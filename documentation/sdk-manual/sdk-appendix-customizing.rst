@@ -18,8 +18,7 @@ build system applies them against ``local.conf`` and ``auto.conf``:
 
 -  Variables whose values start with "/" are excluded since the
    assumption is that those values are paths that are likely to be
-   specific to the `build
-   host <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__.
+   specific to the :term:`Build Host`.
 
 -  Variables listed in
    :term:`SDK_LOCAL_CONF_BLACKLIST`
@@ -57,8 +56,8 @@ OpenEmbedded build system used to create the SDK.
 Adjusting the Extensible SDK to Suit Your Build Host's Setup
 ============================================================
 
-In most cases, the extensible SDK defaults should work with your `build
-host's <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__ setup.
+In most cases, the extensible SDK defaults should work with your :term:`Build
+Host`'s setup.
 However, some cases exist for which you might consider making
 adjustments:
 
@@ -87,8 +86,8 @@ adjustments:
    opposed to being called explicitly), then you need to do one of the
    following:
 
-   -  After ensuring the tasks are `shared
-      state <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__ tasks (i.e. the
+   -  After ensuring the tasks are :ref:`shared
+      state <overview-manual/overview-manual-concepts:shared state cache>` tasks (i.e. the
       output of the task is saved to and can be restored from the shared
       state cache) or ensuring the tasks are able to be produced quickly
       from a task that is a shared state task, add the task name to the
@@ -124,7 +123,7 @@ adjustments:
 
 -  If your OpenEmbedded build system setup uses a different environment
    setup script other than
-   ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__, then you must
+   :ref:`structure-core-script`, then you must
    set
    :term:`OE_INIT_ENV_SCRIPT`
    to point to the environment setup script you use.
@@ -152,8 +151,10 @@ from the :term:`DISTRO` variable.
 The
 :ref:`populate_sdk_base <ref-classes-populate-sdk-*>`
 class defines the default value of the ``SDK_TITLE`` variable as
-follows: SDK_TITLE ??= "${@d.getVar('DISTRO_NAME') or
-d.getVar('DISTRO')} SDK"
+follows:
+::
+
+   SDK_TITLE ??= "${@d.getVar('DISTRO_NAME') or d.getVar('DISTRO')} SDK"
 
 While several ways exist to change this variable, an efficient method is
 to set the variable in your distribution's configuration file. Doing so
@@ -163,7 +164,10 @@ an example, assume you have your own layer for your distribution named
 does the default "poky" distribution. If so, you could update the
 ``SDK_TITLE`` variable in the
 ``~/meta-mydistro/conf/distro/mydistro.conf`` file using the following
-form: SDK_TITLE = "your_title"
+form:
+::
+
+   SDK_TITLE = "your_title"
 
 Providing Updates to the Extensible SDK After Installation
 ==========================================================
@@ -193,8 +197,12 @@ the installed SDKs to update the installed SDKs by using the
 3. Build the extensible SDK normally (i.e., use the
    ``bitbake -c populate_sdk_ext`` imagename command).
 
-4. Publish the SDK using the following command: $ oe-publish-sdk
-   some_path/sdk-installer.sh path_to_shared_http_directory You must
+4. Publish the SDK using the following command:
+   ::
+
+      $ oe-publish-sdk some_path/sdk-installer.sh path_to_shared_http_directory
+
+   You must
    repeat this step each time you rebuild the SDK with changes that you
    want to make available through the update mechanism.
 
@@ -213,7 +221,12 @@ installation directory for the SDK is based on the
 :term:`SDKEXTPATH` variables from
 within the
 :ref:`populate_sdk_base <ref-classes-populate-sdk-*>`
-class as follows: SDKEXTPATH ??= "~/${@d.getVar('DISTRO')}_sdk" You can
+class as follows:
+::
+
+   SDKEXTPATH ??= "~/${@d.getVar('DISTRO')}_sdk"
+
+You can
 change this default installation directory by specifically setting the
 ``SDKEXTPATH`` variable.
 
@@ -226,7 +239,10 @@ assume you have your own layer for your distribution named
 does the default "poky" distribution. If so, you could update the
 ``SDKEXTPATH`` variable in the
 ``~/meta-mydistro/conf/distro/mydistro.conf`` file using the following
-form: SDKEXTPATH = "some_path_for_your_installed_sdk"
+form:
+::
+
+   SDKEXTPATH = "some_path_for_your_installed_sdk"
 
 After building your installer, running it prompts the user for
 acceptance of the some_path_for_your_installed_sdk directory as the
@@ -260,8 +276,11 @@ source, you need to do a number of things:
 3. Set the appropriate configuration so that the produced SDK knows how
    to find the configuration. The variable you need to set is
    :term:`SSTATE_MIRRORS`:
-   SSTATE_MIRRORS = "file://.\*
-   http://example.com/some_path/sstate-cache/PATH" You can set the
+   ::
+
+      SSTATE_MIRRORS = "file://.* http://example.com/some_path/sstate-cache/PATH"
+
+   You can set the
    ``SSTATE_MIRRORS`` variable in two different places:
 
    -  If the mirror value you are setting is appropriate to be set for
@@ -271,8 +290,10 @@ source, you need to do a number of things:
       side, and its contents will not interfere with the build), then
       you can set the variable in your ``local.conf`` or custom distro
       configuration file. You can then "whitelist" the variable through
-      to the SDK by adding the following: SDK_LOCAL_CONF_WHITELIST =
-      "SSTATE_MIRRORS"
+      to the SDK by adding the following:
+      ::
+
+         SDK_LOCAL_CONF_WHITELIST = "SSTATE_MIRRORS"
 
    -  Alternatively, if you just want to set the ``SSTATE_MIRRORS``
       variable's value for the SDK alone, create a
@@ -296,7 +317,11 @@ This bundling can lead to an SDK installer file that is a Gigabyte or
 more in size. If the size of this file causes a problem, you can build
 an SDK that has just enough in it to install and provide access to the
 ``devtool command`` by setting the following in your configuration:
-SDK_EXT_TYPE = "minimal" Setting
+::
+
+   SDK_EXT_TYPE = "minimal"
+
+Setting
 :term:`SDK_EXT_TYPE` to
 "minimal" produces an SDK installer that is around 35 Mbytes in size,
 which downloads and installs quickly. You need to realize, though, that
@@ -314,9 +339,12 @@ information enables the ``devtool search`` command to return useful
 results.
 
 To facilitate this wider range of information, you would need to set the
-following: SDK_INCLUDE_PKGDATA = "1" See the
-:term:`SDK_INCLUDE_PKGDATA`
-variable for additional information.
+following:
+::
+
+   SDK_INCLUDE_PKGDATA = "1"
+
+See the :term:`SDK_INCLUDE_PKGDATA` variable for additional information.
 
 Setting the ``SDK_INCLUDE_PKGDATA`` variable as shown causes the "world"
 target to be built so that information for all of the recipes included

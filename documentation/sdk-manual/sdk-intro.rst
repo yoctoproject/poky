@@ -6,8 +6,8 @@ Introduction
 
 .. _sdk-manual-intro:
 
-Introduction
-============
+eSDK Introduction
+=================
 
 Welcome to the Yocto Project Application Development and the Extensible
 Software Development Kit (eSDK) manual. This manual provides information
@@ -109,18 +109,23 @@ when considering which to build:
 :term:`SDK_EXT_TYPE` is "full"
 or
 :term:`SDK_INCLUDE_TOOLCHAIN`
-is "1", which is the default. \*\* Sysroot is managed through the use of
+is "1", which is the default.
+
+\*\* Sysroot is managed through the use of
 ``devtool``. Thus, it is less likely that you will corrupt your SDK
-sysroot when you try to add additional libraries. \**\* You can add
+sysroot when you try to add additional libraries.
+
+\*\*\* You can add
 runtime package management to the standard SDK but it is not supported
-by default. \***\* You must build and make the shared state available to
+by default.
+
+\*\*\*\* You must build and make the shared state available to
 extensible SDK users for "packages" you want to enable users to install.
 
 The Cross-Development Toolchain
 -------------------------------
 
-The `Cross-Development
-Toolchain <&YOCTO_DOCS_REF_URL;#cross-development-toolchain>`__ consists
+The :term:`Cross-Development Toolchain` consists
 of a cross-compiler, cross-linker, and cross-debugger that are used to
 develop user-space applications for targeted hardware. Additionally, for
 an extensible SDK, the toolchain also has built-in ``devtool``
@@ -190,7 +195,7 @@ You just need to follow these general steps:
    root filesystem images.
 
    If you are going to develop your application on hardware, go to the
-   ```machines`` <&YOCTO_MACHINES_DL_URL;>`__ download area and choose a
+   :yocto_dl:`machines <releases/yocto/yocto-3.1.2/machines/>` download area and choose a
    target machine area from which to download the kernel image and root
    filesystem. This download area could have several files in it that
    support development using actual hardware. For example, the area
@@ -200,7 +205,7 @@ You just need to follow these general steps:
 
    If you are going to develop your application and then run and test it
    using the QEMU emulator, go to the
-   ```machines/qemu`` <&YOCTO_QEMU_DL_URL;>`__ download area. From this
+   :yocto_dl:`machines/qemu <releases/yocto/yocto-3.1.2/machines/qemu>` download area. From this
    area, go down into the directory for your target architecture (e.g.
    ``qemux86_64`` for an Intel-based 64-bit architecture). Download the
    kernel, root filesystem, and any other files you need for your
@@ -217,8 +222,7 @@ You just need to follow these general steps:
    tools to develop your application. If you need to separately install
    and use the QEMU emulator, you can go to `QEMU Home
    Page <http://wiki.qemu.org/Main_Page>`__ to download and learn about
-   the emulator. See the "`Using the Quick EMUlator
-   (QEMU) <&YOCTO_DOCS_DEV_URL;#dev-manual-qemu>`__" chapter in the
+   the emulator. See the ":doc:`../dev-manual/dev-manual-qemu`" chapter in the
    Yocto Project Development Tasks Manual for information on using QEMU
    within the Yocto Project.
 

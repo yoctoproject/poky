@@ -45,14 +45,13 @@ functionality.
 Installing the Extensible SDK
 =============================
 
-The first thing you need to do is install the SDK on your `Build
-Host <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__ by running the
-``*.sh`` installation script.
+The first thing you need to do is install the SDK on your :term:`Build
+Host` by running the ``*.sh`` installation script.
 
 You can download a tarball installer, which includes the pre-built
 toolchain, the ``runqemu`` script, the internal build system,
 ``devtool``, and support files from the appropriate
-`toolchain <&YOCTO_TOOLCHAIN_DL_URL;>`__ directory within the Index of
+:yocto_dl:`toolchain <releases/yocto/yocto-3.1.2/toolchain/>` directory within the Index of
 Releases. Toolchains are available for several 32-bit and 64-bit
 architectures with the ``x86_64`` directories, respectively. The
 toolchains the Yocto Project provides are based off the
@@ -64,17 +63,33 @@ representing the host system appears first in the filename and then is
 immediately followed by a string representing the target architecture.
 An extensible SDK has the string "-ext" as part of the name. Following
 is the general form:
-poky-glibc-host_system-image_type-arch-toolchain-ext-release_version.sh
-Where: host_system is a string representing your development system:
-i686 or x86_64. image_type is the image for which the SDK was built:
-core-image-sato or core-image-minimal arch is a string representing the
-tuned target architecture: aarch64, armv5e, core2-64, i586, mips32r2,
-mips64, ppc7400, or cortexa8hf-neon release_version is a string
-representing the release number of the Yocto Project: DISTRO,
-DISTRO+snapshot For example, the following SDK installer is for a 64-bit
+::
+
+   poky-glibc-host_system-image_type-arch-toolchain-ext-release_version.sh
+
+   Where:
+       host_system is a string representing your development system:
+
+                  i686 or x86_64.
+
+       image_type is the image for which the SDK was built:
+
+                  core-image-sato or core-image-minimal
+
+       arch is a string representing the tuned target architecture:
+
+                  aarch64, armv5e, core2-64, i586, mips32r2, mips64, ppc7400, or cortexa8hf-neon
+
+       release_version is a string representing the release number of the Yocto Project:
+
+                  3.1.2, 3.1.2+snapshot
+
+For example, the following SDK installer is for a 64-bit
 development host system and a i586-tuned target architecture based off
 the SDK for ``core-image-sato`` and using the current DISTRO snapshot:
-poky-glibc-x86_64-core-image-sato-i586-toolchain-ext-DISTRO.sh
+::
+
+   poky-glibc-x86_64-core-image-sato-i586-toolchain-ext-DISTRO.sh
 
 .. note::
 
@@ -102,28 +117,26 @@ architecture. The example assumes the SDK installer is located in
    that case, set up the proper permissions in the directory and run the
    installer again.
 
-$
-./Downloads/poky-glibc-x86_64-core-image-minimal-core2-64-toolchain-ext-2.5.sh
-Poky (Yocto Project Reference Distro) Extensible SDK installer version
-2.5
-==========================================================================
-Enter target directory for SDK (default: ~/poky_sdk): You are about to
-install the SDK to "/home/scottrif/poky_sdk". Proceed [Y/n]? Y
-Extracting SDK..............done Setting it up... Extracting
-buildtools... Preparing build system... Parsing recipes: 100%
-\|##################################################################\|
-Time: 0:00:52 Initialising tasks: 100%
-\|###############################################################\|
-Time: 0:00:00 Checking sstate mirror object availability: 100%
-\|#######################################\| Time: 0:00:00 Loading cache:
-100%
-\|####################################################################\|
-Time: 0:00:00 Initialising tasks: 100%
-\|###############################################################\|
-Time: 0:00:00 done SDK has been successfully set up and is ready to be
-used. Each time you wish to use the SDK in a new shell session, you need
-to source the environment setup script e.g. $ .
-/home/scottrif/poky_sdk/environment-setup-core2-64-poky-linux
+::
+
+   $ ./Downloads/poky-glibc-x86_64-core-image-minimal-core2-64-toolchain-ext-2.5.sh
+   Poky (Yocto Project Reference Distro) Extensible SDK installer version 2.5
+   ==========================================================================
+   Enter target directory for SDK (default: ~/poky_sdk):
+   You are about to install the SDK to "/home/scottrif/poky_sdk". Proceed [Y/n]? Y
+   Extracting SDK..............done
+   Setting it up...
+   Extracting buildtools...
+   Preparing build system...
+   Parsing recipes: 100% |##################################################################| Time: 0:00:52
+   Initialising tasks: 100% |###############################################################| Time: 0:00:00
+   Checking sstate mirror object availability: 100% |#######################################| Time: 0:00:00
+   Loading cache: 100% |####################################################################| Time: 0:00:00
+   Initialising tasks: 100% |###############################################################| Time: 0:00:00
+   done
+   SDK has been successfully set up and is ready to be used.
+   Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
+    $ . /home/scottrif/poky_sdk/environment-setup-core2-64-poky-linux
 
 .. _sdk-running-the-extensible-sdk-environment-setup-script:
 
@@ -142,10 +155,14 @@ begin with the string "``environment-setup``" and include as part of
 their name the tuned target architecture. As an example, the following
 commands set the working directory to where the SDK was installed and
 then source the environment setup script. In this example, the setup
-script is for an IA-based target machine using i586 tuning: $ cd
-/home/scottrif/poky_sdk $ source environment-setup-core2-64-poky-linux
-SDK environment now set up; additionally you may now run devtool to
-perform development tasks. Run devtool --help for further details.
+script is for an IA-based target machine using i586 tuning:
+::
+
+   $ cd /home/scottrif/poky_sdk
+   $ source environment-setup-core2-64-poky-linux
+   SDK environment now set up; additionally you may now run devtool to perform development tasks.
+   Run devtool --help for further details.
+
 Running the setup script defines many environment variables needed in
 order to use the SDK (e.g. ``PATH``,
 :term:`CC`,
@@ -172,7 +189,7 @@ system.
    part of an image built using the build system.
 
 The ``devtool`` command line is organized similarly to
-`Git <&YOCTO_DOCS_OM_URL;#git>`__ in that it has a number of
+:ref:`overview-manual/overview-manual-development-environment:git` in that it has a number of
 sub-commands for each function. You can run ``devtool --help`` to see
 all the commands.
 
@@ -188,12 +205,12 @@ all the commands.
 Three ``devtool`` subcommands exist that provide entry-points into
 development:
 
--  *``devtool add``*: Assists in adding new software to be built.
+-  *devtool add*: Assists in adding new software to be built.
 
--  *``devtool modify``*: Sets up an environment to enable you to modify
+-  *devtool modify*: Sets up an environment to enable you to modify
    the source of an existing component.
 
--  *``devtool upgrade``*: Updates an existing recipe so that you can
+-  *devtool upgrade*: Updates an existing recipe so that you can
    build it for an updated set of source files.
 
 As with the build system, "recipes" represent software packages within
@@ -248,8 +265,12 @@ command:
       to be extracted. In this situation, the source code is extracted
       to the default workspace - you do not want the files in some
       specific location outside of the workspace. Thus, everything you
-      need will be located in the workspace: $ devtool add recipe
-      fetchuri With this command, ``devtool`` extracts the upstream
+      need will be located in the workspace:
+      ::
+
+         $ devtool add recipe fetchuri
+
+      With this command, ``devtool`` extracts the upstream
       source files into a local Git repository within the ``sources``
       folder. The command then creates a recipe named recipe and a
       corresponding append file in the workspace. If you do not provide
@@ -269,7 +290,12 @@ command:
       Furthermore, the first positional argument srctree in this case
       identifies where the ``devtool add`` command will locate the
       extracted code outside of the workspace. You need to specify an
-      empty directory: $ devtool add recipe srctree fetchuri In summary,
+      empty directory:
+      ::
+
+         $ devtool add recipe srctree fetchuri
+
+      In summary,
       the source code is pulled from fetchuri and extracted into the
       location defined by srctree as a local Git repository.
 
@@ -281,7 +307,11 @@ command:
       ``devtool`` workspace.
 
       The following command provides a new recipe name and identifies
-      the existing source tree location: $ devtool add recipe srctree
+      the existing source tree location:
+      ::
+
+         $ devtool add recipe srctree
+
       The command examines the source code and creates a recipe named
       recipe for the code and places the recipe into the workspace.
 
@@ -294,7 +324,12 @@ command:
 
 2. *Edit the Recipe*: You can use ``devtool edit-recipe`` to open up the
    editor as defined by the ``$EDITOR`` environment variable and modify
-   the file: $ devtool edit-recipe recipe From within the editor, you
+   the file:
+   ::
+
+      $ devtool edit-recipe recipe
+
+   From within the editor, you
    can make modifications to the recipe that take affect when you build
    it later.
 
@@ -302,13 +337,18 @@ command:
    depends on what you are going to do with the new code.
 
    If you need to eventually move the build output to the target
-   hardware, use the following ``devtool`` command: $ devtool build
-   recipe
+   hardware, use the following ``devtool`` command:
+   :;
+
+      $ devtool build recipe
 
    On the other hand, if you want an image to contain the recipe's
    packages from the workspace for immediate deployment onto a device
    (e.g. for testing purposes), you can use the ``devtool build-image``
-   command: $ devtool build-image image
+   command:
+   ::
+
+      $ devtool build-image image
 
 4. *Deploy the Build Output*: When you use the ``devtool build`` command
    to build out your recipe, you probably want to see if the resulting
@@ -336,7 +376,10 @@ command:
    creates any patches corresponding to commits in the local Git
    repository, moves the new recipe to a more permanent layer, and then
    resets the recipe so that the recipe is built normally rather than
-   from the workspace. $ devtool finish recipe layer
+   from the workspace.
+   ::
+
+      $ devtool finish recipe layer
 
    .. note::
 
@@ -401,7 +444,12 @@ command:
       outside the workspace (i.e. ``meta-``\ layername).
 
       The following command identifies the recipe and, by default,
-      extracts the source files: $ devtool modify recipe Once
+      extracts the source files:
+      ::
+
+         $ devtool modify recipe
+
+      Once
       ``devtool``\ locates the recipe, ``devtool`` uses the recipe's
       :term:`SRC_URI` statements to
       locate the source code and any local patch files from other
@@ -435,7 +483,10 @@ command:
       The following command tells ``devtool`` the recipe with which to
       work and, in this case, identifies a local area for the extracted
       source files that exists outside of the default ``devtool``
-      workspace: $ devtool modify recipe srctree
+      workspace:
+      ::
+
+         $ devtool modify recipe srctree
 
       .. note::
 
@@ -466,7 +517,10 @@ command:
       The following command tells ``devtool`` the recipe with which to
       work, uses the "-n" option to indicate source does not need to be
       extracted, and uses srctree to point to the previously extracted
-      source files: $ devtool modify -n recipe srctree
+      source files:
+      ::
+
+         $ devtool modify -n recipe srctree
 
       If an ``oe-local-files`` subdirectory happens to exist and it
       contains non-patch files, the files are used. However, if the
@@ -487,8 +541,10 @@ command:
    depends on what you are going to do with the new code.
 
    If you need to eventually move the build output to the target
-   hardware, use the following ``devtool`` command: $ devtool build
-   recipe
+   hardware, use the following ``devtool`` command:
+   ::
+
+      $ devtool build recipe
 
    On the other hand, if you want an image to contain the recipe's
    packages from the workspace for immediate deployment onto a device
@@ -509,8 +565,12 @@ command:
       development machine.
 
    You can deploy your build output to that target hardware by using the
-   ``devtool deploy-target`` command: $ devtool deploy-target recipe
-   target The target is a live target machine running as an SSH server.
+   ``devtool deploy-target`` command:
+   ::
+
+      $ devtool deploy-target recipe target
+
+   The target is a live target machine running as an SSH server.
 
    You can, of course, use other methods to deploy the image you built
    using the ``devtool build-image`` command to actual hardware.
@@ -522,8 +582,10 @@ command:
    repository, updates the recipe to point to them (or creates a
    ``.bbappend`` file to do so, depending on the specified destination
    layer), and then resets the recipe so that the recipe is built
-   normally rather than from the workspace. $ devtool finish recipe
-   layer
+   normally rather than from the workspace.
+   ::
+
+      $ devtool finish recipe layer
 
    .. note::
 
@@ -600,8 +662,12 @@ The following diagram shows the common development flow used with the
    A common situation is where third-party software has undergone a
    revision so that it has been upgraded. The recipe you have access to
    is likely in your own layer. Thus, you need to upgrade the recipe to
-   use the newer version of the software: $ devtool upgrade -V version
-   recipe By default, the ``devtool upgrade`` command extracts source
+   use the newer version of the software:
+   ::
+
+      $ devtool upgrade -V version recipe
+
+   By default, the ``devtool upgrade`` command extracts source
    code into the ``sources`` directory in the
    :ref:`devtool-the-workspace-layer-structure`.
    If you want the code extracted to any other location, you need to
@@ -648,13 +714,18 @@ The following diagram shows the common development flow used with the
    depends on what you are going to do with the new code.
 
    If you need to eventually move the build output to the target
-   hardware, use the following ``devtool`` command: $ devtool build
-   recipe
+   hardware, use the following ``devtool`` command:
+   ::
+
+      $ devtool build recipe
 
    On the other hand, if you want an image to contain the recipe's
    packages from the workspace for immediate deployment onto a device
    (e.g. for testing purposes), you can use the ``devtool build-image``
-   command: $ devtool build-image image
+   command:
+   ::
+
+      $ devtool build-image image
 
 4. *Deploy the Build Output*: When you use the ``devtool build`` command
    or ``bitbake`` to build your recipe, you probably want to see if the
@@ -690,8 +761,10 @@ The following diagram shows the common development flow used with the
 
    If you specify a destination layer that is the same as the original
    source, then the old version of the recipe and associated files are
-   removed prior to adding the new version. $ devtool finish recipe
-   layer
+   removed prior to adding the new version.
+   ::
+
+      $ devtool finish recipe layer
 
    .. note::
 
@@ -770,8 +843,12 @@ name and version, just the name, or just the version as part of the
 command line.
 
 Sometimes the name or version determined from the source tree might be
-incorrect. For such a case, you must reset the recipe: $ devtool reset
--n recipename After running the ``devtool reset`` command, you need to
+incorrect. For such a case, you must reset the recipe:
+::
+
+   $ devtool reset -n recipename
+
+After running the ``devtool reset`` command, you need to
 run ``devtool add`` again and provide the name or the version.
 
 .. _sdk-dependency-detection-and-mapping:
@@ -793,8 +870,10 @@ the ``DEPENDS`` variable in the original recipe to include the new
 recipe.
 
 If you need to add runtime dependencies, you can do so by adding the
-following to your recipe: RDEPENDS_${PN} += "dependency1 dependency2
-..."
+following to your recipe:
+::
+
+   RDEPENDS_${PN} += "dependency1 dependency2 ..."
 
 .. note::
 
@@ -881,7 +960,11 @@ mind:
    :term:`EXTRA_OEMAKE` or
    :term:`PACKAGECONFIG_CONFARGS`
    within the recipe. Here is an example using ``EXTRA_OEMAKE``:
-   EXTRA_OEMAKE += "'CC=${CC}' 'CXX=${CXX}'" In the above example,
+   ::
+
+      EXTRA_OEMAKE += "'CC=${CC}' 'CXX=${CXX}'"
+
+   In the above example,
    single quotes are used around the variable settings as the values are
    likely to contain spaces because required default options are passed
    to the compiler.
@@ -903,8 +986,8 @@ mind:
 Adding Native Tools
 -------------------
 
-Often, you need to build additional tools that run on the `build
-host <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__ as opposed to
+Often, you need to build additional tools that run on the :term:`Build
+Host` as opposed to
 the target. You should indicate this requirement by using one of the
 following methods when you run ``devtool add``:
 
@@ -935,8 +1018,12 @@ You can use the ``devtool add`` command two different ways to add
 Node.js modules: 1) Through ``npm`` and, 2) from a repository or local
 source.
 
-Use the following form to add Node.js modules through ``npm``: $ devtool
-add "npm://registry.npmjs.org;name=forever;version=0.15.1" The name and
+Use the following form to add Node.js modules through ``npm``:
+::
+
+   $ devtool add "npm://registry.npmjs.org;name=forever;version=0.15.1"
+
+The name and
 version parameters are mandatory. Lockdown and shrinkwrap files are
 generated and pointed to by the recipe in order to freeze the version
 that is fetched for the dependencies according to the first time. This
@@ -956,8 +1043,12 @@ these behaviors ensure the reproducibility and integrity of the build.
 
 As mentioned earlier, you can also add Node.js modules directly from a
 repository or local source tree. To add modules this way, use
-``devtool add`` in the following form: $ devtool add
-https://github.com/diversario/node-ssdp In this example, ``devtool``
+``devtool add`` in the following form:
+::
+
+   $ devtool add https://github.com/diversario/node-ssdp
+
+In this example, ``devtool``
 fetches the specified Git repository, detects the code as Node.js code,
 fetches dependencies using ``npm``, and sets
 :term:`SRC_URI` accordingly.
@@ -984,7 +1075,7 @@ build progresses as follows:
 
 For recipes in the workspace, fetching and unpacking is disabled as the
 source tree has already been prepared and is persistent. Each of these
-build steps is defined as a function (task), usually with a "do_" prefix
+build steps is defined as a function (task), usually with a "do\_" prefix
 (e.g. :ref:`ref-tasks-fetch`,
 :ref:`ref-tasks-unpack`, and so
 forth). These functions are typically shell scripts but can instead be
@@ -1069,8 +1160,8 @@ reference.
 Sharing Files Between Recipes
 -----------------------------
 
-Recipes often need to use files provided by other recipes on the `build
-host <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__. For example,
+Recipes often need to use files provided by other recipes on the
+:term:`Build Host`. For example,
 an application linking to a common library needs access to the library
 itself and its associated headers. The way this access is accomplished
 within the extensible SDK is through the sysroot. One sysroot exists per
@@ -1142,11 +1233,19 @@ need to restore the original files that existed prior to running the
 ``devtool deploy-target`` command. Because the ``devtool deploy-target``
 command backs up any files it overwrites, you can use the
 ``devtool undeploy-target`` command to restore those files and remove
-any other files the recipe deployed. Consider the following example: $
-devtool undeploy-target lighttpd root@192.168.7.2 If you have deployed
+any other files the recipe deployed. Consider the following example:
+::
+
+   $ devtool undeploy-target lighttpd root@192.168.7.2
+
+If you have deployed
 multiple applications, you can remove them all using the "-a" option
-thus restoring the target device to its original state: $ devtool
-undeploy-target -a root@192.168.7.2 Information about files deployed to
+thus restoring the target device to its original state:
+::
+
+   $ devtool undeploy-target -a root@192.168.7.2
+
+Information about files deployed to
 the target as well as any backed up files are stored on the target
 itself. This storage, of course, requires some additional space on the
 target machine.
@@ -1175,14 +1274,26 @@ populated on-demand. Sometimes you must explicitly install extra items
 into the SDK. If you need these extra items, you can first search for
 the items using the ``devtool search`` command. For example, suppose you
 need to link to libGL but you are not sure which recipe provides libGL.
-You can use the following command to find out: $ devtool search libGL
-mesa A free implementation of the OpenGL API Once you know the recipe
-(i.e. ``mesa`` in this example), you can install it: $ devtool
-sdk-install mesa By default, the ``devtool sdk-install`` command assumes
+You can use the following command to find out:
+::
+
+   $ devtool search libGL mesa
+
+A free implementation of the OpenGL API Once you know the recipe
+(i.e. ``mesa`` in this example), you can install it:
+::
+
+   $ devtool sdk-install mesa
+
+By default, the ``devtool sdk-install`` command assumes
 the item is available in pre-built form from your SDK provider. If the
 item is not available and it is acceptable to build the item from
-source, you can add the "-s" option as follows: $ devtool sdk-install -s
-mesa It is important to remember that building the item from source
+source, you can add the "-s" option as follows:
+::
+
+   $ devtool sdk-install -s mesa
+
+It is important to remember that building the item from source
 takes significantly longer than installing the pre-built artifact. Also,
 if no recipe exists for the item you want to add to the SDK, you must
 instead add the item using the ``devtool add`` command.
@@ -1196,8 +1307,12 @@ If you are working with an installed extensible SDK that gets
 occasionally updated (e.g. a third-party SDK), then you will need to
 manually "pull down" the updates into the installed SDK.
 
-To update your installed SDK, use ``devtool`` as follows: $ devtool
-sdk-update The previous command assumes your SDK provider has set the
+To update your installed SDK, use ``devtool`` as follows:
+::
+
+   $ devtool sdk-update
+
+The previous command assumes your SDK provider has set the
 default update URL for you through the
 :term:`SDK_UPDATE_URL`
 variable as described in the "`Providing Updates to the Extensible SDK
