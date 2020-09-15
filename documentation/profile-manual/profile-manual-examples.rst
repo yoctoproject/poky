@@ -4,6 +4,8 @@
 Real-World Examples
 *******************
 
+|
+
 This chapter contains real-world examples.
 
 Slow Write Speed on Live Images

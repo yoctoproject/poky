@@ -22,9 +22,8 @@ has started to converge on a 'core' set of underlying mechanisms:
 -  the perf_events subsystem
 -  debugfs
 
-.. container:: informalexample
+.. admonition:: Tying it Together
 
-   Tying it Together:
    Rather than enumerating here how each tool makes use of these common
    mechanisms, textboxes like this will make note of the specific usages
    in each tool as they come up in the course of the text.
