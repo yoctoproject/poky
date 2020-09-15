@@ -382,6 +382,17 @@ Creates the file and directory structure for an installable SDK. See the
 section in the Yocto Project Overview and Concepts Manual for more
 information.
 
+.. _ref-tasks-populate_sdk_ext:
+
+``do_populate_sdk_ext``
+-----------------------
+
+Creates the file and directory structure for an installable extensible 
+SDK (eSDK). See the ":ref:`sdk-generation-dev-environment`"
+section in the Yocto Project Overview and Concepts Manual for more
+information.
+
+
 .. _ref-tasks-populate_sysroot:
 
 ``do_populate_sysroot``
