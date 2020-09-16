@@ -68,21 +68,17 @@ contact us with other suggestions.
    use Google to search for Yocto Project concepts or terms, Google consistently
    searches and retrieves older versions of Yocto Project manuals. For example,
    searching for a particular topic using Google could result in a "hit" on a
-   Yocto Project manual that is several releases old.  To be sure that you are
-   using the most current Yocto Project documentation, use the
-   :yocto_docs:`Yocto Project documentation </>` page to locate the right
-   documentation for your software release version. If you use the search bar on
-   the top of the Documentation Overview page, while that search isn’t optimal,
-   it will point you to the documents where your search string can be
-   found. That search will usually identify where most of the attention on a
-   given term or concept is.
+   Yocto Project manual that is several releases old. To be sure that you are
+   using the most current Yocto Project documentation, use the drop-down menu at
+   the top of any of its page.
 
-   Many developers look through the complete Yocto Project set of manuals for a
-   concept or term by doing a search through the "Yocto Project Complete
-   Documentation Set".  This manual is a concatenation of the core set of Yocto
-   Project manual.  Thus, a simple string search using Ctrl-F in this manual
-   produces all the "hits" for a desired term or concept.  Once you find the area
-   in which you are interested, you can display the actual manual, if desired.
+   Many developers look through the :yocto_docs:`All-in-one 'Mega' Manual </singleindex.html>`
+   for a concept or term by doing a search through the whole page.  This manual
+   is a concatenation of the core set of Yocto Project manual.  Thus, a simple
+   string search using Ctrl-F in this manual produces all the "hits" for a
+   desired term or concept.  Once you find the area in which you are
+   interested, you can display the actual manual, if desired. It is also
+   possible to use the search bar in the menu or in the left navigation pane.
 
 #. **Understand the basic concepts of how the build system works: the workflow:**
    Understanding the Yocto Project workflow is important as it can help you both
