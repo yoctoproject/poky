@@ -7,7 +7,7 @@ Yocto Project Quick Build
 Welcome!
 ========
 
-Welcome! This short document steps you through the process for a typical
+This short document steps you through the process for a typical
 image build using the Yocto Project. The document also introduces how to
 configure a build for specific hardware. You will use Yocto Project to
 build a reference embedded OS called Poky.
