@@ -113,7 +113,7 @@ Project:
    development.
 
 -  *Releases According to a Strict Schedule:* Major releases occur on a
-   `six-month cycle <&YOCTO_DOCS_REF_URL;#ref-release-process>`__
+   :doc:`six-month cycle <../ref-manual/ref-release-process>`
    predictably in October and April. The most recent two releases
    support point releases to address common vulnerabilities and
    exposures. This predictability is crucial for projects based on the
@@ -131,8 +131,8 @@ Project:
    in what order to support dependencies, other build systems can
    arbitrarily include packages.
 
--  *License Manifest:* The Yocto Project provides a `license
-   manifest <&YOCTO_DOCS_DEV_URL;#maintaining-open-source-license-compliance-during-your-products-lifecycle>`__
+-  *License Manifest:* The Yocto Project provides a :ref:`license
+   manifest <dev-manual/dev-manual-common-tasks:maintaining open source license compliance during your product's lifecycle>`
    for review by people who need to track the use of open source
    licenses (e.g.legal teams).
 
@@ -154,10 +154,8 @@ developing using the Yocto Project:
    changes need to be made for your particular design can require a
    significant amount of research and investigation. For information
    that helps you transition from trying out the Yocto Project to using
-   it for your project, see the "`What I wish I'd
-   Known <&YOCTO_DOCS_URL;/what-i-wish-id-known/>`__" and
-   "`Transitioning to a Custom Environment for Systems
-   Development <&YOCTO_DOCS_URL;/transitioning-to-a-custom-environment/>`__"
+   it for your project, see the ":ref:`what-i-wish-id-known:what i wish i'd known about yocto project`" and
+   ":ref:`transitioning-to-a-custom-environment:transitioning to a custom environment for systems development`"
    documents on the Yocto Project website.
 
 -  *Project Workflow Could Be Confusing:* The `Yocto Project
@@ -233,8 +231,8 @@ your Metadata, the easier it is to cope with future changes.
       validated.
 
    -  Layers support the inclusion of technologies, hardware components,
-      and software components. The `Yocto Project
-      Compatible <&YOCTO_DOCS_DEV_URL;#making-sure-your-layer-is-compatible-with-yocto-project>`__
+      and software components. The :ref:`Yocto Project
+      Compatible <dev-manual/dev-manual-common-tasks:making sure your layer is compatible with yocto project>`
       designation provides a minimum level of standardization that
       contributes to a strong ecosystem. "YP Compatible" is applied to
       appropriate products and software components such as BSPs, other
@@ -280,9 +278,8 @@ view <https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/>`__ of the
 ``meta-yocto-bsp``. Each of these repositories represents a distinct
 layer.
 
-For procedures on how to create layers, see the "`Understanding and
-Creating
-Layers <&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers>`__"
+For procedures on how to create layers, see the 
+":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
 section in the Yocto Project Development Tasks Manual.
 
 Components and Tools
@@ -292,7 +289,7 @@ The Yocto Project employs a collection of components and tools used by
 the project itself, by project developers, and by those using the Yocto
 Project. These components and tools are open source projects and
 metadata that are separate from the reference distribution
-(`Poky <&YOCTO_DOCS_REF_URL;#poky>`__) and the 
+(:term:`Poky`) and the 
 :term:`OpenEmbedded Build System`. Most of the
 components and tools are downloaded separately.
 
@@ -336,8 +333,8 @@ applications using the Yocto Project:
 
    You can read about the ``devtool`` workflow in the Yocto Project
    Application Development and Extensible Software Development Kit
-   (eSDK) Manual in the "`Using ``devtool`` in Your SDK
-   Workflow' <&YOCTO_DOCS_SDK_URL;#using-devtool-in-your-sdk-workflow>`__"
+   (eSDK) Manual in the 
+   ":ref:`sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow`"
    section.
 
 -  *Extensible Software Development Kit (eSDK):* The eSDK provides a
@@ -349,14 +346,12 @@ applications using the Yocto Project:
    experience supplemented with the powerful set of ``devtool`` commands
    tailored for the Yocto Project environment.
 
-   For information on the eSDK, see the `Yocto Project Application
-   Development and the Extensible Software Development Kit
-   (eSDK) <&YOCTO_DOCS_SDK_URL;>`__ Manual.
+   For information on the eSDK, see the :doc:`../sdk-manual/sdk-manual` Manual.
 
 -  *Toaster:* Toaster is a web interface to the Yocto Project
    OpenEmbedded build system. Toaster allows you to configure, run, and
    view information about builds. For information on Toaster, see the
-   `Toaster User Manual <&YOCTO_DOCS_TOAST_URL;>`__.
+   :doc:`../toaster-manual/toaster-manual`.
 
 .. _gs-production-tools:
 
@@ -406,7 +401,7 @@ activities using the Yocto Project:
    benefit of the development community.
 
    You can learn more about the AutoBuilder used by the Yocto Project
-   `here <&YOCTO_AB_URL;>`__.
+   Autobuilder :doc:`here <../test-manual/test-manual-understand-autobuilder>`.
 
 -  *Cross-Prelink:* Prelinking is the process of pre-computing the load
    addresses and link tables generated by the dynamic linker as compared
@@ -595,8 +590,8 @@ Linux.
 Development Methods
 ===================
 
-The Yocto Project development environment usually involves a `Build
-Host <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__ and target
+The Yocto Project development environment usually involves a 
+:term:`Build Host` and target
 hardware. You use the Build Host to build images and develop
 applications, while you use the target hardware to test deployed
 software.
@@ -622,8 +617,8 @@ Project.
    supported Linux distribution.
 
    For information on how to set up a Build Host on a system running
-   Linux as its native operating system, see the "`Setting Up a Native
-   Linux Host <&YOCTO_DOCS_DEV_URL;#setting-up-a-native-linux-host>`__"
+   Linux as its native operating system, see the 
+   ":ref:`dev-manual/dev-manual-start:setting up a native linux host`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *CROss PlatformS (CROPS):* Typically, you use
@@ -643,9 +638,8 @@ Project.
    system natively running Linux.
 
    For information on how to set up a Build Host with CROPS, see the
-   "`Setting Up to Use CROss PlatformS
-   (CROPS) <&YOCTO_DOCS_DEV_URL;#setting-up-to-use-crops>`__" section in
-   the Yocto Project Development Tasks Manual.
+   ":ref:`dev-manual/dev-manual-start:setting up to use cross platforms (crops)`"
+   section in the Yocto Project Development Tasks Manual.
 
 -  *Windows Subsystem For Linux (WSLv2):* You may use Windows Subsystem
    For Linux v2 to set up a build host using Windows 10.
@@ -661,9 +655,8 @@ Project.
    virtualization technology.
 
    For information on how to set up a Build Host with WSLv2, see the
-   "`Setting Up to Use Windows Subsystem For
-   Linux <&YOCTO_DOCS_DEV_URL;#setting-up-to-use-wsl>`__" section in the
-   Yocto Project Development Tasks Manual.
+   ":ref:dev-manual/dev-manual-start:setting up to use windows subsystem for linux (wslv2)`"
+   section in the Yocto Project Development Tasks Manual.
 
 -  *Toaster:* Regardless of what your Build Host is running, you can use
    Toaster to develop software using the Yocto Project. Toaster is a web
@@ -673,8 +666,8 @@ Project.
    builds is collected and stored in a database. You can use Toaster to
    configure and start builds on multiple remote build servers.
 
-   For information about and how to use Toaster, see the `Toaster User
-   Manual <&YOCTO_DOCS_TOAST_URL;>`__.
+   For information about and how to use Toaster, see the 
+   :doc:`../toaster-manual/toaster-manual`.
 
 .. _reference-embedded-distribution:
 
@@ -686,7 +679,7 @@ Project's reference distribution or Reference OS Kit. Poky contains the
 :term:`OpenEmbedded Build System`
 (:term:`BitBake` and
 :term:`OpenEmbedded-Core (OE-Core)`) as well as a set
-of `metadata <&YOCTO_DOCS_REF_URL;#metadata>`__ to get you started
+of :term:`Metadata` to get you started
 building your own distro. In other words, Poky is a base specification
 of the functionality needed for a typical embedded system as well as the
 components from the Yocto Project that allow you to build a distribution
@@ -747,8 +740,7 @@ Poky has a regular, well established, six-month release cycle under its
 own version. Major releases occur at the same time major releases (point
 releases) occur for the Yocto Project, which are typically in the Spring
 and Fall. For more information on the Yocto Project release schedule and
-cadence, see the "`Yocto Project Releases and the Stable Release
-Process <&YOCTO_DOCS_REF_URL;#ref-release-process>`__" chapter in the
+cadence, see the ":doc:`../ref-manual/ref-release-process`" chapter in the
 Yocto Project Reference Manual.
 
 Much has been said about Poky being a "default configuration." A default
@@ -827,8 +819,8 @@ Some Basic Terms
 ================
 
 It helps to understand some basic fundamental terms when learning the
-Yocto Project. Although a list of terms exists in the "`Yocto Project
-Terms <&YOCTO_DOCS_REF_URL;#ref-terms>`__" section of the Yocto Project
+Yocto Project. Although a list of terms exists in the ":doc:`Yocto Project
+Terms <../ref-manual/ref-terms>`" section of the Yocto Project
 Reference Manual, this section provides the definitions of some terms
 helpful for getting started:
 
@@ -842,9 +834,7 @@ helpful for getting started:
    application developers. This eSDK allows developers to incorporate
    their library and programming changes back into the image to make
    their code available to other application developers. For information
-   on the eSDK, see the `Yocto Project Application Development and the
-   Extensible Software Development Kit (eSDK) <&YOCTO_DOCS_SDK_URL;>`__
-   manual.
+   on the eSDK, see the :doc:`../sdk-manual/sdk-manual` manual.
 
 -  *Layer:* A collection of related recipes. Layers allow you to
    consolidate related metadata to customize your build. Layers also
@@ -855,12 +845,11 @@ helpful for getting started:
    them. You can search the Layer Index for layers used within Yocto
    Project.
 
-   For more detailed information on layers, see the "`Understanding and
-   Creating
-   Layers <&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers>`__"
+   For more detailed information on layers, see the 
+   ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
    section in the Yocto Project Development Tasks Manual. For a
-   discussion specifically on BSP Layers, see the "`BSP
-   Layers <&YOCTO_DOCS_BSP_URL;#bsp-layers>`__" section in the Yocto
+   discussion specifically on BSP Layers, see the 
+   ":ref:`bsp-guide/bsp:bsp layers`" section in the Yocto
    Project Board Support Packages (BSP) Developer's Guide.
 
 -  *Metadata:* A key element of the Yocto Project is the Metadata that
@@ -913,8 +902,7 @@ helpful for getting started:
 
    It is worth noting that the term "package" can, in general, have
    subtle meanings. For example, the packages referred to in the
-   "`Required Packages for the Build
-   Host <&YOCTO_DOCS_REF_URL;#required-packages-for-the-build-host>`__"
+   ":ref:`ref-manual/ref-system-requirements:required packages for the build host`"
    section in the Yocto Project Reference Manual are compiled binaries
    that, when installed, add functionality to your Linux distribution.
 

@@ -20,7 +20,7 @@ The following list describes what you can get from this manual:
    provides an introduction to the Yocto Project. You will learn about
    features and challenges of the Yocto Project, the layer model,
    components and tools, development methods, the
-   `Poky <&YOCTO_DOCS_REF_URL;#poky>`__ reference distribution, the
+   :term:`Poky` reference distribution, the
    OpenEmbedded build system workflow, and some basic Yocto terms.
 
 -  `The Yocto Project Development
@@ -30,7 +30,7 @@ The following list describes what you can get from this manual:
    Yocto Project source repositories, workflows using Git and the Yocto
    Project, a Git primer, and information about licensing.
 
--  `Yocto Project Concepts <#overview-manual-concepts>`__\ *:* This
+-  :doc:`overview-manual-concepts` *:* This
    chapter presents various concepts regarding the Yocto Project. You
    can find conceptual information about components, development,
    cross-toolchains, and so forth.
@@ -39,19 +39,17 @@ This manual does not give you the following:
 
 -  *Step-by-step Instructions for Development Tasks:* Instructional
    procedures reside in other manuals within the Yocto Project
-   documentation set. For example, the `Yocto Project Development Tasks
-   Manual <&YOCTO_DOCS_DEV_URL;>`__ provides examples on how to perform
-   various development tasks. As another example, the `Yocto Project
-   Application Development and the Extensible Software Development Kit
-   (eSDK) <&YOCTO_DOCS_SDK_URL;>`__ manual contains detailed
+   documentation set. For example, the :doc:`../dev-manual/dev-manual`
+   provides examples on how to perform
+   various development tasks. As another example, the 
+   :doc:`../sdk-manual/sdk-manual` manual contains detailed
    instructions on how to install an SDK, which is used to develop
    applications for target hardware.
 
 -  *Reference Material:* This type of material resides in an appropriate
    reference manual. For example, system variables are documented in the
-   `Yocto Project Reference Manual <&YOCTO_DOCS_REF_URL;>`__. As another
-   example, the `Yocto Project Board Support Package (BSP) Developer's
-   Guide <&YOCTO_DOCS_BSP_URL;>`__ contains reference information on
+   :doc:`../ref-manual/ref-manual`. As another
+   example, the :doc:`../bsp-guide/bsp-guide` contains reference information on
    BSPs.
 
 -  *Detailed Public Information Not Specific to the Yocto Project:* For
@@ -69,8 +67,8 @@ supplemental information is recommended for full comprehension. For
 additional introductory information on the Yocto Project, see the
 :yocto_home:`Yocto Project Website <>`. If you want to build an image
 with no knowledge of Yocto Project as a way of quickly testing it out,
-see the `Yocto Project Quick Build <&YOCTO_DOCS_BRIEF_URL;>`__ document.
+see the :doc:`../brief-yoctoprojectqs/brief-yoctoprojectqs` document.
 For a comprehensive list of links and other documentation, see the
-"`Links and Related
-Documentation <&YOCTO_DOCS_REF_URL;#resources-links-and-related-documentation>`__"
+":ref:`Links and Related
+Documentation <resources-links-and-related-documentation>`"
 section in the Yocto Project Reference Manual.

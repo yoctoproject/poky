@@ -50,8 +50,7 @@ Community
 The Development Host
 ====================
 
-A development host or `build
-host <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__ is key to
+A development host or :term:`Build Host` is key to
 using the Yocto Project. Because the goal of the Yocto Project is to
 develop images or applications that run on embedded hardware,
 development of those images and applications generally takes place on a
@@ -68,8 +67,9 @@ set it up as the development host by using
 to set up a CROPS machine, you effectively have access to a shell
 environment that is similar to what you see when using a Linux-based
 development host. For the steps needed to set up a system using CROPS,
-see the "`Setting Up to Use CROss PlatformS
-(CROPS) <&YOCTO_DOCS_DEV_URL;#setting-up-to-use-crops>`__" section in
+see the
+":ref:`dev-manual/dev-manual-start:setting up to use cross platforms (crops)`"
+section in
 the Yocto Project Development Tasks Manual.
 
 If your development host is going to be a system that runs a Linux
@@ -78,8 +78,8 @@ for use with the Yocto Project. You need to be sure that the Linux
 distribution on the system is one that supports the Yocto Project. You
 also need to be sure that the correct set of host packages are installed
 that allow development using the Yocto Project. For the steps needed to
-set up a development host that runs Linux, see the "`Setting Up a Native
-Linux Host <&YOCTO_DOCS_DEV_URL;#setting-up-a-native-linux-host>`__"
+set up a development host that runs Linux, see the
+":ref:`dev-manual/dev-manual-start:setting up a native linux host`"
 section in the Yocto Project Development Tasks Manual.
 
 Once your development host is set up to use the Yocto Project, several
@@ -95,8 +95,8 @@ methods exist for you to do work in the Yocto Project environment:
    within a shell-based environment using components and tools available
    through your Linux distribution and the Yocto Project.
 
-   For a general flow of the build procedures, see the "`Building a
-   Simple Image <&YOCTO_DOCS_DEV_URL;#dev-building-a-simple-image>`__"
+   For a general flow of the build procedures, see the
+   ":ref:`dev-manual/dev-manual-common-tasks:building a simple image`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *Board Support Package (BSP) Development:* Development of BSPs
@@ -105,11 +105,9 @@ methods exist for you to do work in the Yocto Project environment:
    hardware. To development BSPs, you need to take some additional steps
    beyond what was described in setting up a development host.
 
-   The `Yocto Project Board Support Package (BSP) Developer's
-   Guide <&YOCTO_DOCS_BSP_URL;>`__ provides BSP-related development
+   The :doc:`../bsp-guide/bsp-guide` provides BSP-related development
    information. For specifics on development host preparation, see the
-   "`Preparing Your Build Host to Work With BSP
-   Layers <&YOCTO_DOCS_BSP_URL;#preparing-your-build-host-to-work-with-bsp-layers>`__"
+   ":ref:`bsp-guide/bsp:preparing your build host to work with bsp layers`"
    section in the Yocto Project Board Support Package (BSP) Developer's
    Guide.
 
@@ -118,11 +116,10 @@ methods exist for you to do work in the Yocto Project environment:
    using ``devtool`` makes kernel development quicker by reducing
    iteration cycle times.
 
-   The `Yocto Project Linux Kernel Development
-   Manual <&YOCTO_DOCS_KERNEL_DEV_URL;>`__ provides kernel-related
+   The :doc:`../kernel-dev/kernel-dev` provides kernel-related
    development information. For specifics on development host
-   preparation, see the "`Preparing the Build Host to Work on the
-   Kernel <&YOCTO_DOCS_KERNEL_DEV_URL;#preparing-the-build-host-to-work-on-the-kernel>`__"
+   preparation, see the
+   ":ref:`kernel-dev/kernel-dev-common:preparing the build host to work on the kernel`"
    section in the Yocto Project Linux Kernel Development Manual.
 
 -  *Using Toaster:* The other Yocto Project development method that
@@ -134,8 +131,8 @@ methods exist for you to do work in the Yocto Project environment:
    multiple remote build servers.
 
    For steps that show you how to set up your development host to use
-   Toaster and on how to use Toaster in general, see the `Toaster User
-   Manual <&YOCTO_DOCS_TOAST_URL;>`__.
+   Toaster and on how to use Toaster in general, see the
+   :doc:`../toaster-manual/toaster-manual`.
 
 .. _yocto-project-repositories:
 
@@ -185,8 +182,7 @@ development:
       :align: center
 
    For steps on how to view and access these upstream Git repositories,
-   see the "`Accessing Source
-   Repositories <&YOCTO_DOCS_DEV_URL;#accessing-source-repositories>`__"
+   see the ":ref:`dev-manual/dev-manual-start:accessing source repositories`"
    Section in the Yocto Project Development Tasks Manual.
 
 -  :yocto_dl:`Index of /releases: <releases>` This is an index
@@ -199,9 +195,8 @@ development:
    .. image:: figures/index-downloads.png
       :align: center
 
-   For steps on how to view and access these files, see the "`Accessing
-   Index of
-   Releases <&YOCTO_DOCS_DEV_URL;#accessing-index-of-releases>`__"
+   For steps on how to view and access these files, see the
+   ":ref:`dev-manual/dev-manual-start:accessing index of releases`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *"DOWNLOADS" page for the* :yocto_home:`Yocto Project Website <>` *:*
@@ -215,8 +210,8 @@ development:
    .. image:: figures/yp-download.png
       :align: center
 
-   For steps on how to use the "DOWNLOADS" page, see the "`Using the
-   Downloads Page <&YOCTO_DOCS_DEV_URL;#using-the-downloads-page>`__"
+   For steps on how to use the "DOWNLOADS" page, see the
+   ":ref:`dev-manual/dev-manual-start:using the downloads page`"
    section in the Yocto Project Development Tasks Manual.
 
 .. _gs-git-workflows-and-the-yocto-project:
@@ -252,9 +247,9 @@ and so forth.
 .. note::
 
    For information on finding out who is responsible for (maintains) a
-   particular area of code in the Yocto Project, see the "
-   Submitting a Change to the Yocto Project
-   " section of the Yocto Project Development Tasks Manual.
+   particular area of code in the Yocto Project, see the
+   ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+   section of the Yocto Project Development Tasks Manual.
 
 The Yocto Project ``poky`` Git repository also has an upstream
 contribution Git repository named ``poky-contrib``. You can see all the
@@ -284,9 +279,9 @@ A somewhat formal method exists by which developers commit changes and
 push them into the "contrib" area and subsequently request that the
 maintainer include them into an upstream branch. This process is called
 “submitting a patch” or "submitting a change." For information on
-submitting patches and changes, see the "`Submitting a Change to the
-Yocto Project <&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change>`__" section
-in the Yocto Project Development Tasks Manual.
+submitting patches and changes, see the
+":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+section in the Yocto Project Development Tasks Manual.
 
 In summary, a single point of entry exists for changes into a "master"
 or development branch of the Git repository, which is controlled by the
@@ -351,20 +346,18 @@ Book <http://book.git-scm.com>`__.
    release to facilitate this workflow. You can find these scripts in
    the ``scripts`` folder of the
    :term:`Source Directory`. For information
-   on how to use these scripts, see the "`Using Scripts to Push a Change
-   Upstream and Request a
-   Pull <&YOCTO_DOCS_DEV_URL;#pushing-a-change-upstream>`__" section in
-   the Yocto Project Development Tasks Manual.
+   on how to use these scripts, see the
+   ":ref:`dev-manual/dev-manual-common-tasks:using scripts to push a change upstream and request a pull`"
+   section in the Yocto Project Development Tasks Manual.
 
 -  *Patch Workflow:* This workflow allows you to notify the maintainer
    through an email that you have a change (or patch) you would like
    considered for the "master" branch of the Git repository. To send
    this type of change, you format the patch and then send the email
    using the Git commands ``git format-patch`` and ``git send-email``.
-   For information on how to use these scripts, see the "`Submitting a
-   Change to the Yocto
-   Project <&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change>`__" section in
-   the Yocto Project Development Tasks Manual.
+   For information on how to use these scripts, see the
+   ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+   section in the Yocto Project Development Tasks Manual.
 
 Git
 ===
@@ -389,8 +382,7 @@ commands.
       page, see http://git-scm.com/download.
 
    -  For information beyond the introductory nature in this section,
-      see the "`Locating Yocto Project Source
-      Files <&YOCTO_DOCS_DEV_URL;#locating-yocto-project-source-files>`__"
+      see the ":ref:`dev-manual/dev-manual-start:locating yocto project source files`"
       section in the Yocto Project Development Tasks Manual.
 
 Repositories, Tags, and Branches
@@ -422,14 +414,13 @@ You can create a local copy of any repository by "cloning" it with the
 an identical copy of the repository on your development system. Once you
 have a local copy of a repository, you can take steps to develop
 locally. For examples on how to clone Git repositories, see the
-"`Locating Yocto Project Source
-Files <&YOCTO_DOCS_DEV_URL;#locating-yocto-project-source-files>`__"
+":ref:`dev-manual/dev-manual-start:locating yocto project source files`"
 section in the Yocto Project Development Tasks Manual.
 
 It is important to understand that Git tracks content change and not
 files. Git uses "branches" to organize different development efforts.
 For example, the ``poky`` repository has several branches that include
-the current "DISTRO_NAME_NO_CAP" branch, the "master" branch, and many
+the current "&DISTRO_NAME_NO_CAP;" branch, the "master" branch, and many
 branches for past Yocto Project releases. You can see all the branches
 by going to https://git.yoctoproject.org/cgit.cgi/poky/ and clicking on the
 ``[...]`` link beneath the "Branch" heading.
@@ -444,17 +435,23 @@ local working area (also called a branch) that tracks a specific
 development branch from the upstream source Git repository. in other
 words, you can define your local Git environment to work on any
 development branch in the repository. To help illustrate, consider the
-following example Git commands: $ cd ~ $ git clone
-git://git.yoctoproject.org/poky $ cd poky $ git checkout -b
-DISTRO_NAME_NO_CAP origin/DISTRO_NAME_NO_CAP In the previous example
+following example Git commands:
+::
+
+   $ cd ~
+   $ git clone git://git.yoctoproject.org/poky
+   $ cd poky
+   $ git checkout -b &DISTRO_NAME_NO_CAP; origin/&DISTRO_NAME_NO_CAP;
+
+In the previous example
 after moving to the home directory, the ``git clone`` command creates a
 local copy of the upstream ``poky`` Git repository. By default, Git
 checks out the "master" branch for your work. After changing the working
 directory to the new local repository (i.e. ``poky``), the
 ``git checkout`` command creates and checks out a local branch named
-"DISTRO_NAME_NO_CAP", which tracks the upstream
-"origin/DISTRO_NAME_NO_CAP" branch. Changes you make while in this
-branch would ultimately affect the upstream "DISTRO_NAME_NO_CAP" branch
+"&DISTRO_NAME_NO_CAP;", which tracks the upstream
+"origin/&DISTRO_NAME_NO_CAP;" branch. Changes you make while in this
+branch would ultimately affect the upstream "&DISTRO_NAME_NO_CAP;" branch
 of the ``poky`` repository.
 
 It is important to understand that when you create and checkout a local
@@ -462,7 +459,7 @@ working branch based on a branch name, your local environment matches
 the "tip" of that particular development branch at the time you created
 your local branch, which could be different from the files in the
 "master" branch of the upstream repository. In other words, creating and
-checking out a local branch based on the "DISTRO_NAME_NO_CAP" branch
+checking out a local branch based on the "&DISTRO_NAME_NO_CAP;" branch
 name is not the same as checking out the "master" branch in the
 repository. Keep reading to see how you create a local snapshot of a
 Yocto Project Release.
@@ -476,7 +473,7 @@ beneath the "Tag" heading.
 
 Some key tags for the ``poky`` repository are ``jethro-14.0.3``,
 ``morty-16.0.1``, ``pyro-17.0.0``, and
-``DISTRO_NAME_NO_CAP-POKYVERSION``. These tags represent Yocto Project
+``&DISTRO_NAME_NO_CAP;-&POKYVERSION;``. These tags represent Yocto Project
 releases.
 
 When you create a local copy of the Git repository, you also have access
@@ -485,9 +482,16 @@ create and checkout a local working Git branch based on a tag name. When
 you do this, you get a snapshot of the Git repository that reflects the
 state of the files when the change was made associated with that tag.
 The most common use is to checkout a working branch that matches a
-specific Yocto Project release. Here is an example: $ cd ~ $ git clone
-git://git.yoctoproject.org/poky $ cd poky $ git fetch --tags $ git
-checkout tags/rocko-18.0.0 -b my_rocko-18.0.0 In this example, the name
+specific Yocto Project release. Here is an example:
+::
+
+   $ cd ~
+   $ git clone git://git.yoctoproject.org/poky
+   $ cd poky
+   $ git fetch --tags
+   $ git checkout tags/rocko-18.0.0 -b my_rocko-18.0.0
+
+In this example, the name
 of the top-level directory of your local Yocto Project repository is
 ``poky``. After moving to the ``poky`` directory, the ``git fetch``
 command makes all the upstream tags available locally in your
@@ -518,62 +522,62 @@ list (in most cases) simply shows the base command and omits the many
 arguments it supports. See the Git documentation for complete
 descriptions and strategies on how to use these commands:
 
--  *``git init``:* Initializes an empty Git repository. You cannot use
+-  *git init:* Initializes an empty Git repository. You cannot use
    Git commands unless you have a ``.git`` repository.
 
--  *``git clone``:* Creates a local clone of a Git repository that is on
+-  *git clone:* Creates a local clone of a Git repository that is on
    equal footing with a fellow developer’s Git repository or an upstream
    repository.
 
--  *``git add``:* Locally stages updated file contents to the index that
+-  *git add:* Locally stages updated file contents to the index that
    Git uses to track changes. You must stage all files that have changed
    before you can commit them.
 
--  *``git commit``:* Creates a local "commit" that documents the changes
+-  *git commit:* Creates a local "commit" that documents the changes
    you made. Only changes that have been staged can be committed.
    Commits are used for historical purposes, for determining if a
    maintainer of a project will allow the change, and for ultimately
    pushing the change from your local Git repository into the project’s
    upstream repository.
 
--  *``git status``:* Reports any modified files that possibly need to be
+-  *git status:* Reports any modified files that possibly need to be
    staged and gives you a status of where you stand regarding local
    commits as compared to the upstream repository.
 
--  *``git checkout`` branch-name:* Changes your local working branch and
+-  *git checkout branch-name:* Changes your local working branch and
    in this form assumes the local branch already exists. This command is
    analogous to "cd".
 
--  *``git checkout –b`` working-branch upstream-branch:* Creates and
+-  *git checkout –b working-branch upstream-branch:* Creates and
    checks out a working branch on your local machine. The local branch
    tracks the upstream branch. You can use your local branch to isolate
    your work. It is a good idea to use local branches when adding
    specific features or changes. Using isolated branches facilitates
    easy removal of changes if they do not work out.
 
--  *``git branch``:* Displays the existing local branches associated
+-  *git branch:* Displays the existing local branches associated
    with your local repository. The branch that you have currently
    checked out is noted with an asterisk character.
 
--  *``git branch -D`` branch-name:* Deletes an existing local branch.
+-  *git branch -D branch-name:* Deletes an existing local branch.
    You need to be in a local branch other than the one you are deleting
    in order to delete branch-name.
 
--  *``git pull --rebase``:* Retrieves information from an upstream Git
+-  *git pull --rebase:* Retrieves information from an upstream Git
    repository and places it in your local Git repository. You use this
    command to make sure you are synchronized with the repository from
    which you are basing changes (.e.g. the "master" branch). The
    "--rebase" option ensures that any local commits you have in your
    branch are preserved at the top of your local branch.
 
--  *``git push`` repo-name local-branch\ ``:``\ upstream-branch:* Sends
+-  *git push repo-name local-branch:upstream-branch:* Sends
    all your committed local changes to the upstream Git repository that
    your local repository is tracking (e.g. a contribution repository).
    The maintainer of the project draws from these repositories to merge
    changes (commits) into the appropriate branch of project's upstream
    repository.
 
--  *``git merge``:* Combines or adds changes from one local branch of
+-  *git merge:* Combines or adds changes from one local branch of
    your repository with another branch. When you create a local Git
    repository, the default branch is named "master". A typical workflow
    is to create a temporary branch that is based off "master" that you
@@ -585,12 +589,12 @@ descriptions and strategies on how to use these commands:
    done with working in that isolated branch, you can safely delete the
    isolated branch.
 
--  *``git cherry-pick`` commits:* Choose and apply specific commits from
+-  *git cherry-pick commits:* Choose and apply specific commits from
    one branch into another branch. There are times when you might not be
    able to merge all the changes in one branch with another but need to
    pick out certain ones.
 
--  *``gitk``:* Provides a GUI view of the branches and changes in your
+-  *gitk:* Provides a GUI view of the branches and changes in your
    local Git repository. This command is a good way to graphically see
    where things have diverged in your local repository.
 
@@ -600,11 +604,11 @@ descriptions and strategies on how to use these commands:
       gitk
       package on your development system to use this command.
 
--  *``git log``:* Reports a history of your commits to the repository.
+-  *git log:* Reports a history of your commits to the repository.
    This report lists all commits regardless of whether you have pushed
    them upstream or not.
 
--  *``git diff``:* Displays line-by-line differences between a local
+-  *git diff:* Displays line-by-line differences between a local
    working file and the same file as understood by Git. This command is
    useful to see what you have changed in any given file.
 
@@ -663,7 +667,6 @@ Project uses in the ``meta/files/common-licenses`` directory in your
 
 For information that can help you maintain compliance with various open
 source licensing during the lifecycle of a product created using the
-Yocto Project, see the "`Maintaining Open Source License Compliance
-During Your Product's
-Lifecycle <&YOCTO_DOCS_DEV_URL;#maintaining-open-source-license-compliance-during-your-products-lifecycle>`__"
+Yocto Project, see the
+":ref:`dev-manual/dev-manual-common-tasks:maintaining open source license compliance during your product's lifecycle`"
 section in the Yocto Project Development Tasks Manual.

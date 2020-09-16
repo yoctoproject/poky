@@ -34,14 +34,14 @@ itself is of various types:
 
 BitBake knows how to combine multiple data sources together and refers
 to each data source as a layer. For information on layers, see the
-"`Understanding and Creating
-Layers <&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers>`__"
+":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
 section of the Yocto Project Development Tasks Manual.
 
 Following are some brief details on these core components. For
 additional information on how these components interact during a build,
-see the "`OpenEmbedded Build System
-Concepts <#openembedded-build-system-build-concepts>`__" section.
+see the
+":ref:`overview-manual/overview-manual-concepts:openembedded build system concepts`"
+section.
 
 .. _usingpoky-components-bitbake:
 
@@ -57,14 +57,23 @@ This section briefly introduces BitBake. If you want more information on
 BitBake, see the :doc:`BitBake User Manual <bitbake:index>`.
 
 To see a list of the options BitBake supports, use either of the
-following commands: $ bitbake -h $ bitbake --help
+following commands:
+::
+
+   $ bitbake -h
+   $ bitbake --help
 
 The most common usage for BitBake is ``bitbake packagename``, where
 ``packagename`` is the name of the package you want to build (referred
 to as the "target"). The target often equates to the first part of a
 recipe's filename (e.g. "foo" for a recipe named ``foo_1.3.0-r0.bb``).
 So, to process the ``matchbox-desktop_1.2.3.bb`` recipe file, you might
-type the following: $ bitbake matchbox-desktop Several different
+type the following:
+::
+
+   $ bitbake matchbox-desktop
+
+Several different
 versions of ``matchbox-desktop`` might exist. BitBake chooses the one
 selected by the distribution configuration. You can get more details
 about how BitBake chooses between different target versions and
@@ -153,9 +162,8 @@ By convention, layers in the Yocto Project follow a specific form.
 Conforming to a known structure allows BitBake to make assumptions
 during builds on where to find types of metadata. You can find
 procedures and learn about tools (i.e. ``bitbake-layers``) for creating
-layers suitable for the Yocto Project in the "`Understanding and
-Creating
-Layers <&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers>`__"
+layers suitable for the Yocto Project in the
+":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
 section of the Yocto Project Development Tasks Manual.
 
 .. _openembedded-build-system-build-concepts:
@@ -225,7 +233,7 @@ reside as example files in the ``build/conf`` directory of the
 :term:`Source Directory`. For simplicity,
 this section refers to the Source Directory as the "Poky Directory."
 
-When you clone the `Poky <&YOCTO_DOCS_REF_URL;#poky>`__ Git repository
+When you clone the :term:`Poky` Git repository
 or you download and unpack a Yocto Project release, you can set up the
 Source Directory to be named anything you want. For this discussion, the
 cloned repository uses the default name ``poky``.
@@ -238,7 +246,7 @@ cloned repository uses the default name ``poky``.
 The ``meta-poky`` layer inside Poky contains a ``conf`` directory that
 has example configuration files. These example files are used as a basis
 for creating actual configuration files when you source
-````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__, which is the
+:ref:`structure-core-script`, which is the
 build environment script.
 
 Sourcing the build environment script creates a
@@ -251,8 +259,8 @@ if versions do not already exist in the Build Directory at the time you
 source the build environment setup script.
 
 Because the Poky repository is fundamentally an aggregation of existing
-repositories, some users might be familiar with running the ```` script
-in the context of separate
+repositories, some users might be familiar with running the
+:ref:`structure-core-script` script in the context of separate
 :term:`OpenEmbedded-Core (OE-Core)` and BitBake
 repositories rather than a single Poky repository. This discussion
 assumes the script is executed from within a cloned or unpacked version
@@ -320,16 +328,16 @@ The ``bblayers.conf`` file tells BitBake what layers you want considered
 during the build. By default, the layers listed in this file include
 layers minimally needed by the build system. However, you must manually
 add any custom layers you have created. You can find more information on
-working with the ``bblayers.conf`` file in the "`Enabling Your
-Layer <&YOCTO_DOCS_DEV_URL;#enabling-your-layer>`__" section in the
-Yocto Project Development Tasks Manual.
+working with the ``bblayers.conf`` file in the
+":ref:`dev-manual/dev-manual-common-tasks:enabling your layer`"
+section in the Yocto Project Development Tasks Manual.
 
 The files ``site.conf`` and ``auto.conf`` are not created by the
 environment initialization script. If you want the ``site.conf`` file,
 you need to create that yourself. The ``auto.conf`` file is typically
 created by an autobuilder:
 
--  *``site.conf``:* You can use the ``conf/site.conf`` configuration
+-  *site.conf:* You can use the ``conf/site.conf`` configuration
    file to configure multiple build directories. For example, suppose
    you had several build environments and they shared some common
    features. You can set these default build properties here. A good
@@ -346,7 +354,7 @@ created by an autobuilder:
    configurations within that build directory's ``conf/local.conf``
    file.
 
--  *``auto.conf``:* The file is usually created and written to by an
+-  *auto.conf:* The file is usually created and written to by an
    autobuilder. The settings put into the file are typically the same as
    you would find in the ``conf/local.conf`` or the ``conf/site.conf``
    files.
@@ -382,10 +390,10 @@ In general, three types of layer input exists. You can see them below
 the "User Configuration" box in the `general workflow
 figure <#general-workflow-figure>`__:
 
--  *Metadata (``.bb`` + Patches):* Software layers containing
+-  *Metadata (.bb + Patches):* Software layers containing
    user-supplied recipe files, patches, and append files. A good example
    of a software layer might be the
-   ```meta-qt5`https://github.com/meta-qt5/meta-qt5 layer from
+   `meta-qt5 layer <https://github.com/meta-qt5/meta-qt5>`__ from
    the `OpenEmbedded Layer
    Index <http://layers.openembedded.org/layerindex/branch/master/layers/>`__.
    This layer is for version 5.0 of the popular
@@ -421,8 +429,9 @@ licensing file (e.g. ``COPYING.MIT``) if the layer is to be distributed,
 a ``README`` file as good practice and especially if the layer is to be
 distributed, a configuration directory, and recipe directories. You can
 learn about the general structure for layers used with the Yocto Project
-in the "`Creating Your Own
-Layer <&YOCTO_DOCS_DEV_URL;#creating-your-own-layer>`__" section in the
+in the
+":ref:`dev-manual/dev-manual-common-tasks:creating your own layer`"
+section in the
 Yocto Project Development Tasks Manual. For a general discussion on
 layers and the many layers from which you can draw, see the
 "`Layers <#overview-layers>`__" and "`The Yocto Project Layer
@@ -485,8 +494,7 @@ The BSP Layer provides machine configurations that target specific
 hardware. Everything in this layer is specific to the machine for which
 you are building the image or the SDK. A common structure or form is
 defined for BSP layers. You can learn more about this structure in the
-`Yocto Project Board Support Package (BSP) Developer's
-Guide <&YOCTO_DOCS_BSP_URL;>`__.
+:doc:`../bsp-guide/bsp-guide`.
 
 .. note::
 
@@ -704,8 +712,8 @@ architecture are placed in ``build/tmp/deploy/ipk/qemux86``.
 
 .. _bitbake-dev-environment:
 
-BitBake
--------
+BitBake Tool
+------------
 
 The OpenEmbedded build system uses
 :term:`BitBake` to produce images and
@@ -751,8 +759,7 @@ the source files and unpack them into the
 
 By default, everything is accomplished in the Build Directory, which has
 a defined structure. For additional general information on the Build
-Directory, see the
-"```build/`` <&YOCTO_DOCS_REF_URL;#structure-core-build>`__" section in
+Directory, see the ":ref:`structure-core-build`" section in
 the Yocto Project Reference Manual.
 
 Each recipe has an area in the Build Directory where the unpacked source
@@ -769,8 +776,7 @@ Build Directory's hierarchy:
 -  :term:`PACKAGE_ARCH`: The
    architecture of the built package or packages. Depending on the
    eventual destination of the package or packages (i.e. machine
-   architecture, `build
-   host <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__, SDK, or
+   architecture, :term:`Build Host`, SDK, or
    specific machine), ``PACKAGE_ARCH`` varies. See the variable's
    description for details.
 
@@ -846,15 +852,14 @@ source files, which are located in the
 For more information on how the source directories are created, see the
 "`Source Fetching <#source-fetching-dev-environment>`__" section. For
 more information on how to create patches and how the build system
-processes patches, see the "`Patching
-Code <&YOCTO_DOCS_DEV_URL;#new-recipe-patching-code>`__" section in the
-Yocto Project Development Tasks Manual. You can also see the "`Use
-``devtool modify`` to Modify the Source of an Existing
-Component <&YOCTO_DOCS_SDK_URL;#sdk-devtool-use-devtool-modify-to-modify-the-source-of-an-existing-component>`__"
+processes patches, see the
+":ref:`dev-manual/dev-manual-common-tasks:patching code`"
+section in the
+Yocto Project Development Tasks Manual. You can also see the
+":ref:`sdk-manual/sdk-extensible:use \`\`devtool modify\`\` to modify the source of an existing component`"
 section in the Yocto Project Application Development and the Extensible
-Software Development Kit (SDK) manual and the "`Using Traditional Kernel
-Development to Patch the
-Kernel <&YOCTO_DOCS_KERNEL_DEV_URL;#using-traditional-kernel-development-to-patch-the-kernel>`__"
+Software Development Kit (SDK) manual and the
+":ref:`kernel-dev/kernel-dev-common:using traditional kernel development to patch the kernel`"
 section in the Yocto Project Linux Kernel Development Manual.
 
 .. _configuration-compilation-and-staging-dev-environment:
@@ -882,7 +887,7 @@ This step in the build process consists of the following tasks:
    depends. A sysroot exists for both the target and for the native
    binaries, which run on the host system.
 
--  *``do_configure``*: This task configures the source by enabling and
+-  *do_configure*: This task configures the source by enabling and
    disabling any build-time and configuration options for the software
    being built. Configurations can come from the recipe itself as well
    as from an inherited class. Additionally, the software itself might
@@ -903,7 +908,7 @@ This step in the build process consists of the following tasks:
    :ref:`autotools <ref-classes-autotools>` class
    :yocto_git:`here </cgit/cgit.cgi/poky/tree/meta/classes/autotools.bbclass>`.
 
--  *``do_compile``*: Once a configuration task has been satisfied,
+-  *do_compile*: Once a configuration task has been satisfied,
    BitBake compiles the source using the
    :ref:`ref-tasks-compile` task.
    Compilation occurs in the directory pointed to by the
@@ -911,7 +916,7 @@ This step in the build process consists of the following tasks:
    ``B`` directory is, by default, the same as the
    :term:`S` directory.
 
--  *``do_install``*: After compilation completes, BitBake executes the
+-  *do_install*: After compilation completes, BitBake executes the
    :ref:`ref-tasks-install` task.
    This task copies files from the ``B`` directory and places them in a
    holding area pointed to by the :term:`D`
@@ -1055,8 +1060,8 @@ data files are deleted from the root filesystem. As part of the final
 stage of package installation, post installation scripts that are part
 of the packages are run. Any scripts that fail to run on the build host
 are run on the target when the target system is first booted. If you are
-using a `read-only root
-filesystem <&YOCTO_DOCS_DEV_URL;#creating-a-read-only-root-filesystem>`__,
+using a 
+:ref:`read-only root filesystem <dev-manual/dev-manual-common-tasks:creating a read-only root filesystem>`,
 all the post installation scripts must succeed on the build host during
 the package installation phase since the root filesystem on the target
 is read-only.
@@ -1097,9 +1102,17 @@ the image. The formats used for the root filesystem depend on the
 support compression.
 
 As an example, a dynamically created task when creating a particular
-image type would take the following form: do_image_type So, if the type
+image type would take the following form:
+::
+
+   do_image_type
+
+So, if the type
 as specified by the ``IMAGE_FSTYPES`` were ``ext4``, the dynamically
-generated task would be as follows: do_image_ext4
+generated task would be as follows:
+::
+
+   do_image_ext4
 
 The final task involved in image creation is the
 :ref:`do_image_complete <ref-tasks-image-complete>`
@@ -1217,8 +1230,7 @@ varflag. If some other task depends on such a task, then that task will
 also always be considered out of date, which might not be what you want.
 
 For details on how to view information about a task's signature, see the
-"`Viewing Task Variable
-Dependencies <&YOCTO_DOCS_DEV_URL;#dev-viewing-task-variable-dependencies>`__"
+":ref:`dev-manual/dev-manual-common-tasks:viewing task variable dependencies`"
 section in the Yocto Project Development Tasks Manual.
 
 Setscene Tasks and Shared State
@@ -1397,8 +1409,7 @@ can initialize the environment before using the tools.
       section.
 
    -  For information on setting up a cross-development environment, see
-      the `Yocto Project Application Development and the Extensible
-      Software Development Kit (eSDK) <&YOCTO_DOCS_SDK_URL;>`__ manual.
+      the :doc:`../sdk-manual/sdk-manual` manual.
 
 All the output files for an SDK are written to the ``deploy/sdk`` folder
 inside the :term:`Build Directory` as
@@ -1475,13 +1486,10 @@ Cross-Development Toolchain Generation
 ======================================
 
 The Yocto Project does most of the work for you when it comes to
-creating `cross-development
-toolchains <&YOCTO_DOCS_REF_URL;#cross-development-toolchain>`__. This
+creating :ref:`sdk-manual/sdk-intro:the cross-development toolchain`. This
 section provides some technical background on how cross-development
 toolchains are created and used. For more information on toolchains, you
-can also see the `Yocto Project Application Development and the
-Extensible Software Development Kit (eSDK) <&YOCTO_DOCS_SDK_URL;>`__
-manual.
+can also see the :doc:`../sdk-manual/sdk-manual` manual.
 
 In the Yocto Project development environment, cross-development
 toolchains are used to build images and applications that run on the
@@ -1514,8 +1522,10 @@ cross-compiler that is used internally within BitBake only.
    .
 
 The chain of events that occurs when ``gcc-cross`` is bootstrapped is as
-follows: gcc -> binutils-cross -> gcc-cross-initial ->
-linux-libc-headers -> glibc-initial -> glibc -> gcc-cross -> gcc-runtime
+follows:
+::
+
+   gcc -> binutils-cross -> gcc-cross-initial -> linux-libc-headers -> glibc-initial -> glibc -> gcc-cross -> gcc-runtime
 
 -  ``gcc``: The build host's GNU Compiler Collection (GCC).
 
@@ -1571,9 +1581,10 @@ might not be the same machine as the Build Host.
    can take advantage of pre-built images that ship with the Yocto
    Project and already contain cross-development toolchain installers.
 
-Here is the bootstrap process for the relocatable toolchain: gcc ->
-binutils-crosssdk -> gcc-crosssdk-initial -> linux-libc-headers ->
-glibc-initial -> nativesdk-glibc -> gcc-crosssdk -> gcc-cross-canadian
+Here is the bootstrap process for the relocatable toolchain:
+::
+
+   gcc -> binutils-crosssdk -> gcc-crosssdk-initial -> linux-libc-headers -> glibc-initial -> nativesdk-glibc -> gcc-crosssdk -> gcc-cross-canadian
 
 -  ``gcc``: The build host's GNU Compiler Collection (GCC).
 
@@ -1668,18 +1679,15 @@ them if they are deemed to be valid.
       the shared state packages. Consequently, considerations exist that
       affect maintaining shared state feeds. For information on how the
       build system works with packages and can track incrementing ``PR``
-      information, see the "`Automatically Incrementing a Binary Package
-      Revision
-      Number <&YOCTO_DOCS_DEV_URL;#automatically-incrementing-a-binary-package-revision-number>`__"
+      information, see the ":ref:`dev-manual/dev-manual-common-tasks:automatically incrementing a package version number`"
       section in the Yocto Project Development Tasks Manual.
 
    -  The code in the build system that supports incremental builds is
       not simple code. For techniques that help you work around issues
-      related to shared state code, see the "`Viewing Metadata Used to
-      Create the Input Signature of a Shared State
-      Task <&YOCTO_DOCS_DEV_URL;#dev-viewing-metadata-used-to-create-the-input-signature-of-a-shared-state-task>`__"
-      and "`Invalidating Shared State to Force a Task to
-      Run <&YOCTO_DOCS_DEV_URL;#dev-invalidating-shared-state-to-force-a-task-to-run>`__"
+      related to shared state code, see the
+      ":ref:`dev-manual/dev-manual-common-tasks:viewing metadata used to create the input signature of a shared state task`"
+      and
+      ":ref:`dev-manual/dev-manual-common-tasks:invalidating shared state to force a task to run`"
       sections both in the Yocto Project Development Tasks Manual.
 
 The rest of this section goes into detail about the overall incremental
@@ -1754,15 +1762,22 @@ to the task.
 Like the ``WORKDIR`` case, situations exist where dependencies should be
 ignored. For these situations, you can instruct the build process to
 ignore a dependency by using a line like the following:
-PACKAGE_ARCHS[vardepsexclude] = "MACHINE" This example ensures that the
-:term:`PACKAGE_ARCHS` variable
-does not depend on the value of
-:term:`MACHINE`, even if it does
+::
+
+   PACKAGE_ARCHS[vardepsexclude] = "MACHINE"
+
+This example ensures that the :term:`PACKAGE_ARCHS` variable
+does not depend on the value of :term:`MACHINE`, even if it does
 reference it.
 
 Equally, there are cases where you need to add dependencies BitBake is
 not able to find. You can accomplish this by using a line like the
-following: PACKAGE_ARCHS[vardeps] = "MACHINE" This example explicitly
+following:
+::
+
+   PACKAGE_ARCHS[vardeps] = "MACHINE"
+
+This example explicitly
 adds the ``MACHINE`` variable as a dependency for ``PACKAGE_ARCHS``.
 
 As an example, consider a case with in-line Python where BitBake is not
@@ -1788,12 +1803,16 @@ and the dependent task hashes can be influenced. Within the BitBake
 configuration file, you can give BitBake some extra information to help
 it construct the basehash. The following statement effectively results
 in a list of global variable dependency excludes (i.e. variables never
-included in any checksum): BB_HASHBASE_WHITELIST ?= "TMPDIR FILE PATH
-PWD BB_TASKHASH BBPATH DL_DIR \\ SSTATE_DIR THISDIR FILESEXTRAPATHS
-FILE_DIRNAME HOME LOGNAME SHELL TERM \\ USER FILESPATH STAGING_DIR_HOST
-STAGING_DIR_TARGET COREBASE PRSERV_HOST \\ PRSERV_DUMPDIR
-PRSERV_DUMPFILE PRSERV_LOCKDOWN PARALLEL_MAKE \\ CCACHE_DIR
-EXTERNAL_TOOLCHAIN CCACHE CCACHE_DISABLE LICENSE_PATH SDKPKGSUFFIX" The
+included in any checksum):
+::
+
+   BB_HASHBASE_WHITELIST ?= "TMPDIR FILE PATH PWD BB_TASKHASH BBPATH DL_DIR \\
+       SSTATE_DIR THISDIR FILESEXTRAPATHS FILE_DIRNAME HOME LOGNAME SHELL TERM \\
+       USER FILESPATH STAGING_DIR_HOST STAGING_DIR_TARGET COREBASE PRSERV_HOST \\
+       PRSERV_DUMPDIR PRSERV_DUMPFILE PRSERV_LOCKDOWN PARALLEL_MAKE \\
+       CCACHE_DIR EXTERNAL_TOOLCHAIN CCACHE CCACHE_DISABLE LICENSE_PATH SDKPKGSUFFIX"
+
+The
 previous example excludes
 :term:`WORKDIR` since that variable
 is actually constructed as a path within
@@ -1810,8 +1829,12 @@ desired. This file defines the two basic signature generators
 "OEBasicHash". By default, a dummy "noop" signature handler is enabled
 in BitBake. This means that behavior is unchanged from previous
 versions. OE-Core uses the "OEBasicHash" signature handler by default
-through this setting in the ``bitbake.conf`` file: BB_SIGNATURE_HANDLER
-?= "OEBasicHash" The "OEBasicHash" ``BB_SIGNATURE_HANDLER`` is the same
+through this setting in the ``bitbake.conf`` file:
+::
+
+   BB_SIGNATURE_HANDLER ?= "OEBasicHash"
+
+The "OEBasicHash" ``BB_SIGNATURE_HANDLER`` is the same
 as the "OEBasic" version but adds the task hash to the `stamp
 files <#stamp-files-and-the-rerunning-of-tasks>`__. This results in any
 metadata change that changes the task hash, automatically causing the
@@ -1862,12 +1885,21 @@ implementation hidden in ``sstate`` class. From a user's perspective,
 adding shared state wrapping to a task is as simple as this
 :ref:`ref-tasks-deploy` example taken
 from the :ref:`deploy <ref-classes-deploy>` class:
-DEPLOYDIR = "${WORKDIR}/deploy-${PN}" SSTATETASKS += "do_deploy"
-do_deploy[sstate-inputdirs] = "${DEPLOYDIR}"
-do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}" python
-do_deploy_setscene () { sstate_setscene(d) } addtask do_deploy_setscene
-do_deploy[dirs] = "${DEPLOYDIR} ${B}" do_deploy[stamp-extra-info] =
-"${MACHINE_ARCH}" The following list explains the previous example:
+::
+
+   DEPLOYDIR = "${WORKDIR}/deploy-${PN}"
+   SSTATETASKS += "do_deploy"
+   do_deploy[sstate-inputdirs] = "${DEPLOYDIR}"
+   do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}"
+
+   python do_deploy_setscene () {
+       sstate_setscene(d)
+   }
+   addtask do_deploy_setscene
+   do_deploy[dirs] = "${DEPLOYDIR} ${B}"
+   do_deploy[stamp-extra-info] = "${MACHINE_ARCH}"
+
+The following list explains the previous example:
 
 -  Adding "do_deploy" to ``SSTATETASKS`` adds some required
    sstate-related processing, which is implemented in the
@@ -1907,9 +1939,15 @@ do_deploy[dirs] = "${DEPLOYDIR} ${B}" do_deploy[stamp-extra-info] =
       task.
 
 -  The following task definition is glue logic needed to make the
-   previous settings effective: python do_deploy_setscene () {
-   sstate_setscene(d) } addtask do_deploy_setscene ``sstate_setscene()``
-   takes the flags above as input and accelerates the ``do_deploy`` task
+   previous settings effective:
+   ::
+
+      python do_deploy_setscene () {
+          sstate_setscene(d)
+      }
+      addtask do_deploy_setscene
+
+  ``sstate_setscene()`` takes the flags above as input and accelerates the ``do_deploy`` task
    through the shared state cache if possible. If the task was
    accelerated, ``sstate_setscene()`` returns True. Otherwise, it
    returns False, and the normal ``do_deploy`` task runs. For more
@@ -1941,7 +1979,7 @@ do_deploy[dirs] = "${DEPLOYDIR} ${B}" do_deploy[stamp-extra-info] =
       ::
 
               do_package[sstate-plaindirs] = "${PKGD} ${PKGDEST}"
-                                     
+
 
 -  The ``do_deploy[stamp-extra-info] = "${MACHINE_ARCH}"`` line appends
    extra metadata to the `stamp
@@ -1956,20 +1994,27 @@ do_deploy[dirs] = "${DEPLOYDIR} ${B}" do_deploy[stamp-extra-info] =
    ``PKGDESTWORK`` and ``SHLIBWORK`` as shared state input directories,
    which populates the shared state cache, and ``PKGDATA_DIR`` and
    ``SHLIBSDIR`` as the corresponding shared state output directories:
-   do_package[sstate-inputdirs] = "${PKGDESTWORK} ${SHLIBSWORKDIR}"
-   do_package[sstate-outputdirs] = "${PKGDATA_DIR} ${SHLIBSDIR}"
+   ::
+
+      do_package[sstate-inputdirs] = "${PKGDESTWORK} ${SHLIBSWORKDIR}"
+      do_package[sstate-outputdirs] = "${PKGDATA_DIR} ${SHLIBSDIR}"
 
 -  These methods also include the ability to take a lockfile when
    manipulating shared state directory structures, for cases where file
-   additions or removals are sensitive: do_package[sstate-lockfile] =
-   "${PACKAGELOCK}"
+   additions or removals are sensitive:
+   ::
+
+      do_package[sstate-lockfile] = "${PACKAGELOCK}"
 
 Behind the scenes, the shared state code works by looking in
 :term:`SSTATE_DIR` and
 :term:`SSTATE_MIRRORS` for
-shared state files. Here is an example: SSTATE_MIRRORS ?= "\\ file://.\*
-http://someserver.tld/share/sstate/PATH;downloadfilename=PATH \\n \\
-file://.\* file:///some/local/dir/sstate/PATH"
+shared state files. Here is an example:
+::
+
+   SSTATE_MIRRORS ?= "\
+       file://.\* http://someserver.tld/share/sstate/PATH;downloadfilename=PATH \n \
+       file://.\* file:///some/local/dir/sstate/PATH"
 
 .. note::
 
@@ -2164,11 +2209,11 @@ accomplished using fakeroot.
    , giving the following:
    ::
 
-             fakeroot do_mytask () {
-                 ...
-             }
-             do_mytask[depends] += "virtual/fakeroot-native:do_populate_sysroot"
-                      
+      fakeroot do_mytask () {
+          ...
+      }
+      do_mytask[depends] += "virtual/fakeroot-native:do_populate_sysroot"
+
 
 For more information, see the
 :term:`FAKEROOT* <bitbake:FAKEROOT>` variables in the
