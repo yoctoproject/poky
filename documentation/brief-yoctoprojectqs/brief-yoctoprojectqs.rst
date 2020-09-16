@@ -308,6 +308,12 @@ Follow these steps to add a hardware layer:
    host as ``meta-altera`` and contains all the metadata needed to
    support hardware from Altera, which is owned by Intel.
 
+   .. note::
+
+      It is recommended for layers to have a branch per Yocto Project release.
+      Please make sure to checkout the layer branch supporting the Yocto Project
+      release you're using.
+
 #. **Change the Configuration to Build for a Specific Machine:** The
    :term:`MACHINE` variable in the
    ``local.conf`` file specifies the machine for the build. For this
