@@ -365,7 +365,9 @@ activities using the Yocto Project:
    :term:`OpenEmbedded Build System`
    (BitBake and
    OE-Core) automatically generates upgrades for recipes that are based
-   on new versions of the recipes published upstream.
+   on new versions of the recipes published upstream. See
+   :ref:`dev-manual/dev-manual-common-tasks:using the auto upgrade helper (auh)`
+   for how to set it up.
 
 -  *Recipe Reporting System:* The Recipe Reporting System tracks recipe
    versions available for Yocto Project. The main purpose of the system
