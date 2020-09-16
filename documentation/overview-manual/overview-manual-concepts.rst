@@ -63,8 +63,8 @@ following commands:
    $ bitbake -h
    $ bitbake --help
 
-The most common usage for BitBake is ``bitbake packagename``, where
-``packagename`` is the name of the package you want to build (referred
+The most common usage for BitBake is ``bitbake recipename``, where
+``recipename`` is the name of the recipe you want to build (referred
 to as the "target"). The target often equates to the first part of a
 recipe's filename (e.g. "foo" for a recipe named ``foo_1.3.0-r0.bb``).
 So, to process the ``matchbox-desktop_1.2.3.bb`` recipe file, you might
