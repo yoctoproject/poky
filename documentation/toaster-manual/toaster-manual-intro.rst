@@ -26,9 +26,9 @@ extensive information about the build process.
    Yocto Project releases 1.8 and beyond. With the Toaster web
    interface, you can:
 
-   -  Browse layers listed in the various `layer
-      sources <#layer-source>`__ that are available in your project
-      (e.g. the OpenEmbedded Layer Index at
+   -  Browse layers listed in the various
+      :ref:`layer sources <toaster-manual/toaster-manual-reference:layer source>`
+      that are available in your project (e.g. the OpenEmbedded Layer Index at
       http://layers.openembedded.org/layerindex/).
 
    -  Browse images, recipes, and machines provided by those layers.
@@ -78,7 +78,7 @@ extensive information about the build process.
    -  See performance information such as build time, task time, CPU
       usage, and disk I/O.
 
-For an overview of Toaster shipped with the Yocto Project DISTRO
+For an overview of Toaster shipped with the Yocto Project &DISTRO;
 Release, see the "`Toaster - Yocto Project
 2.2 <https://youtu.be/BlXdOYLgPxA>`__" video.
 

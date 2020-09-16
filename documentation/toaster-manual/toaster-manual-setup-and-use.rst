@@ -1,4 +1,6 @@
 .. SPDX-License-Identifier: CC-BY-2.0-UK
+.. Set default pygment highlighting to 'shell' for this document
+.. highlight:: shell
 
 ****************************
 Setting Up and Using Toaster
@@ -8,28 +10,41 @@ Starting Toaster for Local Development
 ======================================
 
 Once you have set up the Yocto Project and installed the Toaster system
-dependencies as described in the "`Preparing to Use
-Toaster <#toaster-manual-start>`__" chapter, you are ready to start
+dependencies as described in the ":ref:`toaster-manual/toaster-manual-start:Preparing to Use
+Toaster`" chapter, you are ready to start
 Toaster.
 
 Navigate to the root of your
-:term:`Source Directory` (e.g. ``poky``): $
-cd poky Once in that directory, source the build environment script: $
-source oe-init-build-env Next, from the build directory (e.g.
-``poky/build``), start Toaster using this command: $ source toaster
-start You can now run your builds from the command line, or with Toaster
-as explained in section "`Using the Toaster Web
-Interface <#using-the-toaster-web-interface>`__".
+:term:`Source Directory` (e.g. ``poky``)::
+
+   $ cd poky
+
+Once in that directory, source the build environment script::
+
+   $ source oe-init-build-env
+
+Next, from the build directory (e.g.
+``poky/build``), start Toaster using this command::
+
+   $ source toaster start
+
+You can now run your builds from the command line, or with Toaster
+as explained in section
+":ref:`toaster-manual/toaster-manual-setup-and-use:using the toaster web interface`".
 
 To access the Toaster web interface, open your favorite browser and
-enter the following: http://127.0.0.1:8000
+enter the following::
+
+   http://127.0.0.1:8000
 
 Setting a Different Port
 ========================
 
 By default, Toaster starts on port 8000. You can use the ``WEBPORT``
 parameter to set a different port. For example, the following command
-sets the port to "8400": $ source toaster start webport=8400
+sets the port to "8400"::
+
+   $ source toaster start webport=8400
 
 Setting Up Toaster Without a Web Server
 =======================================
@@ -54,8 +69,11 @@ Toaster environment. Before closing the environment, however, you should
 allow a few minutes to ensure the complete transfer of its BitBake build
 statistics to the Toaster database. If you have a separate Toaster web
 server instance running, you can watch this command-line build’s
-progress and examine the results as soon as they are posted: $ source
-toaster start noweb $ bitbake target $ source toaster stop
+progress and examine the results as soon as they are posted::
+
+   $ source toaster start noweb
+   $ bitbake target
+   $ source toaster stop
 
 Setting Up Toaster Without a Build Server
 =========================================
@@ -69,23 +87,27 @@ disabled. Doing so is useful for the following:
 -  Allowing only local command-line builds to be captured into the
    Toaster database.
 
-Use the following command to set up Toaster without a build server: $
-source toaster start nobuild webport=port
+Use the following command to set up Toaster without a build server::
+
+   $ source toaster start nobuild webport=port
 
 Setting up External Access
 ==========================
 
-By default, Toaster binds to the loop back address (i.e. localhost),
+By default, Toaster binds to the loop back address (i.e. ``localhost``),
 which does not allow access from external hosts. To allow external
 access, use the ``WEBPORT`` parameter to open an address that connects
 to the network, specifically the IP address that your NIC uses to
 connect to the network. You can also bind to all IP addresses the
 computer supports by using the shortcut "0.0.0.0:port".
 
-The following example binds to all IP addresses on the host: $ source
-toaster start webport=0.0.0.0:8400 This example binds to a specific IP
-address on the host's NIC: $ source toaster start
-webport=192.168.1.1:8400
+The following example binds to all IP addresses on the host::
+
+   $ source toaster start webport=0.0.0.0:8400
+
+This example binds to a specific IP address on the host's NIC::
+
+   $ source toaster start webport=192.168.1.1:8400
 
 The Directory for Cloning Layers
 ================================
@@ -126,34 +148,43 @@ parameters.
 To access the Django administration interface, you must create a
 superuser by following these steps:
 
-1. If you used ``pip3``, which is recommended, to set up the Toaster
+#. If you used ``pip3``, which is recommended, to set up the Toaster
    system dependencies, you need be sure the local user path is in your
    ``PATH`` list. To append the pip3 local user path, use the following
-   command: $ export PATH=$PATH:$HOME/.local/bin
+   command::
 
-2. From the directory containing the Toaster database, which by default
+      $ export PATH=$PATH:$HOME/.local/bin
+
+#. From the directory containing the Toaster database, which by default
    is the :term:`Build Directory`,
-   invoke the ``createsuperuser`` command from ``manage.py``: $ cd
-   ~/poky/build $ ../bitbake/lib/toaster/manage.py createsuperuser
+   invoke the ``createsuperuser`` command from ``manage.py``::
 
-3. Django prompts you for the username, which you need to provide.
+      $ cd ~/poky/build
+      $ ../bitbake/lib/toaster/manage.py createsuperuser
 
-4. Django prompts you for an email address, which is optional.
+#. Django prompts you for the username, which you need to provide.
 
-5. Django prompts you for a password, which you must provide.
+#. Django prompts you for an email address, which is optional.
 
-6. Django prompts you to re-enter your password for verification.
+#. Django prompts you for a password, which you must provide.
+
+#. Django prompts you to re-enter your password for verification.
 
 After completing these steps, the following confirmation message
-appears: Superuser created successfully.
+appears::
+
+   Superuser created successfully.
 
 Creating a superuser allows you to access the Django administration
 interface through a browser. The URL for this interface is the same as
 the URL used for the Toaster instance with "/admin" on the end. For
-example, if you are running Toaster locally, use the following URL:
-http://127.0.0.1:8000/admin You can use the Django administration
-interface to set Toaster configuration parameters such as the build
-directory, layer sources, default variable values, and BitBake versions.
+example, if you are running Toaster locally, use the following URL::
+
+   http://127.0.0.1:8000/admin
+
+You can use the Django administration interface to set Toaster configuration
+parameters such as the build directory, layer sources, default variable
+values, and BitBake versions.
 
 .. _toaster-setting-up-a-production-instance-of-toaster:
 
@@ -175,12 +206,10 @@ Be sure you meet the following requirements:
 
 .. note::
 
-   You must comply with all Apache,
-   mod-wsgi
-   , and Mysql requirements.
+   You must comply with all Apache, ``mod-wsgi``, and Mysql requirements.
 
--  Have all the build requirements as described in the "`Preparing to
-   Use Toaster <#toaster-manual-start>`__" chapter.
+-  Have all the build requirements as described in the ":ref:`toaster-manual/toaster-manual-start:Preparing to
+   Use Toaster`" chapter.
 
 -  Have an Apache webserver.
 
@@ -188,17 +217,18 @@ Be sure you meet the following requirements:
 
 -  Use the Mysql database server.
 
--  If you are using Ubuntu 16.04, run the following: $ sudo apt-get
-   install apache2 libapache2-mod-wsgi-py3 mysql-server python3-pip
-   libmysqlclient-dev
+-  If you are using Ubuntu, run the following::
 
--  If you are using Fedora 24 or a RedHat distribution, run the
-   following: $ sudo dnf install httpd python3-mod_wsgi python3-pip
-   mariadb-server mariadb-devel python3-devel
+      $ sudo apt-get install apache2 libapache2-mod-wsgi-py3 mysql-server python3-pip libmysqlclient-dev
 
--  If you are using openSUSE Leap 42.1, run the following: $ sudo zypper
-   install apache2 apache2-mod_wsgi-python3 python3-pip mariadb
-   mariadb-client python3-devel
+-  If you are using Fedora or a RedHat distribution, run the
+   following::
+
+      $ sudo dnf install httpd python3-mod_wsgi python3-pip mariadb-server mariadb-devel python3-devel
+
+-  If you are using openSUSE, run the following::
+
+      $ sudo zypper install apache2 apache2-mod_wsgi-python3 python3-pip mariadb mariadb-client python3-devel
 
 .. _toaster-installation-steps:
 
@@ -207,19 +237,24 @@ Installation
 
 Perform the following steps to install Toaster:
 
-1.  Create toaster user and set its home directory to
-    ``/var/www/toaster``: $ sudo /usr/sbin/useradd toaster -md
-    /var/www/toaster -s /bin/false $ sudo su - toaster -s /bin/bash
+#.  Create toaster user and set its home directory to
+    ``/var/www/toaster``::
 
-2.  Checkout a copy of ``poky`` into the web server directory. You will
-    be using ``/var/www/toaster``: $ git clone
-    git://git.yoctoproject.org/poky $ git checkout DISTRO_NAME_NO_CAP
+      $ sudo /usr/sbin/useradd toaster -md /var/www/toaster -s /bin/false
+      $ sudo su - toaster -s /bin/bash
 
-3.  Install Toaster dependencies using the --user flag which keeps the
-    Python packages isolated from your system-provided packages: $ cd
-    /var/www/toaster/ $ pip3 install --user -r
-    ./poky/bitbake/toaster-requirements.txt $ pip3 install --user
-    mysqlclient
+#.  Checkout a copy of ``poky`` into the web server directory. You will
+    be using ``/var/www/toaster``::
+
+      $ git clone git://git.yoctoproject.org/poky
+      $ git checkout &DISTRO_NAME_NO_CAP;
+
+#.  Install Toaster dependencies using the --user flag which keeps the
+    Python packages isolated from your system-provided packages::
+
+      $ cd /var/www/toaster/
+      $ pip3 install --user -r ./poky/bitbake/toaster-requirements.txt
+      $ pip3 install --user mysqlclient
 
     .. note::
 
@@ -227,35 +262,60 @@ Perform the following steps to install Toaster:
        Alternatively, you can use your operating system's package
        manager to install the packages.
 
-4.  Configure Toaster by editing
+#.  Configure Toaster by editing
     ``/var/www/toaster/poky/bitbake/lib/toaster/toastermain/settings.py``
     as follows:
 
     -  Edit the
-       `DATABASES <https://docs.djangoproject.com/en/1.11/ref/settings/#databases>`__
-       settings: DATABASES = { 'default': { 'ENGINE':
-       'django.db.backends.mysql', 'NAME': 'toaster_data', 'USER':
-       'toaster', 'PASSWORD': 'yourpasswordhere', 'HOST': 'localhost',
-       'PORT': '3306', } }
+       `DATABASES <https://docs.djangoproject.com/en/2.2/ref/settings/#databases>`__
+       settings:
+
+       .. code-block:: python
+
+         DATABASES = {
+            'default': {
+               'ENGINE': 'django.db.backends.mysql',
+               'NAME': 'toaster_data',
+               'USER': 'toaster',
+               'PASSWORD': 'yourpasswordhere',
+               'HOST': 'localhost',
+               'PORT': '3306',
+            }
+         }
 
     -  Edit the
-       `SECRET_KEY <https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-SECRET_KEY>`__:
-       SECRET_KEY = 'your_secret_key'
+       `SECRET_KEY <https://docs.djangoproject.com/en/2.2/ref/settings/#std:setting-SECRET_KEY>`__:
+
+       .. code-block:: python
+
+         SECRET_KEY = 'your_secret_key'
 
     -  Edit the
-       `STATIC_ROOT <https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-STATIC_ROOT>`__:
-       STATIC_ROOT = '/var/www/toaster/static_files/'
+       `STATIC_ROOT <https://docs.djangoproject.com/en/2.2/ref/settings/#std:setting-STATIC_ROOT>`__:
 
-5.  Add the database and user to the ``mysql`` server defined earlier: $
-    mysql -u root -p mysql> CREATE DATABASE toaster_data; mysql> CREATE
-    USER 'toaster'@'localhost' identified by 'yourpasswordhere'; mysql>
-    GRANT all on toaster_data.\* to 'toaster'@'localhost'; mysql> quit
+      .. code-block:: python
 
-6.  Get Toaster to create the database schema, default data, and gather
-    the statically-served files: $ cd /var/www/toaster/poky/ $
-    ./bitbake/lib/toaster/manage.py migrate $ TOASTER_DIR=`pwd\`
-    TEMPLATECONF='poky' \\ ./bitbake/lib/toaster/manage.py checksettings
-    $ ./bitbake/lib/toaster/manage.py collectstatic In the previous
+         STATIC_ROOT = '/var/www/toaster/static_files/'
+
+#.  Add the database and user to the ``mysql`` server defined earlier::
+
+      $ mysql -u root -p
+      mysql> CREATE DATABASE toaster_data;
+      mysql> CREATE USER 'toaster'@'localhost' identified by 'yourpasswordhere';
+      mysql> GRANT all on toaster_data.\* to 'toaster'@'localhost';
+      mysql> quit
+
+#.  Get Toaster to create the database schema, default data, and gather
+    the statically-served files::
+
+      $ cd /var/www/toaster/poky/
+      $ ./bitbake/lib/toaster/manage.py migrate
+      $ TOASTER_DIR=`pwd\` TEMPLATECONF='poky' \
+         ./bitbake/lib/toaster/manage.py checksettings
+      $ ./bitbake/lib/toaster/manage.py collectstatic
+
+
+    In the previous
     example, from the ``poky`` directory, the ``migrate`` command
     ensures the database schema changes have propagated correctly (i.e.
     migrations). The next line sets the Toaster root directory
@@ -264,80 +324,145 @@ Perform the following steps to install Toaster:
     ``TEMPLATECONF`` value reflects the contents of
     ``poky/.templateconf``, and by default, should include the string
     "poky". For more information on the Toaster configuration file, see
-    the "`Configuring Toaster <#configuring-toaster>`__" section.
+    the ":ref:`toaster-manual/toaster-manual-reference:Configuring Toaster`" section.
 
     This line also runs the ``checksettings`` command, which configures
     the location of the Toaster :term:`Build Directory`.
     The Toaster
     root directory ``TOASTER_DIR`` determines where the Toaster build
     directory is created on the file system. In the example above,
-    ``TOASTER_DIR`` is set as follows: /var/www/toaster/poky This
-    setting causes the Toaster build directory to be:
-    /var/www/toaster/poky/build
+    ``TOASTER_DIR`` is set as follows::
+
+       /var/www/toaster/poky
+
+
+    This setting causes the Toaster build directory to be::
+
+       /var/www/toaster/poky/build
 
     Finally, the ``collectstatic`` command is a Django framework command
     that collects all the statically served files into a designated
     directory to be served up by the Apache web server as defined by
     ``STATIC_ROOT``.
 
-7.  Test and/or use the Mysql integration with Toaster’s Django web
+#.  Test and/or use the Mysql integration with Toaster’s Django web
     server. At this point, you can start up the normal Toaster Django
     web server with the Toaster database in Mysql. You can use this web
     server to confirm that the database migration and data population
     from the Layer Index is complete.
 
     To start the default Toaster Django web server with the Toaster
-    database now in Mysql, use the standard start commands: $ source
-    oe-init-build-env $ source toaster start Additionally, if Django is
-    sufficient for your requirements, you can use it for your release
-    system and migrate later to Apache as your requirements change.
+    database now in Mysql, use the standard start commands::
 
-8.  Add an Apache configuration file for Toaster to your Apache web
+      $ source oe-init-build-env
+      $ source toaster start
+
+    Additionally, if Django is sufficient for your requirements, you can use
+    it for your release system and migrate later to Apache as your
+    requirements change.
+
+#.  Add an Apache configuration file for Toaster to your Apache web
     server's configuration directory. If you are using Ubuntu or Debian,
-    put the file here: /etc/apache2/conf-available/toaster.conf If you
-    are using Fedora or RedHat, put it here:
-    /etc/httpd/conf.d/toaster.conf If you are using OpenSUSE, put it
-    here: /etc/apache2/conf.d/toaster.conf Following is a sample Apache
-    configuration for Toaster you can follow: Alias /static
-    /var/www/toaster/static_files <Directory
-    /var/www/toaster/static_files> <IfModule mod_access_compat.c> Order
-    allow,deny Allow from all </IfModule> <IfModule
-    !mod_access_compat.c> Require all granted </IfModule> </Directory>
-    <Directory /var/www/toaster/poky/bitbake/lib/toaster/toastermain>
-    <Files "wsgi.py"> Require all granted </Files> </Directory>
-    WSGIDaemonProcess toaster_wsgi
-    python-path=/var/www/toaster/poky/bitbake/lib/toaster:/var/www/toaster/.local/lib/python3.4/site-packages
-    WSGIScriptAlias /
-    "/var/www/toaster/poky/bitbake/lib/toaster/toastermain/wsgi.py"
-    <Location /> WSGIProcessGroup toaster_wsgi </Location> If you are
-    using Ubuntu or Debian, you will need to enable the config and
-    module for Apache: $ sudo a2enmod wsgi $ sudo a2enconf toaster $
-    chmod +x bitbake/lib/toaster/toastermain/wsgi.py Finally, restart
-    Apache to make sure all new configuration is loaded. For Ubuntu,
-    Debian, and OpenSUSE use: $ sudo service apache2 restart For Fedora
-    and RedHat use: $ sudo service httpd restart
+    put the file here::
 
-9.  Prepare the systemd service to run Toaster builds. Here is a sample
-    configuration file for the service: [Unit] Description=Toaster
-    runbuilds [Service] Type=forking User=toaster
-    ExecStart=/usr/bin/screen -d -m -S runbuilds
-    /var/www/toaster/poky/bitbake/lib/toaster/runbuilds-service.sh start
-    ExecStop=/usr/bin/screen -S runbuilds -X quit
-    WorkingDirectory=/var/www/toaster/poky [Install]
-    WantedBy=multi-user.target Prepare the ``runbuilds-service.sh``
-    script that you need to place in the
+      /etc/apache2/conf-available/toaster.conf
+
+
+    If you are using Fedora or RedHat, put it here::
+
+      /etc/httpd/conf.d/toaster.conf
+
+    If you are using OpenSUSE, put it here::
+
+      /etc/apache2/conf.d/toaster.conf
+
+    Following is a sample Apache configuration for Toaster you can follow:
+
+    .. code-block:: apache
+
+      Alias /static /var/www/toaster/static_files
+      <Directory /var/www/toaster/static_files>
+         <IfModule mod_access_compat.c>
+            Order allow,deny
+            Allow from all
+         </IfModule>
+         <IfModule !mod_access_compat.c>
+            Require all granted
+         </IfModule>
+      </Directory>
+    
+      <Directory /var/www/toaster/poky/bitbake/lib/toaster/toastermain>
+         <Files "wsgi.py">
+            Require all granted
+         </Files>
+      </Directory>
+    
+      WSGIDaemonProcess toaster_wsgi python-path=/var/www/toaster/poky/bitbake/lib/toaster:/var/www/toaster/.local/lib/python3.4/site-packages
+      WSGIScriptAlias / "/var/www/toaster/poky/bitbake/lib/toaster/toastermain/wsgi.py"
+      <Location />
+         WSGIProcessGroup toaster_wsgi
+      </Location>
+
+
+    If you are using Ubuntu or Debian, you will need to enable the config and
+    module for Apache::
+
+      $ sudo a2enmod wsgi
+      $ sudo a2enconf toaster
+      $ chmod +x bitbake/lib/toaster/toastermain/wsgi.py
+
+    Finally, restart Apache to make sure all new configuration is loaded. For Ubuntu,
+    Debian, and OpenSUSE use::
+
+      $ sudo service apache2 restart
+
+    For Fedora and RedHat use::
+
+      $ sudo service httpd restart
+
+#.  Prepare the systemd service to run Toaster builds. Here is a sample
+    configuration file for the service:
+
+    .. code-block:: ini
+
+      [Unit]
+      Description=Toaster runbuilds
+      
+      [Service]
+      Type=forking User=toaster
+      ExecStart=/usr/bin/screen -d -m -S runbuilds /var/www/toaster/poky/bitbake/lib/toaster/runbuilds-service.sh start
+      ExecStop=/usr/bin/screen -S runbuilds -X quit
+      WorkingDirectory=/var/www/toaster/poky
+      
+      [Install]
+      WantedBy=multi-user.target
+
+
+    Prepare the ``runbuilds-service.sh`` script that you need to place in the
     ``/var/www/toaster/poky/bitbake/lib/toaster/`` directory by setting
-    up executable permissions: #!/bin/bash #export
-    http_proxy=http://proxy.host.com:8080 #export
-    https_proxy=http://proxy.host.com:8080 #export
-    GIT_PROXY_COMMAND=$HOME/bin/gitproxy cd ~/poky/ source
-    ./oe-init-build-env build source ../bitbake/bin/toaster $1 noweb [
-    "$1" == 'start' ] && /bin/bash
+    up executable permissions::
 
-10. Run the service: # service runbuilds start Since the service is
-    running in a detached screen session, you can attach to it using
-    this command: $ sudo su - toaster $ screen -rS runbuilds You can
-    detach from the service again using "Ctrl-a" followed by "d" key
+      #!/bin/bash
+      
+      #export http_proxy=http://proxy.host.com:8080
+      #export https_proxy=http://proxy.host.com:8080
+      #export GIT_PROXY_COMMAND=$HOME/bin/gitproxy
+      cd ~/poky/
+      source ./oe-init-build-env build
+      source ../bitbake/bin/toaster $1 noweb
+      [ "$1" == 'start' ] && /bin/bash
+
+#.  Run the service::
+
+       $ sudo service runbuilds start
+
+    Since the service is running in a detached screen session, you can
+    attach to it using this command::
+
+       $ sudo su - toaster
+       $ screen -rS runbuilds
+
+    You can detach from the service again using "Ctrl-a" followed by "d" key
     combination.
 
 You can now open up a browser and start using Toaster.
@@ -432,8 +557,9 @@ Additional Information About the Local Yocto Project Release
 ------------------------------------------------------------
 
 This section only applies if you have set up Toaster for local
-development, as explained in the "`Starting Toaster for Local
-Development <#starting-toaster-for-local-development>`__" section.
+development, as explained in the
+":ref:`toaster-manual/toaster-manual-setup-and-use:starting toaster for local development`"
+section.
 
 When you create a project in Toaster, you will be asked to provide a
 name and to select a Yocto Project release. One of the release options

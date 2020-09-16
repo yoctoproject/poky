@@ -1,4 +1,6 @@
 .. SPDX-License-Identifier: CC-BY-2.0-UK
+.. Set default pygments highlighting to shell for this document
+.. highlight:: shell
 
 ************************
 Preparing to Use Toaster
@@ -14,11 +16,11 @@ Setting Up the Basic System Requirements
 
 Before you can use Toaster, you need to first set up your build system
 to run the Yocto Project. To do this, follow the instructions in the
-"`Preparing the Build
-Host <&YOCTO_DOCS_DEV_URL;#dev-preparing-the-build-host>`__" section of
+":ref:`dev-manual/dev-manual-start:preparing the build host`" section of
 the Yocto Project Development Tasks Manual. For Ubuntu/Debian, you might
-also need to do an additional install of pip3. $ sudo apt-get install
-python3-pip
+also need to do an additional install of pip3. ::
+
+   $ sudo apt-get install python3-pip
 
 .. _toaster-establishing-toaster-system-dependencies:
 
@@ -39,10 +41,17 @@ Install Toaster Packages
 ------------------------
 
 You need to install the packages that Toaster requires. Use this
-command: $ pip3 install --user -r bitbake/toaster-requirements.txt The
-previous command installs the necessary Toaster modules into a local
+command::
+
+   $ pip3 install --user -r bitbake/toaster-requirements.txt
+
+The previous command installs the necessary Toaster modules into a local
 python 3 cache in your ``$HOME`` directory. The caches is actually
 located in ``$HOME/.local``. To see what packages have been installed
-into your ``$HOME`` directory, do the following: $ pip3 list installed
---local If you need to remove something, the following works: $ pip3
-uninstall PackageNameToUninstall
+into your ``$HOME`` directory, do the following::
+
+   $ pip3 list installed --local
+
+If you need to remove something, the following works::
+
+   $ pip3 uninstall PackageNameToUninstall

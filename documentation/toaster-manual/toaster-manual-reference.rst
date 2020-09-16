@@ -67,11 +67,10 @@ familiar with where they reside. You will need that information when you
 set up the code for the web application that "hooks" into your set of
 layers.
 
-For general information on layers, see the "`The Yocto Project Layer
-Model <&YOCTO_DOCS_OM_URL;#the-yocto-project-layer-model>`__" section in
-the Yocto Project Overview and Concepts Manual. For information on how
-to create layers, see the "`Understanding and Creating
-Layers <&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers>`__"
+For general information on layers, see the
+":ref:`overview-manual/overview-manual-yp-intro:the yocto project layer model`"
+section in the Yocto Project Overview and Concepts Manual. For information on how
+to create layers, see the ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _configuring-toaster-to-hook-into-your-layer-source:
@@ -98,7 +97,9 @@ Use the Administration Interface
 Access the administration interface through a browser by entering the
 URL of your Toaster instance and adding "``/admin``" to the end of the
 URL. As an example, if you are running Toaster locally, use the
-following URL: http://127.0.0.1:8000/admin
+following URL::
+
+   http://127.0.0.1:8000/admin
 
 The administration interface has a "Layer sources" section that includes
 an "Add layer source" button. Click that button and provide the required
@@ -110,12 +111,19 @@ Use the Fixture Feature
 The Django fixture feature overrides the default layer server when you
 use it to specify a custom URL. To use the fixture feature, create (or
 edit) the file ``bitbake/lib/toaster.orm/fixtures/custom.xml``, and then
-set the following Toaster setting to your custom URL: <?xml
-version="1.0" ?> <django-objects version="1.0"> <object
-model="orm.toastersetting" pk="100"> <field name="name"
-type="CharField">CUSTOM_LAYERINDEX_SERVER</field> <field name="value"
-type="CharField">https://layers.my_organization.org/layerindex/branch/master/layers/</field>
-</object> <django-objects> When you start Toaster for the first time, or
+set the following Toaster setting to your custom URL:
+
+.. code-block:: xml
+
+   <?xml version="1.0" ?>
+   <django-objects version="1.0">
+      <object model="orm.toastersetting" pk="100">
+         <field name="name" type="CharField">CUSTOM_LAYERINDEX_SERVER</field>
+         <field name="value" type="CharField">https://layers.my_organization.org/layerindex/branch/master/layers/</field>
+      </object>
+   <django-objects>
+
+When you start Toaster for the first time, or
 if you delete the file ``toaster.sqlite`` and restart, the database will
 populate cleanly from this layer index server.
 
@@ -125,10 +133,15 @@ is available by using the Toaster web interface. To do that, visit the
 your layer source should be listed there.
 
 If you change the information in your layer index server, refresh the
-Toaster database by running the following command: $
-bitbake/lib/toaster/manage.py lsupdates If Toaster can reach the API
-URL, you should see a message telling you that Toaster is updating the
-layer source information.
+Toaster database by running the following command:
+
+.. code-block:: shell
+
+   $ bitbake/lib/toaster/manage.py lsupdates
+
+
+If Toaster can reach the API URL, you should see a message telling you that
+Toaster is updating the layer source information.
 
 .. _toaster-releases:
 
@@ -157,11 +170,11 @@ to build against different revisions of OpenEmbedded and BitBake.
 
 As shipped, Toaster is configured to work with the following releases:
 
--  *Yocto Project DISTRO "DISTRO_NAME" or OpenEmbedded "DISTRO_NAME":*
+-  *Yocto Project &DISTRO; "&DISTRO_NAME;" or OpenEmbedded "&DISTRO_NAME;":*
    This release causes your Toaster projects to build against the head
-   of the DISTRO_NAME_NO_CAP branch at
-   https://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?h=rocko or
-   http://git.openembedded.org/openembedded-core/commit/?h=rocko.
+   of the &DISTRO_NAME_NO_CAP; branch at
+   https://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?h=&DISTRO_NAME_NO_CAP; or
+   http://git.openembedded.org/openembedded-core/commit/?h=&DISTRO_NAME_NO_CAP;.
 
 -  *Yocto Project "Master" or OpenEmbedded "Master":* This release
    causes your Toaster Projects to build against the head of the master
@@ -224,9 +237,14 @@ particularly useful if your custom configuration defines fewer releases
 or layers than the default fixture files.
 
 The following example sets "name" to "CUSTOM_XML_ONLY" and its value to
-"True". <object model="orm.toastersetting" pk="99"> <field
-type="CharField" name="name">CUSTOM_XML_ONLY</field> <field
-type="CharField" name="value">True</field> </object>
+"True".
+
+.. code-block:: xml
+
+   <object model="orm.toastersetting" pk="99">
+      <field type="CharField" name="name">CUSTOM_XML_ONLY</field>
+      <field type="CharField" name="value">True</field>
+   </object>
 
 Understanding Fixture File Format
 ---------------------------------
@@ -244,10 +262,17 @@ Defining the Default Distro and Other Values
 This section defines the default distro value for new projects. By
 default, it reserves the first Toaster Setting record "1". The following
 demonstrates how to set the project default value for
-:term:`DISTRO`: <!-- Set the project
-default value for DISTRO --> <object model="orm.toastersetting" pk="1">
-<field type="CharField" name="name">DEFCONF_DISTRO</field> <field
-type="CharField" name="value">poky</field> </object> You can override
+:term:`DISTRO`:
+
+.. code-block:: xml
+
+   <!-- Set the project default value for DISTRO -->
+   <object model="orm.toastersetting" pk="1">
+      <field type="CharField" name="name">DEFCONF_DISTRO</field>
+      <field type="CharField" name="value">poky</field>
+   </object>
+
+You can override
 other default project values by adding additional Toaster Setting
 sections such as any of the settings coming from the ``settings.xml``
 file. Also, you can add custom values that are included in the BitBake
@@ -258,40 +283,53 @@ Defining BitBake Version
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following defines which version of BitBake is used for the following
-release selection: <!-- Bitbake versions which correspond to the
-metadata release --> <object model="orm.bitbakeversion" pk="1"> <field
-type="CharField" name="name">rocko</field> <field type="CharField"
-name="giturl">git://git.yoctoproject.org/poky</field> <field
-type="CharField" name="branch">rocko</field> <field type="CharField"
-name="dirpath">bitbake</field> </object>
+release selection:
+
+.. code-block:: xml
+
+   <!-- Bitbake versions which correspond to the metadata release -->
+   <object model="orm.bitbakeversion" pk="1">
+      <field type="CharField" name="name">&DISTRO_NAME_NO_CAP;</field>
+      <field type="CharField" name="giturl">git://git.yoctoproject.org/poky</field>
+      <field type="CharField" name="branch">&DISTRO_NAME_NO_CAP;</field>
+      <field type="CharField" name="dirpath">bitbake</field>
+   </object>
 
 .. _defining-releases:
 
 Defining Release
 ~~~~~~~~~~~~~~~~
 
-The following defines the releases when you create a new project. <!--
-Releases available --> <object model="orm.release" pk="1"> <field
-type="CharField" name="name">rocko</field> <field type="CharField"
-name="description">Yocto Project 2.4 "Rocko"</field> <field
-rel="ManyToOneRel" to="orm.bitbakeversion"
-name="bitbake_version">1</field> <field type="CharField"
-name="branch_name">rocko</field> <field type="TextField"
-name="helptext">Toaster will run your builds using the tip of the <a
-href="http://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?h=rocko">Yocto
-Project Rocko branch</a>.</field> </object> The "pk" value must match
-the above respective BitBake version record.
+The following defines the releases when you create a new project:
+
+.. code-block:: xml
+
+   <!-- Releases available -->
+   <object model="orm.release" pk="1">
+      <field type="CharField" name="name">&DISTRO_NAME_NO_CAP;</field>
+      <field type="CharField" name="description">Yocto Project &DISTRO; "&DISTRO_NAME;"</field>
+      <field rel="ManyToOneRel" to="orm.bitbakeversion" name="bitbake_version">1</field>
+      <field type="CharField" name="branch_name">&DISTRO_NAME_NO_CAP;</field>
+      <field type="TextField" name="helptext">Toaster will run your builds using the tip of the <a href="http://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?h=&DISTRO_NAME_NO_CAP;">Yocto Project &DISTRO_NAME; branch</a>.</field>
+   </object>
+
+The "pk" value must match the above respective BitBake version record.
 
 Defining the Release Default Layer Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following defines the default layers for each release: <!-- Default
-project layers for each release --> <object
-model="orm.releasedefaultlayer" pk="1"> <field rel="ManyToOneRel"
-to="orm.release" name="release">1</field> <field type="CharField"
-name="layer_name">openembedded-core</field> </object> The 'pk' values in
-the example above should start at "1" and increment uniquely. You can
-use the same layer name in multiple releases.
+The following defines the default layers for each release:
+
+.. code-block:: xml
+
+   <!-- Default project layers for each release -->
+   <object model="orm.releasedefaultlayer" pk="1">
+      <field rel="ManyToOneRel" to="orm.release" name="release">1</field>
+      <field type="CharField" name="layer_name">openembedded-core</field>
+   </object>
+
+The 'pk' values in the example above should start at "1" and increment
+uniquely. You can use the same layer name in multiple releases.
 
 Defining Layer Definitions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -302,35 +340,42 @@ for each respective release. You must have one ``orm.layer`` entry for
 each layer. Then, with each entry you need a set of
 ``orm.layer_version`` entries that connects the layer with each release
 that includes the layer. In general all releases include the layer.
-<object model="orm.layer" pk="1"> <field type="CharField"
-name="name">openembedded-core</field> <field type="CharField"
-name="layer_index_url"></field> <field type="CharField"
-name="vcs_url">git://git.yoctoproject.org/poky</field> <field
-type="CharField"
-name="vcs_web_url">http://git.yoctoproject.org/cgit/cgit.cgi/poky</field>
-<field type="CharField"
-name="vcs_web_tree_base_url">http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/%path%?h=%branch%</field>
-<field type="CharField"
-name="vcs_web_file_base_url">http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/%path%?h=%branch%</field>
-</object> <object model="orm.layer_version" pk="1"> <field
-rel="ManyToOneRel" to="orm.layer" name="layer">1</field> <field
-type="IntegerField" name="layer_source">0</field> <field
-rel="ManyToOneRel" to="orm.release" name="release">1</field> <field
-type="CharField" name="branch">rocko</field> <field type="CharField"
-name="dirpath">meta</field> </object> <object model="orm.layer_version"
-pk="2"> <field rel="ManyToOneRel" to="orm.layer" name="layer">1</field>
-<field type="IntegerField" name="layer_source">0</field> <field
-rel="ManyToOneRel" to="orm.release" name="release">2</field> <field
-type="CharField" name="branch">HEAD</field> <field type="CharField"
-name="commit">HEAD</field> <field type="CharField"
-name="dirpath">meta</field> </object> <object model="orm.layer_version"
-pk="3"> <field rel="ManyToOneRel" to="orm.layer" name="layer">1</field>
-<field type="IntegerField" name="layer_source">0</field> <field
-rel="ManyToOneRel" to="orm.release" name="release">3</field> <field
-type="CharField" name="branch">master</field> <field type="CharField"
-name="dirpath">meta</field> </object> The layer "pk" values above must
-be unique, and typically start at "1". The layer version "pk" values
-must also be unique across all layers, and typically start at "1".
+
+.. code-block:: xml
+
+   <object model="orm.layer" pk="1">
+      <field type="CharField" name="name">openembedded-core</field>
+      <field type="CharField" name="layer_index_url"></field>
+      <field type="CharField" name="vcs_url">git://git.yoctoproject.org/poky</field>
+      <field type="CharField" name="vcs_web_url">http://git.yoctoproject.org/cgit/cgit.cgi/poky</field>
+      <field type="CharField" name="vcs_web_tree_base_url">http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/%path%?h=%branch%</field>
+      <field type="CharField" name="vcs_web_file_base_url">http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/%path%?h=%branch%</field>
+   </object>
+   <object model="orm.layer_version" pk="1">
+      <field rel="ManyToOneRel" to="orm.layer" name="layer">1</field>
+      <field type="IntegerField" name="layer_source">0</field>
+      <field rel="ManyToOneRel" to="orm.release" name="release">1</field>
+      <field type="CharField" name="branch">&DISTRO_NAME_NO_CAP;</field>
+      <field type="CharField" name="dirpath">meta</field>
+   </object> <object model="orm.layer_version" pk="2">
+      <field rel="ManyToOneRel" to="orm.layer" name="layer">1</field>
+      <field type="IntegerField" name="layer_source">0</field>
+      <field rel="ManyToOneRel" to="orm.release" name="release">2</field>
+      <field type="CharField" name="branch">HEAD</field>
+      <field type="CharField" name="commit">HEAD</field>
+      <field type="CharField" name="dirpath">meta</field>
+   </object>
+   <object model="orm.layer_version" pk="3">
+      <field rel="ManyToOneRel" to="orm.layer" name="layer">1</field>
+      <field type="IntegerField" name="layer_source">0</field>
+      <field rel="ManyToOneRel" to="orm.release" name="release">3</field>
+      <field type="CharField" name="branch">master</field>
+      <field type="CharField" name="dirpath">meta</field>
+   </object>
+
+The layer "pk" values above must be unique, and typically start at "1". The
+layer version "pk" values must also be unique across all layers, and typically
+start at "1".
 
 Remote Toaster Monitoring
 =========================
@@ -350,26 +395,53 @@ Checking Health
 
 Before you use remote Toaster monitoring, you should do a health check.
 To do this, ping the Toaster server using the following call to see if
-it is still alive: http://host:port/health Be sure to provide values for
-host and port. If the server is alive, you will get the response HTML:
-<!DOCTYPE html> <html lang="en"> <head><title>Toaster
-Health</title></head> <body>Ok</body> </html>
+it is still alive::
+
+   http://host:port/health
+
+Be sure to provide values for host and port. If the server is alive, you will
+get the response HTML:
+
+.. code-block:: html
+
+   <!DOCTYPE html>
+   <html lang="en">
+      <head><title>Toaster Health</title></head>
+      <body>Ok</body>
+   </html>
 
 Determining Status of Builds in Progress
 ----------------------------------------
 
 Sometimes it is useful to determine the status of a build in progress.
-To get the status of pending builds, use the following call:
-http://host:port/toastergui/api/building Be sure to provide values for
-host and port. The output is a JSON file that itemizes all builds in
-progress. This file includes the time in seconds since each respective
-build started as well as the progress of the cloning, parsing, and task
-execution. The following is sample output for a build in progress:
-{"count": 1, "building": [ {"machine": "beaglebone", "seconds":
-"463.869", "task": "927:2384", "distro": "poky", "clone": "1:1", "id":
-2, "start": "2017-09-22T09:31:44.887Z", "name": "20170922093200",
-"parse": "818:818", "project": "my_rocko", "target":
-"core-image-minimal" }] } The JSON data for this query is returned in a
+To get the status of pending builds, use the following call::
+
+   http://host:port/toastergui/api/building
+
+Be sure to provide values for host and port. The output is a JSON file that
+itemizes all builds in progress. This file includes the time in seconds since
+each respective build started as well as the progress of the cloning, parsing,
+and task execution. The following is sample output for a build in progress:
+
+.. code-block:: JSON
+
+   {"count": 1,
+    "building": [
+      {"machine": "beaglebone",
+        "seconds": "463.869",
+        "task": "927:2384",
+        "distro": "poky",
+        "clone": "1:1",
+        "id": 2,
+        "start": "2017-09-22T09:31:44.887Z",
+        "name": "20170922093200",
+        "parse": "818:818",
+        "project": "my_rocko",
+        "target": "core-image-minimal"
+      }]
+   }
+
+The JSON data for this query is returned in a
 single line. In the previous example the line has been artificially
 split for readability.
 
@@ -377,14 +449,33 @@ Checking Status of Builds Completed
 -----------------------------------
 
 Once a build is completed, you get the status when you use the following
-call: http://host:port/toastergui/api/builds Be sure to provide values
-for host and port. The output is a JSON file that itemizes all complete
-builds, and includes build summary information. The following is sample
-output for a completed build: {"count": 1, "builds": [ {"distro":
-"poky", "errors": 0, "machine": "beaglebone", "project": "my_rocko",
-"stop": "2017-09-22T09:26:36.017Z", "target": "quilt-native", "seconds":
-"78.193", "outcome": "Succeeded", "id": 1, "start":
-"2017-09-22T09:25:17.824Z", "warnings": 1, "name": "20170922092618" }] }
+call::
+
+   http://host:port/toastergui/api/builds
+
+Be sure to provide values for host and port. The output is a JSON file that
+itemizes all complete builds, and includes build summary information. The
+following is sample output for a completed build:
+
+.. code-block:: JSON
+
+   {"count": 1,
+    "builds": [
+      {"distro": "poky",
+         "errors": 0,
+         "machine": "beaglebone",
+         "project": "my_rocko",
+         "stop": "2017-09-22T09:26:36.017Z",
+         "target": "quilt-native",
+         "seconds": "78.193",
+         "outcome": "Succeeded",
+         "id": 1,
+         "start": "2017-09-22T09:25:17.824Z",
+         "warnings": 1,
+         "name": "20170922092618"
+      }]
+   }
+
 The JSON data for this query is returned in a single line. In the
 previous example the line has been artificially split for readability.
 
@@ -392,22 +483,39 @@ Determining Status of a Specific Build
 --------------------------------------
 
 Sometimes it is useful to determine the status of a specific build. To
-get the status of a specific build, use the following call:
-http://host:port/toastergui/api/build/ID Be sure to provide values for
+get the status of a specific build, use the following call::
+
+   http://host:port/toastergui/api/build/ID
+
+Be sure to provide values for
 host, port, and ID. You can find the value for ID from the Builds
-Completed query. See the "`Checking Status of Builds
-Completed <#checking-status-of-builds-completed>`__" section for more
-information.
+Completed query. See the ":ref:`toaster-manual/toaster-manual-reference:checking status of builds completed`"
+section for more information.
 
 The output is a JSON file that itemizes the specific build and includes
 build summary information. The following is sample output for a specific
-build: {"build": {"distro": "poky", "errors": 0, "machine":
-"beaglebone", "project": "my_rocko", "stop": "2017-09-22T09:26:36.017Z",
-"target": "quilt-native", "seconds": "78.193", "outcome": "Succeeded",
-"id": 1, "start": "2017-09-22T09:25:17.824Z", "warnings": 1, "name":
-"20170922092618", "cooker_log":
-"/opt/user/poky/build-toaster-2/tmp/log/cooker/beaglebone/build_20170922_022607.991.log"
-} } The JSON data for this query is returned in a single line. In the
+build:
+
+.. code-block:: JSON
+
+   {"build":
+      {"distro": "poky",
+       "errors": 0,
+       "machine": "beaglebone",
+       "project": "my_rocko",
+       "stop": "2017-09-22T09:26:36.017Z",
+       "target": "quilt-native",
+       "seconds": "78.193",
+       "outcome": "Succeeded",
+       "id": 1,
+       "start": "2017-09-22T09:25:17.824Z",
+       "warnings": 1,
+       "name": "20170922092618",
+       "cooker_log": "/opt/user/poky/build-toaster-2/tmp/log/cooker/beaglebone/build_20170922_022607.991.log"
+      }
+   }
+
+The JSON data for this query is returned in a single line. In the
 previous example the line has been artificially split for readability.
 
 .. _toaster-useful-commands:
@@ -419,7 +527,7 @@ In addition to the web user interface and the scripts that start and
 stop Toaster, command-line commands exist through the ``manage.py``
 management script. You can find general documentation on ``manage.py``
 at the
-`Django <https://docs.djangoproject.com/en/1.7/topics/settings/>`__
+`Django <https://docs.djangoproject.com/en/2.2/topics/settings/>`__
 site. However, several ``manage.py`` commands have been created that are
 specific to Toaster and are used to control configuration and back-end
 tasks. You can locate these commands in the
@@ -446,19 +554,31 @@ tasks. You can locate these commands in the
 --------------
 
 The ``buildslist`` command lists all builds that Toaster has recorded.
-Access the command as follows: $ bitbake/lib/toaster/manage.py
-buildslist The command returns a list, which includes numeric
+Access the command as follows:
+
+.. code-block:: shell
+
+   $ bitbake/lib/toaster/manage.py buildslist
+
+The command returns a list, which includes numeric
 identifications, of the builds that Toaster has recorded in the current
 database.
 
 You need to run the ``buildslist`` command first to identify existing
 builds in the database before using the
-```builddelete`` <#toaster-command-builddelete>`__ command. Here is an
-example that assumes default repository and build directory names: $ cd
-~/poky/build $ python ../bitbake/lib/toaster/manage.py buildslist If
-your Toaster database had only one build, the above ``buildslist``
-command would return something like the following: 1: qemux86 poky
-core-image-minimal
+:ref:`toaster-manual/toaster-manual-reference:\`\`builddelete\`\`` command. Here is an
+example that assumes default repository and build directory names:
+
+.. code-block:: shell
+
+   $ cd ~/poky/build
+   $ python ../bitbake/lib/toaster/manage.py buildslist
+
+If your Toaster database had only one build, the above
+:ref:`toaster-manual/toaster-manual-reference:\`\`buildslist\`\``
+command would return something like the following::
+
+   1: qemux86 poky core-image-minimal
 
 .. _toaster-command-builddelete:
 
@@ -466,14 +586,19 @@ core-image-minimal
 ---------------
 
 The ``builddelete`` command deletes data associated with a build. Access
-the command as follows: $ bitbake/lib/toaster/manage.py builddelete
-build_id The command deletes all the build data for the specified
+the command as follows:
+
+.. code-block::
+
+   $ bitbake/lib/toaster/manage.py builddelete build_id
+
+The command deletes all the build data for the specified
 build_id. This command is useful for removing old and unused data from
 the database.
 
 Prior to running the ``builddelete`` command, you need to get the ID
 associated with builds by using the
-```buildslist`` <#toaster-command-buildslist>`__ command.
+:ref:`toaster-manual/toaster-manual-reference:\`\`buildslist\`\`` command.
 
 .. _toaster-command-perf:
 
@@ -481,9 +606,14 @@ associated with builds by using the
 --------
 
 The ``perf`` command measures Toaster performance. Access the command as
-follows: $ bitbake/lib/toaster/manage.py perf The command is a sanity
-check that returns page loading times in order to identify performance
-problems.
+follows:
+
+.. code-block:: shell
+
+   $ bitbake/lib/toaster/manage.py perf
+
+The command is a sanity check that returns page loading times in order to
+identify performance problems.
 
 .. _toaster-command-checksettings:
 
@@ -491,7 +621,12 @@ problems.
 -----------------
 
 The ``checksettings`` command verifies existing Toaster settings. Access
-the command as follows: $ bitbake/lib/toaster/manage.py checksettings
+the command as follows:
+
+.. code-block:: shell
+
+   $ bitbake/lib/toaster/manage.py checksettings
+
 Toaster uses settings that are based on the database to configure the
 building tasks. The ``checksettings`` command verifies that the database
 settings are valid in the sense that they have the minimal information
@@ -499,10 +634,15 @@ needed to start a build.
 
 In order for the ``checksettings`` command to work, the database must be
 correctly set up and not have existing data. To be sure the database is
-ready, you can run the following: $ bitbake/lib/toaster/mana​ge.py
-syncdb $ bitbake/lib/toaster/mana​ge.py migrate orm $
-bitbake/lib/toaster/mana​ge.py migrate bldcontrol After running these
-commands, you can run the ``checksettings`` command.
+ready, you can run the following:
+
+.. code-block:: shell
+
+   $ bitbake/lib/toaster/manage.py syncdb
+   $ bitbake/lib/toaster/manage.py migrate orm
+   $ bitbake/lib/toaster/manage.py migrate bldcontrol
+
+After running these commands, you can run the ``checksettings`` command.
 
 .. _toaster-command-runbuilds:
 
@@ -510,8 +650,13 @@ commands, you can run the ``checksettings`` command.
 -------------
 
 The ``runbuilds`` command launches scheduled builds. Access the command
-as follows: $ bitbake/lib/toaster/manage.py runbuilds The ``runbuilds``
-command checks if scheduled builds exist in the database and then
-launches them per schedule. The command returns after the builds start
-but before they complete. The Toaster Logging Interface records and
+as follows:
+
+.. code-block:: shell
+
+   $ bitbake/lib/toaster/manage.py runbuilds
+
+The ``runbuilds`` command checks if scheduled builds exist in the database
+and then launches them per schedule. The command returns after the builds
+start but before they complete. The Toaster Logging Interface records and
 updates the database when the builds complete.
