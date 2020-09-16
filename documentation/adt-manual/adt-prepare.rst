@@ -189,7 +189,7 @@ the location for cross-toolchain installation. The default location is
 ``/opt/poky/``\ release. After either accepting the default location or
 selecting your own location, you are prompted to run the installation
 script interactively or in silent mode. If you want to closely monitor
-the installation, choose “I” for interactive mode rather than “S” for
+the installation, choose "I" for interactive mode rather than "S" for
 silent mode. Follow the prompts from the script to complete the
 installation.
 
@@ -594,7 +594,7 @@ For this scenario, you need to do several things:
 -  Install the appropriate stand-alone toolchain tarball.
 
 -  Download the pre-built image that will boot with QEMU. You need to be
-   sure to get the QEMU image that matches your target machine’s
+   sure to get the QEMU image that matches your target machine's
    architecture (e.g. x86, ARM, etc.).
 
 -  Download the filesystem image for your target machine's architecture.

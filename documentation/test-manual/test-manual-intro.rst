@@ -12,9 +12,9 @@ Welcome
 Welcome to the Yocto Project Test Environment Manual! This manual is a
 work in progress. The manual contains information about the testing
 environment used by the Yocto Project to make sure each major and minor
-release works as intended. All the project’s testing infrastructure and
+release works as intended. All the project's testing infrastructure and
 processes are publicly visible and available so that the community can
-see what testing is being performed, how it’s being done and the current
+see what testing is being performed, how it's being done and the current
 status of the tests and the project at any given time. It is intended
 that Other organizations can leverage off the process and testing
 environment used by the Yocto Project to create their own automated,
@@ -514,7 +514,7 @@ resource utilisation as that happens. An example from
                      'bitbake -p (cached)')
 
 This example shows how three specific parsing timings are
-measured, with and without various caches, to show how BitBake’s parsing
+measured, with and without various caches, to show how BitBake's parsing
 performance trends over time.
 
 .. _test-writing-considerations:

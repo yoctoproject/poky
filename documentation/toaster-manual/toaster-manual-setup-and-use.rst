@@ -52,15 +52,15 @@ Setting Up Toaster Without a Web Server
 You can start a Toaster environment without starting its web server.
 This is useful for the following:
 
--  Capturing a command-line build’s statistics into the Toaster database
+-  Capturing a command-line build's statistics into the Toaster database
    for examination later.
 
--  Capturing a command-line build’s statistics when the Toaster server
+-  Capturing a command-line build's statistics when the Toaster server
    is already running.
 
 -  Having one instance of the Toaster web server track and capture
    multiple command-line builds, where each build is started in its own
-   “noweb” Toaster environment.
+   "noweb" Toaster environment.
 
 The following commands show how to start a Toaster environment without
 starting its web server, perform BitBake operations, and then shut down
@@ -68,7 +68,7 @@ the Toaster environment. Once the build is complete, you can close the
 Toaster environment. Before closing the environment, however, you should
 allow a few minutes to ensure the complete transfer of its BitBake build
 statistics to the Toaster database. If you have a separate Toaster web
-server instance running, you can watch this command-line build’s
+server instance running, you can watch this command-line build's
 progress and examine the results as soon as they are posted::
 
    $ source toaster start noweb
@@ -78,7 +78,7 @@ progress and examine the results as soon as they are posted::
 Setting Up Toaster Without a Build Server
 =========================================
 
-You can start a Toaster environment with the “New Projects” feature
+You can start a Toaster environment with the "New Projects" feature
 disabled. Doing so is useful for the following:
 
 -  Sharing your build results over the web server while blocking others
@@ -345,7 +345,7 @@ Perform the following steps to install Toaster:
     directory to be served up by the Apache web server as defined by
     ``STATIC_ROOT``.
 
-#.  Test and/or use the Mysql integration with Toaster’s Django web
+#.  Test and/or use the Mysql integration with Toaster's Django web
     server. At this point, you can start up the normal Toaster Django
     web server with the Toaster database in Mysql. You can use this web
     server to confirm that the database migration and data population

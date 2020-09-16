@@ -6111,7 +6111,7 @@ the existing kernel, and then inserts a new kernel:
 
       If you see the following error, you need to update or create a
       ~/.mtoolsrc
-      file and be sure to have the line “mtools_skip_check=1“ in the
+      file and be sure to have the line "mtools_skip_check=1" in the
       file. Then, run the Wic command again:
       ::
 
@@ -7157,7 +7157,7 @@ variable to specify the format:
 2. Select the desired package format as follows:
    ::
 
-      PACKAGE_CLASSES ?= “package_packageformat”
+      PACKAGE_CLASSES ?= "package_packageformat"
 
    where packageformat can be "ipk", "rpm",
    "deb", or "tar" which are the supported package formats.
@@ -10372,7 +10372,7 @@ debugger.
    an image recipe:
    ::
 
-      IMAGE_INSTALL_append = “ gdbserver"
+      IMAGE_INSTALL_append = " gdbserver"
 
    The change makes
    sure the ``gdbserver`` package is included.

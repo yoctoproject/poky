@@ -238,7 +238,7 @@ open source projects do so.
 
 For the Yocto Project, a key individual called the "maintainer" is
 responsible for the integrity of the "master" branch of a given Git
-repository. The "master" branch is the “upstream” repository from which
+repository. The "master" branch is the "upstream" repository from which
 final or most recent builds of a project occur. The maintainer is
 responsible for accepting changes from other developers and for
 organizing the underlying branch structure to reflect release strategies
@@ -273,19 +273,19 @@ with whatever upstream branch they are working against. They are also
 responsible for straightening out any conflicts that might arise within
 files that are being worked on simultaneously by more than one person.
 All this work is done locally on the development host before anything is
-pushed to a "contrib" area and examined at the maintainer’s level.
+pushed to a "contrib" area and examined at the maintainer's level.
 
 A somewhat formal method exists by which developers commit changes and
 push them into the "contrib" area and subsequently request that the
 maintainer include them into an upstream branch. This process is called
-“submitting a patch” or "submitting a change." For information on
+"submitting a patch" or "submitting a change." For information on
 submitting patches and changes, see the
 ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
 section in the Yocto Project Development Tasks Manual.
 
 In summary, a single point of entry exists for changes into a "master"
 or development branch of the Git repository, which is controlled by the
-project’s maintainer. And, a set of developers exist who independently
+project's maintainer. And, a set of developers exist who independently
 develop, test, and submit changes to "contrib" areas for the maintainer
 to examine. The maintainer then chooses which changes are going to
 become a permanent part of the project.
@@ -526,7 +526,7 @@ descriptions and strategies on how to use these commands:
    Git commands unless you have a ``.git`` repository.
 
 -  *git clone:* Creates a local clone of a Git repository that is on
-   equal footing with a fellow developer’s Git repository or an upstream
+   equal footing with a fellow developer's Git repository or an upstream
    repository.
 
 -  *git add:* Locally stages updated file contents to the index that
@@ -537,7 +537,7 @@ descriptions and strategies on how to use these commands:
    you made. Only changes that have been staged can be committed.
    Commits are used for historical purposes, for determining if a
    maintainer of a project will allow the change, and for ultimately
-   pushing the change from your local Git repository into the project’s
+   pushing the change from your local Git repository into the project's
    upstream repository.
 
 -  *git status:* Reports any modified files that possibly need to be

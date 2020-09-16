@@ -7,19 +7,19 @@ Understanding the Yocto Project Autobuilder
 Execution Flow within the Autobuilder
 =====================================
 
-The “a-full” and “a-quick” targets are the usual entry points into the
+The "a-full" and "a-quick" targets are the usual entry points into the
 Autobuilder and it makes sense to follow the process through the system
 starting there. This is best visualised from the Autobuilder Console
 view (:yocto_ab:`/typhoon/#/console`).
 
-Each item along the top of that view represents some “target build” and
-these targets are all run in parallel. The ‘full’ build will trigger the
-majority of them, the “quick” build will trigger some subset of them.
+Each item along the top of that view represents some "target build" and
+these targets are all run in parallel. The 'full' build will trigger the
+majority of them, the "quick" build will trigger some subset of them.
 The Autobuilder effectively runs whichever configuration is defined for
 each of those targets on a seperate buildbot worker. To understand the
 configuration, you need to look at the entry on ``config.json`` file
 within the ``yocto-autobuilder-helper`` repository. The targets are
-defined in the ‘overrides’ section, a quick example could be qemux86-64
+defined in the ‘overrides' section, a quick example could be qemux86-64
 which looks like::
 
    "qemux86-64" : {
@@ -32,8 +32,8 @@ which looks like::
         }
    },
 
-And to expand that, you need the “arch-qemu” entry from
-the “templates” section, which looks like::
+And to expand that, you need the "arch-qemu" entry from
+the "templates" section, which looks like::
 
    "arch-qemu" : {
          "BUILDINFO" : true,
@@ -54,9 +54,9 @@ the “templates” section, which looks like::
          }
    },
 
-Combining these two entries you can see that “qemux86-64” is a three step build where the
+Combining these two entries you can see that "qemux86-64" is a three step build where the
 ``bitbake BBTARGETS`` would be run, then ``bitbake SANITYTARGETS`` for each step; all for
-``MACHINE=”qemx86-64”`` but with differing SDKMACHINE settings. In step
+``MACHINE="qemx86-64"`` but with differing SDKMACHINE settings. In step
 1 an extra variable is added to the ``auto.conf`` file to enable wic
 image generation.
 
@@ -262,7 +262,7 @@ of post-build steps, including:
 
 #. Cleanup the build directory using
    :ref:`test-manual/test-manual-understand-autobuilder:clobberdir` if the build was successful,
-   else rename it to “build-renamed” for potential future debugging.
+   else rename it to "build-renamed" for potential future debugging.
 
 .. _test-deploying-yp-autobuilder:
 

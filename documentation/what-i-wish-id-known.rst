@@ -8,7 +8,7 @@ What I wish I'd known about Yocto Project
 
 .. note::
 
-   Before reading further, make sure you’ve taken a look at the
+   Before reading further, make sure you've taken a look at the
    :yocto_home:`Software Overview</software-overview>` page which presents the
    definitions for many of the terms referenced here. Also, know that some of the
    information here won't make sense now, but as you start developing, it is the
@@ -16,8 +16,8 @@ What I wish I'd known about Yocto Project
    working with Yocto Project and they are updated regularly.
 
 Using the Yocto Project is fairly easy, *until something goes wrong*. Without an
-understanding of how the build process works, you’ll find yourself trying to
-troubleshoot “a black box”. Here are a few items that new users wished they had
+understanding of how the build process works, you'll find yourself trying to
+troubleshoot "a black box". Here are a few items that new users wished they had
 known before embarking on their first build with Yocto Project. Feel free to
 contact us with other suggestions.
 
@@ -34,7 +34,7 @@ contact us with other suggestions.
    </software-over/layer/>`.  Generally check the Compatible layer index first,
    and if you don't find the necessary layer check the general layer index. The
    layer index is an original artifact from the Open Embedded Project. As such,
-   that index doesn’t have the curating and testing that the Yocto Project
+   that index doesn't have the curating and testing that the Yocto Project
    provides on Yocto Project Compatible layer list, but the latter has fewer
    entries. Know that when you start searching in the layer index that not all
    layers have the same level of maturity, validation, or usability.  Nor do
@@ -110,7 +110,7 @@ contact us with other suggestions.
    :ref:`bitbake-user-manual/bitbake-user-manual-intro:generating dependency
    graphs` section in the BitBake User Manual.
 
-#. **Here’s how you decode “magic” folder names in tmp/work:**
+#. **Here's how you decode "magic" folder names in tmp/work:**
    The build system fetches, unpacks, preprocesses, and builds. If something
    goes wrong, the build system reports to you directly the path to a folder
    where the temporary (build/tmp) files and packages reside resulting from the
@@ -128,8 +128,8 @@ contact us with other suggestions.
    Yocto Project, the instructions found in the
    :doc:`brief-yoctoprojectqs/brief-yoctoprojectqs` show how to create an image
    and then run or flash that image.  However, you can actually build just a
-   single recipe. Thus, if some dependency or recipe isn’t working, you can just
-   say “bitbake foo” where "foo" is the name for a specific recipe.  As you
+   single recipe. Thus, if some dependency or recipe isn't working, you can just
+   say "bitbake foo" where "foo" is the name for a specific recipe.  As you
    become more advanced using the Yocto Project, and if builds are failing, it
    can be useful to make sure the fetch itself works as desired. Here are some
    valuable links: :ref:`dev-manual/dev-manual-common-tasks:Using a Development
@@ -147,11 +147,11 @@ contact us with other suggestions.
    the recipe is building but are different parts (packages) of the build
    (i.e. the main package, the doc package, the debug symbols package, the
    separate utilities package, and so forth). The build system splits out the
-   packages so that you don’t need to install the packages you don’t want or
+   packages so that you don't need to install the packages you don't want or
    need, which is advantageous because you are building for small devices when
    developing for embedded and IoT.
 
-#. **You will want to learn about and know what’s packaged in rootfs.**
+#. **You will want to learn about and know what's packaged in rootfs.**
 
 #. **Create your own image recipe:**
    There are a number of ways to create your own image recipe.  We suggest you

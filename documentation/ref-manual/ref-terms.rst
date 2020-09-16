@@ -273,7 +273,7 @@ universal, the list includes them just in case:
       Arbitrary groups of software Recipes. You use
       package groups to hold recipes that, when built, usually accomplish a
       single task. For example, a package group could contain the recipes
-      for a company’s proprietary or value-add software. Or, the package
+      for a company's proprietary or value-add software. Or, the package
       group could contain the recipes that enable graphics. A package group
       is really just another recipe. Because package group files are
       recipes, they end with the ``.bb`` filename extension.

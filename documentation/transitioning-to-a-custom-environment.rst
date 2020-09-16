@@ -10,9 +10,9 @@ Transitioning to a custom environment for systems development
 
    So you've finished the :doc:`brief-yoctoprojectqs/brief-yoctoprojectqs` and
    glanced over the document :doc:`what-i-wish-id-known`, the latter contains
-   important information learned from other users. You’re well prepared. But
-   now, as you are starting your own project, isn’t exactly straightforward what
-   to do. And, the documentation is daunting. We’ve put together a few hints to
+   important information learned from other users. You're well prepared. But
+   now, as you are starting your own project, isn't exactly straightforward what
+   to do. And, the documentation is daunting. We've put together a few hints to
    get you started.
 
 #. **Make a list of the processor, target board, technologies, and capabilities
@@ -21,7 +21,7 @@ Transitioning to a custom environment for systems development
    things, and adding them to your configuration. (See #3)
 
 #. **Set up your board support**.
-   Even if you’re using custom hardware, it might be easier to start with an
+   Even if you're using custom hardware, it might be easier to start with an
    existing target board that uses the same processor or at least the same
    architecture as your custom hardware. Knowing the board already has a
    functioning Board Support Package (BSP) within the project makes it easier
@@ -36,7 +36,7 @@ Transitioning to a custom environment for systems development
    vendor – they can point you to their most qualified efforts. In general, for
    Intel silicon use meta-intel, for Texas Instruments use meta-ti, and so
    forth. Choose a BSP that has been tested with the same Yocto Project release
-   that you’ve downloaded. Be aware that some BSPs may not be immediately
+   that you've downloaded. Be aware that some BSPs may not be immediately
    supported on the very latest release, but they will be eventually.
 
    You might want to start with the build specification that Poky provides
@@ -46,7 +46,7 @@ Transitioning to a custom environment for systems development
 
 #. **Based on the layers you've chosen, make needed changes in your
    configuration**.
-   For instance, you’ve chosen a machine type and added in the corresponding BSP
+   For instance, you've chosen a machine type and added in the corresponding BSP
    layer. You'll then need to change the value of the MACHINE variable in your
    configuration file (build/local.conf) to point to that same machine
    type. There could be other layer-specific settings you need to change as
@@ -82,14 +82,14 @@ Transitioning to a custom environment for systems development
    Recipe <dev-manual/dev-manual-common-tasks:writing a new recipe>` in the
    Yocto Project Development Tasks Manual for more information.
 
-#. **Now you’re ready to create an image recipe**.
+#. **Now you're ready to create an image recipe**.
    There are a number of ways to do this. However, it is strongly recommended
-   that you have your own image recipe - don’t try appending to existing image
+   that you have your own image recipe - don't try appending to existing image
    recipes. Recipes for images are trivial to create and you usually want to
    fully customize their contents.
 
 #. **Build your image and refine it**.
-   Add what’s missing and fix anything that's broken using your knowledge of the
+   Add what's missing and fix anything that's broken using your knowledge of the
    :ref:`workflow <sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk
    workflow>` to identify where issues might be occurring.
 

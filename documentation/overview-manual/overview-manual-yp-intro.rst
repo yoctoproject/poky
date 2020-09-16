@@ -319,14 +319,14 @@ applications using the Yocto Project:
 
    The ``devtool`` command employs a number of sub-commands that allow
    you to add, modify, and upgrade recipes. As with the OpenEmbedded
-   build system, “recipes” represent software packages within
+   build system, "recipes" represent software packages within
    ``devtool``. When you use ``devtool add``, a recipe is automatically
    created. When you use ``devtool modify``, the specified existing
    recipe is used in order to determine where to get the source code and
    how to patch it. In both cases, an environment is set up so that when
    you build the recipe a source tree that is under your control is used
    in order to allow you to make changes to the source as desired. By
-   default, both new recipes and the source go into a “workspace”
+   default, both new recipes and the source go into a "workspace"
    directory under the eSDK. The ``devtool upgrade`` command updates an
    existing recipe so that you can build it for an updated set of source
    files.
@@ -417,7 +417,7 @@ activities using the Yocto Project:
    years ago. Both prelink and cross-prelink are maintained in the same
    repository albeit on separate branches. By providing an emulated
    runtime dynamic linker (i.e. ``glibc``-derived ``ld.so`` emulation),
-   the cross-prelink project extends the prelink software’s ability to
+   the cross-prelink project extends the prelink software's ability to
    prelink a sysroot environment. Additionally, the cross-prelink
    software enables the ability to work in sysroot style environments.
 
@@ -432,7 +432,7 @@ activities using the Yocto Project:
    library code can be re-used from shared Copy-On-Write (COW) pages.
 
    The original upstream prelink project only supports running prelink
-   on the end target device due to the reliance on the target device’s
+   on the end target device due to the reliance on the target device's
    dynamic linker. This restriction causes issues when developing a
    cross-compiled system. The cross-prelink adds a synthesized dynamic
    loader that runs on the host, thus permitting cross-prelinking
@@ -495,7 +495,7 @@ The following list consists of components associated with the
    Sharing a core set of metadata results in Poky as an integration
    layer on top of OE-Core. You can see that in this
    `figure <#yp-key-dev-elements>`__. The Yocto Project combines various
-   components such as BitBake, OE-Core, script “glue”, and documentation
+   components such as BitBake, OE-Core, script "glue", and documentation
    for its build system.
 
 .. _gs-reference-distribution-poky:
@@ -556,7 +556,7 @@ targets:
    .. note::
 
       As best it can, opkg maintains backwards compatibility with ipkg
-      and conforms to a subset of Debian’s policy manual regarding
+      and conforms to a subset of Debian's policy manual regarding
       control files.
 
 .. _gs-archived-components:

@@ -6,7 +6,7 @@ Images
 
 The OpenEmbedded build system provides several example images to satisfy
 different needs. When you issue the ``bitbake`` command you provide a
-“top-level” recipe that essentially begins the build for the type of
+"top-level" recipe that essentially begins the build for the type of
 image you want.
 
 .. note::
@@ -85,7 +85,7 @@ Following is a list of supported recipes:
 
 -  ``core-image-minimal-initramfs``: A ``core-image-minimal`` image that
    has the Minimal RAM-based Initial Root Filesystem (initramfs) as part
-   of the kernel, which allows the system to find the first “init”
+   of the kernel, which allows the system to find the first "init"
    program more efficiently. See the
    :term:`PACKAGE_INSTALL` variable for
    additional information helpful when working with initramfs images.

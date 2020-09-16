@@ -74,7 +74,7 @@ available. Follow these general steps to run QEMU:
 
 3. *Ensure the Artifacts are in Place:* You need to be sure you have a
    pre-built kernel that will boot in QEMU. You also need the target
-   root filesystem for your target machine’s architecture:
+   root filesystem for your target machine's architecture:
 
    -  If you have previously built an image for QEMU (e.g. ``qemux86``,
       ``qemuarm``, and so forth), then the artifacts are in place in
@@ -396,7 +396,7 @@ command line:
 
 -  ROOTFS: A root filesystem that has one of the following filetype
    extensions: "ext2", "ext3", "ext4", "jffs2", "nfs", or "btrfs". If
-   the filename you provide for this option uses “nfs”, it must provide
+   the filename you provide for this option uses "nfs", it must provide
    an explicit root filesystem path.
 
 -  KERNEL: A kernel image, which is a ``.bin`` file. When you provide a
@@ -405,7 +405,7 @@ command line:
 
 -  MACHINE: The architecture of the QEMU machine, which must be one of
    the following: "qemux86", "qemux86-64", "qemuarm", "qemuarm64",
-   "qemumips", “qemumips64", or "qemuppc". The MACHINE and QEMUARCH
+   "qemumips", "qemumips64", or "qemuppc". The MACHINE and QEMUARCH
    options are basically identical. If you do not provide a MACHINE
    option, ``runqemu`` tries to determine it based on other options.
 
@@ -465,6 +465,6 @@ command line:
       ``/dev/vhost-net``.
 
    -  The build host ``/dev/vhost-net`` directory has to be either
-      readable or writable and “slirp-enabled”.
+      readable or writable and "slirp-enabled".
 
 -  ``publicvnc``: Enables a VNC server open to all hosts.
