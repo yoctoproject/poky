@@ -391,9 +391,7 @@ activities using the Yocto Project:
 
    .. note::
 
-      AutoBuilder is based on
-      buildbot
-      .
+      AutoBuilder is based on buildbot.
 
    A goal of the Yocto Project is to lead the open source industry with
    a project that automates testing and QA procedures. In doing so, the

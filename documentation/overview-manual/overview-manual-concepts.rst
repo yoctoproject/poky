@@ -1948,11 +1948,11 @@ The following list explains the previous example:
       addtask do_deploy_setscene
 
   ``sstate_setscene()`` takes the flags above as input and accelerates the ``do_deploy`` task
-   through the shared state cache if possible. If the task was
-   accelerated, ``sstate_setscene()`` returns True. Otherwise, it
-   returns False, and the normal ``do_deploy`` task runs. For more
-   information, see the ":ref:`setscene <bitbake:bitbake-user-manual/bitbake-user-manual-execution:setscene>`"
-   section in the BitBake User Manual.
+  through the shared state cache if possible. If the task was
+  accelerated, ``sstate_setscene()`` returns True. Otherwise, it
+  returns False, and the normal ``do_deploy`` task runs. For more
+  information, see the ":ref:`setscene <bitbake:bitbake-user-manual/bitbake-user-manual-execution:setscene>`"
+  section in the BitBake User Manual.
 
 -  The ``do_deploy[dirs] = "${DEPLOYDIR} ${B}"`` line creates
    ``${DEPLOYDIR}`` and ``${B}`` before the ``do_deploy`` task runs, and
