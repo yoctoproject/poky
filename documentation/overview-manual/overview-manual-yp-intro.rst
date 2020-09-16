@@ -311,7 +311,7 @@ applications using the Yocto Project:
    binaries for a variety of architectures on Windows, Linux and Mac OS
    X hosts.
 
--  *``devtool``:* This command-line tool is available as part of the
+-  *devtool:* This command-line tool is available as part of the
    extensible SDK (eSDK) and is its cornerstone. You can use ``devtool``
    to help build, test, and package software within the eSDK. You can
    use the tool to optionally integrate what you build into an image
