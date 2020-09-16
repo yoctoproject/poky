@@ -47,16 +47,16 @@ Transitioning to a custom environment for systems development
 #. **Based on the layers you've chosen, make needed changes in your
    configuration**.
    For instance, you've chosen a machine type and added in the corresponding BSP
-   layer. You'll then need to change the value of the MACHINE variable in your
+   layer. You'll then need to change the value of the ``MACHINE`` variable in your
    configuration file (build/local.conf) to point to that same machine
    type. There could be other layer-specific settings you need to change as
-   well. Each layer has a README document that you can look at for this type of
+   well. Each layer has a ``README`` document that you can look at for this type of
    usage information.
 
 #. **Add a new layer for any custom recipes and metadata you create**.
-   Use the "bitbake-layers create-layer" tool for Yocto Project 2.4+
+   Use the ``bitbake-layers create-layer`` tool for Yocto Project 2.4+
    releases. If you are using a Yocto Project release earlier than 2.4, use the
-   "yocto-layer create" tool. The "bitbake-layers" tool also provides a number
+   ``yocto-layer create`` tool. The ``bitbake-layers`` tool also provides a number
    of other useful layer-related commands. See
    :ref:`dev-manual/dev-manual-common-tasks:creating a general layer using the
    \`\`bitbake-layers\`\` script` section.

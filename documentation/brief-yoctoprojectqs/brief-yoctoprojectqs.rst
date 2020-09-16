@@ -131,7 +131,7 @@ Move to the ``poky`` directory and take a look at the tags:
    yocto_1.5_M5.rc8
 
 For this example, check out the branch based on the
-&DISTRO_REL_TAG; release:
+``&DISTRO_REL_TAG;`` release:
 
 .. code-block:: shell
 
@@ -139,8 +139,8 @@ For this example, check out the branch based on the
    Switched to a new branch 'my-&DISTRO_REL_TAG;'
 
 The previous Git checkout command creates a local branch named
-my-&DISTRO_REL_TAG;. The files available to you in that branch exactly
-match the repository's files in the "&DISTRO_NAME_NO_CAP;" development
+``my-&DISTRO_REL_TAG;``. The files available to you in that branch exactly
+match the repository's files in the ``&DISTRO_NAME_NO_CAP;`` development
 branch at the time of the Yocto Project &DISTRO_REL_TAG; release.
 
 For more options and information about accessing Yocto Project related
@@ -317,7 +317,7 @@ Follow these steps to add a hardware layer:
 #. **Change the Configuration to Build for a Specific Machine:** The
    :term:`MACHINE` variable in the
    ``local.conf`` file specifies the machine for the build. For this
-   example, set the ``MACHINE`` variable to "cyclone5". These
+   example, set the ``MACHINE`` variable to ``cyclone5``. These
    configurations are used:
    https://github.com/kraj/meta-altera/blob/master/conf/machine/cyclone5.conf.
 
@@ -351,13 +351,13 @@ Follow these steps to add a hardware layer:
 
 Completing these steps has added the ``meta-altera`` layer to your Yocto
 Project development environment and configured it to build for the
-"cyclone5" machine.
+``cyclone5`` machine.
 
 .. note::
 
    The previous steps are for demonstration purposes only. If you were
-   to attempt to build an image for the "cyclone5" machine, you should
-   read the Altera README.
+   to attempt to build an image for the ``cyclone5`` machine, you should
+   read the Altera ``README``.
 
 Creating Your Own General Layer
 ===============================
