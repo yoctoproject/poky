@@ -787,7 +787,7 @@ Build Directory's hierarchy:
 -  :term:`PN`: The name of the recipe used
    to build the package. This variable can have multiple meanings.
    However, when used in the context of input files, ``PN`` represents
-   the the name of the recipe.
+   the name of the recipe.
 
 -  :term:`WORKDIR`: The location
    where the OpenEmbedded build system builds a recipe (i.e. does the
@@ -1125,8 +1125,7 @@ build system has created the final image output files.
 .. note::
 
    The entire image generation process is run under
-   Pseudo
-   . Running under Pseudo ensures that the files in the root filesystem
+   Pseudo. Running under Pseudo ensures that the files in the root filesystem
    have correct ownership.
 
 .. _sdk-generation-dev-environment:
@@ -1736,8 +1735,7 @@ objective of making native or cross packages relocatable.
 .. note::
 
    Both native and cross packages run on the
-   build host
-   . However, cross packages generate output for the target
+   build host. However, cross packages generate output for the target
    architecture.
 
 The checksum therefore needs to exclude ``WORKDIR``. The simplistic

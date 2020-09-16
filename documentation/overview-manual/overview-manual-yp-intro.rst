@@ -134,7 +134,7 @@ Project:
 -  *License Manifest:* The Yocto Project provides a :ref:`license
    manifest <dev-manual/dev-manual-common-tasks:maintaining open source license compliance during your product's lifecycle>`
    for review by people who need to track the use of open source
-   licenses (e.g.legal teams).
+   licenses (e.g. legal teams).
 
 .. _gs-challenges:
 
@@ -540,7 +540,7 @@ targets:
    You can find the Matchbox source in the Yocto Project
    :yocto_git:`Source Repositories <>`.
 
--  *Opkg* Open PacKaGe management (opkg) is a lightweight package
+-  *Opkg:* Open PacKaGe management (opkg) is a lightweight package
    management system based on the itsy package (ipkg) management system.
    Opkg is written in C and resembles Advanced Package Tool (APT) and
    Debian Package (dpkg) in operation.
@@ -655,7 +655,7 @@ Project.
    virtualization technology.
 
    For information on how to set up a Build Host with WSLv2, see the
-   ":ref:dev-manual/dev-manual-start:setting up to use windows subsystem for linux (wslv2)`"
+   ":ref:`dev-manual/dev-manual-start:setting up to use windows subsystem for linux (wslv2)`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *Toaster:* Regardless of what your Build Host is running, you can use
@@ -743,7 +743,7 @@ and Fall. For more information on the Yocto Project release schedule and
 cadence, see the ":doc:`../ref-manual/ref-release-process`" chapter in the
 Yocto Project Reference Manual.
 
-Much has been said about Poky being a "default configuration." A default
+Much has been said about Poky being a "default configuration". A default
 configuration provides a starting image footprint. You can use Poky out
 of the box to create an image ranging from a shell-accessible minimal
 image all the way up to a Linux Standard Base-compliant image that uses

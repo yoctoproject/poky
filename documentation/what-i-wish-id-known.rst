@@ -85,7 +85,7 @@ contact us with other suggestions.
    pinpoint where trouble is occurring and how the build is breaking. The
    workflow breaks down into the following steps:
 
-   #. Fetch – get the sourcecode
+   #. Fetch – get the source code
    #. Extract – unpack the sources
    #. Patch – apply patches for bug fixes and new capability
    #. Configure – set up your environment specifications
@@ -105,7 +105,7 @@ contact us with other suggestions.
    You can use the "-g" option with BitBake to generate this graph.  When you
    start a build and the build breaks, you could see packages you have no clue
    about or have any idea why the build system has included them.  The
-   dependency graph can clarify that confustion.  You can learn more about
+   dependency graph can clarify that confusion.  You can learn more about
    dependency graphs and how to generate them in the
    :ref:`bitbake-user-manual/bitbake-user-manual-intro:generating dependency
    graphs` section in the BitBake User Manual.

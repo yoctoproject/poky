@@ -11,7 +11,7 @@ Transitioning to a custom environment for systems development
    So you've finished the :doc:`brief-yoctoprojectqs/brief-yoctoprojectqs` and
    glanced over the document :doc:`what-i-wish-id-known`, the latter contains
    important information learned from other users. You're well prepared. But
-   now, as you are starting your own project, isn't exactly straightforward what
+   now, as you are starting your own project, it isn't exactly straightforward what
    to do. And, the documentation is daunting. We've put together a few hints to
    get you started.
 
@@ -67,7 +67,7 @@ Transitioning to a custom environment for systems development
    BSP, :ref:`create your own layer for the BSP <bsp-guide/bsp:creating a new
    bsp layer using the \`\`bitbake-layers\`\` script>`. For example, given a
    64-bit x86-based machine, copy the conf/intel-corei7-64 definition and give
-   it a machine a relevant name (think board name, not product name). Make sure
+   the machine a relevant name (think board name, not product name). Make sure
    the layer configuration is dependent on the meta-intel layer (or at least,
    meta-intel remains in your bblayers.conf). Now you can put your custom BSP
    settings into your layer and you can re-use it for different applications.

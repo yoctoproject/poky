@@ -102,7 +102,7 @@ commands to clone the Poky repository.
    remote: Counting
    objects: 432160, done. remote: Compressing objects: 100%
    (102056/102056), done. remote: Total 432160 (delta 323116), reused
-   432037 (delta 323000) Receiving objects: 100% (432160/432160), 153.81 MiB \| 8.54 MiB/s, done.
+   432037 (delta 323000) Receiving objects: 100% (432160/432160), 153.81 MiB | 8.54 MiB/s, done.
    Resolving deltas: 100% (323116/323116), done.
    Checking connectivity... done.
 
@@ -287,7 +287,7 @@ Follow these steps to add a hardware layer:
    This example adds the
    `meta-altera <https://github.com/kraj/meta-altera>`__ hardware layer.
 
-#. **Clone the Layer** Use Git to make a local copy of the layer on your
+#. **Clone the Layer:** Use Git to make a local copy of the layer on your
    machine. You can put the copy in the top level of the copy of the
    Poky repository created earlier:
 
@@ -299,7 +299,7 @@ Follow these steps to add a hardware layer:
       remote: Counting objects: 25170, done.
       remote: Compressing objects: 100% (350/350), done.
       remote: Total 25170 (delta 645), reused 719 (delta 538), pack-reused 24219
-      Receiving objects: 100% (25170/25170), 41.02 MiB \| 1.64 MiB/s, done.
+      Receiving objects: 100% (25170/25170), 41.02 MiB | 1.64 MiB/s, done.
       Resolving deltas: 100% (13385/13385), done.
       Checking connectivity... done.
 
@@ -340,7 +340,7 @@ Follow these steps to add a hardware layer:
       $ cd ~/poky/build
       $ bitbake-layers add-layer ../meta-altera
       NOTE: Starting bitbake server...
-      Parsing recipes: 100% \|##################################################################\| Time: 0:00:32
+      Parsing recipes: 100% |##################################################################| Time: 0:00:32
       Parsing of 918 .bb files complete (0 cached, 918 parsed). 1401 targets,
       123 skipped, 0 masked, 0 errors.
 
@@ -388,7 +388,7 @@ Where To Go Next
 ================
 
 Now that you have experienced using the Yocto Project, you might be
-asking yourself "What now?" The Yocto Project has many sources of
+asking yourself "What now?". The Yocto Project has many sources of
 information including the website, wiki pages, and user manuals:
 
 -  **Website:** The :yocto_home:`Yocto Project Website <>` provides
