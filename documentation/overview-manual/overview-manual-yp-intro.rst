@@ -255,7 +255,7 @@ accomplish this through a recipe that is a BitBake append
 .. note::
 
    For general information on BSP layer structure, see the
-   Yocto Project Board Support Packages (BSP) Developer's Guide
+   :doc:`../bsp-guide/bsp-guide`
    .
 
 The :term:`Source Directory`
@@ -557,6 +557,9 @@ targets:
       and conforms to a subset of Debian's policy manual regarding
       control files.
 
+   You can find the opkg source in the Yocto Project
+   :yocto_git:`Source Repositories <>`.
+
 .. _gs-archived-components:
 
 Archived Components
@@ -605,9 +608,8 @@ Project.
 .. note::
 
    For additional detail about the Yocto Project development
-   environment, see the "
-   The Yocto Project Development Environment
-   " chapter.
+   environment, see the ":doc:`overview-manual-development-environment`"
+   chapter.
 
 -  *Native Linux Host:* By far the best option for a Build Host. A
    system running Linux as its native operating system allows you to
@@ -695,9 +697,8 @@ these items that make up the Poky repository in the
 
    If you are interested in all the contents of the
    poky
-   Git repository, see the "
-   Top-Level Core Components
-   " section in the Yocto Project Reference Manual.
+   Git repository, see the ":ref:`ref-manual/ref-structure:top-level core components`"
+   section in the Yocto Project Reference Manual.
 
 The following figure illustrates what generally comprises Poky:
 

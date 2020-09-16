@@ -1142,15 +1142,12 @@ the extensible SDK (eSDK):
 .. note::
 
    For more information on the cross-development toolchain generation,
-   see the "
-   Cross-Development Toolchain Generation
-   " section. For information on advantages gained when building a
-   cross-development toolchain using the
-   do_populate_sdk
-   task, see the "
-   Building an SDK Installer
-   " section in the Yocto Project Application Development and the
-   Extensible Software Development Kit (eSDK) manual.
+   see the ":ref:`overview-manual/overview-manual-concepts:cross-development toolchain generation`"
+   section. For information on advantages gained when building a
+   cross-development toolchain using the do_populate_sdk task, see the
+   ":ref:`sdk-manual/sdk-appendix-obtain:building an sdk installer`" section in
+   the Yocto Project Application Development and the Extensible Software
+   Development Kit (eSDK) manual.
 
 Like image generation, the SDK script process consists of several stages
 and depends on many variables. The
@@ -1323,9 +1320,8 @@ this output:
 .. note::
 
    For a list of example images that the Yocto Project provides, see the
-   "
-   Images
-   " chapter in the Yocto Project Reference Manual.
+   ":doc:`../ref-manual/ref-images`" chapter in the Yocto Project Reference
+   Manual.
 
 The build process writes images out to the :term:`Build Directory`
 inside the
@@ -1623,9 +1619,9 @@ Here is the bootstrap process for the relocatable toolchain:
 .. note::
 
    For information on advantages gained when building a
-   cross-development toolchain installer, see the "
-   Building an SDK Installer
-   " appendix in the Yocto Project Application Development and the
+   cross-development toolchain installer, see the
+   ":ref:`sdk-manual/sdk-appendix-obtain:building an sdk installer`" appendix
+   in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual.
 
 Shared State Cache
