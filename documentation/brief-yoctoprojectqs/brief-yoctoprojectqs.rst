@@ -350,7 +350,7 @@ Project development environment and configured it to build for the
 .. note::
 
    The previous steps are for demonstration purposes only. If you were
-   to attempt to build an image for the "cyclone5" build, you should
+   to attempt to build an image for the "cyclone5" machine, you should
    read the Altera README.
 
 Creating Your Own General Layer
