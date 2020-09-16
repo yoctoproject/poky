@@ -78,15 +78,15 @@ You must install essential host packages on your build host. The
 following command installs the host packages based on an Ubuntu
 distribution:
 
+.. code-block:: shell
+
+  $ sudo apt-get install &UBUNTU_HOST_PACKAGES_ESSENTIAL;
+
 .. note::
 
    For host package requirements on all supported Linux distributions,
    see the :ref:`ref-manual/ref-system-requirements:required packages for the build host`
    section in the Yocto Project Reference Manual.
-
-.. code-block:: shell
-
-  $ sudo apt-get install &UBUNTU_HOST_PACKAGES_ESSENTIAL;
 
 Use Git to Clone Poky
 =====================
