@@ -420,3 +420,5 @@ information including the website, wiki pages, and user manuals:
    :ref:`ref-manual/resources:links and related documentation`
    section in the Yocto Project Reference Manual provides a
    comprehensive list of all related links and other user documentation.
+
+.. include:: /boilerplate.rst
