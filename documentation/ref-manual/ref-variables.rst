@@ -696,7 +696,7 @@ system and gives an overview of their function and contents.
       compiler. Consequently, the syntax follows Python's Regular
       Expression (re) syntax. The expressions are compared against the full
       paths to the files. For complete syntax information, see Python's
-      documentation at http://docs.python.org/3/library/re.html#re.
+      documentation at https://docs.python.org/3/library/re.html#regular-expression-syntax.
 
       The following example uses a complete regular expression to tell
       BitBake to ignore all recipe and recipe append files in the
@@ -3669,7 +3669,7 @@ system and gives an overview of their function and contents.
       The value in ``INITSCRIPT_PARAMS`` is passed through to the
       ``update-rc.d`` command. For more information on valid parameters,
       please see the ``update-rc.d`` manual page at
-      http://www.tin.org/bin/man.cgi?section=8&topic=update-rc.d.
+      https://manpages.debian.org/buster/init-system-helpers/update-rc.d.8.en.html
 
    INSANE_SKIP
       Specifies the QA checks to skip for a specific package within a
