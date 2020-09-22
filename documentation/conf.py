@@ -27,7 +27,7 @@ release = current_version
 
 
 # -- Project information -----------------------------------------------------
-project = 'The Yocto Project'
+project = 'The Yocto Project \xae'
 copyright = '2010-%s, The Linux Foundation' % datetime.datetime.now().year
 author = 'The Linux Foundation'
 
