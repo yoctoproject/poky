@@ -2585,12 +2585,35 @@ system and gives an overview of their function and contents.
       For guidance on how to create your own file permissions settings
       table file, examine the existing ``fs-perms.txt``.
 
+   FIT_GENERATE_KEYS
+      Decides whether to generate the keys for signing fitImage if they
+      don't already exist. The keys are created in ``UBOOT_SIGN_KEYDIR``.
+      The default value is 0.
+
    FIT_HASH_ALG
       Specifies the hash algorithm used in creating the FIT Image. For e.g. sha256.
+
+   FIT_KEY_GENRSA_ARGS
+      Arguments to openssl genrsa for generating RSA private key for signing
+      fitImage. The default value is "-F4". i.e. the public exponent 65537 to
+      use.
+
+   FIT_KEY_REQ_ARGS
+      Arguments to openssl req for generating certificate for signing fitImage.
+      The default value is "-batch -new". batch for non interactive mode
+      and new for generating new keys.
+
+   FIT_KEY_SIGN_PKCS
+      Format for public key ceritifcate used in signing fitImage.
+      The default value is "x509".
 
    FIT_SIGN_ALG
       Specifies the signature algorithm used in creating the FIT Image.
       For e.g. rsa2048.
+
+   FIT_SIGN_NUMBITS
+      Size of private key in number of bits used in fitImage. The default
+      value is "2048".
 
    FONT_EXTRA_RDEPENDS
       When inheriting the :ref:`fontcache <ref-classes-fontcache>` class,
