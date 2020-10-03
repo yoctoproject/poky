@@ -7533,14 +7533,6 @@ system and gives an overview of their function and contents.
 
       The class checks for and uses the variable as needed.
 
-   SYSLINUX_SPLASH
-      An ``.LSS`` file used as the background for the VGA boot menu when
-      you use the boot menu. You need to set this variable in your recipe.
-
-      The :ref:`syslinux <ref-classes-syslinux>` class checks for this
-      variable and if found, the OpenEmbedded build system installs the
-      splash screen.
-
    SYSLINUX_SERIAL_TTY
       Specifies the alternate console=tty... kernel boot argument. The
       variable's default value is set in the
@@ -7550,6 +7542,14 @@ system and gives an overview of their function and contents.
          SYSLINUX_SERIAL_TTY ?= "console=ttyS0,115200"
 
       The class checks for and uses the variable as needed.
+
+   SYSLINUX_SPLASH
+      An ``.LSS`` file used as the background for the VGA boot menu when
+      you use the boot menu. You need to set this variable in your recipe.
+
+      The :ref:`syslinux <ref-classes-syslinux>` class checks for this
+      variable and if found, the OpenEmbedded build system installs the
+      splash screen.
 
    SYSROOT_DESTDIR
       Points to the temporary directory under the work directory (default
@@ -8037,6 +8037,49 @@ system and gives an overview of their function and contents.
          WORKDIR/oe-rootfs-repo
          .
 
+   TEST_SUITES
+      An ordered list of tests (modules) to run against an image when
+      performing automated runtime testing.
+
+      The OpenEmbedded build system provides a core set of tests that can
+      be used against images.
+
+      .. note::
+
+         Currently, there is only support for running these tests under
+         QEMU.
+
+      Tests include ``ping``, ``ssh``, ``df`` among others. You can add
+      your own tests to the list of tests by appending ``TEST_SUITES`` as
+      follows:
+      ::
+
+         TEST_SUITES_append = " mytest"
+
+      Alternatively, you can
+      provide the "auto" option to have all applicable tests run against
+      the image.
+      ::
+
+         TEST_SUITES_append = " auto"
+
+      Using this option causes the
+      build system to automatically run tests that are applicable to the
+      image. Tests that are not applicable are skipped.
+
+      The order in which tests are run is important. Tests that depend on
+      another test must appear later in the list than the test on which
+      they depend. For example, if you append the list of tests with two
+      tests (``test_A`` and ``test_B``) where ``test_B`` is dependent on
+      ``test_A``, then you must order the tests as follows:
+      ::
+
+         TEST_SUITES = "test_A test_B"
+
+      For more information on testing images, see the
+      ":ref:`dev-manual/dev-manual-common-tasks:performing automated runtime testing`"
+      section in the Yocto Project Development Tasks Manual.
+
    TEST_TARGET
       Specifies the target controller to use when running tests against a
       test image. The default controller to use is "qemu":
@@ -8090,49 +8133,6 @@ system and gives an overview of their function and contents.
       your hardware under test is behind a firewall or network that is not
       directly accessible from your host and you need to do port address
       translation.
-
-   TEST_SUITES
-      An ordered list of tests (modules) to run against an image when
-      performing automated runtime testing.
-
-      The OpenEmbedded build system provides a core set of tests that can
-      be used against images.
-
-      .. note::
-
-         Currently, there is only support for running these tests under
-         QEMU.
-
-      Tests include ``ping``, ``ssh``, ``df`` among others. You can add
-      your own tests to the list of tests by appending ``TEST_SUITES`` as
-      follows:
-      ::
-
-         TEST_SUITES_append = " mytest"
-
-      Alternatively, you can
-      provide the "auto" option to have all applicable tests run against
-      the image.
-      ::
-
-         TEST_SUITES_append = " auto"
-
-      Using this option causes the
-      build system to automatically run tests that are applicable to the
-      image. Tests that are not applicable are skipped.
-
-      The order in which tests are run is important. Tests that depend on
-      another test must appear later in the list than the test on which
-      they depend. For example, if you append the list of tests with two
-      tests (``test_A`` and ``test_B``) where ``test_B`` is dependent on
-      ``test_A``, then you must order the tests as follows:
-      ::
-
-         TEST_SUITES = "test_A test_B"
-
-      For more information on testing images, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:performing automated runtime testing`"
-      section in the Yocto Project Development Tasks Manual.
 
    TESTIMAGE_AUTO
       Automatically runs the series of automated tests for images when an
@@ -8319,6 +8319,23 @@ system and gives an overview of their function and contents.
          in turn, affects the tune variables themselves (i.e. the tune can
          supply its own set of flags).
 
+   TUNE_FEATURES
+      Features used to "tune" a compiler for optimal use given a specific
+      processor. The features are defined within the tune files and allow
+      arguments (i.e. ``TUNE_*ARGS``) to be dynamically generated based on
+      the features.
+
+      The OpenEmbedded build system verifies the features to be sure they
+      are not conflicting and that they are supported.
+
+      The BitBake configuration file (``meta/conf/bitbake.conf``) defines
+      ``TUNE_FEATURES`` as follows:
+      ::
+
+         TUNE_FEATURES ??= "${TUNE_FEATURES_tune-${DEFAULTTUNE}}"
+
+      See the :term:`DEFAULTTUNE` variable for more information.
+
    TUNE_LDARGS
       Specifies architecture-specific linker flags for the target system.
       The set of flags is based on the selected tune features.
@@ -8336,23 +8353,6 @@ system and gives an overview of their function and contents.
          Board Support Packages (BSPs) select the tune. The selected tune,
          in turn, affects the tune variables themselves (i.e. the tune can
          supply its own set of flags).
-
-   TUNE_FEATURES
-      Features used to "tune" a compiler for optimal use given a specific
-      processor. The features are defined within the tune files and allow
-      arguments (i.e. ``TUNE_*ARGS``) to be dynamically generated based on
-      the features.
-
-      The OpenEmbedded build system verifies the features to be sure they
-      are not conflicting and that they are supported.
-
-      The BitBake configuration file (``meta/conf/bitbake.conf``) defines
-      ``TUNE_FEATURES`` as follows:
-      ::
-
-         TUNE_FEATURES ??= "${TUNE_FEATURES_tune-${DEFAULTTUNE}}"
-
-      See the :term:`DEFAULTTUNE` variable for more information.
 
    TUNE_PKGARCH
       The package architecture understood by the packaging system to define
@@ -8500,20 +8500,20 @@ system and gives an overview of their function and contents.
       Options for the device tree compiler passed to mkimage '-D'
       feature while creating FIT image in :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class.
 
-   UBOOT_RD_LOADADDRESS
-      Specifies the load address for the RAM disk image.
-      During FIT image creation, the
-      ``UBOOT_RD_LOADADDRESS`` variable is used
-      in :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class to specify the
-      load address to be used in creating the Image Tree Source for
-      the FIT image.
-
    UBOOT_RD_ENTRYPOINT
       Specifies the entrypoint for the RAM disk image.
       During FIT image creation, the
       ``UBOOT_RD_ENTRYPOINT`` variable is used
       in :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class to specify the
       entrypoint to be used in creating the Image Tree Source for
+      the FIT image.
+
+   UBOOT_RD_LOADADDRESS
+      Specifies the load address for the RAM disk image.
+      During FIT image creation, the
+      ``UBOOT_RD_LOADADDRESS`` variable is used
+      in :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class to specify the
+      load address to be used in creating the Image Tree Source for
       the FIT image.
 
    UBOOT_SIGN_ENABLE
@@ -8813,6 +8813,15 @@ system and gives an overview of their function and contents.
       can control with this variable, see the
       ":ref:`insane.bbclass <ref-classes-insane>`" section.
 
+   WKS_FILE
+      Specifies the location of the Wic kickstart file that is used by the
+      OpenEmbedded build system to create a partitioned image
+      (image\ ``.wic``). For information on how to create a partitioned
+      image, see the
+      ":ref:`dev-manual/dev-manual-common-tasks:creating partitioned images using wic`"
+      section in the Yocto Project Development Tasks Manual. For details on
+      the kickstart file format, see the ":doc:`../ref-manual/ref-kickstart`" Chapter.
+
    WKS_FILE_DEPENDS
       When placed in the recipe that builds your image, this variable lists
       build-time dependencies. The ``WKS_FILE_DEPENDS`` variable is only
@@ -8837,15 +8846,6 @@ system and gives an overview of their function and contents.
       In the
       previous example, some-native-tool would be replaced with an actual
       native tool on which the build would depend.
-
-   WKS_FILE
-      Specifies the location of the Wic kickstart file that is used by the
-      OpenEmbedded build system to create a partitioned image
-      (image\ ``.wic``). For information on how to create a partitioned
-      image, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:creating partitioned images using wic`"
-      section in the Yocto Project Development Tasks Manual. For details on
-      the kickstart file format, see the ":doc:`../ref-manual/ref-kickstart`" Chapter.
 
    WORKDIR
       The pathname of the work directory in which the OpenEmbedded build
