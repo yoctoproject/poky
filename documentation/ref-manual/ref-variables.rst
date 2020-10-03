@@ -7,14 +7,14 @@ Variables Glossary
 This chapter lists common variables used in the OpenEmbedded build
 system and gives an overview of their function and contents.
 
-`A <#var-ABIEXTENSION>`__ :term:`B` `C <#var-CACHE>`__
-:term:`D` `E <#var-EFI_PROVIDER>`__ `F <#var-FEATURE_PACKAGES>`__
-`G <#var-GCCPIE>`__ `H <#var-HOMEPAGE>`__ `I <#var-ICECC_DISABLED>`__
-`K <#var-KARCH>`__ `L <#var-LABELS>`__ `M <#var-MACHINE>`__
-`N <#var-NATIVELSBSTRING>`__ `O <#var-OBJCOPY>`__ :term:`P`
-`R <#var-RANLIB>`__ :term:`S` :term:`T`
-`U <#var-UBOOT_CONFIG>`__ `V <#var-VOLATILE_LOG_DIR>`__
-`W <#var-WARN_QA>`__ `X <#var-XSERVER>`__
+:term:`A <ABIEXTENSION>` :term:`B` :term:`C <CACHE>`
+:term:`D` :term:`E <EFI_PROVIDER>` :term:`F <FEATURE_PACKAGES>`
+:term:`G <GCCPIE>` :term:`H <HOMEPAGE>` :term:`I <ICECC_DISABLED>`
+:term:`K <KARCH>` :term:`L <LABELS>` :term:`M <MACHINE>`
+:term:`N <NATIVELSBSTRING>` :term:`O <OBJCOPY>` :term:`P`
+:term:`R <RANLIB>` :term:`S` :term:`T`
+:term:`U <UBOOT_CONFIG>` :term:`V <VOLATILE_LOG_DIR>`
+:term:`W <WARN_QA>` :term:`X <XSERVER>`
 
 .. glossary::
 
