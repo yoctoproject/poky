@@ -141,7 +141,14 @@ supported Ubuntu or Debian Linux distribution:
    Yocto Project documentation manuals:
    ::
 
-      $ sudo apt-get install make xsltproc docbook-utils fop dblatex xmlto
+      $ sudo apt-get install make python3-pip
+      &PIP3_HOST_PACKAGES_DOC;
+
+   .. note::
+
+      It is currently not possible to build out documentation from Debian 8
+      (Jessie) because of outdated ``pip3`` and ``python3``. ``python3-sphinx``
+      is too outdated.
 
 Fedora Packages
 ---------------
@@ -159,8 +166,8 @@ supported Fedora Linux distribution:
    Yocto Project documentation manuals:
    ::
 
-      $ sudo dnf install  docbook-style-dsssl docbook-style-xsl \
-      docbook-dtds docbook-utils fop libxslt dblatex xmlto
+      $ sudo dnf install make python3-pip which
+      &PIP3_HOST_PACKAGES_DOC;
 
 openSUSE Packages
 -----------------
@@ -178,7 +185,8 @@ supported openSUSE Linux distribution:
    Yocto Project documentation manuals:
    ::
 
-      $ sudo zypper install dblatex xmlto
+      $ sudo zypper install make python3-pip which
+      &PIP3_HOST_PACKAGES_DOC;
 
 
 CentOS-7 Packages
@@ -207,8 +215,8 @@ supported CentOS-7 Linux distribution:
    Yocto Project documentation manuals:
    ::
 
-      $ sudo yum install docbook-style-dsssl docbook-style-xsl \
-      docbook-dtds docbook-utils fop libxslt dblatex xmlto
+      $ sudo yum install make python3-pip which
+      &PIP3_HOST_PACKAGES_DOC;
 
 CentOS-8 Packages
 -----------------
@@ -239,8 +247,8 @@ supported CentOS-8 Linux distribution:
    Yocto Project documentation manuals:
    ::
 
-      $ sudo dnf install docbook-style-dsssl docbook-style-xsl \
-      docbook-dtds docbook-utils fop libxslt dblatex xmlto
+      $ sudo dnf install make python3-pip which
+      &PIP3_HOST_PACKAGES_DOC;
 
 Required Git, tar, Python and gcc Versions
 ==========================================
