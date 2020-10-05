@@ -45,7 +45,7 @@ universal, the list includes them just in case:
 
       .. note::
 
-         The use of the " % " character is limited in that it only works
+         The use of the "%" character is limited in that it only works
          directly in front of the .bbappend portion of the append file's
          name. You cannot use the wildcard character in any other location of
          the name.

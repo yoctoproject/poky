@@ -4573,7 +4573,7 @@ system and gives an overview of their function and contents.
       recipe:
       ::
 
-         SRC_URI_append_qemuall = "file://wired.config \
+         SRC_URI_append_qemuall = " file://wired.config \
              file://wired-setup \
              "
 

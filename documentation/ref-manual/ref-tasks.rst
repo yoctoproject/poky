@@ -326,9 +326,9 @@ As mentioned earlier, the build system treats files whose file types are
 file as a patch file:
 ::
 
-   SRC_URI = " \\
-       git://path_to_repo/some_package \\
-       file://file;apply=yes \\
+   SRC_URI = " \
+       git://path_to_repo/some_package \
+       file://file;apply=yes \
        "
 
 Conversely, if you have a directory full of patch files and you want to
@@ -537,7 +537,7 @@ Removes all output files and shared state
 (:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>`) cache for a
 target. Essentially, the ``do_cleansstate`` task is identical to the
 :ref:`ref-tasks-clean` task with the added removal of
-shared state (`:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>`)
+shared state (:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>`)
 cache.
 
 You can run this task using BitBake as follows:
@@ -593,7 +593,7 @@ Lists all defined tasks for a target.
 ``do_package_index``
 --------------------
 
-Creates or updates the index in the `:ref:`package-feeds-dev-environment` area.
+Creates or updates the index in the :ref:`package-feeds-dev-environment` area.
 
 .. note::
 

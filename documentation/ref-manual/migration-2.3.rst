@@ -481,7 +481,7 @@ The following miscellaneous changes have occurred:
    following:
    ::
 
-      KERNEL_MODULE_PACKAGE_SUFFIX to ""
+      KERNEL_MODULE_PACKAGE_SUFFIX = ""
 
 -  Removal of ``libtool`` ``*.la`` files is now enabled by default. The
    ``*.la`` files are not actually needed on Linux and relocating them
