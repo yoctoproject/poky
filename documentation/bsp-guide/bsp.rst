@@ -233,7 +233,7 @@ section.
    setup script to define the OpenEmbedded build environment on your
    build host. ::
 
-      $ source &OE_INIT_FILE;
+      $ source oe-init-build-env
 
    Among other things, the script creates the :term:`Build Directory`, which is
    ``build`` in this case and is located in the :term:`Source Directory`.  After

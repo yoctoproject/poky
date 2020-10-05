@@ -188,7 +188,7 @@ your choice. For example, the following command creates a Build
 Directory named ``mybuilds/`` that is outside of the :term:`Source Directory`:
 ::
 
-   $ source OE_INIT_FILE ~/mybuilds
+   $ source oe-init-build-env ~/mybuilds
 
 The OpenEmbedded build system uses the template configuration files, which
 are found by default in the ``meta-poky/conf/`` directory in the Source
@@ -200,8 +200,7 @@ information.
 .. note::
 
    The OpenEmbedded build system does not support file or directory
-   names that contain spaces. If you attempt to run the
-   OE_INIT_FILE
+   names that contain spaces. If you attempt to run the ``oe-init-build-env``
    script from a Source Directory that contains spaces in either the
    filenames or directory names, the script returns an error indicating
    no such file or directory. Be sure to use a Source Directory free of
