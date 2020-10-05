@@ -120,7 +120,7 @@ The following changes to scripts took place:
       $ . oe-find-native-sysroot recipe
 
    You must now supply a recipe for recipe
-   as part of the command. Prior to the Yocto Project &DISTRO; release, it
+   as part of the command. Prior to the Yocto Project 2.3 release, it
    was not necessary to provide the script with the command.
 
 -  ``oe-run-native``: The usage for the ``oe-run-native`` script has
@@ -131,7 +131,7 @@ The following changes to scripts took place:
 
    You must
    supply the name of the native recipe and the tool you want to run as
-   part of the command. Prior to the Yocto Project DISTRO release, it
+   part of the command. Prior to the Yocto Project 2.3 release, it
    was not necessary to provide the native recipe with the command.
 
 -  ``cleanup-workdir``: The ``cleanup-workdir`` script has been
