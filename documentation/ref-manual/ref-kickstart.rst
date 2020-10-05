@@ -55,15 +55,14 @@ must also provide one of the ``--ondrive``, ``--ondisk``, or
 .. note::
 
    The mount program must understand the PARTUUID syntax you use with
-   --use-uuid
-   and non-root
-   mountpoint
-   , including swap. The busybox versions of these application are
-   currently excluded.
+   ``--use-uuid`` and non-root *mountpoint*, including swap. The busybox
+   versions of these application are currently excluded.
 
 Here is an example that uses "/" as the mountpoint. The command uses
-``--ondisk`` to force the partition onto the ``sdb`` disk: part /
---source rootfs --ondisk sdb --fstype=ext3 --label platform --align 1024
+``--ondisk`` to force the partition onto the ``sdb`` disk:
+::
+
+      part / --source rootfs --ondisk sdb --fstype=ext3 --label platform --align 1024
 
 Here is a list that describes other supported options you can use with
 the ``part`` and ``partition`` commands:

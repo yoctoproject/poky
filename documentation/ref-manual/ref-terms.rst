@@ -101,12 +101,12 @@ universal, the list includes them just in case:
 
       .. note::
 
-         By default, the Build Directory contains :term:`TMPDIR` , which is a
-         temporary directory the build system uses for its work. TMPDIR cannot
+         By default, the Build Directory contains :term:`TMPDIR`, which is a
+         temporary directory the build system uses for its work. ``TMPDIR`` cannot
          be under NFS. Thus, by default, the Build Directory cannot be under
          NFS. However, if you need the Build Directory to be under NFS, you can
-         set this up by setting TMPDIR in your local.conf file to use a local
-         drive. Doing so effectively separates TMPDIR from TOPDIR , which is the
+         set this up by setting ``TMPDIR`` in your ``local.conf`` file to use a local
+         drive. Doing so effectively separates ``TMPDIR`` from :term:`TOPDIR`, which is the
          Build Directory.
 
    Build Host
@@ -232,7 +232,7 @@ universal, the list includes them just in case:
       core set of recipes.
 
       You can see the Metadata in the ``meta`` directory of the Yocto
-      Project :yocto_git:`Source Repositories <>`.
+      Project :yocto_git:`Source Repositories </cgit/cgit.cgi/poky>`.
 
    OpenEmbedded Build System
       The build system specific to the Yocto
@@ -246,9 +246,7 @@ universal, the list includes them just in case:
 
       .. note::
 
-         For some historical information about Poky, see the
-         Poky
-         term.
+         For some historical information about Poky, see the :term:`Poky` term.
 
    Package
       In the context of the Yocto Project, this term refers to a
@@ -258,10 +256,9 @@ universal, the list includes them just in case:
 
       It is worth noting that the term "package" can, in general, have
       subtle meanings. For example, the packages referred to in the
-      "`Required Packages for the Build
-      Host <#required-packages-for-the-build-host>`__" section are compiled
-      binaries that, when installed, add functionality to your Linux
-      distribution.
+      ":ref:`ref-manual/ref-system-requirements:required packages for the build host`"
+      section are compiled binaries that, when installed, add functionality to
+      your Linux distribution.
 
       Another point worth noting is that historically within the Yocto
       Project, recipes were referred to as packages - thus, the existence
