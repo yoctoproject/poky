@@ -243,7 +243,7 @@ supported CentOS-8 Linux distribution:
    Yocto Project documentation manuals:
    ::
 
-      $ sudo dnf install docbook-style-dsssl docbook-style-xsl \\
+      $ sudo dnf install docbook-style-dsssl docbook-style-xsl \
       docbook-dtds docbook-utils fop libxslt dblatex xmlto
 
 Required Git, tar, Python and gcc Versions

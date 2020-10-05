@@ -1388,7 +1388,7 @@ Multiple device trees can be added to the FIT image created by
 ``kernel-fitimage`` and the device tree is optional.
 The address where the device tree is to be loaded by U-boot is
 specified by :term:`UBOOT_DTBO_LOADADDRESS` for device tree overlays
-and by `:term:`UBOOT_DTB_LOADADDRESS` for device tree binaries.
+and by :term:`UBOOT_DTB_LOADADDRESS` for device tree binaries.
 
 Only a single RAM disk can be added to the FIT image created by
 ``kernel-fitimage`` and the RAM disk in FIT is optional.
@@ -2255,7 +2255,7 @@ The root filesystem is created from packages using one of the
 :term:`PACKAGE_CLASSES` variable.
 
 For information on how root filesystem images are created, see the
-:ref:`image-generation-dev-environment`"
+":ref:`image-generation-dev-environment`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-classes-sanity:

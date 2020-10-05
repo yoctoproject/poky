@@ -12,7 +12,7 @@ BitBake
 Differences include the following:
 
 -  *Comment Continuation:* If a comment ends with a line continuation
-   (\) character, then the next line must also be a comment. Any
+   (\\) character, then the next line must also be a comment. Any
    instance where this is not the case, now triggers a warning. You must
    either remove the continuation character, or be sure the next line is
    a comment.
