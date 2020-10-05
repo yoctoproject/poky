@@ -2670,18 +2670,6 @@ host system.
    you can remove "texinfo-native" from :term:`ASSUME_PROVIDED` and makeinfo
    from :term:`SANITY_REQUIRED_UTILITIES`.
 
-.. _ref-classes-tinderclient:
-
-``tinderclient.bbclass``
-========================
-
-The ``tinderclient`` class submits build results to an external
-Tinderbox instance.
-
-.. note::
-
-   This class is currently unmaintained.
-
 .. _ref-classes-toaster:
 
 ``toaster.bbclass``
