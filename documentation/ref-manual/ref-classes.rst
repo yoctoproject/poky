@@ -2380,19 +2380,6 @@ Autotools automatically picks up.
 The class also provides variables like ``SITEINFO_ENDIANNESS`` and
 ``SITEINFO_BITS`` that can be used elsewhere in the metadata.
 
-.. _ref-classes-spdx:
-
-``spdx.bbclass``
-================
-
-The ``spdx`` class integrates real-time license scanning, generation of
-SPDX standard output, and verification of license information during the
-build.
-
-.. note::
-
-   This class is currently at the prototype stage in the 1.6 release.
-
 .. _ref-classes-sstate:
 
 ``sstate.bbclass``

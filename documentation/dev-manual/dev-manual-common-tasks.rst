@@ -11401,6 +11401,8 @@ to be covered by assuming that three main areas of concern exist:
 -  Compilation scripts and modifications to the source code must be
    provided.
 
+-  spdx files can be provided.
+
 There are other requirements beyond the scope of these three and the
 methods described in this section (e.g. the mechanism through which
 source code is distributed).
@@ -11594,6 +11596,42 @@ providing an archive of the :term:`Metadata`
 layers (recipes, configuration files, and so forth) enables you to meet
 your requirements to include the scripts to control compilation as well
 as any modifications to the original source.
+
+Providing spdx files
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The spdx module has been integrated to a layer named meta-spdxscanner.
+meta-spdxscanner provides several kinds of scanner. If you want to enable
+this function, you have to follow the following steps:
+
+1. Add meta-spdxscanner layer into ``bblayers.conf``. 
+
+2. Refer to the README in meta-spdxscanner to setup the environment (e.g, 
+   setup a fossology server) needed for the scanner.
+
+3. Meta-spdxscanner provids several methods within the bbclass to create spdx files.
+   Please choose one that you want to use and enable the spdx task. You have to
+   add some config options in 
+``local.conf`` file in your
+:term:`Build Directory`.
+The following is an example showing how to generate spdx files during bitbake 
+using the fossology-python.bbclass:
+::
+
+   # Selet fossology-python.bbclass.
+   INHERIT += "fossology-python"
+   # For fossology-python.bbclass, TOKEN is necessary, so, after setup a 
+   # Fossology server, you have to create a token.
+   TOKEN = "eyJ0eXAiO..."
+   # The fossology server is necessary for fossology-python.bbclass.
+   FOSSOLOGY_SERVER = "http://xx.xx.xx.xx:8081/repo"
+   # If you want to upload the source code to a special folder:
+   FOLDER_NAME = "xxxx" //Optional
+   # If you don't want to put spdx files in tmp/deploy/spdx, you can enable:
+   SPDX_DEPLOY_DIR = "${DeployDir}" //Optional
+
+For more usage information on meta-spdxscanner, refer to the repsoitory which you can find at:
+https://git.yoctoproject.org/cgit/cgit.cgi/meta-spdxscanner/.
 
 Copying Licenses that Do Not Exist
 ----------------------------------

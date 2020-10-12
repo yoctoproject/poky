@@ -859,17 +859,3 @@ sure that the machine and metadata branches as specified by the
 branches. If these branches do not exist and
 :term:`AUTOREV` is not being used, the
 ``do_validate_branches`` task fails during the build.
-
-Miscellaneous Tasks
-===================
-
-The following sections describe miscellaneous tasks.
-
-.. _ref-tasks-spdx:
-
-``do_spdx``
------------
-
-A build stage that takes the source code and scans it on a remote
-FOSSOLOGY server in order to produce an SPDX document. This task applies
-only to the :ref:`spdx <ref-classes-spdx>` class.
