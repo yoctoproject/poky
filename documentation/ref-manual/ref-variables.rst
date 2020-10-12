@@ -4601,7 +4601,7 @@ system and gives an overview of their function and contents.
          MACHINEOVERRIDES =. "qemuall:"
 
       This
-      override allows variables to be overriden for all machines emulated
+      override allows variables to be overridden for all machines emulated
       in QEMU, like in the following example from the ``connman-conf``
       recipe:
       ::
