@@ -9477,7 +9477,7 @@ been parsed. The variables include those from the configuration as well:
 
 In the output of ``bitbake -e``, each variable is preceded by a
 description of how the variable got its value, including temporary
-values that were later overriden. This description also includes
+values that were later overridden. This description also includes
 variable flags (varflags) set on the variable. The output can be very
 helpful during debugging.
 
