@@ -7037,8 +7037,18 @@ system and gives an overview of their function and contents.
          tree when using the Git fetcher is used.
 
       -  ``name`` - Specifies a name to be used for association with
-         ``SRC_URI`` checksums when you have more than one file specified
-         in ``SRC_URI``.
+         ``SRC_URI`` checksums or :term:`SRCREV` when you have more than one
+         file or git repository specified in ``SRC_URI``. For example:
+         ::
+
+            SRC_URI = "git://example.com/foo.git;name=first \
+                       git://example.com/bar.git;name=second \
+                       http://example.com/file.tar.gz;name=third"
+
+            SRCREV_first = "f1d2d2f924e986ac86fdf7b36c94bcdf32beec15"
+            SRCREV_second = "e242ed3bffccdf271b7fbaf34ed72d089537b42f"
+            SRC_URI[third.sha256sum] = "13550350a8681c84c861aac2e5b440161c2b33a3e4f302ac680ca5b686de48de"
+
 
       -  ``downloadfilename`` - Specifies the filename used when storing
          the downloaded file.
