@@ -7223,11 +7223,11 @@ Host or Server Machine Setup
 
 Although other protocols are possible, a server using HTTP typically
 serves packages. If you want to use HTTP, then set up and configure a
-web server such as Apache 2, lighttpd, or SimpleHTTPServer on the
+web server such as Apache 2, lighttpd, or Python web server on the
 machine serving the packages.
 
 To keep things simple, this section describes how to set up a
-SimpleHTTPServer web server to share package feeds from the developer's
+Python web server to share package feeds from the developer's
 machine. Although this server might not be the best for a production
 environment, the setup is simple and straight forward. Should you want
 to use a different server more suited for production (e.g. Apache 2,
@@ -7242,7 +7242,7 @@ setting of "package_rpm":
 ::
 
    $ cd ~/poky/build/tmp/deploy/rpm
-   $ python -m SimpleHTTPServer
+   $ python3 -m http.server
 
 .. _runtime-package-management-target:
 
