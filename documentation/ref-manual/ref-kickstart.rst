@@ -134,6 +134,11 @@ the ``part`` and ``partition`` commands:
 -  ``--align (in KBytes)``: This option is a Wic-specific option that
    says to start partitions on boundaries given x KBytes.
 
+-  ``--offset (in KBytes)``: This option is a Wic-specific option that
+   says to place a partition at exactly the specified offset. If the
+   partition cannot be placed at the specified offset, the image build
+   will fail.
+
 -  ``--no-table``: This option is a Wic-specific option. Using the
    option reserves space for the partition and causes it to become
    populated. However, the partition is not added to the partition
