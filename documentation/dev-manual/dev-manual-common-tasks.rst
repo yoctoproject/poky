@@ -11487,26 +11487,23 @@ this function, you have to follow the following steps:
 2. Refer to the README in meta-spdxscanner to setup the environment (e.g, 
    setup a fossology server) needed for the scanner.
 
-3. Meta-spdxscanner provids several methods within the bbclass to create spdx files.
+3. Meta-spdxscanner provides several methods within the bbclass to create spdx files.
    Please choose one that you want to use and enable the spdx task. You have to
-   add some config options in 
-``local.conf`` file in your
-:term:`Build Directory`.
-The following is an example showing how to generate spdx files during bitbake 
-using the fossology-python.bbclass:
-::
+   add some config options in ``local.conf`` file in your :term:`Build
+   Directory`. The following is an example showing how to generate spdx files
+   during bitbake using the fossology-python.bbclass::
 
-   # Selet fossology-python.bbclass.
-   INHERIT += "fossology-python"
-   # For fossology-python.bbclass, TOKEN is necessary, so, after setup a 
-   # Fossology server, you have to create a token.
-   TOKEN = "eyJ0eXAiO..."
-   # The fossology server is necessary for fossology-python.bbclass.
-   FOSSOLOGY_SERVER = "http://xx.xx.xx.xx:8081/repo"
-   # If you want to upload the source code to a special folder:
-   FOLDER_NAME = "xxxx" //Optional
-   # If you don't want to put spdx files in tmp/deploy/spdx, you can enable:
-   SPDX_DEPLOY_DIR = "${DeployDir}" //Optional
+      # Selet fossology-python.bbclass.
+      INHERIT += "fossology-python"
+      # For fossology-python.bbclass, TOKEN is necessary, so, after setup a
+      # Fossology server, you have to create a token.
+      TOKEN = "eyJ0eXAiO..."
+      # The fossology server is necessary for fossology-python.bbclass.
+      FOSSOLOGY_SERVER = "http://xx.xx.xx.xx:8081/repo"
+      # If you want to upload the source code to a special folder:
+      FOLDER_NAME = "xxxx" //Optional
+      # If you don't want to put spdx files in tmp/deploy/spdx, you can enable:
+      SPDX_DEPLOY_DIR = "${DeployDir}" //Optional
 
 For more usage information on meta-spdxscanner, refer to the repsoitory which you can find at:
 https://git.yoctoproject.org/cgit/cgit.cgi/meta-spdxscanner/.
