@@ -436,9 +436,9 @@ home directory:
 
       FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-      SRC_URI_append = " file://patch-file-one"
-      SRC_URI_append = " file://patch-file-two"
-      SRC_URI_append = " file://patch-file-three"
+      SRC_URI_append = " file://patch-file-one.patch"
+      SRC_URI_append = " file://patch-file-two.patch"
+      SRC_URI_append = " file://patch-file-three.patch"
 
    The :term:`FILESEXTRAPATHS` and :term:`SRC_URI` statements
    enable the OpenEmbedded build system to find patch files. For more
