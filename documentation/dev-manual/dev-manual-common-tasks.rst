@@ -11493,7 +11493,7 @@ this function, you have to follow the following steps:
    Directory`. The following is an example showing how to generate spdx files
    during bitbake using the fossology-python.bbclass::
 
-      # Selet fossology-python.bbclass.
+      # Select fossology-python.bbclass.
       INHERIT += "fossology-python"
       # For fossology-python.bbclass, TOKEN is necessary, so, after setup a
       # Fossology server, you have to create a token.
@@ -11503,10 +11503,11 @@ this function, you have to follow the following steps:
       # If you want to upload the source code to a special folder:
       FOLDER_NAME = "xxxx" //Optional
       # If you don't want to put spdx files in tmp/deploy/spdx, you can enable:
-      SPDX_DEPLOY_DIR = "${DeployDir}" //Optional
+      SPDX_DEPLOY_DIR = "${DEPLOY_DIR}" //Optional
 
-For more usage information on meta-spdxscanner, refer to the repsoitory which you can find at:
-https://git.yoctoproject.org/cgit/cgit.cgi/meta-spdxscanner/.
+For more usage information refer to :yocto_git:`the meta-spdxscanner repository
+</cgit/cgit.cgi/meta-spdxscanner/>`.
+
 
 Copying Licenses that Do Not Exist
 ----------------------------------
