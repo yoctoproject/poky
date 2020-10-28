@@ -75,6 +75,37 @@ pseudo will throw an ``abort()`` and direct you to a :yocto_wiki:`wiki page </wi
 that explains how to deal with this.
 
 
+.. _migration-3.2-multilib-mlprefix:
+
+``MLPREFIX`` now required for multilib when runtime dependencies conditionally added
+------------------------------------------------------------------------------------
+
+In order to solve some previously intractable problems with runtime
+dependencies and multilib, a change was made that now requires the :term:`MLPREFIX`
+value to be explicitly prepended to package names being added as
+dependencies (e.g. in :term:`RDEPENDS` and :term:`RRECOMMENDS` values)
+where the dependency is conditionally added.
+
+If you have anonymous python or in-line python conditionally adding
+dependencies in your custom recipes, and you intend for those recipes to
+work with multilib, then you will need to ensure that ``${MLPREFIX}``
+is prefixed on the package names in the dependencies, for example
+(from the ``glibc`` recipe): ::
+
+    RRECOMMENDS_${PN} = "${@bb.utils.contains('DISTRO_FEATURES', 'ldconfig', '${MLPREFIX}ldconfig', '', d)}"
+
+This also applies when conditionally adding packages to :term:`PACKAGES` where
+those packages have dependencies, for example (from the ``alsa-plugins`` recipe): ::
+
+    PACKAGES += "${@bb.utils.contains('PACKAGECONFIG', 'pulseaudio', 'alsa-plugins-pulseaudio-conf', '', d)}"
+    ...
+    RDEPENDS_${PN}-pulseaudio-conf += "\
+            ${MLPREFIX}libasound-module-conf-pulse \
+            ${MLPREFIX}libasound-module-ctl-pulse \
+            ${MLPREFIX}libasound-module-pcm-pulse \
+    "
+
+
 .. _migration-3.2-packagegroup-core-device-devel:
 
 packagegroup-core-device-devel no longer included in images built for qemu* machines
