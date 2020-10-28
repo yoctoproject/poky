@@ -132,6 +132,18 @@ system and gives an overview of their function and contents.
       ":ref:`update-alternatives.bbclass <ref-classes-update-alternatives>`"
       section.
 
+   :term:`ANY_OF_DISTRO_FEATURES`
+      When inheriting the
+      :ref:`features_check <ref-classes-features_check>`
+      class, this variable identifies a list of distribution features where
+      at least one must be enabled in the current configuration in order
+      for the OpenEmbedded build system to build the recipe. In other words,
+      if none of the features listed in ``ANY_OF_DISTRO_FEATURES``
+      appear in ``DISTRO_FEATURES`` within the current configuration, then
+      the recipe will be skipped, and if the build system attempts to build
+      the recipe then an error will be triggered.
+      
+
    :term:`APPEND`
       An override list of append strings for each target specified with
       :term:`LABELS`.
@@ -1300,12 +1312,13 @@ system and gives an overview of their function and contents.
 
    :term:`CONFLICT_DISTRO_FEATURES`
       When inheriting the
-      :ref:`distro_features_check <ref-classes-distro_features_check>`
+      :ref:`features_check <ref-classes-features_check>`
       class, this variable identifies distribution features that would be
       in conflict should the recipe be built. In other words, if the
       ``CONFLICT_DISTRO_FEATURES`` variable lists a feature that also
-      appears in ``DISTRO_FEATURES`` within the current configuration, an
-      error occurs and the build stops.
+      appears in ``DISTRO_FEATURES`` within the current configuration, then
+      the recipe will be skipped, and if the build system attempts to build
+      the recipe then an error will be triggered.
 
    :term:`COPYLEFT_LICENSE_EXCLUDE`
       A space-separated list of licenses to exclude from the source
@@ -6063,13 +6076,14 @@ system and gives an overview of their function and contents.
 
    :term:`REQUIRED_DISTRO_FEATURES`
       When inheriting the
-      :ref:`distro_features_check <ref-classes-distro_features_check>`
+      :ref:`features_check <ref-classes-features_check>`
       class, this variable identifies distribution features that must exist
       in the current configuration in order for the OpenEmbedded build
       system to build the recipe. In other words, if the
       ``REQUIRED_DISTRO_FEATURES`` variable lists a feature that does not
-      appear in ``DISTRO_FEATURES`` within the current configuration, an
-      error occurs and the build stops.
+      appear in ``DISTRO_FEATURES`` within the current configuration, then
+      the recipe will be skipped, and if the build system attempts to build
+      the recipe then an error will be triggered.
 
    :term:`RM_WORK_EXCLUDE`
       With ``rm_work`` enabled, this variable specifies a list of recipes
