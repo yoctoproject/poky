@@ -3062,11 +3062,11 @@ system and gives an overview of their function and contents.
    :term:`IMAGE_NAME`
       The name of the output image files minus the extension. This variable
       is derived using the :term:`IMAGE_BASENAME`,
-      :term:`MACHINE`, and :term:`DATETIME`
+      :term:`MACHINE`, and :term:`IMAGE_VERSION_SUFFIX`
       variables:
       ::
 
-         IMAGE_NAME = "${IMAGE_BASENAME}-${MACHINE}-${DATETIME}"
+         IMAGE_NAME ?= "${IMAGE_BASENAME}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
    :term:`IMAGE_OVERHEAD_FACTOR`
       Defines a multiplier that the build system applies to the initial
@@ -3269,6 +3269,14 @@ system and gives an overview of their function and contents.
 
       For more information about these types of images, see
       ``meta/classes/image_types*.bbclass`` in the :term:`Source Directory`.
+
+   :term:`IMAGE_VERSION_SUFFIX`
+      Version suffix that is part of the default :term:`IMAGE_NAME` and
+      :term:`KERNEL_ARTIFACT_NAME` values.
+      Defaults to ``"-${DATETIME}"``, however you could set this to a
+      version string that comes from your external build environment if
+      desired, and this suffix would then be used consistently across
+      the build artifacts.
 
    :term:`INC_PR`
       Helps define the recipe revision for recipes that share a common
@@ -3728,12 +3736,8 @@ system and gives an overview of their function and contents.
 
          KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
-      See the :term:`PKGE`, :term:`PKGV`, :term:`PKGR`, and :term:`MACHINE`
-      variables for additional information.
-
-      .. note::
-
-         The ``IMAGE_VERSION_SUFFIX`` variable is set to :term:`DATETIME`.
+      See the :term:`PKGE`, :term:`PKGV`, :term:`PKGR`, :term:`MACHINE`
+      and :term:`IMAGE_VERSION_SUFFIX` variables for additional information.
 
    :term:`KERNEL_CLASSES`
       A list of classes defining kernel image types that the
