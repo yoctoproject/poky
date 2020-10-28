@@ -43,6 +43,8 @@ error form along with an explanation.
 Errors and Warnings
 ===================
 
+.. _qa-check-libexec:
+
 -  ``<packagename>: <path> is using libexec please relocate to <libexecdir> [libexec]``
 
    The specified package contains files in ``/usr/libexec`` when the
@@ -51,6 +53,7 @@ Errors and Warnings
    default can be changed (e.g. ``${libdir}``).
 
     
+.. _qa-check-rpaths:
 
 -  ``package <packagename> contains bad RPATH <rpath> in file <file> [rpaths]``
 
@@ -65,6 +68,7 @@ Errors and Warnings
    software.
 
     
+.. _qa-check-useless-rpaths:
 
 -  ``<packagename>: <file> contains probably-redundant RPATH <rpath> [useless-rpaths]``
 
@@ -77,6 +81,7 @@ Errors and Warnings
    the build of the software.
 
     
+.. _qa-check-file-rdeps:
 
 -  ``<packagename> requires <files>, but no providers in its RDEPENDS [file-rdeps]``
 
@@ -88,6 +93,7 @@ Errors and Warnings
    built.
 
     
+.. _qa-check-build-deps:
 
 -  ``<packagename1> rdepends on <packagename2>, but it isn't a build dependency? [build-deps]``
 
@@ -101,6 +107,7 @@ Errors and Warnings
    to add an explicit ``RDEPENDS`` for the dependency.
 
     
+.. _qa-check-dev-so:
 
 -  ``non -dev/-dbg/nativesdk- package contains symlink .so: <packagename> path '<path>' [dev-so]``
 
@@ -112,6 +119,7 @@ Errors and Warnings
    file goes into an appropriate ``-dev`` package.
 
     
+.. _qa-check-staticdev:
 
 -  ``non -staticdev package contains static .a library: <packagename> path '<path>' [staticdev]``
 
@@ -121,6 +129,7 @@ Errors and Warnings
    goes into an appropriate ``-staticdev`` package.
 
     
+.. _qa-check-libdir:
 
 -  ``<packagename>: found library in wrong location [libdir]``
 
@@ -133,6 +142,7 @@ Errors and Warnings
    :term:`INSANE_SKIP` for the package.
 
     
+.. _qa-check-debug-files:
 
 -  ``non debug package contains .debug directory: <packagename> path <path> [debug-files]``
 
@@ -145,6 +155,7 @@ Errors and Warnings
    information on ``FILES``.
 
     
+.. _qa-check-arch:
 
 -  ``Architecture did not match (<machine_arch> to <file_arch>) on <file> [arch]``
 
@@ -199,6 +210,7 @@ Errors and Warnings
    and verify that the compiler options being used are correct.
 
     
+.. _qa-check-textrel:
 
 -  ``ELF binary '<file>' has relocations in .text [textrel]``
 
@@ -218,6 +230,7 @@ Errors and Warnings
    http://www.akkadia.org/drepper/textrelocs.html.
 
     
+.. _qa-check-ldflags:
 
 -  ``No GNU_HASH in the elf binary: '<file>' [ldflags]``
 
@@ -233,6 +246,7 @@ Errors and Warnings
       TARGET_CC_ARCH += "${LDFLAGS}"
 
     
+.. _qa-check-xorg-driver-abi:
 
 -  ``Package <packagename> contains Xorg driver (<driver>) but no xorg-abi- dependencies [xorg-driver-abi]``
 
@@ -245,6 +259,7 @@ Errors and Warnings
    to explicitly add dependencies to binary driver recipes.
 
     
+.. _qa-check-infodir:
 
 -  ``The /usr/share/info/dir file is not meant to be shipped in a particular package. [infodir]``
 
@@ -256,6 +271,8 @@ Errors and Warnings
       rm ${D}${infodir}/dir
    
 
+.. _qa-check-symlink-to-sysroot:
+
 -  ``Symlink <path> in <packagename> points to TMPDIR [symlink-to-sysroot]``
 
    The specified symlink points into :term:`TMPDIR` on the
@@ -264,6 +281,7 @@ Errors and Warnings
    symlink to use a relative path or remove the symlink.
 
     
+.. _qa-check-la:
 
 -  ``<file> failed sanity test (workdir) in path <path> [la]``
 
@@ -273,6 +291,7 @@ Errors and Warnings
    automatically itself.
 
     
+.. _qa-check-pkgconfig:
 
 -  ``<file> failed sanity test (tmpdir) in path <path> [pkgconfig]``
 
@@ -283,6 +302,7 @@ Errors and Warnings
    are accessed.
 
     
+.. _qa-check-debug-deps:
 
 -  ``<packagename> rdepends on <debug_packagename> [debug-deps]``
 
@@ -305,6 +325,7 @@ Errors and Warnings
    manually (e.g. by adding to :term:`RDEPENDS`).
 
     
+.. _qa-check-dev-deps:
 
 -  ``<packagename> rdepends on <dev_packagename> [dev-deps]``
 
@@ -327,6 +348,7 @@ Errors and Warnings
    manually (e.g. by adding to :term:`RDEPENDS`).
 
     
+.. _qa-check-dep-cmp:
 
 -  ``<var>_<packagename> is invalid: <comparison> (<value>)   only comparisons <, =, >, <=, and >= are allowed [dep-cmp]``
 
@@ -341,6 +363,7 @@ Errors and Warnings
    adding to match those listed in the message.
 
     
+.. _qa-check-compile-host-path:
 
 -  ``<recipename>: The compile log indicates that host include and/or library paths were used. Please check the log '<logfile>' for more information. [compile-host-path]``
 
@@ -351,6 +374,7 @@ Errors and Warnings
    file.
 
     
+.. _qa-check-install-host-path:
 
 -  ``<recipename>: The install log indicates that host include and/or library paths were used. Please check the log '<logfile>' for more information. [install-host-path]``
 
@@ -361,6 +385,7 @@ Errors and Warnings
    file.
 
     
+.. _qa-check-configure-unsafe:
 
 -  ``This autoconf log indicates errors, it looked at host include and/or library paths while determining system capabilities. Rerun configure task after fixing this. The path was '<path>'``
 
@@ -371,6 +396,7 @@ Errors and Warnings
    file.
 
     
+.. _qa-check-pkgname:
 
 -  ``<packagename> doesn't match the [a-z0-9.+-]+ regex [pkgname]``
 
@@ -384,6 +410,7 @@ Errors and Warnings
    change the package name appropriately.
 
     
+.. _qa-check-unknown-configure-option:
 
 -  ``<recipe>: configure was passed unrecognized options: <options> [unknown-configure-option]``
 
@@ -401,6 +428,7 @@ Errors and Warnings
    accordingly.
 
     
+.. _qa-check-pn-overrides:
 
 -  ``Recipe <recipefile> has PN of "<recipename>" which is in OVERRIDES, this can result in unexpected behavior. [pn-overrides]``
 
@@ -416,6 +444,7 @@ Errors and Warnings
    :term:`FILES` for additional information.
 
     
+.. _qa-check-pkgvarcheck:
 
 -  ``<recipefile>: Variable <variable> is set as not being package specific, please fix this. [pkgvarcheck]``
 
@@ -433,6 +462,7 @@ Errors and Warnings
    assignments to these variables within your recipe.
 
     
+.. _qa-check-already-stripped:
 
 -  ``File '<file>' from <recipename> was already stripped, this will prevent future debugging! [already-stripped]``
 
@@ -458,6 +488,7 @@ Errors and Warnings
       strip the symbols from the binaries.
 
     
+.. _qa-check-packages-list:
 
 -  ``<packagename> is listed in PACKAGES multiple times, this leads to packaging errors. [packages-list]``
 
@@ -467,6 +498,7 @@ Errors and Warnings
    already in the variable's value.
 
     
+.. _qa-check-files-invalid:
 
 -  ``FILES variable for package <packagename> contains '//' which is invalid. Attempting to fix this but you should correct the metadata. [files-invalid]``
 
@@ -475,6 +507,7 @@ Errors and Warnings
    that there is only a single "/".
 
     
+.. _qa-check-installed-vs-shipped:
 
 -  ``<recipename>: Files/directories were installed but not shipped in any package [installed-vs-shipped]``
 
@@ -504,6 +537,9 @@ Errors and Warnings
    is the case, you should add the library's ``.so`` file name to
    :term:`PRIVATE_LIBS` in the recipe that provides
    the private version of the library.
+
+
+.. _qa-check-unlisted-pkg-lics:
 
 -  ``LICENSE_<packagename> includes licenses (<licenses>) that are not listed in LICENSE [unlisted-pkg-lics]``
 
