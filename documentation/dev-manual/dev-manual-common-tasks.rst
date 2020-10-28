@@ -2602,6 +2602,13 @@ doing the following:
    where you have installed them and whether those files are in
    different locations than the defaults.
 
+.. note::
+
+  If image prelinking is enabled (e.g. "image-prelink" is in :term:`USER_CLASSES`
+  which it is by default), prelink will change the binaries in the generated images
+  and this often catches people out. Remove that class to ensure binaries are
+  preserved exactly if that is necessary.
+
 Following Recipe Style Guidelines
 ---------------------------------
 
