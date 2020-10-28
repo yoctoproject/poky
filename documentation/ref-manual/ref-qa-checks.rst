@@ -157,7 +157,7 @@ Errors and Warnings
     
 .. _qa-check-arch:
 
--  ``Architecture did not match (<machine_arch> to <file_arch>) on <file> [arch]``
+-  ``Architecture did not match (<file_arch>, expected <machine_arch>) in <file> [arch]``
 
    By default, the OpenEmbedded build system checks the Executable and
    Linkable Format (ELF) type, bit size, and endianness of any binaries
@@ -175,7 +175,7 @@ Errors and Warnings
 
     
 
--  ``Bit size did not match (<machine_bits> to <file_bits>) <recipe> on <file> [arch]``
+-  ``Bit size did not match (<file_bits>, expected <machine_bits>) in <file> [arch]``
 
    By default, the OpenEmbedded build system checks the Executable and
    Linkable Format (ELF) type, bit size, and endianness of any binaries
@@ -193,7 +193,7 @@ Errors and Warnings
 
     
 
--  ``Endianness did not match (<machine_endianness> to <file_endianness>) on <file> [arch]``
+-  ``Endianness did not match (<file_endianness>, expected <machine_endianness>) in <file> [arch]``
 
    By default, the OpenEmbedded build system checks the Executable and
    Linkable Format (ELF) type, bit size, and endianness of any binaries
@@ -232,7 +232,7 @@ Errors and Warnings
     
 .. _qa-check-ldflags:
 
--  ``No GNU_HASH in the elf binary: '<file>' [ldflags]``
+-  ``File '<file>' in package '<package>' doesn't have GNU_HASH (didn't pass LDFLAGS?) [ldflags]``
 
    This indicates that binaries produced when building the recipe have
    not been linked with the :term:`LDFLAGS` options
@@ -387,7 +387,7 @@ Errors and Warnings
     
 .. _qa-check-configure-unsafe:
 
--  ``This autoconf log indicates errors, it looked at host include and/or library paths while determining system capabilities. Rerun configure task after fixing this. The path was '<path>'``
+-  ``This autoconf log indicates errors, it looked at host include and/or library paths while determining system capabilities. Rerun configure task after fixing this. [configure-unsafe]``
 
    The log for the :ref:`ref-tasks-configure` task
    indicates that paths on the host were searched for files, which is
@@ -461,7 +461,15 @@ Errors and Warnings
    ``RDEPENDS = "value"``). If you receive this error, correct any
    assignments to these variables within your recipe.
 
-    
+
+- ``recipe uses DEPENDS_${PN}, should use DEPENDS [pkgvarcheck]``
+
+   This check looks for instances of setting ``DEPENDS_${PN}``
+   which is erroneous (:term:`DEPENDS` is a recipe-wide variable and thus
+   it is not correct to specify it for a particular package, nor will such
+   an assignment actually work.) Set ``DEPENDS`` instead.
+
+
 .. _qa-check-already-stripped:
 
 -  ``File '<file>' from <recipename> was already stripped, this will prevent future debugging! [already-stripped]``
@@ -548,7 +556,192 @@ Errors and Warnings
    words, any license in ``LICENSE_*`` should also appear in
    :term:`LICENSE`.
 
-    
+
+.. _qa-check-configure-gettext:
+
+-  ``AM_GNU_GETTEXT used but no inherit gettext [configure-gettext]``
+
+    If a recipe is building something that uses automake and the automake
+    files contain an ``AM_GNU_GETTEXT`` directive then this check will fail
+    if there is no ``inherit gettext`` statement in the recipe to ensure
+    that gettext is available during the build. Add ``inherit gettext`` to
+    remove the warning.
+
+
+.. _qa-check-mime:
+
+- ``package contains mime types but does not inherit mime: <packagename> path '<file>' [mime]``
+
+   The specified package contains mime type files (``.xml`` files in
+   ``${datadir}/mime/packages``) and yet does not inherit the mime
+   class which will ensure that these get properly installed. Either
+   add ``inherit mime`` to the recipe or remove the files at the
+   ``do_install`` step if they are not needed.
+
+
+.. _qa-check-mime-xdg:
+
+- ``package contains desktop file with key 'MimeType' but does not inhert mime-xdg: <packagename> path '<file>' [mime-xdg]``
+
+    The specified package contains a .desktop file with a 'MimeType' key
+    present, but does not inherit the mime-xdg class that is required in
+    order for that to be activated. Either add ``inherit mime`` to the
+    recipe or remove the files at the ``do_install`` step if they are not
+    needed.
+
+
+.. _qa-check-src-uri-bad:
+
+- ``<recipename>: SRC_URI uses unstable GitHub archives [src-uri-bad]``
+
+    GitHub provides "archive" tarballs, however these can be re-generated
+    on the fly and thus the file's signature will not necessarily match that
+    in the SRC_URI checksums in future leading to build failures. It is
+    recommended that you use an official release tarball or switch to
+    pulling the corresponding revision in the actual git repository instead.
+
+
+- ``SRC_URI uses PN not BPN [src-uri-bad]``
+
+    If some part of :term:`SRC_URI` needs to reference the recipe name, it should do
+    so using ${:term:`BPN`} rather than ${:term:`PN`} as the latter will change
+    for different variants of the same recipe e.g. when :term:`BBCLASSEXTEND`
+    or multilib are being used. This check will fail if a reference to ``${PN}``
+    is found within the ``SRC_URI`` value - change it to ``${BPN}`` instead.
+
+
+.. _qa-check-unhandled-features-check:
+
+- ``<recipename>: recipe doesn't inherit features_check [unhandled-features-check]``
+
+    This check ensures that if one of the variables that the :ref:`features_check <ref-classes-features_check>`
+    class supports (e.g. :term:`REQUIRED_DISTRO_FEATURES`) is used, then the recipe
+    inherits ``features_check`` in order for the requirement to actually work. If
+    you are seeing this message, either add ``inherit features_check`` to your recipe
+    or remove the reference to the variable if it is not needed.
+
+
+.. _qa-check-missing-update-alternatives:
+
+- ``<recipename>: recipe defines ALTERNATIVE_<packagename> but doesn't inherit update-alternatives. This might fail during do_rootfs later! [missing-update-alternatives]``
+
+    This check ensures that if a recipe sets the :term:`ALTERNATIVE` variable that the
+    recipe also inherits :ref:`update-alternatives <ref-classes-update-alternatives>` such
+    that the alternative will be correctly set up. If you are seeing this message, either
+    add ``inherit update-alternatives`` to your recipe or remove the reference to the variable
+    if it is not needed.
+
+
+.. _qa-check-shebang-size:
+
+- ``<packagename>: <file> maximum shebang size exceeded, the maximum size is 128. [shebang-size]``
+
+    This check ensures that the shebang line (``#!`` in the first line) for a script
+    is not longer than 128 characters, which can cause an error at runtime depending
+    on the operating system. If you are seeing this message then the specified script
+    may need to be patched to have a shorter in order to avoid runtime problems.
+
+
+.. _qa-check-perllocalpod:
+
+- ``<packagename> contains perllocal.pod (<files>), should not be installed [perllocalpod]``
+
+    ``perllocal.pod`` is an index file of locally installed modules and so shouldn't be
+    installed by any distribution packages. The :ref:`cpan <ref-classes-cpan>` class
+    already sets ``NO_PERLLOCAL`` to stop this file being generated by most Perl recipes,
+    but if a recipe is using ``MakeMaker`` directly then they might not be doing this
+    correctly. This check ensures that perllocal.pod is not in any package in order to
+    avoid multiple packages shipping this file and thus their packages conflicting
+    if installed together.
+
+
+.. _qa-check-usrmerge:
+
+- ``<packagename> package is not obeying usrmerge distro feature. /<path> should be relocated to /usr. [usrmerge]``
+
+    If ``usrmerge`` is in :term:`DISTRO_FEATURES`, this check will ensure that no package
+    installs files to root (``/bin``, ``/sbin``, ``/lib``, ``/lib64``) directories. If you are seeing this
+    message, it indicates that the ``do_install`` step (or perhaps the build process that
+    ``do_install`` is calling into, e.g. ``make install`` is using hardcoded paths instead
+    of the variables set up for this (``bindir``, ``sbindir``, etc.), and should be
+    changed so that it does.
+
+
+.. _qa-check-patch-fuzz:
+
+- ``Fuzz detected: <patch output> [patch-fuzz]``
+
+    This check looks for evidence of "fuzz" when applying patches within the ``do_patch``
+    task. Patch fuzz is a situation when the ``patch`` tool ignores some of the context
+    lines in order to apply the patch. Consider this example:
+
+    Patch to be applied: ::
+
+        --- filename
+        +++ filename
+         context line 1
+         context line 2
+         context line 3
+        +newly added line
+         context line 4
+         context line 5
+         context line 6
+
+    Original source code: ::
+
+        different context line 1
+        different context line 2
+        context line 3
+        context line 4
+        different context line 5
+        different context line 6
+
+    Outcome (after applying patch with fuzz): ::
+
+        different context line 1
+        different context line 2
+        context line 3
+        newly added line
+        context line 4
+        different context line 5
+        different context line 6
+
+    Chances are, the newly added line was actually added in a completely
+    wrong location, or it was already in the original source and was added
+    for the second time. This is especially possible if the context line 3
+    and 4 are blank or have only generic things in them, such as ``#endif`` or ``}``.
+    Depending on the patched code, it is entirely possible for an incorrectly
+    patched file to still compile without errors.
+
+    *How to eliminate patch fuzz warnings*
+
+    Use the ``devtool`` command as explained by the warning. First, unpack the
+    source into devtool workspace: ::
+
+            devtool modify <recipe>
+
+    This will apply all of the patches, and create new commits out of them in
+    the workspace - with the patch context updated.
+
+    Then, replace the patches in the recipe layer: ::
+
+            devtool finish --force-patch-refresh <recipe> <layer_path>
+
+    The patch updates then need be reviewed (preferably with a side-by-side diff
+    tool) to ensure they are indeed doing the right thing i.e.:
+
+    #. they are applied in the correct location within the file;
+    #. they do not introduce duplicate lines, or otherwise do things that
+       are no longer necessary.
+
+    To confirm these things, you can also review the patched source code in
+    devtool's workspace, typically in ``<build_dir>/workspace/sources/<recipe>/``
+
+    Once the review is done, you can create and publish a layer commit with
+    the patch updates that modify the context. Devtool may also refresh
+    other things in the patches, those can be discarded.
+
+
 
 Configuring and Disabling QA Checks
 ===================================
