@@ -451,3 +451,14 @@ variant. For another example, permissions errors might be caused by a
 Makefile that ignores ``DESTDIR`` or uses a different name for that
 environment variable. Check the the build system to see if these kinds
 of issues exist.
+
+**Q:** I'm adding a binary in a recipe but it's different in the image, what is
+changing it?
+
+**A:** The first most obvious change is the system stripping debug symbols from
+it. Setting :term:`INHIBIT_PACKAGE_STRIP` to stop debug symbols being stripped and/or
+:term:`INHIBIT_PACKAGE_DEBUG_SPLIT` to stop debug symbols being split into a separate
+file will ensure the binary is unchanged. The other less obvious thing that can
+happen is prelinking of the image. This is set by default in local.conf via
+:term:`USER_CLASSES` which can contain 'image-prelink'. If you remove that, the
+image will not be prelinked meaning the binaries would be unchanged.
