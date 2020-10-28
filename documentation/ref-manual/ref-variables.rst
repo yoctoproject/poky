@@ -3039,6 +3039,17 @@ system and gives an overview of their function and contents.
       See the :term:`GLIBC_GENERATE_LOCALES`
       variable for information on generating GLIBC locales.
 
+
+   :term:`IMAGE_LINK_NAME`
+      The name of the output image symlink (which does not include
+      the version part as :term:`IMAGE_NAME` does). The default value
+      is derived using the :term:`IMAGE_BASENAME` and :term:`MACHINE`
+      variables:
+      ::
+
+         IMAGE_LINK_NAME ?= "${IMAGE_BASENAME}-${MACHINE}"
+
+
    :term:`IMAGE_MANIFEST`
       The manifest file for the image. This file lists all the installed
       packages that make up the image. The file contains package
