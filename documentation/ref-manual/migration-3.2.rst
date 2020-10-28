@@ -246,6 +246,27 @@ by these image recipes directly then you will need to adapt to the new
 naming without the ``.rootfs`` part.
 
 
+.. _migration-3.2-image-artifact-names:
+
+Image artifact name variables now centralised in image-artifact-names class
+---------------------------------------------------------------------------
+
+The defaults for the following image artifact name variables have been moved
+from bitbake.conf to a new ``image-artifact-names`` class:
+
+- :term:`IMAGE_BASENAME`
+- :term:`IMAGE_LINK_NAME`
+- :term:`IMAGE_NAME`
+- :term:`IMAGE_NAME_SUFFIX`
+- :term:`IMAGE_VERSION_SUFFIX`
+
+Image-related classes now inherit this class, and typically these variables
+are only referenced within image recipes so those will be unaffected by this
+change. However if you have references to these variables in either a recipe
+that is not an image or a class that is enabled globally, then those will
+now need to be changed to ``inherit image-artifact-names``.
+
+
 .. _migration-3.2-misc:
 
 Miscellaneous changes
