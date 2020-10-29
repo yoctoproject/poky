@@ -5080,7 +5080,7 @@ system and gives an overview of their function and contents.
 
       .. note::
 
-         You can use the ``PACKAGE_FEEDS_ARCHS``
+         You can use the ``PACKAGE_FEED_ARCHS``
          variable to whitelist specific package architectures. If you do
          not need to whitelist specific architectures, which is a common
          case, you can omit this variable. Omitting the variable results in
