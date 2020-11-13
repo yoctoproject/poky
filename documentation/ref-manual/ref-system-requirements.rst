@@ -43,17 +43,15 @@ distributions:
 
 -  Ubuntu 18.04 (LTS)
 
--  Ubuntu 20.04
+-  Ubuntu 19.04
+
+-  Fedora 28
+
+-  Fedora 29
 
 -  Fedora 30
 
--  Fedora 31
-
--  Fedora 32
-
 -  CentOS 7.x
-
--  CentOS 8.x
 
 -  Debian GNU/Linux 8.x (Jessie)
 
