@@ -65,3 +65,15 @@ Manual Revision History
    * - 3.1
      - April 2020
      - Released with the Yocto Project 3.1 Release.
+   * - 3.1.1
+     - June 2020
+     - Released with the Yocto Project 3.1.1 Release.
+   * - 3.1.2
+     - August 2020
+     - Released with the Yocto Project 3.1.2 Release.
+   * - 3.1.3
+     - September 2020
+     - Released with the Yocto Project 3.1.3 Release.
+   * - 3.1.4
+     - November 2020
+     - Released with the Yocto Project 3.1.4 Release.

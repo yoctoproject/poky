@@ -45,11 +45,17 @@ distributions:
 
 -  Ubuntu 19.04
 
+-  Ubuntu 20.04
+
 -  Fedora 28
 
 -  Fedora 29
 
 -  Fedora 30
+
+-  Fedora 31
+
+-  Fedora 32
 
 -  CentOS 7.x
 
