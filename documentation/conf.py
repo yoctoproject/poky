@@ -124,3 +124,8 @@ html_last_updated_fmt = '%b %d, %Y'
 
 # Remove the trailing 'dot' in section numbers
 html_secnumber_suffix = " "
+
+latex_elements = {
+    'passoptionstopackages': '\PassOptionsToPackage{bookmarksdepth=5}{hyperref}',
+    'preamble': '\setcounter{tocdepth}{2}',
+}
