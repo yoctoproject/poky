@@ -1143,7 +1143,7 @@ necessary when adding a recipe to build a new piece of software to be
 included in a build.
 
 You can find a complete description of the ``devtool add`` command in
-the ":ref:`sdk-a-closer-look-at-devtool-add`" section
+the ":ref:`sdk-manual/sdk-extensible:a closer look at \`\`devtool add\`\``" section
 in the Yocto Project Application Development and the Extensible Software
 Development Kit (eSDK) manual.
 
@@ -1819,7 +1819,7 @@ Here are some common issues that cause failures.
    For cases where improper paths are detected for configuration files
    or for when libraries/headers cannot be found, be sure you are using
    the more robust ``pkg-config``. See the note in section
-   ":ref:`new-recipe-configuring-the-recipe`" for additional information.
+   ":ref:`dev-manual/dev-manual-common-tasks:Configuring the Recipe`" for additional information.
 
 -  *Parallel build failures:* These failures manifest themselves as
    intermittent errors, or errors reporting that a file or directory
@@ -3048,7 +3048,7 @@ The following steps describe how to set up the AUH utility:
 1. *Be Sure the Development Host is Set Up:* You need to be sure that
    your development host is set up to use the Yocto Project. For
    information on how to set up your host, see the
-   ":ref:`dev-preparing-the-build-host`" section.
+   ":ref:`dev-manual/dev-manual-start:Preparing the Build Host`" section.
 
 2. *Make Sure Git is Configured:* The AUH utility requires Git to be
    configured because AUH uses Git to save upgrades. Thus, you must have
@@ -3216,7 +3216,7 @@ As mentioned earlier, an alternative method for upgrading recipes to
 newer versions is to use
 :doc:`devtool upgrade <../ref-manual/ref-devtool-reference>`.
 You can read about ``devtool upgrade`` in general in the
-":ref:`sdk-devtool-use-devtool-upgrade-to-create-a-version-of-the-recipe-that-supports-a-newer-version-of-the-software`"
+":ref:`sdk-manual/sdk-extensible:use \`\`devtool upgrade\`\` to create a version of the recipe that supports a newer version of the software`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (eSDK) Manual.
 
@@ -3356,7 +3356,8 @@ Manually Upgrading a Recipe
 ---------------------------
 
 If for some reason you choose not to upgrade recipes using
-:ref:`gs-using-the-auto-upgrade-helper` or by :ref:`gs-using-devtool-upgrade`,
+:ref:`dev-manual/dev-manual-common-tasks:Using the Auto Upgrade Helper (AUH)` or
+by :ref:`dev-manual/dev-manual-common-tasks:Using \`\`devtool upgrade\`\``,
 you can manually edit the recipe files to upgrade the versions.
 
 .. note::
@@ -4196,7 +4197,7 @@ view file dependencies in a human-readable form:
    directory.
 
    For more information on configuration fragments, see the
-   ":ref:`creating-config-fragments`"
+   ":ref:`kernel-dev/kernel-dev-common:creating configuration fragments`"
    section in the Yocto Project Linux Kernel Development Manual.
 
 -  ``bitbake -u taskexp -g bitbake_target``: Using the BitBake command
@@ -8143,7 +8144,7 @@ associated ``EXTRA_IMAGE_FEATURES`` variable, as in:
    EXTRA_IMAGE_FEATURES = "read-only-rootfs"
 
 For more information on how to use these variables, see the
-":ref:`usingpoky-extend-customimage-imagefeatures`"
+":ref:`dev-manual/dev-manual-common-tasks:Customizing Images Using Custom \`\`IMAGE_FEATURES\`\` and \`\`EXTRA_IMAGE_FEATURES\`\``"
 section. For information on the variables, see
 :term:`IMAGE_FEATURES` and
 :term:`EXTRA_IMAGE_FEATURES`.
