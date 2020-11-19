@@ -4,8 +4,6 @@
 Introduction
 ************
 
-.. _kernel-dev-overview:
-
 Overview
 ========
 

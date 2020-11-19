@@ -4,8 +4,6 @@
 Working with Advanced Metadata (``yocto-kernel-cache``)
 *******************************************************
 
-.. _kernel-dev-advanced-overview:
-
 Overview
 ========
 
@@ -478,8 +476,6 @@ concepts, and presents a detailed example using a BSP supported by the
 Yocto Project (i.e. BeagleBone Board). For complete information on BSP
 layer file hierarchy, see the :doc:`../bsp-guide/bsp-guide`.
 
-.. _bsp-description-file-overview:
-
 Description Overview
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -582,8 +578,6 @@ types of configurations. However, the Malta 32-bit board does
 
    include mti-malta32.scc
    kconf hardware mti-malta32-le.cfg
-
-.. _bsp-description-file-example-minnow:
 
 Example
 ~~~~~~~
@@ -924,8 +918,6 @@ after any ``branch`` commands:
       git merge myfeature
 
       include mybsp-hw.scc
-
-.. _scc-reference:
 
 SCC Description File Reference
 ==============================
