@@ -4,8 +4,6 @@
 Obtaining the SDK
 *****************
 
-.. _sdk-locating-pre-built-sdk-installers:
-
 Locating Pre-Built SDK Installers
 =================================
 
