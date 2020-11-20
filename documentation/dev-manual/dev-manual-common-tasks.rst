@@ -1369,7 +1369,7 @@ the Yocto Project Overview and Concepts Manual.
 
 The :ref:`ref-tasks-fetch` task uses
 the prefix of each entry in the ``SRC_URI`` variable value to determine
-which :ref:`fetcher <bitbake:bb-fetchers>` to use to get your
+which :ref:`fetcher <bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers>` to use to get your
 source files. It is the ``SRC_URI`` variable that triggers the fetcher.
 The :ref:`ref-tasks-patch` task uses
 the variable after source is fetched to apply patches. The OpenEmbedded
@@ -7567,7 +7567,7 @@ Creating Node Package Manager (NPM) Packages
 
 `NPM <https://en.wikipedia.org/wiki/Npm_(software)>`__ is a package
 manager for the JavaScript programming language. The Yocto Project
-supports the NPM :ref:`fetcher <bitbake:bb-fetchers>`. You can
+supports the NPM :ref:`fetcher <bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers>`. You can
 use this fetcher in combination with
 :doc:`devtool <../ref-manual/ref-devtool-reference>` to create
 recipes that produce NPM packages.

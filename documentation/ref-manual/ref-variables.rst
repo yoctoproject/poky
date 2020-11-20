@@ -3062,7 +3062,7 @@ system and gives an overview of their function and contents.
             section in the Yocto Project Development Tasks Manual.
 
          -  Using ``IMAGE_INSTALL`` with the
-            :ref:`+= <bitbake:appending-and-prepending>`
+            :ref:`+= <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:appending (+=) and prepending (=+) with spaces>`
             BitBake operator within the ``/conf/local.conf`` file or from
             within an image recipe is not recommended. Use of this operator
             in these ways can cause ordering issues. Since
@@ -7018,7 +7018,7 @@ system and gives an overview of their function and contents.
       protocols are highly dependent on particular BitBake Fetcher
       submodules. Depending on the fetcher BitBake uses, various URL
       parameters are employed. For specifics on the supported Fetchers, see
-      the ":ref:`Fetchers <bitbake:bb-fetchers>`" section in the
+      the ":ref:`Fetchers <bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers>`" section in the
       BitBake User Manual.
 
       -  ``file://`` - Fetches files, which are usually files shipped

@@ -198,7 +198,7 @@ The following changes took place for BitBake:
    fetcher passes the new parameter through the ``SVN_SSH`` environment
    variable during the :ref:`ref-tasks-fetch` task.
 
-   See the ":ref:`bitbake:svn-fetcher`"
+   See the ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-fetching:subversion (svn) fetcher (\`\`svn://\`\`)`"
    section in the BitBake
    User Manual for additional information.
 

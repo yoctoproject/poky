@@ -627,7 +627,7 @@ specify source code revision and versioning schemes, extract code into
 or out of the ``devtool``
 :ref:`devtool-the-workspace-layer-structure`,
 and work with any source file forms that the
-:ref:`fetchers <bitbake:bb-fetchers>` support.
+:ref:`fetchers <bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers>` support.
 
 The following diagram shows the common development flow used with the
 ``devtool upgrade`` command:
