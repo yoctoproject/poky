@@ -1364,7 +1364,7 @@ files. Fetching is controlled mainly through the
 :term:`SRC_URI` variable. Your recipe
 must have a ``SRC_URI`` variable that points to where the source is
 located. For a graphical representation of source locations, see the
-":ref:`sources-dev-environment`" section in
+":ref:`overview-manual/overview-manual-concepts:sources`" section in
 the Yocto Project Overview and Concepts Manual.
 
 The :ref:`ref-tasks-fetch` task uses
@@ -3759,7 +3759,7 @@ build host running Linux.
 The build process creates an entire Linux distribution from source and
 places it in your :term:`Build Directory` under
 ``tmp/deploy/images``. For detailed information on the build process
-using BitBake, see the ":ref:`images-dev-environment`" section in the
+using BitBake, see the ":ref:`overview-manual/overview-manual-concepts:images`" section in the
 Yocto Project Overview and Concepts Manual.
 
 The following figure and list overviews the build process:
@@ -6663,7 +6663,7 @@ revision, respectively). The values are highly dependent on the policies
 and procedures of a given distribution and package feed.
 
 Because the OpenEmbedded build system uses
-":ref:`signatures <overview-checksums>`", which are
+":ref:`signatures <overview-manual/overview-manual-concepts:checksums (signatures)>`", which are
 unique to a given build, the build system knows when to rebuild
 packages. All the inputs into a given task are represented by a
 signature, which can trigger a rebuild when different. Thus, the build
@@ -6906,7 +6906,7 @@ multiple times if you have more than one set of modules to package.
 
 For more examples that show how to use ``do_split_packages``, see the
 ``connman.inc`` file in the ``meta/recipes-connectivity/connman/``
-directory of the ``poky`` :ref:`source repository <yocto-project-repositories>`. You can
+directory of the ``poky`` :ref:`source repository <overview-manual/overview-manual-development-environment:yocto project source repositories>`. You can
 also find examples in ``meta/classes/kernel.bbclass``.
 
 Following is a reference that shows ``do_split_packages`` mandatory and
@@ -9661,7 +9661,7 @@ Invalidating Shared State to Force a Task to Run
 ------------------------------------------------
 
 The OpenEmbedded build system uses
-:ref:`checksums <overview-checksums>` and
+:ref:`checksums <overview-manual/overview-manual-concepts:checksums (signatures)>` and
 :ref:`overview-manual/overview-manual-concepts:shared state` cache to avoid unnecessarily
 rebuilding tasks. Collectively, this scheme is known as "shared state
 code".
@@ -10662,7 +10662,8 @@ Yocto general mailing list or on the openembedded-devel mailing list.
 
 You can also push a change upstream and request a maintainer to pull the
 change into the component's upstream repository. You do this by pushing
-to a contribution repository that is upstream. See the ":ref:`gs-git-workflows-and-the-yocto-project`"
+to a contribution repository that is upstream. See the
+":ref:`overview-manual/overview-manual-development-environment:git workflows and the yocto project`"
 section in the Yocto Project Overview and Concepts Manual for additional
 concepts on working in the Yocto Project development environment.
 
@@ -10789,7 +10790,7 @@ Yocto Project Reference Manual.
 
 Here is the general procedure on how to submit a patch through email
 without using the scripts once the steps in
-:ref:`preparing-changes-for-submissions` have been followed:
+:ref:`dev-manual/dev-manual-common-tasks:preparing changes for submission` have been followed:
 
 1. *Format the Commit:* Format the commit into an email message. To
    format commits, use the ``git format-patch`` command. When you
@@ -10880,7 +10881,7 @@ and ``send-pull-request`` scripts from openembedded-core to create and send a
 patch series with a link to the branch for review.
 
 Follow this procedure to push a change to an upstream "contrib" Git
-repository once the steps in :ref:`preparing-changes-for-submissions` have
+repository once the steps in :ref:`dev-manual/dev-manual-common-tasks:preparing changes for submission` have
 been followed:
 
 .. note::
@@ -11055,8 +11056,8 @@ follows:
       a newer version of the software which includes an upstream fix for the
       issue or when the issue has been fixed on the master branch in a way
       that introduces backwards incompatible changes. In this case follow the
-      steps in :ref:`preparing-changes-for-submissions` and
-      :ref:`submitting-a-patch` but modify the subject header of your patch
+      steps in :ref:`dev-manual/dev-manual-common-tasks:preparing changes for submission` and
+      :ref:`dev-manual/dev-manual-common-tasks:using email to submit a patch` but modify the subject header of your patch
       email to include the name of the stable branch which you are
       targetting. This can be done using the ``--subject-prefix`` argument to
       ``git format-patch``, for example to submit a patch to the dunfell
