@@ -43,8 +43,6 @@ see the
 ":ref:`overview-manual/overview-manual-concepts:openembedded build system concepts`"
 section.
 
-.. _usingpoky-components-bitbake:
-
 BitBake
 -------
 
@@ -92,8 +90,6 @@ occurs, the target that failed and those that depend on it cannot be
 remade. However, when you use this option other dependencies can still
 be processed.
 
-.. _overview-components-recipes:
-
 Recipes
 -------
 
@@ -109,8 +105,6 @@ the word "package" is used for the packaged output from the OpenEmbedded
 build system (i.e. ``.ipk`` or ``.deb`` files), this document avoids
 using the term "package" when referring to recipes.
 
-.. _overview-components-classes:
-
 Classes
 -------
 
@@ -122,8 +116,6 @@ The ":ref:`ref-manual/ref-classes:Classes`" chapter in the
 Yocto Project Reference Manual provides details about classes and how to
 use them.
 
-.. _overview-components-configurations:
-
 Configurations
 --------------
 
@@ -134,8 +126,6 @@ distribution configuration options, compiler tuning options, general
 common configuration options, and user configuration options in
 ``conf/local.conf``, which is found in the :term:`Build Directory`.
 
-
-.. _overview-layers:
 
 Layers
 ======
@@ -165,8 +155,6 @@ procedures and learn about tools (i.e. ``bitbake-layers``) for creating
 layers suitable for the Yocto Project in the
 ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
 section of the Yocto Project Development Tasks Manual.
-
-.. _openembedded-build-system-build-concepts:
 
 OpenEmbedded Build System Concepts
 ==================================
@@ -527,8 +515,6 @@ their respective layers.
 This layer contains any recipes, append files, and patches, that your
 project needs.
 
-.. _sources-dev-environment:
-
 Sources
 -------
 
@@ -601,8 +587,6 @@ class to include that local project. You use either the ``local.conf``
 or a recipe's append file to override or set the recipe to point to the
 local directory on your disk to pull in the whole source tree.
 
-.. _scms:
-
 Source Control Managers (Optional)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -643,8 +627,6 @@ organization.
 Regular mirrors can be any site across the Internet that is used as an
 alternative location for source code should the primary site not be
 functioning for some reason or another.
-
-.. _package-feeds-dev-environment:
 
 Package Feeds
 -------------
@@ -709,8 +691,6 @@ qemux86 exist. Packages for the i586 architecture are placed in
 ``build/tmp/deploy/ipk/i586``, while packages for the qemux86
 architecture are placed in ``build/tmp/deploy/ipk/qemux86``.
 
-.. _bitbake-dev-environment:
-
 BitBake Tool
 ------------
 
@@ -726,8 +706,6 @@ those areas.
    Separate documentation exists for the BitBake tool. See the
    BitBake User Manual
    for reference material on BitBake.
-
-.. _source-fetching-dev-environment:
 
 Source Fetching
 ~~~~~~~~~~~~~~~
@@ -819,8 +797,6 @@ Build Directory's hierarchy:
    what the OpenEmbedded build system is using as a build target (e.g.
    general architecture, a build host, an SDK, or a specific machine).
 
-.. _patching-dev-environment:
-
 Patching
 ~~~~~~~~
 
@@ -860,8 +836,6 @@ section in the Yocto Project Application Development and the Extensible
 Software Development Kit (SDK) manual and the
 ":ref:`kernel-dev/kernel-dev-common:using traditional kernel development to patch the kernel`"
 section in the Yocto Project Linux Kernel Development Manual.
-
-.. _configuration-compilation-and-staging-dev-environment:
 
 Configuration, Compilation, and Staging
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -921,8 +895,6 @@ This step in the build process consists of the following tasks:
    holding area pointed to by the :term:`D`
    variable. Packaging occurs later using files from this holding
    directory.
-
-.. _package-splitting-dev-environment:
 
 Package Splitting
 ~~~~~~~~~~~~~~~~~
@@ -1003,8 +975,6 @@ that part of the build process.
    into an official package feed (e.g. the Ångström distribution). This
    functionality is highly distribution-specific and thus is not
    provided out of the box.
-
-.. _image-generation-dev-environment:
 
 Image Generation
 ~~~~~~~~~~~~~~~~
@@ -1126,8 +1096,6 @@ build system has created the final image output files.
    The entire image generation process is run under
    Pseudo. Running under Pseudo ensures that the files in the root filesystem
    have correct ownership.
-
-.. _sdk-generation-dev-environment:
 
 SDK Generation
 ~~~~~~~~~~~~~~
@@ -1303,8 +1271,6 @@ variable is the function that determines whether a given dependency
 needs to be followed, and whether for any given relationship the
 function needs to be passed. The function returns a True or False value.
 
-.. _images-dev-environment:
-
 Images
 ------
 
@@ -1362,8 +1328,6 @@ current configuration.
    link that points to the most recently built file for each machine.
    These links might be useful for external scripts that need to obtain
    the latest version of each file.
-
-.. _sdk-dev-environment:
 
 Application Development SDK
 ---------------------------
@@ -1677,8 +1641,6 @@ them if they are deemed to be valid.
 The rest of this section goes into detail about the overall incremental
 build architecture, the checksums (signatures), and shared state.
 
-.. _concepts-overall-architecture:
-
 Overall Architecture
 --------------------
 
@@ -1696,8 +1658,6 @@ best solution. Also, in this case, the core must be "taught" much about
 specific tasks. This methodology does not scale well and does not allow
 users to easily add new tasks in layers or as external recipes without
 touching the packaged-staging core.
-
-.. _overview-checksums:
 
 Checksums (Signatures)
 ----------------------

@@ -4,8 +4,6 @@
 The Yocto Project Overview and Concepts Manual
 **********************************************
 
-.. _overview-manual-welcome:
-
 Welcome
 =======
 
@@ -56,8 +54,6 @@ This manual does not give you the following:
    example, exhaustive information on how to use the Source Control
    Manager Git is better covered with Internet searches and official Git
    Documentation than through the Yocto Project documentation.
-
-.. _overview-manual-other-information:
 
 Other Information
 =================

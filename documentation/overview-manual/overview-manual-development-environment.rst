@@ -45,8 +45,6 @@ also find helpful information on how to participate in the Linux
 Community
 `here <https://www.kernel.org/doc/html/latest/process/index.html>`__.
 
-.. _gs-the-development-host:
-
 The Development Host
 ====================
 
@@ -134,8 +132,6 @@ methods exist for you to do work in the Yocto Project environment:
    Toaster and on how to use Toaster in general, see the
    :doc:`../toaster-manual/toaster-manual`.
 
-.. _yocto-project-repositories:
-
 Yocto Project Source Repositories
 =================================
 
@@ -213,8 +209,6 @@ development:
    For steps on how to use the "DOWNLOADS" page, see the
    ":ref:`dev-manual/dev-manual-start:using the downloads page`"
    section in the Yocto Project Development Tasks Manual.
-
-.. _gs-git-workflows-and-the-yocto-project:
 
 Git Workflows and the Yocto Project
 ===================================
