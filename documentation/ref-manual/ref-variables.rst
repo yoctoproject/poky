@@ -746,7 +746,7 @@ system and gives an overview of their function and contents.
 
       For information on how to use ``BBMULTICONFIG`` in an environment
       that supports building targets with multiple configurations, see the
-      ":ref:`dev-building-images-for-multiple-targets-using-multiple-configurations`"
+      ":ref:`dev-manual/dev-manual-common-tasks:building images for multiple targets using multiple configurations`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`BBPATH`
@@ -1299,7 +1299,7 @@ system and gives an overview of their function and contents.
       will be the aggregate of all of them.
 
       For information on creating an initramfs, see the
-      ":ref:`building-an-initramfs-image`" section
+      ":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`" section
       in the Yocto Project Development Tasks Manual.
 
    :term:`CONFIG_SITE`
@@ -1672,9 +1672,9 @@ system and gives an overview of their function and contents.
       For more information on the structure of the Build Directory, see
       ":ref:`ref-manual/ref-structure:the build directory - \`\`build/\`\``" section.
       For more detail on the contents of the ``deploy`` directory, see the
-      ":ref:`Images <images-dev-environment>`", ":ref:`Package
-      Feeds <package-feeds-dev-environment>`", and
-      ":ref:`sdk-dev-environment`" sections all in the
+      ":ref:`overview-manual/overview-manual-concepts:images`",
+      ":ref:`overview-manual/overview-manual-concepts:package feeds`", and
+      ":ref:`overview-manual/overview-manual-concepts:application development sdk`" sections all in the
       Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOY_DIR_DEB`
@@ -1695,8 +1695,8 @@ system and gives an overview of their function and contents.
       ``DEPLOY_DIR_DEB`` variable to make sure the
       :ref:`ref-tasks-package_write_deb` task
       writes Debian packages into the appropriate folder. For more
-      information on how packaging works, see the ":ref:`Package
-      Feeds <package-feeds-dev-environment>`" section
+      information on how packaging works, see the
+      ":ref:`overview-manual/overview-manual-concepts:package feeds`" section
       in the Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOY_DIR_IMAGE`
@@ -1710,8 +1710,8 @@ system and gives an overview of their function and contents.
       For more information on the structure of the Build Directory, see
       ":ref:`ref-manual/ref-structure:the build directory - \`\`build/\`\``" section.
       For more detail on the contents of the ``deploy`` directory, see the
-      ":ref:`Images <images-dev-environment>`" and
-      ":ref:`sdk-dev-environment`" sections both in
+      ":ref:`overview-manual/overview-manual-concepts:images`" and
+      ":ref:`overview-manual/overview-manual-concepts:application development sdk`" sections both in
       the Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOY_DIR_IPK`
@@ -1731,8 +1731,8 @@ system and gives an overview of their function and contents.
       ``DEPLOY_DIR_IPK`` variable to make sure the
       :ref:`ref-tasks-package_write_ipk` task
       writes IPK packages into the appropriate folder. For more information
-      on how packaging works, see the ":ref:`Package
-      Feeds <package-feeds-dev-environment>`" section
+      on how packaging works, see the
+      ":ref:`overview-manual/overview-manual-concepts:package feeds`" section
       in the Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOY_DIR_RPM`
@@ -1752,8 +1752,8 @@ system and gives an overview of their function and contents.
       ``DEPLOY_DIR_RPM`` variable to make sure the
       :ref:`ref-tasks-package_write_rpm` task
       writes RPM packages into the appropriate folder. For more information
-      on how packaging works, see the ":ref:`Package
-      Feeds <package-feeds-dev-environment>`" section
+      on how packaging works, see the
+      ":ref:`overview-manual/overview-manual-concepts:package feeds`" section
       in the Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOY_DIR_TAR`
@@ -1773,8 +1773,8 @@ system and gives an overview of their function and contents.
       ``DEPLOY_DIR_TAR`` variable to make sure the
       :ref:`ref-tasks-package_write_tar` task
       writes TAR packages into the appropriate folder. For more information
-      on how packaging works, see the ":ref:`Package
-      Feeds <package-feeds-dev-environment>`" section
+      on how packaging works, see the
+      ":ref:`overview-manual/overview-manual-concepts:package feeds`" section
       in the Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOYDIR`
@@ -2194,7 +2194,7 @@ system and gives an overview of their function and contents.
       Project, see the ":ref:`ref-features-image`" section.
 
       For an example that shows how to customize your image by using this
-      variable, see the ":ref:`usingpoky-extend-customimage-imagefeatures`"
+      variable, see the ":ref:`dev-manual/dev-manual-common-tasks:customizing images using custom \`\`image_features\`\` and \`\`extra_image_features\`\``"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`EXTRA_IMAGECMD`
@@ -2509,9 +2509,9 @@ system and gives an overview of their function and contents.
       build system uses files from ``files/defconfig``.
 
       You can find out more about the patching process in the
-      ":ref:`patching-dev-environment`" section
+      ":ref:`overview-manual/overview-manual-concepts:patching`" section
       in the Yocto Project Overview and Concepts Manual and the
-      ":ref:`new-recipe-patching-code`" section in
+      ":ref:`dev-manual/dev-manual-common-tasks:patching code`" section in
       the Yocto Project Development Tasks Manual. See the
       :ref:`ref-tasks-patch` task as well.
 
@@ -3000,7 +3000,7 @@ system and gives an overview of their function and contents.
       the ":ref:`ref-features-image`" section.
 
       For an example that shows how to customize your image by using this
-      variable, see the ":ref:`usingpoky-extend-customimage-imagefeatures`"
+      variable, see the ":ref:`dev-manual/dev-manual-common-tasks:customizing images using custom \`\`image_features\`\` and \`\`extra_image_features\`\``"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`IMAGE_FSTYPES`
@@ -3058,7 +3058,7 @@ system and gives an overview of their function and contents.
             allows the initial RAM filesystem (initramfs) recipe to use a
             fixed set of packages and not be affected by ``IMAGE_INSTALL``.
             For information on creating an initramfs, see the
-            ":ref:`building-an-initramfs-image`"
+            ":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`"
             section in the Yocto Project Development Tasks Manual.
 
          -  Using ``IMAGE_INSTALL`` with the
@@ -3126,7 +3126,7 @@ system and gives an overview of their function and contents.
       The location is
       derived using the :term:`DEPLOY_DIR_IMAGE`
       and :term:`IMAGE_NAME` variables. You can find
-      information on how the image is created in the ":ref:`image-generation-dev-environment`"
+      information on how the image is created in the ":ref:`overview-manual/overview-manual-concepts:image generation`"
       section in the Yocto Project Overview and Concepts Manual.
 
    :term:`IMAGE_NAME`
@@ -3554,7 +3554,7 @@ system and gives an overview of their function and contents.
       :term:`INITRAMFS_IMAGE_BUNDLE`
       variable, which allows the generated image to be bundled inside the
       kernel image. Additionally, for information on creating an initramfs
-      image, see the ":ref:`building-an-initramfs-image`" section
+      image, see the ":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`" section
       in the Yocto Project Development Tasks Manual.
 
    :term:`INITRAMFS_IMAGE_BUNDLE`
@@ -3602,7 +3602,7 @@ system and gives an overview of their function and contents.
       See the
       :yocto_git:`local.conf.sample.extended </cgit/cgit.cgi/poky/tree/meta-poky/conf/local.conf.sample.extended>`
       file for additional information. Also, for information on creating an
-      initramfs, see the ":ref:`building-an-initramfs-image`" section
+      initramfs, see the ":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`" section
       in the Yocto Project Development Tasks Manual.
 
    :term:`INITRAMFS_LINK_NAME`
@@ -4240,7 +4240,7 @@ system and gives an overview of their function and contents.
       This variable must be defined for all recipes (unless
       :term:`LICENSE` is set to "CLOSED").
 
-      For more information, see the ":ref:`usingpoky-configuring-lic_files_chksum`"
+      For more information, see the ":ref:`dev-manual/dev-manual-common-tasks:tracking license changes`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`LICENSE`
@@ -4890,7 +4890,7 @@ system and gives an overview of their function and contents.
       Controls how the OpenEmbedded build system spawns interactive
       terminals on the host development system (e.g. using the BitBake
       command with the ``-c devshell`` command-line option). For more
-      information, see the ":ref:`platdev-appdev-devshell`" section in
+      information, see the ":ref:`dev-manual/dev-manual-common-tasks:using a development shell`" section in
       the Yocto Project Development Tasks Manual.
 
       You can use the following values for the ``OE_TERMINAL`` variable:
@@ -4959,7 +4959,7 @@ system and gives an overview of their function and contents.
 
          An easy way to see what overrides apply is to search for ``OVERRIDES``
          in the output of the ``bitbake -e`` command. See the
-         ":ref:`dev-debugging-viewing-variable-values`" section in the Yocto
+         ":ref:`dev-manual/dev-manual-common-tasks:viewing variable values`" section in the Yocto
          Project Development Tasks Manual for more information.
 
    :term:`P`
@@ -5079,7 +5079,7 @@ system and gives an overview of their function and contents.
          separate ``*-src`` pkg. This is the default behavior.
 
       You can find out more about debugging using GDB by reading the
-      ":ref:`platdev-gdb-remotedebug`" section
+      ":ref:`dev-manual/dev-manual-common-tasks:debugging with the gnu project debugger (gdb) remotely`" section
       in the Yocto Project Development Tasks Manual.
 
    :term:`PACKAGE_EXCLUDE_COMPLEMENTARY`
@@ -5243,7 +5243,7 @@ system and gives an overview of their function and contents.
       the :ref:`core-image-minimal-initramfs <ref-manual/ref-images:images>`
       image. When working with an initial RAM filesystem (initramfs) image,
       use the ``PACKAGE_INSTALL`` variable. For information on creating an
-      initramfs, see the ":ref:`building-an-initramfs-image`" section
+      initramfs, see the ":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`" section
       in the Yocto Project Development Tasks Manual.
 
    :term:`PACKAGE_INSTALL_ATTEMPTONLY`
@@ -5691,7 +5691,7 @@ system and gives an overview of their function and contents.
 
          The OpenEmbedded build system does not need the aid of ``PR``
          to know when to rebuild a recipe. The build system uses the task
-         :ref:`input checksums <overview-checksums>` along with the
+         :ref:`input checksums <overview-manual/overview-manual-concepts:checksums (signatures)>` along with the
          :ref:`stamp <structure-build-tmp-stamps>` and
          :ref:`overview-manual/overview-manual-concepts:shared state cache`
          mechanisms.
@@ -5738,7 +5738,7 @@ system and gives an overview of their function and contents.
          PREFERRED_PROVIDER_virtual/libgl ?= "mesa"
 
       For more
-      information, see the ":ref:`metadata-virtual-providers`"
+      information, see the ":ref:`dev-manual/dev-manual-common-tasks:using virtual providers`"
       section in the Yocto Project Development Tasks Manual.
 
       .. note::
@@ -7023,7 +7023,7 @@ system and gives an overview of their function and contents.
 
       -  ``file://`` - Fetches files, which are usually files shipped
          with the :term:`Metadata`, from the local machine (e.g.
-         :ref:`patch <patching-dev-environment>` files).
+         :ref:`patch <overview-manual/overview-manual-concepts:patching>` files).
          The path is relative to the :term:`FILESPATH`
          variable. Thus, the build system searches, in order, from the
          following directories, which are assumed to be a subdirectories of
@@ -7200,7 +7200,7 @@ system and gives an overview of their function and contents.
          For information on limitations when inheriting the latest revision
          of software using ``SRCREV``, see the :term:`AUTOREV` variable
          description and the
-         ":ref:`automatically-incrementing-a-binary-package-revision-number`"
+         ":ref:`dev-manual/dev-manual-common-tasks:automatically incrementing a package version number`"
          section, which is in the Yocto Project Development Tasks Manual.
 
    :term:`SSTATE_DIR`
@@ -7316,7 +7316,7 @@ system and gives an overview of their function and contents.
       see the :ref:`ref-tasks-populate_sysroot`
       task, the ":ref:`sdk-manual/sdk-extensible:sharing files between recipes`"
       section in the Yocto Project Development Tasks Manual, the
-      ":ref:`configuration-compilation-and-staging-dev-environment`"
+      ":ref:`overview-manual/overview-manual-concepts:configuration, compilation, and staging`"
       section in the Yocto Project Overview and Concepts Manual, and the
       :term:`SYSROOT_DIRS` variable.
 
@@ -8042,7 +8042,7 @@ system and gives an overview of their function and contents.
       You can provide the following arguments with ``TEST_TARGET``:
 
       -  *"qemu":* Boots a QEMU image and runs the tests. See the
-         ":ref:`qemu-image-enabling-tests`" section
+         ":ref:`dev-manual/dev-manual-common-tasks:enabling runtime tests on qemu`" section
          in the Yocto Project Development Tasks Manual for more
          information.
 
@@ -8058,7 +8058,7 @@ system and gives an overview of their function and contents.
             ``meta/lib/oeqa/controllers/simpleremote.py``.
 
       For information on running tests on hardware, see the
-      ":ref:`hardware-image-enabling-tests`"
+      ":ref:`dev-manual/dev-manual-common-tasks:enabling runtime tests on hardware`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`TEST_TARGET_IP`
@@ -8554,13 +8554,13 @@ system and gives an overview of their function and contents.
       specifically set. Typically, you would set ``USE_DEVFS`` to "0" for a
       statically populated ``/dev`` directory.
 
-      See the ":ref:`selecting-dev-manager`" section in
+      See the ":ref:`dev-manual/dev-manual-common-tasks:selecting a device manager`" section in
       the Yocto Project Development Tasks Manual for information on how to
       use this variable.
 
    :term:`USE_VT`
       When using
-      :ref:`SysVinit <new-recipe-enabling-system-services>`,
+      :ref:`SysVinit <dev-manual/dev-manual-common-tasks:enabling system services>`,
       determines whether or not to run a
       `getty <http://en.wikipedia.org/wiki/Getty_%28Unix%29>`__ on any
       virtual terminals in order to enable logging in through those

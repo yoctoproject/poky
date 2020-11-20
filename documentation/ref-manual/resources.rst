@@ -23,7 +23,7 @@ The Yocto Project gladly accepts contributions. You can submit changes
 to the project either by creating and sending pull requests, or by
 submitting patches through email. For information on how to do both as
 well as information on how to identify the maintainer for each area of
-code, see the ":ref:`how-to-submit-a-change`" section in the
+code, see the ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`" section in the
 Yocto Project Development Tasks Manual.
 
 .. _resources-bugtracker:

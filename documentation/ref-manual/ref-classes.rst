@@ -86,7 +86,7 @@ standardization. This class defines a set of tasks (e.g. ``configure``,
 should usually be enough to define a few standard variables and then
 simply ``inherit autotools``. These classes can also work with software
 that emulates Autotools. For more information, see the
-":ref:`new-recipe-autotooled-package`" section
+":ref:`dev-manual/dev-manual-common-tasks:autotooled package`" section
 in the Yocto Project Development Tasks Manual.
 
 By default, the ``autotools*`` classes use out-of-tree builds (i.e.
@@ -458,7 +458,7 @@ staging the files from ``DEPLOYDIR`` to ``DEPLOY_DIR_IMAGE``.
 ====================
 
 The ``devshell`` class adds the ``do_devshell`` task. Distribution
-policy dictates whether to include this class. See the ":ref:`platdev-appdev-devshell`"
+policy dictates whether to include this class. See the ":ref:`dev-manual/dev-manual-common-tasks:using a development shell`"
 section in the Yocto Project Development Tasks Manual for more
 information about using ``devshell``.
 
@@ -927,10 +927,10 @@ then one or more image files are created.
    install into the image.
 
 For information on customizing images, see the
-":ref:`usingpoky-extend-customimage`" section
+":ref:`dev-manual/dev-manual-common-tasks:customizing images`" section
 in the Yocto Project Development Tasks Manual. For information on how
 images are created, see the
-":ref:`images-dev-environment`" section in the
+":ref:`overview-manual/overview-manual-concepts:images`" section in the
 Yocto Project Overview and Concpets Manual.
 
 .. _ref-classes-image-buildinfo:
@@ -1344,7 +1344,7 @@ packages such as ``kernel-vmlinux``.
 The ``kernel`` class contains logic that allows you to embed an initial
 RAM filesystem (initramfs) image when you build the kernel image. For
 information on how to build an initramfs, see the
-":ref:`building-an-initramfs-image`" section in
+":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`" section in
 the Yocto Project Development Tasks Manual.
 
 Various other classes are used by the ``kernel`` and ``module`` classes
@@ -1620,7 +1620,7 @@ different target optimizations or target architectures and installing
 them side-by-side in the same image.
 
 For more information on using the Multilib feature, see the
-":ref:`combining-multiple-versions-library-files-into-one-image`"
+":ref:`dev-manual/dev-manual-common-tasks:combining multiple versions of library files into one image`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _ref-classes-native:
@@ -1921,7 +1921,7 @@ so forth). It is highly recommended that all package group recipes
 inherit this class.
 
 For information on how to use this class, see the
-":ref:`usingpoky-extend-customimage-customtasks`"
+":ref:`dev-manual/dev-manual-common-tasks:customizing images using custom package groups`"
 section in the Yocto Project Development Tasks Manual.
 
 Previously, this class was called the ``task`` class.
@@ -2268,7 +2268,7 @@ The root filesystem is created from packages using one of the
 :term:`PACKAGE_CLASSES` variable.
 
 For information on how root filesystem images are created, see the
-":ref:`image-generation-dev-environment`"
+":ref:`overview-manual/overview-manual-concepts:image generation`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-classes-sanity:

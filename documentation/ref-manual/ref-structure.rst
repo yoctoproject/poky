@@ -399,8 +399,8 @@ This directory contains any "end result" output from the OpenEmbedded
 build process. The :term:`DEPLOY_DIR` variable points
 to this directory. For more detail on the contents of the ``deploy``
 directory, see the
-":ref:`images-dev-environment`" and
-":ref:`sdk-dev-environment`" sections in the Yocto
+":ref:`overview-manual/overview-manual-concepts:images`" and
+":ref:`overview-manual/overview-manual-concepts:application development sdk`" sections in the Yocto
 Project Overview and Concepts Manual.
 
 .. _structure-build-tmp-deploy-deb:
@@ -577,7 +577,7 @@ built within the Yocto Project. For this package, a work directory of
 ``tmp/work/qemux86-poky-linux/linux-yocto/3.0+git1+<.....>``, referred
 to as the ``WORKDIR``, is created. Within this directory, the source is
 unpacked to ``linux-qemux86-standard-build`` and then patched by Quilt.
-(See the ":ref:`using-a-quilt-workflow`" section in
+(See the ":ref:`dev-manual/dev-manual-common-tasks:using quilt in your workflow`" section in
 the Yocto Project Development Tasks Manual for more information.) Within
 the ``linux-qemux86-standard-build`` directory, standard Quilt
 directories ``linux-3.0/patches`` and ``linux-3.0/.pc`` are created, and

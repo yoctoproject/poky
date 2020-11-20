@@ -140,7 +140,7 @@ The ``do_image`` task performs pre-processing on the image through the
 :term:`IMAGE_PREPROCESS_COMMAND` and
 dynamically generates supporting ``do_image_*`` tasks as needed.
 
-For more information on image creation, see the ":ref:`image-generation-dev-environment`"
+For more information on image creation, see the ":ref:`overview-manual/overview-manual-concepts:image generation`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-image-complete:
@@ -159,7 +159,7 @@ through the
 :term:`IMAGE_POSTPROCESS_COMMAND`.
 
 For more information on image creation, see the
-":ref:`image-generation-dev-environment`"
+":ref:`overview-manual/overview-manual-concepts:image generation`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-install:
@@ -237,7 +237,7 @@ see the :ref:`insane <ref-classes-insane>` class.
 Creates Debian packages (i.e. ``*.deb`` files) and places them in the
 ``${``\ :term:`DEPLOY_DIR_DEB`\ ``}`` directory in
 the package feeds area. For more information, see the
-":ref:`package-feeds-dev-environment`" section in
+":ref:`overview-manual/overview-manual-concepts:package feeds`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_write_ipk:
@@ -248,7 +248,7 @@ the Yocto Project Overview and Concepts Manual.
 Creates IPK packages (i.e. ``*.ipk`` files) and places them in the
 ``${``\ :term:`DEPLOY_DIR_IPK`\ ``}`` directory in
 the package feeds area. For more information, see the
-":ref:`package-feeds-dev-environment`" section in
+":ref:`overview-manual/overview-manual-concepts:package feeds`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_write_rpm:
@@ -259,7 +259,7 @@ the Yocto Project Overview and Concepts Manual.
 Creates RPM packages (i.e. ``*.rpm`` files) and places them in the
 ``${``\ :term:`DEPLOY_DIR_RPM`\ ``}`` directory in
 the package feeds area. For more information, see the
-":ref:`package-feeds-dev-environment`" section in
+":ref:`overview-manual/overview-manual-concepts:package feeds`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_write_tar:
@@ -270,7 +270,7 @@ the Yocto Project Overview and Concepts Manual.
 Creates tarballs and places them in the
 ``${``\ :term:`DEPLOY_DIR_TAR`\ ``}`` directory in
 the package feeds area. For more information, see the
-":ref:`package-feeds-dev-environment`" section in
+":ref:`overview-manual/overview-manual-concepts:package feeds`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-packagedata:
@@ -349,9 +349,9 @@ patch files end with either ``.patch`` or ``.diff``, every file would be
 applied as a patch by default except for the ``patch_file5`` patch.
 
 You can find out more about the patching process in the
-":ref:`patching-dev-environment`" section in
+":ref:`overview-manual/overview-manual-concepts:patching`" section in
 the Yocto Project Overview and Concepts Manual and the
-":ref:`new-recipe-patching-code`" section in the
+":ref:`dev-manual/dev-manual-common-tasks:patching code`" section in the
 Yocto Project Development Tasks Manual.
 
 .. _ref-tasks-populate_lic:
@@ -368,7 +368,7 @@ the image is constructed.
 -------------------
 
 Creates the file and directory structure for an installable SDK. See the
-":ref:`sdk-generation-dev-environment`"
+":ref:`overview-manual/overview-manual-concepts:sdk generation`"
 section in the Yocto Project Overview and Concepts Manual for more
 information.
 
@@ -378,7 +378,7 @@ information.
 -----------------------
 
 Creates the file and directory structure for an installable extensible 
-SDK (eSDK). See the ":ref:`sdk-generation-dev-environment`"
+SDK (eSDK). See the ":ref:`overview-manual/overview-manual-concepts:sdk generation`"
 section in the Yocto Project Overview and Concepts Manual for more
 information.
 
@@ -434,7 +434,7 @@ Unpacks the source code into a working directory pointed to by
 ``${``\ :term:`WORKDIR`\ ``}``. The :term:`S`
 variable also plays a role in where unpacked source files ultimately
 reside. For more information on how source files are unpacked, see the
-":ref:`source-fetching-dev-environment`"
+":ref:`overview-manual/overview-manual-concepts:source fetching`"
 section in the Yocto Project Overview and Concepts Manual and also see
 the ``WORKDIR`` and ``S`` variable descriptions.
 
@@ -567,7 +567,7 @@ scratch is guaranteed.
 Starts a shell in which an interactive Python interpreter allows you to
 interact with the BitBake build environment. From within this shell, you
 can directly examine and set bits from the data store and execute
-functions as if within the BitBake environment. See the ":ref:`platdev-appdev-devpyshell`" section in
+functions as if within the BitBake environment. See the ":ref:`dev-manual/dev-manual-common-tasks:using a development python shell`" section in
 the Yocto Project Development Tasks Manual for more information about
 using ``devpyshell``.
 
@@ -577,7 +577,7 @@ using ``devpyshell``.
 ---------------
 
 Starts a shell whose environment is set up for development, debugging,
-or both. See the ":ref:`platdev-appdev-devshell`" section in the
+or both. See the ":ref:`dev-manual/dev-manual-common-tasks:using a development shell`" section in the
 Yocto Project Development Tasks Manual for more information about using
 ``devshell``.
 
@@ -593,7 +593,7 @@ Lists all defined tasks for a target.
 ``do_package_index``
 --------------------
 
-Creates or updates the index in the :ref:`package-feeds-dev-environment` area.
+Creates or updates the index in the :ref:`overview-manual/overview-manual-concepts:package feeds` area.
 
 .. note::
 
@@ -631,7 +631,7 @@ has some more information about these types of images.
 -------------
 
 Creates the root filesystem (file and directory structure) for an image.
-See the ":ref:`image-generation-dev-environment`"
+See the ":ref:`overview-manual/overview-manual-concepts:image generation`"
 section in the Yocto Project Overview and Concepts Manual for more
 information on how the root filesystem is created.
 
