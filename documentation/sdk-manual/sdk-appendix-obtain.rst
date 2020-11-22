@@ -91,7 +91,7 @@ build the SDK installer. Follow these steps:
    (i.e. a local
    ``poky`` repository). See the ":ref:`dev-manual/dev-manual-start:cloning the \`\`poky\`\` repository`" and
    possibly the ":ref:`dev-manual/dev-manual-start:checking out by branch in poky`" and
-   ":ref:`checkout-out-by-tag-in-poky`" sections
+   ":ref:`dev-manual/dev-manual-start:checking out by tag in poky`" sections
    all in the Yocto Project Development Tasks Manual for information on
    how to clone the ``poky`` repository and check out the appropriate
    branch for your work.
