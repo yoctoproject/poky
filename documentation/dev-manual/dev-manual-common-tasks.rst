@@ -10982,6 +10982,28 @@ reduce the burden of patch review on maintainers.
    Asking about the status of a patch or change is reasonable if the change
    has been idle for a while with no feedback.
 
+Responding to Patch Review
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You may get feedback on your submitted patches from other community members
+or from the automated patchtest service. If issues are identified in your
+patch then it is usually necessary to address these before the patch will be
+accepted into the project. In this case you should amend the patch according
+to the feedback and submit an updated version to the relevant mailing list,
+copying in the reviewers who provided feedback to the previous version of the
+patch.
+
+The patch should be amended using ``git commit --amend`` or perhaps ``git
+rebase`` for more expert git users. You should also modify the ``[PATCH]``
+tag in the email subject line when sending the revised patch to mark the new
+iteration as ``[PATCH v2]``, ``[PATCH v3]``, etc as appropriate. This can be
+done by passing the ``-v`` argument to ``git format-patch`` with a version
+number.
+
+Lastly please ensure that you also test your revised changes. In particular
+please don't just edit the patch file written out by ``git format-patch`` and
+resend it.
+
 Working With Licenses
 =====================
 
