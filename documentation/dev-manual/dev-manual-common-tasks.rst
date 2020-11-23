@@ -10939,8 +10939,8 @@ without using the scripts once the steps in
       or to OpenEmbedded, you might consider requesting a contrib area
       and the necessary associated rights.
 
-2. *Import the Files Into Your Mail Client:* Import the files into your
-   mail client by using the ``git send-email`` command.
+2. *Send the patches via email:* Send the patches to the recipients and
+   relevant mailing lists by using the ``git send-email`` command.
 
    .. note::
 
