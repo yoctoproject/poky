@@ -10690,19 +10690,10 @@ layers you are contributing to.
 
 The following sections provide procedures for submitting a change.
 
-.. _pushing-a-change-upstream:
+.. _preparing-changes-for-submissions:
 
-Using Scripts to Push a Change Upstream and Request a Pull
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Follow this procedure to push a change to an upstream "contrib" Git
-repository:
-
-.. note::
-
-   You can find general Git information on how to push a change upstream
-   in the
-   `Git Community Book <https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows>`__.
+Preparing Changes for Submission
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. *Make Your Changes Locally:* Make your changes in your local Git
    repository. You should make small, controlled, isolated changes.
@@ -10784,7 +10775,22 @@ repository:
 
          detailed description of change
 
-4. *Push Your Commits to a "Contrib" Upstream:* If you have arranged for
+.. _pushing-a-change-upstream:
+
+Using Scripts to Push a Change Upstream and Request a Pull
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Follow this procedure to push a change to an upstream "contrib" Git
+repository once the steps in :ref:`preparing-changes-for-submissions` have
+been followed:
+
+.. note::
+
+   You can find general Git information on how to push a change upstream
+   in the
+   `Git Community Book <https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows>`__.
+
+1. *Push Your Commits to a "Contrib" Upstream:* If you have arranged for
    permissions to push to an upstream contrib repository, push the
    change to that repository:
    ::
@@ -10801,7 +10807,7 @@ repository:
 
       $ git push meta-intel-contrib your_name/README
 
-5. *Determine Who to Notify:* Determine the maintainer or the mailing
+2. *Determine Who to Notify:* Determine the maintainer or the mailing
    list that you need to notify for the change.
 
    Before submitting any change, you need to be sure who the maintainer
@@ -10830,7 +10836,7 @@ repository:
       lists <resources-mailinglist>`" section in
       the Yocto Project Reference Manual.
 
-6. *Make a Pull Request:* Notify the maintainer or the mailing list that
+3. *Make a Pull Request:* Notify the maintainer or the mailing list that
    you have pushed a change by making a pull request.
 
    The Yocto Project provides two scripts that conveniently let you
@@ -10897,29 +10903,10 @@ mailing lists, see the ":ref:`Mailing Lists <resources-mailinglist>`" section in
 Yocto Project Reference Manual.
 
 Here is the general procedure on how to submit a patch through email
-without using the scripts:
+without using the scripts once the steps in
+:ref:`preparing-changes-for-submissions` have been followed:
 
-1. *Make Your Changes Locally:* Make your changes in your local Git
-   repository. You should make small, controlled, isolated changes.
-   Keeping changes small and isolated aids review, makes
-   merging/rebasing easier and keeps the change history clean should
-   anyone need to refer to it in future.
-
-2. *Stage Your Changes:* Stage your changes by using the ``git add``
-   command on each file you changed.
-
-3. *Commit Your Changes:* Commit the change by using the
-   ``git commit --signoff`` command. Using the ``--signoff`` option
-   identifies you as the person making the change and also satisfies the
-   Developer's Certificate of Origin (DCO) shown earlier.
-
-   When you form a commit, you must follow certain standards established
-   by the Yocto Project development team. See :ref:`Step 3
-   <dev-manual/dev-manual-common-tasks:using scripts to push a change upstream and request a pull>`
-   in the previous section for information on how to provide commit information
-   that meets Yocto Project commit message standards.
-
-4. *Format the Commit:* Format the commit into an email message. To
+1. *Format the Commit:* Format the commit into an email message. To
    format commits, use the ``git format-patch`` command. When you
    provide the command, you must include a revision list or a number of
    patches as part of the command. For example, either of these two
@@ -10952,7 +10939,7 @@ without using the scripts:
       or to OpenEmbedded, you might consider requesting a contrib area
       and the necessary associated rights.
 
-5. *Import the Files Into Your Mail Client:* Import the files into your
+2. *Import the Files Into Your Mail Client:* Import the files into your
    mail client by using the ``git send-email`` command.
 
    .. note::
