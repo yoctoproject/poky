@@ -10666,18 +10666,27 @@ to a contribution repository that is upstream. See the ":ref:`gs-git-workflows-a
 section in the Yocto Project Overview and Concepts Manual for additional
 concepts on working in the Yocto Project development environment.
 
-Two commonly used testing repositories exist for OpenEmbedded-Core:
+Maintainers commonly use ``-next`` branches to test submissions prior to
+merging patches. Thus, you can get an idea of the status of a patch based on
+whether the patch has been merged into one of these branches. The commonly
+used testing branches for OpenEmbedded-Core are as follows:
 
--  *"ross/mut" branch:* The "mut" (master-under-test) tree exists in the
-   ``poky-contrib`` repository in the
-   :yocto_git:`Yocto Project source repositories <>`.
+-  *openembedded-core "master-next" branch:* This branch is part of the
+   :oe_git:`openembedded-core </openembedded-core/>` repository and contains
+   proposed changes to the core metadata.
 
--  *"master-next" branch:* This branch is part of the main "poky"
-   repository in the Yocto Project source repositories.
+-  *poky "master-next" branch:* This branch is part of the
+   :yocto_git:`poky </cgit/cgit.cgi/poky/>` repository and combines proposed
+   changes to bitbake, the core metadata and the poky distro.
 
-Maintainers use these branches to test submissions prior to merging
-patches. Thus, you can get an idea of the status of a patch based on
-whether the patch has been merged into one of these branches.
+Similarly, stable branches maintained by the project may have corresponding
+``-next`` branches which collect proposed changes. For example,
+``&DISTRO_NAME_NO_CAP;-next`` and ``&DISTRO_NAME_NO_CAP_MINUS_ONE;-next``
+branches in both the "openembdedded-core" and "poky" repositories.
+
+Other layers may have similar testing branches but there is no formal
+requirement or standard for these so please check the documentation for the
+layers you are contributing to.
 
 .. note::
 
