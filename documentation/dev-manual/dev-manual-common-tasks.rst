@@ -10688,16 +10688,6 @@ Other layers may have similar testing branches but there is no formal
 requirement or standard for these so please check the documentation for the
 layers you are contributing to.
 
-.. note::
-
-   This system is imperfect and changes can sometimes get lost in the
-   flow. Asking about the status of a patch or change is reasonable if
-   the change has been idle for a while with no feedback. The Yocto
-   Project does have plans to use
-   `Patchwork <https://en.wikipedia.org/wiki/Patchwork_(software)>`__
-   to track the status of patches and also to automatically preview
-   patches.
-
 The following sections provide procedures for submitting a change.
 
 .. _pushing-a-change-upstream:
@@ -10991,6 +10981,19 @@ without using the scripts:
    message. For information on how to use the ``git send-email``
    command, see ``GIT-SEND-EMAIL(1)`` displayed using the
    ``man git-send-email`` command.
+
+The Yocto Project uses a `Patchwork instance <https://patchwork.openembedded.org/>`__
+to track the status of patches submitted to the various mailing lists and to
+support automated patch testing. Each submitted patch is checked for common
+mistakes and deviations from the expected patch format and submitters are
+notified by patchtest if such mistakes are found. This process helps to
+reduce the burden of patch review on maintainers.
+
+.. note::
+
+   This system is imperfect and changes can sometimes get lost in the flow.
+   Asking about the status of a patch or change is reasonable if the change
+   has been idle for a while with no feedback.
 
 Working With Licenses
 =====================
