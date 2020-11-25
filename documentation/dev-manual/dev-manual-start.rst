@@ -11,8 +11,6 @@ host <dev-manual/dev-manual-start:preparing the build host>`, how to locate
 Yocto Project source repositories, and how to create local Git
 repositories.
 
-.. _usingpoky-changes-collaborate:
-
 Creating a Team Development Environment
 =======================================
 
@@ -261,8 +259,6 @@ particular working environment and set of practices.
        of the available mailing lists, see the ":ref:`resources-mailinglist`" section in
        the Yocto Project Reference Manual.
 
-.. _dev-preparing-the-build-host:
-
 Preparing the Build Host
 ========================
 
@@ -351,8 +347,6 @@ Project Application Development and the Extensible Software Development
 Kit (eSDK) manual. If you want to work on the kernel, see the :doc:`../kernel-dev/kernel-dev`. If you are going to use
 Toaster, see the ":doc:`../toaster-manual/toaster-manual-setup-and-use`"
 section in the Toaster User Manual.
-
-.. _setting-up-to-use-crops:
 
 Setting Up to Use CROss PlatformS (CROPS)
 -----------------------------------------
@@ -453,8 +447,6 @@ Project Application Development and the Extensible Software Development
 Kit (eSDK) manual. If you are going to use the Toaster container, see
 the ":doc:`../toaster-manual/toaster-manual-setup-and-use`"
 section in the Toaster User Manual.
-
-.. _setting-up-to-use-wsl:
 
 Setting Up to Use Windows Subsystem For Linux (WSLv2)
 -----------------------------------------------------
@@ -854,8 +846,6 @@ and then specifically check out that development branch.
       $ git branch
         master
         * &DISTRO_NAME_NO_CAP;
-
-.. _checkout-out-by-tag-in-poky:
 
 Checking Out by Tag in Poky
 ---------------------------

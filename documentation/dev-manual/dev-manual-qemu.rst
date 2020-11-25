@@ -10,8 +10,6 @@ This chapter provides both procedures that show you how to use the Quick
 EMUlator (QEMU) and other QEMU information helpful for development
 purposes.
 
-.. _qemu-dev-overview:
-
 Overview
 ========
 
@@ -38,8 +36,6 @@ following references:
 
 -  `Documentation <https://wiki.qemu.org/Manual>`__\ *:* The QEMU user
    manual.
-
-.. _qemu-running-qemu:
 
 Running QEMU
 ============
@@ -187,8 +183,6 @@ allow input of absolute coordinates. This default means that the mouse
 can enter and leave the main window without the grab taking effect
 leading to a better user experience.
 
-.. _qemu-running-under-a-network-file-system-nfs-server:
-
 Running Under a Network File System (NFS) Server
 ================================================
 
@@ -243,8 +237,6 @@ using an NFS server.
 
          runqemu-export-rootfs restart file-system-location
 
-.. _qemu-kvm-cpu-compatibility:
-
 QEMU CPU Compatibility Under KVM
 ================================
 
@@ -265,8 +257,6 @@ problem, you can override QEMU's runtime CPU setting by changing the
 directory. This setting specifies a ``-cpu`` option passed into QEMU in
 the ``runqemu`` script. Running ``qemu -cpu help`` returns a list of
 available supported CPU types.
-
-.. _qemu-dev-performance:
 
 QEMU Performance
 ================
@@ -319,8 +309,6 @@ present, the toolchain is also automatically used.
       See the "`Running Under a Network File System (NFS)
       Server <#qemu-running-under-a-network-file-system-nfs-server>`__"
       section for more information.
-
-.. _qemu-dev-command-line-syntax:
 
 QEMU Command-Line Syntax
 ========================
@@ -376,8 +364,6 @@ Following is the command-line help output for the ``runqemu`` command:
      runqemu qemux86 bootparams="psplash=false"
      runqemu path/to/<image>-<machine>.wic
      runqemu path/to/<image>-<machine>.wic.vmdk
-
-.. _qemu-dev-runqemu-command-line-options:
 
 ``runqemu`` Command-Line Options
 ================================

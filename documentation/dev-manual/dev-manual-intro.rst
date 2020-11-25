@@ -4,8 +4,6 @@
 The Yocto Project Development Tasks Manual
 ******************************************
 
-.. _dev-welcome:
-
 Welcome
 =======
 

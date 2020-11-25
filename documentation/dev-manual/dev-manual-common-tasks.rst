@@ -160,8 +160,6 @@ Follow these general steps to create your layer without using tools:
    Project <#making-sure-your-layer-is-compatible-with-yocto-project>`__"
    section for more information.
 
-.. _best-practices-to-follow-when-creating-layers:
-
 Following Best Practices When Creating Layers
 ---------------------------------------------
 
@@ -456,8 +454,6 @@ specified in the ``BBLAYERS`` variable within the ``conf/bblayers.conf``
 file. During the processing of each ``conf/layer.conf`` file, BitBake
 adds the recipes, classes and configurations contained within the
 particular layer to the source directory.
-
-.. _using-bbappend-files:
 
 Using .bbappend Files in Your Layer
 -----------------------------------
@@ -839,15 +835,11 @@ enables the build system to locate the layer during the build.
    During a build, the OpenEmbedded build system looks in the layers
    from the top of the list down to the bottom in that order.
 
-.. _usingpoky-extend-customimage:
-
 Customizing Images
 ==================
 
 You can customize images to satisfy particular requirements. This
 section describes several methods and provides guidelines for each.
-
-.. _usingpoky-extend-customimage-localconf:
 
 Customizing Images Using ``local.conf``
 ---------------------------------------
@@ -890,8 +882,6 @@ This example adds ``strace`` to the ``core-image-minimal`` image only.
 You can add packages using a similar approach through the
 ``CORE_IMAGE_EXTRA_INSTALL`` variable. If you use this variable, only
 ``core-image-*`` images are affected.
-
-.. _usingpoky-extend-customimage-imagefeatures:
 
 Customizing Images Using Custom ``IMAGE_FEATURES`` and ``EXTRA_IMAGE_FEATURES``
 -------------------------------------------------------------------------------
@@ -949,8 +939,6 @@ configures the image you are working with to include
    Project Reference Manual for a complete list of image features that ship
    with the Yocto Project.
 
-.. _usingpoky-extend-customimage-custombb:
-
 Customizing Images Using Custom .bb Files
 -----------------------------------------
 
@@ -976,8 +964,6 @@ image, copy the ``meta/recipes-sato/images/core-image-sato.bb`` to a new
 ::
 
    IMAGE_INSTALL += "strace"
-
-.. _usingpoky-extend-customimage-customtasks:
 
 Customizing Images Using Custom Package Groups
 ----------------------------------------------
@@ -1039,8 +1025,6 @@ build an image using these package group packages, you need to add
 ``IMAGE_INSTALL``. For other forms of image dependencies see the other
 areas of this section.
 
-.. _usingpoky-extend-customimage-image-name:
-
 Customizing an Image Hostname
 -----------------------------
 
@@ -1080,8 +1064,6 @@ unsets the variable in a configuration file:
 Having no default hostname in the filesystem is suitable for
 environments that use dynamic hostnames such as virtual machines.
 
-.. _new-recipe-writing-a-new-recipe:
-
 Writing a New Recipe
 ====================
 
@@ -1097,8 +1079,6 @@ how to create, write, and test a new recipe.
    ":ref:`ref-manual/ref-varlocality:recipes`" section of the Yocto Project
    Reference Manual.
 
-.. _new-recipe-overview:
-
 Overview
 --------
 
@@ -1107,8 +1087,6 @@ The remainder of the section provides details for the steps.
 
 .. image:: figures/recipe-workflow.png
    :align: center
-
-.. _new-recipe-locate-or-automatically-create-a-base-recipe:
 
 Locate or Automatically Create a Base Recipe
 --------------------------------------------
@@ -1130,8 +1108,6 @@ that can help you quickly get a start on a new recipe:
    For information on recipe syntax, see the
    ":ref:`dev-manual/dev-manual-common-tasks:recipe syntax`" section.
 
-.. _new-recipe-creating-the-base-recipe-using-devtool:
-
 Creating the Base Recipe Using ``devtool add``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1146,8 +1122,6 @@ You can find a complete description of the ``devtool add`` command in
 the ":ref:`sdk-manual/sdk-extensible:a closer look at \`\`devtool add\`\``" section
 in the Yocto Project Application Development and the Extensible Software
 Development Kit (eSDK) manual.
-
-.. _new-recipe-creating-the-base-recipe-using-recipetool:
 
 Creating the Base Recipe Using ``recipetool create``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1213,8 +1187,6 @@ Following are some syntax examples:
 
       recipetool create -d -o OUTFILE source
 
-.. _new-recipe-locating-and-using-a-similar-recipe:
-
 Locating and Using a Similar Recipe
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1253,8 +1225,6 @@ get started. Here are some points on both methods:
       LIC_FILES_CHKSUM = ""
 
       SRC_URI = ""
-
-.. _new-recipe-storing-and-naming-the-recipe:
 
 Storing and Naming the Recipe
 -----------------------------
@@ -1297,8 +1267,6 @@ the recipe.
       cups_1.7.0.bb
       gawk_4.0.2.bb
       irssi_0.8.16-rc1.bb
-
-.. _new-recipe-running-a-build-on-the-recipe:
 
 Running a Build on the Recipe
 -----------------------------
@@ -1353,8 +1321,6 @@ to determine how well the build went.
 You can find more information about the build process in
 ":doc:`../overview-manual/overview-manual-development-environment`"
 chapter of the Yocto Project Overview and Concepts Manual.
-
-.. _new-recipe-fetching-code:
 
 Fetching Code
 -------------
@@ -1490,8 +1456,6 @@ compressed suffixes such as ``diff.gz`` and ``patch.bz2``, for example.
 The build system automatically applies patches as described in the
 "`Patching Code <#new-recipe-patching-code>`__" section.
 
-.. _new-recipe-unpacking-code:
-
 Unpacking Code
 --------------
 
@@ -1511,8 +1475,6 @@ an SCM like Git or Subversion, your recipe needs to define ``S``.
 If processing your recipe using BitBake successfully unpacks the source
 files, you need to be sure that the directory pointed to by ``${S}``
 matches the structure of the source.
-
-.. _new-recipe-patching-code:
 
 Patching Code
 -------------
@@ -1538,8 +1500,6 @@ you should place patch files in a directory next to the recipe either
 named the same as the base name of the recipe
 (:term:`BP` and
 :term:`BPN`) or "files".
-
-.. _new-recipe-licensing:
 
 Licensing
 ---------
@@ -1597,8 +1557,6 @@ variables:
    correct string that you can substitute into the recipe file for a
    subsequent build.
 
-.. _new-dependencies:
-
 Dependencies
 ------------
 
@@ -1644,8 +1602,6 @@ system will automatically add a runtime dependency to "mypackage" on
 ":ref:`overview-manual/overview-manual-concepts:automatically added runtime dependencies`"
 section in the Yocto Project Overview and Concepts Manual for further
 details.
-
-.. _new-recipe-configuring-the-recipe:
 
 Configuring the Recipe
 ----------------------
@@ -1741,8 +1697,6 @@ the software you are building, you can consult the output of the
 ``./configure --help`` command within ``${S}`` or consult the software's
 upstream documentation.
 
-.. _new-recipe-using-headers-to-interface-with-devices:
-
 Using Headers to Interface with Devices
 ---------------------------------------
 
@@ -1801,8 +1755,6 @@ out-of-tree modules. Your recipe will also need the following:
 ::
 
    do_configure[depends] += "virtual/kernel:do_shared_workdir"
-
-.. _new-recipe-compilation:
 
 Compilation
 -----------
@@ -1866,8 +1818,6 @@ Here are some common issues that cause failures.
    variables that the OpenEmbedded build system provides (e.g.
    ``STAGING_BINDIR``, ``STAGING_INCDIR``, ``STAGING_DATADIR``, and so
    forth).
-
-.. _new-recipe-installing:
 
 Installing
 ----------
@@ -1956,8 +1906,6 @@ installed correctly.
       files to ``${D}${datadir}/cmake/Modules`` during
       :ref:`ref-tasks-install`.
 
-.. _new-recipe-enabling-system-services:
-
 Enabling System Services
 ------------------------
 
@@ -2008,8 +1956,6 @@ different ways:
    the ``systemd.bbclass`` file located in your :term:`Source Directory`
    section for
    more information.
-
-.. _new-recipe-packaging:
 
 Packaging
 ---------
@@ -2089,8 +2035,6 @@ take. The following list describes the process:
    target machine, particularly if you run separate builds for more than
    one target machine.
 
-.. _new-sharing-files-between-recipes:
-
 Sharing Files Between Recipes
 -----------------------------
 
@@ -2136,8 +2080,6 @@ For a more complete description of the
 :ref:`ref-tasks-populate_sysroot`
 task and its associated functions, see the
 :ref:`staging <ref-classes-staging>` class.
-
-.. _metadata-virtual-providers:
 
 Using Virtual Providers
 -----------------------
@@ -2251,8 +2193,6 @@ example:
    REALPV = "0.8.16-rc1"
    PV = "0.8.15+${REALPV}"
 
-.. _new-recipe-post-installation-scripts:
-
 Post-Installation Scripts
 -------------------------
 
@@ -2313,8 +2253,6 @@ script to first boot is undesirable and for read-only rootfs impossible.
    because of when they run, they are not applicable to being run at image
    creation time like ``pkg_postinst``.
 
-.. _new-recipe-testing:
-
 Testing
 -------
 
@@ -2325,8 +2263,6 @@ the build's output packages to your image and test them on the target.
 For information on how to customize your image by adding specific
 packages, see the "`Customizing
 Images <#usingpoky-extend-customimage>`__" section.
-
-.. _new-recipe-testing-examples:
 
 Examples
 --------
@@ -2343,8 +2279,6 @@ examples given various scenarios:
 -  Splitting an application into multiple packages
 
 -  Adding binaries to an image
-
-.. _new-recipe-single-c-file-package-hello-world:
 
 Single .c File Package (Hello World!)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2382,8 +2316,6 @@ customize the packaging process, see the "`Splitting an Application into
 Multiple Packages <#splitting-an-application-into-multiple-packages>`__"
 section.
 
-.. _new-recipe-autotooled-package:
-
 Autotooled Package
 ~~~~~~~~~~~~~~~~~~
 
@@ -2412,8 +2344,6 @@ changes as described in the
 ":ref:`dev-manual/dev-manual-common-tasks:tracking license changes`" section in
 the Yocto Project Overview and Concepts Manual. You can quickly create
 Autotool-based recipes in a manner similar to the previous example.
-
-.. _new-recipe-makefile-based-package:
 
 Makefile-Based Package
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -2864,8 +2794,6 @@ in the BitBake User Manual.
    might wish to use. If in doubt, you should check with multiple
    implementations - including those from BusyBox.
 
-.. _platdev-newmachine:
-
 Adding a New Machine
 ====================
 
@@ -2884,8 +2812,6 @@ For a complete example that shows how to add a new machine, see the
 ":ref:`bsp-guide/bsp:creating a new bsp layer using the \`\`bitbake-layers\`\` script`"
 section in the Yocto Project Board Support Package (BSP) Developer's
 Guide.
-
-.. _platdev-newmachine-conffile:
 
 Adding the Machine Configuration File
 -------------------------------------
@@ -2919,8 +2845,6 @@ You might also need these variables:
 You can find full details on these variables in the reference section.
 You can leverage existing machine ``.conf`` files from
 ``meta-yocto-bsp/conf/machine/``.
-
-.. _platdev-newmachine-kernel:
 
 Adding a Kernel for the Machine
 -------------------------------
@@ -2956,8 +2880,6 @@ For more information on ``defconfig`` files, see the
 ":ref:`kernel-dev/kernel-dev-common:changing the configuration`"
 section in the Yocto Project Linux Kernel Development Manual.
 
-.. _platdev-newmachine-formfactor:
-
 Adding a Formfactor Configuration File
 --------------------------------------
 
@@ -2990,8 +2912,6 @@ Following is an example for "qemuarm" machine:
    DISPLAY_DPI=150
    DISPLAY_SUBPIXEL_ORDER=vrgb
 
-.. _gs-upgrading-recipes:
-
 Upgrading Recipes
 =================
 
@@ -3010,8 +2930,6 @@ recipe. You can use the Automated Upgrade Helper (AUH) to set up
 automatic version upgrades. Alternatively, you can use
 ``devtool upgrade`` to set up semi-automatic version upgrades. Finally,
 you can manually upgrade a recipe by editing the recipe itself.
-
-.. _gs-using-the-auto-upgrade-helper:
 
 Using the Auto Upgrade Helper (AUH)
 -----------------------------------
@@ -3207,8 +3125,6 @@ a cron job. See the
 :yocto_git:`weeklyjob.sh </cgit/cgit.cgi/auto-upgrade-helper/tree/weeklyjob.sh>`
 file distributed with the utility for an example.
 
-.. _gs-using-devtool-upgrade:
-
 Using ``devtool upgrade``
 -------------------------
 
@@ -3350,8 +3266,6 @@ Using the ``devtool finish`` command cleans up the workspace and creates a patch
 file based on your commits. The tool puts all patch files back into the
 source directory in a sub-directory named ``nano`` in this case.
 
-.. _dev-manually-upgrading-a-recipe:
-
 Manually Upgrading a Recipe
 ---------------------------
 
@@ -3418,8 +3332,6 @@ To manually upgrade recipe versions, follow these general steps:
 7. *Create a Commit with the Change in the Layer Repository:* After all
    builds work and any testing is successful, you can create commits for
    any changes in the layer holding your upgraded recipe.
-
-.. _finding-the-temporary-source-code:
 
 Finding Temporary Source Code
 =============================
@@ -3490,8 +3402,6 @@ build system uses to build the package would be as follows:
 ::
 
    poky/build/tmp/work/qemux86-poky-linux/foo/1.3.0-r0
-
-.. _using-a-quilt-workflow:
 
 Using Quilt in Your Workflow
 ============================
@@ -3587,8 +3497,6 @@ Follow these general steps:
 
       SRC_URI += "file://my_changes.patch"
 
-.. _platdev-appdev-devshell:
-
 Using a Development Shell
 =========================
 
@@ -3671,8 +3579,6 @@ terminal window.
    -  It is also worth noting that ``devshell`` still works over X11
       forwarding and similar situations.
 
-.. _platdev-appdev-devpyshell:
-
 Using a Development Python Shell
 ================================
 
@@ -3720,16 +3626,12 @@ controls what type of shell is opened.
 When you are finished using ``devpyshell``, you can exit the shell
 either by using Ctrl+d or closing the terminal window.
 
-.. _dev-building:
-
 Building
 ========
 
 This section describes various build procedures. For example, the steps
 needed for a simple build, a target that uses multiple configurations,
 building an image for more than one machine, and so forth.
-
-.. _dev-building-a-simple-image:
 
 Building a Simple Image
 -----------------------
@@ -3833,8 +3735,6 @@ The following figure and list overviews the build process:
    information about how to install these images, see the documentation
    for your particular board or machine.
 
-.. _dev-building-images-for-multiple-targets-using-multiple-configurations:
-
 Building Images for Multiple Targets Using Multiple Configurations
 ------------------------------------------------------------------
 
@@ -3847,8 +3747,6 @@ section uses that term throughout.
 This section describes how to set up for multiple configuration builds
 and how to account for cross-build dependencies between the
 multiconfigs.
-
-.. _dev-setting-up-and-running-a-multiple-configuration-build:
 
 Setting Up and Running a Multiple Configuration Build
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3942,8 +3840,6 @@ Follow these steps to set up and execute multiple configuration builds:
    directories, the build either loads from an existing sstate cache for
    that build at the start or builds the object fresh.
 
-.. _dev-enabling-multiple-configuration-build-dependencies:
-
 Enabling Multiple Configuration Build Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -4002,8 +3898,6 @@ Because "x86" and "arm" are enabled for multiple configuration builds
 and have separate configuration files, BitBake places the artifacts for
 each build in the respective temporary build directories (i.e.
 :term:`TMPDIR`).
-
-.. _building-an-initramfs-image:
 
 Building an Initial RAM Filesystem (initramfs) Image
 ----------------------------------------------------
@@ -4095,8 +3989,6 @@ distribution to even smaller sizes than the ``poky-tiny`` distribution,
 which is around 5 Mbytes, that can be built out-of-the-box using the
 Yocto Project.
 
-.. _tiny-system-overview:
-
 Tiny System Overview
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -4144,8 +4036,6 @@ very small distributions:
 -  Work in a separate layer so that you keep changes isolated. For
    information on how to create layers, see the "`Understanding and
    Creating Layers <#understanding-and-creating-layers>`__" section.
-
-.. _understand-what-gives-your-image-size:
 
 Understand What Contributes to Your Image Size
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4812,8 +4702,6 @@ that can help you speed up the build:
          the static libraries. If so, you might need to exclude them as
          well.
 
-.. _platdev-working-with-libraries:
-
 Working With Libraries
 ======================
 
@@ -4888,8 +4776,6 @@ how the static library files are defined:
    FILES_${PN}-staticdev = "${libdir}/*.a ${base_libdir}/*.a ${libdir}/${BPN}/*.a"
    SECTION_${PN}-staticdev = "devel"
    RDEPENDS_${PN}-staticdev = "${PN}-dev (= ${EXTENDPKGV})"
-
-.. _combining-multiple-versions-library-files-into-one-image:
 
 Combining Multiple Versions of Library Files into One Image
 -----------------------------------------------------------
@@ -5299,8 +5185,6 @@ The following know issues exist for GObject Introspection Support:
    under 32-bit host machines. In particular, "qemumips64" is known to
    not work under i686.
 
-.. _dev-optionally-using-an-external-toolchain:
-
 Optionally Using an External Toolchain
 ======================================
 
@@ -5368,8 +5252,6 @@ you need to have in place to run the tool, provides instruction on how
 to use the Wic utility, provides information on using the Wic plugins
 interface, and provides several examples that show how to use Wic.
 
-.. _wic-background:
-
 Background
 ----------
 
@@ -5394,8 +5276,6 @@ this information is required to use Wic, you might find it interesting.
    the functionality of those scripts is implemented by a
    general-purpose partitioning language, which is based on Redhat
    kickstart syntax.
-
-.. _wic-requirements:
 
 Requirements
 ------------
@@ -5434,8 +5314,6 @@ system needs to meet the following requirements:
 
 -  Include the name of the :ref:`wic kickstart file <openembedded-kickstart-wks-reference>`
    as part of the :term:`WKS_FILE` variable
-
-.. _wic-getting-help:
 
 Getting Help
 ------------
@@ -5610,8 +5488,6 @@ The general form of the ``wic`` command using Cooked Mode is as follows:
                                 name of the image to use the artifacts from e.g. core-
                                 image-sato
 
-.. _using-a-provided-kickstart-file:
-
 Using an Existing Kickstart File
 --------------------------------
 
@@ -5660,8 +5536,6 @@ Here are the actual partition language commands used in the
    part swap --ondisk sda --size 44 --label swap1 --fstype=swap
 
    bootloader --ptable gpt --timeout=5 --append="rootfstype=ext4 console=ttyS0,115200 console=tty0"
-
-.. _wic-using-the-wic-plugin-interface:
 
 Using the Wic Plugin Interface
 ------------------------------
@@ -5802,8 +5676,6 @@ by filling up a dict with keys that contain the method names of
 interest. On success, these will be filled in with the actual methods.
 See the Wic implementation for examples and details.
 
-.. _wic-usage-examples:
-
 Wic Examples
 ------------
 
@@ -5812,8 +5684,6 @@ utility. All the examples assume the list of requirements in the
 "`Requirements <#wic-requirements>`__" section have been met. The
 examples assume the previously generated image is
 ``core-image-minimal``.
-
-.. _generate-an-image-using-a-provided-kickstart-file:
 
 Generate an Image using an Existing Kickstart File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -6495,8 +6365,6 @@ Changing the listed common targets is as easy as editing your version of
 ``conf-notes.txt`` in your custom template configuration directory and
 making sure you have ``TEMPLATECONF`` set to your directory.
 
-.. _dev-saving-memory-during-a-build:
-
 Conserving Disk Space During Builds
 ===================================
 
@@ -6572,8 +6440,6 @@ Yocto Project Reference Manual's glossary chapter.
    realize that the build process could fail with an error when you
    prevent the installation of a package whose presence is required by
    an installed package.
-
-.. _incrementing-a-binary-package-version:
 
 Incrementing a Package Version
 ------------------------------
@@ -6776,8 +6642,6 @@ Field Policy
 Guidelines <https://www.debian.org/doc/debian-policy/ch-controlfields.html>`__.
 These guidelines define how versions are compared and what "increasing"
 a version means.
-
-.. _automatically-incrementing-a-binary-package-revision-number:
 
 Automatically Incrementing a Package Version Number
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -7077,8 +6941,6 @@ use of runtime package management, you need to do a couple things above
 and beyond the basics. The remainder of this section describes what you
 need to do.
 
-.. _runtime-package-management-build:
-
 Build Considerations
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -7165,8 +7027,6 @@ When your build is complete, your packages reside in the
 ``tmp`` and your selected package type is RPM, then your RPM packages
 are available in ``tmp/deploy/rpm``.
 
-.. _runtime-package-management-server:
-
 Host or Server Machine Setup
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -7193,15 +7053,11 @@ setting of "package_rpm":
    $ cd ~/poky/build/tmp/deploy/rpm
    $ python3 -m http.server
 
-.. _runtime-package-management-target:
-
 Target Setup
 ~~~~~~~~~~~~
 
 Setting up the target differs depending on the package management
 system. This section provides information for RPM, IPK, and DEB.
-
-.. _runtime-package-management-target-rpm:
 
 Using RPM
 ^^^^^^^^^
@@ -7283,8 +7139,6 @@ upgrade packages from the specified repository or repositories.
    See the `DNF documentation <https://dnf.readthedocs.io/en/latest/>`__ for
    additional information.
 
-.. _runtime-package-management-target-ipk:
-
 Using IPK
 ^^^^^^^^^
 
@@ -7324,8 +7178,6 @@ repository information:
 
 The ``opkg`` application is now able to find, install, and upgrade packages
 from the specified repository.
-
-.. _runtime-package-management-target-deb:
 
 Using DEB
 ^^^^^^^^^
@@ -7583,8 +7435,6 @@ method.
 
 Additionally, some requirements and caveats exist.
 
-.. _npm-package-creation-requirements:
-
 Requirements and Caveats
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -7618,8 +7468,6 @@ NPM packages:
 -  Although you might not need NPM to run your node package, it is
    useful to have NPM on your target. The NPM package name is
    ``nodejs-npm``.
-
-.. _npm-using-the-registry-modules-method:
 
 Using the Registry Modules Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -7730,8 +7578,6 @@ go to ``http://192.168.7.2:3000`` and you see the following:
 
 You can find the recipe in ``workspace/recipes/cute-files``. You can use
 the recipe in any layer you choose.
-
-.. _npm-using-the-npm-projects-method:
 
 Using the NPM Projects Code Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -7956,8 +7802,6 @@ image cannot use this package group. However, it can install SysVinit
 and the appropriate packages will have support for both systemd and
 SysVinit.
 
-.. _selecting-dev-manager:
-
 Selecting a Device Manager
 ==========================
 
@@ -7973,8 +7817,6 @@ The Yocto Project provides multiple ways to manage the device manager
    is automatically populated by the kernel at runtime. Additional
    configuration of device nodes is done in user space by a device
    manager like ``udev`` or ``busybox-mdev``.
-
-.. _static-dev-management:
 
 Using Persistent and Pre-Populated\ ``/dev``
 --------------------------------------------
@@ -8001,8 +7843,6 @@ If you do not define the ``IMAGE_DEVICE_TABLES`` variable, the default
 
 The population is handled by the ``makedevs`` utility during image
 creation:
-
-.. _devtmpfs-dev-management:
 
 Using ``devtmpfs`` and a Device Manager
 ---------------------------------------
@@ -8035,8 +7875,6 @@ your ``local.conf`` configuration file:
    # Some alternative values
    # VIRTUAL-RUNTIME_dev_manager = "busybox-mdev"
    # VIRTUAL-RUNTIME_dev_manager = "systemd"
-
-.. _platdev-appdev-srcrev:
 
 Using an External SCM
 =====================
@@ -8628,8 +8466,6 @@ hardware, you have to take different steps to enable the tests. See the
 following subsections for information on how to enable both types of
 tests.
 
-.. _qemu-image-enabling-tests:
-
 Enabling Runtime Tests on QEMU
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -8713,8 +8549,6 @@ Once you start running the tests, the following happens:
 6. If no failures occur, the task running the tests ends successfully.
    You can find the output from the ``unittest`` in the task log at
    ``${WORKDIR}/temp/log.do_testimage``.
-
-.. _hardware-image-enabling-tests:
 
 Enabling Runtime Tests on Hardware
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -8931,8 +8765,6 @@ wrapper, simply prefix the terminal command with
 
    TEST_SERIALCONTROL_CMD = "${COREBASE}/scripts/contrib/serdevtry picocom -b 115200 /dev/ttyUSB0"
 
-.. _qemu-image-running-tests:
-
 Running Tests
 -------------
 
@@ -9077,8 +8909,6 @@ the build environment using the following:
    $ cd tmp/testexport/core-image-sato
    $ ./runexported.py testdata.json
 
-.. _qemu-image-writing-new-tests:
-
 Writing New Tests
 -----------------
 
@@ -9110,8 +8940,6 @@ You will notice that all test classes inherit ``oeRuntimeTest``, which
 is found in ``meta/lib/oetest.py``. This base class offers some helper
 attributes, which are described in the following sections:
 
-.. _qemu-image-writing-tests-class-methods:
-
 Class Methods
 ~~~~~~~~~~~~~
 
@@ -9124,8 +8952,6 @@ Class methods are as follows:
 -  *hasFeature(feature):* Returns "True" if the feature is in
    :term:`IMAGE_FEATURES` or
    :term:`DISTRO_FEATURES`.
-
-.. _qemu-image-writing-tests-class-attributes:
 
 Class Attributes
 ~~~~~~~~~~~~~~~~
@@ -9173,8 +8999,6 @@ Class attributes are as follows:
 
       -  *copy_from(remotepath, localpath):*
          ``scp root@host:remotepath localpath``.
-
-.. _qemu-image-writing-tests-instance-attributes:
 
 Instance Attributes
 ~~~~~~~~~~~~~~~~~~~
@@ -9240,8 +9064,6 @@ Once the test is complete, the packages are removed from the DUT.
              }
          ]
      }
-
-.. _usingpoky-debugging-tools-and-techniques:
 
 Debugging Tools and Techniques
 ==============================
@@ -9333,8 +9155,6 @@ section:
 -  "`Other Debugging Tips <#dev-other-debugging-others>`__" describes
    miscellaneous debugging tips that can be useful.
 
-.. _dev-debugging-viewing-logs-from-failed-tasks:
-
 Viewing Logs from Failed Tasks
 ------------------------------
 
@@ -9353,8 +9173,6 @@ links to ``log.do_``\ `taskname`\ ``.``\ `pid` and
 ``log.run_``\ `taskname`\ ``.``\ `pid`, where `pid` is the PID the task had
 when it ran. The symlinks always point to the files corresponding to the
 most recent run.
-
-.. _dev-debugging-viewing-variable-values:
 
 Viewing Variable Values
 -----------------------
@@ -9477,8 +9295,6 @@ facility:
    $ oe-pkgdata-util --help
    $ oe-pkgdata-util subcommand --help
 
-.. _dev-viewing-dependencies-between-recipes-and-tasks:
-
 Viewing Dependencies Between Recipes and Tasks
 ----------------------------------------------
 
@@ -9544,8 +9360,6 @@ the following command:
 This command
 displays a GUI window from which you can view build-time and runtime
 dependencies for the recipes involved in building recipename.
-
-.. _dev-viewing-task-variable-dependencies:
 
 Viewing Task Variable Dependencies
 ----------------------------------
@@ -9638,8 +9452,6 @@ Using BitBake with either of these options causes BitBake to dump out
 ``sigdata`` files in the ``stamps`` directory for every task it would
 have executed instead of building the specified target package.
 
-.. _dev-viewing-metadata-used-to-create-the-input-signature-of-a-shared-state-task:
-
 Viewing Metadata Used to Create the Input Signature of a Shared State Task
 --------------------------------------------------------------------------
 
@@ -9654,8 +9466,6 @@ Dependencies <#dev-viewing-task-variable-dependencies>`__" section.
 For conceptual information on shared state, see the
 ":ref:`overview-manual/overview-manual-concepts:shared state`"
 section in the Yocto Project Overview and Concepts Manual.
-
-.. _dev-invalidating-shared-state-to-force-a-task-to-run:
 
 Invalidating Shared State to Force a Task to Run
 ------------------------------------------------
@@ -9702,8 +9512,6 @@ the build system to run the task again.
    For an example of a commit that makes a cosmetic change to invalidate
    shared state, see this
    :yocto_git:`commit </cgit.cgi/poky/commit/meta/classes/package.bbclass?id=737f8bbb4f27b4837047cb9b4fbfe01dfde36d54>`.
-
-.. _dev-debugging-taskrunning:
 
 Running Specific Tasks
 ----------------------
@@ -9812,8 +9620,6 @@ You can view a list of tasks in a given package by running the
 The results appear as output to the console and are also in
 the file ``${WORKDIR}/temp/log.do_listtasks``.
 
-.. _dev-debugging-bitbake:
-
 General BitBake Problems
 ------------------------
 
@@ -9826,8 +9632,6 @@ The output from ``bitbake -DDD -v targetname`` can reveal why BitBake
 chose a certain version of a package or why BitBake picked a certain
 provider. This command could also help you in a situation where you
 think BitBake did something unexpected.
-
-.. _dev-debugging-buildfile:
 
 Building with No Dependencies
 -----------------------------
@@ -10190,8 +9994,6 @@ problem is taken care of at its source. See the "`Submitting a Change to
 the Yocto Project <#how-to-submit-a-change>`__" section for more
 information.
 
-.. _platdev-gdb-remotedebug:
-
 Debugging With the GNU Project Debugger (GDB) Remotely
 ------------------------------------------------------
 
@@ -10453,8 +10255,6 @@ To support this kind of debugging, you need do the following:
    Consider that this will reduce the application's performance and is
    recommended only for debugging purposes.
 
-.. _dev-other-debugging-others:
-
 Other Debugging Tips
 --------------------
 
@@ -10596,8 +10396,6 @@ categorization, progress, or comments on the bug result in Bugzilla
 sending you an automated email concerning the particular change or
 progress to the bug.
 
-.. _how-to-submit-a-change:
-
 Submitting a Change to the Yocto Project
 ----------------------------------------
 
@@ -10691,8 +10489,6 @@ layers you are contributing to.
 
 The following sections provide procedures for submitting a change.
 
-.. _preparing-changes-for-submissions:
-
 Preparing Changes for Submission
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -10775,8 +10571,6 @@ Preparing Changes for Submission
          Fixes [YOCTO #bug-id]
 
          detailed description of change
-
-.. _submitting-a-patch:
 
 Using Email to Submit a Patch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -10867,8 +10661,6 @@ reduce the burden of patch review on maintainers.
    This system is imperfect and changes can sometimes get lost in the flow.
    Asking about the status of a patch or change is reasonable if the change
    has been idle for a while with no feedback.
-
-.. _pushing-a-change-upstream:
 
 Using Scripts to Push a Change Upstream and Request a Pull
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -11077,8 +10869,6 @@ licensing text and covers how to maintain open source license compliance
 during your project's lifecycle. The section also describes how to
 enable commercially licensed recipes, which by default are disabled.
 
-.. _usingpoky-configuring-LIC_FILES_CHKSUM:
-
 Tracking License Changes
 ------------------------
 
@@ -11088,8 +10878,6 @@ to prevent these changes going unnoticed, the
 variable tracks changes to the license text. The checksums are validated
 at the end of the configure step, and if the checksums do not match, the
 build will fail.
-
-.. _usingpoky-specifying-LIC_FILES_CHKSUM:
 
 Specifying the ``LIC_FILES_CHKSUM`` Variable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -11133,8 +10921,6 @@ five through 16 as license text. The second line refers to a file in
 
 Note that ``LIC_FILES_CHKSUM`` variable is mandatory for all recipes,
 unless the ``LICENSE`` variable is set to "CLOSED".
-
-.. _usingpoky-LIC_FILES_CHKSUM-explanation-of-syntax:
 
 Explanation of Syntax
 ~~~~~~~~~~~~~~~~~~~~~
@@ -11704,8 +11490,6 @@ If you want to set up your own error reporting server, you can obtain
 the code from the Git repository at :yocto_git:`/cgit/cgit.cgi/error-report-web/`.
 Instructions on how to set it up are in the README document.
 
-.. _dev-using-wayland-and-weston:
-
 Using Wayland and Weston
 ========================
 
@@ -11748,8 +11532,6 @@ Enabling Wayland in an Image
 To enable Wayland, you need to enable it to be built and enable it to be
 included (installed) in the image.
 
-.. _enable-building:
-
 Building Wayland
 ~~~~~~~~~~~~~~~~
 
@@ -11767,8 +11549,6 @@ statement in your ``local.conf`` file:
 
    If X11 has been enabled elsewhere, Weston will build Wayland with X11
    support
-
-.. _enable-installation-in-an-image:
 
 Installing Wayland and Weston
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
