@@ -86,11 +86,11 @@ project:
    the string "environment-setup" and contains the machine architecture,
    which is followed by the string "poky-linux". For this example, the
    command sources a script from the default SDK installation directory
-   that uses the 32-bit Intel x86 Architecture and the 3.1.2 Yocto
+   that uses the 32-bit Intel x86 Architecture and the &DISTRO; Yocto
    Project release:
    ::
 
-      $ source /opt/poky/3.1.2/environment-setup-i586-poky-linux
+      $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
 
 3. *Create the configure Script:* Use the ``autoreconf`` command to
    generate the ``configure`` script.
@@ -229,14 +229,14 @@ a null value for the compiler variable (i.e.
 
 Running the
 SDK setup script for a 64-bit build host and an i586-tuned target
-architecture for a ``core-image-sato`` image using the current 3.1.2
+architecture for a ``core-image-sato`` image using the current &DISTRO;
 Yocto Project release and then echoing that variable shows the value
 established through the script:
 ::
 
-   $ source /opt/poky/3.1.2/environment-setup-i586-poky-linux
+   $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
    $ echo ${CC}
-   i586-poky-linux-gcc -m32 -march=i586 --sysroot=/opt/poky/3.1.2/sysroots/i586-poky-linux
+   i586-poky-linux-gcc -m32 -march=i586 --sysroot=/opt/poky/&DISTRO;/sysroots/i586-poky-linux
 
 To illustrate variable use, work through this simple "Hello World!"
 example:

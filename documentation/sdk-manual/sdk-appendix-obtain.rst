@@ -15,7 +15,7 @@ and then run the script to hand-install the toolchain.
 Follow these steps to locate and hand-install the toolchain:
 
 1. *Go to the Installers Directory:* Go to
-   :yocto_dl:`/releases/yocto/yocto-3.1.2/toolchain/`
+   :yocto_dl:`/releases/yocto/yocto-&DISTRO;/toolchain/`
 
 2. *Open the Folder for Your Build Host:* Open the folder that matches
    your :term:`Build Host` (i.e.
@@ -202,7 +202,7 @@ Follow these steps to extract the root filesystem:
    Image File:* You need to find and download the root filesystem image
    file that is appropriate for your target system. These files are kept
    in machine-specific folders in the
-   :yocto_dl:`Index of Releases </releases/yocto/yocto-3.1.2/machines/>`
+   :yocto_dl:`Index of Releases </releases/yocto/yocto-&DISTRO;/machines/>`
    in the "machines" directory.
 
    The machine-specific folders of the "machines" directory contain
@@ -256,7 +256,7 @@ Follow these steps to extract the root filesystem:
 
    Following is an example command that extracts the root filesystem
    from a previously built root filesystem image that was downloaded
-   from the :yocto_dl:`Index of Releases </releases/yocto/yocto-3.1.2/machines/>`.
+   from the :yocto_dl:`Index of Releases </releases/yocto/yocto-&DISTRO;/machines/>`.
    This command extracts the root filesystem into the ``core2-64-sato``
    directory:
    ::
@@ -285,7 +285,7 @@ Within the figure, italicized text is used to indicate replaceable
 portions of the file or directory name. For example, install_dir/version
 is the directory where the SDK is installed. By default, this directory
 is ``/opt/poky/``. And, version represents the specific snapshot of the
-SDK (e.g. 3.1.2). Furthermore, target represents the target architecture
+SDK (e.g. &DISTRO;). Furthermore, target represents the target architecture
 (e.g. ``i586``) and host represents the development system's
 architecture (e.g. ``x86_64``). Thus, the complete names of the two
 directories within the ``sysroots`` could be ``i586-poky-linux`` and

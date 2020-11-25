@@ -43,7 +43,7 @@ Host` by running the ``*.sh`` installation script.
 
 You can download a tarball installer, which includes the pre-built
 toolchain, the ``runqemu`` script, and support files from the
-appropriate :yocto_dl:`toolchain </releases/yocto/yocto-3.1.2/toolchain/>` directory within
+appropriate :yocto_dl:`toolchain </releases/yocto/yocto-&DISTRO;/toolchain/>` directory within
 the Index of Releases. Toolchains are available for several 32-bit and
 64-bit architectures with the ``x86_64`` directories, respectively. The
 toolchains the Yocto Project provides are based off the
@@ -72,7 +72,7 @@ immediately followed by a string representing the target architecture.
 
        release_version is a string representing the release number of the Yocto Project:
 
-                  3.1.2, 3.1.2+snapshot
+                  &DISTRO;, &DISTRO;+snapshot
 
 For example, the following SDK installer is for a 64-bit
 development host system and a i586-tuned target architecture based off
@@ -109,16 +109,16 @@ architecture. The example assumes the SDK installer is located in
 
 ::
 
-   $ ./Downloads/poky-glibc-x86_64-core-image-sato-i586-toolchain-3.1.2.sh
-   Poky (Yocto Project Reference Distro) SDK installer version 3.1.2
+   $ ./Downloads/poky-glibc-x86_64-core-image-sato-i586-toolchain-&DISTRO;.sh
+   Poky (Yocto Project Reference Distro) SDK installer version &DISTRO;
    ===============================================================
-   Enter target directory for SDK (default: /opt/poky/3.1.2):
-   You are about to install the SDK to "/opt/poky/3.1.2". Proceed [Y/n]? Y
+   Enter target directory for SDK (default: /opt/poky/&DISTRO;):
+   You are about to install the SDK to "/opt/poky/&DISTRO;". Proceed [Y/n]? Y
    Extracting SDK........................................ ..............................done
    Setting it up...done
    SDK has been successfully set up and is ready to be used.
    Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
-    $ . /opt/poky/3.1.2/environment-setup-i586-poky-linux
+    $ . /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
 
 Again, reference the "`Installed Standard SDK Directory
 Structure <#sdk-installed-standard-sdk-directory-structure>`__" section
@@ -131,7 +131,7 @@ Running the SDK Environment Setup Script
 Once you have the SDK installed, you must run the SDK environment setup
 script before you can actually use the SDK. This setup script resides in
 the directory you chose when you installed the SDK, which is either the
-default ``/opt/poky/3.1.2`` directory or the directory you chose during
+default ``/opt/poky/&DISTRO;`` directory or the directory you chose during
 installation.
 
 Before running the script, be sure it is the one that matches the
@@ -143,7 +143,7 @@ then source the environment setup script. In this example, the setup
 script is for an IA-based target machine using i586 tuning:
 ::
 
-   $ source /opt/poky/3.1.2/environment-setup-i586-poky-linux
+   $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
 
 When you run the
 setup script, the same environment variables are defined as are when you

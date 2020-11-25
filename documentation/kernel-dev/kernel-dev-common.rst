@@ -147,8 +147,8 @@ section:
    ::
 
       $ cd ~/poky/build/tmp/deploy/sdk
-      $ ./poky-glibc-x86_64-core-image-minimal-i586-toolchain-ext-3.1.2.sh
-      Poky (Yocto Project Reference Distro) Extensible SDK installer version 3.1.2
+      $ ./poky-glibc-x86_64-core-image-minimal-i586-toolchain-ext-&DISTRO;.sh
+      Poky (Yocto Project Reference Distro) Extensible SDK installer version &DISTRO;
       ============================================================================
       Enter target directory for SDK (default: ~/poky_sdk):
       You are about to install the SDK to "/home/scottrif/poky_sdk". Proceed [Y/n]? Y

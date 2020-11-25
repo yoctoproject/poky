@@ -47,7 +47,7 @@ Host` by running the ``*.sh`` installation script.
 You can download a tarball installer, which includes the pre-built
 toolchain, the ``runqemu`` script, the internal build system,
 ``devtool``, and support files from the appropriate
-:yocto_dl:`toolchain </releases/yocto/yocto-3.1.2/toolchain/>` directory within the Index of
+:yocto_dl:`toolchain </releases/yocto/yocto-&DISTRO;/toolchain/>` directory within the Index of
 Releases. Toolchains are available for several 32-bit and 64-bit
 architectures with the ``x86_64`` directories, respectively. The
 toolchains the Yocto Project provides are based off the
@@ -78,7 +78,7 @@ is the general form:
 
        release_version is a string representing the release number of the Yocto Project:
 
-                  3.1.2, 3.1.2+snapshot
+                  &DISTRO;, &DISTRO;+snapshot
 
 For example, the following SDK installer is for a 64-bit
 development host system and a i586-tuned target architecture based off
