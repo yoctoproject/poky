@@ -181,7 +181,7 @@ The following changes have been made that relate to
 
 The ``/run`` directory from the Filesystem Hierarchy Standard 3.0 has
 been introduced. You can find some of the implications for this change
-`here <http://cgit.openembedded.org/openembedded-core/commit/?id=0e326280a15b0f2c4ef2ef4ec441f63f55b75873>`__.
+:oe_git:`here </openembedded-core/commit/?id=0e326280a15b0f2c4ef2ef4ec441f63f55b75873>`.
 The change also means that recipes that install files to ``/var/run``
 must be changed. You can find a guide on how to make these changes
 `here <https://www.mail-archive.com/openembedded-devel@lists.openembedded.org/msg31649.html>`__.

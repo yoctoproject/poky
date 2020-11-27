@@ -66,8 +66,8 @@ occurred:
    foreign mode themselves, the option is mostly superfluous. However,
    some recipes will need patches for this change. You can easily make
    the change by patching ``configure.ac`` so that it passes "foreign"
-   to ``AM_INIT_AUTOMAKE()``. See `this
-   commit <http://cgit.openembedded.org/openembedded-core/commit/?id=01943188f85ce6411717fb5bf702d609f55813f2>`__
+   to ``AM_INIT_AUTOMAKE()``. See :oe_git:`this
+   commit </openembedded-core/commit/?id=01943188f85ce6411717fb5bf702d609f55813f2>`
    for an example showing how to make the patch.
 
 .. _migration-1.7-binary-configuration-scripts-disabled:
