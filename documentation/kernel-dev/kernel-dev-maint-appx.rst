@@ -103,7 +103,7 @@ patch, or BSP:
    located by searching these system directories:
 
    -  The in-tree kernel-cache directories, which are located in the
-      :yocto_git:`yocto-kernel-cache </cgit/cgit.cgi/yocto-kernel-cache/tree/bsp>`
+      :yocto_git:`yocto-kernel-cache </yocto-kernel-cache/tree/bsp>`
       repository organized under the "Yocto Linux Kernel" heading in the
       :yocto_git:`Yocto Project Source Repositories <>`.
 
@@ -167,7 +167,7 @@ specific to some target hardware.
       The end result is a branched, clean history tree that makes up the
       kernel for a given release. You can see the script (``kgit-scc``)
       responsible for this in the
-      :yocto_git:`yocto-kernel-tools </cgit.cgi/yocto-kernel-tools/tree/tools>`
+      :yocto_git:`yocto-kernel-tools </yocto-kernel-tools/tree/tools>`
       repository.
 
    -  The steps used to construct the full kernel tree are the same

@@ -349,7 +349,7 @@ particular recipe.
 .. note::
 
    -  For the ``oe-core`` layer, recipe maintainers come from the
-      `maintainers.inc <http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/distro/include/maintainers.inc>`_
+      :yocto_git:`maintainers.inc </poky/tree/meta/conf/distro/include/maintainers.inc>`
       file.
 
    -  If the recipe is using the :ref:`bitbake:bitbake-user-manual/bitbake-user-manual-fetching:git fetcher (\`\`git://\`\`)`
@@ -388,7 +388,7 @@ satisfied.
    When a reason for not upgrading displays, the reason is usually
    written into the recipe using the ``RECIPE_NO_UPDATE_REASON``
    variable. See the
-   :yocto_git:`base-passwd.bb </cgit/cgit.cgi/poky/tree/meta/recipes-core/base-passwd/base-passwd_3.5.29.bb>`
+   :yocto_git:`base-passwd.bb </poky/tree/meta/recipes-core/base-passwd/base-passwd_3.5.29.bb>`
    recipe for an example.
 
 ::

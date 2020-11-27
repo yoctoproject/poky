@@ -172,8 +172,7 @@ section.
 #. *Optionally Clone the meta-intel BSP Layer:* If your hardware is
    based on current Intel CPUs and devices, you can leverage this BSP
    layer. For details on the ``meta-intel`` BSP layer, see the layer's
-   `README <http://git.yoctoproject.org/cgit/cgit.cgi/meta-intel/tree/README>`__
-   file.
+   :yocto_git:`README </meta-intel/tree/README>` file.
 
    #. *Navigate to Your Source Directory:* Typically, you set up the
       ``meta-intel`` Git repository inside the :term:`Source Directory` (e.g.
@@ -902,13 +901,13 @@ Yocto Project:
    ``meta-bsp_root_name`` directory. This license covers the BSP
    Metadata as a whole. You must specify which license to use since no
    default license exists when one is not specified. See the
-   :yocto_git:`COPYING.MIT </cgit.cgi/meta-raspberrypi/tree/COPYING.MIT>`
+   :yocto_git:`COPYING.MIT </meta-raspberrypi/tree/COPYING.MIT>`
    file for the Raspberry Pi BSP in the ``meta-raspberrypi`` BSP layer
    as an example.
 
 -  *README File:* You must include a ``README`` file in the
    ``meta-bsp_root_name`` directory. See the
-   :yocto_git:`README.md </cgit.cgi/meta-raspberrypi/tree/README.md>`
+   :yocto_git:`README.md </meta-raspberrypi/tree/README.md>`
    file for the Raspberry Pi BSP in the ``meta-raspberrypi`` BSP layer
    as an example.
 
@@ -1181,16 +1180,16 @@ Use these steps to create a BSP layer:
    :yocto_git:`Source Repositories <>`. To get examples of what you need
    in your configuration file, locate a layer (e.g. "meta-ti") and
    examine the
-   :yocto_git:`local.conf </cgit/cgit.cgi/meta-ti/tree/conf/layer.conf>`
+   :yocto_git:`local.conf </meta-ti/tree/conf/layer.conf>`
    file.
 
 -  *Create a Machine Configuration File:* Create a
    ``conf/machine/bsp_root_name.conf`` file. See
-   :yocto_git:`meta-yocto-bsp/conf/machine </cgit/cgit.cgi/poky/tree/meta-yocto-bsp/conf/machine>`
+   :yocto_git:`meta-yocto-bsp/conf/machine </poky/tree/meta-yocto-bsp/conf/machine>`
    for sample ``bsp_root_name.conf`` files. Other samples such as
-   :yocto_git:`meta-ti </cgit/cgit.cgi/meta-ti/tree/conf/machine>`
+   :yocto_git:`meta-ti </meta-ti/tree/conf/machine>`
    and
-   :yocto_git:`meta-freescale </cgit/cgit.cgi/meta-freescale/tree/conf/machine>`
+   :yocto_git:`meta-freescale </meta-freescale/tree/conf/machine>`
    exist from other vendors that have more specific machine and tuning
    examples.
 
@@ -1204,7 +1203,7 @@ Use these steps to create a BSP layer:
 
 The remainder of this section provides a description of the Yocto
 Project reference BSP for Beaglebone, which resides in the
-:yocto_git:`meta-yocto-bsp </cgit/cgit.cgi/poky/tree/meta-yocto-bsp>`
+:yocto_git:`meta-yocto-bsp </poky/tree/meta-yocto-bsp>`
 layer.
 
 BSP Layer Configuration Example
@@ -1413,7 +1412,7 @@ Project Reference Manual.
    .. note::
 
       For more information on how the SPL variables are used, see the
-      :yocto_git:`u-boot.inc </cgit/cgit.cgi/poky/tree/meta/recipes-bsp/u-boot/u-boot.inc>`
+      :yocto_git:`u-boot.inc </poky/tree/meta/recipes-bsp/u-boot/u-boot.inc>`
       include file.
 
 -  :term:`UBOOT_* <UBOOT_ENTRYPOINT>`: Defines
@@ -1457,7 +1456,7 @@ The ``meta-yocto-bsp/recipes-kernel/linux`` directory in the layer contains
 metadata used to build the kernel. In this case, a kernel append file
 (i.e. ``linux-yocto_5.0.bbappend``) is used to override an established
 kernel recipe (i.e. ``linux-yocto_5.0.bb``), which is located in
-:yocto_git:`/cgit/cgit.cgi/poky/tree/meta/recipes-kernel/linux`.
+:yocto_git:`/poky/tree/meta/recipes-kernel/linux`.
 
 Following is the contents of the append file: ::
 

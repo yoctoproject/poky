@@ -35,9 +35,9 @@ which the result was required.
 The Autobuilder does build the ``master`` branch once daily for several
 reasons, in particular, to ensure the current ``master`` branch does
 build, but also to keep ``yocto-testresults``
-(:yocto_git:`/cgit.cgi/yocto-testresults/`),
+(:yocto_git:`/yocto-testresults/`),
 buildhistory
-(:yocto_git:`/cgit.cgi/poky-buildhistory/`), and
+(:yocto_git:`/poky-buildhistory/`), and
 our sstate up to date. On the weekend, there is a master-next build
 instead to ensure the test results are updated for the less frequently
 run targets.
@@ -45,7 +45,7 @@ run targets.
 Performance builds (buildperf-\* targets in the console) are triggered
 separately every six hours and automatically push their results to the
 buildstats repository at:
-:yocto_git:`/cgit.cgi/yocto-buildstats/`.
+:yocto_git:`/yocto-buildstats/`.
 
 The 'quick' targets have been selected to be the ones which catch the
 most failures or give the most valuable data. We run 'fast' ptests in

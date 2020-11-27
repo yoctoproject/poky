@@ -25,8 +25,7 @@ A layer index is a web application that contains information about a set
 of custom layers. A good example of an existing layer index is the
 OpenEmbedded Layer Index. A public instance of this layer index exists
 at http://layers.openembedded.org. You can find the code for this
-layer index's web application at
-http://git.yoctoproject.org/cgit/cgit.cgi/layerindex-web/.
+layer index's web application at :yocto_git:`/layerindex-web/`.
 
 When you tie a layer source into Toaster, it can query the layer source
 through a
@@ -83,9 +82,8 @@ index.
 
 In the previous section, the code for the OpenEmbedded Metadata Index
 (i.e. http://layers.openembedded.org) was referenced. You can use
-this code, which is at
-http://git.yoctoproject.org/cgit/cgit.cgi/layerindex-web/, as a
-base to create your own layer index.
+this code, which is at :yocto_git:`/layerindex-web/`, as a base to create
+your own layer index.
 
 Use the Administration Interface
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -165,14 +163,13 @@ As shipped, Toaster is configured to work with the following releases:
 -  *Yocto Project &DISTRO; "&DISTRO_NAME;" or OpenEmbedded "&DISTRO_NAME;":*
    This release causes your Toaster projects to build against the head
    of the &DISTRO_NAME_NO_CAP; branch at
-   https://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?h=&DISTRO_NAME_NO_CAP; or
-   http://git.openembedded.org/openembedded-core/commit/?h=&DISTRO_NAME_NO_CAP;.
+   :yocto_git:`/poky/log/?h=&DISTRO_NAME_NO_CAP;` or
+   :oe_git:`/openembedded-core/commit/?h=&DISTRO_NAME_NO_CAP;`.
 
 -  *Yocto Project "Master" or OpenEmbedded "Master":* This release
    causes your Toaster Projects to build against the head of the master
    branch, which is where active development takes place, at
-   https://git.yoctoproject.org/cgit/cgit.cgi/poky/log/ or
-   http://git.openembedded.org/openembedded-core/log/.
+   :yocto_git:`/poky/log/` or :oe_git:`/openembedded-core/log/`.
 
 -  *Local Yocto Project or Local OpenEmbedded:* This release causes your
    Toaster Projects to build against the head of the ``poky`` or

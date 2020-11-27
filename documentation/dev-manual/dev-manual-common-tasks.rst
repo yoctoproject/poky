@@ -75,7 +75,7 @@ Follow these general steps to create your layer without using tools:
    ``conf`` directory and then modify the file as needed.
 
    The ``meta-yocto-bsp/conf/layer.conf`` file in the Yocto Project
-   :yocto_git:`Source Repositories </cgit/cgit.cgi/poky/tree/meta-yocto-bsp/conf>`
+   :yocto_git:`Source Repositories </poky/tree/meta-yocto-bsp/conf>`
    demonstrates the required syntax. For your layer, you need to replace
    "yoctobsp" with a unique identifier for your layer (e.g. "machinexyz"
    for a layer named "meta-machinexyz"):
@@ -2107,15 +2107,12 @@ being able to provide the ``virtual/kernel`` item.
 
 Now comes the time to actually build an image and you need a kernel
 recipe, but which one? You can configure your build to call out the
-kernel recipe you want by using the
-:term:`PREFERRED_PROVIDER`
-variable. As an example, consider the
-`x86-base.inc <https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/machine/include/x86-base.inc>`_
-include file, which is a machine (i.e.
-:term:`MACHINE`) configuration file.
-This include file is the reason all x86-based machines use the
-``linux-yocto`` kernel. Here are the relevant lines from the include
-file:
+kernel recipe you want by using the :term:`PREFERRED_PROVIDER` variable. As
+an example, consider the :yocto_git:`x86-base.inc
+</poky/tree/meta/conf/machine/include/x86-base.inc>` include file, which is a
+machine (i.e. :term:`MACHINE`) configuration file. This include file is the
+reason all x86-based machines use the ``linux-yocto`` kernel. Here are the
+relevant lines from the include file:
 ::
 
    PREFERRED_PROVIDER_virtual/kernel ??= "linux-yocto"
@@ -3058,7 +3055,7 @@ The following steps describe how to set up the AUH utility:
 7. *Create and Edit an AUH Configuration File:* You need to have the
    ``upgrade-helper/upgrade-helper.conf`` configuration file in your
    build directory. You can find a sample configuration file in the
-   :yocto_git:`AUH source repository </cgit/cgit.cgi/auto-upgrade-helper/tree/>`.
+   :yocto_git:`AUH source repository </auto-upgrade-helper/tree/>`.
 
    Read through the sample file and make configurations as needed. For
    example, if you enabled build history in your ``local.conf`` as
@@ -3122,7 +3119,7 @@ the layer tree.
 
 You can easily set up to run the AUH utility on a regular basis by using
 a cron job. See the
-:yocto_git:`weeklyjob.sh </cgit/cgit.cgi/auto-upgrade-helper/tree/weeklyjob.sh>`
+:yocto_git:`weeklyjob.sh </auto-upgrade-helper/tree/weeklyjob.sh>`
 file distributed with the utility for an example.
 
 Using ``devtool upgrade``
@@ -4362,9 +4359,9 @@ your tunings to best consider build times and package feed maintenance.
    higher levels noted earlier can be useful. For example, consider how
    NXP (formerly Freescale) allows for the easy reuse of binary packages
    in their layer
-   :yocto_git:`meta-freescale </cgit/cgit.cgi/meta-freescale/>`.
+   :yocto_git:`meta-freescale </meta-freescale/>`.
    In this example, the
-   :yocto_git:`fsl-dynamic-packagearch </cgit/cgit.cgi/meta-freescale/tree/classes/fsl-dynamic-packagearch.bbclass>`
+   :yocto_git:`fsl-dynamic-packagearch </meta-freescale/tree/classes/fsl-dynamic-packagearch.bbclass>`
    class shares GPU packages for i.MX53 boards because all boards share
    the AMD GPU. The i.MX6-based boards can do the same because all
    boards share the Vivante GPU. This class inspects the BitBake
@@ -5564,7 +5561,7 @@ partition.
 Source plugins are subclasses defined in plugin files. As shipped, the
 Yocto Project provides several plugin files. You can see the source
 plugin files that ship with the Yocto Project
-:yocto_git:`here </cgit/cgit.cgi/poky/tree/scripts/lib/wic/plugins/source>`.
+:yocto_git:`here </poky/tree/scripts/lib/wic/plugins/source>`.
 Each of these plugin files contains source plugins that are designed to
 populate a specific Wic image partition.
 
@@ -6175,7 +6172,7 @@ system to make your images more secure:
 -  Consider enabling a Mandatory Access Control (MAC) framework such as
    SMACK or SELinux and tuning it appropriately for your device's usage.
    You can find more information in the
-   :yocto_git:`meta-selinux </cgit/cgit.cgi/meta-selinux/>` layer.
+   :yocto_git:`meta-selinux </meta-selinux/>` layer.
 
 Tools for Hardening Your Image
 ------------------------------
@@ -8436,7 +8433,7 @@ might be significant in human-readable form. Here is an example:
 
 To see changes to the build history using a web interface, follow the
 instruction in the ``README`` file
-:yocto_git:`here </cgit/cgit.cgi/buildhistory-web/>`.
+:yocto_git:`here </buildhistory-web/>`.
 
 Here is a sample screenshot of the interface:
 
@@ -9511,7 +9508,7 @@ the build system to run the task again.
 
    For an example of a commit that makes a cosmetic change to invalidate
    shared state, see this
-   :yocto_git:`commit </cgit.cgi/poky/commit/meta/classes/package.bbclass?id=737f8bbb4f27b4837047cb9b4fbfe01dfde36d54>`.
+   :yocto_git:`commit </poky/commit/meta/classes/package.bbclass?id=737f8bbb4f27b4837047cb9b4fbfe01dfde36d54>`.
 
 Running Specific Tasks
 ----------------------
@@ -10475,7 +10472,7 @@ used testing branches for OpenEmbedded-Core are as follows:
    proposed changes to the core metadata.
 
 -  *poky "master-next" branch:* This branch is part of the
-   :yocto_git:`poky </cgit/cgit.cgi/poky/>` repository and combines proposed
+   :yocto_git:`poky </poky/>` repository and combines proposed
    changes to bitbake, the core metadata and the poky distro.
 
 Similarly, stable branches maintained by the project may have corresponding
@@ -11381,7 +11378,7 @@ this function, you have to follow the following steps:
       SPDX_DEPLOY_DIR = "${DEPLOY_DIR}" //Optional
 
 For more usage information refer to :yocto_git:`the meta-spdxscanner repository
-</cgit/cgit.cgi/meta-spdxscanner/>`.
+</meta-spdxscanner/>`.
 
 
 Copying Licenses that Do Not Exist
@@ -11487,7 +11484,7 @@ Setting Up Your Own Error Reporting Server
 ------------------------------------------
 
 If you want to set up your own error reporting server, you can obtain
-the code from the Git repository at :yocto_git:`/cgit/cgit.cgi/error-report-web/`.
+the code from the Git repository at :yocto_git:`/error-report-web/`.
 Instructions on how to set it up are in the README document.
 
 Using Wayland and Weston

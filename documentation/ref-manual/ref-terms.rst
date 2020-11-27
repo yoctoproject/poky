@@ -218,7 +218,7 @@ universal, the list includes them just in case:
 
       In the context of the kernel ("kernel Metadata"), the term refers to
       the kernel config fragments and features contained in the
-      :yocto_git:`yocto-kernel-cache </cgit/cgit.cgi/yocto-kernel-cache>`
+      :yocto_git:`yocto-kernel-cache </yocto-kernel-cache>`
       Git repository.
 
    :term:`OpenEmbedded-Core (OE-Core)`
@@ -232,7 +232,7 @@ universal, the list includes them just in case:
       core set of recipes.
 
       You can see the Metadata in the ``meta`` directory of the Yocto
-      Project :yocto_git:`Source Repositories </cgit/cgit.cgi/poky>`.
+      Project :yocto_git:`Source Repositories </poky>`.
 
    :term:`OpenEmbedded Build System`
       The build system specific to the Yocto

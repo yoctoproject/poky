@@ -267,9 +267,8 @@ with the string ``meta-``.
    , but it is a commonly accepted standard in the Yocto Project
    community.
 
-For example, if you were to examine the `tree
-view <https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/>`__ of the
-``poky`` repository, you will see several layers: ``meta``,
+For example, if you were to examine the :yocto_git:`tree view </poky/tree/>`
+of the ``poky`` repository, you will see several layers: ``meta``,
 ``meta-skeleton``, ``meta-selftest``, ``meta-poky``, and
 ``meta-yocto-bsp``. Each of these repositories represents a distinct
 layer.
@@ -467,7 +466,7 @@ The following list consists of components associated with the
    OpenEmbedded-derived systems, which includes the Yocto Project. The
    Yocto Project and the OpenEmbedded Project both maintain the
    OpenEmbedded-Core. You can find the OE-Core metadata in the Yocto
-   Project :yocto_git:`Source Repositories </cgit/cgit.cgi/poky/tree/meta>`.
+   Project :yocto_git:`Source Repositories </poky/tree/meta>`.
 
    Historically, the Yocto Project integrated the OE-Core metadata
    throughout the Yocto Project source repository reference system
@@ -671,7 +670,7 @@ Poky is a combined repository of BitBake, OpenEmbedded-Core (which is
 found in ``meta``), ``meta-poky``, ``meta-yocto-bsp``, and documentation
 provided all together and known to work well together. You can view
 these items that make up the Poky repository in the
-:yocto_git:`Source Repositories </cgit/cgit.cgi/poky/tree/>`.
+:yocto_git:`Source Repositories </poky/tree/>`.
 
 .. note::
 
@@ -870,8 +869,7 @@ helpful for getting started:
    set of recipes.
 
    You can see the Metadata in the ``meta`` directory of the Yocto
-   Project `Source
-   Repositories <http://git.yoctoproject.org/cgit/cgit.cgi>`__.
+   Project :yocto_git:`Source Repositories <>`.
 
 -  *Packages:* In the context of the Yocto Project, this term refers to
    a recipe's packaged output produced by BitBake (i.e. a "baked

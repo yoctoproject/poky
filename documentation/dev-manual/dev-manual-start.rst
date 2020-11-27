@@ -586,7 +586,7 @@ Working from a copy of the upstream :ref:`dev-manual/dev-manual-start:accessing 
 preferred method for obtaining and using a Yocto Project release. You
 can view the Yocto Project Source Repositories at
 :yocto_git:`/`. In particular, you can find the ``poky``
-repository at :yocto_git:`/cgit.cgi/poky`.
+repository at :yocto_git:`/poky`.
 
 Use the following procedure to locate the latest upstream copy of the
 ``poky`` Git repository:
@@ -600,7 +600,7 @@ Use the following procedure to locate the latest upstream copy of the
 
 3. *Find the URL Used to Clone the Repository:* At the bottom of the
    page, note the URL used to clone that repository
-   (e.g. :yocto_git:`/cgit.cgi/poky`).
+   (e.g. :yocto_git:`/poky`).
 
    .. note::
 

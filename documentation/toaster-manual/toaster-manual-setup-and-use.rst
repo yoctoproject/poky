@@ -561,8 +561,8 @@ the same clone you are using to run Toaster. Unless you manually update
 this clone, your builds will always use the same Git revision.
 
 If you select any of the other release options, Toaster will fetch the
-tip of your selected release from the upstream `Yocto Project
-repository <https://git.yoctoproject.org>`__ every time you run a build.
+tip of your selected release from the upstream :yocto_git:`Yocto Project
+repository <>` every time you run a build.
 Fetching this tip effectively means that if your selected release is
 updated upstream, the Git revision you are using for your builds will
 change. If you are doing development locally, you might not want this

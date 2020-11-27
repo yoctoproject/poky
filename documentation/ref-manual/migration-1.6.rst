@@ -411,6 +411,6 @@ The previous reference BSPs for the ``beagleboard`` and
 ``routerstationpro`` machines are still available in a new
 ``meta-yocto-bsp-old`` layer in the
 :yocto_git:`Source Repositories <>` at
-:yocto_git:`/cgit/cgit.cgi/meta-yocto-bsp-old/`.
+:yocto_git:`/meta-yocto-bsp-old/`.
 
 

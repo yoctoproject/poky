@@ -273,7 +273,7 @@ The ``local.conf`` file provides many basic variables that define a
 build environment. Here is a list of a few. To see the default
 configurations in a ``local.conf`` file created by the build environment
 script, see the
-:yocto_git:`local.conf.sample </cgit/cgit.cgi/poky/tree/meta-poky/conf/local.conf.sample>`
+:yocto_git:`local.conf.sample </poky/tree/meta-poky/conf/local.conf.sample>`
 in the ``meta-poky`` layer:
 
 -  *Target Machine Selection:* Controlled by the
@@ -393,17 +393,17 @@ figure <#general-workflow-figure>`__:
    configurations. This type of information is specific to a particular
    target architecture. A good example of a BSP layer from the `Poky
    Reference Distribution <#gs-reference-distribution-poky>`__ is the
-   :yocto_git:`meta-yocto-bsp </cgit/cgit.cgi/poky/tree/meta-yocto-bsp>`
+   :yocto_git:`meta-yocto-bsp </poky/tree/meta-yocto-bsp>`
    layer.
 
 -  *Policy Configuration:* Distribution Layers (i.e. "Distro Layer" in
    the following figure) providing top-level or general policies for the
    images or SDKs being built for a particular distribution. For
    example, in the Poky Reference Distribution the distro layer is the
-   :yocto_git:`meta-poky </cgit/cgit.cgi/poky/tree/meta-poky>`
+   :yocto_git:`meta-poky </poky/tree/meta-poky>`
    layer. Within the distro layer is a ``conf/distro`` directory that
    contains distro configuration files (e.g.
-   :yocto_git:`poky.conf </cgit/cgit.cgi/poky/tree/meta-poky/conf/distro/poky.conf>`
+   :yocto_git:`poky.conf </poky/tree/meta-poky/conf/distro/poky.conf>`
    that contain many policy configurations for the Poky distribution.
 
 The following figure shows an expanded representation of these three
@@ -427,9 +427,8 @@ Model <#the-yocto-project-layer-model>`__" sections both earlier in this
 manual.
 
 If you explored the previous links, you discovered some areas where many
-layers that work with the Yocto Project exist. The `Source
-Repositories <http://git.yoctoproject.org/>`__ also shows layers
-categorized under "Yocto Metadata Layers."
+layers that work with the Yocto Project exist. The :yocto_git:`Source
+Repositories <>` also shows layers categorized under "Yocto Metadata Layers."
 
 .. note::
 
@@ -879,7 +878,7 @@ This step in the build process consists of the following tasks:
    variables. For information on how this variable works within that
    class, see the
    :ref:`autotools <ref-classes-autotools>` class
-   :yocto_git:`here </cgit/cgit.cgi/poky/tree/meta/classes/autotools.bbclass>`.
+   :yocto_git:`here </poky/tree/meta/classes/autotools.bbclass>`.
 
 -  *do_compile*: Once a configuration task has been satisfied,
    BitBake compiles the source using the
@@ -957,7 +956,7 @@ The :term:`FILES` variable defines the
 files that go into each package in
 :term:`PACKAGES`. If you want
 details on how this is accomplished, you can look at
-:yocto_git:`package.bbclass </cgit/cgit.cgi/poky/tree/meta/classes/package.bbclass>`.
+:yocto_git:`package.bbclass </poky/tree/meta/classes/package.bbclass>`.
 
 Depending on the type of packages being created (RPM, DEB, or IPK), the
 :ref:`do_package_write_* <ref-tasks-package_write_deb>`
