@@ -305,7 +305,7 @@ Project Build Host:
    validation and their status, see the ":ref:`Supported Linux
    Distributions <detailed-supported-distros>`"
    section in the Yocto Project Reference Manual and the wiki page at
-   :yocto_wiki:`Distribution Support </wiki/Distribution_Support>`.
+   :yocto_wiki:`Distribution Support </Distribution_Support>`.
 
 2. *Have Enough Free Memory:* Your system should have at least 50 Gbytes
    of free disk space for building images.
@@ -678,7 +678,7 @@ Releases <#accessing-index-of-releases>`__" section.
    .. note::
 
       For a "map" of Yocto Project releases to version numbers, see the
-      :yocto_wiki:`Releases </wiki/Releases>` wiki page.
+      :yocto_wiki:`Releases </Releases>` wiki page.
 
    You can use the "RELEASE ARCHIVE" link to reveal a menu of all Yocto
    Project releases.

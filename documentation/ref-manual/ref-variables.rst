@@ -1997,7 +1997,7 @@ system and gives an overview of their function and contents.
       process gets source files when working behind a firewall or proxy
       server, see this specific question in the ":doc:`faq`"
       chapter. You can also refer to the
-      ":yocto_wiki:`Working Behind a Network Proxy </wiki/Working_Behind_a_Network_Proxy>`"
+      ":yocto_wiki:`Working Behind a Network Proxy </Working_Behind_a_Network_Proxy>`"
       Wiki page.
 
    :term:`DOC_COMPRESS`
@@ -4177,7 +4177,7 @@ system and gives an overview of their function and contents.
       To specify the OE-Core versions for which a layer is compatible, use
       this variable in your layer's ``conf/layer.conf`` configuration file.
       For the list, use the Yocto Project
-      :yocto_wiki:`Release Name </wiki/Releases>` (e.g.
+      :yocto_wiki:`Release Name </Releases>` (e.g.
       DISTRO_NAME_NO_CAP). To specify multiple OE-Core versions for the
       layer, use a space-separated list:
       ::

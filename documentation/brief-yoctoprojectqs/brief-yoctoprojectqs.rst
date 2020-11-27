@@ -165,7 +165,7 @@ an entire Linux distribution, including the toolchain, from source.
       infrastructure resources and get that information. A good starting
       point could also be to check your web browser settings. Finally,
       you can find more information on the
-      ":yocto_wiki:`Working Behind a Network Proxy </wiki/Working_Behind_a_Network_Proxy>`"
+      ":yocto_wiki:`Working Behind a Network Proxy </Working_Behind_a_Network_Proxy>`"
       page of the Yocto Project Wiki.
 
 #. **Initialize the Build Environment:** From within the ``poky``

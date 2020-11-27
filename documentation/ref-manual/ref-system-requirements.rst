@@ -93,7 +93,7 @@ distributions:
       Bugzilla <>` and submit a bug. We are
       interested in hearing about your experience. For information on
       how to submit a bug, see the Yocto Project
-      :yocto_wiki:`Bugzilla wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`
+      :yocto_wiki:`Bugzilla wiki page </Bugzilla_Configuration_and_Bug_Tracking>`
       and the ":ref:`dev-manual/dev-manual-common-tasks:submitting a defect against the yocto project`"
       section in the Yocto Project Development Tasks Manual.
 

@@ -25,7 +25,7 @@ at: :yocto_ab:`/typhoon/#/console`.
 
 Builds are triggered manually when the test branches are ready. The
 builds are monitored by the SWAT team. For additional information, see
-:yocto_wiki:`/wiki/Yocto_Build_Failure_Swat_Team`.
+:yocto_wiki:`/Yocto_Build_Failure_Swat_Team`.
 If successful, the changes would usually be merged to the ``master``
 branch. If not successful, someone would respond to the changes on the
 mailing list explaining that there was a failure in testing. The choice

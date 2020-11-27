@@ -144,7 +144,7 @@ thefollowing types of tests:
    :ref:`Testing Packages With
    ptest <dev-manual/dev-manual-common-tasks:Testing Packages With ptest>` section
    in the Yocto Project Development Tasks Manual and the
-   ":yocto_wiki:`Ptest </wiki/Ptest>`" Wiki page for more
+   ":yocto_wiki:`Ptest </Ptest>`" Wiki page for more
    information on Ptest.
 
 -  *SDK Testing:* Image tests initiated through the following command::

@@ -854,7 +854,7 @@ Before looking at BSP requirements, you should consider the following:
    a BSP. You should consult the packaging and distribution guidelines
    for your specific release process. For an example of packaging and
    distribution requirements, see the ":yocto_wiki:`Third Party BSP Release
-   Process </wiki/Third_Party_BSP_Release_Process>`"
+   Process </Third_Party_BSP_Release_Process>`"
    wiki page.
 
 -  The requirements for the BSP as it is made available to a developer

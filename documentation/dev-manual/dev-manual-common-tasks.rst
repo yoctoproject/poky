@@ -135,7 +135,7 @@ Follow these general steps to create your layer without using tools:
       Lists all layers on which this layer depends (if any).
 
    -  :term:`LAYERSERIES_COMPAT`:
-      Lists the :yocto_wiki:`Yocto Project </wiki/Releases>`
+      Lists the :yocto_wiki:`Yocto Project </Releases>`
       releases for which the current version is compatible. This
       variable is a good way to indicate if your particular layer is
       current.
@@ -6476,7 +6476,7 @@ the following:
    build system uses this string to help define the value of ``PV`` when
    the source code revision needs to be included in it.
 
--  :yocto_wiki:`PR Service </wiki/PR_Service>`: A
+-  :yocto_wiki:`PR Service </PR_Service>`: A
    network-based service that helps automate keeping package feeds
    compatible with existing package manager applications such as RPM,
    APT, and OPKG.
@@ -6518,7 +6518,7 @@ revision field, which removes the human element.
 .. note::
 
    For additional information on using a PR Service, you can see the
-   :yocto_wiki:`PR Service </wiki/PR_Service>` wiki page.
+   :yocto_wiki:`PR Service </PR_Service>` wiki page.
 
 The Yocto Project uses variables in order of decreasing priority to
 facilitate revision numbering (i.e.
@@ -7314,7 +7314,7 @@ where the result can be ``PASS``, ``FAIL``, or ``SKIP``, and
 the testname can be any identifying string.
 
 For a list of Yocto Project recipes that are already enabled with ptest,
-see the :yocto_wiki:`Ptest </wiki/Ptest>` wiki page.
+see the :yocto_wiki:`Ptest </Ptest>` wiki page.
 
 .. note::
 
@@ -10320,7 +10320,7 @@ Here are some other tips that you might find useful:
    Project implementation of
    :yocto_bugs:`Bugzilla <>`. For information on
    how to submit a bug against the Yocto Project, see the Yocto Project
-   Bugzilla :yocto_wiki:`wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`
+   Bugzilla :yocto_wiki:`wiki page </Bugzilla_Configuration_and_Bug_Tracking>`
    and the "`Submitting a Defect Against the Yocto
    Project <#submitting-a-defect-against-the-yocto-project>`__" section.
 
@@ -10348,7 +10348,7 @@ implementation of Bugzilla see the ":ref:`Yocto Project
 Bugzilla <resources-bugtracker>`" section in the
 Yocto Project Reference Manual. For more detail on any of the following
 steps, see the Yocto Project
-:yocto_wiki:`Bugzilla wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`.
+:yocto_wiki:`Bugzilla wiki page </Bugzilla_Configuration_and_Bug_Tracking>`.
 
 Use the following general steps to submit a bug:
 
@@ -10812,7 +10812,7 @@ master branch or the fix on the master branch is unsuitable for backporting.
 
 The list of stable branches along with the status and maintainer for each
 branch can be obtained from the
-:yocto_wiki:`Releases wiki page </wiki/Releases>`.
+:yocto_wiki:`Releases wiki page </Releases>`.
 
 .. note::
 

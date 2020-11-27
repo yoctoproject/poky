@@ -50,7 +50,7 @@ against the Yocto Project, see the following:
 -  The ":ref:`dev-manual/dev-manual-common-tasks:submitting a defect against the yocto project`"
    section in the Yocto Project Development Tasks Manual.
 
--  The Yocto Project :yocto_wiki:`Bugzilla wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`
+-  The Yocto Project :yocto_wiki:`Bugzilla wiki page </Bugzilla_Configuration_and_Bug_Tracking>`
 
 For information on Bugzilla in general, see http://www.bugzilla.org/about/.
 
@@ -108,7 +108,7 @@ Here is a list of resources you might find helpful:
 -  :yocto_home:`The Yocto Project Website <>`\ *:* The home site
    for the Yocto Project.
 
--  :yocto_wiki:`The Yocto Project Main Wiki Page </wiki/Main_Page>`\ *:* The main wiki page for
+-  :yocto_wiki:`The Yocto Project Main Wiki Page <>`\ *:* The main wiki page for
    the Yocto Project. This page contains information about project
    planning, release engineering, QA & automation, a reference site map,
    and other resources related to the Yocto Project.
@@ -171,7 +171,7 @@ Here is a list of resources you might find helpful:
    the :term:`OpenEmbedded Build System`, which uses
    BitBake, that reports build information.
 
--  :yocto_wiki:`FAQ </wiki/FAQ>`\ *:* A list of commonly asked
+-  :yocto_wiki:`FAQ </FAQ>`\ *:* A list of commonly asked
    questions and their answers.
 
 -  *Release Notes:* Features, updates and known issues for the current
@@ -184,7 +184,8 @@ Here is a list of resources you might find helpful:
    the Yocto Project uses. If you find problems with the Yocto Project,
    you should report them using this application.
 
--  :yocto_wiki:`Bugzilla Configuration and Bug Tracking Wiki Page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`\ *:*
+-  :yocto_wiki:`Bugzilla Configuration and Bug Tracking Wiki Page
+   </Bugzilla_Configuration_and_Bug_Tracking>`\ *:*
    Information on how to get set up and use the Yocto Project
    implementation of Bugzilla for logging and tracking Yocto Project
    defects.

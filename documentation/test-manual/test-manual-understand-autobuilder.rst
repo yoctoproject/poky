@@ -195,7 +195,7 @@ Resulttool is part of OpenEmbedded-Core and is used to manipulate these
 json results files. It has the ability to merge files together, display
 reports of the test results and compare different result files.
 
-For details, see :yocto_wiki:`/wiki/Resulttool`.
+For details, see :yocto_wiki:`/Resulttool`.
 
 run-config Target Execution
 ===========================
