@@ -1119,7 +1119,7 @@ necessary when adding a recipe to build a new piece of software to be
 included in a build.
 
 You can find a complete description of the ``devtool add`` command in
-the ":ref:`sdk-manual/sdk-extensible:a closer look at \`\`devtool add\`\``" section
+the ":ref:`sdk-manual/extensible:a closer look at \`\`devtool add\`\``" section
 in the Yocto Project Application Development and the Extensible Software
 Development Kit (eSDK) manual.
 
@@ -3129,7 +3129,7 @@ As mentioned earlier, an alternative method for upgrading recipes to
 newer versions is to use
 :doc:`devtool upgrade </ref-manual/ref-devtool-reference>`.
 You can read about ``devtool upgrade`` in general in the
-":ref:`sdk-manual/sdk-extensible:use \`\`devtool upgrade\`\` to create a version of the recipe that supports a newer version of the software`"
+":ref:`sdk-manual/extensible:use \`\`devtool upgrade\`\` to create a version of the recipe that supports a newer version of the software`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (eSDK) Manual.
 
@@ -3413,7 +3413,7 @@ form of a patch all using Quilt.
 
    With regard to preserving changes to source files, if you clean a
    recipe or have ``rm_work`` enabled, the
-   :ref:`devtool workflow <sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow>`
+   :ref:`devtool workflow <sdk-manual/extensible:using \`\`devtool\`\` in your sdk workflow>`
    as described in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual is a safer
    development flow than the flow that uses Quilt.
@@ -3647,7 +3647,7 @@ build host running Linux.
       :doc:`/toaster-manual/index`.
 
    -  For information on how to use ``devtool`` to build images, see the
-      ":ref:`sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow`"
+      ":ref:`sdk-manual/extensible:using \`\`devtool\`\` in your sdk workflow`"
       section in the Yocto Project Application Development and the
       Extensible Software Development Kit (eSDK) manual.
 

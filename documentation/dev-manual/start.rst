@@ -342,7 +342,7 @@ using a given development path on your native Linux machine. If you are
 going to use BitBake, see the
 ":ref:`dev-manual/start:cloning the \`\`poky\`\` repository`"
 section. If you are going
-to use the Extensible SDK, see the ":doc:`/sdk-manual/sdk-extensible`" Chapter in the Yocto
+to use the Extensible SDK, see the ":doc:`/sdk-manual/extensible`" Chapter in the Yocto
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual. If you want to work on the kernel, see the :doc:`/kernel-dev/index`. If you are going to use
 Toaster, see the ":doc:`/toaster-manual/setup-and-use`"
@@ -442,7 +442,7 @@ as if you were running on a native Linux machine. If you are going to
 use the Poky container, see the
 ":ref:`dev-manual/start:cloning the \`\`poky\`\` repository`"
 section. If you are going to use the Extensible SDK container, see the
-":doc:`/sdk-manual/sdk-extensible`" Chapter in the Yocto
+":doc:`/sdk-manual/extensible`" Chapter in the Yocto
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual. If you are going to use the Toaster container, see
 the ":doc:`/toaster-manual/setup-and-use`"
@@ -557,7 +557,7 @@ your Yocto Project build host:
 
 Once you have WSLv2 set up, everything is in place to develop just as if
 you were running on a native Linux machine. If you are going to use the
-Extensible SDK container, see the ":doc:`/sdk-manual/sdk-extensible`" Chapter in the Yocto
+Extensible SDK container, see the ":doc:`/sdk-manual/extensible`" Chapter in the Yocto
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual. If you are going to use the Toaster container, see
 the ":doc:`/toaster-manual/setup-and-use`"

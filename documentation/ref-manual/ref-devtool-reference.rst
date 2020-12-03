@@ -11,7 +11,7 @@ is a key part of the extensible SDK.
 
 This chapter provides a Quick Reference for the ``devtool`` command. For
 more information on how to apply the command when using the extensible
-SDK, see the ":doc:`/sdk-manual/sdk-extensible`" chapter in the Yocto
+SDK, see the ":doc:`/sdk-manual/extensible`" chapter in the Yocto
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual.
 
@@ -438,7 +438,7 @@ revision to which you want to upgrade (i.e. the
 forth.
 
 You can read more on the ``devtool upgrade`` workflow in the
-":ref:`sdk-manual/sdk-extensible:use \`\`devtool upgrade\`\` to create a version of the recipe that supports a newer version of the software`"
+":ref:`sdk-manual/extensible:use \`\`devtool upgrade\`\` to create a version of the recipe that supports a newer version of the software`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (eSDK) manual. You can also see an example of
 how to use ``devtool upgrade`` in the ":ref:`dev-manual/common-tasks:using \`\`devtool upgrade\`\``"

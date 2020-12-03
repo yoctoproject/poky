@@ -477,7 +477,7 @@ the kernel files:
 The OpenEmbedded build system creates this directory to hold toolchain
 installer scripts which, when executed, install the sysroot that matches
 your target hardware. You can find out more about these installers in
-the ":ref:`sdk-manual/sdk-appendix-obtain:building an sdk installer`"
+the ":ref:`sdk-manual/appendix-obtain:building an sdk installer`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (eSDK) manual.
 

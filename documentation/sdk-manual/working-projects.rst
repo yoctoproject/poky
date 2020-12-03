@@ -10,7 +10,7 @@ projects.
 Autotools-Based Projects
 ========================
 
-Once you have a suitable :ref:`sdk-manual/sdk-intro:the cross-development toolchain`
+Once you have a suitable :ref:`sdk-manual/intro:the cross-development toolchain`
 installed, it is very easy to develop a project using the `GNU
 Autotools-based <https://en.wikipedia.org/wiki/GNU_Build_System>`__
 workflow, which is outside of the :term:`OpenEmbedded Build System`.

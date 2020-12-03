@@ -39,7 +39,7 @@ Source Directory.
    sections in the Yocto Project Development Tasks Manual for more information.
 
 Kernel development is best accomplished using
-:ref:`devtool <sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow>`
+:ref:`devtool <sdk-manual/extensible:using \`\`devtool\`\` in your sdk workflow>`
 and not through traditional kernel workflow methods. The remainder of
 this section provides information for both scenarios.
 

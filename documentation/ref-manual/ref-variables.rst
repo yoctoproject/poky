@@ -6542,7 +6542,7 @@ system and gives an overview of their function and contents.
 
       For additional information on how to customize the extensible SDK's
       configuration, see the
-      ":ref:`sdk-manual/sdk-appendix-customizing:configuring the extensible sdk`"
+      ":ref:`sdk-manual/appendix-customizing:configuring the extensible sdk`"
       section in the Yocto Project Application Development and the
       Extensible Software Development Kit (eSDK) manual.
 
@@ -6568,7 +6568,7 @@ system and gives an overview of their function and contents.
 
       For additional information on how to customize the extensible SDK's
       configuration, see the
-      ":ref:`sdk-manual/sdk-appendix-customizing:configuring the extensible sdk`"
+      ":ref:`sdk-manual/appendix-customizing:configuring the extensible sdk`"
       section in the Yocto Project Application Development and the
       Extensible Software Development Kit (eSDK) manual.
 
@@ -6587,7 +6587,7 @@ system and gives an overview of their function and contents.
 
       For additional information on how to customize the extensible SDK's
       configuration, see the
-      ":ref:`sdk-manual/sdk-appendix-customizing:configuring the extensible sdk`"
+      ":ref:`sdk-manual/appendix-customizing:configuring the extensible sdk`"
       section in the Yocto Project Application Development and the
       Extensible Software Development Kit (eSDK) manual.
 
@@ -6710,7 +6710,7 @@ system and gives an overview of their function and contents.
       ``SDK_TITLE`` is set to "Poky (Yocto Project Reference Distro)".
 
       For information on how to change this default title, see the
-      ":ref:`sdk-manual/sdk-appendix-customizing:changing the extensible sdk installer title`"
+      ":ref:`sdk-manual/appendix-customizing:changing the extensible sdk installer title`"
       section in the Yocto Project Application Development and the
       Extensible Software Development Kit (eSDK) manual.
 
@@ -6748,7 +6748,7 @@ system and gives an overview of their function and contents.
       default distribution "poky", the ``SDKEXTPATH`` is set to "poky_sdk".
 
       For information on how to change this default directory, see the
-      ":ref:`sdk-manual/sdk-appendix-customizing:changing the default sdk installation directory`"
+      ":ref:`sdk-manual/appendix-customizing:changing the default sdk installation directory`"
       section in the Yocto Project Application Development and the
       Extensible Software Development Kit (eSDK) manual.
 
@@ -7314,7 +7314,7 @@ system and gives an overview of their function and contents.
 
       For information on how staging for recipe-specific sysroots occurs,
       see the :ref:`ref-tasks-populate_sysroot`
-      task, the ":ref:`sdk-manual/sdk-extensible:sharing files between recipes`"
+      task, the ":ref:`sdk-manual/extensible:sharing files between recipes`"
       section in the Yocto Project Development Tasks Manual, the
       ":ref:`overview-manual/concepts:configuration, compilation, and staging`"
       section in the Yocto Project Overview and Concepts Manual, and the
@@ -8145,13 +8145,13 @@ system and gives an overview of their function and contents.
       In this case, a default list of packages is
       set in this variable, but you can add additional packages to the
       list. See the
-      ":ref:`sdk-manual/sdk-appendix-customizing-standard:adding individual packages to the standard sdk`" section
+      ":ref:`sdk-manual/appendix-customizing-standard:adding individual packages to the standard sdk`" section
       in the Yocto Project Application Development and the Extensible
       Software Development Kit (eSDK) manual for more information.
 
       For background information on cross-development toolchains in the
       Yocto Project development environment, see the
-      ":ref:`sdk-manual/sdk-intro:the cross-development toolchain`"
+      ":ref:`sdk-manual/intro:the cross-development toolchain`"
       section in the Yocto Project Overview and Concepts Manual. For
       information on setting up a cross-development environment, see the
       :doc:`/sdk-manual/index` manual.
@@ -8175,13 +8175,13 @@ system and gives an overview of their function and contents.
       target hardware), which includes libraries and headers. Use this
       variable to add individual packages to the part of the SDK that runs
       on the target. See the
-      ":ref:`sdk-manual/sdk-appendix-customizing-standard:adding individual packages to the standard sdk`" section
+      ":ref:`sdk-manual/appendix-customizing-standard:adding individual packages to the standard sdk`" section
       in the Yocto Project Application Development and the Extensible
       Software Development Kit (eSDK) manual for more information.
 
       For background information on cross-development toolchains in the
       Yocto Project development environment, see the
-      ":ref:`sdk-manual/sdk-intro:the cross-development toolchain`"
+      ":ref:`sdk-manual/intro:the cross-development toolchain`"
       section in the Yocto Project Overview and Concepts Manual. For
       information on setting up a cross-development environment, see the
       :doc:`/sdk-manual/index` manual.

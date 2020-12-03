@@ -135,7 +135,7 @@ contact us with other suggestions.
    valuable links: :ref:`dev-manual/common-tasks:Using a Development
    Shell` for information on how to build and run a specific task using
    devshell. Also, the :ref:`SDK manual shows how to build out a specific recipe
-   <sdk-manual/sdk-extensible:use \`\`devtool modify\`\` to modify the source of an existing component>`.
+   <sdk-manual/extensible:use \`\`devtool modify\`\` to modify the source of an existing component>`.
 
 #. **An ambiguous definition: Package vs Recipe:**
    A recipe contains instructions the build system uses to create
@@ -195,9 +195,9 @@ contact us with other suggestions.
    * **Look Through the Yocto Project Application Development and the Extensible
      Software Development Kit (eSDK) manual**: This manual describes how to use
      both the standard SDK and the extensible SDK, which are used primarily for
-     application development. The :doc:`/sdk-manual/sdk-extensible` also provides
+     application development. The :doc:`/sdk-manual/extensible` also provides
      example workflows that use devtool. See the section
-     :ref:`sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow`
+     :ref:`sdk-manual/extensible:using \`\`devtool\`\` in your sdk workflow`
      for more information.
 
    * **Learn About Kernel Development**: If you want to see how to work with the

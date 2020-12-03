@@ -46,7 +46,7 @@ available. Follow these general steps to run QEMU:
 
 1. *Install QEMU:* QEMU is made available with the Yocto Project a
    number of ways. One method is to install a Software Development Kit
-   (SDK). See ":ref:`sdk-manual/sdk-intro:the qemu emulator`" section in the
+   (SDK). See ":ref:`sdk-manual/intro:the qemu emulator`" section in the
    Yocto Project Application Development and the Extensible Software
    Development Kit (eSDK) manual for information on how to install QEMU.
 
@@ -81,7 +81,7 @@ available. Follow these general steps to run QEMU:
       pre-built image that matches your architecture and can be run on
       QEMU.
 
-   See the ":ref:`sdk-manual/sdk-appendix-obtain:extracting the root filesystem`"
+   See the ":ref:`sdk-manual/appendix-obtain:extracting the root filesystem`"
    section in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual for information on
    how to extract a root filesystem.

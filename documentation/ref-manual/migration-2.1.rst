@@ -231,8 +231,8 @@ ADT Removed
 
 The Application Development Toolkit (ADT) has been removed because its
 functionality almost completely overlapped with the :ref:`standard
-SDK <sdk-manual/sdk-using:using the standard sdk>` and the
-:ref:`extensible SDK <sdk-manual/sdk-extensible:using the extensible sdk>`. For
+SDK <sdk-manual/using:using the standard sdk>` and the
+:ref:`extensible SDK <sdk-manual/extensible:using the extensible sdk>`. For
 information on these SDKs and how to build and use them, see the
 :doc:`/sdk-manual/index` manual.
 
@@ -386,7 +386,7 @@ These additional changes exist:
    removed at runtime).
 
 -  The
-   :ref:`devtool modify <sdk-manual/sdk-extensible:use \`\`devtool modify\`\` to modify the source of an existing component>`
+   :ref:`devtool modify <sdk-manual/extensible:use \`\`devtool modify\`\` to modify the source of an existing component>`
    command now defaults to extracting the source since that is most
    commonly expected. The "-x" or "--extract" options are now no-ops. If
    you wish to provide your own existing source tree, you will now need

@@ -1986,7 +1986,7 @@ files.
 The ``populate_sdk`` class provides support for SDK-only recipes. For
 information on advantages gained when building a cross-development
 toolchain using the :ref:`ref-tasks-populate_sdk`
-task, see the ":ref:`sdk-manual/sdk-appendix-obtain:building an sdk installer`"
+task, see the ":ref:`sdk-manual/appendix-obtain:building an sdk installer`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (eSDK) manual.
 
@@ -2044,7 +2044,7 @@ section in the Yocto Project Overview and Concepts Manual. For
 information on advantages gained when building a cross-development
 toolchain using the :ref:`ref-tasks-populate_sdk`
 task, see the
-":ref:`sdk-manual/sdk-appendix-obtain:building an sdk installer`"
+":ref:`sdk-manual/appendix-obtain:building an sdk installer`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (eSDK) manual.
 

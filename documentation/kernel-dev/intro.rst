@@ -84,7 +84,7 @@ understand the following documentation:
 -  :doc:`/overview-manual/index`.
 
 -  :ref:`devtool
-   workflow <sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow>`
+   workflow <sdk-manual/extensible:using \`\`devtool\`\` in your sdk workflow>`
    as described in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual.
 

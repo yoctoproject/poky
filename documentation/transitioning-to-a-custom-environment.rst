@@ -90,7 +90,7 @@ Transitioning to a custom environment for systems development
 
 #. **Build your image and refine it**.
    Add what's missing and fix anything that's broken using your knowledge of the
-   :ref:`workflow <sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk
+   :ref:`workflow <sdk-manual/extensible:using \`\`devtool\`\` in your sdk
    workflow>` to identify where issues might be occurring.
 
 #. **Consider creating your own distribution**.

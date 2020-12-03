@@ -10,13 +10,13 @@ Yocto Project Application Development and the Extensible Software Development Ki
    :caption: Table of Contents
    :numbered:
 
-   sdk-intro
-   sdk-extensible
-   sdk-using
-   sdk-working-projects
-   sdk-appendix-obtain
-   sdk-appendix-customizing
-   sdk-appendix-customizing-standard
+   intro
+   extensible
+   using
+   working-projects
+   appendix-obtain
+   appendix-customizing
+   appendix-customizing-standard
    history
 
 .. include:: /boilerplate.rst

@@ -830,7 +830,7 @@ processes patches, see the
 ":ref:`dev-manual/common-tasks:patching code`"
 section in the
 Yocto Project Development Tasks Manual. You can also see the
-":ref:`sdk-manual/sdk-extensible:use \`\`devtool modify\`\` to modify the source of an existing component`"
+":ref:`sdk-manual/extensible:use \`\`devtool modify\`\` to modify the source of an existing component`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (SDK) manual and the
 ":ref:`kernel-dev/common:using traditional kernel development to patch the kernel`"
@@ -1112,7 +1112,7 @@ the extensible SDK (eSDK):
    see the ":ref:`overview-manual/concepts:cross-development toolchain generation`"
    section. For information on advantages gained when building a
    cross-development toolchain using the do_populate_sdk task, see the
-   ":ref:`sdk-manual/sdk-appendix-obtain:building an sdk installer`" section in
+   ":ref:`sdk-manual/appendix-obtain:building an sdk installer`" section in
    the Yocto Project Application Development and the Extensible Software
    Development Kit (eSDK) manual.
 
@@ -1443,7 +1443,7 @@ Cross-Development Toolchain Generation
 ======================================
 
 The Yocto Project does most of the work for you when it comes to
-creating :ref:`sdk-manual/sdk-intro:the cross-development toolchain`. This
+creating :ref:`sdk-manual/intro:the cross-development toolchain`. This
 section provides some technical background on how cross-development
 toolchains are created and used. For more information on toolchains, you
 can also see the :doc:`/sdk-manual/index` manual.
@@ -1573,7 +1573,7 @@ Here is the bootstrap process for the relocatable toolchain:
 
    For information on advantages gained when building a
    cross-development toolchain installer, see the
-   ":ref:`sdk-manual/sdk-appendix-obtain:building an sdk installer`" appendix
+   ":ref:`sdk-manual/appendix-obtain:building an sdk installer`" appendix
    in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual.
 

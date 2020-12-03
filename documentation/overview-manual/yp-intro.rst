@@ -327,7 +327,7 @@ applications using the Yocto Project:
    You can read about the ``devtool`` workflow in the Yocto Project
    Application Development and Extensible Software Development Kit
    (eSDK) Manual in the 
-   ":ref:`sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow`"
+   ":ref:`sdk-manual/extensible:using \`\`devtool\`\` in your sdk workflow`"
    section.
 
 -  *Extensible Software Development Kit (eSDK):* The eSDK provides a

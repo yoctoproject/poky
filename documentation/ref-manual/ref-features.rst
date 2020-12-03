@@ -118,7 +118,7 @@ metadata:
 -  *api-documentation:* Enables generation of API documentation during
    recipe builds. The resulting documentation is added to SDK tarballs
    when the ``bitbake -c populate_sdk`` command is used. See the
-   ":ref:`sdk-manual/sdk-appendix-customizing-standard:adding api documentation to the standard sdk`"
+   ":ref:`sdk-manual/appendix-customizing-standard:adding api documentation to the standard sdk`"
    section in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual.
 
