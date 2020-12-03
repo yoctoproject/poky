@@ -14,7 +14,7 @@ Setting Up the Basic System Requirements
 
 Before you can use Toaster, you need to first set up your build system
 to run the Yocto Project. To do this, follow the instructions in the
-":ref:`dev-manual/dev-manual-start:preparing the build host`" section of
+":ref:`dev-manual/start:preparing the build host`" section of
 the Yocto Project Development Tasks Manual. For Ubuntu/Debian, you might
 also need to do an additional install of pip3. ::
 

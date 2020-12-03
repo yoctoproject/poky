@@ -34,7 +34,7 @@ itself is of various types:
 
 BitBake knows how to combine multiple data sources together and refers
 to each data source as a layer. For information on layers, see the
-":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+":ref:`dev-manual/common-tasks:understanding and creating layers`"
 section of the Yocto Project Development Tasks Manual.
 
 Following are some brief details on these core components. For
@@ -153,7 +153,7 @@ Conforming to a known structure allows BitBake to make assumptions
 during builds on where to find types of metadata. You can find
 procedures and learn about tools (i.e. ``bitbake-layers``) for creating
 layers suitable for the Yocto Project in the
-":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+":ref:`dev-manual/common-tasks:understanding and creating layers`"
 section of the Yocto Project Development Tasks Manual.
 
 OpenEmbedded Build System Concepts
@@ -317,7 +317,7 @@ during the build. By default, the layers listed in this file include
 layers minimally needed by the build system. However, you must manually
 add any custom layers you have created. You can find more information on
 working with the ``bblayers.conf`` file in the
-":ref:`dev-manual/dev-manual-common-tasks:enabling your layer`"
+":ref:`dev-manual/common-tasks:enabling your layer`"
 section in the Yocto Project Development Tasks Manual.
 
 The files ``site.conf`` and ``auto.conf`` are not created by the
@@ -418,7 +418,7 @@ a ``README`` file as good practice and especially if the layer is to be
 distributed, a configuration directory, and recipe directories. You can
 learn about the general structure for layers used with the Yocto Project
 in the
-":ref:`dev-manual/dev-manual-common-tasks:creating your own layer`"
+":ref:`dev-manual/common-tasks:creating your own layer`"
 section in the
 Yocto Project Development Tasks Manual. For a general discussion on
 layers and the many layers from which you can draw, see the
@@ -827,7 +827,7 @@ For more information on how the source directories are created, see the
 "`Source Fetching <#source-fetching-dev-environment>`__" section. For
 more information on how to create patches and how the build system
 processes patches, see the
-":ref:`dev-manual/dev-manual-common-tasks:patching code`"
+":ref:`dev-manual/common-tasks:patching code`"
 section in the
 Yocto Project Development Tasks Manual. You can also see the
 ":ref:`sdk-manual/sdk-extensible:use \`\`devtool modify\`\` to modify the source of an existing component`"
@@ -1029,7 +1029,7 @@ stage of package installation, post installation scripts that are part
 of the packages are run. Any scripts that fail to run on the build host
 are run on the target when the target system is first booted. If you are
 using a 
-:ref:`read-only root filesystem <dev-manual/dev-manual-common-tasks:creating a read-only root filesystem>`,
+:ref:`read-only root filesystem <dev-manual/common-tasks:creating a read-only root filesystem>`,
 all the post installation scripts must succeed on the build host during
 the package installation phase since the root filesystem on the target
 is read-only.
@@ -1192,7 +1192,7 @@ varflag. If some other task depends on such a task, then that task will
 also always be considered out of date, which might not be what you want.
 
 For details on how to view information about a task's signature, see the
-":ref:`dev-manual/dev-manual-common-tasks:viewing task variable dependencies`"
+":ref:`dev-manual/common-tasks:viewing task variable dependencies`"
 section in the Yocto Project Development Tasks Manual.
 
 Setscene Tasks and Shared State
@@ -1626,15 +1626,15 @@ them if they are deemed to be valid.
       the shared state packages. Consequently, considerations exist that
       affect maintaining shared state feeds. For information on how the
       build system works with packages and can track incrementing ``PR``
-      information, see the ":ref:`dev-manual/dev-manual-common-tasks:automatically incrementing a package version number`"
+      information, see the ":ref:`dev-manual/common-tasks:automatically incrementing a package version number`"
       section in the Yocto Project Development Tasks Manual.
 
    -  The code in the build system that supports incremental builds is
       not simple code. For techniques that help you work around issues
       related to shared state code, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:viewing metadata used to create the input signature of a shared state task`"
+      ":ref:`dev-manual/common-tasks:viewing metadata used to create the input signature of a shared state task`"
       and
-      ":ref:`dev-manual/dev-manual-common-tasks:invalidating shared state to force a task to run`"
+      ":ref:`dev-manual/common-tasks:invalidating shared state to force a task to run`"
       sections both in the Yocto Project Development Tasks Manual.
 
 The rest of this section goes into detail about the overall incremental

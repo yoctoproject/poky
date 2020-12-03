@@ -156,7 +156,7 @@ metadata:
 
 -  *ptest:* Enables building the package tests where supported by
    individual recipes. For more information on package tests, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:testing packages with ptest`" section
+   ":ref:`dev-manual/common-tasks:testing packages with ptest`" section
    in the Yocto Project Development Tasks Manual.
 
 -  *smbfs:* Include SMB networks client support (for mounting
@@ -236,7 +236,7 @@ The following image features are available for all images:
 
 -  *read-only-rootfs:* Creates an image whose root filesystem is
    read-only. See the
-   ":ref:`dev-manual/dev-manual-common-tasks:creating a read-only root filesystem`"
+   ":ref:`dev-manual/common-tasks:creating a read-only root filesystem`"
    section in the Yocto Project Development Tasks Manual for more
    information.
 
@@ -273,7 +273,7 @@ these valid features is as follows:
 
 -  *tools-debug:* Installs debugging tools such as ``strace`` and
    ``gdb``. For information on GDB, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:debugging with the gnu project debugger (gdb) remotely`" section
+   ":ref:`dev-manual/common-tasks:debugging with the gnu project debugger (gdb) remotely`" section
    in the Yocto Project Development Tasks Manual. For information on
    tracing and profiling, see the :doc:`/profile-manual/index`.
 

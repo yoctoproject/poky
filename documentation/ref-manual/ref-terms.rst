@@ -21,7 +21,7 @@ universal, the list includes them just in case:
 
       Information in append files extends or overrides the information in the
       similarly-named recipe file. For an example of an append file in use, see
-      the ":ref:`dev-manual/dev-manual-common-tasks:Using .bbappend Files in
+      the ":ref:`dev-manual/common-tasks:Using .bbappend Files in
       Your Layer`" section in the Yocto Project Development Tasks Manual.
 
       When you name an append file, you can use the "``%``" wildcard character
@@ -192,7 +192,7 @@ universal, the list includes them just in case:
       ":ref:`overview-manual/overview-manual-yp-intro:The Yocto Project Layer
       Model`" section in the Yocto Project Overview and Concepts Manual. For
       more detailed information on layers, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:Understanding and Creating
+      ":ref:`dev-manual/common-tasks:Understanding and Creating
       Layers`" section in the Yocto Project Development Tasks Manual. For a
       discussion specifically on BSP Layers, see the ":ref:`bsp-guide/bsp:BSP
       Layers`" section in the Yocto Project Board Support Packages (BSP)

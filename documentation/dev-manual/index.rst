@@ -10,10 +10,10 @@ Yocto Project Development Tasks Manual
    :caption: Table of Contents
    :numbered:
 
-   dev-manual-intro
-   dev-manual-start
-   dev-manual-common-tasks
-   dev-manual-qemu
+   intro
+   start
+   common-tasks
+   qemu
    history
 
 .. include:: /boilerplate.rst

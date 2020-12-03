@@ -72,7 +72,7 @@ For information on typical BSP development workflow, see the
 section. For more
 information on how to set up a local copy of source files from a Git
 repository, see the
-:ref:`dev-manual/dev-manual-start:locating yocto project source files`
+:ref:`dev-manual/start:locating yocto project source files`
 section in the Yocto Project Development Tasks Manual.
 
 The BSP layer's base directory (``meta-bsp_root_name``) is the root
@@ -128,7 +128,7 @@ you want to work with, such as: ::
 and so on.
 
 For more information on layers, see the
-":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+":ref:`dev-manual/common-tasks:understanding and creating layers`"
 section of the Yocto Project Development Tasks Manual.
 
 Preparing Your Build Host to Work With BSP Layers
@@ -146,7 +146,7 @@ section.
    :ref:`bsp-guide/bsp:example filesystem layout` section.
 
 #. *Set Up the Build Environment:* Be sure you are set up to use BitBake
-   in a shell. See the ":ref:`dev-manual/dev-manual-start:preparing the build host`"
+   in a shell. See the ":ref:`dev-manual/start:preparing the build host`"
    section in the Yocto Project Development Tasks Manual for information on how
    to get a build host ready that is either a native Linux machine or a machine
    that uses CROPS.
@@ -154,10 +154,10 @@ section.
 #. *Clone the poky Repository:* You need to have a local copy of the
    Yocto Project :term:`Source Directory` (i.e. a local
    ``poky`` repository). See the
-   ":ref:`dev-manual/dev-manual-start:cloning the \`\`poky\`\` repository`" and
+   ":ref:`dev-manual/start:cloning the \`\`poky\`\` repository`" and
    possibly the
-   ":ref:`dev-manual/dev-manual-start:checking out by branch in poky`" or
-   ":ref:`dev-manual/dev-manual-start:checking out by tag in poky`"
+   ":ref:`dev-manual/start:checking out by branch in poky`" or
+   ":ref:`dev-manual/start:checking out by tag in poky`"
    sections
    all in the Yocto Project Development Tasks Manual for information on
    how to clone the ``poky`` repository and check out the appropriate
@@ -205,7 +205,7 @@ section.
 
          To see the available branch names in a cloned repository, use the ``git
          branch -al`` command. See the
-         ":ref:`dev-manual/dev-manual-start:checking out by branch in poky`"
+         ":ref:`dev-manual/start:checking out by branch in poky`"
          section in the Yocto Project Development Tasks Manual for more
          information.
 
@@ -463,7 +463,7 @@ requirements are handled with the ``COPYING.MIT`` file.
 Licensing files can be MIT, BSD, GPLv*, and so forth. These files are
 recommended for the BSP but are optional and totally up to the BSP
 developer. For information on how to maintain license compliance, see
-the ":ref:`dev-manual/dev-manual-common-tasks:maintaining open source license compliance during your product's lifecycle`"
+the ":ref:`dev-manual/common-tasks:maintaining open source license compliance during your product's lifecycle`"
 section in the Yocto Project Development Tasks Manual.
 
 README File
@@ -589,7 +589,7 @@ filenames correspond to the values to which users have set the
 
 These files define things such as the kernel package to use
 (:term:`PREFERRED_PROVIDER` of
-:ref:`virtual/kernel <dev-manual/dev-manual-common-tasks:using virtual providers>`),
+:ref:`virtual/kernel <dev-manual/common-tasks:using virtual providers>`),
 the hardware drivers to include in different types of images, any
 special software components that are needed, any bootloader information,
 and also any special image format requirements.
@@ -726,7 +726,7 @@ workflow.
    :align: center
 
 #. *Set up Your Host Development System to Support Development Using the
-   Yocto Project*: See the ":ref:`dev-manual/dev-manual-start:preparing the build host`"
+   Yocto Project*: See the ":ref:`dev-manual/start:preparing the build host`"
    section in the Yocto Project Development Tasks Manual for options on how to
    get a system ready to use the Yocto Project.
 
@@ -756,7 +756,7 @@ workflow.
    OpenEmbedded build system knows about. For more information on
    layers, see the ":ref:`overview-manual/overview-manual-yp-intro:the yocto project layer model`"
    section in the Yocto Project Overview and Concepts Manual. You can also
-   reference the ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+   reference the ":ref:`dev-manual/common-tasks:understanding and creating layers`"
    section in the Yocto Project Development Tasks Manual. For more
    information on BSP layers, see the ":ref:`bsp-guide/bsp:bsp layers`"
    section.
@@ -815,7 +815,7 @@ workflow.
    key configuration files are configured appropriately: the
    ``conf/local.conf`` and the ``conf/bblayers.conf`` file. You must
    make the OpenEmbedded build system aware of your new layer. See the
-   ":ref:`dev-manual/dev-manual-common-tasks:enabling your layer`"
+   ":ref:`dev-manual/common-tasks:enabling your layer`"
    section in the Yocto Project Development Tasks Manual for information
    on how to let the build system know about your new layer.
 
@@ -846,7 +846,7 @@ Before looking at BSP requirements, you should consider the following:
    layer that can be added to the Yocto Project. For guidelines on
    creating a layer that meets these base requirements, see the
    ":ref:`bsp-guide/bsp:bsp layers`" section in this manual and the
-   ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+   ":ref:`dev-manual/common-tasks:understanding and creating layers`"
    section in the Yocto Project Development Tasks Manual.
 
 -  The requirements in this section apply regardless of how you package
@@ -928,7 +928,7 @@ Yocto Project:
    -  The name and contact information for the BSP layer maintainer.
       This is the person to whom patches and questions should be sent.
       For information on how to find the right person, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+      ":ref:`dev-manual/common-tasks:submitting a change to the yocto project`"
       section in the Yocto Project Development Tasks Manual.
 
    -  Instructions on how to build the BSP using the BSP layer.
@@ -1013,7 +1013,7 @@ If you plan on customizing a recipe for a particular BSP, you need to do
 the following:
 
 -  Create a ``*.bbappend`` file for the modified recipe. For information on using
-   append files, see the ":ref:`dev-manual/dev-manual-common-tasks:using
+   append files, see the ":ref:`dev-manual/common-tasks:using
    .bbappend files in your layer`" section in the Yocto Project Development
    Tasks Manual.
 
@@ -1118,7 +1118,7 @@ list describes them in order of preference:
    Specifying the matching license string signifies that you agree to
    the license. Thus, the build system can build the corresponding
    recipe and include the component in the image. See the
-   ":ref:`dev-manual/dev-manual-common-tasks:enabling commercially licensed recipes`"
+   ":ref:`dev-manual/common-tasks:enabling commercially licensed recipes`"
    section in the Yocto Project Development Tasks Manual for details on
    how to use these variables.
 
@@ -1170,7 +1170,7 @@ Use these steps to create a BSP layer:
    ``create-layer`` subcommand to create a new general layer. For
    instructions on how to create a general layer using the
    ``bitbake-layers`` script, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
+   ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *Create a Layer Configuration File:* Every layer needs a layer
@@ -1230,7 +1230,7 @@ configuration files is to examine various files for BSP from the
 :yocto_git:`Source Repositories <>`.
 
 For a detailed description of this particular layer configuration file,
-see ":ref:`step 3 <dev-manual/dev-manual-common-tasks:creating your own layer>`"
+see ":ref:`step 3 <dev-manual/common-tasks:creating your own layer>`"
 in the discussion that describes how to create layers in the Yocto
 Project Development Tasks Manual.
 

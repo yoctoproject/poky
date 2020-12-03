@@ -7,7 +7,7 @@ Setting Up to Use the Yocto Project
 This chapter provides guidance on how to prepare to use the Yocto
 Project. You can learn about creating a team environment to develop
 using the Yocto Project, how to set up a :ref:`build
-host <dev-manual/dev-manual-start:preparing the build host>`, how to locate
+host <dev-manual/start:preparing the build host>`, how to locate
 Yocto Project source repositories, and how to create local Git
 repositories.
 
@@ -224,7 +224,7 @@ particular working environment and set of practices.
     -  Maintain your Metadata in layers that make sense for your
        situation. See the ":ref:`overview-manual/overview-manual-yp-intro:the yocto project layer model`"
        section in the Yocto Project Overview and Concepts Manual and the
-       ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+       ":ref:`dev-manual/common-tasks:understanding and creating layers`"
        section for more information on layers.
 
     -  Separate the project's Metadata and code by using separate Git
@@ -248,13 +248,13 @@ particular working environment and set of practices.
        project to fix bugs or add features. If you do submit patches,
        follow the project commit guidelines for writing good commit
        messages. See the
-       ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+       ":ref:`dev-manual/common-tasks:submitting a change to the yocto project`"
        section.
 
     -  Send changes to the core sooner than later as others are likely
        to run into the same issues. For some guidance on mailing lists
        to use, see the list in the
-       ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+       ":ref:`dev-manual/common-tasks:submitting a change to the yocto project`"
        section. For a description
        of the available mailing lists, see the ":ref:`resources-mailinglist`" section in
        the Yocto Project Reference Manual.
@@ -340,7 +340,7 @@ Project Build Host:
 Once you have completed the previous steps, you are ready to continue
 using a given development path on your native Linux machine. If you are
 going to use BitBake, see the
-":ref:`dev-manual/dev-manual-start:cloning the \`\`poky\`\` repository`"
+":ref:`dev-manual/start:cloning the \`\`poky\`\` repository`"
 section. If you are going
 to use the Extensible SDK, see the ":doc:`/sdk-manual/sdk-extensible`" Chapter in the Yocto
 Project Application Development and the Extensible Software Development
@@ -440,7 +440,7 @@ as your Yocto Project build host:
 Once you have a container set up, everything is in place to develop just
 as if you were running on a native Linux machine. If you are going to
 use the Poky container, see the
-":ref:`dev-manual/dev-manual-start:cloning the \`\`poky\`\` repository`"
+":ref:`dev-manual/start:cloning the \`\`poky\`\` repository`"
 section. If you are going to use the Extensible SDK container, see the
 ":doc:`/sdk-manual/sdk-extensible`" Chapter in the Yocto
 Project Application Development and the Extensible Software Development
@@ -582,7 +582,7 @@ files you'll need to work with the Yocto Project.
 Accessing Source Repositories
 -----------------------------
 
-Working from a copy of the upstream :ref:`dev-manual/dev-manual-start:accessing source repositories` is the
+Working from a copy of the upstream :ref:`dev-manual/start:accessing source repositories` is the
 preferred method for obtaining and using a Yocto Project release. You
 can view the Yocto Project Source Repositories at
 :yocto_git:`/`. In particular, you can find the ``poky``
@@ -605,7 +605,7 @@ Use the following procedure to locate the latest upstream copy of the
    .. note::
 
       For information on cloning a repository, see the
-      ":ref:`dev-manual/dev-manual-start:cloning the \`\`poky\`\` repository`" section.
+      ":ref:`dev-manual/start:cloning the \`\`poky\`\` repository`" section.
 
 Accessing Index of Releases
 ---------------------------
@@ -801,7 +801,7 @@ and then specifically check out that development branch.
 1. *Switch to the Poky Directory:* If you have a local poky Git
    repository, switch to that directory. If you do not have the local
    copy of poky, see the
-   ":ref:`dev-manual/dev-manual-start:cloning the \`\`poky\`\` repository`"
+   ":ref:`dev-manual/start:cloning the \`\`poky\`\` repository`"
    section.
 
 2. *Determine Existing Branch Names:*
@@ -864,7 +864,7 @@ similar to checking out by branch name except you use tag names.
 1. *Switch to the Poky Directory:* If you have a local poky Git
    repository, switch to that directory. If you do not have the local
    copy of poky, see the
-   ":ref:`dev-manual/dev-manual-start:cloning the \`\`poky\`\` repository`"
+   ":ref:`dev-manual/start:cloning the \`\`poky\`\` repository`"
    section.
 
 2. *Fetch the Tag Names:* To checkout the branch based on a tag name,

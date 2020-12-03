@@ -366,7 +366,7 @@ The following changes have been made to Wic:
 .. note::
 
    For more information on Wic, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:creating partitioned images using wic`"
+   ":ref:`dev-manual/common-tasks:creating partitioned images using wic`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *Default Output Directory Changed:* Wic's default output directory is

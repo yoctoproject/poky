@@ -66,7 +66,7 @@ to set up a CROPS machine, you effectively have access to a shell
 environment that is similar to what you see when using a Linux-based
 development host. For the steps needed to set up a system using CROPS,
 see the
-":ref:`dev-manual/dev-manual-start:setting up to use cross platforms (crops)`"
+":ref:`dev-manual/start:setting up to use cross platforms (crops)`"
 section in
 the Yocto Project Development Tasks Manual.
 
@@ -77,7 +77,7 @@ distribution on the system is one that supports the Yocto Project. You
 also need to be sure that the correct set of host packages are installed
 that allow development using the Yocto Project. For the steps needed to
 set up a development host that runs Linux, see the
-":ref:`dev-manual/dev-manual-start:setting up a native linux host`"
+":ref:`dev-manual/start:setting up a native linux host`"
 section in the Yocto Project Development Tasks Manual.
 
 Once your development host is set up to use the Yocto Project, several
@@ -94,7 +94,7 @@ methods exist for you to do work in the Yocto Project environment:
    through your Linux distribution and the Yocto Project.
 
    For a general flow of the build procedures, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:building a simple image`"
+   ":ref:`dev-manual/common-tasks:building a simple image`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *Board Support Package (BSP) Development:* Development of BSPs
@@ -178,7 +178,7 @@ development:
       :align: center
 
    For steps on how to view and access these upstream Git repositories,
-   see the ":ref:`dev-manual/dev-manual-start:accessing source repositories`"
+   see the ":ref:`dev-manual/start:accessing source repositories`"
    Section in the Yocto Project Development Tasks Manual.
 
 -  :yocto_dl:`Index of /releases: </releases>` This is an index
@@ -192,7 +192,7 @@ development:
       :align: center
 
    For steps on how to view and access these files, see the
-   ":ref:`dev-manual/dev-manual-start:accessing index of releases`"
+   ":ref:`dev-manual/start:accessing index of releases`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *"DOWNLOADS" page for the* :yocto_home:`Yocto Project Website <>` *:*
@@ -207,7 +207,7 @@ development:
       :align: center
 
    For steps on how to use the "DOWNLOADS" page, see the
-   ":ref:`dev-manual/dev-manual-start:using the downloads page`"
+   ":ref:`dev-manual/start:using the downloads page`"
    section in the Yocto Project Development Tasks Manual.
 
 Git Workflows and the Yocto Project
@@ -242,7 +242,7 @@ and so forth.
 
    For information on finding out who is responsible for (maintains) a
    particular area of code in the Yocto Project, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+   ":ref:`dev-manual/common-tasks:submitting a change to the yocto project`"
    section of the Yocto Project Development Tasks Manual.
 
 The Yocto Project ``poky`` Git repository also has an upstream
@@ -274,7 +274,7 @@ push them into the "contrib" area and subsequently request that the
 maintainer include them into an upstream branch. This process is called
 "submitting a patch" or "submitting a change." For information on
 submitting patches and changes, see the
-":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+":ref:`dev-manual/common-tasks:submitting a change to the yocto project`"
 section in the Yocto Project Development Tasks Manual.
 
 In summary, a single point of entry exists for changes into a "master"
@@ -341,7 +341,7 @@ Book <http://book.git-scm.com>`__.
    the ``scripts`` folder of the
    :term:`Source Directory`. For information
    on how to use these scripts, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:using scripts to push a change upstream and request a pull`"
+   ":ref:`dev-manual/common-tasks:using scripts to push a change upstream and request a pull`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *Patch Workflow:* This workflow allows you to notify the maintainer
@@ -350,7 +350,7 @@ Book <http://book.git-scm.com>`__.
    this type of change, you format the patch and then send the email
    using the Git commands ``git format-patch`` and ``git send-email``.
    For information on how to use these scripts, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+   ":ref:`dev-manual/common-tasks:submitting a change to the yocto project`"
    section in the Yocto Project Development Tasks Manual.
 
 Git
@@ -376,7 +376,7 @@ commands.
       page, see http://git-scm.com/download.
 
    -  For information beyond the introductory nature in this section,
-      see the ":ref:`dev-manual/dev-manual-start:locating yocto project source files`"
+      see the ":ref:`dev-manual/start:locating yocto project source files`"
       section in the Yocto Project Development Tasks Manual.
 
 Repositories, Tags, and Branches
@@ -408,7 +408,7 @@ You can create a local copy of any repository by "cloning" it with the
 an identical copy of the repository on your development system. Once you
 have a local copy of a repository, you can take steps to develop
 locally. For examples on how to clone Git repositories, see the
-":ref:`dev-manual/dev-manual-start:locating yocto project source files`"
+":ref:`dev-manual/start:locating yocto project source files`"
 section in the Yocto Project Development Tasks Manual.
 
 It is important to understand that Git tracks content change and not
@@ -661,5 +661,5 @@ Project uses in the ``meta/files/common-licenses`` directory in your
 For information that can help you maintain compliance with various open
 source licensing during the lifecycle of a product created using the
 Yocto Project, see the
-":ref:`dev-manual/dev-manual-common-tasks:maintaining open source license compliance during your product's lifecycle`"
+":ref:`dev-manual/common-tasks:maintaining open source license compliance during your product's lifecycle`"
 section in the Yocto Project Development Tasks Manual.

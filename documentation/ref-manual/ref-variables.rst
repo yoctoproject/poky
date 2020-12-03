@@ -239,7 +239,7 @@ system and gives an overview of their function and contents.
       so that it does contain ``${SRCPV}``.
 
       For more information see the
-      ":ref:`dev-manual/dev-manual-common-tasks:automatically incrementing a package version number`"
+      ":ref:`dev-manual/common-tasks:automatically incrementing a package version number`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`AVAILABLE_LICENSES`
@@ -261,7 +261,7 @@ system and gives an overview of their function and contents.
       The list simply presents the tunes that are available. Not all tunes
       may be compatible with a particular machine configuration, or with
       each other in a
-      :ref:`Multilib <dev-manual/dev-manual-common-tasks:combining multiple versions of library files into one image>`
+      :ref:`Multilib <dev-manual/common-tasks:combining multiple versions of library files into one image>`
       configuration.
 
       To add a tune to the list, be sure to append it with spaces using the
@@ -317,7 +317,7 @@ system and gives an overview of their function and contents.
    :term:`BASE_LIB`
       The library directory name for the CPU or Application Binary
       Interface (ABI) tune. The ``BASE_LIB`` applies only in the Multilib
-      context. See the ":ref:`dev-manual/dev-manual-common-tasks:combining multiple versions of library files into one image`"
+      context. See the ":ref:`dev-manual/common-tasks:combining multiple versions of library files into one image`"
       section in the Yocto Project Development Tasks Manual for information
       on Multilib.
 
@@ -545,7 +545,7 @@ system and gives an overview of their function and contents.
       is not set higher than "20".
 
       For more information on speeding up builds, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:speeding up a build`"
+      ":ref:`dev-manual/common-tasks:speeding up a build`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`BB_SERVER_TIMEOUT`
@@ -746,7 +746,7 @@ system and gives an overview of their function and contents.
 
       For information on how to use ``BBMULTICONFIG`` in an environment
       that supports building targets with multiple configurations, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:building images for multiple targets using multiple configurations`"
+      ":ref:`dev-manual/common-tasks:building images for multiple targets using multiple configurations`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`BBPATH`
@@ -1002,7 +1002,7 @@ system and gives an overview of their function and contents.
       When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
       class, this variable specifies the build history features to be
       enabled. For more information on how build history works, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:maintaining build output quality`"
+      ":ref:`dev-manual/common-tasks:maintaining build output quality`"
       section in the Yocto Project Development Tasks Manual.
 
       You can specify these features in the form of a space-separated list:
@@ -1299,7 +1299,7 @@ system and gives an overview of their function and contents.
       will be the aggregate of all of them.
 
       For information on creating an initramfs, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`" section
+      ":ref:`dev-manual/common-tasks:building an initial ram filesystem (initramfs) image`" section
       in the Yocto Project Development Tasks Manual.
 
    :term:`CONFIG_SITE`
@@ -1402,7 +1402,7 @@ system and gives an overview of their function and contents.
          newly installed packages to an image, which might be most suitable for
          read-only filesystems that cannot be upgraded. See the
          :term:`LICENSE_CREATE_PACKAGE` variable for additional information.
-         You can also reference the ":ref:`dev-manual/dev-manual-common-tasks:providing license text`"
+         You can also reference the ":ref:`dev-manual/common-tasks:providing license text`"
          section in the Yocto Project Development Tasks Manual for
          information on providing license text.
 
@@ -1418,7 +1418,7 @@ system and gives an overview of their function and contents.
          newly installed packages to an image, which might be most suitable for
          read-only filesystems that cannot be upgraded. See the
          :term:`LICENSE_CREATE_PACKAGE` variable for additional information.
-         You can also reference the ":ref:`dev-manual/dev-manual-common-tasks:providing license text`"
+         You can also reference the ":ref:`dev-manual/common-tasks:providing license text`"
          section in the Yocto Project Development Tasks Manual for
          information on providing license text.
 
@@ -2029,7 +2029,7 @@ system and gives an overview of their function and contents.
       When used with the :ref:`report-error <ref-classes-report-error>`
       class, specifies the path used for storing the debug files created by
       the :ref:`error reporting
-      tool <dev-manual/dev-manual-common-tasks:using the error reporting tool>`, which
+      tool <dev-manual/common-tasks:using the error reporting tool>`, which
       allows you to submit build errors you encounter to a central
       database. By default, the value of this variable is
       ``${``\ :term:`LOG_DIR`\ ``}/error-report``.
@@ -2129,7 +2129,7 @@ system and gives an overview of their function and contents.
       For more information on ``externalsrc.bbclass``, see the
       ":ref:`externalsrc.bbclass <ref-classes-externalsrc>`" section. You
       can also find information on how to use this variable in the
-      ":ref:`dev-manual/dev-manual-common-tasks:building software from an external source`"
+      ":ref:`dev-manual/common-tasks:building software from an external source`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`EXTERNALSRC_BUILD`
@@ -2143,7 +2143,7 @@ system and gives an overview of their function and contents.
       For more information on ``externalsrc.bbclass``, see the
       ":ref:`externalsrc.bbclass <ref-classes-externalsrc>`" section. You
       can also find information on how to use this variable in the
-      ":ref:`dev-manual/dev-manual-common-tasks:building software from an external source`"
+      ":ref:`dev-manual/common-tasks:building software from an external source`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`EXTRA_AUTORECONF`
@@ -2181,7 +2181,7 @@ system and gives an overview of their function and contents.
           useful if you want to develop against the libraries in the image.
         - "read-only-rootfs" - Creates an image whose root filesystem is
           read-only. See the
-          ":ref:`dev-manual/dev-manual-common-tasks:creating a read-only root filesystem`"
+          ":ref:`dev-manual/common-tasks:creating a read-only root filesystem`"
           section in the Yocto Project Development Tasks Manual for more
           information
         - "tools-debug" - Adds debugging tools such as gdb and strace.
@@ -2194,7 +2194,7 @@ system and gives an overview of their function and contents.
       Project, see the ":ref:`ref-features-image`" section.
 
       For an example that shows how to customize your image by using this
-      variable, see the ":ref:`dev-manual/dev-manual-common-tasks:customizing images using custom \`\`image_features\`\` and \`\`extra_image_features\`\``"
+      variable, see the ":ref:`dev-manual/common-tasks:customizing images using custom \`\`image_features\`\` and \`\`extra_image_features\`\``"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`EXTRA_IMAGECMD`
@@ -2511,7 +2511,7 @@ system and gives an overview of their function and contents.
       You can find out more about the patching process in the
       ":ref:`overview-manual/overview-manual-concepts:patching`" section
       in the Yocto Project Overview and Concepts Manual and the
-      ":ref:`dev-manual/dev-manual-common-tasks:patching code`" section in
+      ":ref:`dev-manual/common-tasks:patching code`" section in
       the Yocto Project Development Tasks Manual. See the
       :ref:`ref-tasks-patch` task as well.
 
@@ -2904,7 +2904,7 @@ system and gives an overview of their function and contents.
       the same files into a ``boot`` directory within the target partition.
 
       You can find information on how to use the Wic tool in the
-      ":ref:`dev-manual/dev-manual-common-tasks:creating partitioned images using wic`"
+      ":ref:`dev-manual/common-tasks:creating partitioned images using wic`"
       section of the Yocto Project Development Tasks Manual. Reference
       material for Wic is located in the
       ":doc:`/ref-manual/ref-kickstart`" chapter.
@@ -2940,7 +2940,7 @@ system and gives an overview of their function and contents.
       the same files into a ``boot`` directory within the target partition.
 
       You can find information on how to use the Wic tool in the
-      ":ref:`dev-manual/dev-manual-common-tasks:creating partitioned images using wic`"
+      ":ref:`dev-manual/common-tasks:creating partitioned images using wic`"
       section of the Yocto Project Development Tasks Manual. Reference
       material for Wic is located in the
       ":doc:`/ref-manual/ref-kickstart`" chapter.
@@ -3000,7 +3000,7 @@ system and gives an overview of their function and contents.
       the ":ref:`ref-features-image`" section.
 
       For an example that shows how to customize your image by using this
-      variable, see the ":ref:`dev-manual/dev-manual-common-tasks:customizing images using custom \`\`image_features\`\` and \`\`extra_image_features\`\``"
+      variable, see the ":ref:`dev-manual/common-tasks:customizing images using custom \`\`image_features\`\` and \`\`extra_image_features\`\``"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`IMAGE_FSTYPES`
@@ -3058,7 +3058,7 @@ system and gives an overview of their function and contents.
             allows the initial RAM filesystem (initramfs) recipe to use a
             fixed set of packages and not be affected by ``IMAGE_INSTALL``.
             For information on creating an initramfs, see the
-            ":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`"
+            ":ref:`dev-manual/common-tasks:building an initial ram filesystem (initramfs) image`"
             section in the Yocto Project Development Tasks Manual.
 
          -  Using ``IMAGE_INSTALL`` with the
@@ -3554,7 +3554,7 @@ system and gives an overview of their function and contents.
       :term:`INITRAMFS_IMAGE_BUNDLE`
       variable, which allows the generated image to be bundled inside the
       kernel image. Additionally, for information on creating an initramfs
-      image, see the ":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`" section
+      image, see the ":ref:`dev-manual/common-tasks:building an initial ram filesystem (initramfs) image`" section
       in the Yocto Project Development Tasks Manual.
 
    :term:`INITRAMFS_IMAGE_BUNDLE`
@@ -3602,7 +3602,7 @@ system and gives an overview of their function and contents.
       See the
       :yocto_git:`local.conf.sample.extended </poky/tree/meta-poky/conf/local.conf.sample.extended>`
       file for additional information. Also, for information on creating an
-      initramfs, see the ":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`" section
+      initramfs, see the ":ref:`dev-manual/common-tasks:building an initial ram filesystem (initramfs) image`" section
       in the Yocto Project Development Tasks Manual.
 
    :term:`INITRAMFS_LINK_NAME`
@@ -4191,7 +4191,7 @@ system and gives an overview of their function and contents.
          The OpenEmbedded build system produces a warning if the variable
          is not set for any given layer.
 
-      See the ":ref:`dev-manual/dev-manual-common-tasks:creating your own layer`"
+      See the ":ref:`dev-manual/common-tasks:creating your own layer`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`LAYERVERSION`
@@ -4240,7 +4240,7 @@ system and gives an overview of their function and contents.
       This variable must be defined for all recipes (unless
       :term:`LICENSE` is set to "CLOSED").
 
-      For more information, see the ":ref:`dev-manual/dev-manual-common-tasks:tracking license changes`"
+      For more information, see the ":ref:`dev-manual/common-tasks:tracking license changes`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`LICENSE`
@@ -4306,7 +4306,7 @@ system and gives an overview of their function and contents.
       For related information on providing license text, see the
       :term:`COPY_LIC_DIRS` variable, the
       :term:`COPY_LIC_MANIFEST` variable, and the
-      ":ref:`dev-manual/dev-manual-common-tasks:providing license text`"
+      ":ref:`dev-manual/common-tasks:providing license text`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`LICENSE_FLAGS`
@@ -4319,7 +4319,7 @@ system and gives an overview of their function and contents.
       typically used to mark recipes that might require additional licenses
       in order to be used in a commercial product. For more information,
       see the
-      ":ref:`dev-manual/dev-manual-common-tasks:enabling commercially licensed recipes`"
+      ":ref:`dev-manual/common-tasks:enabling commercially licensed recipes`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`LICENSE_FLAGS_WHITELIST`
@@ -4327,7 +4327,7 @@ system and gives an overview of their function and contents.
       :term:`LICENSE_FLAGS` within a recipe should not
       prevent that recipe from being built. This practice is otherwise
       known as "whitelisting" license flags. For more information, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:enabling commercially licensed recipes`"
+      ":ref:`dev-manual/common-tasks:enabling commercially licensed recipes`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`LICENSE_PATH`
@@ -4890,7 +4890,7 @@ system and gives an overview of their function and contents.
       Controls how the OpenEmbedded build system spawns interactive
       terminals on the host development system (e.g. using the BitBake
       command with the ``-c devshell`` command-line option). For more
-      information, see the ":ref:`dev-manual/dev-manual-common-tasks:using a development shell`" section in
+      information, see the ":ref:`dev-manual/common-tasks:using a development shell`" section in
       the Yocto Project Development Tasks Manual.
 
       You can use the following values for the ``OE_TERMINAL`` variable:
@@ -4959,7 +4959,7 @@ system and gives an overview of their function and contents.
 
          An easy way to see what overrides apply is to search for ``OVERRIDES``
          in the output of the ``bitbake -e`` command. See the
-         ":ref:`dev-manual/dev-manual-common-tasks:viewing variable values`" section in the Yocto
+         ":ref:`dev-manual/common-tasks:viewing variable values`" section in the Yocto
          Project Development Tasks Manual for more information.
 
    :term:`P`
@@ -4981,7 +4981,7 @@ system and gives an overview of their function and contents.
       specific by using the package name as a suffix.
 
       You can find out more about applying this variable in the
-      ":ref:`dev-manual/dev-manual-common-tasks:adding custom metadata to packages`"
+      ":ref:`dev-manual/common-tasks:adding custom metadata to packages`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`PACKAGE_ARCH`
@@ -5079,7 +5079,7 @@ system and gives an overview of their function and contents.
          separate ``*-src`` pkg. This is the default behavior.
 
       You can find out more about debugging using GDB by reading the
-      ":ref:`dev-manual/dev-manual-common-tasks:debugging with the gnu project debugger (gdb) remotely`" section
+      ":ref:`dev-manual/common-tasks:debugging with the gnu project debugger (gdb) remotely`" section
       in the Yocto Project Development Tasks Manual.
 
    :term:`PACKAGE_EXCLUDE_COMPLEMENTARY`
@@ -5243,7 +5243,7 @@ system and gives an overview of their function and contents.
       the :ref:`core-image-minimal-initramfs <ref-manual/ref-images:images>`
       image. When working with an initial RAM filesystem (initramfs) image,
       use the ``PACKAGE_INSTALL`` variable. For information on creating an
-      initramfs, see the ":ref:`dev-manual/dev-manual-common-tasks:building an initial ram filesystem (initramfs) image`" section
+      initramfs, see the ":ref:`dev-manual/common-tasks:building an initial ram filesystem (initramfs) image`" section
       in the Yocto Project Development Tasks Manual.
 
    :term:`PACKAGE_INSTALL_ATTEMPTONLY`
@@ -5266,7 +5266,7 @@ system and gives an overview of their function and contents.
       ``PACKAGE_WRITE_DEPS``.
 
       For information on running post-installation scripts, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:post-installation scripts`"
+      ":ref:`dev-manual/common-tasks:post-installation scripts`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`PACKAGECONFIG`
@@ -5423,7 +5423,7 @@ system and gives an overview of their function and contents.
 
       For an example of how to use the ``PACKAGES_DYNAMIC`` variable when
       you are splitting packages, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:handling optional module packaging`"
+      ":ref:`dev-manual/common-tasks:handling optional module packaging`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`PACKAGESPLITFUNCS`
@@ -5458,7 +5458,7 @@ system and gives an overview of their function and contents.
          the ``do_compile`` task that result in race conditions, you can clear
          the ``PARALLEL_MAKE`` variable within the recipe as a workaround. For
          information on addressing race conditions, see the
-         ":ref:`dev-manual/dev-manual-common-tasks:debugging parallel make races`"
+         ":ref:`dev-manual/common-tasks:debugging parallel make races`"
          section in the Yocto Project Development Tasks Manual.
 
       For single socket systems (i.e. one CPU), you should not have to
@@ -5468,7 +5468,7 @@ system and gives an overview of their function and contents.
       not set higher than "-j 20".
 
       For more information on speeding up builds, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:speeding up a build`"
+      ":ref:`dev-manual/common-tasks:speeding up a build`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`PARALLEL_MAKEINST`
@@ -5488,7 +5488,7 @@ system and gives an overview of their function and contents.
          the ``do_install`` task that result in race conditions, you can
          clear the ``PARALLEL_MAKEINST`` variable within the recipe as a
          workaround. For information on addressing race conditions, see the
-         ":ref:`dev-manual/dev-manual-common-tasks:debugging parallel make races`"
+         ":ref:`dev-manual/common-tasks:debugging parallel make races`"
          section in the Yocto Project Development Tasks Manual.
 
    :term:`PATCHRESOLVE`
@@ -5580,7 +5580,7 @@ system and gives an overview of their function and contents.
       For examples of how this data is used, see the
       ":ref:`overview-manual/overview-manual-concepts:automatically added runtime dependencies`"
       section in the Yocto Project Overview and Concepts Manual and the
-      ":ref:`dev-manual/dev-manual-common-tasks:viewing package information with \`\`oe-pkgdata-util\`\``"
+      ":ref:`dev-manual/common-tasks:viewing package information with \`\`oe-pkgdata-util\`\``"
       section in the Yocto Project Development Tasks Manual. For more
       information on the shared, global-state directory, see
       :term:`STAGING_DIR_HOST`.
@@ -5713,7 +5713,7 @@ system and gives an overview of their function and contents.
 
       Because manually managing ``PR`` can be cumbersome and error-prone,
       an automated solution exists. See the
-      ":ref:`dev-manual/dev-manual-common-tasks:working with a pr service`" section
+      ":ref:`dev-manual/common-tasks:working with a pr service`" section
       in the Yocto Project Development Tasks Manual for more information.
 
    :term:`PREFERRED_PROVIDER`
@@ -5738,7 +5738,7 @@ system and gives an overview of their function and contents.
          PREFERRED_PROVIDER_virtual/libgl ?= "mesa"
 
       For more
-      information, see the ":ref:`dev-manual/dev-manual-common-tasks:using virtual providers`"
+      information, see the ":ref:`dev-manual/common-tasks:using virtual providers`"
       section in the Yocto Project Development Tasks Manual.
 
       .. note::
@@ -5951,7 +5951,7 @@ system and gives an overview of their function and contents.
 
       You must
       set the variable if you want to automatically start a local :ref:`PR
-      service <dev-manual/dev-manual-common-tasks:working with a pr service>`. You can
+      service <dev-manual/common-tasks:working with a pr service>`. You can
       set ``PRSERV_HOST`` to other values to use a remote PR service.
 
 
@@ -5965,7 +5965,7 @@ system and gives an overview of their function and contents.
 
    :term:`PTEST_ENABLED`
       Specifies whether or not :ref:`Package
-      Test <dev-manual/dev-manual-common-tasks:testing packages with ptest>` (ptest)
+      Test <dev-manual/common-tasks:testing packages with ptest>` (ptest)
       functionality is enabled when building a recipe. You should not set
       this variable directly. Enabling and disabling building Package Tests
       at build time should be done by adding "ptest" to (or removing it
@@ -7000,7 +7000,7 @@ system and gives an overview of their function and contents.
       various ``SPL_*`` variables used by the OpenEmbedded build system.
 
       See the BeagleBone machine configuration example in the
-      ":ref:`dev-manual/dev-manual-common-tasks:adding a layer using the \`\`bitbake-layers\`\` script`"
+      ":ref:`dev-manual/common-tasks:adding a layer using the \`\`bitbake-layers\`\` script`"
       section in the Yocto Project Board Support Package Developer's Guide
       for additional information.
 
@@ -7200,7 +7200,7 @@ system and gives an overview of their function and contents.
          For information on limitations when inheriting the latest revision
          of software using ``SRCREV``, see the :term:`AUTOREV` variable
          description and the
-         ":ref:`dev-manual/dev-manual-common-tasks:automatically incrementing a package version number`"
+         ":ref:`dev-manual/common-tasks:automatically incrementing a package version number`"
          section, which is in the Yocto Project Development Tasks Manual.
 
    :term:`SSTATE_DIR`
@@ -7660,7 +7660,7 @@ system and gives an overview of their function and contents.
 
    :term:`SYSVINIT_ENABLED_GETTYS`
       When using
-      :ref:`SysVinit <dev-manual/dev-manual-common-tasks:enabling system services>`,
+      :ref:`SysVinit <dev-manual/common-tasks:enabling system services>`,
       specifies a space-separated list of the virtual terminals that should
       run a `getty <http://en.wikipedia.org/wiki/Getty_%28Unix%29>`__
       (allowing login), assuming :term:`USE_VT` is not set to
@@ -7946,7 +7946,7 @@ system and gives an overview of their function and contents.
       file.
 
       For more information on testing images, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:performing automated runtime testing`"
+      ":ref:`dev-manual/common-tasks:performing automated runtime testing`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`TEST_SERIALCONTROL_CMD`
@@ -8022,7 +8022,7 @@ system and gives an overview of their function and contents.
          TEST_SUITES = "test_A test_B"
 
       For more information on testing images, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:performing automated runtime testing`"
+      ":ref:`dev-manual/common-tasks:performing automated runtime testing`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`TEST_TARGET`
@@ -8042,7 +8042,7 @@ system and gives an overview of their function and contents.
       You can provide the following arguments with ``TEST_TARGET``:
 
       -  *"qemu":* Boots a QEMU image and runs the tests. See the
-         ":ref:`dev-manual/dev-manual-common-tasks:enabling runtime tests on qemu`" section
+         ":ref:`dev-manual/common-tasks:enabling runtime tests on qemu`" section
          in the Yocto Project Development Tasks Manual for more
          information.
 
@@ -8058,7 +8058,7 @@ system and gives an overview of their function and contents.
             ``meta/lib/oeqa/controllers/simpleremote.py``.
 
       For information on running tests on hardware, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:enabling runtime tests on hardware`"
+      ":ref:`dev-manual/common-tasks:enabling runtime tests on hardware`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`TEST_TARGET_IP`
@@ -8096,7 +8096,7 @@ system and gives an overview of their function and contents.
 
       For more information
       on enabling, running, and writing these tests, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:performing automated runtime testing`"
+      ":ref:`dev-manual/common-tasks:performing automated runtime testing`"
       section in the Yocto Project Development Tasks Manual and the
       ":ref:`testimage*.bbclass <ref-classes-testimage*>`" section.
 
@@ -8554,13 +8554,13 @@ system and gives an overview of their function and contents.
       specifically set. Typically, you would set ``USE_DEVFS`` to "0" for a
       statically populated ``/dev`` directory.
 
-      See the ":ref:`dev-manual/dev-manual-common-tasks:selecting a device manager`" section in
+      See the ":ref:`dev-manual/common-tasks:selecting a device manager`" section in
       the Yocto Project Development Tasks Manual for information on how to
       use this variable.
 
    :term:`USE_VT`
       When using
-      :ref:`SysVinit <dev-manual/dev-manual-common-tasks:enabling system services>`,
+      :ref:`SysVinit <dev-manual/common-tasks:enabling system services>`,
       determines whether or not to run a
       `getty <http://en.wikipedia.org/wiki/Getty_%28Unix%29>`__ on any
       virtual terminals in order to enable logging in through those
@@ -8735,7 +8735,7 @@ system and gives an overview of their function and contents.
       OpenEmbedded build system to create a partitioned image
       (image\ ``.wic``). For information on how to create a partitioned
       image, see the
-      ":ref:`dev-manual/dev-manual-common-tasks:creating partitioned images using wic`"
+      ":ref:`dev-manual/common-tasks:creating partitioned images using wic`"
       section in the Yocto Project Development Tasks Manual. For details on
       the kickstart file format, see the ":doc:`/ref-manual/ref-kickstart`" Chapter.
 

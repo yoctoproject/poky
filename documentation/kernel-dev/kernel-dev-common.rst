@@ -21,11 +21,11 @@ Preparing the Build Host to Work on the Kernel
 
 Before you can do any kernel development, you need to be sure your build
 host is set up to use the Yocto Project. For information on how to get
-set up, see the ":doc:`/dev-manual/dev-manual-start`" section in
+set up, see the ":doc:`/dev-manual/start`" section in
 the Yocto Project Development Tasks Manual. Part of preparing the system
 is creating a local Git repository of the
 :term:`Source Directory` (``poky``) on your system. Follow the steps in the
-":ref:`dev-manual/dev-manual-start:cloning the \`\`poky\`\` repository`"
+":ref:`dev-manual/start:cloning the \`\`poky\`\` repository`"
 section in the Yocto Project Development Tasks Manual to set up your
 Source Directory.
 
@@ -34,8 +34,8 @@ Source Directory.
    Be sure you check out the appropriate development branch or you
    create your local branch by checking out a specific tag to get the
    desired version of Yocto Project. See the
-   ":ref:`dev-manual/dev-manual-start:checking out by branch in poky`" and
-   ":ref:`dev-manual/dev-manual-start:checking out by tag in poky`"
+   ":ref:`dev-manual/start:checking out by branch in poky`" and
+   ":ref:`dev-manual/start:checking out by tag in poky`"
    sections in the Yocto Project Development Tasks Manual for more information.
 
 Kernel development is best accomplished using
@@ -104,13 +104,13 @@ section:
 
       For background information on working with common and BSP layers,
       see the
-      ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+      ":ref:`dev-manual/common-tasks:understanding and creating layers`"
       section in the Yocto Project Development Tasks Manual and the
       ":ref:`bsp-guide/bsp:bsp layers`" section in the Yocto Project Board
       Support (BSP) Developer's Guide, respectively. For information on how to
       use the ``bitbake-layers create-layer`` command to quickly set up a layer,
       see the
-      ":ref:`dev-manual/dev-manual-common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
+      ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
       section in the Yocto Project Development Tasks Manual.
 
 4. *Inform the BitBake Build Environment About Your Layer:* As directed
@@ -236,7 +236,7 @@ section:
    Also, for this example, be sure that the local branch you have
    checked out for ``poky`` is the Yocto Project &DISTRO_NAME; branch. If
    you need to checkout out the &DISTRO_NAME; branch, see the
-   ":ref:`dev-manual/dev-manual-start:checking out by branch in poky`"
+   ":ref:`dev-manual/start:checking out by branch in poky`"
    section in the Yocto Project Development Tasks Manual.
    ::
 
@@ -289,13 +289,13 @@ section:
 
       For background information on working with common and BSP layers,
       see the
-      ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+      ":ref:`dev-manual/common-tasks:understanding and creating layers`"
       section in the Yocto Project Development Tasks Manual and the
       ":ref:`bsp-guide/bsp:bsp layers`" section in the Yocto Project Board
       Support (BSP) Developer's Guide, respectively. For information on how to
       use the ``bitbake-layers create-layer`` command to quickly set up a layer,
       see the
-      ":ref:`dev-manual/dev-manual-common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
+      ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
       section in the Yocto Project Development Tasks Manual.
 
 4. *Inform the BitBake Build Environment About Your Layer:* As directed
@@ -378,7 +378,7 @@ layer contains its own :term:`BitBake`
 append files (``.bbappend``) and provides a convenient mechanism to
 create your own recipe files (``.bb``) as well as store and use kernel
 patch files. For background information on working with layers, see the
-":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+":ref:`dev-manual/common-tasks:understanding and creating layers`"
 section in the Yocto Project Development Tasks Manual.
 
 .. note::
@@ -386,7 +386,7 @@ section in the Yocto Project Development Tasks Manual.
    The Yocto Project comes with many tools that simplify tasks you need
    to perform. One such tool is the ``bitbake-layers create-layer``
    command, which simplifies creating a new layer. See the
-   ":ref:`dev-manual/dev-manual-common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
+   ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
    section in the Yocto Project Development Tasks Manual for
    information on how to use this script to quick set up a new layer.
 
@@ -443,7 +443,7 @@ home directory:
    The :term:`FILESEXTRAPATHS` and :term:`SRC_URI` statements
    enable the OpenEmbedded build system to find patch files. For more
    information on using append files, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:using .bbappend files in your layer`"
+   ":ref:`dev-manual/common-tasks:using .bbappend files in your layer`"
    section in the Yocto Project Development Tasks Manual.
 
 Modifying an Existing Recipe
@@ -1108,7 +1108,7 @@ Section.
    For more information on append files and patches, see the "`Creating
    the Append File <#creating-the-append-file>`__" and "`Applying
    Patches <#applying-patches>`__" sections. You can also see the
-   ":ref:`dev-manual/dev-manual-common-tasks:using .bbappend files in your layer`"
+   ":ref:`dev-manual/common-tasks:using .bbappend files in your layer`"
    section in the Yocto Project Development Tasks Manual.
 
    .. note::

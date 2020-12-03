@@ -266,7 +266,7 @@ The following are additional changes:
    will trigger a warning during ``do_rootfs``.
 
    For more information, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:post-installation scripts`"
+   ":ref:`dev-manual/common-tasks:post-installation scripts`"
    section in the Yocto Project Development Tasks Manual.
 
 -  The ``elf`` image type has been removed. This image type was removed

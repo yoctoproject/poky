@@ -45,7 +45,7 @@ section for steps on how to update your build tools.
 **A:** Support for an additional board is added by creating a Board
 Support Package (BSP) layer for it. For more information on how to
 create a BSP layer, see the
-":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+":ref:`dev-manual/common-tasks:understanding and creating layers`"
 section in the Yocto Project Development Tasks Manual and the
 :doc:`/bsp-guide/index`.
 
@@ -73,7 +73,7 @@ device.
 
 **A:** To add a package, you need to create a BitBake recipe. For
 information on how to create a BitBake recipe, see the
-":ref:`dev-manual/dev-manual-common-tasks:writing a new recipe`"
+":ref:`dev-manual/common-tasks:writing a new recipe`"
 section in the Yocto Project Development Tasks Manual.
 
 **Q:** Do I have to reflash my entire board with a new Yocto Project
@@ -201,7 +201,7 @@ You can find more information on licensing in the
 ":ref:`overview-manual/overview-manual-development-environment:licensing`"
 section in the Yocto
 Project Overview and Concepts Manual and also in the
-":ref:`dev-manual/dev-manual-common-tasks:maintaining open source license compliance during your product's lifecycle`"
+":ref:`dev-manual/common-tasks:maintaining open source license compliance during your product's lifecycle`"
 section in the Yocto Project Development Tasks Manual.
 
 **Q:** How do I disable the cursor on my touchscreen device?

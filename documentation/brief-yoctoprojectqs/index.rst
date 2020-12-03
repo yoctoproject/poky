@@ -20,7 +20,7 @@ build a reference embedded OS called Poky.
       (:term:`Build Host`) is not
       a native Linux system, you can still perform these steps by using
       CROss PlatformS (CROPS) and setting up a Poky container. See the
-      :ref:`dev-manual/dev-manual-start:setting up to use cross platforms (crops)`
+      :ref:`dev-manual/start:setting up to use cross platforms (crops)`
       section
       in the Yocto Project Development Tasks Manual for more
       information.
@@ -34,7 +34,7 @@ build a reference embedded OS called Poky.
          compatible but not officially supported nor validated with
          WSLv2, if you still decide to use WSL please upgrade to WSLv2.
 
-      See the :ref:`dev-manual/dev-manual-start:setting up to use windows
+      See the :ref:`dev-manual/start:setting up to use windows
       subsystem for linux (wslv2)` section in the Yocto Project Development
       Tasks Manual for more information.
 
@@ -55,7 +55,7 @@ following requirements:
    :ref:`ref-manual/ref-system-requirements:supported linux distributions`
    section in the Yocto Project Reference Manual. For detailed
    information on preparing your build host, see the
-   :ref:`dev-manual/dev-manual-start:preparing the build host`
+   :ref:`dev-manual/start:preparing the build host`
    section in the Yocto Project Development Tasks Manual.
 
 -
@@ -145,7 +145,7 @@ branch at the time of the Yocto Project &DISTRO_REL_TAG; release.
 
 For more options and information about accessing Yocto Project related
 repositories, see the
-:ref:`dev-manual/dev-manual-start:locating yocto project source files`
+:ref:`dev-manual/start:locating yocto project source files`
 section in the Yocto Project Development Tasks Manual.
 
 Building Your Image
@@ -257,7 +257,7 @@ an entire Linux distribution, including the toolchain, from source.
       $ runqemu qemux86-64
 
    If you want to learn more about running QEMU, see the
-   :ref:`dev-manual/dev-manual-qemu:using the quick emulator (qemu)` chapter in
+   :ref:`dev-manual/qemu:using the quick emulator (qemu)` chapter in
    the Yocto Project Development Tasks Manual.
 
 #. **Exit QEMU:** Exit QEMU by either clicking on the shutdown icon or by typing
@@ -346,7 +346,7 @@ Follow these steps to add a hardware layer:
 
    You can find
    more information on adding layers in the
-   :ref:`dev-manual/dev-manual-common-tasks:adding a layer using the \`\`bitbake-layers\`\` script`
+   :ref:`dev-manual/common-tasks:adding a layer using the \`\`bitbake-layers\`\` script`
    section.
 
 Completing these steps has added the ``meta-altera`` layer to your Yocto
@@ -381,7 +381,7 @@ The following commands run the tool to create a layer named
 
 For more information
 on layers and how to create them, see the
-:ref:`dev-manual/dev-manual-common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`
+:ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`
 section in the Yocto Project Development Tasks Manual.
 
 Where To Go Next

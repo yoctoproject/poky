@@ -31,7 +31,7 @@ layers so that you can better understand them. For information about the
 layer-creation tools, see the
 ":ref:`bsp-guide/bsp:creating a new bsp layer using the \`\`bitbake-layers\`\` script`"
 section in the Yocto Project Board Support Package (BSP) Developer's
-Guide and the ":ref:`dev-manual/dev-manual-common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
+Guide and the ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
 section further down in this manual.
 
 Follow these general steps to create your layer without using tools:
@@ -725,7 +725,7 @@ simplifies creating a new general layer.
 
    -  In order to use a layer with the OpenEmbedded build system, you
       need to add the layer to your ``bblayers.conf`` configuration
-      file. See the ":ref:`dev-manual/dev-manual-common-tasks:adding a layer using the \`\`bitbake-layers\`\` script`"
+      file. See the ":ref:`dev-manual/common-tasks:adding a layer using the \`\`bitbake-layers\`\` script`"
       section for more information.
 
 The default mode of the script's operation with this subcommand is to
@@ -1106,7 +1106,7 @@ that can help you quickly get a start on a new recipe:
 .. note::
 
    For information on recipe syntax, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:recipe syntax`" section.
+   ":ref:`dev-manual/common-tasks:recipe syntax`" section.
 
 Creating the Base Recipe Using ``devtool add``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1538,7 +1538,7 @@ variables:
    differences result in an error with the message containing the
    current checksum. For more explanation and examples of how to set the
    ``LIC_FILES_CHKSUM`` variable, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:tracking license changes`" section.
+   ":ref:`dev-manual/common-tasks:tracking license changes`" section.
 
    To determine the correct checksum string, you can list the
    appropriate files in the ``LIC_FILES_CHKSUM`` variable with incorrect
@@ -1771,7 +1771,7 @@ Here are some common issues that cause failures.
    For cases where improper paths are detected for configuration files
    or for when libraries/headers cannot be found, be sure you are using
    the more robust ``pkg-config``. See the note in section
-   ":ref:`dev-manual/dev-manual-common-tasks:Configuring the Recipe`" for additional information.
+   ":ref:`dev-manual/common-tasks:Configuring the Recipe`" for additional information.
 
 -  *Parallel build failures:* These failures manifest themselves as
    intermittent errors, or errors reporting that a file or directory
@@ -2338,7 +2338,7 @@ Following is one example: (``hello_2.3.bb``)
 
 The variable ``LIC_FILES_CHKSUM`` is used to track source license
 changes as described in the
-":ref:`dev-manual/dev-manual-common-tasks:tracking license changes`" section in
+":ref:`dev-manual/common-tasks:tracking license changes`" section in
 the Yocto Project Overview and Concepts Manual. You can quickly create
 Autotool-based recipes in a manner similar to the previous example.
 
@@ -2963,7 +2963,7 @@ The following steps describe how to set up the AUH utility:
 1. *Be Sure the Development Host is Set Up:* You need to be sure that
    your development host is set up to use the Yocto Project. For
    information on how to set up your host, see the
-   ":ref:`dev-manual/dev-manual-start:Preparing the Build Host`" section.
+   ":ref:`dev-manual/start:Preparing the Build Host`" section.
 
 2. *Make Sure Git is Configured:* The AUH utility requires Git to be
    configured because AUH uses Git to save upgrades. Thus, you must have
@@ -3015,7 +3015,7 @@ The following steps describe how to set up the AUH utility:
    configurations:
 
    -  If you want to enable :ref:`Build
-      History <dev-manual/dev-manual-common-tasks:maintaining build output quality>`,
+      History <dev-manual/common-tasks:maintaining build output quality>`,
       which is optional, you need the following lines in the
       ``conf/local.conf`` file:
       ::
@@ -3267,8 +3267,8 @@ Manually Upgrading a Recipe
 ---------------------------
 
 If for some reason you choose not to upgrade recipes using
-:ref:`dev-manual/dev-manual-common-tasks:Using the Auto Upgrade Helper (AUH)` or
-by :ref:`dev-manual/dev-manual-common-tasks:Using \`\`devtool upgrade\`\``,
+:ref:`dev-manual/common-tasks:Using the Auto Upgrade Helper (AUH)` or
+by :ref:`dev-manual/common-tasks:Using \`\`devtool upgrade\`\``,
 you can manually edit the recipe files to upgrade the versions.
 
 .. note::
@@ -3467,7 +3467,7 @@ Follow these general steps:
       (i.e. ``bitbake -c clean package`` and ``bitbake -c cleanall package``).
       Modifications will also disappear if you use the ``rm_work`` feature as
       described in the
-      ":ref:`dev-manual/dev-manual-common-tasks:conserving disk space during builds`"
+      ":ref:`dev-manual/common-tasks:conserving disk space during builds`"
       section.
 
 7. *Generate the Patch:* Once your changes work as expected, you need to
@@ -3667,7 +3667,7 @@ The following figure and list overviews the build process:
    :align: center
 
 1. *Set up Your Host Development System to Support Development Using the
-   Yocto Project*: See the ":doc:`dev-manual-start`" section for options on how to get a
+   Yocto Project*: See the ":doc:`start`" section for options on how to get a
    build host ready to use the Yocto Project.
 
 2. *Initialize the Build Environment:* Initialize the build environment
@@ -4046,7 +4046,7 @@ your own distribution that are likely modeled after ``poky-tiny``.
 
    To use ``poky-tiny`` in your build, set the ``DISTRO`` variable in your
    ``local.conf`` file to "poky-tiny" as described in the
-   ":ref:`dev-manual/dev-manual-common-tasks:creating your own distribution`"
+   ":ref:`dev-manual/common-tasks:creating your own distribution`"
    section.
 
 Understanding some memory concepts will help you reduce the system size.
@@ -5736,7 +5736,7 @@ or ::
 
    For more information on how to use the ``bmaptool``
    to flash a device with an image, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:flashing images using \`\`bmaptool\`\``"
+   ":ref:`dev-manual/common-tasks:flashing images using \`\`bmaptool\`\``"
    section.
 
 Using a Modified Kickstart File
@@ -5956,7 +5956,7 @@ the existing kernel, and then inserts a new kernel:
 
    Once the new kernel is added back into the image, you can use the
    ``dd`` command or :ref:`bmaptool
-   <dev-manual/dev-manual-common-tasks:flashing images using \`\`bmaptool\`\`>`
+   <dev-manual/common-tasks:flashing images using \`\`bmaptool\`\`>`
    to flash your wic image onto an SD card or USB stick and test your
    target.
 
@@ -6202,7 +6202,7 @@ layer. The following steps provide some more detail:
    just placing configurations in a ``local.conf`` configuration file
    makes it easier to reproduce the same build configuration when using
    multiple build machines. See the
-   ":ref:`dev-manual/dev-manual-common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
+   ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
    section for information on how to quickly set up a layer.
 
 -  *Create the distribution configuration file:* The distribution
@@ -7979,7 +7979,7 @@ associated ``EXTRA_IMAGE_FEATURES`` variable, as in:
    EXTRA_IMAGE_FEATURES = "read-only-rootfs"
 
 For more information on how to use these variables, see the
-":ref:`dev-manual/dev-manual-common-tasks:Customizing Images Using Custom \`\`IMAGE_FEATURES\`\` and \`\`EXTRA_IMAGE_FEATURES\`\``"
+":ref:`dev-manual/common-tasks:Customizing Images Using Custom \`\`IMAGE_FEATURES\`\` and \`\`EXTRA_IMAGE_FEATURES\`\``"
 section. For information on the variables, see
 :term:`IMAGE_FEATURES` and
 :term:`EXTRA_IMAGE_FEATURES`.
@@ -8056,13 +8056,13 @@ the information.
 
 The remainder of this section describes the following:
 
--  :ref:`How you can enable and disable build history <dev-manual/dev-manual-common-tasks:enabling and disabling build history>`
+-  :ref:`How you can enable and disable build history <dev-manual/common-tasks:enabling and disabling build history>`
 
--  :ref:`How to understand what the build history contains <dev-manual/dev-manual-common-tasks:understanding what the build history contains>`
+-  :ref:`How to understand what the build history contains <dev-manual/common-tasks:understanding what the build history contains>`
 
--  :ref:`How to limit the information used for build history <dev-manual/dev-manual-common-tasks:using build history to gather image information only>`
+-  :ref:`How to limit the information used for build history <dev-manual/common-tasks:using build history to gather image information only>`
 
--  :ref:`How to examine the build history from both a command-line and web interface <dev-manual/dev-manual-common-tasks:examining build history information>`
+-  :ref:`How to examine the build history from both a command-line and web interface <dev-manual/common-tasks:examining build history information>`
 
 Enabling and Disabling Build History
 ------------------------------------
@@ -9084,7 +9084,7 @@ situations.
    completes to log error information into a common database, that can
    help you figure out what might be going wrong. For information on how
    to enable and use this feature, see the
-   ":ref:`dev-manual/dev-manual-common-tasks:using the error reporting tool`"
+   ":ref:`dev-manual/common-tasks:using the error reporting tool`"
    section.
 
 The following list shows the debugging topics in the remainder of this
@@ -9100,7 +9100,7 @@ section:
    use the BitBake ``-e`` option to examine variable values after a
    recipe has been parsed.
 
--  ":ref:`dev-manual/dev-manual-common-tasks:viewing package information with \`\`oe-pkgdata-util\`\``"
+-  ":ref:`dev-manual/common-tasks:viewing package information with \`\`oe-pkgdata-util\`\``"
    describes how to use the ``oe-pkgdata-util`` utility to query
    :term:`PKGDATA_DIR` and
    display package-related information for built packages.
@@ -10581,7 +10581,7 @@ Yocto Project Reference Manual.
 
 Here is the general procedure on how to submit a patch through email
 without using the scripts once the steps in
-:ref:`dev-manual/dev-manual-common-tasks:preparing changes for submission` have been followed:
+:ref:`dev-manual/common-tasks:preparing changes for submission` have been followed:
 
 1. *Format the Commit:* Format the commit into an email message. To
    format commits, use the ``git format-patch`` command. When you
@@ -10670,7 +10670,7 @@ and ``send-pull-request`` scripts from openembedded-core to create and send a
 patch series with a link to the branch for review.
 
 Follow this procedure to push a change to an upstream "contrib" Git
-repository once the steps in :ref:`dev-manual/dev-manual-common-tasks:preparing changes for submission` have
+repository once the steps in :ref:`dev-manual/common-tasks:preparing changes for submission` have
 been followed:
 
 .. note::
@@ -10845,8 +10845,8 @@ follows:
       a newer version of the software which includes an upstream fix for the
       issue or when the issue has been fixed on the master branch in a way
       that introduces backwards incompatible changes. In this case follow the
-      steps in :ref:`dev-manual/dev-manual-common-tasks:preparing changes for submission` and
-      :ref:`dev-manual/dev-manual-common-tasks:using email to submit a patch` but modify the subject header of your patch
+      steps in :ref:`dev-manual/common-tasks:preparing changes for submission` and
+      :ref:`dev-manual/common-tasks:using email to submit a patch` but modify the subject header of your patch
       email to include the name of the stable branch which you are
       targetting. This can be done using the ``--subject-prefix`` argument to
       ``git format-patch``, for example to submit a patch to the dunfell

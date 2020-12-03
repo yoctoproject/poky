@@ -38,7 +38,7 @@ The kernel image (e.g. ``vmlinuz``) is provided by the
 specify whether or not the kernel image is installed in the generated
 root filesystem, override ``RDEPENDS_${KERNEL_PACKAGE_NAME}-base`` to include or not
 include "kernel-image". See the
-":ref:`dev-manual/dev-manual-common-tasks:using .bbappend files in your layer`"
+":ref:`dev-manual/common-tasks:using .bbappend files in your layer`"
 section in the
 Yocto Project Development Tasks Manual for information on how to use an
 append file to override metadata.

@@ -88,7 +88,7 @@ understand the following documentation:
    as described in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual.
 
--  The ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+-  The ":ref:`dev-manual/common-tasks:understanding and creating layers`"
    section in the Yocto Project Development Tasks Manual.
 
 -  The "`Kernel Modification
@@ -111,7 +111,7 @@ general information and references for further information.
    :align: center
 
 1. *Set up Your Host Development System to Support Development Using the
-   Yocto Project*: See the ":doc:`/dev-manual/dev-manual-start`" section in
+   Yocto Project*: See the ":doc:`/dev-manual/start`" section in
    the Yocto Project Development Tasks Manual for options on how to get
    a build host ready to use the Yocto Project.
 
