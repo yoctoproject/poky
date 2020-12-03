@@ -406,7 +406,7 @@ cross-compilation tools.
 
 The ``cross-canadian`` class provides support for the recipes that build
 the Canadian Cross-compilation tools for SDKs. See the
-":ref:`overview-manual/overview-manual-concepts:cross-development toolchain generation`"
+":ref:`overview-manual/concepts:cross-development toolchain generation`"
 section in the Yocto Project Overview and Concepts Manual for more
 discussion on these cross-compilation tools.
 
@@ -417,7 +417,7 @@ discussion on these cross-compilation tools.
 
 The ``crosssdk`` class provides support for the recipes that build the
 cross-compilation tools used for building SDKs. See the
-":ref:`overview-manual/overview-manual-concepts:cross-development toolchain generation`"
+":ref:`overview-manual/concepts:cross-development toolchain generation`"
 section in the Yocto Project Overview and Concepts Manual for more
 discussion on these cross-compilation tools.
 
@@ -930,7 +930,7 @@ For information on customizing images, see the
 ":ref:`dev-manual/common-tasks:customizing images`" section
 in the Yocto Project Development Tasks Manual. For information on how
 images are created, see the
-":ref:`overview-manual/overview-manual-concepts:images`" section in the
+":ref:`overview-manual/concepts:images`" section in the
 Yocto Project Overview and Concpets Manual.
 
 .. _ref-classes-image-buildinfo:
@@ -2039,7 +2039,7 @@ These classes are inherited by and used with the ``populate_sdk_base``
 class.
 
 For more information on the cross-development toolchain generation, see
-the ":ref:`overview-manual/overview-manual-concepts:cross-development toolchain generation`"
+the ":ref:`overview-manual/concepts:cross-development toolchain generation`"
 section in the Yocto Project Overview and Concepts Manual. For
 information on advantages gained when building a cross-development
 toolchain using the :ref:`ref-tasks-populate_sdk`
@@ -2268,7 +2268,7 @@ The root filesystem is created from packages using one of the
 :term:`PACKAGE_CLASSES` variable.
 
 For information on how root filesystem images are created, see the
-":ref:`overview-manual/overview-manual-concepts:image generation`"
+":ref:`overview-manual/concepts:image generation`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-classes-sanity:
@@ -2375,7 +2375,7 @@ default, the class is enabled through the
 :term:`INHERIT_DISTRO` variable's default value.
 
 For more information on sstate, see the
-":ref:`overview-manual/overview-manual-concepts:shared state cache`"
+":ref:`overview-manual/concepts:shared state cache`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-classes-staging:

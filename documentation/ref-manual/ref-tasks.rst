@@ -140,7 +140,7 @@ The ``do_image`` task performs pre-processing on the image through the
 :term:`IMAGE_PREPROCESS_COMMAND` and
 dynamically generates supporting ``do_image_*`` tasks as needed.
 
-For more information on image creation, see the ":ref:`overview-manual/overview-manual-concepts:image generation`"
+For more information on image creation, see the ":ref:`overview-manual/concepts:image generation`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-image-complete:
@@ -159,7 +159,7 @@ through the
 :term:`IMAGE_POSTPROCESS_COMMAND`.
 
 For more information on image creation, see the
-":ref:`overview-manual/overview-manual-concepts:image generation`"
+":ref:`overview-manual/concepts:image generation`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-install:
@@ -174,7 +174,7 @@ compilation directory. The ``do_install`` task, as well as other tasks
 that either directly or indirectly depend on the installed files (e.g.
 :ref:`ref-tasks-package`, ``do_package_write_*``, and
 :ref:`ref-tasks-rootfs`), run under
-:ref:`fakeroot <overview-manual/overview-manual-concepts:fakeroot and pseudo>`.
+:ref:`fakeroot <overview-manual/concepts:fakeroot and pseudo>`.
 
 .. note::
 
@@ -218,7 +218,7 @@ The ``do_package`` task, in conjunction with the
 :ref:`ref-tasks-packagedata` task, also saves some
 important package metadata. For additional information, see the
 :term:`PKGDESTWORK` variable and the
-":ref:`overview-manual/overview-manual-concepts:automatically added runtime dependencies`"
+":ref:`overview-manual/concepts:automatically added runtime dependencies`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_qa:
@@ -237,7 +237,7 @@ see the :ref:`insane <ref-classes-insane>` class.
 Creates Debian packages (i.e. ``*.deb`` files) and places them in the
 ``${``\ :term:`DEPLOY_DIR_DEB`\ ``}`` directory in
 the package feeds area. For more information, see the
-":ref:`overview-manual/overview-manual-concepts:package feeds`" section in
+":ref:`overview-manual/concepts:package feeds`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_write_ipk:
@@ -248,7 +248,7 @@ the Yocto Project Overview and Concepts Manual.
 Creates IPK packages (i.e. ``*.ipk`` files) and places them in the
 ``${``\ :term:`DEPLOY_DIR_IPK`\ ``}`` directory in
 the package feeds area. For more information, see the
-":ref:`overview-manual/overview-manual-concepts:package feeds`" section in
+":ref:`overview-manual/concepts:package feeds`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_write_rpm:
@@ -259,7 +259,7 @@ the Yocto Project Overview and Concepts Manual.
 Creates RPM packages (i.e. ``*.rpm`` files) and places them in the
 ``${``\ :term:`DEPLOY_DIR_RPM`\ ``}`` directory in
 the package feeds area. For more information, see the
-":ref:`overview-manual/overview-manual-concepts:package feeds`" section in
+":ref:`overview-manual/concepts:package feeds`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_write_tar:
@@ -270,7 +270,7 @@ the Yocto Project Overview and Concepts Manual.
 Creates tarballs and places them in the
 ``${``\ :term:`DEPLOY_DIR_TAR`\ ``}`` directory in
 the package feeds area. For more information, see the
-":ref:`overview-manual/overview-manual-concepts:package feeds`" section in
+":ref:`overview-manual/concepts:package feeds`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-packagedata:
@@ -349,7 +349,7 @@ patch files end with either ``.patch`` or ``.diff``, every file would be
 applied as a patch by default except for the ``patch_file5`` patch.
 
 You can find out more about the patching process in the
-":ref:`overview-manual/overview-manual-concepts:patching`" section in
+":ref:`overview-manual/concepts:patching`" section in
 the Yocto Project Overview and Concepts Manual and the
 ":ref:`dev-manual/common-tasks:patching code`" section in the
 Yocto Project Development Tasks Manual.
@@ -368,7 +368,7 @@ the image is constructed.
 -------------------
 
 Creates the file and directory structure for an installable SDK. See the
-":ref:`overview-manual/overview-manual-concepts:sdk generation`"
+":ref:`overview-manual/concepts:sdk generation`"
 section in the Yocto Project Overview and Concepts Manual for more
 information.
 
@@ -378,7 +378,7 @@ information.
 -----------------------
 
 Creates the file and directory structure for an installable extensible 
-SDK (eSDK). See the ":ref:`overview-manual/overview-manual-concepts:sdk generation`"
+SDK (eSDK). See the ":ref:`overview-manual/concepts:sdk generation`"
 section in the Yocto Project Overview and Concepts Manual for more
 information.
 
@@ -434,7 +434,7 @@ Unpacks the source code into a working directory pointed to by
 ``${``\ :term:`WORKDIR`\ ``}``. The :term:`S`
 variable also plays a role in where unpacked source files ultimately
 reside. For more information on how source files are unpacked, see the
-":ref:`overview-manual/overview-manual-concepts:source fetching`"
+":ref:`overview-manual/concepts:source fetching`"
 section in the Yocto Project Overview and Concepts Manual and also see
 the ``WORKDIR`` and ``S`` variable descriptions.
 
@@ -500,7 +500,7 @@ You can run this task using BitBake as follows:
    $ bitbake -c clean recipe
 
 Running this task does not remove the
-:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>` cache files.
+:ref:`sstate <overview-manual/concepts:shared state cache>` cache files.
 Consequently, if no changes have been made and the recipe is rebuilt
 after cleaning, output files are simply restored from the sstate cache.
 If you want to remove the sstate cache files for the recipe, you need to
@@ -513,7 +513,7 @@ use the :ref:`ref-tasks-cleansstate` task instead
 ---------------
 
 Removes all output files, shared state
-(:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>`) cache, and
+(:ref:`sstate <overview-manual/concepts:shared state cache>`) cache, and
 downloaded source files for a target (i.e. the contents of
 :term:`DL_DIR`). Essentially, the ``do_cleanall`` task is
 identical to the :ref:`ref-tasks-cleansstate` task
@@ -534,10 +534,10 @@ task.
 ------------------
 
 Removes all output files and shared state
-(:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>`) cache for a
+(:ref:`sstate <overview-manual/concepts:shared state cache>`) cache for a
 target. Essentially, the ``do_cleansstate`` task is identical to the
 :ref:`ref-tasks-clean` task with the added removal of
-shared state (:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>`)
+shared state (:ref:`sstate <overview-manual/concepts:shared state cache>`)
 cache.
 
 You can run this task using BitBake as follows:
@@ -593,7 +593,7 @@ Lists all defined tasks for a target.
 ``do_package_index``
 --------------------
 
-Creates or updates the index in the :ref:`overview-manual/overview-manual-concepts:package feeds` area.
+Creates or updates the index in the :ref:`overview-manual/concepts:package feeds` area.
 
 .. note::
 
@@ -631,7 +631,7 @@ has some more information about these types of images.
 -------------
 
 Creates the root filesystem (file and directory structure) for an image.
-See the ":ref:`overview-manual/overview-manual-concepts:image generation`"
+See the ":ref:`overview-manual/concepts:image generation`"
 section in the Yocto Project Overview and Concepts Manual for more
 information on how the root filesystem is created.
 

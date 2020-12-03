@@ -160,7 +160,7 @@ universal, the list includes them just in case:
 
       Creation of these toolchains is simple and automated. For information on
       toolchain concepts as they apply to the Yocto Project, see the
-      ":ref:`overview-manual/overview-manual-concepts:Cross-Development
+      ":ref:`overview-manual/concepts:Cross-Development
       Toolchain Generation`" section in the Yocto Project Overview and Concepts
       Manual. You can also find more information on using the relocatable
       toolchain in the :doc:`/sdk-manual/index` manual.
@@ -189,7 +189,7 @@ universal, the list includes them just in case:
       layers used within Yocto Project.
 
       For introductory information on layers, see the
-      ":ref:`overview-manual/overview-manual-yp-intro:The Yocto Project Layer
+      ":ref:`overview-manual/yp-intro:The Yocto Project Layer
       Model`" section in the Yocto Project Overview and Concepts Manual. For
       more detailed information on layers, see the
       ":ref:`dev-manual/common-tasks:Understanding and Creating
@@ -366,7 +366,7 @@ universal, the list includes them just in case:
 
      For more information on concepts related to Git repositories,
      branches, and tags, see the
-     ":ref:`overview-manual/overview-manual-development-environment:repositories, tags, and branches`"
+     ":ref:`overview-manual/development-environment:repositories, tags, and branches`"
      section in the Yocto Project Overview and Concepts Manual.
 
    :term:`Task`

@@ -51,7 +51,7 @@ Consider the following:
    :term:`SYSROOT_PREPROCESS_FUNCS`.
 
    For an example, see the ``pixbufcache`` class in ``meta/classes/`` in
-   the :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`.
+   the :ref:`overview-manual/development-environment:yocto project source repositories`.
 
    .. note::
 

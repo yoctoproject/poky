@@ -87,7 +87,7 @@ adjustments:
    following:
 
    -  After ensuring the tasks are :ref:`shared
-      state <overview-manual/overview-manual-concepts:shared state cache>` tasks (i.e. the
+      state <overview-manual/concepts:shared state cache>` tasks (i.e. the
       output of the task is saved to and can be restored from the shared
       state cache) or ensuring the tasks are able to be produced quickly
       from a task that is a shared state task, add the task name to the

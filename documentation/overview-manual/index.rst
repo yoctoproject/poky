@@ -10,10 +10,10 @@ Yocto Project Overview and Concepts Manual
    :caption: Table of Contents
    :numbered:
 
-   overview-manual-intro
-   overview-manual-yp-intro
-   overview-manual-development-environment
-   overview-manual-concepts
+   intro
+   yp-intro
+   development-environment
+   concepts
    history
 
 .. include:: /boilerplate.rst

@@ -183,7 +183,7 @@ system.
    part of an image built using the build system.
 
 The ``devtool`` command line is organized similarly to
-:ref:`overview-manual/overview-manual-development-environment:git` in that it has a number of
+:ref:`overview-manual/development-environment:git` in that it has a number of
 sub-commands for each function. You can run ``devtool --help`` to see
 all the commands.
 

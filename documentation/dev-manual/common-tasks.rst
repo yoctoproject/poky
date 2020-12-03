@@ -18,7 +18,7 @@ The OpenEmbedded build system supports organizing
 Layers allow you to isolate different types of customizations from each
 other. For introductory information on the Yocto Project Layer Model,
 see the
-":ref:`overview-manual/overview-manual-yp-intro:the yocto project layer model`"
+":ref:`overview-manual/yp-intro:the yocto project layer model`"
 section in the Yocto Project Overview and Concepts Manual.
 
 Creating Your Own Layer
@@ -1319,7 +1319,7 @@ to determine how well the build went.
    ``log.do_fetch``, and ``log.do_compile``).
 
 You can find more information about the build process in
-":doc:`/overview-manual/overview-manual-development-environment`"
+":doc:`/overview-manual/development-environment`"
 chapter of the Yocto Project Overview and Concepts Manual.
 
 Fetching Code
@@ -1330,7 +1330,7 @@ files. Fetching is controlled mainly through the
 :term:`SRC_URI` variable. Your recipe
 must have a ``SRC_URI`` variable that points to where the source is
 located. For a graphical representation of source locations, see the
-":ref:`overview-manual/overview-manual-concepts:sources`" section in
+":ref:`overview-manual/concepts:sources`" section in
 the Yocto Project Overview and Concepts Manual.
 
 The :ref:`ref-tasks-fetch` task uses
@@ -1599,7 +1599,7 @@ package "example" contains "libexample" and another package "mypackage"
 contains a binary that links to "libexample" then the OpenEmbedded build
 system will automatically add a runtime dependency to "mypackage" on
 "example"). See the
-":ref:`overview-manual/overview-manual-concepts:automatically added runtime dependencies`"
+":ref:`overview-manual/concepts:automatically added runtime dependencies`"
 section in the Yocto Project Overview and Concepts Manual for further
 details.
 
@@ -2486,7 +2486,7 @@ Reference Manual's variable glossary.
 
    -  Using ``DEPENDS`` also allows runtime dependencies between
       packages to be added automatically. See the
-      ":ref:`overview-manual/overview-manual-concepts:automatically added runtime dependencies`"
+      ":ref:`overview-manual/concepts:automatically added runtime dependencies`"
       section in the Yocto Project Overview and Concepts Manual for more
       information.
 
@@ -3658,7 +3658,7 @@ build host running Linux.
 The build process creates an entire Linux distribution from source and
 places it in your :term:`Build Directory` under
 ``tmp/deploy/images``. For detailed information on the build process
-using BitBake, see the ":ref:`overview-manual/overview-manual-concepts:images`" section in the
+using BitBake, see the ":ref:`overview-manual/concepts:images`" section in the
 Yocto Project Overview and Concepts Manual.
 
 The following figure and list overviews the build process:
@@ -5490,7 +5490,7 @@ Using an Existing Kickstart File
 
 If you do not want to create your own kickstart file, you can use an
 existing file provided by the Wic installation. As shipped, kickstart
-files can be found in the :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories` in the
+files can be found in the :ref:`overview-manual/development-environment:yocto project source repositories` in the
 following two locations:
 ::
 
@@ -6526,7 +6526,7 @@ revision, respectively). The values are highly dependent on the policies
 and procedures of a given distribution and package feed.
 
 Because the OpenEmbedded build system uses
-":ref:`signatures <overview-manual/overview-manual-concepts:checksums (signatures)>`", which are
+":ref:`signatures <overview-manual/concepts:checksums (signatures)>`", which are
 unique to a given build, the build system knows when to rebuild
 packages. All the inputs into a given task are represented by a
 signature, which can trigger a rebuild when different. Thus, the build
@@ -6600,7 +6600,7 @@ Quality <#maintaining-build-output-quality>`__" section.
    use a PR Service while others do not leads to obvious problems.
 
    For more information on shared state, see the
-   ":ref:`overview-manual/overview-manual-concepts:shared state cache`"
+   ":ref:`overview-manual/concepts:shared state cache`"
    section in the Yocto Project Overview and Concepts Manual.
 
 Manually Bumping PR
@@ -6767,7 +6767,7 @@ multiple times if you have more than one set of modules to package.
 
 For more examples that show how to use ``do_split_packages``, see the
 ``connman.inc`` file in the ``meta/recipes-connectivity/connman/``
-directory of the ``poky`` :ref:`source repository <overview-manual/overview-manual-development-environment:yocto project source repositories>`. You can
+directory of the ``poky`` :ref:`source repository <overview-manual/development-environment:yocto project source repositories>`. You can
 also find examples in ``meta/classes/kernel.bbclass``.
 
 Following is a reference that shows ``do_split_packages`` mandatory and
@@ -8080,7 +8080,7 @@ variable to "1" at the end of your ``conf/local.conf`` file found in the
 Enabling build history as
 previously described causes the OpenEmbedded build system to collect
 build output information and commit it as a single commit to a local
-:ref:`overview-manual/overview-manual-development-environment:git` repository.
+:ref:`overview-manual/development-environment:git` repository.
 
 .. note::
 
@@ -9394,7 +9394,7 @@ BitBake has determined by doing the following:
       ${BUILDDIR}/tmp/stamps/i586-poky-linux/db/6.0.30-r1.do_fetch.sigdata.7c048c18222b16ff0bcee2000ef648b1
 
    For tasks that are accelerated through the shared state
-   (:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>`) cache, an
+   (:ref:`sstate <overview-manual/concepts:shared state cache>`) cache, an
    additional ``siginfo`` file is written into
    :term:`SSTATE_DIR` along with
    the cached task output. The ``siginfo`` files contain exactly the
@@ -9461,15 +9461,15 @@ files, see the "`Viewing Task Variable
 Dependencies <#dev-viewing-task-variable-dependencies>`__" section.
 
 For conceptual information on shared state, see the
-":ref:`overview-manual/overview-manual-concepts:shared state`"
+":ref:`overview-manual/concepts:shared state`"
 section in the Yocto Project Overview and Concepts Manual.
 
 Invalidating Shared State to Force a Task to Run
 ------------------------------------------------
 
 The OpenEmbedded build system uses
-:ref:`checksums <overview-manual/overview-manual-concepts:checksums (signatures)>` and
-:ref:`overview-manual/overview-manual-concepts:shared state` cache to avoid unnecessarily
+:ref:`checksums <overview-manual/concepts:checksums (signatures)>` and
+:ref:`overview-manual/concepts:shared state` cache to avoid unnecessarily
 rebuilding tasks. Collectively, this scheme is known as "shared state
 code".
 
@@ -9530,7 +9530,7 @@ tasks (including tasks from other recipes) that the specified task
 depends on will be run before the task. Even when you manually specify a
 task to run with ``-c``, BitBake will only run the task if it considers
 it "out of date". See the
-":ref:`overview-manual/overview-manual-concepts:stamp files and the rerunning of tasks`"
+":ref:`overview-manual/concepts:stamp files and the rerunning of tasks`"
 section in the Yocto Project Overview and Concepts Manual for how
 BitBake determines whether a task is "out of date".
 
@@ -10458,7 +10458,7 @@ Yocto general mailing list or on the openembedded-devel mailing list.
 You can also push a change upstream and request a maintainer to pull the
 change into the component's upstream repository. You do this by pushing
 to a contribution repository that is upstream. See the
-":ref:`overview-manual/overview-manual-development-environment:git workflows and the yocto project`"
+":ref:`overview-manual/development-environment:git workflows and the yocto project`"
 section in the Yocto Project Overview and Concepts Manual for additional
 concepts on working in the Yocto Project development environment.
 
@@ -10707,7 +10707,7 @@ been followed:
       located in the :term:`Source Directory` at
       ``meta/conf/distro/include``, to see who is responsible for code.
 
-   -  *Search by File:* Using :ref:`overview-manual/overview-manual-development-environment:git`, you can
+   -  *Search by File:* Using :ref:`overview-manual/development-environment:git`, you can
       enter the following command to bring up a short list of all
       commits against a specific file:
       ::
@@ -10856,7 +10856,7 @@ follows:
 Working With Licenses
 =====================
 
-As mentioned in the ":ref:`overview-manual/overview-manual-development-environment:licensing`"
+As mentioned in the ":ref:`overview-manual/development-environment:licensing`"
 section in the Yocto Project Overview and Concepts Manual, open source
 projects are open to the public and they consequently have different
 licensing structures in place. This section describes the mechanism by
@@ -11299,7 +11299,7 @@ By releasing the version of the OpenEmbedded build system and the layers
 used during the build, you will be providing both compilation scripts
 and the source code modifications in one step.
 
-If the deployment team has a :ref:`overview-manual/overview-manual-concepts:bsp layer`
+If the deployment team has a :ref:`overview-manual/concepts:bsp layer`
 and a distro layer, and those
 those layers are used to patch, compile, package, or modify (in any way)
 any open source software included in your released images, you might be

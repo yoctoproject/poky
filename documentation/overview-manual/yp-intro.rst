@@ -589,7 +589,7 @@ Project.
 .. note::
 
    For additional detail about the Yocto Project development
-   environment, see the ":doc:`overview-manual-development-environment`"
+   environment, see the ":doc:`/overview-manual/development-environment`"
    chapter.
 
 -  *Native Linux Host:* By far the best option for a Build Host. A

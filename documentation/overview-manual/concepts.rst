@@ -40,7 +40,7 @@ section of the Yocto Project Development Tasks Manual.
 Following are some brief details on these core components. For
 additional information on how these components interact during a build,
 see the
-":ref:`overview-manual/overview-manual-concepts:openembedded build system concepts`"
+":ref:`overview-manual/concepts:openembedded build system concepts`"
 section.
 
 BitBake
@@ -1109,7 +1109,7 @@ the extensible SDK (eSDK):
 .. note::
 
    For more information on the cross-development toolchain generation,
-   see the ":ref:`overview-manual/overview-manual-concepts:cross-development toolchain generation`"
+   see the ":ref:`overview-manual/concepts:cross-development toolchain generation`"
    section. For information on advantages gained when building a
    cross-development toolchain using the do_populate_sdk task, see the
    ":ref:`sdk-manual/sdk-appendix-obtain:building an sdk installer`" section in

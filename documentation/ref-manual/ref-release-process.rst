@@ -50,7 +50,7 @@ Major Release Codenames
 =======================
 
 Each major release receives a codename that identifies the release in
-the :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`.
+the :ref:`overview-manual/development-environment:yocto project source repositories`.
 The concept is that branches of :term:`Metadata` with the same
 codename are likely to be compatible and thus work together.
 

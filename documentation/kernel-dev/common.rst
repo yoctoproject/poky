@@ -63,7 +63,7 @@ section:
    .. note::
 
       The previous commands assume the
-      :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`
+      :ref:`overview-manual/development-environment:yocto project source repositories`
       (i.e. ``poky``) have been cloned using Git and the local repository is named
       "poky".
 
@@ -249,7 +249,7 @@ section:
    .. note::
 
       The previous commands assume the
-      :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`
+      :ref:`overview-manual/development-environment:yocto project source repositories`
       (i.e. ``poky``) have been cloned using Git and the local repository is named
       "poky".
 

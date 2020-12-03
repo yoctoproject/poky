@@ -399,8 +399,8 @@ This directory contains any "end result" output from the OpenEmbedded
 build process. The :term:`DEPLOY_DIR` variable points
 to this directory. For more detail on the contents of the ``deploy``
 directory, see the
-":ref:`overview-manual/overview-manual-concepts:images`" and
-":ref:`overview-manual/overview-manual-concepts:application development sdk`" sections in the Yocto
+":ref:`overview-manual/concepts:images`" and
+":ref:`overview-manual/concepts:application development sdk`" sections in the Yocto
 Project Overview and Concepts Manual.
 
 .. _structure-build-tmp-deploy-deb:
@@ -545,7 +545,7 @@ and timestamps for tracking purposes.
 
 For information on how BitBake uses stamp files to determine if a task
 should be rerun, see the
-":ref:`overview-manual/overview-manual-concepts:stamp files and the rerunning of tasks`"
+":ref:`overview-manual/concepts:stamp files and the rerunning of tasks`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _structure-build-tmp-log:

@@ -28,7 +28,7 @@ The following list describes what you can get from this manual:
    Yocto Project source repositories, workflows using Git and the Yocto
    Project, a Git primer, and information about licensing.
 
--  :doc:`overview-manual-concepts` *:* This
+-  :doc:`/overview-manual/concepts` *:* This
    chapter presents various concepts regarding the Yocto Project. You
    can find conceptual information about components, development,
    cross-toolchains, and so forth.

@@ -15,7 +15,7 @@ Yocto Project.
 
 For introductory information on the Yocto Project, see the
 :yocto_home:`Yocto Project Website <>` and the
-":ref:`overview-manual/overview-manual-development-environment:the yocto project development environment`"
+":ref:`overview-manual/development-environment:the yocto project development environment`"
 chapter in the Yocto Project Overview and Concepts Manual.
 
 If you want to use the Yocto Project to quickly build an image without

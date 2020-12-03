@@ -198,7 +198,7 @@ and also any configuration information about how that package was
 configured and built.
 
 You can find more information on licensing in the
-":ref:`overview-manual/overview-manual-development-environment:licensing`"
+":ref:`overview-manual/development-environment:licensing`"
 section in the Yocto
 Project Overview and Concepts Manual and also in the
 ":ref:`dev-manual/common-tasks:maintaining open source license compliance during your product's lifecycle`"

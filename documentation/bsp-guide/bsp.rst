@@ -44,7 +44,7 @@ machine or platform name, which is "bsp_root_name" in the above form.
 To help understand the BSP layer concept, consider the BSPs that the
 Yocto Project supports and provides with each release. You can see the
 layers in the
-:ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`
+:ref:`overview-manual/development-environment:yocto project source repositories`
 through
 a web interface at :yocto_git:`/`. If you go to that interface,
 you will find a list of repositories under "Yocto Metadata Layers".
@@ -253,7 +253,7 @@ developers can use this structure with other build systems besides the
 OpenEmbedded build system. It is also intended that it will be be simple
 to extract information and convert it to other formats if required. The
 OpenEmbedded build system, through its standard :ref:`layers mechanism
-<overview-manual/overview-manual-yp-intro:the yocto project layer model>`, can
+<overview-manual/yp-intro:the yocto project layer model>`, can
 directly accept the format described as a layer. The BSP layer captures
 all the hardware-specific details in one place using a standard format,
 which is useful for any person wishing to use the hardware platform
@@ -754,7 +754,7 @@ workflow.
    are kept. The key point for a layer is that it is an isolated area
    that contains all the relevant information for the project that the
    OpenEmbedded build system knows about. For more information on
-   layers, see the ":ref:`overview-manual/overview-manual-yp-intro:the yocto project layer model`"
+   layers, see the ":ref:`overview-manual/yp-intro:the yocto project layer model`"
    section in the Yocto Project Overview and Concepts Manual. You can also
    reference the ":ref:`dev-manual/common-tasks:understanding and creating layers`"
    section in the Yocto Project Development Tasks Manual. For more

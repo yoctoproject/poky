@@ -1016,7 +1016,7 @@ system and gives an overview of their function and contents.
          (SDK).
 
       -  *task:* Save output file signatures for
-         :ref:`shared state <overview-manual/overview-manual-concepts:shared state cache>`
+         :ref:`shared state <overview-manual/concepts:shared state cache>`
          (sstate) tasks.
          This saves one file per task and lists the SHA-256 checksums for
          each file staged (i.e. the output of the task).
@@ -1522,7 +1522,7 @@ system and gives an overview of their function and contents.
       .. note::
 
          Tasks that read from or write to this directory should run under
-         :ref:`fakeroot <overview-manual/overview-manual-concepts:fakeroot and pseudo>`.
+         :ref:`fakeroot <overview-manual/concepts:fakeroot and pseudo>`.
 
    :term:`DATE`
       The date the build was started. Dates appear using the year, month,
@@ -1641,7 +1641,7 @@ system and gives an overview of their function and contents.
          -  One recipe having another recipe in ``DEPENDS`` does not by
             itself add any runtime dependencies between the packages
             produced by the two recipes. However, as explained in the
-            ":ref:`overview-manual/overview-manual-concepts:automatically added runtime dependencies`"
+            ":ref:`overview-manual/concepts:automatically added runtime dependencies`"
             section in the Yocto Project Overview and Concepts Manual,
             runtime dependencies will often be added automatically, meaning
             ``DEPENDS`` alone is sufficient for most recipes.
@@ -1672,9 +1672,9 @@ system and gives an overview of their function and contents.
       For more information on the structure of the Build Directory, see
       ":ref:`ref-manual/ref-structure:the build directory - \`\`build/\`\``" section.
       For more detail on the contents of the ``deploy`` directory, see the
-      ":ref:`overview-manual/overview-manual-concepts:images`",
-      ":ref:`overview-manual/overview-manual-concepts:package feeds`", and
-      ":ref:`overview-manual/overview-manual-concepts:application development sdk`" sections all in the
+      ":ref:`overview-manual/concepts:images`",
+      ":ref:`overview-manual/concepts:package feeds`", and
+      ":ref:`overview-manual/concepts:application development sdk`" sections all in the
       Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOY_DIR_DEB`
@@ -1696,7 +1696,7 @@ system and gives an overview of their function and contents.
       :ref:`ref-tasks-package_write_deb` task
       writes Debian packages into the appropriate folder. For more
       information on how packaging works, see the
-      ":ref:`overview-manual/overview-manual-concepts:package feeds`" section
+      ":ref:`overview-manual/concepts:package feeds`" section
       in the Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOY_DIR_IMAGE`
@@ -1710,8 +1710,8 @@ system and gives an overview of their function and contents.
       For more information on the structure of the Build Directory, see
       ":ref:`ref-manual/ref-structure:the build directory - \`\`build/\`\``" section.
       For more detail on the contents of the ``deploy`` directory, see the
-      ":ref:`overview-manual/overview-manual-concepts:images`" and
-      ":ref:`overview-manual/overview-manual-concepts:application development sdk`" sections both in
+      ":ref:`overview-manual/concepts:images`" and
+      ":ref:`overview-manual/concepts:application development sdk`" sections both in
       the Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOY_DIR_IPK`
@@ -1732,7 +1732,7 @@ system and gives an overview of their function and contents.
       :ref:`ref-tasks-package_write_ipk` task
       writes IPK packages into the appropriate folder. For more information
       on how packaging works, see the
-      ":ref:`overview-manual/overview-manual-concepts:package feeds`" section
+      ":ref:`overview-manual/concepts:package feeds`" section
       in the Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOY_DIR_RPM`
@@ -1753,7 +1753,7 @@ system and gives an overview of their function and contents.
       :ref:`ref-tasks-package_write_rpm` task
       writes RPM packages into the appropriate folder. For more information
       on how packaging works, see the
-      ":ref:`overview-manual/overview-manual-concepts:package feeds`" section
+      ":ref:`overview-manual/concepts:package feeds`" section
       in the Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOY_DIR_TAR`
@@ -1774,7 +1774,7 @@ system and gives an overview of their function and contents.
       :ref:`ref-tasks-package_write_tar` task
       writes TAR packages into the appropriate folder. For more information
       on how packaging works, see the
-      ":ref:`overview-manual/overview-manual-concepts:package feeds`" section
+      ":ref:`overview-manual/concepts:package feeds`" section
       in the Yocto Project Overview and Concepts Manual.
 
    :term:`DEPLOYDIR`
@@ -2419,7 +2419,7 @@ system and gives an overview of their function and contents.
 
       The previous statement appears in the
       ``linux-yocto-dev.bbappend`` file, which is found in the
-      :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories` in
+      :ref:`overview-manual/development-environment:yocto project source repositories` in
       ``meta-intel/common/recipes-kernel/linux``. Here, the machine
       override is a special :term:`PACKAGE_ARCH`
       definition for multiple ``meta-intel`` machines.
@@ -2509,7 +2509,7 @@ system and gives an overview of their function and contents.
       build system uses files from ``files/defconfig``.
 
       You can find out more about the patching process in the
-      ":ref:`overview-manual/overview-manual-concepts:patching`" section
+      ":ref:`overview-manual/concepts:patching`" section
       in the Yocto Project Overview and Concepts Manual and the
       ":ref:`dev-manual/common-tasks:patching code`" section in
       the Yocto Project Development Tasks Manual. See the
@@ -3126,7 +3126,7 @@ system and gives an overview of their function and contents.
       The location is
       derived using the :term:`DEPLOY_DIR_IMAGE`
       and :term:`IMAGE_NAME` variables. You can find
-      information on how the image is created in the ":ref:`overview-manual/overview-manual-concepts:image generation`"
+      information on how the image is created in the ":ref:`overview-manual/concepts:image generation`"
       section in the Yocto Project Overview and Concepts Manual.
 
    :term:`IMAGE_NAME`
@@ -5578,7 +5578,7 @@ system and gives an overview of their function and contents.
          ${STAGING_DIR_HOST}/pkgdata
 
       For examples of how this data is used, see the
-      ":ref:`overview-manual/overview-manual-concepts:automatically added runtime dependencies`"
+      ":ref:`overview-manual/concepts:automatically added runtime dependencies`"
       section in the Yocto Project Overview and Concepts Manual and the
       ":ref:`dev-manual/common-tasks:viewing package information with \`\`oe-pkgdata-util\`\``"
       section in the Yocto Project Development Tasks Manual. For more
@@ -5691,9 +5691,9 @@ system and gives an overview of their function and contents.
 
          The OpenEmbedded build system does not need the aid of ``PR``
          to know when to rebuild a recipe. The build system uses the task
-         :ref:`input checksums <overview-manual/overview-manual-concepts:checksums (signatures)>` along with the
+         :ref:`input checksums <overview-manual/concepts:checksums (signatures)>` along with the
          :ref:`stamp <structure-build-tmp-stamps>` and
-         :ref:`overview-manual/overview-manual-concepts:shared state cache`
+         :ref:`overview-manual/concepts:shared state cache`
          mechanisms.
 
       The ``PR`` variable primarily becomes significant when a package
@@ -5875,7 +5875,7 @@ system and gives an overview of their function and contents.
                          libplds4.so"
 
       For more information, see the
-      ":ref:`overview-manual/overview-manual-concepts:automatically added runtime dependencies`"
+      ":ref:`overview-manual/concepts:automatically added runtime dependencies`"
       section in the Yocto Project Overview and Concepts Manual.
 
    :term:`PROVIDES`
@@ -6068,7 +6068,7 @@ system and gives an overview of their function and contents.
       runtime dependencies are automatically detected and added. Therefore,
       most recipes do not need to set ``RDEPENDS``. For more information,
       see the
-      ":ref:`overview-manual/overview-manual-concepts:automatically added runtime dependencies`"
+      ":ref:`overview-manual/concepts:automatically added runtime dependencies`"
       section in the Yocto Project Overview and Concepts Manual.
 
       The practical effect of the above ``RDEPENDS`` assignment is that
@@ -7023,7 +7023,7 @@ system and gives an overview of their function and contents.
 
       -  ``file://`` - Fetches files, which are usually files shipped
          with the :term:`Metadata`, from the local machine (e.g.
-         :ref:`patch <overview-manual/overview-manual-concepts:patching>` files).
+         :ref:`patch <overview-manual/concepts:patching>` files).
          The path is relative to the :term:`FILESPATH`
          variable. Thus, the build system searches, in order, from the
          following directories, which are assumed to be a subdirectories of
@@ -7316,7 +7316,7 @@ system and gives an overview of their function and contents.
       see the :ref:`ref-tasks-populate_sysroot`
       task, the ":ref:`sdk-manual/sdk-extensible:sharing files between recipes`"
       section in the Yocto Project Development Tasks Manual, the
-      ":ref:`overview-manual/overview-manual-concepts:configuration, compilation, and staging`"
+      ":ref:`overview-manual/concepts:configuration, compilation, and staging`"
       section in the Yocto Project Overview and Concepts Manual, and the
       :term:`SYSROOT_DIRS` variable.
 
@@ -7437,7 +7437,7 @@ system and gives an overview of their function and contents.
 
       For information on how BitBake uses stamp files to determine if a
       task should be rerun, see the
-      ":ref:`overview-manual/overview-manual-concepts:stamp files and the rerunning of tasks`"
+      ":ref:`overview-manual/concepts:stamp files and the rerunning of tasks`"
       section in the Yocto Project Overview and Concepts Manual.
 
       See :term:`STAMPS_DIR`,

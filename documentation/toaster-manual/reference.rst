@@ -65,7 +65,7 @@ set up the code for the web application that "hooks" into your set of
 layers.
 
 For general information on layers, see the
-":ref:`overview-manual/overview-manual-yp-intro:the yocto project layer model`"
+":ref:`overview-manual/yp-intro:the yocto project layer model`"
 section in the Yocto Project Overview and Concepts Manual. For information on how
 to create layers, see the ":ref:`dev-manual/common-tasks:understanding and creating layers`"
 section in the Yocto Project Development Tasks Manual.

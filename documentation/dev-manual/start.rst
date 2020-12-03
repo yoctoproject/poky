@@ -78,7 +78,7 @@ particular working environment and set of practices.
     developing under the control of an SCM system that is compatible
     with the OpenEmbedded build system is advisable. Of all of the SCMs
     supported by BitBake, the Yocto Project team strongly recommends using
-    :ref:`overview-manual/overview-manual-development-environment:git`.
+    :ref:`overview-manual/development-environment:git`.
     Git is a distributed system
     that is easy to back up, allows you to work remotely, and then
     connects back to the infrastructure.
@@ -165,7 +165,7 @@ particular working environment and set of practices.
     -  Highlights when commits break the build.
 
     -  Populates an :ref:`sstate
-       cache <overview-manual/overview-manual-concepts:shared state cache>` from which
+       cache <overview-manual/concepts:shared state cache>` from which
        developers can pull rather than requiring local builds.
 
     -  Allows commit hook triggers, which trigger builds when commits
@@ -218,17 +218,17 @@ particular working environment and set of practices.
     some best practices exist within the Yocto Project development
     environment. Consider the following:
 
-    -  Use :ref:`overview-manual/overview-manual-development-environment:git` as the source control
+    -  Use :ref:`overview-manual/development-environment:git` as the source control
        system.
 
     -  Maintain your Metadata in layers that make sense for your
-       situation. See the ":ref:`overview-manual/overview-manual-yp-intro:the yocto project layer model`"
+       situation. See the ":ref:`overview-manual/yp-intro:the yocto project layer model`"
        section in the Yocto Project Overview and Concepts Manual and the
        ":ref:`dev-manual/common-tasks:understanding and creating layers`"
        section for more information on layers.
 
     -  Separate the project's Metadata and code by using separate Git
-       repositories. See the ":ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`"
+       repositories. See the ":ref:`overview-manual/development-environment:yocto project source repositories`"
        section in the Yocto Project Overview and Concepts Manual for
        information on these repositories. See the "`Locating Yocto
        Project Source Files <#locating-yocto-project-source-files>`__"
@@ -572,11 +572,11 @@ files you'll need to work with the Yocto Project.
 .. note::
 
    -  For concepts and introductory information about Git as it is used
-      in the Yocto Project, see the ":ref:`overview-manual/overview-manual-development-environment:git`"
+      in the Yocto Project, see the ":ref:`overview-manual/development-environment:git`"
       section in the Yocto Project Overview and Concepts Manual.
 
    -  For concepts on Yocto Project source repositories, see the
-      ":ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`"
+      ":ref:`overview-manual/development-environment:yocto project source repositories`"
       section in the Yocto Project Overview and Concepts Manual."
 
 Accessing Source Repositories
@@ -722,7 +722,7 @@ files is referred to as the :term:`Source Directory`
 in the Yocto Project documentation.
 
 The preferred method of creating your Source Directory is by using
-:ref:`overview-manual/overview-manual-development-environment:git` to clone a local copy of the upstream
+:ref:`overview-manual/development-environment:git` to clone a local copy of the upstream
 ``poky`` repository. Working from a cloned copy of the upstream
 repository allows you to contribute back into the Yocto Project or to
 simply work with the latest software on a development branch. Because

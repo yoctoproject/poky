@@ -35,7 +35,7 @@ Yocto Project Linux kernel that caters to specific embedded designer
 needs for targeted hardware.
 
 You can find a web interface to the Yocto Linux kernels in the
-:ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`
+:ref:`overview-manual/development-environment:yocto project source repositories`
 at :yocto_git:`/`. If you look at the interface, you will see to
 the left a grouping of Git repositories titled "Yocto Linux Kernel".
 Within this group, you will find several Linux Yocto kernels developed
@@ -160,7 +160,7 @@ implemented by the Yocto Project team using the Source Code Manager
 
    -  You can find documentation on Git at https://git-scm.com/doc. You can
       also get an introduction to Git as it applies to the Yocto Project in the
-      ":ref:`overview-manual/overview-manual-development-environment:git`" section in the Yocto Project
+      ":ref:`overview-manual/development-environment:git`" section in the Yocto Project
       Overview and Concepts Manual. The latter reference provides an
       overview of Git and presents a minimal set of Git commands that
       allows you to be functional using Git. You can use as much, or as
@@ -258,7 +258,7 @@ Yocto Linux kernel needed for any given set of requirements.
    Yocto Linux kernels, but rather shows a single generic kernel just
    for conceptual purposes. Also keep in mind that this structure
    represents the
-   :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`
+   :ref:`overview-manual/development-environment:yocto project source repositories`
    that are either pulled from during the build or established on the
    host development system prior to the build by either cloning a
    particular kernel's Git repository or by downloading and unpacking a

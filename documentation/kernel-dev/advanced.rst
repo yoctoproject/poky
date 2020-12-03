@@ -16,7 +16,7 @@ complexity of the configuration and sources used to support multiple
 BSPs and Linux kernel types.
 
 Kernel Metadata exists in many places. One area in the
-:ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`
+:ref:`overview-manual/development-environment:yocto project source repositories`
 is the ``yocto-kernel-cache`` Git repository. You can find this repository
 grouped under the "Yocto Linux Kernel" heading in the
 :yocto_git:`Yocto Project Source Repositories <>`.
@@ -386,7 +386,7 @@ type as follows:
 .. note::
 
    You can find kernel recipes in the ``meta/recipes-kernel/linux`` directory
-   of the :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`
+   of the :ref:`overview-manual/development-environment:yocto project source repositories`
    (e.g. ``poky/meta/recipes-kernel/linux/linux-yocto_4.12.bb``). See the
    ":ref:`kernel-dev/advanced:using kernel metadata in a recipe`"
    section for more information.

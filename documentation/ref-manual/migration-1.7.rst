@@ -26,7 +26,7 @@ QEMU, you should now have these lines in ``local.conf``:
 Minimum Git version
 -------------------
 
-The minimum :ref:`overview-manual/overview-manual-development-environment:git`
+The minimum :ref:`overview-manual/development-environment:git`
 version required on the
 build host is now 1.7.8 because the ``--list`` option is now required by
 BitBake's Git fetcher. As always, if your host distribution does not

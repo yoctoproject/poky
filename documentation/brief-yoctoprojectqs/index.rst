@@ -244,7 +244,7 @@ an entire Linux distribution, including the toolchain, from source.
       $ bitbake core-image-sato
 
    For information on using the ``bitbake`` command, see the
-   :ref:`overview-manual/overview-manual-concepts:bitbake` section in the Yocto Project Overview and
+   :ref:`overview-manual/concepts:bitbake` section in the Yocto Project Overview and
    Concepts Manual, or see the ":ref:`BitBake Command
    <bitbake:bitbake-user-manual/bitbake-user-manual-intro:the bitbake command>`" section in the BitBake User Manual.
 
