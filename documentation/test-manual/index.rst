@@ -10,9 +10,9 @@ Yocto Project Test Environment Manual
    :caption: Table of Contents
    :numbered:
 
-   test-manual-intro
-   test-manual-test-process
-   test-manual-understand-autobuilder
+   intro
+   test-process
+   understand-autobuilder
    history
 
 .. include:: /boilerplate.rst

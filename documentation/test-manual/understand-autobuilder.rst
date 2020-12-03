@@ -84,7 +84,7 @@ roughly consist of:
 
    This cleans out any previous build. Old builds are left around to
    allow easier debugging of failed builds. For additional information,
-   see :ref:`test-manual/test-manual-understand-autobuilder:clobberdir`.
+   see :ref:`test-manual/understand-autobuilder:clobberdir`.
 
 #. *Obtain yocto-autobuilder-helper*
 
@@ -108,7 +108,7 @@ roughly consist of:
    from the ``layerinfo.json`` file to help understand the
    configuration. It will also use a local cache of repositories to
    speed up the clone checkouts. For additional information, see
-   :ref:`test-manual/test-manual-understand-autobuilder:Autobuilder Clone Cache`.
+   :ref:`test-manual/understand-autobuilder:Autobuilder Clone Cache`.
 
    This step has two possible modes of operation. If the build is part
    of a parent build, its possible that all the repositories needed may
@@ -147,7 +147,7 @@ special script that moves files to a special location, rather than
 deleting them. Files in this location are deleted by an ``rm`` command,
 which is run under ``ionice -c 3``. For example, the deletion only
 happens when there is idle IO capacity on the Worker. The Autobuilder
-Worker Janitor runs this deletion. See :ref:`test-manual/test-manual-understand-autobuilder:Autobuilder Worker Janitor`.
+Worker Janitor runs this deletion. See :ref:`test-manual/understand-autobuilder:Autobuilder Worker Janitor`.
 
 Autobuilder Clone Cache
 -----------------------
@@ -157,13 +157,13 @@ on the Autobuilder. We therefore have a stash of commonly used
 repositories pre-cloned on the Workers. Data is fetched from these
 during clones first, then "topped up" with later revisions from any
 upstream when necessary. The cache is maintained by the Autobuilder
-Worker Janitor. See :ref:`test-manual/test-manual-understand-autobuilder:Autobuilder Worker Janitor`.
+Worker Janitor. See :ref:`test-manual/understand-autobuilder:Autobuilder Worker Janitor`.
 
 Autobuilder Worker Janitor
 --------------------------
 
 This is a process running on each Worker that performs two basic
-operations, including background file deletion at IO idle (see :ref:`test-manual/test-manual-understand-autobuilder:Autobuilder Target Execution Overview`: Run clobberdir) and
+operations, including background file deletion at IO idle (see :ref:`test-manual/understand-autobuilder:Autobuilder Target Execution Overview`: Run clobberdir) and
 maintainenance of a cache of cloned repositories to improve the speed
 the system can checkout repositories.
 
@@ -243,7 +243,7 @@ of post-build steps, including:
    generated to the remote server.
 
 #. Cleanup the build directory using
-   :ref:`test-manual/test-manual-understand-autobuilder:clobberdir` if the build was successful,
+   :ref:`test-manual/understand-autobuilder:clobberdir` if the build was successful,
    else rename it to "build-renamed" for potential future debugging.
 
 Deploying Yocto Autobuilder

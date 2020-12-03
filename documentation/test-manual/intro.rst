@@ -310,7 +310,7 @@ Test Examples
 =============
 
 This section provides example tests for each of the tests listed in the
-:ref:`test-manual/test-manual-intro:How Tests Map to Areas of Code` section.
+:ref:`test-manual/intro:How Tests Map to Areas of Code` section.
 
 For oeqa tests, testcases for each area reside in the main test
 directory at ``meta/lib/oeqa/selftest/cases`` directory.
