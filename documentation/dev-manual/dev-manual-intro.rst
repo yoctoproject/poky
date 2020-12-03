@@ -31,13 +31,13 @@ This manual provides the following:
 This manual does not provide the following:
 
 -  Redundant Step-by-step Instructions: For example, the
-   :doc:`../sdk-manual/index` manual contains detailed
+   :doc:`/sdk-manual/index` manual contains detailed
    instructions on how to install an SDK, which is used to develop
    applications for target hardware.
 
 -  Reference or Conceptual Material: This type of material resides in an
    appropriate reference manual. For example, system variables are
-   documented in the :doc:`../ref-manual/index`.
+   documented in the :doc:`/ref-manual/index`.
 
 -  Detailed Public Information Not Specific to the Yocto Project: For
    example, exhaustive information on how to use the Source Control
@@ -52,7 +52,7 @@ supplemental information is recommended for full comprehension. For
 introductory information on the Yocto Project, see the
 :yocto_home:`Yocto Project Website <>`. If you want to build an image with no
 knowledge of Yocto Project as a way of quickly testing it out, see the
-:doc:`../brief-yoctoprojectqs/index` document.
+:doc:`/brief-yoctoprojectqs/index` document.
 
 For a comprehensive list of links and other documentation, see the
 ":ref:`ref-manual/resources:links and related documentation`"

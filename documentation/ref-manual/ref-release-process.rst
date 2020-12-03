@@ -128,7 +128,7 @@ consists of the following pieces:
 
 -  :ref:`testimage.bbclass <ref-classes-testimage*>`: This class
    performs runtime testing of images after they are built. The tests
-   are usually used with :doc:`QEMU <../dev-manual/dev-manual-qemu>`
+   are usually used with :doc:`QEMU </dev-manual/dev-manual-qemu>`
    to boot the images and check the combined runtime result boot
    operation and functions. However, the test can also use the IP
    address of a machine to test.

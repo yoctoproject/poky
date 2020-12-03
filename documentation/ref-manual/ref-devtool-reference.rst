@@ -11,7 +11,7 @@ is a key part of the extensible SDK.
 
 This chapter provides a Quick Reference for the ``devtool`` command. For
 more information on how to apply the command when using the extensible
-SDK, see the ":doc:`../sdk-manual/sdk-extensible`" chapter in the Yocto
+SDK, see the ":doc:`/sdk-manual/sdk-extensible`" chapter in the Yocto
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual.
 

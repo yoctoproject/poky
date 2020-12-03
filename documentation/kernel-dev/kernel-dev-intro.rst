@@ -79,9 +79,9 @@ facilitate the process of working with the kernel recipes. If you find
 you need some additional background, please be sure to review and
 understand the following documentation:
 
--  :doc:`../brief-yoctoprojectqs/index` document.
+-  :doc:`/brief-yoctoprojectqs/index` document.
 
--  :doc:`../overview-manual/index`.
+-  :doc:`/overview-manual/index`.
 
 -  :ref:`devtool
    workflow <sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow>`
@@ -111,7 +111,7 @@ general information and references for further information.
    :align: center
 
 1. *Set up Your Host Development System to Support Development Using the
-   Yocto Project*: See the ":doc:`../dev-manual/dev-manual-start`" section in
+   Yocto Project*: See the ":doc:`/dev-manual/dev-manual-start`" section in
    the Yocto Project Development Tasks Manual for options on how to get
    a build host ready to use the Yocto Project.
 

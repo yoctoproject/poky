@@ -104,7 +104,7 @@ metadata to define the Poky reference distribution.
 
 This directory contains the Yocto Project reference hardware Board
 Support Packages (BSPs). For more information on BSPs, see the
-:doc:`../bsp-guide/index`.
+:doc:`/bsp-guide/index`.
 
 .. _structure-meta-selftest:
 

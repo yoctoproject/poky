@@ -380,7 +380,7 @@ universal, the list includes them just in case:
       The interface enables you to
       configure and run your builds. Information about builds is collected
       and stored in a database. For information on Toaster, see the
-      :doc:`../toaster-manual/index`.
+      :doc:`/toaster-manual/index`.
 
    :term:`Upstream`
       A reference to source code or repositories that are not

@@ -39,7 +39,7 @@ build a reference embedded OS called Poky.
       Tasks Manual for more information.
 
 If you want more conceptual or background information on the Yocto
-Project, see the :doc:`../overview-manual/index`.
+Project, see the :doc:`/overview-manual/index`.
 
 Compatible Linux Distribution
 =============================
@@ -404,7 +404,7 @@ information including the website, wiki pages, and user manuals:
    concepts are useful for the beginner.
 
 -  **Yocto Project Overview and Concepts Manual:** The
-   :doc:`../overview-manual/index` is a great
+   :doc:`/overview-manual/index` is a great
    place to start to learn about the Yocto Project. This manual
    introduces you to the Yocto Project and its development environment.
    The manual also provides conceptual information for various aspects

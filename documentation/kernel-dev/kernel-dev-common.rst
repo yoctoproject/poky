@@ -21,7 +21,7 @@ Preparing the Build Host to Work on the Kernel
 
 Before you can do any kernel development, you need to be sure your build
 host is set up to use the Yocto Project. For information on how to get
-set up, see the ":doc:`../dev-manual/dev-manual-start`" section in
+set up, see the ":doc:`/dev-manual/dev-manual-start`" section in
 the Yocto Project Development Tasks Manual. Part of preparing the system
 is creating a local Git repository of the
 :term:`Source Directory` (``poky``) on your system. Follow the steps in the
@@ -502,7 +502,7 @@ your layer in the following area:
 .. note::
 
    If you are working on a new machine Board Support Package (BSP), be
-   sure to refer to the :doc:`../bsp-guide/index`.
+   sure to refer to the :doc:`/bsp-guide/index`.
 
 As an example, consider the following append file used by the BSPs in
 ``meta-yocto-bsp``:

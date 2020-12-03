@@ -474,7 +474,7 @@ supported kernel type.
 This section overviews the BSP description structure, the aggregation
 concepts, and presents a detailed example using a BSP supported by the
 Yocto Project (i.e. BeagleBone Board). For complete information on BSP
-layer file hierarchy, see the :doc:`../bsp-guide/index`.
+layer file hierarchy, see the :doc:`/bsp-guide/index`.
 
 Description Overview
 ~~~~~~~~~~~~~~~~~~~~

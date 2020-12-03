@@ -103,7 +103,7 @@ methods exist for you to do work in the Yocto Project environment:
    hardware. To development BSPs, you need to take some additional steps
    beyond what was described in setting up a development host.
 
-   The :doc:`../bsp-guide/index` provides BSP-related development
+   The :doc:`/bsp-guide/index` provides BSP-related development
    information. For specifics on development host preparation, see the
    ":ref:`bsp-guide/bsp:preparing your build host to work with bsp layers`"
    section in the Yocto Project Board Support Package (BSP) Developer's
@@ -114,7 +114,7 @@ methods exist for you to do work in the Yocto Project environment:
    using ``devtool`` makes kernel development quicker by reducing
    iteration cycle times.
 
-   The :doc:`../kernel-dev/index` provides kernel-related
+   The :doc:`/kernel-dev/index` provides kernel-related
    development information. For specifics on development host
    preparation, see the
    ":ref:`kernel-dev/kernel-dev-common:preparing the build host to work on the kernel`"
@@ -130,7 +130,7 @@ methods exist for you to do work in the Yocto Project environment:
 
    For steps that show you how to set up your development host to use
    Toaster and on how to use Toaster in general, see the
-   :doc:`../toaster-manual/index`.
+   :doc:`/toaster-manual/index`.
 
 Yocto Project Source Repositories
 =================================

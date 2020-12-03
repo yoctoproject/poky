@@ -1319,7 +1319,7 @@ to determine how well the build went.
    ``log.do_fetch``, and ``log.do_compile``).
 
 You can find more information about the build process in
-":doc:`../overview-manual/overview-manual-development-environment`"
+":doc:`/overview-manual/overview-manual-development-environment`"
 chapter of the Yocto Project Overview and Concepts Manual.
 
 Fetching Code
@@ -3127,7 +3127,7 @@ Using ``devtool upgrade``
 
 As mentioned earlier, an alternative method for upgrading recipes to
 newer versions is to use
-:doc:`devtool upgrade <../ref-manual/ref-devtool-reference>`.
+:doc:`devtool upgrade </ref-manual/ref-devtool-reference>`.
 You can read about ``devtool upgrade`` in general in the
 ":ref:`sdk-manual/sdk-extensible:use \`\`devtool upgrade\`\` to create a version of the recipe that supports a newer version of the software`"
 section in the Yocto Project Application Development and the Extensible
@@ -3644,7 +3644,7 @@ build host running Linux.
 
    -  For information on how to build an image using
       :term:`Toaster`, see the
-      :doc:`../toaster-manual/index`.
+      :doc:`/toaster-manual/index`.
 
    -  For information on how to use ``devtool`` to build images, see the
       ":ref:`sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow`"
@@ -3653,7 +3653,7 @@ build host running Linux.
 
    -  For a quick example on how to build an image using the
       OpenEmbedded build system, see the
-      :doc:`../brief-yoctoprojectqs/index` document.
+      :doc:`/brief-yoctoprojectqs/index` document.
 
 The build process creates an entire Linux distribution from source and
 places it in your :term:`Build Directory` under
@@ -3728,7 +3728,7 @@ The following figure and list overviews the build process:
    kernels built by the OpenEmbedded build system are placed in the
    Build Directory in ``tmp/deploy/images``. For information on how to
    run pre-built images such as ``qemux86`` and ``qemuarm``, see the
-   :doc:`../sdk-manual/index` manual. For
+   :doc:`/sdk-manual/index` manual. For
    information about how to install these images, see the documentation
    for your particular board or machine.
 
@@ -7418,7 +7418,7 @@ Creating Node Package Manager (NPM) Packages
 manager for the JavaScript programming language. The Yocto Project
 supports the NPM :ref:`fetcher <bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers>`. You can
 use this fetcher in combination with
-:doc:`devtool <../ref-manual/ref-devtool-reference>` to create
+:doc:`devtool </ref-manual/ref-devtool-reference>` to create
 recipes that produce NPM packages.
 
 Two workflows exist that allow you to create NPM packages using
@@ -7446,7 +7446,7 @@ NPM packages:
    is NPM's public registry.
 
 -  Be familiar with
-   :doc:`devtool <../ref-manual/ref-devtool-reference>`.
+   :doc:`devtool </ref-manual/ref-devtool-reference>`.
 
 -  The NPM host tools need the native ``nodejs-npm`` package, which is
    part of the OpenEmbedded environment. You need to get the package by

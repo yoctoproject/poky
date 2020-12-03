@@ -37,17 +37,17 @@ This manual does not give you the following:
 
 -  *Step-by-step Instructions for Development Tasks:* Instructional
    procedures reside in other manuals within the Yocto Project
-   documentation set. For example, the :doc:`../dev-manual/index`
+   documentation set. For example, the :doc:`/dev-manual/index`
    provides examples on how to perform
    various development tasks. As another example, the 
-   :doc:`../sdk-manual/index` manual contains detailed
+   :doc:`/sdk-manual/index` manual contains detailed
    instructions on how to install an SDK, which is used to develop
    applications for target hardware.
 
 -  *Reference Material:* This type of material resides in an appropriate
    reference manual. For example, system variables are documented in the
-   :doc:`../ref-manual/index`. As another
-   example, the :doc:`../bsp-guide/index` contains reference information on
+   :doc:`/ref-manual/index`. As another
+   example, the :doc:`/bsp-guide/index` contains reference information on
    BSPs.
 
 -  *Detailed Public Information Not Specific to the Yocto Project:* For
@@ -63,7 +63,7 @@ supplemental information is recommended for full comprehension. For
 additional introductory information on the Yocto Project, see the
 :yocto_home:`Yocto Project Website <>`. If you want to build an image
 with no knowledge of Yocto Project as a way of quickly testing it out,
-see the :doc:`../brief-yoctoprojectqs/index` document.
+see the :doc:`/brief-yoctoprojectqs/index` document.
 For a comprehensive list of links and other documentation, see the
 ":ref:`Links and Related
 Documentation <resources-links-and-related-documentation>`"

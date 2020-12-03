@@ -2907,7 +2907,7 @@ system and gives an overview of their function and contents.
       ":ref:`dev-manual/dev-manual-common-tasks:creating partitioned images using wic`"
       section of the Yocto Project Development Tasks Manual. Reference
       material for Wic is located in the
-      ":doc:`../ref-manual/ref-kickstart`" chapter.
+      ":doc:`/ref-manual/ref-kickstart`" chapter.
 
    :term:`IMAGE_BOOT_FILES`
       A space-separated list of files installed into the boot partition
@@ -2943,7 +2943,7 @@ system and gives an overview of their function and contents.
       ":ref:`dev-manual/dev-manual-common-tasks:creating partitioned images using wic`"
       section of the Yocto Project Development Tasks Manual. Reference
       material for Wic is located in the
-      ":doc:`../ref-manual/ref-kickstart`" chapter.
+      ":doc:`/ref-manual/ref-kickstart`" chapter.
 
    :term:`IMAGE_CLASSES`
       A list of classes that all images should inherit. You typically use
@@ -8154,7 +8154,7 @@ system and gives an overview of their function and contents.
       ":ref:`sdk-manual/sdk-intro:the cross-development toolchain`"
       section in the Yocto Project Overview and Concepts Manual. For
       information on setting up a cross-development environment, see the
-      :doc:`../sdk-manual/index` manual.
+      :doc:`/sdk-manual/index` manual.
 
    :term:`TOOLCHAIN_OUTPUTNAME`
       This variable defines the name used for the toolchain output. The
@@ -8184,7 +8184,7 @@ system and gives an overview of their function and contents.
       ":ref:`sdk-manual/sdk-intro:the cross-development toolchain`"
       section in the Yocto Project Overview and Concepts Manual. For
       information on setting up a cross-development environment, see the
-      :doc:`../sdk-manual/index` manual.
+      :doc:`/sdk-manual/index` manual.
 
    :term:`TOPDIR`
       The top-level :term:`Build Directory`. BitBake
@@ -8737,7 +8737,7 @@ system and gives an overview of their function and contents.
       image, see the
       ":ref:`dev-manual/dev-manual-common-tasks:creating partitioned images using wic`"
       section in the Yocto Project Development Tasks Manual. For details on
-      the kickstart file format, see the ":doc:`../ref-manual/ref-kickstart`" Chapter.
+      the kickstart file format, see the ":doc:`/ref-manual/ref-kickstart`" Chapter.
 
    :term:`WKS_FILE_DEPENDS`
       When placed in the recipe that builds your image, this variable lists
