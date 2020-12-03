@@ -79,9 +79,9 @@ facilitate the process of working with the kernel recipes. If you find
 you need some additional background, please be sure to review and
 understand the following documentation:
 
--  :doc:`../brief-yoctoprojectqs/brief-yoctoprojectqs` document.
+-  :doc:`../brief-yoctoprojectqs/index` document.
 
--  :doc:`../overview-manual/overview-manual`.
+-  :doc:`../overview-manual/index`.
 
 -  :ref:`devtool
    workflow <sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow>`

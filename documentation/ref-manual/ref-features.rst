@@ -261,7 +261,7 @@ these valid features is as follows:
 
 -  *perf:* Installs profiling tools such as ``perf``, ``systemtap``, and
    ``LTTng``. For general information on user-space tools, see the
-   :doc:`../sdk-manual/sdk-manual` manual.
+   :doc:`../sdk-manual/index` manual.
 
 -  *ssh-server-dropbear:* Installs the Dropbear minimal SSH server.
 
@@ -275,7 +275,7 @@ these valid features is as follows:
    ``gdb``. For information on GDB, see the
    ":ref:`dev-manual/dev-manual-common-tasks:debugging with the gnu project debugger (gdb) remotely`" section
    in the Yocto Project Development Tasks Manual. For information on
-   tracing and profiling, see the :doc:`../profile-manual/profile-manual`.
+   tracing and profiling, see the :doc:`../profile-manual/index`.
 
 -  *tools-sdk:* Installs a full SDK that runs on the device.
 

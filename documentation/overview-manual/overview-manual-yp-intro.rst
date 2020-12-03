@@ -251,7 +251,7 @@ accomplish this through a recipe that is a BitBake append
 .. note::
 
    For general information on BSP layer structure, see the
-   :doc:`../bsp-guide/bsp-guide`
+   :doc:`../bsp-guide/index`
    .
 
 The :term:`Source Directory`
@@ -339,12 +339,12 @@ applications using the Yocto Project:
    experience supplemented with the powerful set of ``devtool`` commands
    tailored for the Yocto Project environment.
 
-   For information on the eSDK, see the :doc:`../sdk-manual/sdk-manual` Manual.
+   For information on the eSDK, see the :doc:`../sdk-manual/index` Manual.
 
 -  *Toaster:* Toaster is a web interface to the Yocto Project
    OpenEmbedded build system. Toaster allows you to configure, run, and
    view information about builds. For information on Toaster, see the
-   :doc:`../toaster-manual/toaster-manual`.
+   :doc:`../toaster-manual/index`.
 
 Production Tools
 ----------------
@@ -650,7 +650,7 @@ Project.
    configure and start builds on multiple remote build servers.
 
    For information about and how to use Toaster, see the 
-   :doc:`../toaster-manual/toaster-manual`.
+   :doc:`../toaster-manual/index`.
 
 Reference Embedded Distribution (Poky)
 ======================================
@@ -812,7 +812,7 @@ helpful for getting started:
    application developers. This eSDK allows developers to incorporate
    their library and programming changes back into the image to make
    their code available to other application developers. For information
-   on the eSDK, see the :doc:`../sdk-manual/sdk-manual` manual.
+   on the eSDK, see the :doc:`../sdk-manual/index` manual.
 
 -  *Layer:* A collection of related recipes. Layers allow you to
    consolidate related metadata to customize your build. Layers also

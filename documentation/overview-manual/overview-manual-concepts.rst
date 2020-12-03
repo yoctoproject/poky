@@ -481,7 +481,7 @@ The BSP Layer provides machine configurations that target specific
 hardware. Everything in this layer is specific to the machine for which
 you are building the image or the SDK. A common structure or form is
 defined for BSP layers. You can learn more about this structure in the
-:doc:`../bsp-guide/bsp-guide`.
+:doc:`../bsp-guide/index`.
 
 .. note::
 
@@ -1366,7 +1366,7 @@ can initialize the environment before using the tools.
       section.
 
    -  For information on setting up a cross-development environment, see
-      the :doc:`../sdk-manual/sdk-manual` manual.
+      the :doc:`../sdk-manual/index` manual.
 
 All the output files for an SDK are written to the ``deploy/sdk`` folder
 inside the :term:`Build Directory` as
@@ -1446,7 +1446,7 @@ The Yocto Project does most of the work for you when it comes to
 creating :ref:`sdk-manual/sdk-intro:the cross-development toolchain`. This
 section provides some technical background on how cross-development
 toolchains are created and used. For more information on toolchains, you
-can also see the :doc:`../sdk-manual/sdk-manual` manual.
+can also see the :doc:`../sdk-manual/index` manual.
 
 In the Yocto Project development environment, cross-development
 toolchains are used to build images and applications that run on the

@@ -20,9 +20,9 @@ chapter in the Yocto Project Overview and Concepts Manual.
 
 If you want to use the Yocto Project to quickly build an image without
 having to understand concepts, work through the
-:doc:`../brief-yoctoprojectqs/brief-yoctoprojectqs` document. You can find "how-to"
-information in the :doc:`../dev-manual/dev-manual`. You can find Yocto Project overview
-and conceptual information in the :doc:`../overview-manual/overview-manual`.
+:doc:`../brief-yoctoprojectqs/index` document. You can find "how-to"
+information in the :doc:`../dev-manual/index`. You can find Yocto Project overview
+and conceptual information in the :doc:`../overview-manual/index`.
 
 .. note::
 

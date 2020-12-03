@@ -234,7 +234,7 @@ functionality almost completely overlapped with the :ref:`standard
 SDK <sdk-manual/sdk-using:using the standard sdk>` and the
 :ref:`extensible SDK <sdk-manual/sdk-extensible:using the extensible sdk>`. For
 information on these SDKs and how to build and use them, see the
-:doc:`../sdk-manual/sdk-manual` manual.
+:doc:`../sdk-manual/index` manual.
 
 .. note::
 

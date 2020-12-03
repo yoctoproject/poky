@@ -344,7 +344,7 @@ going to use BitBake, see the
 section. If you are going
 to use the Extensible SDK, see the ":doc:`../sdk-manual/sdk-extensible`" Chapter in the Yocto
 Project Application Development and the Extensible Software Development
-Kit (eSDK) manual. If you want to work on the kernel, see the :doc:`../kernel-dev/kernel-dev`. If you are going to use
+Kit (eSDK) manual. If you want to work on the kernel, see the :doc:`../kernel-dev/index`. If you are going to use
 Toaster, see the ":doc:`../toaster-manual/toaster-manual-setup-and-use`"
 section in the Toaster User Manual.
 

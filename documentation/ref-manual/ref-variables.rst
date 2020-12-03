@@ -8154,7 +8154,7 @@ system and gives an overview of their function and contents.
       ":ref:`sdk-manual/sdk-intro:the cross-development toolchain`"
       section in the Yocto Project Overview and Concepts Manual. For
       information on setting up a cross-development environment, see the
-      :doc:`../sdk-manual/sdk-manual` manual.
+      :doc:`../sdk-manual/index` manual.
 
    :term:`TOOLCHAIN_OUTPUTNAME`
       This variable defines the name used for the toolchain output. The
@@ -8184,7 +8184,7 @@ system and gives an overview of their function and contents.
       ":ref:`sdk-manual/sdk-intro:the cross-development toolchain`"
       section in the Yocto Project Overview and Concepts Manual. For
       information on setting up a cross-development environment, see the
-      :doc:`../sdk-manual/sdk-manual` manual.
+      :doc:`../sdk-manual/index` manual.
 
    :term:`TOPDIR`
       The top-level :term:`Build Directory`. BitBake

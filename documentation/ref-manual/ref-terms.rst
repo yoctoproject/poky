@@ -58,8 +58,7 @@ universal, the list includes them just in case:
    :term:`Board Support Package (BSP)`
       A group of drivers, definitions, and other components that provide support
       for a specific hardware configuration. For more information on BSPs, see
-      the :ref:`bsp-guide/bsp-guide:Yocto Project Board Support Package
-      Developer's Guide`.
+      the :doc:`/bsp-guide/index`.
 
    :term:`Build Directory`
       This term refers to the area used by the OpenEmbedded build system for
@@ -164,17 +163,14 @@ universal, the list includes them just in case:
       ":ref:`overview-manual/overview-manual-concepts:Cross-Development
       Toolchain Generation`" section in the Yocto Project Overview and Concepts
       Manual. You can also find more information on using the relocatable
-      toolchain in the :ref:`sdk-manual/sdk-manual:Yocto Project Application
-      Development and the Extensible Software Development Kit (eSDK)` manual.
+      toolchain in the :doc:`/sdk-manual/index` manual.
 
    :term:`Extensible Software Development Kit (eSDK)`
       A custom SDK for application developers. This eSDK allows developers to
       incorporate their library and programming changes back into the image to
       make their code available to other application developers.
 
-      For information on the eSDK, see the :ref:`sdk-manual/sdk-manual:Yocto
-      Project Application Development and the Extensible Software Development
-      Kit (eSDK)` manual.
+      For information on the eSDK, see the :doc:`/sdk-manual/index` manual.
 
    :term:`Image`
       An image is an artifact of the BitBake build process given a collection of
@@ -384,7 +380,7 @@ universal, the list includes them just in case:
       The interface enables you to
       configure and run your builds. Information about builds is collected
       and stored in a database. For information on Toaster, see the
-      :doc:`../toaster-manual/toaster-manual`.
+      :doc:`../toaster-manual/index`.
 
    :term:`Upstream`
       A reference to source code or repositories that are not

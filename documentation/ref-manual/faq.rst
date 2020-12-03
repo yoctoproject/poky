@@ -47,7 +47,7 @@ Support Package (BSP) layer for it. For more information on how to
 create a BSP layer, see the
 ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
 section in the Yocto Project Development Tasks Manual and the
-:doc:`../bsp-guide/bsp-guide`.
+:doc:`../bsp-guide/index`.
 
 Usually, if the board is not completely exotic, adding support in the
 Yocto Project is fairly straightforward.

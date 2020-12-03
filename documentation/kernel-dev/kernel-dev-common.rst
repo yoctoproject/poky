@@ -502,7 +502,7 @@ your layer in the following area:
 .. note::
 
    If you are working on a new machine Board Support Package (BSP), be
-   sure to refer to the :doc:`../bsp-guide/bsp-guide`.
+   sure to refer to the :doc:`../bsp-guide/index`.
 
 As an example, consider the following append file used by the BSPs in
 ``meta-yocto-bsp``:

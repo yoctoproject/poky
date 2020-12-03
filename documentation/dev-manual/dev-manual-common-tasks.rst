@@ -3644,7 +3644,7 @@ build host running Linux.
 
    -  For information on how to build an image using
       :term:`Toaster`, see the
-      :doc:`../toaster-manual/toaster-manual`.
+      :doc:`../toaster-manual/index`.
 
    -  For information on how to use ``devtool`` to build images, see the
       ":ref:`sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow`"
@@ -3653,7 +3653,7 @@ build host running Linux.
 
    -  For a quick example on how to build an image using the
       OpenEmbedded build system, see the
-      :doc:`../brief-yoctoprojectqs/brief-yoctoprojectqs` document.
+      :doc:`../brief-yoctoprojectqs/index` document.
 
 The build process creates an entire Linux distribution from source and
 places it in your :term:`Build Directory` under
@@ -3728,7 +3728,7 @@ The following figure and list overviews the build process:
    kernels built by the OpenEmbedded build system are placed in the
    Build Directory in ``tmp/deploy/images``. For information on how to
    run pre-built images such as ``qemux86`` and ``qemuarm``, see the
-   :doc:`../sdk-manual/sdk-manual` manual. For
+   :doc:`../sdk-manual/index` manual. For
    information about how to install these images, see the documentation
    for your particular board or machine.
 

@@ -125,18 +125,18 @@ Here is a list of resources you might find helpful:
    guide to the BitBake tool. If you want information on BitBake, see
    this manual.
 
--  :doc:`../brief-yoctoprojectqs/brief-yoctoprojectqs` *:* This
+-  :doc:`../brief-yoctoprojectqs/index` *:* This
    short document lets you experience building an image using the Yocto
    Project without having to understand any concepts or details.
 
--  :doc:`../overview-manual/overview-manual` *:* This manual provides overview
+-  :doc:`../overview-manual/index` *:* This manual provides overview
    and conceptual information about the Yocto Project.
 
--  :doc:`../dev-manual/dev-manual` *:* This manual is a "how-to" guide
+-  :doc:`../dev-manual/index` *:* This manual is a "how-to" guide
    that presents procedures useful to both application and system
    developers who use the Yocto Project.
 
--  :doc:`../sdk-manual/sdk-manual` *manual :* This
+-  :doc:`../sdk-manual/index` *manual :* This
    guide provides information that lets you get going with the standard
    or extensible SDK. An SDK, with its cross-development toolchains,
    allows you to develop projects inside or outside of the Yocto Project
@@ -146,12 +146,12 @@ Here is a list of resources you might find helpful:
    for BSP components. Having a commonly understood structure encourages
    standardization.
 
--  :doc:`../kernel-dev/kernel-dev` *:* This manual describes
+-  :doc:`../kernel-dev/index` *:* This manual describes
    how to work with Linux Yocto kernels as well as provides a bit of
    conceptual information on the construction of the Yocto Linux kernel
    tree.
 
--  :doc:`../ref-manual/ref-manual` *:* This
+-  :doc:`../ref-manual/index` *:* This
    manual provides reference material such as variable, task, and class
    descriptions.
 
@@ -161,11 +161,11 @@ Here is a list of resources you might find helpful:
    which you can easily search for phrases and terms used in the Yocto
    Project documentation set.
 
--  :doc:`../profile-manual/profile-manual` *:* This manual presents a set of
+-  :doc:`../profile-manual/index` *:* This manual presents a set of
    common and generally useful tracing and profiling schemes along with
    their applications (as appropriate) to each tool.
 
--  :doc:`../toaster-manual/toaster-manual` *:* This manual
+-  :doc:`../toaster-manual/index` *:* This manual
    introduces and describes how to set up and use Toaster. Toaster is an
    Application Programming Interface (API) and web-based interface to
    the :term:`OpenEmbedded Build System`, which uses
