@@ -45,7 +45,7 @@ Perf Setup
 ----------
 
 For this section, we'll assume you've already performed the basic setup
-outlined in the ":ref:`profile-manual/profile-manual-intro:General Setup`" section.
+outlined in the ":ref:`profile-manual/intro:General Setup`" section.
 
 In particular, you'll get the most mileage out of perf if you profile an
 image built with the following in your ``local.conf`` file: ::
@@ -1183,7 +1183,7 @@ ftrace Setup
 ------------
 
 For this section, we'll assume you've already performed the basic setup
-outlined in the ":ref:`profile-manual/profile-manual-intro:General Setup`" section.
+outlined in the ":ref:`profile-manual/intro:General Setup`" section.
 
 ftrace, trace-cmd, and kernelshark run on the target system, and are
 ready to go out-of-the-box - no additional setup is necessary. For the
@@ -1871,7 +1871,7 @@ having done a build: ::
 
 So essentially what you need to
 do is build an SDK image or image with 'tools-profile' as detailed in
-the ":ref:`profile-manual/profile-manual-intro:General Setup`" section of this
+the ":ref:`profile-manual/intro:General Setup`" section of this
 manual, and boot the resulting target image.
 
 .. note::
@@ -1954,7 +1954,7 @@ Sysprof Setup
 -------------
 
 For this section, we'll assume you've already performed the basic setup
-outlined in the ":ref:`profile-manual/profile-manual-intro:General Setup`" section.
+outlined in the ":ref:`profile-manual/intro:General Setup`" section.
 
 Sysprof is a GUI-based application that runs on the target system. For
 the rest of this document we assume you've ssh'ed to the host and will
@@ -2025,7 +2025,7 @@ LTTng Setup
 -----------
 
 For this section, we'll assume you've already performed the basic setup
-outlined in the ":ref:`profile-manual/profile-manual-intro:General Setup`" section.
+outlined in the ":ref:`profile-manual/intro:General Setup`" section.
 LTTng is run on the target system by ssh'ing to it.
 
 Collecting and Viewing Traces
@@ -2033,7 +2033,7 @@ Collecting and Viewing Traces
 
 Once you've applied the above commits and built and booted your image
 (you need to build the core-image-sato-sdk image or use one of the other
-methods described in the ":ref:`profile-manual/profile-manual-intro:General Setup`" section), you're ready to start
+methods described in the ":ref:`profile-manual/intro:General Setup`" section), you're ready to start
 tracing.
 
 Collecting and viewing a trace on the target (inside a shell)
@@ -2230,14 +2230,14 @@ blktrace Setup
 --------------
 
 For this section, we'll assume you've already performed the basic setup
-outlined in the ":ref:`profile-manual/profile-manual-intro:General Setup`"
+outlined in the ":ref:`profile-manual/intro:General Setup`"
 section.
 
 blktrace is an application that runs on the target system. You can run
 the entire blktrace and blkparse pipeline on the target, or you can run
 blktrace in 'listen' mode on the target and have blktrace and blkparse
 collect and analyze the data on the host (see the
-":ref:`profile-manual/profile-manual-usage:Using blktrace Remotely`" section
+":ref:`profile-manual/usage:Using blktrace Remotely`" section
 below). For the rest of this section we assume you've ssh'ed to the host and
 will be running blkrace on the target.
 
@@ -2512,7 +2512,7 @@ Tracing Block I/O via 'ftrace'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It's also possible to trace block I/O using only
-:ref:`profile-manual/profile-manual-usage:The 'trace events' Subsystem`, which
+:ref:`profile-manual/usage:The 'trace events' Subsystem`, which
 can be useful for casual tracing if you don't want to bother dealing with the
 userspace tools.
 

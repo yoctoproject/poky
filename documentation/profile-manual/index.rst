@@ -10,10 +10,10 @@ Yocto Project Profiling and Tracing Manual
    :caption: Table of Contents
    :numbered:
 
-   profile-manual-intro
-   profile-manual-arch
-   profile-manual-usage
-   profile-manual-examples
+   intro
+   arch
+   usage
+   examples
    history
 
 .. include:: /boilerplate.rst
