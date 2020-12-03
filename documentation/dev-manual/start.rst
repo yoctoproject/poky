@@ -325,7 +325,7 @@ Project Build Host:
    If your build host does not meet any of these three listed version
    requirements, you can take steps to prepare the system so that you
    can still use the Yocto Project. See the
-   ":ref:`ref-manual/ref-system-requirements:required git, tar, python and gcc versions`"
+   ":ref:`ref-manual/system-requirements:required git, tar, python and gcc versions`"
    section in the Yocto Project Reference Manual for information.
 
 4. *Install Development Host Packages:* Required development host
@@ -334,7 +334,7 @@ Project Build Host:
    is large if you want to be able to cover all cases.
 
    For lists of required packages for all scenarios, see the
-   ":ref:`ref-manual/ref-system-requirements:required packages for the build host`"
+   ":ref:`ref-manual/system-requirements:required packages for the build host`"
    section in the Yocto Project Reference Manual.
 
 Once you have completed the previous steps, you are ready to continue

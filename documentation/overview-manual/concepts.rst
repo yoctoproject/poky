@@ -112,7 +112,7 @@ Class files (``.bbclass``) contain information that is useful to share
 between recipes files. An example is the
 :ref:`autotools <ref-classes-autotools>` class,
 which contains common settings for any application that Autotools uses.
-The ":ref:`ref-manual/ref-classes:Classes`" chapter in the
+The ":ref:`ref-manual/classes:Classes`" chapter in the
 Yocto Project Reference Manual provides details about classes and how to
 use them.
 
@@ -456,7 +456,7 @@ typically find in the distribution layer:
    can be shared among recipes in the distribution. When your recipes
    inherit a class, they take on the settings and functions for that
    class. You can read more about class files in the
-   ":ref:`ref-manual/ref-classes:Classes`" chapter of the Yocto
+   ":ref:`ref-manual/classes:Classes`" chapter of the Yocto
    Reference Manual.
 
 -  *conf:* This area holds configuration files for the layer
@@ -1285,7 +1285,7 @@ this output:
 .. note::
 
    For a list of example images that the Yocto Project provides, see the
-   ":doc:`/ref-manual/ref-images`" chapter in the Yocto Project Reference
+   ":doc:`/ref-manual/images`" chapter in the Yocto Project Reference
    Manual.
 
 The build process writes images out to the :term:`Build Directory`

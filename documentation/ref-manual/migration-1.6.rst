@@ -126,7 +126,7 @@ Changes to Variables
 --------------------
 
 The following variables have changed. For information on the
-OpenEmbedded build system variables, see the ":doc:`ref-variables`" Chapter.
+OpenEmbedded build system variables, see the ":doc:`/ref-manual/variables`" Chapter.
 
 .. _migration-1.6-variable-changes-TMPDIR:
 

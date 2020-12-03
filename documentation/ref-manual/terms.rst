@@ -64,7 +64,7 @@ universal, the list includes them just in case:
       This term refers to the area used by the OpenEmbedded build system for
       builds. The area is created when you ``source`` the setup environment
       script that is found in the Source Directory
-      (i.e. :ref:`ref-manual/ref-structure:\`\`oe-init-build-env\`\``). The
+      (i.e. :ref:`ref-manual/structure:\`\`oe-init-build-env\`\``). The
       :term:`TOPDIR` variable points to the Build Directory.
 
       You have a lot of flexibility when creating the Build Directory.
@@ -117,7 +117,7 @@ universal, the list includes them just in case:
       Files that provide for logic encapsulation and inheritance so that
       commonly used patterns can be defined once and then easily used in
       multiple recipes. For reference information on the Yocto Project classes,
-      see the ":ref:`ref-manual/ref-classes:Classes`" chapter. Class files end with the
+      see the ":ref:`ref-manual/classes:Classes`" chapter. Class files end with the
       ``.bbclass`` filename extension.
 
    :term:`Configuration File`
@@ -177,7 +177,7 @@ universal, the list includes them just in case:
       recipes and related Metadata. Images are the binary output that run on
       specific hardware or QEMU and are used for specific use-cases. For a list
       of the supported image types that the Yocto Project provides, see the
-      ":ref:`ref-manual/ref-images:Images`" chapter.
+      ":ref:`ref-manual/images:Images`" chapter.
 
    :term:`Layer`
       A collection of related recipes. Layers allow you to consolidate related
@@ -252,7 +252,7 @@ universal, the list includes them just in case:
 
       It is worth noting that the term "package" can, in general, have
       subtle meanings. For example, the packages referred to in the
-      ":ref:`ref-manual/ref-system-requirements:required packages for the build host`"
+      ":ref:`ref-manual/system-requirements:required packages for the build host`"
       section are compiled binaries that, when installed, add functionality to
       your Linux distribution.
 

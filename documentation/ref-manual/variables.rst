@@ -1670,7 +1670,7 @@ system and gives an overview of their function and contents.
       ``${TMPDIR}/deploy``.
 
       For more information on the structure of the Build Directory, see
-      ":ref:`ref-manual/ref-structure:the build directory - \`\`build/\`\``" section.
+      ":ref:`ref-manual/structure:the build directory - \`\`build/\`\``" section.
       For more detail on the contents of the ``deploy`` directory, see the
       ":ref:`overview-manual/concepts:images`",
       ":ref:`overview-manual/concepts:package feeds`", and
@@ -1708,7 +1708,7 @@ system and gives an overview of their function and contents.
       ``${DEPLOY_DIR}/images/${MACHINE}/``.
 
       For more information on the structure of the Build Directory, see
-      ":ref:`ref-manual/ref-structure:the build directory - \`\`build/\`\``" section.
+      ":ref:`ref-manual/structure:the build directory - \`\`build/\`\``" section.
       For more detail on the contents of the ``deploy`` directory, see the
       ":ref:`overview-manual/concepts:images`" and
       ":ref:`overview-manual/concepts:application development sdk`" sections both in
@@ -2907,7 +2907,7 @@ system and gives an overview of their function and contents.
       ":ref:`dev-manual/common-tasks:creating partitioned images using wic`"
       section of the Yocto Project Development Tasks Manual. Reference
       material for Wic is located in the
-      ":doc:`/ref-manual/ref-kickstart`" chapter.
+      ":doc:`/ref-manual/kickstart`" chapter.
 
    :term:`IMAGE_BOOT_FILES`
       A space-separated list of files installed into the boot partition
@@ -2943,7 +2943,7 @@ system and gives an overview of their function and contents.
       ":ref:`dev-manual/common-tasks:creating partitioned images using wic`"
       section of the Yocto Project Development Tasks Manual. Reference
       material for Wic is located in the
-      ":doc:`/ref-manual/ref-kickstart`" chapter.
+      ":doc:`/ref-manual/kickstart`" chapter.
 
    :term:`IMAGE_CLASSES`
       A list of classes that all images should inherit. You typically use
@@ -3051,7 +3051,7 @@ system and gives an overview of their function and contents.
       .. note::
 
          -  When working with a
-            :ref:`core-image-minimal-initramfs <ref-manual/ref-images:images>`
+            :ref:`core-image-minimal-initramfs <ref-manual/images:images>`
             image, do not use the ``IMAGE_INSTALL`` variable to specify
             packages for installation. Instead, use the
             :term:`PACKAGE_INSTALL` variable, which
@@ -5240,7 +5240,7 @@ system and gives an overview of their function and contents.
       general, you should use the
       :term:`IMAGE_INSTALL` variable to specify
       packages for installation. The exception to this is when working with
-      the :ref:`core-image-minimal-initramfs <ref-manual/ref-images:images>`
+      the :ref:`core-image-minimal-initramfs <ref-manual/images:images>`
       image. When working with an initial RAM filesystem (initramfs) image,
       use the ``PACKAGE_INSTALL`` variable. For information on creating an
       initramfs, see the ":ref:`dev-manual/common-tasks:building an initial ram filesystem (initramfs) image`" section
@@ -8737,7 +8737,7 @@ system and gives an overview of their function and contents.
       image, see the
       ":ref:`dev-manual/common-tasks:creating partitioned images using wic`"
       section in the Yocto Project Development Tasks Manual. For details on
-      the kickstart file format, see the ":doc:`/ref-manual/ref-kickstart`" Chapter.
+      the kickstart file format, see the ":doc:`/ref-manual/kickstart`" Chapter.
 
    :term:`WKS_FILE_DEPENDS`
       When placed in the recipe that builds your image, this variable lists

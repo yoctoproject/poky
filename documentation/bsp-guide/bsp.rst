@@ -81,7 +81,7 @@ directory of that Layer. This directory is what you add to the
 ``conf/bblayers.conf`` file found in your
 :term:`Build Directory`, which is
 established after you run the OpenEmbedded build environment setup
-script (i.e. :ref:`ref-manual/ref-structure:\`\`oe-init-build-env\`\``).
+script (i.e. :ref:`ref-manual/structure:\`\`oe-init-build-env\`\``).
 Adding the root directory allows the :term:`OpenEmbedded Build System`
 to recognize the BSP
 layer and from it build an image. Here is an example: ::
@@ -229,7 +229,7 @@ section.
 
 #. *Initialize the Build Environment:* While in the root directory of
    the Source Directory (i.e. ``poky``), run the
-   :ref:`ref-manual/ref-structure:\`\`oe-init-build-env\`\`` environment
+   :ref:`ref-manual/structure:\`\`oe-init-build-env\`\`` environment
    setup script to define the OpenEmbedded build environment on your
    build host. ::
 
@@ -826,7 +826,7 @@ workflow.
 
    The build process supports several types of images to satisfy
    different needs. See the
-   ":ref:`ref-manual/ref-images:Images`" chapter in the Yocto
+   ":ref:`ref-manual/images:Images`" chapter in the Yocto
    Project Reference Manual for information on supported images.
 
 Requirements and Recommendations for Released BSPs
@@ -1305,7 +1305,7 @@ the example reference machine configuration file for the BeagleBone
 development boards. Realize that much more can be defined as part of a
 machine's configuration file. In general, you can learn about related
 variables that this example does not have by locating the variables in
-the ":ref:`ref-manual/ref-variables:variables glossary`" in the Yocto
+the ":ref:`ref-manual/variables:variables glossary`" in the Yocto
 Project Reference Manual.
 
 -  :term:`PREFERRED_PROVIDER_virtual/xserver <PREFERRED_PROVIDER>`:
@@ -1360,7 +1360,7 @@ Project Reference Manual.
    `JFFS2 <https://en.wikipedia.org/wiki/JFFS2>`__ image.
 
 -  :term:`WKS_FILE`: The location of
-   the :ref:`Wic kickstart <ref-manual/ref-kickstart:openembedded kickstart (\`\`.wks\`\`) reference>` file used
+   the :ref:`Wic kickstart <ref-manual/kickstart:openembedded kickstart (\`\`.wks\`\`) reference>` file used
    by the OpenEmbedded build system to create a partitioned image
    (image.wic).
 

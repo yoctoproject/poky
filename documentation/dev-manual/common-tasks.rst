@@ -935,7 +935,7 @@ configures the image you are working with to include
 
 .. note::
 
-   See the ":ref:`ref-manual/ref-features:image features`" section in the Yocto
+   See the ":ref:`ref-manual/features:image features`" section in the Yocto
    Project Reference Manual for a complete list of image features that ship
    with the Yocto Project.
 
@@ -1076,7 +1076,7 @@ how to create, write, and test a new recipe.
 
    For information on variables that are useful for recipes and for
    information about recipe naming issues, see the
-   ":ref:`ref-manual/ref-varlocality:recipes`" section of the Yocto Project
+   ":ref:`ref-manual/varlocality:recipes`" section of the Yocto Project
    Reference Manual.
 
 Overview
@@ -1978,7 +1978,7 @@ take. The following list describes the process:
    of common problems that show up during runtime. For information on
    these checks, see the
    :ref:`insane <ref-classes-insane>` class and
-   the ":ref:`ref-manual/ref-qa-checks:qa error and warning messages`"
+   the ":ref:`ref-manual/qa-checks:qa error and warning messages`"
    chapter in the Yocto Project Reference Manual.
 
 -  *Hand-Checking Your Packages*: After you build your software, you
@@ -3127,7 +3127,7 @@ Using ``devtool upgrade``
 
 As mentioned earlier, an alternative method for upgrading recipes to
 newer versions is to use
-:doc:`devtool upgrade </ref-manual/ref-devtool-reference>`.
+:doc:`devtool upgrade </ref-manual/devtool-reference>`.
 You can read about ``devtool upgrade`` in general in the
 ":ref:`sdk-manual/extensible:use \`\`devtool upgrade\`\` to create a version of the recipe that supports a newer version of the software`"
 section in the Yocto Project Application Development and the Extensible
@@ -3714,7 +3714,7 @@ The following figure and list overviews the build process:
    can be the name of a recipe for a specific piece of software such as
    BusyBox. For more details about the images the OpenEmbedded build
    system supports, see the
-   ":ref:`ref-manual/ref-images:Images`" chapter in the Yocto
+   ":ref:`ref-manual/images:Images`" chapter in the Yocto
    Project Reference Manual.
 
    As an example, the following command builds the
@@ -5234,7 +5234,7 @@ particular system.
 .. note::
 
    For a kickstart file reference, see the
-   ":ref:`ref-manual/ref-kickstart:openembedded kickstart (\`\`.wks\`\`) reference`"
+   ":ref:`ref-manual/kickstart:openembedded kickstart (\`\`.wks\`\`) reference`"
    Chapter in the Yocto Project Reference Manual.
 
 The ``wic`` command and the infrastructure it is based on is by
@@ -7418,7 +7418,7 @@ Creating Node Package Manager (NPM) Packages
 manager for the JavaScript programming language. The Yocto Project
 supports the NPM :ref:`fetcher <bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers>`. You can
 use this fetcher in combination with
-:doc:`devtool </ref-manual/ref-devtool-reference>` to create
+:doc:`devtool </ref-manual/devtool-reference>` to create
 recipes that produce NPM packages.
 
 Two workflows exist that allow you to create NPM packages using
@@ -7446,7 +7446,7 @@ NPM packages:
    is NPM's public registry.
 
 -  Be familiar with
-   :doc:`devtool </ref-manual/ref-devtool-reference>`.
+   :doc:`devtool </ref-manual/devtool-reference>`.
 
 -  The NPM host tools need the native ``nodejs-npm`` package, which is
    part of the OpenEmbedded environment. You need to get the package by
@@ -8452,7 +8452,7 @@ you set up the environment to use these tests, run available tests, and
 write and add your own tests.
 
 For information on the test and QA infrastructure available within the
-Yocto Project, see the ":ref:`ref-manual/ref-release-process:testing and quality assurance`"
+Yocto Project, see the ":ref:`ref-manual/release-process:testing and quality assurance`"
 section in the Yocto Project Reference Manual.
 
 Enabling Tests
@@ -9224,7 +9224,7 @@ In addition to variable values, the output of the ``bitbake -e`` and
 -  The output starts with a tree listing all configuration files and
    classes included globally, recursively listing the files they include
    or inherit in turn. Much of the behavior of the OpenEmbedded build
-   system (including the behavior of the :ref:`ref-manual/ref-tasks:normal recipe build tasks`) is
+   system (including the behavior of the :ref:`ref-manual/tasks:normal recipe build tasks`) is
    implemented in the
    :ref:`base <ref-classes-base>` class and the
    classes it inherits, rather than being built into BitBake itself.
@@ -9564,7 +9564,7 @@ compile. BitBake recognizes that the ``do_compile`` task was rerun and
 therefore understands that the other tasks also need to be run again.
 
 Another, shorter way to rerun a task and all
-:ref:`ref-manual/ref-tasks:normal recipe build tasks`
+:ref:`ref-manual/tasks:normal recipe build tasks`
 that depend on it is to use the ``-C`` option.
 
 .. note::
@@ -9998,7 +9998,7 @@ GDB allows you to examine running programs, which in turn helps you to
 understand and fix problems. It also allows you to perform post-mortem
 style analysis of program crashes. GDB is available as a package within
 the Yocto Project and is installed in SDK images by default. See the
-":ref:`ref-manual/ref-images:Images`" chapter in the Yocto
+":ref:`ref-manual/images:Images`" chapter in the Yocto
 Project Reference Manual for a description of these images. You can find
 information on GDB at https://sourceware.org/gdb/.
 

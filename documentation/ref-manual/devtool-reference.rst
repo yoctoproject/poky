@@ -193,7 +193,7 @@ external source tree.
    run your application. If dependent packages (e.g. libraries) do not
    exist on the target, your application, when run, will fail to find
    those functions. For more information, see the
-   ":ref:`ref-manual/ref-devtool-reference:deploying your software on the target machine`"
+   ":ref:`ref-manual/devtool-reference:deploying your software on the target machine`"
    section.
 
 By default, ``devtool add`` uses the latest revision (i.e. master) when
@@ -561,7 +561,7 @@ Removing Your Software from the Target Machine
 Use the ``devtool undeploy-target`` command to remove deployed build
 output from the target machine. For the ``devtool undeploy-target``
 command to work, you must have previously used the
-":ref:`devtool deploy-target <ref-manual/ref-devtool-reference:deploying your software on the target machine>`"
+":ref:`devtool deploy-target <ref-manual/devtool-reference:deploying your software on the target machine>`"
 command.
 ::
 
@@ -609,7 +609,7 @@ The ``devtool status`` command has no command-line options:
    $ devtool status
 
 Following is sample output after using
-:ref:`devtool add <ref-manual/ref-devtool-reference:adding a new recipe to the workspace layer>`
+:ref:`devtool add <ref-manual/devtool-reference:adding a new recipe to the workspace layer>`
 to create and add the ``mtr_0.86.bb`` recipe to the ``workspace`` directory:
 ::
 

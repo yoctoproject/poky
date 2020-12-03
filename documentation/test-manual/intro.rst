@@ -124,7 +124,7 @@ thefollowing types of tests:
    The tests utilize the ``testsdkext`` class and the ``do_testsdkext`` task.
 
 -  *Feature Testing:* Various scenario-based tests are run through the
-   :ref:`OpenEmbedded Self test (oe-selftest) <ref-manual/ref-release-process:Testing and Quality Assurance>`. We test oe-selftest on each of the main distrubutions
+   :ref:`OpenEmbedded Self test (oe-selftest) <ref-manual/release-process:Testing and Quality Assurance>`. We test oe-selftest on each of the main distrubutions
    we support.
 
 -  *Image Testing:* Image tests initiated through the following command::
@@ -155,8 +155,8 @@ thefollowing types of tests:
    the ``do_testsdk`` task.
 
 -  *Unit Testing:* Unit tests on various components of the system run
-   through :ref:`bitbake-selftest <ref-manual/ref-release-process:Testing and Quality Assurance>` and
-   :ref:`oe-selftest <ref-manual/ref-release-process:Testing and Quality Assurance>`.
+   through :ref:`bitbake-selftest <ref-manual/release-process:Testing and Quality Assurance>` and
+   :ref:`oe-selftest <ref-manual/release-process:Testing and Quality Assurance>`.
 
 -  *Automatic Upgrade Helper:* This target tests whether new versions of
    software are available and whether we can automatically upgrade to

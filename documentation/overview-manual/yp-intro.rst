@@ -111,7 +111,7 @@ Project:
    development.
 
 -  *Releases According to a Strict Schedule:* Major releases occur on a
-   :doc:`six-month cycle </ref-manual/ref-release-process>`
+   :doc:`six-month cycle </ref-manual/release-process>`
    predictably in October and April. The most recent two releases
    support point releases to address common vulnerabilities and
    exposures. This predictability is crucial for projects based on the
@@ -676,7 +676,7 @@ these items that make up the Poky repository in the
 
    If you are interested in all the contents of the
    poky
-   Git repository, see the ":ref:`ref-manual/ref-structure:top-level core components`"
+   Git repository, see the ":ref:`ref-manual/structure:top-level core components`"
    section in the Yocto Project Reference Manual.
 
 The following figure illustrates what generally comprises Poky:
@@ -720,7 +720,7 @@ Poky has a regular, well established, six-month release cycle under its
 own version. Major releases occur at the same time major releases (point
 releases) occur for the Yocto Project, which are typically in the Spring
 and Fall. For more information on the Yocto Project release schedule and
-cadence, see the ":doc:`/ref-manual/ref-release-process`" chapter in the
+cadence, see the ":doc:`/ref-manual/release-process`" chapter in the
 Yocto Project Reference Manual.
 
 Much has been said about Poky being a "default configuration". A default
@@ -798,7 +798,7 @@ Some Basic Terms
 
 It helps to understand some basic fundamental terms when learning the
 Yocto Project. Although a list of terms exists in the ":doc:`Yocto Project
-Terms </ref-manual/ref-terms>`" section of the Yocto Project
+Terms </ref-manual/terms>`" section of the Yocto Project
 Reference Manual, this section provides the definitions of some terms
 helpful for getting started:
 
@@ -879,7 +879,7 @@ helpful for getting started:
 
    It is worth noting that the term "package" can, in general, have
    subtle meanings. For example, the packages referred to in the
-   ":ref:`ref-manual/ref-system-requirements:required packages for the build host`"
+   ":ref:`ref-manual/system-requirements:required packages for the build host`"
    section in the Yocto Project Reference Manual are compiled binaries
    that, when installed, add functionality to your Linux distribution.
 

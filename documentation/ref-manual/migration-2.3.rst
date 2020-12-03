@@ -404,7 +404,7 @@ The following QA checks have changed:
 
    For additional information, see the
    :ref:`insane <ref-classes-insane>` class and the
-   ":ref:`ref-manual/ref-qa-checks:errors and warnings`" section.
+   ":ref:`ref-manual/qa-checks:errors and warnings`" section.
 
 .. _migration-2.3-miscellaneous-changes:
 

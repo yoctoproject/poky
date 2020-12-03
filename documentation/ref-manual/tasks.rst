@@ -461,7 +461,7 @@ devtool commands:
    $ devtool latest-version
    $ devtool check-upgrade-status
 
-See the ":ref:`ref-manual/ref-devtool-reference:\`\`devtool\`\` quick reference`"
+See the ":ref:`ref-manual/devtool-reference:\`\`devtool\`\` quick reference`"
 chapter for more information on
 ``devtool``. See the ":ref:`devtool-checking-on-the-upgrade-status-of-a-recipe`"
 section for information on checking the upgrade status of a recipe.

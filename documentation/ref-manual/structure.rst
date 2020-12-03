@@ -682,7 +682,7 @@ generation or packaging also have their specific class files such as
 ``image.bbclass``, ``rootfs_*.bbclass`` and ``package*.bbclass``.
 
 For reference information on classes, see the
-":ref:`ref-manual/ref-classes:Classes`" chapter.
+":ref:`ref-manual/classes:Classes`" chapter.
 
 .. _structure-meta-conf:
 

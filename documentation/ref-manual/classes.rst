@@ -1033,7 +1033,7 @@ You can configure the sanity checks so that specific test failures
 either raise a warning or an error message. Typically, failures for new
 tests generate a warning. Subsequent failures for the same test would
 then generate an error message once the metadata is in a known and good
-condition. See the ":doc:`ref-qa-checks`" Chapter for a list of all the warning
+condition. See the ":doc:`/ref-manual/qa-checks`" Chapter for a list of all the warning
 and error messages you might encounter using a default configuration.
 
 Use the :term:`WARN_QA` and
@@ -1276,7 +1276,7 @@ The following list shows the tests you can list with the ``WARN_QA`` and
 -  ``textrel:`` Checks for ELF binaries that contain relocations in
    their ``.text`` sections, which can result in a performance impact at
    runtime. See the explanation for the ``ELF binary`` message in
-   ":doc:`ref-qa-checks`" for more information regarding runtime performance
+   ":doc:`/ref-manual/qa-checks`" for more information regarding runtime performance
    issues.
 
 -  ``unlisted-pkg-lics:`` Checks that all declared licenses applying

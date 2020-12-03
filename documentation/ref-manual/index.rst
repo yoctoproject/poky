@@ -10,20 +10,20 @@ Yocto Project Reference Manual
    :caption: Table of Contents
    :numbered:
 
-   ref-system-requirements
-   ref-terms
-   ref-release-process
+   system-requirements
+   terms
+   release-process
    migration
-   ref-structure
-   ref-classes
-   ref-tasks
-   ref-devtool-reference
-   ref-kickstart
-   ref-qa-checks
-   ref-images
-   ref-features
-   ref-variables
-   ref-varlocality
+   structure
+   classes
+   tasks
+   devtool-reference
+   kickstart
+   qa-checks
+   images
+   features
+   variables
+   varlocality
    faq
    resources
    history

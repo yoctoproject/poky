@@ -146,7 +146,7 @@ consists of the following pieces:
    .. note::
 
       Running ``oe-selftest`` requires host packages beyond the "Essential"
-      grouping. See the :ref:`ref-manual/ref-system-requirements:required packages for the build host`
+      grouping. See the :ref:`ref-manual/system-requirements:required packages for the build host`
       section for more information.
 
 Originally, much of this testing was done manually. However, significant

@@ -52,7 +52,7 @@ following requirements:
 -  Runs a supported Linux distribution (i.e. recent releases of Fedora,
    openSUSE, CentOS, Debian, or Ubuntu). For a list of Linux
    distributions that support the Yocto Project, see the
-   :ref:`ref-manual/ref-system-requirements:supported linux distributions`
+   :ref:`ref-manual/system-requirements:supported linux distributions`
    section in the Yocto Project Reference Manual. For detailed
    information on preparing your build host, see the
    :ref:`dev-manual/start:preparing the build host`
@@ -68,7 +68,7 @@ following requirements:
 If your build host does not meet any of these three listed version
 requirements, you can take steps to prepare the system so that you
 can still use the Yocto Project. See the
-:ref:`ref-manual/ref-system-requirements:required git, tar, python and gcc versions`
+:ref:`ref-manual/system-requirements:required git, tar, python and gcc versions`
 section in the Yocto Project Reference Manual for information.
 
 Build Host Packages
@@ -85,7 +85,7 @@ distribution:
 .. note::
 
    For host package requirements on all supported Linux distributions,
-   see the :ref:`ref-manual/ref-system-requirements:required packages for the build host`
+   see the :ref:`ref-manual/system-requirements:required packages for the build host`
    section in the Yocto Project Reference Manual.
 
 Use Git to Clone Poky
@@ -169,7 +169,7 @@ an entire Linux distribution, including the toolchain, from source.
       page of the Yocto Project Wiki.
 
 #. **Initialize the Build Environment:** From within the ``poky``
-   directory, run the :ref:`ref-manual/ref-structure:\`\`oe-init-build-env\`\``
+   directory, run the :ref:`ref-manual/structure:\`\`oe-init-build-env\`\``
    environment
    setup script to define Yocto Project's build environment on your
    build host.
