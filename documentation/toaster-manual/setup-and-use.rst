@@ -10,7 +10,7 @@ Starting Toaster for Local Development
 ======================================
 
 Once you have set up the Yocto Project and installed the Toaster system
-dependencies as described in the ":ref:`toaster-manual/toaster-manual-start:Preparing to Use
+dependencies as described in the ":ref:`toaster-manual/start:Preparing to Use
 Toaster`" chapter, you are ready to start
 Toaster.
 
@@ -30,7 +30,7 @@ Next, from the build directory (e.g.
 
 You can now run your builds from the command line, or with Toaster
 as explained in section
-":ref:`toaster-manual/toaster-manual-setup-and-use:using the toaster web interface`".
+":ref:`toaster-manual/setup-and-use:using the toaster web interface`".
 
 To access the Toaster web interface, open your favorite browser and
 enter the following::
@@ -200,7 +200,7 @@ Be sure you meet the following requirements:
 
    You must comply with all Apache, ``mod-wsgi``, and Mysql requirements.
 
--  Have all the build requirements as described in the ":ref:`toaster-manual/toaster-manual-start:Preparing to
+-  Have all the build requirements as described in the ":ref:`toaster-manual/start:Preparing to
    Use Toaster`" chapter.
 
 -  Have an Apache webserver.
@@ -314,7 +314,7 @@ Perform the following steps to install Toaster:
     ``TEMPLATECONF`` value reflects the contents of
     ``poky/.templateconf``, and by default, should include the string
     "poky". For more information on the Toaster configuration file, see
-    the ":ref:`toaster-manual/toaster-manual-reference:Configuring Toaster`" section.
+    the ":ref:`toaster-manual/reference:Configuring Toaster`" section.
 
     This line also runs the ``checksettings`` command, which configures
     the location of the Toaster :term:`Build Directory`.
@@ -544,7 +544,7 @@ Additional Information About the Local Yocto Project Release
 
 This section only applies if you have set up Toaster for local
 development, as explained in the
-":ref:`toaster-manual/toaster-manual-setup-and-use:starting toaster for local development`"
+":ref:`toaster-manual/setup-and-use:starting toaster for local development`"
 section.
 
 When you create a project in Toaster, you will be asked to provide a

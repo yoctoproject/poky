@@ -217,7 +217,7 @@ The following changes have been made to the build system user interface:
 -  *Hob GTK+-based UI*: Removed because it is unmaintained and based on
    the outdated GTK+ 2 library. The Toaster web-based UI is much more
    capable and is actively maintained. See the
-   ":ref:`toaster-manual/toaster-manual-setup-and-use:using the toaster web interface`"
+   ":ref:`toaster-manual/setup-and-use:using the toaster web interface`"
    section in the Toaster User Manual for more information on this
    interface.
 

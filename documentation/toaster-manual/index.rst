@@ -10,10 +10,10 @@ Toaster User Manual
    :caption: Table of Contents
    :numbered:
 
-   toaster-manual-intro
-   toaster-manual-start
-   toaster-manual-setup-and-use
-   toaster-manual-reference
+   intro
+   start
+   setup-and-use
+   reference
    history
 
 .. include:: /boilerplate.rst

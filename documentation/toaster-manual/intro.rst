@@ -25,7 +25,7 @@ extensive information about the build process.
    interface, you can:
 
    -  Browse layers listed in the various
-      :ref:`layer sources <toaster-manual/toaster-manual-reference:layer source>`
+      :ref:`layer sources <toaster-manual/reference:layer source>`
       that are available in your project (e.g. the OpenEmbedded Layer Index at
       http://layers.openembedded.org/layerindex/).
 

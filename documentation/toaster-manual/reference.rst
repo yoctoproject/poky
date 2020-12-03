@@ -476,7 +476,7 @@ get the status of a specific build, use the following call::
 
 Be sure to provide values for
 host, port, and ID. You can find the value for ID from the Builds
-Completed query. See the ":ref:`toaster-manual/toaster-manual-reference:checking status of builds completed`"
+Completed query. See the ":ref:`toaster-manual/reference:checking status of builds completed`"
 section for more information.
 
 The output is a JSON file that itemizes the specific build and includes
@@ -549,7 +549,7 @@ database.
 
 You need to run the ``buildslist`` command first to identify existing
 builds in the database before using the
-:ref:`toaster-manual/toaster-manual-reference:\`\`builddelete\`\`` command. Here is an
+:ref:`toaster-manual/reference:\`\`builddelete\`\`` command. Here is an
 example that assumes default repository and build directory names:
 
 .. code-block:: shell
@@ -558,7 +558,7 @@ example that assumes default repository and build directory names:
    $ python ../bitbake/lib/toaster/manage.py buildslist
 
 If your Toaster database had only one build, the above
-:ref:`toaster-manual/toaster-manual-reference:\`\`buildslist\`\``
+:ref:`toaster-manual/reference:\`\`buildslist\`\``
 command would return something like the following::
 
    1: qemux86 poky core-image-minimal
@@ -579,7 +579,7 @@ the database.
 
 Prior to running the ``builddelete`` command, you need to get the ID
 associated with builds by using the
-:ref:`toaster-manual/toaster-manual-reference:\`\`buildslist\`\`` command.
+:ref:`toaster-manual/reference:\`\`buildslist\`\`` command.
 
 ``perf``
 --------
