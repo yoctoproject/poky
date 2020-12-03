@@ -71,7 +71,7 @@ and included with Yocto Project releases:
    and configurations for the linux-yocto kernel tree. This repository
    is useful when working on the linux-yocto kernel. For more
    information on this "Advanced Kernel Metadata", see the
-   ":doc:`kernel-dev-advanced`" Chapter.
+   ":doc:`/kernel-dev/advanced`" Chapter.
 
 -  *linux-yocto-dev:* A development kernel based on the latest
    upstream release candidate available.
@@ -293,13 +293,13 @@ ways:
 
 -  *Files Accessed While using devtool:* ``devtool``, which is
    available with the Yocto Project, is the preferred method by which to
-   modify the kernel. See the ":ref:`kernel-dev/kernel-dev-intro:kernel modification workflow`" section.
+   modify the kernel. See the ":ref:`kernel-dev/intro:kernel modification workflow`" section.
 
 -  *Cloned Repository:* If you are working in the kernel all the time,
    you probably would want to set up your own local Git repository of
    the Yocto Linux kernel tree. For information on how to clone a Yocto
    Linux kernel Git repository, see the
-   ":ref:`kernel-dev/kernel-dev-common:preparing the build host to work on the kernel`"
+   ":ref:`kernel-dev/common:preparing the build host to work on the kernel`"
    section.
 
 -  *Temporary Source Files from a Build:* If you just need to make some
@@ -327,11 +327,11 @@ source files used during the build.
 
 Again, for additional information on the Yocto Project kernel's
 architecture and its branching strategy, see the
-":ref:`kernel-dev/kernel-dev-concepts-appx:yocto linux kernel architecture and branching strategies`"
+":ref:`kernel-dev/concepts-appx:yocto linux kernel architecture and branching strategies`"
 section. You can also reference the
-":ref:`kernel-dev/kernel-dev-common:using \`\`devtool\`\` to patch the kernel`"
+":ref:`kernel-dev/common:using \`\`devtool\`\` to patch the kernel`"
 and
-":ref:`kernel-dev/kernel-dev-common:using traditional kernel development to patch the kernel`"
+":ref:`kernel-dev/common:using traditional kernel development to patch the kernel`"
 sections for detailed example that modifies the kernel.
 
 Determining Hardware and Non-Hardware Features for the Kernel Configuration Audit Phase
@@ -341,7 +341,7 @@ This section describes part of the kernel configuration audit phase that
 most developers can ignore. For general information on kernel
 configuration including ``menuconfig``, ``defconfig`` files, and
 configuration fragments, see the
-":ref:`kernel-dev/kernel-dev-common:configuring the kernel`" section.
+":ref:`kernel-dev/common:configuring the kernel`" section.
 
 During this part of the audit phase, the contents of the final
 ``.config`` file are compared against the fragments specified by the

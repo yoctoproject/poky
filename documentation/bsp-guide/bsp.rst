@@ -693,7 +693,7 @@ BSP settings to the kernel, thus configuring the kernel for your
 particular BSP.
 
 You can find more information on what your append file should contain in
-the ":ref:`kernel-dev/kernel-dev-common:creating the append file`" section
+the ":ref:`kernel-dev/common:creating the append file`" section
 in the Yocto Project Linux Kernel Development Manual.
 
 An alternate scenario is when you create your own kernel recipe for the
@@ -1197,7 +1197,7 @@ Use these steps to create a BSP layer:
    ``recipes-kernel/linux`` by either using a kernel append file or a
    new custom kernel recipe file (e.g. ``yocto-linux_4.12.bb``). The BSP
    layers mentioned in the previous step also contain different kernel
-   examples. See the ":ref:`kernel-dev/kernel-dev-common:modifying an existing recipe`"
+   examples. See the ":ref:`kernel-dev/common:modifying an existing recipe`"
    section in the Yocto Project Linux Kernel Development Manual for
    information on how to create a custom kernel.
 

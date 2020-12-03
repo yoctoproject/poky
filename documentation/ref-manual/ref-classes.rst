@@ -1596,7 +1596,7 @@ and implements the :ref:`ref-tasks-compile` and
 everything needed to build and package a kernel module.
 
 For general information on out-of-tree Linux kernel modules, see the
-":ref:`kernel-dev/kernel-dev-common:incorporating out-of-tree modules`"
+":ref:`kernel-dev/common:incorporating out-of-tree modules`"
 section in the Yocto Project Linux Kernel Development Manual.
 
 .. _ref-classes-module-base:

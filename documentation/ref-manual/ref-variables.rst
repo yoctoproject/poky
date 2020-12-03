@@ -3723,7 +3723,7 @@ system and gives an overview of their function and contents.
       - qemu
       - mips
 
-      You define the ``KARCH`` variable in the :ref:`kernel-dev/kernel-dev-advanced:bsp descriptions`.
+      You define the ``KARCH`` variable in the :ref:`kernel-dev/advanced:bsp descriptions`.
 
    :term:`KBRANCH`
       A regular expression used by the build process to explicitly identify
@@ -3793,7 +3793,7 @@ system and gives an overview of their function and contents.
 
       For more
       information on how to use the ``KBUILD_DEFCONFIG`` variable, see the
-      ":ref:`kernel-dev/kernel-dev-common:using an "in-tree" \`\`defconfig\`\` file`"
+      ":ref:`kernel-dev/common:using an "in-tree" \`\`defconfig\`\` file`"
       section in the Yocto Project Linux Kernel Development Manual.
 
    :term:`KERNEL_ALT_IMAGETYPE`
@@ -4029,7 +4029,7 @@ system and gives an overview of their function and contents.
       of the :term:`STAGING_KERNEL_DIR` within
       the :ref:`module <ref-classes-module>` class. For information on
       how this variable is used, see the
-      ":ref:`kernel-dev/kernel-dev-common:incorporating out-of-tree modules`"
+      ":ref:`kernel-dev/common:incorporating out-of-tree modules`"
       section in the Yocto Project Linux Kernel Development Manual.
 
       To help maximize compatibility with out-of-tree drivers used to build
@@ -4043,7 +4043,7 @@ system and gives an overview of their function and contents.
       of the :term:`STAGING_KERNEL_DIR` within
       the :ref:`module <ref-classes-module>` class. For information on
       how this variable is used, see the
-      ":ref:`kernel-dev/kernel-dev-common:incorporating out-of-tree modules`"
+      ":ref:`kernel-dev/common:incorporating out-of-tree modules`"
       section in the Yocto Project Linux Kernel Development Manual.
 
       To help maximize compatibility with out-of-tree drivers used to build
@@ -4108,13 +4108,13 @@ system and gives an overview of their function and contents.
    :term:`KTYPE`
       Defines the kernel type to be used in assembling the configuration.
       The linux-yocto recipes define "standard", "tiny", and "preempt-rt"
-      kernel types. See the ":ref:`kernel-dev/kernel-dev-advanced:kernel types`"
+      kernel types. See the ":ref:`kernel-dev/advanced:kernel types`"
       section in the
       Yocto Project Linux Kernel Development Manual for more information on
       kernel types.
 
       You define the ``KTYPE`` variable in the
-      :ref:`kernel-dev/kernel-dev-advanced:bsp descriptions`. The
+      :ref:`kernel-dev/advanced:bsp descriptions`. The
       value you use must match the value used for the
       :term:`LINUX_KERNEL_TYPE` value used by the
       kernel recipe.
@@ -4343,7 +4343,7 @@ system and gives an overview of their function and contents.
    :term:`LINUX_KERNEL_TYPE`
       Defines the kernel type to be used in assembling the configuration.
       The linux-yocto recipes define "standard", "tiny", and "preempt-rt"
-      kernel types. See the ":ref:`kernel-dev/kernel-dev-advanced:kernel types`"
+      kernel types. See the ":ref:`kernel-dev/advanced:kernel types`"
       section in the
       Yocto Project Linux Kernel Development Manual for more information on
       kernel types.

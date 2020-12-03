@@ -49,7 +49,7 @@ Getting Ready to Develop Using ``devtool``
 Follow these steps to prepare to update the kernel image using
 ``devtool``. Completing this procedure leaves you with a clean kernel
 image and ready to make modifications as described in the
-":ref:`kernel-dev/kernel-dev-common:using \`\`devtool\`\` to patch the kernel`"
+":ref:`kernel-dev/common:using \`\`devtool\`\` to patch the kernel`"
 section:
 
 1. *Initialize the BitBake Environment:* Before building an extensible
@@ -212,7 +212,7 @@ section:
 
 At this point you have set up to start making modifications to the
 kernel by using the extensible SDK. For a continued example, see the
-":ref:`kernel-dev/kernel-dev-common:using \`\`devtool\`\` to patch the kernel`"
+":ref:`kernel-dev/common:using \`\`devtool\`\` to patch the kernel`"
 section.
 
 Getting Ready for Traditional Kernel Development
@@ -226,7 +226,7 @@ you will be editing these files.
 Follow these steps to prepare to update the kernel image using
 traditional kernel development flow with the Yocto Project. Completing
 this procedure leaves you ready to make modifications to the kernel
-source as described in the ":ref:`kernel-dev/kernel-dev-common:using traditional kernel development to patch the kernel`"
+source as described in the ":ref:`kernel-dev/common:using traditional kernel development to patch the kernel`"
 section:
 
 1. *Initialize the BitBake Environment:* Before you can do anything
@@ -457,11 +457,11 @@ the :term:`Source Directory` in
 
 Modifying an existing recipe can consist of the following:
 
-- :ref:`kernel-dev/kernel-dev-common:creating the append file`
+- :ref:`kernel-dev/common:creating the append file`
 
-- :ref:`kernel-dev/kernel-dev-common:applying patches`
+- :ref:`kernel-dev/common:applying patches`
 
-- :ref:`kernel-dev/kernel-dev-common:changing the configuration`
+- :ref:`kernel-dev/common:changing the configuration`
 
 Before modifying an existing recipe, be sure that you have created a
 minimal, custom layer from which you can work. See the "`Creating and
@@ -642,9 +642,9 @@ and applies the patches before building the kernel.
 
 For a detailed example showing how to patch the kernel using
 ``devtool``, see the
-":ref:`kernel-dev/kernel-dev-common:using \`\`devtool\`\` to patch the kernel`"
+":ref:`kernel-dev/common:using \`\`devtool\`\` to patch the kernel`"
 and
-":ref:`kernel-dev/kernel-dev-common:using traditional kernel development to patch the kernel`"
+":ref:`kernel-dev/common:using traditional kernel development to patch the kernel`"
 sections.
 
 Changing the Configuration
@@ -769,7 +769,7 @@ the extensible SDK and ``devtool``.
 
    Before attempting this procedure, be sure you have performed the
    steps to get ready for updating the kernel as described in the
-   ":ref:`kernel-dev/kernel-dev-common:getting ready to develop using \`\`devtool\`\``"
+   ":ref:`kernel-dev/common:getting ready to develop using \`\`devtool\`\``"
    section.
 
 Patching the kernel involves changing or adding configurations to an
@@ -782,7 +782,7 @@ output at boot time through ``printk`` statements in the kernel's
 ``calibrate.c`` source code file. Applying the patch and booting the
 modified image causes the added messages to appear on the emulator's
 console. The example is a continuation of the setup procedure found in
-the ":ref:`kernel-dev/kernel-dev-common:getting ready to develop using \`\`devtool\`\``" Section.
+the ":ref:`kernel-dev/common:getting ready to develop using \`\`devtool\`\``" Section.
 
 1. *Check Out the Kernel Source Files:* First you must use ``devtool``
    to checkout the kernel source code in its workspace. Be sure you are
@@ -791,7 +791,7 @@ the ":ref:`kernel-dev/kernel-dev-common:getting ready to develop using \`\`devto
    .. note::
 
       See this step in the
-      ":ref:`kernel-dev/kernel-dev-common:getting ready to develop using \`\`devtool\`\``"
+      ":ref:`kernel-dev/common:getting ready to develop using \`\`devtool\`\``"
       section for more information.
 
    Use the following ``devtool`` command to check out the code:
@@ -912,7 +912,7 @@ the ":ref:`kernel-dev/kernel-dev-common:getting ready to develop using \`\`devto
    .. note::
 
       See Step 3 of the
-      ":ref:`kernel-dev/kernel-dev-common:getting ready to develop using \`\`devtool\`\``"
+      ":ref:`kernel-dev/common:getting ready to develop using \`\`devtool\`\``"
       section for information on setting up this layer.
 
    Once the command
@@ -935,14 +935,14 @@ Using Traditional Kernel Development to Patch the Kernel
 The steps in this procedure show you how you can patch the kernel using
 traditional kernel development (i.e. not using ``devtool`` and the
 extensible SDK as described in the
-":ref:`kernel-dev/kernel-dev-common:using \`\`devtool\`\` to patch the kernel`"
+":ref:`kernel-dev/common:using \`\`devtool\`\` to patch the kernel`"
 section).
 
 .. note::
 
    Before attempting this procedure, be sure you have performed the
    steps to get ready for updating the kernel as described in the
-   ":ref:`kernel-dev/kernel-dev-common:getting ready for traditional kernel development`"
+   ":ref:`kernel-dev/common:getting ready for traditional kernel development`"
    section.
 
 Patching the kernel involves changing or adding configurations to an
@@ -1190,9 +1190,9 @@ the tool and save your changes to create an updated version of the
 
    You can use the entire ``.config`` file as the ``defconfig`` file. For
    information on ``defconfig`` files, see the
-   ":ref:`kernel-dev/kernel-dev-common:changing the configuration`",
-   ":ref:`kernel-dev/kernel-dev-common:using an "in-tree" \`\`defconfig\`\` file`",
-   and ":ref:`kernel-dev/kernel-dev-common:creating a \`\`defconfig\`\` file`"
+   ":ref:`kernel-dev/common:changing the configuration`",
+   ":ref:`kernel-dev/common:using an "in-tree" \`\`defconfig\`\` file`",
+   and ":ref:`kernel-dev/common:creating a \`\`defconfig\`\` file`"
    sections.
 
 Consider an example that configures the "CONFIG_SMP" setting for the
@@ -1320,7 +1320,7 @@ appear in the ``.config`` file, which is in the :term:`Build Directory`.
 
    For more information about where the ``.config`` file is located, see the
    example in the
-   ":ref:`kernel-dev/kernel-dev-common:using \`\`menuconfig\`\``"
+   ":ref:`kernel-dev/common:using \`\`menuconfig\`\``"
    section.
 
 It is simple to create a configuration fragment. One method is to use
@@ -1377,7 +1377,7 @@ information on how to use the output as a configuration fragment.
 .. note::
 
    You can also use this method to create configuration fragments for a
-   BSP. See the ":ref:`kernel-dev/kernel-dev-advanced:bsp descriptions`"
+   BSP. See the ":ref:`kernel-dev/advanced:bsp descriptions`"
    section for more information.
 
 Where do you put your configuration fragment files? You can place these
@@ -1423,7 +1423,7 @@ when you override a policy configuration in a hardware configuration
 fragment.
 
 In order to run this task, you must have an existing ``.config`` file.
-See the ":ref:`kernel-dev/kernel-dev-common:using \`\`menuconfig\`\``" section for
+See the ":ref:`kernel-dev/common:using \`\`menuconfig\`\``" section for
 information on how to create a configuration file.
 
 Following is sample output from the ``do_kernel_configcheck`` task:
@@ -1496,7 +1496,7 @@ and
 tasks until they produce no warnings.
 
 For more information on how to use the ``menuconfig`` tool, see the
-:ref:`kernel-dev/kernel-dev-common:using \`\`menuconfig\`\`` section.
+:ref:`kernel-dev/common:using \`\`menuconfig\`\`` section.
 
 Fine-Tuning the Kernel Configuration File
 -----------------------------------------
@@ -1612,7 +1612,7 @@ source directory. Follow these steps to clean up the version string:
    Depending on your particular kernel development workflow, the
    commands you use to rebuild the kernel might differ. For information
    on building the kernel image when using ``devtool``, see the
-   ":ref:`kernel-dev/kernel-dev-common:using \`\`devtool\`\` to patch the kernel`"
+   ":ref:`kernel-dev/common:using \`\`devtool\`\` to patch the kernel`"
    section. For
    information on building the kernel image when using Bitbake, see the
    "`Using Traditional Kernel Development to Patch the
@@ -1942,7 +1942,7 @@ Adding Recipe-Space Kernel Features
 ===================================
 
 You can add kernel features in the
-:ref:`recipe-space <kernel-dev/kernel-dev-advanced:recipe-space metadata>`
+:ref:`recipe-space <kernel-dev/advanced:recipe-space metadata>`
 by using the :term:`KERNEL_FEATURES`
 variable and by specifying the feature's ``.scc`` file path in the
 :term:`SRC_URI` statement. When you
@@ -1961,7 +1961,7 @@ OpenEmbedded build system searches all forms of kernel Metadata on the
 ``SRC_URI`` statement regardless of whether the Metadata is in the
 "kernel-cache", system kernel Metadata, or a recipe-space Metadata (i.e.
 part of the kernel recipe). See the
-":ref:`kernel-dev/kernel-dev-advanced:kernel metadata location`" section for
+":ref:`kernel-dev/advanced:kernel metadata location`" section for
 additional information.
 
 When you specify the feature's ``.scc`` file on the ``SRC_URI``

@@ -27,7 +27,7 @@ and supported for at least one additional Yocto Project release. As they
 align, these previous releases are updated to include the latest from
 the Long Term Support Initiative (LTSI) project. You can learn more
 about Yocto Linux kernels and LTSI in the
-":ref:`kernel-dev/kernel-dev-concepts-appx:yocto project kernel development and maintenance`" section.
+":ref:`kernel-dev/concepts-appx:yocto project kernel development and maintenance`" section.
 
 Also included is a Yocto Linux kernel development recipe
 (``linux-yocto-dev.bb``) should you want to work with the very latest in
@@ -36,7 +36,7 @@ upstream Yocto Linux kernel development and kernel Metadata development.
 .. note::
 
    For more on Yocto Linux kernels, see the
-   ":ref:`kernel-dev/kernel-dev-concepts-appx:yocto project kernel development and maintenance`"
+   ":ref:`kernel-dev/concepts-appx:yocto project kernel development and maintenance`"
    section.
 
 The Yocto Project also provides a powerful set of kernel tools for
@@ -124,13 +124,13 @@ general information and references for further information.
    Using ``devtool`` and the eSDK requires that you have a clean build
    of the image and that you are set up with the appropriate eSDK. For
    more information, see the
-   ":ref:`kernel-dev/kernel-dev-common:getting ready to develop using \`\`devtool\`\``"
+   ":ref:`kernel-dev/common:getting ready to develop using \`\`devtool\`\``"
    section.
 
    Using traditional kernel development requires that you have the
    kernel source available in an isolated local Git repository. For more
    information, see the
-   ":ref:`kernel-dev/kernel-dev-common:getting ready for traditional kernel development`"
+   ":ref:`kernel-dev/common:getting ready for traditional kernel development`"
    section.
 
 3. *Make Changes to the Kernel Source Code if applicable:* Modifying the
@@ -138,17 +138,17 @@ general information and references for further information.
    if you have to do this, you make the changes to the files in the
    eSDK's Build Directory if you are using ``devtool``. For more
    information, see the
-   ":ref:`kernel-dev/kernel-dev-common:using \`\`devtool\`\` to patch the kernel`"
+   ":ref:`kernel-dev/common:using \`\`devtool\`\` to patch the kernel`"
    section.
 
    If you are using traditional kernel development, you edit the source
    files in the kernel's local Git repository. For more information, see the
-   ":ref:`kernel-dev/kernel-dev-common:using traditional kernel development to patch the kernel`"
+   ":ref:`kernel-dev/common:using traditional kernel development to patch the kernel`"
    section.
 
 4. *Make Kernel Configuration Changes if Applicable:* If your situation
    calls for changing the kernel's configuration, you can use
-   :ref:`menuconfig <kernel-dev/kernel-dev-common:using \`\`menuconfig\`\`>`,
+   :ref:`menuconfig <kernel-dev/common:using \`\`menuconfig\`\`>`,
    which allows you to
    interactively develop and test the configuration changes you are
    making to the kernel. Saving changes you make with ``menuconfig``
@@ -165,7 +165,7 @@ general information and references for further information.
    ``menuconfig`` and you have saved them, you can directly compare the
    resulting ``.config`` file against an existing original and gather
    those changes into a
-   :ref:`configuration fragment file <kernel-dev/kernel-dev-common:creating configuration fragments>` to be
+   :ref:`configuration fragment file <kernel-dev/common:creating configuration fragments>` to be
    referenced from within the kernel's ``.bbappend`` file.
 
    Additionally, if you are working in a BSP layer and need to modify

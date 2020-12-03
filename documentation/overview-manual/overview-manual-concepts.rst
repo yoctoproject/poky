@@ -833,7 +833,7 @@ Yocto Project Development Tasks Manual. You can also see the
 ":ref:`sdk-manual/sdk-extensible:use \`\`devtool modify\`\` to modify the source of an existing component`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (SDK) manual and the
-":ref:`kernel-dev/kernel-dev-common:using traditional kernel development to patch the kernel`"
+":ref:`kernel-dev/common:using traditional kernel development to patch the kernel`"
 section in the Yocto Project Linux Kernel Development Manual.
 
 Configuration, Compilation, and Staging

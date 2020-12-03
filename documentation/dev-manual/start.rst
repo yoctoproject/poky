@@ -288,7 +288,7 @@ Package (BSP) development and kernel development:
    section in the Yocto Project Board Support Package (BSP) Developer's
    Guide.
 
--  *Kernel Development:* See the ":ref:`kernel-dev/kernel-dev-common:preparing the build host to work on the kernel`"
+-  *Kernel Development:* See the ":ref:`kernel-dev/common:preparing the build host to work on the kernel`"
    section in the Yocto Project Linux Kernel Development Manual.
 
 Setting Up a Native Linux Host

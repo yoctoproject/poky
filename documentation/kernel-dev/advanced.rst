@@ -243,7 +243,7 @@ two files: ``smp.scc`` and ``smp.cfg``. You can find these files in the
       CONFIG_X86_BIGSMP=y
 
 You can find general information on configuration
-fragment files in the ":ref:`kernel-dev/kernel-dev-common:creating configuration fragments`" section.
+fragment files in the ":ref:`kernel-dev/common:creating configuration fragments`" section.
 
 Within the ``smp.scc`` file, the
 :term:`KFEATURE_DESCRIPTION`
@@ -264,7 +264,7 @@ non-hardware fragment.
    fragment.
 
 As described in the
-":ref:`kernel-dev/kernel-dev-common:validating configuration`" section, you can
+":ref:`kernel-dev/common:validating configuration`" section, you can
 use the following BitBake command to audit your configuration:
 ::
 
@@ -325,8 +325,8 @@ for the five patches in the directory.
 
 You can create a typical ``.patch`` file using ``diff -Nurp`` or
 ``git format-patch`` commands. For information on how to create patches,
-see the ":ref:`kernel-dev/kernel-dev-common:using \`\`devtool\`\` to patch the kernel`"
-and ":ref:`kernel-dev/kernel-dev-common:using traditional kernel development to patch the kernel`"
+see the ":ref:`kernel-dev/common:using \`\`devtool\`\` to patch the kernel`"
+and ":ref:`kernel-dev/common:using traditional kernel development to patch the kernel`"
 sections.
 
 Features
@@ -388,7 +388,7 @@ type as follows:
    You can find kernel recipes in the ``meta/recipes-kernel/linux`` directory
    of the :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`
    (e.g. ``poky/meta/recipes-kernel/linux/linux-yocto_4.12.bb``). See the
-   ":ref:`kernel-dev/kernel-dev-advanced:using kernel metadata in a recipe`"
+   ":ref:`kernel-dev/advanced:using kernel metadata in a recipe`"
    section for more information.
 
 Three kernel types ("standard", "tiny", and "preempt-rt") are supported
@@ -453,7 +453,7 @@ and ``patch`` commands, respectively.
    It is not strictly necessary to create a kernel type ``.scc``
    file. The Board Support Package (BSP) file can implicitly define the
    kernel type using a ``define`` :term:`KTYPE` ``myktype`` line. See the
-   ":ref:`kernel-dev/kernel-dev-advanced:bsp descriptions`" section for more
+   ":ref:`kernel-dev/advanced:bsp descriptions`" section for more
    information.
 
 BSP Descriptions
@@ -555,7 +555,7 @@ You can see that in the BeagleBone example with the following:
    include beaglebone.scc
 
 For information on how to break a complete ``.config`` file into the various
-configuration fragments, see the ":ref:`kernel-dev/kernel-dev-common:creating configuration fragments`" section.
+configuration fragments, see the ":ref:`kernel-dev/common:creating configuration fragments`" section.
 
 Finally, if you have any configurations specific to the hardware that
 are not in a ``*.scc`` file, you can include them as follows:
@@ -696,7 +696,7 @@ good approach if you are working with Linux kernel sources you do not
 control or if you just do not want to maintain a Linux kernel Git
 repository on your own. For partial information on how you can define
 kernel Metadata in the recipe-space, see the
-":ref:`kernel-dev/kernel-dev-common:modifying an existing recipe`" section.
+":ref:`kernel-dev/common:modifying an existing recipe`" section.
 
 Conversely, if you are actively developing a kernel and are already
 maintaining a Linux kernel Git repository of your own, you might find it
@@ -716,7 +716,7 @@ modifying
 ``oe-core/meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb`` to
 a recipe in your layer, ``FILESEXTRAPATHS`` is typically set to
 ``${``\ :term:`THISDIR`\ ``}/${``\ :term:`PN`\ ``}``.
-See the ":ref:`kernel-dev/kernel-dev-common:modifying an existing recipe`"
+See the ":ref:`kernel-dev/common:modifying an existing recipe`"
 section for more information.
 
 Here is an example that shows a trivial tree of kernel Metadata stored

@@ -2874,7 +2874,7 @@ the ``SRC_URI`` and adding the machine to the expression in
    COMPATIBLE_MACHINE = '(qemux86|qemumips)'
 
 For more information on ``defconfig`` files, see the
-":ref:`kernel-dev/kernel-dev-common:changing the configuration`"
+":ref:`kernel-dev/common:changing the configuration`"
 section in the Yocto Project Linux Kernel Development Manual.
 
 Adding a Formfactor Configuration File
@@ -4084,7 +4084,7 @@ view file dependencies in a human-readable form:
    directory.
 
    For more information on configuration fragments, see the
-   ":ref:`kernel-dev/kernel-dev-common:creating configuration fragments`"
+   ":ref:`kernel-dev/common:creating configuration fragments`"
    section in the Yocto Project Linux Kernel Development Manual.
 
 -  ``bitbake -u taskexp -g bitbake_target``: Using the BitBake command

@@ -37,7 +37,7 @@ kernel that branches off ``linux.org`` version 4.12 and the
 For more information on
 how to set up a local Git repository of the Yocto Project Linux kernel
 files, see the
-":ref:`kernel-dev/kernel-dev-common:preparing the build host to work on the kernel`"
+":ref:`kernel-dev/common:preparing the build host to work on the kernel`"
 section.
 
 Once you have cloned the kernel Git repository and the cache of Metadata

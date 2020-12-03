@@ -693,7 +693,7 @@ from the command line as follows:
    $ bitbake linux-yocto -c diffconfig
 
 For more information, see the
-":ref:`kernel-dev/kernel-dev-common:creating configuration fragments`"
+":ref:`kernel-dev/common:creating configuration fragments`"
 section in the Yocto Project Linux Kernel Development Manual.
 
 .. _ref-tasks-kernel_checkout:
@@ -724,7 +724,7 @@ following command:
    $ bitbake linux-yocto -c kernel_configcheck -f
 
 For more information, see the
-":ref:`kernel-dev/kernel-dev-common:validating configuration`"
+":ref:`kernel-dev/common:validating configuration`"
 section in the Yocto Project Linux Kernel Development Manual.
 
 .. _ref-tasks-kernel_configme:
@@ -756,7 +756,7 @@ tool, which you then use to modify the kernel configuration.
            $ bitbake linux-yocto -c menuconfig
 
 
-See the ":ref:`kernel-dev/kernel-dev-common:using \`\`menuconfig\`\``"
+See the ":ref:`kernel-dev/common:using \`\`menuconfig\`\``"
 section in the Yocto Project Linux Kernel Development Manual for more
 information on this configuration tool.
 
@@ -780,7 +780,7 @@ which can then be applied by subsequent tasks such as
 
 Runs ``make menuconfig`` for the kernel. For information on
 ``menuconfig``, see the
-":ref:`kernel-dev/kernel-dev-common:using \`\`menuconfig\`\``"
+":ref:`kernel-dev/common:using \`\`menuconfig\`\``"
 section in the Yocto Project Linux Kernel Development Manual.
 
 .. _ref-tasks-savedefconfig:

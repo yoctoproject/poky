@@ -117,7 +117,7 @@ methods exist for you to do work in the Yocto Project environment:
    The :doc:`/kernel-dev/index` provides kernel-related
    development information. For specifics on development host
    preparation, see the
-   ":ref:`kernel-dev/kernel-dev-common:preparing the build host to work on the kernel`"
+   ":ref:`kernel-dev/common:preparing the build host to work on the kernel`"
    section in the Yocto Project Linux Kernel Development Manual.
 
 -  *Using Toaster:* The other Yocto Project development method that

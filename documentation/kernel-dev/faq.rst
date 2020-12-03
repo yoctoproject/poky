@@ -13,21 +13,21 @@ How do I use my own Linux kernel ``.config`` file?
 --------------------------------------------------
 
 Refer to the
-":ref:`kernel-dev/kernel-dev-common:changing the configuration`"
+":ref:`kernel-dev/common:changing the configuration`"
 section for information.
 
 How do I create configuration fragments?
 ----------------------------------------
 
 A: Refer to the
-":ref:`kernel-dev/kernel-dev-common:creating configuration fragments`"
+":ref:`kernel-dev/common:creating configuration fragments`"
 section for information.
 
 How do I use my own Linux kernel sources?
 -----------------------------------------
 
 Refer to the
-":ref:`kernel-dev/kernel-dev-common:working with your own sources`"
+":ref:`kernel-dev/common:working with your own sources`"
 section for information.
 
 How do I install/not-install the kernel image on the rootfs?
@@ -63,7 +63,7 @@ machine:
    MACHINE_EXTRA_RRECOMMENDS += "kernel-module-ab123"
 
 For more information, see the
-":ref:`kernel-dev/kernel-dev-common:incorporating out-of-tree modules`" section.
+":ref:`kernel-dev/common:incorporating out-of-tree modules`" section.
 
 How do I change the Linux kernel command line?
 ----------------------------------------------
