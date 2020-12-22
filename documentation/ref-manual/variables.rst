@@ -3983,8 +3983,9 @@ system and gives an overview of their function and contents.
       when building the kernel and is passed to ``make`` as the target to
       build.
 
-      If you want to build an alternate kernel image type, use the
-      :term:`KERNEL_ALT_IMAGETYPE` variable.
+      If you want to build an alternate kernel image type in addition to that
+      specified by ``KERNEL_IMAGETYPE``, use the :term:`KERNEL_ALT_IMAGETYPE`
+      variable.
 
    :term:`KERNEL_MODULE_AUTOLOAD`
       Lists kernel modules that need to be auto-loaded during boot.
