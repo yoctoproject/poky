@@ -1374,18 +1374,18 @@ generation.
 ``kernel-fitimage.bbclass``
 ===========================
 
-The ``kernel-fitimage`` class provides support to pack a kernel Image,
+The ``kernel-fitimage`` class provides support to pack a kernel image,
 device trees and a RAM disk into a single FIT image. In theory, a FIT
-image can support any number of kernels, RAM disks and device-trees.
+image can support any number of kernels, RAM disks and device trees.
 However, ``kernel-fitimage`` currently only supports
 limited usescases: just one kernel image, an optional RAM disk, and
-any number of device tree.
+any number of device trees.
 
 To create a FIT image, it is required that :term:`KERNEL_CLASSES`
-is set to "kernel-fitimage" and :term:`KERNEL_IMAGETYPE`
+is set to include "kernel-fitimage" and :term:`KERNEL_IMAGETYPE`
 is set to "fitImage".
 
-The options for the device tree compiler passed to mkimage -D feature
+The options for the device tree compiler passed to ``mkimage -D``
 when creating the FIT image are specified using the
 :term:`UBOOT_MKIMAGE_DTCOPTS` variable.
 
