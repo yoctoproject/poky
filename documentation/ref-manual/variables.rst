@@ -2538,6 +2538,13 @@ system and gives an overview of their function and contents.
       For guidance on how to create your own file permissions settings
       table file, examine the existing ``fs-perms.txt``.
 
+   :term:`FIT_DESC`
+      Specifies the description string encoded into a fitImage. The default
+      value is set by the :ref:`kernel-fitimage <ref-classes-kernel-fitimage>`
+      class as follows::
+
+         FIT_DESC ?= "U-Boot fitImage for ${DISTRO_NAME}/${PV}/${MACHINE}"
+
    :term:`FIT_GENERATE_KEYS`
       Decides whether to generate the keys for signing fitImage if they
       don't already exist. The keys are created in ``UBOOT_SIGN_KEYDIR``.
@@ -2567,6 +2574,13 @@ system and gives an overview of their function and contents.
    :term:`FIT_SIGN_NUMBITS`
       Size of private key in number of bits used in fitImage. The default
       value is "2048".
+
+   :term:`FIT_SIGN_INDIVIDUAL`
+      If set to "1", then the :ref:`kernel-fitimage <ref-classes-kernel-fitimage>`
+      class will sign the kernel, dtb and ramdisk images individually in addition
+      to signing the fitImage itself. This could be useful if you are
+      intending to verify signatures in another context than booting via
+      U-Boot.
 
    :term:`FONT_EXTRA_RDEPENDS`
       When inheriting the :ref:`fontcache <ref-classes-fontcache>` class,
@@ -8441,11 +8455,29 @@ system and gives an overview of their function and contents.
       Specifies the target called in the ``Makefile``. The default target
       is "all".
 
+   :term:`UBOOT_MKIMAGE`
+      Specifies the name of the mkimage command as used by the
+      :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class to assemble
+      the FIT image. This can be used to substitute an alternative command, wrapper
+      script or function if desired. The default is "uboot-mkimage".
+
    :term:`UBOOT_MKIMAGE_DTCOPTS`
       Options for the device tree compiler passed to mkimage '-D'
       feature while creating FIT image in :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class.
       If ``UBOOT_MKIMAGE_DTCOPTS`` is not set then kernel-fitimage will not
       pass the ``-D`` option to mkimage.
+
+   :term:`UBOOT_MKIMAGE_SIGN`
+      Specifies the name of the mkimage command as used by the
+      :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class to sign
+      the FIT image after it has been assembled (if enabled). This can be used
+      to substitute an alternative command, wrapper script or function if
+      desired. The default is "${:term:`UBOOT_MKIMAGE`}".
+
+   :term:`UBOOT_MKIMAGE_SIGN_ARGS`
+      Optionally specifies additional arguments for the
+      :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class to pass to the
+      mkimage command when signing the FIT image.
 
    :term:`UBOOT_RD_ENTRYPOINT`
       Specifies the entrypoint for the RAM disk image.
