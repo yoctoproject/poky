@@ -2662,7 +2662,7 @@ system and gives an overview of their function and contents.
          GROUPADD_PARAM_${PN} = "-r netdev"
 
       For information on the standard Linux shell command
-      ``groupadd``, see http://linux.die.net/man/8/groupadd.
+      ``groupadd``, see https://linux.die.net/man/8/groupadd.
 
    :term:`GROUPMEMS_PARAM`
       When inheriting the :ref:`useradd <ref-classes-useradd>` class,
@@ -2671,7 +2671,7 @@ system and gives an overview of their function and contents.
       of a group when the package is installed.
 
       For information on the standard Linux shell command ``groupmems``,
-      see http://linux.die.net/man/8/groupmems.
+      see https://linux.die.net/man/8/groupmems.
 
    :term:`GRUB_GFXSERIAL`
       Configures the GNU GRand Unified Bootloader (GRUB) to have graphics
@@ -4694,7 +4694,7 @@ system and gives an overview of their function and contents.
       See the :term:`KERNEL_MODULE_AUTOLOAD` variable for more information.
 
    module_conf
-      Specifies `modprobe.d <http://linux.die.net/man/5/modprobe.d>`_
+      Specifies `modprobe.d <https://linux.die.net/man/5/modprobe.d>`_
       syntax lines for inclusion in the ``/etc/modprobe.d/modname.conf``
       file.
 
@@ -7619,7 +7619,7 @@ system and gives an overview of their function and contents.
          SYSTEMD_BOOT_CFG ?= "${:term:`S`}/loader.conf"
 
       For information on Systemd-boot, see the `Systemd-boot
-      documentation <http://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__.
+      documentation <https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__.
 
    :term:`SYSTEMD_BOOT_ENTRIES`
       When :term:`EFI_PROVIDER` is set to
@@ -7633,7 +7633,7 @@ system and gives an overview of their function and contents.
           SYSTEMD_BOOT_ENTRIES ?= ""
 
       For information on Systemd-boot, see the `Systemd-boot
-      documentation <http://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__.
+      documentation <https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__.
 
    :term:`SYSTEMD_BOOT_TIMEOUT`
       When :term:`EFI_PROVIDER` is set to
@@ -7646,7 +7646,7 @@ system and gives an overview of their function and contents.
          SYSTEMD_BOOT_TIMEOUT ?= "10"
 
       For information on Systemd-boot, see the `Systemd-boot
-      documentation <http://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__.
+      documentation <https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__.
 
    :term:`SYSTEMD_PACKAGES`
       When inheriting the :ref:`systemd <ref-classes-systemd>` class,
@@ -7677,7 +7677,7 @@ system and gives an overview of their function and contents.
       When using
       :ref:`SysVinit <dev-manual/common-tasks:enabling system services>`,
       specifies a space-separated list of the virtual terminals that should
-      run a `getty <http://en.wikipedia.org/wiki/Getty_%28Unix%29>`__
+      run a `getty <https://en.wikipedia.org/wiki/Getty_%28Unix%29>`__
       (allowing login), assuming :term:`USE_VT` is not set to
       "0".
 
@@ -7901,7 +7901,7 @@ system and gives an overview of their function and contents.
       toolchain. One example is the Sourcery G++ Toolchain. The support for
       this toolchain resides in the separate Mentor Graphics
       ``meta-sourcery`` layer at
-      http://github.com/MentorEmbedded/meta-sourcery/.
+      https://github.com/MentorEmbedded/meta-sourcery/.
 
       The layer's ``README`` file contains information on how to use the
       Sourcery G++ Toolchain as an external toolchain. In summary, you must
@@ -8597,7 +8597,7 @@ system and gives an overview of their function and contents.
       When using
       :ref:`SysVinit <dev-manual/common-tasks:enabling system services>`,
       determines whether or not to run a
-      `getty <http://en.wikipedia.org/wiki/Getty_%28Unix%29>`__ on any
+      `getty <https://en.wikipedia.org/wiki/Getty_%28Unix%29>`__ on any
       virtual terminals in order to enable logging in through those
       terminals.
 
@@ -8708,7 +8708,7 @@ system and gives an overview of their function and contents.
 
       For information on the
       standard Linux shell command ``useradd``, see
-      http://linux.die.net/man/8/useradd.
+      https://linux.die.net/man/8/useradd.
 
    :term:`USERADD_UID_TABLES`
       Specifies a password file to use for obtaining static user

@@ -6043,7 +6043,7 @@ the Internet:
    Botnet
 
 -  *"*\ `Security Issues for Embedded
-   Devices <http://elinux.org/images/6/6f/Security-issues.pdf>`__\ *"*
+   Devices <https://elinux.org/images/6/6f/Security-issues.pdf>`__\ *"*
    by Jake Edge
 
 When securing your image is of concern, there are steps, tools, and

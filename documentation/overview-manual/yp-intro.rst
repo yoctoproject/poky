@@ -368,7 +368,7 @@ activities using the Yocto Project:
 
 -  *Patchwork:* `Patchwork <http://jk.ozlabs.org/projects/patchwork/>`__
    is a fork of a project originally started by
-   `OzLabs <http://ozlabs.org/>`__. The project is a web-based tracking
+   `OzLabs <https://ozlabs.org/>`__. The project is a web-based tracking
    system designed to streamline the process of bringing contributions
    into a project. The Yocto Project uses Patchwork as an organizational
    tool to handle patches, which number in the thousands for every
@@ -400,7 +400,7 @@ activities using the Yocto Project:
 
    Historically, cross-prelink is a variant of prelink, which was
    conceived by `Jakub
-   Jelínek <http://people.redhat.com/jakub/prelink.pdf>`__ a number of
+   Jelínek <https://people.redhat.com/jakub/prelink.pdf>`__ a number of
    years ago. Both prelink and cross-prelink are maintained in the same
    repository albeit on separate branches. By providing an emulated
    runtime dynamic linker (i.e. ``glibc``-derived ``ld.so`` emulation),

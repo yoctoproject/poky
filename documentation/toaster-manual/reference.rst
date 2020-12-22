@@ -29,7 +29,7 @@ layer index's web application at :yocto_git:`/layerindex-web/`.
 
 When you tie a layer source into Toaster, it can query the layer source
 through a
-`REST <http://en.wikipedia.org/wiki/Representational_state_transfer>`__
+`REST <https://en.wikipedia.org/wiki/Representational_state_transfer>`__
 API, store the information about the layers in the Toaster database, and
 then show the information to users. Users are then able to view that
 information and build layers from Toaster itself without worrying about
@@ -370,7 +370,7 @@ Remote Toaster Monitoring
 Toaster has an API that allows remote management applications to
 directly query the state of the Toaster server and its builds in a
 machine-to-machine manner. This API uses the
-`REST <http://en.wikipedia.org/wiki/Representational_state_transfer>`__
+`REST <https://en.wikipedia.org/wiki/Representational_state_transfer>`__
 interface and the transfer of JSON files. For example, you might monitor
 a build inside a container through well supported known HTTP ports in
 order to easily access a Toaster server inside the container. In this

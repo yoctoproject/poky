@@ -278,7 +278,7 @@ The ``ccache`` class enables the C/C++ Compiler Cache for the build.
 This class is used to give a minor performance boost during the build.
 However, using the class can lead to unexpected side-effects. Thus, it
 is recommended that you do not use this class. See
-http://ccache.samba.org/ for information on the C/C++ Compiler
+https://ccache.samba.org/ for information on the C/C++ Compiler
 Cache.
 
 .. _ref-classes-chrpath:
@@ -2581,7 +2581,7 @@ the :term:`SYSTEMD_BOOT_CFG`,
 :term:`SYSTEMD_BOOT_TIMEOUT` variables.
 
 You can also see the `Systemd-boot
-documentation <http://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__
+documentation <https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__
 for more information.
 
 .. _ref-classes-terminal:

@@ -274,7 +274,7 @@ The following package management changes took place:
    fixed.
 
    For more information, see the `DNF
-   Documentation <http://dnf.readthedocs.io/en/latest/>`__.
+   Documentation <https://dnf.readthedocs.io/en/latest/>`__.
 
 -  Rpm 5.x is replaced with Rpm 4.x. This is done for two major reasons:
 
