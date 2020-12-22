@@ -118,8 +118,7 @@ Here is a list of resources you might find helpful:
    distribution from which the Yocto Project derives its build system
    (Poky) and to which it contributes.
 
--  :oe_home:`BitBake </wiki/BitBake>`\ *:* The tool
-   used to process metadata.
+-  :oe_wiki:`BitBake </BitBake>`\ *:* The tool used to process metadata.
 
 -  :doc:`BitBake User Manual <bitbake:index>`\ *:* A comprehensive
    guide to the BitBake tool. If you want information on BitBake, see

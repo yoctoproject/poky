@@ -2540,7 +2540,7 @@ Following Recipe Style Guidelines
 ---------------------------------
 
 When writing recipes, it is good to conform to existing style
-guidelines. The :oe_home:`OpenEmbedded Styleguide </wiki/Styleguide>` wiki page
+guidelines. The :oe_wiki:`OpenEmbedded Styleguide </Styleguide>` wiki page
 provides rough guidelines for preferred recipe style.
 
 It is common for existing recipes to deviate a bit from this style.

@@ -531,8 +531,7 @@ targets:
    Debian Package (dpkg) in operation.
 
    Opkg is intended for use on embedded Linux devices and is used in
-   this capacity in the
-   `OpenEmbedded <http://www.openembedded.org/wiki/Main_Page>`__ and
+   this capacity in the :oe_home:`OpenEmbedded <>` and
    `OpenWrt <https://openwrt.org/>`__ projects, as well as the Yocto
    Project.
 

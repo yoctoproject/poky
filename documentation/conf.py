@@ -79,6 +79,7 @@ extlinks = {
     'oe_home': ('https://www.openembedded.org%s', None),
     'oe_lists': ('https://lists.openembedded.org%s', None),
     'oe_git': ('https://git.openembedded.org%s', None),
+    'oe_wiki': ('https://www.openembedded.org/wiki%s', None),
 }
 
 # Intersphinx config to use cross reference with Bitbake user manual
