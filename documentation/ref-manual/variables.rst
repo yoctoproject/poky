@@ -8404,21 +8404,21 @@ system and gives an overview of their function and contents.
       In this example, "sd" is selected as the configuration of the possible four for the
       ``UBOOT_MACHINE``. The "sd" configuration defines
       "mx6qsabreauto_config" as the value for ``UBOOT_MACHINE``, while the
-      "sdcard" specifies the ``IMAGE_FSTYPES`` to use for the U-boot image.
+      "sdcard" specifies the ``IMAGE_FSTYPES`` to use for the U-Boot image.
 
       For more information on how the ``UBOOT_CONFIG`` is handled, see the
       :ref:`uboot-config <ref-classes-uboot-config>`
       class.
 
    :term:`UBOOT_DTB_LOADADDRESS`
-      Specifies the load address for the dtb image used by U-boot. During FIT
+      Specifies the load address for the dtb image used by U-Boot. During FIT
       image creation, the ``UBOOT_DTB_LOADADDRESS`` variable is used in
       :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class to specify
       the load address to be used in
       creating the dtb sections of Image Tree Source for the FIT image.
 
    :term:`UBOOT_DTBO_LOADADDRESS`
-      Specifies the load address for the dtbo image used by U-boot.  During FIT
+      Specifies the load address for the dtbo image used by U-Boot.  During FIT
       image creation, the ``UBOOT_DTBO_LOADADDRESS`` variable is used in
       :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class to specify the load address to be used in
       creating the dtbo sections of Image Tree Source for the FIT image.
@@ -8503,7 +8503,7 @@ system and gives an overview of their function and contents.
       certificate used for signing FIT image.
 
    :term:`UBOOT_SIGN_KEYNAME`
-      The name of keys used for signing U-boot FIT image stored in
+      The name of keys used for signing U-Boot FIT image stored in
       :term:`UBOOT_SIGN_KEYDIR` directory. For e.g. dev.key key and dev.crt
       certificate stored in :term:`UBOOT_SIGN_KEYDIR` directory will have
       :term:`UBOOT_SIGN_KEYNAME` set to "dev".

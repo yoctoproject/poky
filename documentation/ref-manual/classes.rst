@@ -1391,19 +1391,19 @@ when creating the FIT image are specified using the
 
 Only a single kernel can be added to the FIT image created by
 ``kernel-fitimage`` and the kernel image in FIT is mandatory. The
-address where the kernel image is to be loaded by U-boot is
+address where the kernel image is to be loaded by U-Boot is
 specified by :term:`UBOOT_LOADADDRESS` and the entrypoint by
 :term:`UBOOT_ENTRYPOINT`.
 
 Multiple device trees can be added to the FIT image created by
 ``kernel-fitimage`` and the device tree is optional.
-The address where the device tree is to be loaded by U-boot is
+The address where the device tree is to be loaded by U-Boot is
 specified by :term:`UBOOT_DTBO_LOADADDRESS` for device tree overlays
 and by :term:`UBOOT_DTB_LOADADDRESS` for device tree binaries.
 
 Only a single RAM disk can be added to the FIT image created by
 ``kernel-fitimage`` and the RAM disk in FIT is optional.
-The address where the RAM disk image is to be loaded by U-boot
+The address where the RAM disk image is to be loaded by U-Boot
 is specified by :term:`UBOOT_RD_LOADADDRESS` and the entrypoint by
 :term:`UBOOT_RD_ENTRYPOINT`. The ramdisk is added to FIT image when
 :term:`INITRAMFS_IMAGE` is specified.
