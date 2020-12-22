@@ -38,9 +38,8 @@ Follow these general steps to create your layer without using tools:
 
 1. *Check Existing Layers:* Before creating a new layer, you should be
    sure someone has not already created a layer containing the Metadata
-   you need. You can see the `OpenEmbedded Metadata
-   Index <https://layers.openembedded.org/layerindex/layers/>`__ for a
-   list of layers from the OpenEmbedded community that can be used in
+   you need. You can see the :oe_layerindex:`OpenEmbedded Metadata Index <>`
+   for a list of layers from the OpenEmbedded community that can be used in
    the Yocto Project. You could find a layer that is identical or close
    to what you need.
 
@@ -1194,8 +1193,8 @@ Before writing a recipe from scratch, it is often useful to discover
 whether someone else has already written one that meets (or comes close
 to meeting) your needs. The Yocto Project and OpenEmbedded communities
 maintain many recipes that might be candidates for what you are doing.
-You can find a good central index of these recipes in the `OpenEmbedded
-Layer Index <https://layers.openembedded.org>`__.
+You can find a good central index of these recipes in the
+:oe_layerindex:`OpenEmbedded Layer Index <>`.
 
 Working from an existing recipe or a skeleton recipe is the best way to
 get started. Here are some points on both methods:

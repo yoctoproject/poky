@@ -238,7 +238,7 @@ to substitute a GPLv2 version of a GPLv3 recipe, then you must add the
 .. note::
 
    You can ``find meta-gplv2`` layer in the OpenEmbedded layer index at
-   https://layers.openembedded.org/layerindex/branch/master/layer/meta-gplv2/.
+   :oe_layer:`/meta-gplv2`.
 
 These relocated GPLv2 recipes do not receive the same level of
 maintenance as other core recipes. The recipes do not get security fixes

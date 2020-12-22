@@ -221,8 +221,7 @@ your Metadata, the easier it is to cope with future changes.
 
    -  Familiarize yourself with the `Yocto Project curated layer
       index <https://www.yoctoproject.org/software-overview/layers/>`__
-      or the `OpenEmbedded layer
-      index <http://layers.openembedded.org/layerindex/branch/master/layers/>`__.
+      or the :oe_layerindex:`OpenEmbedded layer index <>`.
       The latter contains more layers but they are less universally
       validated.
 
@@ -364,8 +363,7 @@ activities using the Yocto Project:
    versions available for Yocto Project. The main purpose of the system
    is to help you manage the recipes you maintain and to offer a dynamic
    overview of the project. The Recipe Reporting System is built on top
-   of the `OpenEmbedded Layer
-   Index <http://layers.openembedded.org/layerindex/layers/>`__, which
+   of the :oe_layerindex:`OpenEmbedded Layer Index <>`, which
    is a website that indexes OpenEmbedded-Core layers.
 
 -  *Patchwork:* `Patchwork <http://jk.ozlabs.org/projects/patchwork/>`__
