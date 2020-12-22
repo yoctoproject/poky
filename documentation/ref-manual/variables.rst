@@ -8444,6 +8444,8 @@ system and gives an overview of their function and contents.
    :term:`UBOOT_MKIMAGE_DTCOPTS`
       Options for the device tree compiler passed to mkimage '-D'
       feature while creating FIT image in :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class.
+      If ``UBOOT_MKIMAGE_DTCOPTS`` is not set then kernel-fitimage will not
+      pass the ``-D`` option to mkimage.
 
    :term:`UBOOT_RD_ENTRYPOINT`
       Specifies the entrypoint for the RAM disk image.
