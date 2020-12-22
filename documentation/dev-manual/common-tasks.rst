@@ -321,7 +321,7 @@ Logo for your layer and application. The process consists of two parts:
    successful compatibility registration.
 
 2. Completion of an application acceptance form, which you can find at
-   https://www.yoctoproject.org/webform/yocto-project-compatible-registration.
+   :yocto_home:`/webform/yocto-project-compatible-registration`.
 
 To be granted permission to use the logo, you need to satisfy the
 following:
@@ -345,7 +345,7 @@ application, you can use the Yocto Project Compatibility Logo with your
 layer and the application that uses your layer.
 
 To access the form, use this link:
-https://www.yoctoproject.org/webform/yocto-project-compatible-registration.
+:yocto_home:`/webform/yocto-project-compatible-registration`.
 Follow the instructions on the form to complete your application.
 
 The application consists of the following sections:

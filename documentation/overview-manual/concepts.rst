@@ -141,11 +141,10 @@ hardware-specific configurations allows you to share other metadata by
 using a different layer where that metadata might be common across
 several pieces of hardware.
 
-Many layers exist that work in the Yocto Project development
-environment. The `Yocto Project Curated Layer
-Index <https://www.yoctoproject.org/software-overview/layers/>`__
-and :oe_layerindex:`OpenEmbedded Layer Index <>`
-both contain layers from which you can use or leverage.
+Many layers exist that work in the Yocto Project development environment. The
+:yocto_home:`Yocto Project Curated Layer Index </software-overview/layers/>`
+and :oe_layerindex:`OpenEmbedded Layer Index <>` both contain layers from
+which you can use or leverage.
 
 By convention, layers in the Yocto Project follow a specific form.
 Conforming to a known structure allows BitBake to make assumptions
@@ -2093,10 +2092,8 @@ The capability to run tasks in a fake root environment is known as
 the BitBake keyword/variable flag that requests a fake root environment
 for a task.
 
-In the :term:`OpenEmbedded Build System`,
-the program that
-implements fakeroot is known as
-`Pseudo <https://www.yoctoproject.org/software-item/pseudo/>`__. Pseudo
+In the :term:`OpenEmbedded Build System`, the program that implements
+fakeroot is known as :yocto_home:`Pseudo </software-item/pseudo/>`. Pseudo
 overrides system calls by using the environment variable ``LD_PRELOAD``,
 which results in the illusion of running as root. To keep track of
 "fake" file ownership and permissions resulting from operations that

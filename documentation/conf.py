@@ -68,7 +68,7 @@ rst_prolog = """
 
 # external links and substitutions
 extlinks = {
-    'yocto_home': ('https://yoctoproject.org%s', None),
+    'yocto_home': ('https://www.yoctoproject.org%s', None),
     'yocto_wiki': ('https://wiki.yoctoproject.org/wiki%s', None),
     'yocto_dl': ('https://downloads.yoctoproject.org%s', None),
     'yocto_lists': ('https://lists.yoctoproject.org%s', None),
