@@ -33,7 +33,7 @@ Welcome to the Yocto Project Documentation
    Profile and Tracing Manual <profile-manual/profile-manual>
    Application Development and the Extensible SDK (eSDK) <sdk-manual/sdk-manual>
    Toaster Manual <toaster-manual/toaster-manual>
-   Bitbake User Manual <https://docs.yoctoproject.org/bitbake>
+   Bitbake User Manual <https://docs.yoctoproject.org/bitbake/1.46>
 
 .. toctree::
    :maxdepth: 1
