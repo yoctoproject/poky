@@ -2298,7 +2298,7 @@ directory BitBake uses for the build.
    S = "${WORKDIR}"
 
    do_compile() {
-       ${CC} helloworld.c -o helloworld
+       ${CC} ${LDFLAGS} helloworld.c -o helloworld
    }
 
    do_install() {
