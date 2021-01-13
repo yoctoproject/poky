@@ -931,7 +931,7 @@ For information on customizing images, see the
 in the Yocto Project Development Tasks Manual. For information on how
 images are created, see the
 ":ref:`overview-manual/concepts:images`" section in the
-Yocto Project Overview and Concpets Manual.
+Yocto Project Overview and Concepts Manual.
 
 .. _ref-classes-image-buildinfo:
 
