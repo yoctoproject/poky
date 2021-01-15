@@ -2075,6 +2075,12 @@ recipe:
 
    SYSROOT_DIRS += "/opt"
 
+.. note::
+
+   The `/sysroot-only` is to be used by recipes that generate artifacts
+   that are not included in the target filesystem, allowing them to share
+   these artifacts without needing to use the ``DEPLOY_DIR``.
+
 For a more complete description of the
 :ref:`ref-tasks-populate_sysroot`
 task and its associated functions, see the
