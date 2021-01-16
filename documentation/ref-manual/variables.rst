@@ -4202,11 +4202,11 @@ system and gives an overview of their function and contents.
       this variable in your layer's ``conf/layer.conf`` configuration file.
       For the list, use the Yocto Project
       :yocto_wiki:`Release Name </Releases>` (e.g.
-      DISTRO_NAME_NO_CAP). To specify multiple OE-Core versions for the
+      &DISTRO_NAME_NO_CAP;). To specify multiple OE-Core versions for the
       layer, use a space-separated list:
       ::
 
-         LAYERSERIES_COMPAT_layer_root_name = "DISTRO_NAME_NO_CAP DISTRO_NAME_NO_CAP_MINUS_ONE"
+         LAYERSERIES_COMPAT_layer_root_name = "&DISTRO_NAME_NO_CAP; &DISTRO_NAME_NO_CAP_MINUS_ONE;"
 
       .. note::
 

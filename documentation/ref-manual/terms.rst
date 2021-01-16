@@ -90,13 +90,13 @@ universal, the list includes them just in case:
          -  Provide a directory path and specifically name the Build
             Directory. Any intermediate folders in the pathname must exist.
             This next example creates a Build Directory named
-            ``YP-POKYVERSION`` in your home directory within the existing
+            ``YP-&POKYVERSION;`` in your home directory within the existing
             directory ``mybuilds``:
 
             .. code-block:: shell
 
                $ cd $HOME
-               $ source $HOME/poky/oe-init-build-env $HOME/mybuilds/YP-POKYVERSION
+               $ source $HOME/poky/oe-init-build-env $HOME/mybuilds/YP-&POKYVERSION;
 
       .. note::
 
