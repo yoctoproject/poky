@@ -5915,23 +5915,16 @@ system and gives an overview of their function and contents.
       file ``eudev_3.2.9.bb``:
       ::
 
-         PROVIDES = "udev"
+         PROVIDES += "udev"
 
       The ``PROVIDES`` statement
       results in the "eudev" recipe also being available as simply "udev".
 
       .. note::
 
-         Given that a recipe's own recipe name is already implicitly in its
-         own PROVIDES list, it is unnecessary to add aliases with the "+=" operator;
-         using a simple assignment will be sufficient. In other words,
-         while you could write:
-         ::
-
-                 PROVIDES += "udev"
-
-
-         in the above, the "+=" is overkill and unnecessary.
+         A recipe's own recipe name (:term:`PN`) is always implicitly prepended
+         to `PROVIDES`, so while using "+=" in the above example may not be
+         strictly necessary it is recommended to avoid confusion.
 
       In addition to providing recipes under alternate names, the
       ``PROVIDES`` mechanism is also used to implement virtual targets. A
