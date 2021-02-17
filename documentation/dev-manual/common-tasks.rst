@@ -5908,7 +5908,7 @@ the existing kernel, and then inserts a new kernel:
               $ wic help ls
 
 
-   The following command shows what is in Partition one:
+   The following command shows what is in partition one:
    ::
 
         $ wic ls tmp/deploy/images/qemux86/core-image-minimal-qemux86.wic:1

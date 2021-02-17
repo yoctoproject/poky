@@ -8801,7 +8801,7 @@ system and gives an overview of their function and contents.
       The ``WKS_FILE_DEPENDS`` variable is similar to the
       :term:`DEPENDS` variable. When you use the variable in
       your recipe that builds the Wic image, dependencies you list in the
-      ``WIC_FILE_DEPENDS`` variable are added to the ``DEPENDS`` variable.
+      ``WKS_FILE_DEPENDS`` variable are added to the ``DEPENDS`` variable.
 
       With the ``WKS_FILE_DEPENDS`` variable, you have the possibility to
       specify a list of additional dependencies (e.g. native tools,
