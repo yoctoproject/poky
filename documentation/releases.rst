@@ -22,6 +22,7 @@
 - :yocto_docs:`3.1.3 Documentation </3.1.3>`
 - :yocto_docs:`3.1.4 Documentation </3.1.4>`
 - :yocto_docs:`3.1.5 Documentation </3.1.5>`
+- :yocto_docs:`3.1.6 Documentation </3.1.6>`
 
 ==========================
  Previous Release Manuals
