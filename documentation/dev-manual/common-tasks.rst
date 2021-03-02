@@ -10023,7 +10023,52 @@ before starting the debugging process. These extra computations place
 more load on the target system and can alter the characteristics of the
 program being debugged.
 
-To help get past the previously mentioned constraints, you can use
+To help get past the previously mentioned constraints, there are two
+methods you can use: running a debuginfod server and using gdbserver.
+
+Using the debuginfod server method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+"debuginfod" from "elfutils" is a way to distribute "debuginfo" files.
+Running a "debuginfod" server makes debug symbols readily available,
+which means you don't need to download debugging information
+and the binaries of the process being debugged. You can just fetch
+debug symbols from the server.
+
+To run a debuginfod server, you need to do the following:
+
+-  Ensure that this variable is set in your ``local.conf`` file:
+   ::
+
+      PACKAGECONFIG_pn-elfutils-native = "debuginfod libdebuginfod"
+
+   This :term:`PACKAGECONFIG` option enables debuginfod and libdebuginfod for
+   "elfutils-native".
+
+-  Run the following commands to set up the "debuginfod" server:
+   ::
+
+      $ oe-debuginfod
+
+
+To use debuginfod on the target, you need the following:
+
+-  Ensure that this variable is set in your ``local.conf`` file:
+   ::
+
+      DEBUGINFOD_URLS = "http://localhost:8002/"
+
+   This :term:`DEBUGINFOD_URLS` option does the client configuration.
+
+   ::
+
+        PACKAGECONFIG_pn-gdb = "debuginfod"
+
+   This :term:`PACKAGECONFIG` option enables "debuginfod" for "gdb".
+
+Using the gdbserver method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 gdbserver, which runs on the remote target and does not load any
 debugging information from the debugged process. Instead, a GDB instance
 processes the debugging information that is run on a remote computer -
