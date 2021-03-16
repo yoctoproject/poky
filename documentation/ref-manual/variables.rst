@@ -2230,7 +2230,7 @@ system and gives an overview of their function and contents.
       .. note::
 
          To add packages to the root filesystem, see the various
-         \*:term:`RDEPENDS` and \*:term:`RRECOMMENDS` variables.
+         :term:`RDEPENDS` and :term:`RRECOMMENDS` variables.
 
    :term:`EXTRANATIVEPATH`
       A list of subdirectories of
