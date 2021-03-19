@@ -189,7 +189,7 @@ an entire Linux distribution, including the toolchain, from source.
 
       The Yocto Project has extensive documentation about OE including a reference
       manual which can be found at:
-          http://yoctoproject.org/documentation
+          https://docs.yoctoproject.org
 
       For more information about OpenEmbedded see their website:
           http://www.openembedded.org/
