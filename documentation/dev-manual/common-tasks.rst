@@ -3007,7 +3007,7 @@ The following steps describe how to set up the AUH utility:
    running the AUH utility:
    ::
 
-      $ cd ~/poky
+      $ cd poky
       $ source oe-init-build-env your_AUH_build_directory
 
    Re-using an existing build directory and its configurations is not
@@ -5956,8 +5956,8 @@ the existing kernel, and then inserts a new kernel:
    kernel:
    ::
 
-      $ wic cp ~/poky_sdk/tmp/work/qemux86-poky-linux/linux-yocto/4.12.12+git999-r0/linux-yocto-4.12.12+git999/arch/x86/boot/bzImage \
-               ~/poky/build/tmp/deploy/images/qemux86/core-image-minimal-qemux86.wic:1/vmlinuz
+      $ wic cp poky_sdk/tmp/work/qemux86-poky-linux/linux-yocto/4.12.12+git999-r0/linux-yocto-4.12.12+git999/arch/x86/boot/bzImage \
+               poky/build/tmp/deploy/images/qemux86/core-image-minimal-qemux86.wic:1/vmlinuz
 
    Once the new kernel is added back into the image, you can use the
    ``dd`` command or :ref:`bmaptool
@@ -6956,7 +6956,7 @@ variable to specify the format:
 
 1. Open the ``local.conf`` file inside your
    :term:`Build Directory` (e.g.
-   ``~/poky/build/conf/local.conf``).
+   ``poky/build/conf/local.conf``).
 
 2. Select the desired package format as follows:
    ::
@@ -7048,11 +7048,11 @@ From within the build directory where you have built an image based on
 your packaging choice (i.e. the
 :term:`PACKAGE_CLASSES`
 setting), simply start the server. The following example assumes a build
-directory of ``~/poky/build/tmp/deploy/rpm`` and a ``PACKAGE_CLASSES``
+directory of ``poky/build/tmp/deploy/rpm`` and a ``PACKAGE_CLASSES``
 setting of "package_rpm":
 ::
 
-   $ cd ~/poky/build/tmp/deploy/rpm
+   $ cd poky/build/tmp/deploy/rpm
    $ python3 -m http.server
 
 Target Setup
@@ -8409,7 +8409,7 @@ that queries the Git repository and prints just the differences that
 might be significant in human-readable form. Here is an example:
 ::
 
-   $ ~/poky/poky/scripts/buildhistory-diff . HEAD^
+   $ poky/poky/scripts/buildhistory-diff . HEAD^
    Changes to images/qemux86_64/glibc/core-image-minimal (files-in-image.txt):
       /etc/anotherpkg.conf was added
       /sbin/anotherpkg was added
@@ -10738,7 +10738,7 @@ been followed:
    are ``create-pull-request`` and ``send-pull-request``. You can find
    these scripts in the ``scripts`` directory within the
    :term:`Source Directory` (e.g.
-   ``~/poky/scripts``).
+   ``poky/scripts``).
 
    Using these scripts correctly formats the requests without
    introducing any whitespace or HTML formatting. The maintainer that
@@ -10752,7 +10752,7 @@ been followed:
    line in the created patch files:
    ::
 
-      $ ~/poky/scripts/create-pull-request -u meta-intel-contrib -s "Updated Manual Section Reference in README"
+      $ poky/scripts/create-pull-request -u meta-intel-contrib -s "Updated Manual Section Reference in README"
 
    Running this script forms ``*.patch`` files in a folder named
    ``pull-``\ `PID` in the current directory. One of the patch files is a
@@ -10766,7 +10766,7 @@ been followed:
    list:
    ::
 
-      $ ~/poky/scripts/send-pull-request -p ~/meta-intel/pull-10565 -t meta-intel@yoctoproject.org
+      $ poky/scripts/send-pull-request -p ~/meta-intel/pull-10565 -t meta-intel@yoctoproject.org
 
    You need to follow the prompts as the script is interactive.
 
