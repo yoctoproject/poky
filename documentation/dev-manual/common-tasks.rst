@@ -5362,7 +5362,7 @@ command to return the available Wic images as follows:
      genericx86                    		Create an EFI disk image for genericx86*
      beaglebone-yocto              		Create SD card image for Beaglebone
      edgerouter                    		Create SD card image for Edgerouter
-     qemux86-directdisk            		Create a qemu machine 'pcbios' direct disk image
+     qemux86-directdisk            		Create a QEMU machine 'pcbios' direct disk image
      directdisk-gpt                		Create a 'pcbios' direct disk image
      mkefidisk                     		Create an EFI disk image
      directdisk                    		Create a 'pcbios' direct disk image
@@ -5509,7 +5509,7 @@ Use the following command to list the available kickstart files:
      genericx86                    		Create an EFI disk image for genericx86*
      beaglebone-yocto              		Create SD card image for Beaglebone
      edgerouter                    		Create SD card image for Edgerouter
-     qemux86-directdisk            		Create a qemu machine 'pcbios' direct disk image
+     qemux86-directdisk            		Create a QEMU machine 'pcbios' direct disk image
      directdisk-gpt                		Create a 'pcbios' direct disk image
      mkefidisk                     		Create an EFI disk image
      directdisk                    		Create a 'pcbios' direct disk image
@@ -8522,7 +8522,7 @@ In order to run tests, you need to do the following:
 
    -  Ubuntu and Debian: ``sysstat`` and ``iproute2``
 
-   -  OpenSUSE: ``sysstat`` and ``iproute2``
+   -  openSUSE: ``sysstat`` and ``iproute2``
 
    -  Fedora: ``sysstat`` and ``iproute``
 
@@ -8648,7 +8648,7 @@ perform a one-time setup of your master image by doing the following:
 
    -  Inherits ``core-image`` so that kernel modules are installed.
 
-   -  Installs normal linux utilities not busybox ones (e.g. ``bash``,
+   -  Installs normal linux utilities not BusyBox ones (e.g. ``bash``,
       ``coreutils``, ``tar``, ``gzip``, and ``kmod``).
 
    -  Uses a custom Initial RAM Disk (initramfs) image with a custom

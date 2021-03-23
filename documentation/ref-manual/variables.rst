@@ -2582,7 +2582,7 @@ system and gives an overview of their function and contents.
       and new for generating new keys.
 
    :term:`FIT_KEY_SIGN_PKCS`
-      Format for public key ceritifcate used in signing fitImage.
+      Format for public key certificate used in signing fitImage.
       The default value is "x509".
 
    :term:`FIT_SIGN_ALG`
@@ -3449,7 +3449,7 @@ system and gives an overview of their function and contents.
 
          It is possible to define a list of licenses that are allowed to be
          used instead of the licenses that are excluded. To do this, define
-         a variable ``COMPATIBLE_LICENSES`` with the names of the licences
+         a variable ``COMPATIBLE_LICENSES`` with the names of the licenses
          that are allowed. Then define ``INCOMPATIBLE_LICENSE`` as:
          ::
 
@@ -3457,8 +3457,8 @@ system and gives an overview of their function and contents.
 
 
          This will result in ``INCOMPATIBLE_LICENSE`` containing the names of
-         all licences from :term:`AVAILABLE_LICENSES` except the ones specified
-         in ``COMPATIBLE_LICENSES`` , thus only allowing the latter licences to
+         all licenses from :term:`AVAILABLE_LICENSES` except the ones specified
+         in ``COMPATIBLE_LICENSES`` , thus only allowing the latter licenses to
          be used.
 
    :term:`INHERIT`
@@ -5011,7 +5011,7 @@ system and gives an overview of their function and contents.
          ${PN}-${PV}
 
    :term:`PACKAGE_ADD_METADATA`
-      This variable defines additional metdata to add to packages.
+      This variable defines additional metadata to add to packages.
 
       You may find you need to inject additional metadata into packages.
       This variable allows you to do that by setting the injected data as
@@ -7092,7 +7092,7 @@ system and gives an overview of their function and contents.
       -  ``git://`` - Fetches files from a Git revision control
          repository.
 
-      -  ``osc://`` - Fetches files from an OSC (OpenSUSE Build service)
+      -  ``osc://`` - Fetches files from an OSC (openSUSE Build service)
          revision control repository.
 
       -  ``repo://`` - Fetches files from a repo (Git) repository.

@@ -59,7 +59,7 @@ distributions:
 
 -  Debian GNU/Linux 10.x (Buster)
 
--  OpenSUSE Leap 15.1
+-  openSUSE Leap 15.1
 
 
 .. note::

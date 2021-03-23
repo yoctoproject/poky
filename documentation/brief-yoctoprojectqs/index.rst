@@ -204,7 +204,7 @@ an entire Linux distribution, including the toolchain, from source.
           meta-toolchain
           meta-ide-support
 
-      You can also run generated qemu images with a command like 'runqemu qemux86-64'
+      You can also run generated QEMU images with a command like 'runqemu qemux86-64'
 
    Among other things, the script creates the :term:`Build Directory`, which is
    ``build`` in this case and is located in the :term:`Source Directory`.  After

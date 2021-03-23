@@ -289,7 +289,7 @@ individual BSPs could differ. ::
    meta-bsp_root_name/recipes-kernel/linux/linux-yocto_kernel_rev.bbappend
 
 Below is an example of the Raspberry Pi BSP layer that is available from
-the :yocto_git:`Source Respositories <>`:
+the :yocto_git:`Source Repositories <>`:
 
 .. code-block:: none
 
