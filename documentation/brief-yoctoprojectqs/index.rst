@@ -106,42 +106,57 @@ commands to clone the Poky repository.
    Resolving deltas: 100% (323116/323116), done.
    Checking connectivity... done.
 
-Move to the ``poky`` directory and take a look at the tags:
+Go to :yocto_wiki:`Releases wiki page </Releases>`, and choose a release
+codename (such as ``&DISTRO_NAME_NO_CAP;``), corresponding to either the
+latest stable release or a Long Term Support release.
+
+Then move to the ``poky`` directory and take a look at existing branches:
 
 .. code-block:: shell
 
    $ cd poky
-   $ git fetch --tags
-   $ git tag
-   1.1_M1.final
-   1.1_M1.rc1
-   1.1_M1.rc2
-   1.1_M2.final
-   1.1_M2.rc1
+   $ git branch -a
    .
    .
    .
-   yocto-2.5
-   yocto-2.5.1
-   yocto-2.5.2
-   yocto-2.6
-   yocto-2.6.1
-   yocto-2.6.2
-   yocto-2.7
-   yocto_1.5_M5.rc8
+   remotes/origin/HEAD -> origin/master
+   remotes/origin/dunfell
+   remotes/origin/dunfell-next
+   .
+   .
+   .
+   remotes/origin/gatesgarth
+   remotes/origin/gatesgarth-next
+   .
+   .
+   .
+   remotes/origin/master
+   remotes/origin/master-next
+   .
+   .
+   .
 
-For this example, check out the branch based on the
-``&DISTRO_REL_TAG;`` release:
+
+For this example, check out the ``&DISTRO_NAME_NO_CAP;`` branch based on the
+``&DISTRO_NAME;`` release:
 
 .. code-block:: shell
 
-   $ git checkout tags/&DISTRO_REL_TAG; -b my-&DISTRO_REL_TAG;
-   Switched to a new branch 'my-&DISTRO_REL_TAG;'
+   $ git checkout -t origin/&DISTRO_NAME_NO_CAP; -b my-&DISTRO_NAME_NO_CAP;
+   Branch 'my-&DISTRO_NAME_NO_CAP;' set up to track remote branch '&DISTRO_NAME_NO_CAP;' from 'origin'.
+   Switched to a new branch 'my-&DISTRO_NAME_NO_CAP;'
 
 The previous Git checkout command creates a local branch named
-``my-&DISTRO_REL_TAG;``. The files available to you in that branch exactly
-match the repository's files in the ``&DISTRO_NAME_NO_CAP;`` development
-branch at the time of the Yocto Project &DISTRO_REL_TAG; release.
+``my-&DISTRO_NAME_NO_CAP;``. The files available to you in that branch
+exactly match the repository's files in the ``&DISTRO_NAME_NO_CAP;``
+release branch.
+
+Note that you can regularly type the following command in the same directory
+to keep your local files in sync with the release branch:
+
+.. code-block:: shell
+
+   $ git pull
 
 For more options and information about accessing Yocto Project related
 repositories, see the
