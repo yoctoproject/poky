@@ -1271,11 +1271,9 @@ To update your installed SDK, use ``devtool`` as follows:
    $ devtool sdk-update
 
 The previous command assumes your SDK provider has set the
-default update URL for you through the
-:term:`SDK_UPDATE_URL`
-variable as described in the "`Providing Updates to the Extensible SDK
-After
-Installation <#sdk-providing-updates-to-the-extensible-sdk-after-installation>`__"
+default update URL for you through the :term:`SDK_UPDATE_URL`
+variable as described in the
+":ref:`sdk-manual/appendix-customizing:Providing Updates to the Extensible SDK After Installation`"
 section. If the SDK provider has not set that default URL, you need to
 specify it yourself in the command as follows: $ devtool sdk-update
 path_to_update_directory
