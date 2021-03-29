@@ -256,7 +256,7 @@ important for now), which takes the buffers the kernel passes to it and
 writes it to a disk file to save it.
 
 The part of this process that we're looking at in the above call stacks
-is the part where the kernel passes the data it's read from the socket
+is the part where the kernel passes the data it has read from the socket
 down to wget i.e. a copy-to-user.
 
 Notice also that here there's also a case where the hex value is
@@ -1580,7 +1580,7 @@ events in the output buffer: ::
    root@sugarbay:/sys/kernel/debug/tracing# echo nop > current_tracer
    root@sugarbay:/sys/kernel/debug/tracing# echo 1 > tracing_on
 
-Now, if we look at the the 'trace' file, we see nothing
+Now, if we look at the 'trace' file, we see nothing
 but the kmalloc events we just turned on: ::
 
    root@sugarbay:/sys/kernel/debug/tracing# cat trace | less

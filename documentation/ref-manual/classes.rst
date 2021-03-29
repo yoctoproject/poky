@@ -1426,7 +1426,7 @@ Only a single U-boot boot script can be added to the FIT image created by
 The boot script is specified in the ITS file as a text file containing
 U-boot commands. When using a boot script the user should configure the
 U-boot ``do_install`` task to copy the script to sysroot.
-So the script can be included in the the FIT image by the ``kernel-fitimage``
+So the script can be included in the FIT image by the ``kernel-fitimage``
 class. At run-time, U-boot CONFIG_BOOTCOMMAND define can be configured to
 load the boot script from the FIT image and executes it.
 

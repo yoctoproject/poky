@@ -135,7 +135,7 @@ consists of the following pieces:
 
 -  :ref:`ptest <dev-manual/common-tasks:testing packages with ptest>`:
    Runs tests against packages produced during the build for a given
-   piece of software. The test allows the packages to be be run within a
+   piece of software. The test allows the packages to be run within a
    target image.
 
 -  ``oe-selftest``: Tests combination BitBake invocations. These tests

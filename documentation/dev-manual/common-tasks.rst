@@ -2065,7 +2065,7 @@ A subset of the files installed by the
 :ref:`ref-tasks-install` task are
 used by the
 :ref:`ref-tasks-populate_sysroot`
-task as defined by the the
+task as defined by the
 :term:`SYSROOT_DIRS` variable to
 automatically populate the sysroot. It is possible to modify the list of
 directories that populate the sysroot. The following example shows how
@@ -4591,7 +4591,7 @@ directory:
          section.
 
       3. Once you have the correct source revisions, you can modify
-         those recipes to to set ``SRCREV`` to specific versions of the
+         those recipes to set ``SRCREV`` to specific versions of the
          software.
 
 Speeding Up a Build
@@ -6599,7 +6599,7 @@ Quality <#maintaining-build-output-quality>`__" section.
 
    The OpenEmbedded build system does not maintain ``PR`` information as
    part of the shared state (sstate) packages. If you maintain an sstate
-   feed, its expected that either all your building systems that
+   feed, it's expected that either all your building systems that
    contribute to the sstate feed use a shared PR Service, or you do not
    run a PR Service on any of your building systems. Having some systems
    use a PR Service while others do not leads to obvious problems.
@@ -7070,7 +7070,7 @@ runtime package management of RPM packages. In order to use DNF for
 runtime package management, you must perform an initial setup on the
 target machine for cases where the ``PACKAGE_FEED_*`` variables were not
 set as part of the image that is running on the target. This means if
-you built your image and did not not use these variables as part of the
+you built your image and did not use these variables as part of the
 build and your image is now running on the target, you need to perform
 the steps in this section if you want to use runtime package management.
 

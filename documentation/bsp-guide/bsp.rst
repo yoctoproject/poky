@@ -250,7 +250,7 @@ standardization of software support for hardware.
 The proposed form described in this section does have elements that are
 specific to the OpenEmbedded build system. It is intended that
 developers can use this structure with other build systems besides the
-OpenEmbedded build system. It is also intended that it will be be simple
+OpenEmbedded build system. It is also intended that it will be simple
 to extract information and convert it to other formats if required. The
 OpenEmbedded build system, through its standard :ref:`layers mechanism
 <overview-manual/yp-intro:the yocto project layer model>`, can
@@ -1036,7 +1036,7 @@ the following:
    to reside in a machine-specific directory.
 
 Following is a specific example to help you better understand the
-process. This example customizes customizes a recipe by adding a
+process. This example customizes a recipe by adding a
 BSP-specific configuration file named ``interfaces`` to the
 ``init-ifupdown_1.0.bb`` recipe for machine "xyz" where the BSP layer
 also supports several other machines:

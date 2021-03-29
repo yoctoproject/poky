@@ -272,7 +272,7 @@ of the ``poky`` repository, you will see several layers: ``meta``,
 ``meta-yocto-bsp``. Each of these repositories represents a distinct
 layer.
 
-For procedures on how to create layers, see the 
+For procedures on how to create layers, see the
 ":ref:`dev-manual/common-tasks:understanding and creating layers`"
 section in the Yocto Project Development Tasks Manual.
 
@@ -283,7 +283,7 @@ The Yocto Project employs a collection of components and tools used by
 the project itself, by project developers, and by those using the Yocto
 Project. These components and tools are open source projects and
 metadata that are separate from the reference distribution
-(:term:`Poky`) and the 
+(:term:`Poky`) and the
 :term:`OpenEmbedded Build System`. Most of the
 components and tools are downloaded separately.
 
@@ -325,7 +325,7 @@ applications using the Yocto Project:
 
    You can read about the ``devtool`` workflow in the Yocto Project
    Application Development and Extensible Software Development Kit
-   (eSDK) Manual in the 
+   (eSDK) Manual in the
    ":ref:`sdk-manual/extensible:using \`\`devtool\`\` in your sdk workflow`"
    section.
 
@@ -571,7 +571,7 @@ Linux.
 Development Methods
 ===================
 
-The Yocto Project development environment usually involves a 
+The Yocto Project development environment usually involves a
 :term:`Build Host` and target
 hardware. You use the Build Host to build images and develop
 applications, while you use the target hardware to test deployed
@@ -597,7 +597,7 @@ Project.
    supported Linux distribution.
 
    For information on how to set up a Build Host on a system running
-   Linux as its native operating system, see the 
+   Linux as its native operating system, see the
    ":ref:`dev-manual/start:setting up a native linux host`"
    section in the Yocto Project Development Tasks Manual.
 
@@ -646,7 +646,7 @@ Project.
    builds is collected and stored in a database. You can use Toaster to
    configure and start builds on multiple remote build servers.
 
-   For information about and how to use Toaster, see the 
+   For information about and how to use Toaster, see the
    :doc:`/toaster-manual/index`.
 
 Reference Embedded Distribution (Poky)
@@ -820,10 +820,10 @@ helpful for getting started:
    them. You can search the Layer Index for layers used within Yocto
    Project.
 
-   For more detailed information on layers, see the 
+   For more detailed information on layers, see the
    ":ref:`dev-manual/common-tasks:understanding and creating layers`"
    section in the Yocto Project Development Tasks Manual. For a
-   discussion specifically on BSP Layers, see the 
+   discussion specifically on BSP Layers, see the
    ":ref:`bsp-guide/bsp:bsp layers`" section in the Yocto
    Project Board Support Packages (BSP) Developer's Guide.
 

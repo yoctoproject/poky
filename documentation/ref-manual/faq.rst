@@ -449,7 +449,7 @@ variable ``bindir``. The makefile's hardcoded default value of
 "/usr/bin" worked most of the time, but not for the recipe's ``-native``
 variant. For another example, permissions errors might be caused by a
 Makefile that ignores ``DESTDIR`` or uses a different name for that
-environment variable. Check the the build system to see if these kinds
+environment variable. Check the build system to see if these kinds
 of issues exist.
 
 **Q:** I'm adding a binary in a recipe but it's different in the image, what is

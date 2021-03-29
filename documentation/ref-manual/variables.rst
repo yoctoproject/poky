@@ -2991,7 +2991,7 @@ system and gives an overview of their function and contents.
 
    :term:`IMAGE_CMD`
       Specifies the command to create the image file for a specific image
-      type, which corresponds to the value set set in
+      type, which corresponds to the value set in
       :term:`IMAGE_FSTYPES`, (e.g. ``ext3``,
       ``btrfs``, and so forth). When setting this variable, you should use
       an override for the associated type. Here is an example:
@@ -3458,7 +3458,7 @@ system and gives an overview of their function and contents.
 
          This will result in ``INCOMPATIBLE_LICENSE`` containing the names of
          all licenses from :term:`AVAILABLE_LICENSES` except the ones specified
-         in ``COMPATIBLE_LICENSES`` , thus only allowing the latter licenses to
+         in ``COMPATIBLE_LICENSES``, thus only allowing the latter licenses to
          be used.
 
    :term:`INHERIT`

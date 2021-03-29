@@ -111,7 +111,7 @@ roughly consist of:
    :ref:`test-manual/understand-autobuilder:Autobuilder Clone Cache`.
 
    This step has two possible modes of operation. If the build is part
-   of a parent build, its possible that all the repositories needed may
+   of a parent build, it's possible that all the repositories needed may
    already be available, ready in a pre-prepared directory. An "a-quick"
    or "a-full" build would prepare this before starting the other
    sub-target builds. This is done for two reasons:
@@ -130,7 +130,7 @@ roughly consist of:
 
 #. *Call scripts/run-config*
 
-   This is another call into the Helper scripts where its expected that
+   This is another call into the Helper scripts where it's expected that
    the main functionality of this target will be executed.
 
 Autobuilder Technology

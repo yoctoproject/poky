@@ -1914,7 +1914,7 @@ differences:
    $ git show origin/standard/base..origin/standard/emenlow
 
 Use this command to create individual patches for each change. Here is
-an example that that creates patch files for each commit and places them
+an example that creates patch files for each commit and places them
 in your ``Documents`` directory:
 ::
 

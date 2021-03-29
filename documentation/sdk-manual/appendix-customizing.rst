@@ -139,7 +139,7 @@ Changing the Extensible SDK Installer Title
 
 You can change the displayed title for the SDK installer by setting the
 :term:`SDK_TITLE` variable and then
-rebuilding the the SDK installer. For information on how to build an SDK
+rebuilding the SDK installer. For information on how to build an SDK
 installer, see the "`Building an SDK
 Installer <#sdk-building-an-sdk-installer>`__" section.
 
