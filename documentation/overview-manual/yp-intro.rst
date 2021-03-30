@@ -262,8 +262,7 @@ with the string ``meta-``.
 .. note::
 
    It is not a requirement that a layer name begin with the prefix
-   meta-
-   , but it is a commonly accepted standard in the Yocto Project
+   ``meta-``, but it is a commonly accepted standard in the Yocto Project
    community.
 
 For example, if you were to examine the :yocto_git:`tree view </poky/tree/>`
@@ -283,8 +282,7 @@ The Yocto Project employs a collection of components and tools used by
 the project itself, by project developers, and by those using the Yocto
 Project. These components and tools are open source projects and
 metadata that are separate from the reference distribution
-(:term:`Poky`) and the
-:term:`OpenEmbedded Build System`. Most of the
+(:term:`Poky`) and the :term:`OpenEmbedded Build System`. Most of the
 components and tools are downloaded separately.
 
 This section provides brief overviews of the components and tools
@@ -655,14 +653,12 @@ Reference Embedded Distribution (Poky)
 
 "Poky", which is pronounced *Pock*-ee, is the name of the Yocto
 Project's reference distribution or Reference OS Kit. Poky contains the
-:term:`OpenEmbedded Build System`
-(:term:`BitBake` and
-:term:`OpenEmbedded-Core (OE-Core)`) as well as a set
-of :term:`Metadata` to get you started
-building your own distro. In other words, Poky is a base specification
-of the functionality needed for a typical embedded system as well as the
-components from the Yocto Project that allow you to build a distribution
-into a usable binary image.
+:term:`OpenEmbedded Build System` (:term:`BitBake` and
+:term:`OpenEmbedded-Core (OE-Core)`) as well as a set of
+:term:`Metadata` to get you started building your own distro. In other
+words, Poky is a base specification of the functionality needed for a
+typical embedded system as well as the components from the Yocto Project
+that allow you to build a distribution into a usable binary image.
 
 Poky is a combined repository of BitBake, OpenEmbedded-Core (which is
 found in ``meta``), ``meta-poky``, ``meta-yocto-bsp``, and documentation

@@ -2111,8 +2111,7 @@ accomplished using fakeroot.
    under fakeroot. Otherwise, the task cannot run root-only operations,
    and cannot see the fake file ownership and permissions set by the
    other task. You need to also add a dependency on
-   virtual/fakeroot-native:do_populate_sysroot
-   , giving the following:
+   ``virtual/fakeroot-native:do_populate_sysroot``, giving the following:
    ::
 
       fakeroot do_mytask () {

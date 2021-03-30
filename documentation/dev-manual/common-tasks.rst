@@ -2061,16 +2061,12 @@ sysroot are cataloged in manifests in order to ensure the files can be
 removed later when a recipe is either modified or removed. Thus, the
 sysroot is able to remain free from stale files.
 
-A subset of the files installed by the
-:ref:`ref-tasks-install` task are
-used by the
-:ref:`ref-tasks-populate_sysroot`
-task as defined by the
-:term:`SYSROOT_DIRS` variable to
-automatically populate the sysroot. It is possible to modify the list of
-directories that populate the sysroot. The following example shows how
-you could add the ``/opt`` directory to the list of directories within a
-recipe:
+A subset of the files installed by the :ref:`ref-tasks-install` task are
+used by the :ref:`ref-tasks-populate_sysroot` task as defined by the the
+:term:`SYSROOT_DIRS` variable to automatically populate the sysroot. It
+is possible to modify the list of directories that populate the sysroot.
+The following example shows how you could add the ``/opt`` directory to
+the list of directories within a recipe:
 ::
 
    SYSROOT_DIRS += "/opt"
@@ -2081,8 +2077,7 @@ recipe:
    that are not included in the target filesystem, allowing them to share
    these artifacts without needing to use the ``DEPLOY_DIR``.
 
-For a more complete description of the
-:ref:`ref-tasks-populate_sysroot`
+For a more complete description of the :ref:`ref-tasks-populate_sysroot`
 task and its associated functions, see the
 :ref:`staging <ref-classes-staging>` class.
 

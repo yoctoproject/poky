@@ -768,9 +768,7 @@ system and gives an overview of their function and contents.
       .. note::
 
          If you run BitBake from a directory outside of the
-         Build Directory
-         , you must be sure to set
-         BBPATH
+         :term:`Build Directory`, you must be sure to set ``BBPATH``
          to point to the Build Directory. Set the variable as you would any
          environment variable and then run BitBake:
          ::
