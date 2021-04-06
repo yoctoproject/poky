@@ -134,7 +134,7 @@ or that mention ``do_rootfs``, you might need to update those changes.
 In particular, if you had added any tasks after ``do_rootfs``, you
 should make edits so that those tasks are after the
 :ref:`ref-tasks-image-complete` task rather than
-after ``do_rootfs`` so that the your added tasks run at the correct
+after ``do_rootfs`` so that your added tasks run at the correct
 time.
 
 A minor part of this restructuring is that the post-processing
