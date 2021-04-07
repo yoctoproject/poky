@@ -38,7 +38,7 @@ Follow these steps to locate and hand-install the toolchain:
                 "sato" or "minimal"
 
           arch is a string representing the target architecture:
-                 "aarch64", "armv5e", "core2-64", "coretexa8hf-neon", "i586", "mips32r2",
+                 "aarch64", "armv5e", "core2-64", "cortexa8hf-neon", "i586", "mips32r2",
                  "mips64", or "ppc7400"
 
           release is the version of Yocto Project.
