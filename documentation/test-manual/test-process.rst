@@ -63,7 +63,7 @@ milestone releases (usually four) with the final one being stabilization
 only along with point releases of our stable branches.
 
 The build and release process for these project releases is similar to
-that in `Day to Day Development <#test-daily-devel>`__, in that the
+that in :ref:`test-manual/test-process:day to day development`, in that the
 a-full target of the Autobuilder is used but in addition the form is
 configured to generate and publish artifacts and the milestone number,
 version, release candidate number and other information is entered. The

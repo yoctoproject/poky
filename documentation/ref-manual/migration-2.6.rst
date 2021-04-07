@@ -110,7 +110,7 @@ upon the older ``*proto`` recipes need to be changed to depend on the
 newer ``xorgproto`` recipe instead.
 
 For names of recipes removed because of this repository change, see the
-`Removed Recipes <#removed-recipes>`__ section.
+:ref:`ref-manual/migration-2.6:removed recipes` section.
 
 .. _migration-2.6-distutils-distutils3-fetching-dependencies:
 

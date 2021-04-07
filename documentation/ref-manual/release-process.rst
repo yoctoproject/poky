@@ -15,9 +15,8 @@ Major and Minor Release Cadence
 The Yocto Project delivers major releases (e.g. &DISTRO;) using a six
 month cadence roughly timed each April and October of the year.
 Following are examples of some major YP releases with their codenames
-also shown. See the "`Major Release
-Codenames <#major-release-codenames>`__" section for information on
-codenames used with major releases.
+also shown. See the ":ref:`ref-manual/release-process:major release codenames`"
+section for information on codenames used with major releases.
 
   - 2.2 (Morty) 
   - 2.1 (Krogoth)

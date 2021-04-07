@@ -96,18 +96,18 @@ Project:
    of your design instead of adopting decisions enforced by some system
    software provider.
 
--  *Uses a Layer Model:* The Yocto Project `layer
-   infrastructure <#the-yocto-project-layer-model>`__ groups related
-   functionality into separate bundles. You can incrementally add these
-   grouped functionalities to your project as needed. Using layers to
+-  *Uses a Layer Model:* The Yocto Project :ref:`layer
+   infrastructure <overview-manual/yp-intro:the yocto project layer model>`
+   groups related functionality into separate bundles. You can incrementally
+   add these grouped functionalities to your project as needed. Using layers to
    isolate and group functionality reduces project complexity and
    redundancy, allows you to easily extend the system, make
    customizations, and keep functionality organized.
 
 -  *Supports Partial Builds:* You can build and rebuild individual
    packages as needed. Yocto Project accomplishes this through its
-   `shared-state cache <#shared-state-cache>`__ (sstate) scheme. Being
-   able to build and debug components individually eases project
+   :ref:`overview-manual/concepts:shared state cache` (sstate) scheme.
+   Being able to build and debug components individually eases project
    development.
 
 -  *Releases According to a Strict Schedule:* Major releases occur on a
@@ -155,8 +155,9 @@ developing using the Yocto Project:
    documents on the Yocto Project website.
 
 -  *Project Workflow Could Be Confusing:* The `Yocto Project
-   workflow <#overview-development-environment>`__ could be confusing if
-   you are used to traditional desktop and server software development.
+   workflow <overview-manual/development-environment:the yocto project development environment>`
+   could be confusing if you are used to traditional desktop and server
+   software development.
    In a desktop development environment, mechanisms exist to easily pull
    and install new packages, which are typically pre-compiled binaries
    from servers accessible over the Internet. Using the Yocto Project,
@@ -437,8 +438,8 @@ activities using the Yocto Project:
    Thanks to Pseudo, the Yocto Project never needs root privileges to
    build images for your target system.
 
-   You can read more about Pseudo in the "`Fakeroot and
-   Pseudo <#fakeroot-and-pseudo>`__" section.
+   You can read more about Pseudo in the
+   ":ref:`overview-manual/concepts:fakeroot and pseudo`" section.
 
 Open-Embedded Build System Components
 -------------------------------------
@@ -480,9 +481,9 @@ The following list consists of components associated with the
 
    Sharing a core set of metadata results in Poky as an integration
    layer on top of OE-Core. You can see that in this
-   `figure <#yp-key-dev-elements>`__. The Yocto Project combines various
-   components such as BitBake, OE-Core, script "glue", and documentation
-   for its build system.
+   :ref:`figure <overview-manual/yp-intro:what is the yocto project?>`.
+   The Yocto Project combines various components such as BitBake, OE-Core,
+   script "glue", and documentation for its build system.
 
 Reference Distribution (Poky)
 -----------------------------
@@ -490,8 +491,8 @@ Reference Distribution (Poky)
 Poky is the Yocto Project reference distribution. It contains the
 :term:`OpenEmbedded Build System`
 (BitBake and OE-Core) as well as a set of metadata to get you started
-building your own distribution. See the
-`figure <#what-is-the-yocto-project>`__ in "What is the Yocto Project?"
+building your own distribution. See the figure in
+":ref:`overview-manual/yp-intro:what is the yocto project?`"
 section for an illustration that shows Poky and its relationship with
 other parts of the Yocto Project.
 
@@ -503,8 +504,9 @@ To use the Yocto Project tools and components, you can download
    Poky does not contain binary files. It is a working example of how to
    build your own custom Linux distribution from source.
 
-You can read more about Poky in the "`Reference Embedded Distribution
-(Poky) <#reference-embedded-distribution>`__" section.
+You can read more about Poky in the
+":ref:`overview-manual/yp-intro:reference embedded distribution (poky)`"
+section.
 
 Packages for Finished Targets
 -----------------------------
@@ -567,7 +569,7 @@ Linux.
 
 3. *CROPS:* The final and best solution available now for developing
    using the Yocto Project on a system not native to Linux is with
-   `CROPS <#gs-crops-overview>`__.
+   :ref:`CROPS <overview-manual/yp-intro:development tools>`.
 
 Development Methods
 ===================
@@ -727,7 +729,8 @@ Sato.
 One of the most powerful properties of Poky is that every aspect of a
 build is controlled by the metadata. You can use metadata to augment
 these base image types by adding metadata
-`layers <#the-yocto-project-layer-model>`__ that extend functionality.
+`layers <overview-manual/yp-intro:the yocto project layer model>` that extend
+functionality.
 These layers can provide, for example, an additional software stack for
 an image type, add a board support package (BSP) for additional
 hardware, or even create a new image type.
@@ -784,8 +787,8 @@ Following is a brief summary of the "workflow":
 7. The build system generates the file system image and a customized
    Extensible SDK (eSDK) for application development in parallel.
 
-For a very detailed look at this workflow, see the "`OpenEmbedded Build
-System Concepts <#openembedded-build-system-build-concepts>`__" section.
+For a very detailed look at this workflow, see the
+":ref:`overview-manual/concepts:openembedded build system concepts`" section.
 
 Some Basic Terms
 ================

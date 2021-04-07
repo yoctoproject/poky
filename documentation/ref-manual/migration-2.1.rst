@@ -179,9 +179,8 @@ The following recipes have been removed in the 2.1 release:
 
 -  ``python-pygtk``: Recipe became obsolete.
 
--  ``adt-installer``: Recipe became obsolete. See the "`ADT
-   Removed <#adt-removed>`__" section for more
-   information.
+-  ``adt-installer``: Recipe became obsolete. See the
+   ":ref:`ref-manual/migration-2.1:adt removed`" section for more information.
 
 .. _migration-2.1-class-changes:
 
