@@ -4659,6 +4659,14 @@ system and gives an overview of their function and contents.
    :term:`MAINTAINER`
       The email address of the distribution maintainer.
 
+   :term:`METADATA_BRANCH`
+      The branch currently checked out for the OpenEmbedded-Core layer (path
+      determined by :term:`COREBASE`).
+
+   :term:`METADATA_REVISION`
+      The revision currently checked out for the OpenEmbedded-Core layer (path
+      determined by :term:`COREBASE`).
+
    :term:`MIRRORS`
       Specifies additional paths from which the OpenEmbedded build system
       gets source code. When the build system searches for source code, it
