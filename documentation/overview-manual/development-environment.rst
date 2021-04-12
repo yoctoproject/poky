@@ -542,7 +542,7 @@ descriptions and strategies on how to use these commands:
    in this form assumes the local branch already exists. This command is
    analogous to "cd".
 
--  *git checkout –b working-branch upstream-branch:* Creates and
+-  *git checkout -b working-branch upstream-branch:* Creates and
    checks out a working branch on your local machine. The local branch
    tracks the upstream branch. You can use your local branch to isolate
    your work. It is a good idea to use local branches when adding
