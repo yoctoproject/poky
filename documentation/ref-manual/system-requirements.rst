@@ -274,7 +274,8 @@ version requirement for gcc:
 
 If your host development system does not meet this requirement, you can
 resolve this by installing a ``buildtools-extended`` tarball that
-contains additional tools, the equivalent of ``buildtools-essential``.
+contains additional tools, the equivalent of the Debian/Ubuntu ``build-essential``
+package.
 
 Installing a Pre-Built ``buildtools`` Tarball with ``install-buildtools`` script
 --------------------------------------------------------------------------------
