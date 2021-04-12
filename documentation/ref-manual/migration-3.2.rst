@@ -1,8 +1,8 @@
-Moving to the Yocto Project 3.2 Release
-=======================================
+Moving to the Yocto Project 3.2 Release (gatesgarth)
+====================================================
 
 This section provides migration information for moving to the Yocto
-Project 3.2 Release from the prior release.
+Project 3.2 Release (codename "gatesgarth") from the prior release.
 
 .. _migration-3.2-minimum-system-requirements:
 

@@ -1,8 +1,8 @@
-Moving to the Yocto Project 2.2 Release
-=======================================
+Moving to the Yocto Project 2.2 Release (morty)
+===============================================
 
 This section provides migration information for moving to the Yocto
-Project 2.2 Release from the prior release.
+Project 2.2 Release (codename "morty") from the prior release.
 
 .. _migration-2.2-minimum-kernel-version:
 

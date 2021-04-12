@@ -1,8 +1,8 @@
-Moving to the Yocto Project 2.6 Release
-=======================================
+Moving to the Yocto Project 2.6 Release (thud)
+==============================================
 
 This section provides migration information for moving to the Yocto
-Project 2.6 Release from the prior release.
+Project 2.6 Release (codename "thud") from the prior release.
 
 .. _migration-2.6-gcc-changes:
 

@@ -1,8 +1,8 @@
-Moving to the Yocto Project 1.7 Release
-=======================================
+Moving to the Yocto Project 1.7 Release (dizzy)
+===============================================
 
 This section provides migration information for moving to the Yocto
-Project 1.7 Release from the prior release.
+Project 1.7 Release (codename "dizzy") from the prior release.
 
 .. _migration-1.7-changes-to-setting-qemu-packageconfig-options:
 

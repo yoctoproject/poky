@@ -1,8 +1,8 @@
-Moving to the Yocto Project 1.5 Release
-=======================================
+Moving to the Yocto Project 1.5 Release (dora)
+==============================================
 
 This section provides migration information for moving to the Yocto
-Project 1.5 Release from the prior release.
+Project 1.5 Release (codename "dora") from the prior release.
 
 .. _migration-1.5-host-dependency-changes:
 

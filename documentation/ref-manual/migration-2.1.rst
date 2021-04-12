@@ -1,8 +1,8 @@
-Moving to the Yocto Project 2.1 Release
-=======================================
+Moving to the Yocto Project 2.1 Release (krogoth)
+=================================================
 
 This section provides migration information for moving to the Yocto
-Project 2.1 Release from the prior release.
+Project 2.1 Release (codename "krogoth") from the prior release.
 
 .. _migration-2.1-variable-expansion-in-python-functions:
 
