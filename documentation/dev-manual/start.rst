@@ -314,13 +314,13 @@ Project Build Host:
    should be able to run on any modern distribution that has the
    following versions for Git, tar, Python and gcc.
 
-   -  Git 1.8.3.1 or greater
+   -  Git &MIN_GIT_VERSION; or greater
 
-   -  tar 1.28 or greater
+   -  tar &MIN_TAR_VERSION; or greater
 
-   -  Python 3.5.0 or greater.
+   -  Python &MIN_PYTHON_VERSION; or greater.
 
-   -  gcc 5.0 or greater.
+   -  gcc &MIN_GCC_VERSION; or greater.
 
    If your build host does not meet any of these three listed version
    requirements, you can take steps to prepare the system so that you

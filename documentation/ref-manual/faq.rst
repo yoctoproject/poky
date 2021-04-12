@@ -16,7 +16,7 @@ first before being pulled back into Poky. This practice benefits both
 projects immediately.
 
 **Q:** My development system does not meet the required Git, tar, and
-Python versions. In particular, I do not have Python 3.5.0 or greater.
+Python versions. In particular, I do not have Python &MIN_PYTHON_VERSION; or greater.
 Can I still use the Yocto Project?
 
 **A:** You can get the required tools on your host development system a

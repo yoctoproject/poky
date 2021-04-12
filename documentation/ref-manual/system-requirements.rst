@@ -256,11 +256,11 @@ Required Git, tar, Python and gcc Versions
 In order to use the build system, your host development system must meet
 the following version requirements for Git, tar, and Python:
 
--  Git 1.8.3.1 or greater
+-  Git &MIN_GIT_VERSION; or greater
 
--  tar 1.28 or greater
+-  tar &MIN_TAR_VERSION; or greater
 
--  Python 3.5.0 or greater
+-  Python &MIN_PYTHON_VERSION; or greater
 
 If your host development system does not meet all these requirements,
 you can resolve this by installing a ``buildtools`` tarball that
@@ -270,7 +270,7 @@ a pre-built tarball or use BitBake to build the tarball.
 In addition, your host development system must meet the following
 version requirement for gcc:
 
--  gcc 5.0 or greater
+-  gcc &MIN_GCC_VERSION; or greater
 
 If your host development system does not meet this requirement, you can
 resolve this by installing a ``buildtools-extended`` tarball that
