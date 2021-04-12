@@ -6489,6 +6489,11 @@ system and gives an overview of their function and contents.
       The target architecture for the SDK. Typically, you do not directly
       set this variable. Instead, use :term:`SDKMACHINE`.
 
+   :term:`SDK_CUSTOM_TEMPLATECONF`
+      When building the extensible SDK, if ``SDK_CUSTOM_TEMPLATECONF`` is set to
+      "1" and a ``conf/templateconf.conf`` file exists in the build directory
+      (:term:`TOPDIR`) then this will be copied into the SDK.
+
    :term:`SDK_DEPLOY`
       The directory set up and used by the
       :ref:`populate_sdk_base <ref-classes-populate-sdk>` class to which
