@@ -6030,9 +6030,7 @@ system and gives an overview of their function and contents.
    :term:`PYTHON_ABI`
       When used by recipes that inherit the
       :ref:`distutils3 <ref-classes-distutils3>`,
-      :ref:`setuptools3 <ref-classes-setuptools3>`,
-      :ref:`distutils <ref-classes-distutils>`, or
-      :ref:`setuptools <ref-classes-setuptools>` classes, denotes the
+      :ref:`setuptools3 <ref-classes-setuptools3>` classes, denotes the
       Application Binary Interface (ABI) currently in use for Python. By
       default, the ABI is "m". You do not have to set this variable as the
       OpenEmbedded build system sets it for you.
@@ -6041,16 +6039,14 @@ system and gives an overview of their function and contents.
       names used when installing the Python headers and libraries in
       sysroot (e.g. ``.../python3.3m/...``).
 
-      Recipes that inherit the ``distutils`` class during cross-builds also
+      Recipes that inherit the ``distutils3`` class during cross-builds also
       use this variable to locate the headers and libraries of the
       appropriate Python that the extension is targeting.
 
    :term:`PYTHON_PN`
       When used by recipes that inherit the
       `distutils3 <ref-classes-distutils3>`,
-      :ref:`setuptools3 <ref-classes-setuptools3>`,
-      :ref:`distutils <ref-classes-distutils>`, or
-      :ref:`setuptools <ref-classes-setuptools>` classes, specifies the
+      :ref:`setuptools3 <ref-classes-setuptools3>` classes, specifies the
       major Python version being built. For Python 3.x, ``PYTHON_PN`` would
       be "python3". You do not have to set this variable as the
       OpenEmbedded build system automatically sets it for you.
