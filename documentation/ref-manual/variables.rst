@@ -2293,6 +2293,17 @@ system and gives an overview of their function and contents.
          # usermod -s /bin/sh tester; \
          # "
 
+      Additionally there is a special ``passwd-expire`` command that will
+      cause the password for a user to be expired and thus force changing it
+      on first login, for example::
+
+         EXTRA_USERS_PARAMS += " useradd myuser; passwd-expire myuser;"
+
+      .. note::
+
+         At present, ``passwd-expire`` may only work for remote logins when
+         using OpenSSH and not dropbear as an SSH server.
+
    :term:`FEATURE_PACKAGES`
       Defines one or more packages to include in an image when a specific
       item is included in :term:`IMAGE_FEATURES`.
