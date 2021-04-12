@@ -5798,10 +5798,11 @@ system and gives an overview of their function and contents.
          exclusive alternative providers.
 
    :term:`PREFERRED_VERSION`
-      If multiple versions of recipes exist, this variable determines which
-      version is given preference. You must always suffix the variable with
-      the :term:`PN` you want to select, and you should set the
-      :term:`PV` accordingly for precedence.
+      If there are multiple versions of a recipe available, this variable
+      determines which version should be given preference. You must always
+      suffix the variable with the :term:`PN` you want to select (`python` in
+      the first example below), and you should specify the :term:`PV`
+      accordingly (`3.4.0` in the example).
 
       The ``PREFERRED_VERSION`` variable supports limited wildcard use
       through the "``%``" character. You can use the character to match any
@@ -5858,6 +5859,10 @@ system and gives an overview of their function and contents.
 
          The ``\_forcevariable`` override is not handled specially. This override
          only works because the default value of ``OVERRIDES`` includes "forcevariable".
+
+      If a recipe with the specified version is not available, a warning
+      message will be shown. See :term:`REQUIRED_VERSION` if you want this
+      to be an error instead.
 
    :term:`PREMIRRORS`
       Specifies additional paths from which the OpenEmbedded build system
@@ -6215,6 +6220,17 @@ system and gives an overview of their function and contents.
       appear in ``DISTRO_FEATURES`` within the current configuration, then
       the recipe will be skipped, and if the build system attempts to build
       the recipe then an error will be triggered.
+
+   :term:`REQUIRED_VERSION`
+      If there are multiple versions of a recipe available, this variable
+      determines which version should be given preference.
+      :term:`REQUIRED_VERSION` works in exactly the same manner as
+      :term:`PREFERRED_VERSION`, except that if the specified version is not
+      available then an error message is shown and the build fails
+      immediately.
+
+      If both :term:`REQUIRED_VERSION` and :term:`PREFERRED_VERSION` are set
+      for the same recipe, the :term:`REQUIRED_VERSION` value applies.
 
    :term:`RM_WORK_EXCLUDE`
       With ``rm_work`` enabled, this variable specifies a list of recipes
