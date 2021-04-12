@@ -277,6 +277,9 @@ resolve this by installing a ``buildtools-extended`` tarball that
 contains additional tools, the equivalent of the Debian/Ubuntu ``build-essential``
 package.
 
+In the sections that follow, three different methods will be described for
+installing the ``buildtools`` or ``buildtools-extended`` toolset.
+
 Installing a Pre-Built ``buildtools`` Tarball with ``install-buildtools`` script
 --------------------------------------------------------------------------------
 
@@ -332,8 +335,9 @@ installer and automatically installs the tools for you:
 Downloading a Pre-Built ``buildtools`` Tarball
 ----------------------------------------------
 
-Downloading and running a pre-built buildtools installer is the easiest
-of the two methods by which you can get these tools:
+If you would prefer not to use the ``install-buildtools`` script, you can instead
+download and run a pre-built buildtools installer yourself with the following
+steps:
 
 1. Locate and download the ``*.sh`` at &YOCTO_RELEASE_DL_URL;/buildtools/
 
