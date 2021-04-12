@@ -6764,16 +6764,16 @@ system and gives an overview of their function and contents.
       Specifies the name of the SDK vendor.
 
    :term:`SDK_VERSION`
-      Specifies the version of the SDK. The distribution configuration file
-      (e.g. ``/meta-poky/conf/distro/poky.conf``) defines the
+      Specifies the version of the SDK. The Poky distribution configuration file
+      (``/meta-poky/conf/distro/poky.conf``) sets the default
       ``SDK_VERSION`` as follows:
       ::
 
-         SDK_VERSION = "${@d.getVar('DISTRO_VERSION').replace('snapshot-${DATE}','snapshot')}"
+         SDK_VERSION = "${@d.getVar('DISTRO_VERSION').replace('snapshot-${METADATA_REVISION}', 'snapshot')}"
 
       For additional information, see the
       :term:`DISTRO_VERSION` and
-      :term:`DATE` variables.
+      :term:`METADATA_REVISION` variables.
 
    :term:`SDKEXTPATH`
       The default installation directory for the Extensible SDK. By
