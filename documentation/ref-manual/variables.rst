@@ -2580,6 +2580,16 @@ system and gives an overview of their function and contents.
    :term:`FIT_HASH_ALG`
       Specifies the hash algorithm used in creating the FIT Image. For e.g. sha256.
 
+   :term:`FIT_KERNEL_COMP_ALG`
+      Compression algorithm to use for the kernel image inside the FIT Image.
+      At present, the only supported values are "gzip" (default) or "none"
+      If you set this variable to anything other than "none" you may also need
+      to set :term:`FIT_KERNEL_COMP_ALG_EXTENSION`.
+
+   :term:`FIT_KERNEL_COMP_ALG_EXTENSION`
+      File extension corresponding to :term:`FIT_KERNEL_COMP_ALG`. The default
+      value is ".gz".
+
    :term:`FIT_KEY_GENRSA_ARGS`
       Arguments to openssl genrsa for generating RSA private key for signing
       fitImage. The default value is "-F4". i.e. the public exponent 65537 to
