@@ -1978,6 +1978,19 @@ system and gives an overview of their function and contents.
       is included in the default value of
       :term:`OVERRIDES`.
 
+   :term:`DISTUTILS_SETUP_PATH`
+      When used by recipes that inherit the
+      :ref:`distutils3 <ref-classes-distutils3>` or
+      :ref:`setuptools3 <ref-classes-setuptools3>` class, this variable should
+      be used to specify the directory in which the ``setup.py`` file is
+      located if it is not at the root of the source tree (as specified by
+      :term:`S`). For example, in a recipe where the sources are fetched from
+      a Git repository and ``setup.py`` is in a ``python/pythonmodule``
+      subdirectory, you would have this::
+
+         S = "${WORKDIR}/git"
+         DISTUTILS_SETUP_PATH = "${S}/python/pythonmodule"
+
    :term:`DL_DIR`
       The central download directory used by the build process to store
       downloads. By default, ``DL_DIR`` gets files suitable for mirroring

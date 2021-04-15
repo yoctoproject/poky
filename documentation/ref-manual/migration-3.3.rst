@@ -74,6 +74,35 @@ Some example recipes where this change has been made: ``gpgme``, ``libcap-ng``,
 ``python3-pycairo``.
 
 
+.. _migration-3.3-distutils-path:
+
+``setup.py`` path for python modules
+------------------------------------
+
+In a Python module, sometimes ``setup.py`` can be buried deep in the
+source tree. Previously this was handled in recipes by setting :term:`S` to
+point to the subdirectory within the source where ``setup.py`` is located.
+However with the recent :ref:`pseudo <overview-manual/concepts:fakeroot and pseudo>`
+changes, some Python modules make changes to files beneath ``${S}``, for
+example::
+
+   S = "${WORKDIR}/git/python/pythonmodule"
+
+then in ``setup.py`` it works with source code in a relative fashion, such
+as ``../../src``. This causes pseudo to abort as it isn't able to track
+the paths properly. This release introduces a new :term:`DISTUTILS_SETUP_PATH`
+variable so that recipes can specify it explicitly, for example::
+
+   S = "${WORKDIR}/git"
+   DISTUTILS_SETUP_PATH = "${S}/python/pythonmodule"
+
+Recipes that inherit from :ref:`distutils3 <ref-classes-distutils3>` (or
+:ref:`setuptools3 <ref-classes-setuptools3>` which itself inherits
+:ref:`distutils3 <ref-classes-distutils3>`) that also set :term:`S` to
+point to a Python module within a subdirectory in the aforementioned
+manner should be changed to set :term:`DISTUTILS_SETUP_PATH` instead.
+
+
 .. _migration-3.3-bitbake:
 
 BitBake changes
