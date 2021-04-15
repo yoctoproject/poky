@@ -207,7 +207,7 @@ functions to call and not arbitrary shell commands:
 
 For
 migration purposes, you can simply wrap shell commands in a shell
-function and then call the function. Here is an example: ::
+function and then call the function. Here is an example::
 
    my_postprocess_function() {
       echo "hello" > ${IMAGE_ROOTFS}/hello.txt

@@ -169,7 +169,7 @@ one of the packages provided by the Python recipe. You can no longer run
 ``bitbake python-foo`` or have a
 :term:`DEPENDS` on ``python-foo``,
 but doing either of the following causes the package to work as
-expected: ::
+expected::
 
    IMAGE_INSTALL_append = " python-foo"
 

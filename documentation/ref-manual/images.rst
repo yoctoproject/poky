@@ -27,7 +27,7 @@ image you want.
 
 From within the ``poky`` Git repository, you can use the following
 command to display the list of directories within the :term:`Source Directory`
-that contain image recipe files: ::
+that contain image recipe files::
 
    $ ls meta*/recipes*/images/*.bb
 

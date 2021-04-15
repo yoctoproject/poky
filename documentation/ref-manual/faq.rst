@@ -125,7 +125,7 @@ file.
 
 Following is the applicable code for setting various proxy types in the
 ``.wgetrc`` file. By default, these settings are disabled with comments.
-To use them, remove the comments: ::
+To use them, remove the comments::
 
    # You can set the default proxies for Wget to use for http, https, and ftp.
    # They will override the value in the environment.
@@ -224,7 +224,7 @@ to add a BSP-specific netbase that includes an interfaces file. See the
 the Yocto Project Board Support Packages (BSP) Developer's Guide for
 information on creating these types of miscellaneous recipe files.
 
-For example, add the following files to your layer: ::
+For example, add the following files to your layer::
 
    meta-MACHINE/recipes-bsp/netbase/netbase/MACHINE/interfaces
    meta-MACHINE/recipes-bsp/netbase/netbase_5.0.bbappend
@@ -300,7 +300,7 @@ fail.
 
 As an example, you could add a specific server for the build system to
 attempt before any others by adding something like the following to the
-``local.conf`` configuration file: ::
+``local.conf`` configuration file::
 
    PREMIRRORS_prepend = "\
        git://.*/.* http://www.yoctoproject.org/sources/ \n \
@@ -343,7 +343,7 @@ however, the technique can simply waste time during the build.
 
 Finally, consider an example where you are behind an HTTP-only firewall.
 You could make the following changes to the ``local.conf`` configuration
-file as long as the ``PREMIRRORS`` server is current: ::
+file as long as the ``PREMIRRORS`` server is current::
 
    PREMIRRORS_prepend = "\
        ftp://.*/.* http://www.yoctoproject.org/sources/ \n \

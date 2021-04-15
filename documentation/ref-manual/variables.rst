@@ -728,7 +728,7 @@ system and gives an overview of their function and contents.
 
       If you want to mask out multiple directories or recipes, you can
       specify multiple regular expression fragments. This next example
-      masks out multiple directories and individual recipes: ::
+      masks out multiple directories and individual recipes::
 
          BBMASK += "/meta-ti/recipes-misc/ meta-ti/recipes-ti/packagegroup/"
          BBMASK += "/meta-oe/recipes-support/"
@@ -4890,13 +4890,13 @@ system and gives an overview of their function and contents.
       Prevents installation of all "recommended-only" packages.
       Recommended-only packages are packages installed only through the
       :term:`RRECOMMENDS` variable). Setting the
-      ``NO_RECOMMENDATIONS`` variable to "1" turns this feature on: ::
+      ``NO_RECOMMENDATIONS`` variable to "1" turns this feature on::
 
          NO_RECOMMENDATIONS = "1"
 
       You can set this variable globally in your ``local.conf`` file or you
       can attach it to a specific image recipe by using the recipe name
-      override: ::
+      override::
 
          NO_RECOMMENDATIONS_pn-target_image = "1"
 
@@ -6924,7 +6924,7 @@ system and gives an overview of their function and contents.
       ``/proc/console`` before enabling them using getty. This variable
       allows aliasing in the format: <device>:<alias>. If a device was
       listed as "sclp_line0" in ``/dev/`` and "ttyS0" was listed in
-      ``/proc/console``, you would do the following: ::
+      ``/proc/console``, you would do the following::
 
          SERIAL_CONSOLES_CHECK = "slcp_line0:ttyS0"
 
@@ -6934,7 +6934,7 @@ system and gives an overview of their function and contents.
    :term:`SIGGEN_EXCLUDE_SAFE_RECIPE_DEPS`
       A list of recipe dependencies that should not be used to determine
       signatures of tasks from one recipe when they depend on tasks from
-      another recipe. For example: ::
+      another recipe. For example::
 
          SIGGEN_EXCLUDE_SAFE_RECIPE_DEPS += "intone->mplayer2"
 
@@ -6942,7 +6942,7 @@ system and gives an overview of their function and contents.
 
       You can use the special token ``"*"`` on the left-hand side of the
       dependency to match all recipes except the one on the right-hand
-      side. Here is an example: ::
+      side. Here is an example::
 
          SIGGEN_EXCLUDE_SAFE_RECIPE_DEPS += "*->quilt-native"
 

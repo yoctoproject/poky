@@ -179,12 +179,12 @@ parameter instead of the earlier ``name`` which overlapped with the
 generic ``name`` parameter. All recipes using the npm fetcher will need
 to be changed as a result.
 
-An example of the new scheme: ::
+An example of the new scheme::
 
    SRC_URI = "npm://registry.npmjs.org;package=array-flatten;version=1.1.1 \
               npmsw://${THISDIR}/npm-shrinkwrap.json"
 
-Another example where the sources are fetched from git rather than an npm repository: ::
+Another example where the sources are fetched from git rather than an npm repository::
 
    SRC_URI = "git://github.com/foo/bar.git;protocol=https \
               npmsw://${THISDIR}/npm-shrinkwrap.json"

@@ -179,7 +179,7 @@ Supported machines are as follows:
 
 Consider the
 following example, which uses the ``qemux86-64`` machine, provides a
-root filesystem, provides an image, and uses the ``nographic`` option: ::
+root filesystem, provides an image, and uses the ``nographic`` option::
 
    $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.ext4 tmp/deploy/images/qemux86-64/bzImage nographic
 

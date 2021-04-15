@@ -675,7 +675,7 @@ Errors and Warnings
     task. Patch fuzz is a situation when the ``patch`` tool ignores some of the context
     lines in order to apply the patch. Consider this example:
 
-    Patch to be applied: ::
+    Patch to be applied::
 
         --- filename
         +++ filename
@@ -687,7 +687,7 @@ Errors and Warnings
          context line 5
          context line 6
 
-    Original source code: ::
+    Original source code::
 
         different context line 1
         different context line 2
@@ -696,7 +696,7 @@ Errors and Warnings
         different context line 5
         different context line 6
 
-    Outcome (after applying patch with fuzz): ::
+    Outcome (after applying patch with fuzz)::
 
         different context line 1
         different context line 2
@@ -716,14 +716,14 @@ Errors and Warnings
     *How to eliminate patch fuzz warnings*
 
     Use the ``devtool`` command as explained by the warning. First, unpack the
-    source into devtool workspace: ::
+    source into devtool workspace::
 
             devtool modify <recipe>
 
     This will apply all of the patches, and create new commits out of them in
     the workspace - with the patch context updated.
 
-    Then, replace the patches in the recipe layer: ::
+    Then, replace the patches in the recipe layer::
 
             devtool finish --force-patch-refresh <recipe> <layer_path>
 
