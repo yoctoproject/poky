@@ -486,8 +486,7 @@ your Yocto Project build host:
    distribution.
 
 3. *Check your Linux distribution is using WSLv2:* Open a Windows
-   PowerShell and run:
-   ::
+   PowerShell and run::
 
       C:\WINDOWS\system32> wsl -l -v
       NAME    STATE   VERSION
@@ -514,8 +513,7 @@ your Yocto Project build host:
 
    1. *Find the location of your VHDX file:* First you need to find the
       distro app package directory, to achieve this open a Windows
-      Powershell as Administrator and run:
-      ::
+      Powershell as Administrator and run::
 
          C:\WINDOWS\system32> Get-AppxPackage -Name "*Ubuntu*" | Select PackageFamilyName
          PackageFamilyName
@@ -525,8 +523,7 @@ your Yocto Project build host:
 
       You should now
       replace the PackageFamilyName and your user on the following path
-      to find your VHDX file:
-      ::
+      to find your VHDX file::
 
           ls C:\Users\myuser\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79abcdefgh\LocalState\
           Mode                 LastWriteTime         Length Name
@@ -536,8 +533,7 @@ your Yocto Project build host:
       ``C:\Users\myuser\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79abcdefgh\LocalState\ext4.vhdx``
 
    2. *Optimize your VHDX file:* Open a Windows Powershell as
-      Administrator to optimize your VHDX file, shutting down WSL first:
-      ::
+      Administrator to optimize your VHDX file, shutting down WSL first::
 
          C:\WINDOWS\system32> wsl --shutdown
          C:\WINDOWS\system32> optimize-vhd -Path C:\Users\myuser\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79abcdefgh\LocalState\ext4.vhdx -Mode full
@@ -741,8 +737,7 @@ Follow these steps to create a local version of the upstream
 
 2. *Clone the Repository:* The following example command clones the
    ``poky`` repository and uses the default name "poky" for your local
-   repository:
-   ::
+   repository::
 
       $ git clone git://git.yoctoproject.org/poky
       Cloning into 'poky'...
@@ -764,8 +759,7 @@ Follow these steps to create a local version of the upstream
 
    Once the local repository is created, you can change to that
    directory and check its status. Here, the single "master" branch
-   exists on your system and by default, it is checked out:
-   ::
+   exists on your system and by default, it is checked out::
 
       $ cd poky
       $ git status
@@ -826,8 +820,7 @@ and then specifically check out that development branch.
 
 3. *Check out the Branch:* Check out the development branch in which you
    want to work. For example, to access the files for the Yocto Project
-   &DISTRO; Release (&DISTRO_NAME;), use the following command:
-   ::
+   &DISTRO; Release (&DISTRO_NAME;), use the following command::
 
       $ git checkout -b &DISTRO_NAME_NO_CAP; origin/&DISTRO_NAME_NO_CAP;
       Branch &DISTRO_NAME_NO_CAP; set up to track remote branch &DISTRO_NAME_NO_CAP; from origin.
@@ -839,8 +832,7 @@ and then specifically check out that development branch.
 
    The following command displays the branches that are now part of your
    local poky repository. The asterisk character indicates the branch
-   that is currently checked out for work:
-   ::
+   that is currently checked out for work::
 
       $ git branch
         master
@@ -867,14 +859,12 @@ similar to checking out by branch name except you use tag names.
    section.
 
 2. *Fetch the Tag Names:* To checkout the branch based on a tag name,
-   you need to fetch the upstream tags into your local repository:
-   ::
+   you need to fetch the upstream tags into your local repository::
 
       $ git fetch --tags
       $
 
-3. *List the Tag Names:* You can list the tag names now:
-   ::
+3. *List the Tag Names:* You can list the tag names now::
 
       $ git tag
       1.1_M1.final

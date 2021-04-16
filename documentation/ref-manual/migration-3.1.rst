@@ -71,8 +71,7 @@ when building a simple image such as core-image-minimal. If you do not
 need runtime tests enabled for core components, then it is recommended
 that you remove "ptest" from
 :term:`DISTRO_FEATURES` to save a significant
-amount of build time e.g. by adding the following in your configuration:
-::
+amount of build time e.g. by adding the following in your configuration::
 
    DISTRO_FEATURES_remove = "ptest"
 

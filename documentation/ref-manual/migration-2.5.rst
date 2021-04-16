@@ -138,13 +138,11 @@ The following are BitBake changes:
    tree" tasks have been removed (e.g. ``fetchall``, ``checkuriall``,
    and the ``*all`` tasks provided by the ``distrodata`` and
    ``archiver`` classes). There is a BitBake option to complete this for
-   any arbitrary task. For example:
-   ::
+   any arbitrary task. For example::
 
       bitbake <target> -c fetchall
 
-   should now be replaced with:
-   ::
+   should now be replaced with::
 
       bitbake <target> --runall=fetch
 

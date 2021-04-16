@@ -181,8 +181,7 @@ Linux Kernel Naming
 -------------------
 
 The naming scheme for kernel output binaries has been changed to now
-include :term:`PE` as part of the filename:
-::
+include :term:`PE` as part of the filename::
 
    KERNEL_IMAGE_BASE_NAME ?= "${KERNEL_IMAGETYPE}-${PE}-${PV}-${PR}-${MACHINE}-${DATETIME}"
 

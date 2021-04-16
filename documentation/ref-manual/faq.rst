@@ -209,8 +209,7 @@ section in the Yocto Project Development Tasks Manual.
 **A:** You need to create a form factor file as described in the
 ":ref:`bsp-guide/bsp:miscellaneous bsp-specific recipe files`" section in
 the Yocto Project Board Support Packages (BSP) Developer's Guide. Set
-the ``HAVE_TOUCHSCREEN`` variable equal to one as follows:
-::
+the ``HAVE_TOUCHSCREEN`` variable equal to one as follows::
 
    HAVE_TOUCHSCREEN=1
 
@@ -313,8 +312,7 @@ HTTPS requests and direct them to the ``http://`` sources mirror. You
 can use ``file://`` URLs to point to local directories or network shares
 as well.
 
-Aside from the previous technique, these options also exist:
-::
+Aside from the previous technique, these options also exist::
 
    BB_NO_NETWORK = "1"
 
@@ -322,8 +320,7 @@ This statement tells BitBake to issue an error
 instead of trying to access the Internet. This technique is useful if
 you want to ensure code builds only from local sources.
 
-Here is another technique:
-::
+Here is another technique::
 
    BB_FETCH_PREMIRRORONLY = "1"
 
@@ -331,8 +328,7 @@ This statement
 limits the build system to pulling source from the ``PREMIRRORS`` only.
 Again, this technique is useful for reproducing builds.
 
-Here is another technique:
-::
+Here is another technique::
 
    BB_GENERATE_MIRROR_TARBALLS = "1"
 
