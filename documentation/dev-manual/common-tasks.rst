@@ -9351,7 +9351,7 @@ automatically for a given task, you can list the variable dependencies
 BitBake has determined by doing the following:
 
 1. Build the recipe containing the task:
-::
+   ::
 
    $ bitbake recipename
 
