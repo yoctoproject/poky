@@ -6694,7 +6694,11 @@ system and gives an overview of their function and contents.
          SERIAL_CONSOLES_CHECK = "slcp_line0:ttyS0"
 
       This variable is currently only supported with SysVinit (i.e. not
-      with systemd).
+      with systemd). Note that :term:`SERIAL_CONSOLES_CHECK` also requires
+      ``/etc/inittab`` to be writable when used with SysVinit. This makes it
+      incompatible with customizations such as the following::
+
+         EXTRA_IMAGE_FEATURES += "read-only-rootfs"
 
    :term:`SIGGEN_EXCLUDE_SAFE_RECIPE_DEPS`
       A list of recipe dependencies that should not be used to determine
