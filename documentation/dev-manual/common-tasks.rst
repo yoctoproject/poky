@@ -9705,39 +9705,47 @@ methods you can use: running a debuginfod server and using gdbserver.
 Using the debuginfod server method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-"debuginfod" from "elfutils" is a way to distribute "debuginfo" files.
-Running a "debuginfod" server makes debug symbols readily available,
+``debuginfod`` from ``elfutils`` is a way to distribute ``debuginfo`` files.
+Running a ``debuginfod`` server makes debug symbols readily available,
 which means you don't need to download debugging information
 and the binaries of the process being debugged. You can just fetch
 debug symbols from the server.
 
-To run a debuginfod server, you need to do the following:
+To run a ``debuginfod`` server, you need to do the following:
 
--  Ensure that this variable is set in your ``local.conf`` file::
+-  Ensure that ``debuginfod`` is present in :term:`DISTRO_FEATURES`
+   (it already is in ``OpenEmbedded-core`` defaults and ``poky`` reference distribution).
+   If not, set in your distro config file or in ``local.conf``::
 
-      PACKAGECONFIG_pn-elfutils-native = "debuginfod libdebuginfod"
+      DISTRO_FEATURES_append = " debuginfod"
 
-   This :term:`PACKAGECONFIG` option enables debuginfod and libdebuginfod for
-   "elfutils-native".
+   This distro feature enables the server and client library in ``elfutils``,
+   and enables ``debuginfod`` support in clients (at the moment, ``gdb`` and ``binutils``).
 
--  Run the following commands to set up the "debuginfod" server::
+-  Run the following commands to launch the ``debuginfod`` server on the host::
 
       $ oe-debuginfod
 
+-  To use ``debuginfod`` on the target, you need to know the ip:port where
+   ``debuginfod`` is listening on the host (port defaults to 8002), and export
+   that into the shell environment, for example in ``qemu``::
 
-To use debuginfod on the target, you need the following:
+      root@qemux86-64:~# export DEBUGINFOD_URLS="http://192.168.7.1:8002/"
 
--  Ensure that this variable is set in your ``local.conf`` file::
+-  Then debug info fetching should simply work when running the target ``gdb``,
+   ``readelf`` or ``objdump``, for example::
 
-      DEBUGINFOD_URLS = "http://localhost:8002/"
+      root@qemux86-64:~# gdb /bin/cat
+      ...
+      Reading symbols from /bin/cat...
+      Downloading separate debug info for /bin/cat...
+      Reading symbols from /home/root/.cache/debuginfod_client/923dc4780cfbc545850c616bffa884b6b5eaf322/debuginfo...
 
-   This :term:`DEBUGINFOD_URLS` option does the client configuration.
+-  It's also possible to use ``debuginfod-find`` to just query the server::
 
-   ::
+      root@qemux86-64:~# debuginfod-find debuginfo /bin/ls
+      /home/root/.cache/debuginfod_client/356edc585f7f82d46f94fcb87a86a3fe2d2e60bd/debuginfo
 
-        PACKAGECONFIG_pn-gdb = "debuginfod"
-
-   This :term:`PACKAGECONFIG` option enables "debuginfod" for "gdb".
 
 Using the gdbserver method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
