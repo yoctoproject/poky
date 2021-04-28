@@ -387,36 +387,28 @@ as your Yocto Project build host:
    software. Follow the instructions for your specific machine and the
    type of the software you need to install:
 
-   -  Install `Docker CE for
+   -  Install `Docker Desktop on
       Windows <https://docs.docker.com/docker-for-windows/install/#install-docker-desktop-on-windows>`__
       for Windows build hosts that meet requirements.
 
-   -  Install `Docker CE for
+   -  Install `Docker Desktop on
       MacOs <https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-desktop-on-mac>`__
       for Mac build hosts that meet requirements.
 
-   -  Install `Docker Toolbox for
-      Windows <https://docs.docker.com/toolbox/toolbox_install_windows/>`__
-      for Windows build hosts that do not meet Docker requirements.
-
-   -  Install `Docker Toolbox for
-      MacOS <https://docs.docker.com/toolbox/toolbox_install_mac/>`__
-      for Mac build hosts that do not meet Docker requirements.
-
-   -  Install `Docker CE for
-      CentOS <https://docs.docker.com/install/linux/docker-ce/centos/>`__
+   -  Install `Docker Engine on
+      CentOS <https://docs.docker.com/engine/install/centos/>`__
       for Linux build hosts running the CentOS distribution.
 
-   -  Install `Docker CE for
-      Debian <https://docs.docker.com/install/linux/docker-ce/debian/>`__
+   -  Install `Docker Engine on
+      Debian <https://docs.docker.com/engine/install/debian/>`__
       for Linux build hosts running the Debian distribution.
 
-   -  Install `Docker CE for
-      Fedora <https://docs.docker.com/install/linux/docker-ce/fedora/>`__
+   -  Install `Docker Engine for
+      Fedora <https://docs.docker.com/engine/install/fedora/>`__
       for Linux build hosts running the Fedora distribution.
 
-   -  Install `Docker CE for
-      Ubuntu <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`__
+   -  Install `Docker Engine for
+      Ubuntu <https://docs.docker.com/engine/install/ubuntu/>`__
       for Linux build hosts running the Ubuntu distribution.
 
 5. *Optionally Orient Yourself With Docker:* If you are unfamiliar with
