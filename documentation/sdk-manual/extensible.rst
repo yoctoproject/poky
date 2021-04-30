@@ -953,7 +953,7 @@ following methods when you run ``devtool add``:
    Specifying the name like this produces a recipe that only builds for
    the build host.
 
--  Specify the "DASHDASHalso-native" option with the ``devtool add``
+-  Specify the "--also-native" option with the ``devtool add``
    command. Specifying this option creates a recipe file that still
    builds for the target but also creates a variant with a "-native"
    suffix that builds for the build host.
@@ -964,7 +964,7 @@ following methods when you run ``devtool add``:
    that builds code for the target, you can typically accomplish this by
    building the native and target parts separately rather than within
    the same compilation process. Realize though that with the
-   "DASHDASHalso-native" option, you can add the tool using just one
+   "--also-native" option, you can add the tool using just one
    recipe file.
 
 Adding Node.js Modules
@@ -1100,7 +1100,7 @@ arguments listed in the previous paragraph. The command determines the
 exact options being passed, and shows them to you along with any custom
 arguments specified through ``EXTRA_OECONF`` or
 ``PACKAGECONFIG_CONFARGS``. If applicable, the command also shows you
-the output of the configure script's "DASHDASHhelp" option as a
+the output of the configure script's "--help" option as a
 reference.
 
 Sharing Files Between Recipes
