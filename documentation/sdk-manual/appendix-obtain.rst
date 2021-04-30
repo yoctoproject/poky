@@ -138,9 +138,11 @@ build the SDK installer. Follow these steps:
 
 6. *Build the SDK Installer:* To build the SDK installer for a standard
    SDK and populate the SDK image, use the following command form. Be
-   sure to replace image with an image (e.g. "core-image-sato"): $
-   bitbake image -c populate_sdk You can do the same for the extensible
-   SDK using this command form::
+   sure to replace ``image`` with an image (e.g. "core-image-sato")::
+
+      $ bitbake image -c populate_sdk
+
+   You can do the same for the extensible SDK using this command form::
 
       $ bitbake image -c populate_sdk_ext
 
