@@ -253,7 +253,7 @@ Follow these steps to extract the root filesystem:
 
       $ runqemu-extract-sdk ~/Downloads/core-image-sato-sdk-beaglebone-yocto.tar.bz2 ~/beaglebone-sato
 
-   You could now point to the target sysroot at ``beablebone-sato``.
+   You could now point to the target sysroot at ``beaglebone-sato``.
 
 Installed Standard SDK Directory Structure
 ==========================================
