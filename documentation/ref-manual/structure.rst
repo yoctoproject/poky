@@ -783,7 +783,7 @@ system. The tools, however, can also be used on targets.
 
 This directory contains non-essential applications that add features
 compared to the alternatives in core. You might need this directory for
-full tool functionality or for Linux Standard Base (LSB) compliance.
+full tool functionality.
 
 .. _structure-meta-recipes-gnome:
 
@@ -808,14 +808,6 @@ libraries.
 
 This directory contains the kernel and generic applications and
 libraries that have strong kernel dependencies.
-
-.. _structure-meta-recipes-lsb4:
-
-``meta/recipes-lsb4/``
-----------------------
-
-This directory contains recipes specifically added to support the Linux
-Standard Base (LSB) version 4.x.
 
 .. _structure-meta-recipes-multimedia:
 
