@@ -279,7 +279,7 @@ file, it uses ``sed`` to substitute final
 .. note::
 
    You can see how the ``TEMPLATECONF`` variable is used by looking at the
-   ``scripts/oe-setup-builddir``` script in the :term:`Source Directory`.
+   ``scripts/oe-setup-builddir`` script in the :term:`Source Directory`.
    You can find the Yocto Project version of the ``local.conf.sample`` file in
    the ``meta-poky/conf`` directory.
 
