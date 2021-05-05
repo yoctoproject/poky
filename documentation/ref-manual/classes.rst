@@ -1260,8 +1260,8 @@ The following list shows the tests you can list with the ``WARN_QA`` and
 
    .. note::
 
-      If you are not using runtime package management on your target
-      system, then you do not need to worry about this situation.
+      This is only relevant when you are using runtime package management
+      on your target system.
 
 -  ``xorg-driver-abi:`` Checks that all packages containing Xorg
    drivers have ABI dependencies. The ``xserver-xorg`` recipe provides

@@ -589,8 +589,8 @@ recipe is processed.
 
    In general, however, the Yocto Project maintainers take care of
    moving the ``SRC_URI``-specified configuration options to the
-   kernel's ``meta`` branch. Not only is it easier for BSP developers to
-   not have to worry about putting those configurations in the branch,
+   kernel's ``meta`` branch. Not only is it easier for BSP developers
+   not to have to put those configurations in the branch,
    but having the maintainers do it allows them to apply 'global'
    knowledge about the kinds of common configuration options multiple
    BSPs in the tree are typically using. This allows for promotion of

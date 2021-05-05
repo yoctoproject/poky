@@ -38,7 +38,7 @@ usually matches the current stable BitBake release from the BitBake
 project. BitBake, a :term:`Metadata` interpreter, reads the
 Yocto Project Metadata and runs the tasks defined by that data. Failures
 are usually caused by errors in your Metadata and not from BitBake
-itself; consequently, most users do not need to worry about BitBake.
+itself.
 
 When you run the ``bitbake`` command, the main BitBake executable (which
 resides in the ``bitbake/bin/`` directory) starts. Sourcing the

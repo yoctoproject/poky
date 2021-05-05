@@ -1589,7 +1589,7 @@ your software is built:
 
 -  *Autotools:* If your source files have a ``configure.ac`` file, then
    your software is built using Autotools. If this is the case, you just
-   need to worry about modifying the configuration.
+   need to modify the configuration.
 
    When using Autotools, your recipe needs to inherit the
    :ref:`autotools <ref-classes-autotools>` class
@@ -1603,7 +1603,7 @@ your software is built:
 
 -  *CMake:* If your source files have a ``CMakeLists.txt`` file, then
    your software is built using CMake. If this is the case, you just
-   need to worry about modifying the configuration.
+   need to modify the configuration.
 
    When you use CMake, your recipe needs to inherit the
    :ref:`cmake <ref-classes-cmake>` class and your
