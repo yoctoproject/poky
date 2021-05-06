@@ -379,8 +379,7 @@ or non-hardware. To better show this, consider a situation where the
    yocto-kernel-cache/ktypes/base/hardware.kcf
    yocto-kernel-cache/bsp/qemu-ppc32/hardware.kcf
 
-The following list
-provides explanations for the various files:
+Here are explanations for the various files:
 
 -  ``hardware.kcf``: Specifies a list of kernel Kconfig files that
    contain hardware options only.

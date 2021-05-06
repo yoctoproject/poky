@@ -1009,7 +1009,7 @@ Please keep in mind that the QA checks
 exist in order to detect real or potential problems in the packaged
 output. So exercise caution when disabling these checks.
 
-The following list shows the tests you can list with the ``WARN_QA`` and
+Here are the tests you can list with the ``WARN_QA`` and
 ``ERROR_QA`` variables:
 
 -  ``already-stripped:`` Checks that produced binaries have not

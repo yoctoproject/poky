@@ -219,15 +219,15 @@ using an NFS server.
    Should you need to start, stop, or restart the NFS share, you can use
    the following commands:
 
-   -  The following command starts the NFS share::
+   -  To start the NFS share::
 
          runqemu-export-rootfs start file-system-location
 
-   -  The following command stops the NFS share::
+   -  To stop the NFS share::
 
          runqemu-export-rootfs stop file-system-location
 
-   -  The following command restarts the NFS share::
+   -  To restart the NFS share::
 
          runqemu-export-rootfs restart file-system-location
 

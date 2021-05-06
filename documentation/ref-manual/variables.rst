@@ -4754,7 +4754,7 @@ system and gives an overview of their function and contents.
 
          NO_GENERIC_LICENSE[license_name] = "license_file_in_fetched_source"
 
-      The following is an example that
+      Here is an example that
       uses the ``LICENSE.Abilis.txt`` file as the license from the fetched
       source::
 

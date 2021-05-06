@@ -2513,7 +2513,7 @@ chapter of the BitBake User Manual.
    syntax, although access to OpenEmbedded variables and internal
    methods are also available.
 
-   The following is an example function from the ``sed`` recipe::
+   Here is an example function from the ``sed`` recipe::
 
       do_install () {
           autotools_do_install
@@ -7413,7 +7413,7 @@ The variable can contain multiple [one-line] metadata fields separated
 by the literal sequence '\\n'. The separator can be redefined using the
 variable flag ``separator``.
 
-The following is an example that adds two custom fields for ipk
+Here is an example that adds two custom fields for ipk
 packages::
 
    PACKAGE_ADD_METADATA_IPK = "Vendor: CustomIpk\nGroup:Applications/Spreadsheets"
@@ -7844,7 +7844,7 @@ Build history information is kept in
 ``${``\ :term:`TOPDIR`\ ``}/buildhistory``
 in the Build Directory as defined by the
 :term:`BUILDHISTORY_DIR`
-variable. The following is an example abbreviated listing:
+variable. Here is an example abbreviated listing:
 
 .. image:: figures/buildhistory.png
    :align: center
@@ -11058,7 +11058,7 @@ this function, you have to follow the following steps:
 3. Meta-spdxscanner provides several methods within the bbclass to create spdx files.
    Please choose one that you want to use and enable the spdx task. You have to
    add some config options in ``local.conf`` file in your :term:`Build
-   Directory`. The following is an example showing how to generate spdx files
+   Directory`. Here is an example showing how to generate spdx files
    during bitbake using the fossology-python.bbclass::
 
       # Select fossology-python.bbclass.
@@ -11088,7 +11088,7 @@ package, by using the
 variable. Using this variable also avoids QA errors when you use a
 non-common, non-CLOSED license in a recipe.
 
-The following is an example that uses the ``LICENSE.Abilis.txt`` file as
+Here is an example that uses the ``LICENSE.Abilis.txt`` file as
 the license from the fetched source::
 
    NO_GENERIC_LICENSE[Firmware-Abilis] = "LICENSE.Abilis.txt"

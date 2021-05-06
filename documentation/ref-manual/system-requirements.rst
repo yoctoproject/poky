@@ -111,7 +111,7 @@ function.
 Ubuntu and Debian
 -----------------
 
-The following list shows the required packages by function given a
+Here are the required packages by function given a
 supported Ubuntu or Debian Linux distribution:
 
 .. note::
@@ -150,7 +150,7 @@ supported Ubuntu or Debian Linux distribution:
 Fedora Packages
 ---------------
 
-The following list shows the required packages by function given a
+Here are the required packages by function given a
 supported Fedora Linux distribution:
 
 -  *Essentials:* Packages needed to build an image for a headless
@@ -167,7 +167,7 @@ supported Fedora Linux distribution:
 openSUSE Packages
 -----------------
 
-The following list shows the required packages by function given a
+Here are the required packages by function given a
 supported openSUSE Linux distribution:
 
 -  *Essentials:* Packages needed to build an image for a headless
@@ -185,7 +185,7 @@ supported openSUSE Linux distribution:
 CentOS-7 Packages
 -----------------
 
-The following list shows the required packages by function given a
+Here are the required packages by function given a
 supported CentOS-7 Linux distribution:
 
 -  *Essentials:* Packages needed to build an image for a headless
@@ -212,7 +212,7 @@ supported CentOS-7 Linux distribution:
 CentOS-8 Packages
 -----------------
 
-The following list shows the required packages by function given a
+Here are the required packages by function given a
 supported CentOS-8 Linux distribution:
 
 -  *Essentials:* Packages needed to build an image for a headless

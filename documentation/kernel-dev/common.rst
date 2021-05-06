@@ -338,7 +338,7 @@ section:
    the ``yocto-4.12`` branch.
 
    The following commands show how to create a local copy of the
-   ``yocto-kernel-cache`` and be in the ``yocto-4.12`` branch::
+   ``yocto-kernel-cache`` and switch to the ``yocto-4.12`` branch::
 
       $ cd ~
       $ git clone git://git.yoctoproject.org/yocto-kernel-cache --branch yocto-4.12
@@ -491,7 +491,7 @@ As an example, consider the following append file used by the BSPs in
 
    meta-yocto-bsp/recipes-kernel/linux/linux-yocto_4.12.bbappend
 
-The following listing shows the file. Be aware that the actual commit ID
+Here are the contents of this file. Be aware that the actual commit ID
 strings in this example listing might be different than the actual
 strings in the file from the ``meta-yocto-bsp`` layer upstream.
 ::

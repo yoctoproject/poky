@@ -38,8 +38,7 @@ to the Yocto Project.
 Features
 --------
 
-The following list describes features and advantages of the Yocto
-Project:
+Here are features and advantages of the Yocto Project:
 
 -  *Widely Adopted Across the Industry:* Many semiconductor, operating
    system, software, and service vendors adopt and support the Yocto
@@ -137,8 +136,7 @@ Project:
 Challenges
 ----------
 
-The following list presents challenges you might encounter when
-developing using the Yocto Project:
+Here are challenges you might encounter when developing using the Yocto Project:
 
 -  *Steep Learning Curve:* The Yocto Project has a steep learning curve
    and has many different ways to accomplish similar tasks. It can be
@@ -292,8 +290,8 @@ associated with the Yocto Project.
 Development Tools
 -----------------
 
-The following list consists of tools that help you develop images and
-applications using the Yocto Project:
+Here are tools that help you develop images and applications using
+the Yocto Project:
 
 -  *CROPS:* `CROPS <https://github.com/crops/poky-container/>`__ is an
    open source, cross-platform development framework that leverages
@@ -347,8 +345,8 @@ applications using the Yocto Project:
 Production Tools
 ----------------
 
-The following list consists of tools that help production related
-activities using the Yocto Project:
+Here are tools that help with production related activities using the
+Yocto Project:
 
 -  *Auto Upgrade Helper:* This utility when used in conjunction with the
    :term:`OpenEmbedded Build System`
@@ -444,8 +442,7 @@ activities using the Yocto Project:
 Open-Embedded Build System Components
 -------------------------------------
 
-The following list consists of components associated with the
-:term:`OpenEmbedded Build System`:
+Here are components associated with the :term:`OpenEmbedded Build System`:
 
 -  *BitBake:* BitBake is a core component of the Yocto Project and is
    used by the OpenEmbedded build system to build images. While BitBake
@@ -511,8 +508,7 @@ section.
 Packages for Finished Targets
 -----------------------------
 
-The following lists components associated with packages for finished
-targets:
+Here are components associated with packages for finished targets:
 
 -  *Matchbox:* Matchbox is an Open Source, base environment for the X
    Window System running on non-desktop, embedded platforms such as

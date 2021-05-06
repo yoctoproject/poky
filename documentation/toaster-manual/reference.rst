@@ -186,7 +186,7 @@ Configuring the Workflow
 ------------------------
 
 The ``bldcontrol/management/commands/checksettings.py`` file controls
-workflow configuration. The following steps outline the process to
+workflow configuration. Here is the process to
 initially populate this database.
 
 1. The default project settings are set from
@@ -237,7 +237,7 @@ The following example sets "name" to "CUSTOM_XML_ONLY" and its value to
 Understanding Fixture File Format
 ---------------------------------
 
-The following is an overview of the file format used by the
+Here is an overview of the file format used by the
 ``oe-core.xml``, ``poky.xml``, and ``custom.xml`` files.
 
 The following subsections describe each of the sections in the fixture
@@ -407,7 +407,7 @@ To get the status of pending builds, use the following call::
 Be sure to provide values for host and port. The output is a JSON file that
 itemizes all builds in progress. This file includes the time in seconds since
 each respective build started as well as the progress of the cloning, parsing,
-and task execution. The following is sample output for a build in progress:
+and task execution. Here is sample output for a build in progress:
 
 .. code-block:: JSON
 
@@ -440,8 +440,8 @@ call::
    http://host:port/toastergui/api/builds
 
 Be sure to provide values for host and port. The output is a JSON file that
-itemizes all complete builds, and includes build summary information. The
-following is sample output for a completed build:
+itemizes all complete builds, and includes build summary information. Here
+is sample output for a completed build:
 
 .. code-block:: JSON
 
@@ -479,7 +479,7 @@ Completed query. See the ":ref:`toaster-manual/reference:checking status of buil
 section for more information.
 
 The output is a JSON file that itemizes the specific build and includes
-build summary information. The following is sample output for a specific
+build summary information. Here is sample output for a specific
 build:
 
 .. code-block:: JSON
