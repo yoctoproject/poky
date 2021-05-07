@@ -1614,7 +1614,7 @@ them if they are deemed to be valid.
       section in the Yocto Project Development Tasks Manual.
 
    -  The code in the build system that supports incremental builds is
-      not simple code. For techniques that help you work around issues
+      complex. For techniques that help you work around issues
       related to shared state code, see the
       ":ref:`dev-manual/common-tasks:viewing metadata used to create the input signature of a shared state task`"
       and
