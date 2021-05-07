@@ -641,8 +641,10 @@ system and gives an overview of their function and contents.
       introduce a hard dependency on those other layers.
 
       Use the following form for :term:`BBFILES_DYNAMIC`:
-      collection_name:filename_pattern The following example identifies two
-      collection names and two filename patterns::
+      ``collection_name:filename_pattern``.
+
+      The following example identifies two collection names and two
+      filename patterns::
 
          BBFILES_DYNAMIC += " \
             clang-layer:${LAYERDIR}/bbappends/meta-clang/*/*/*.bbappend \
