@@ -66,9 +66,8 @@ distributions:
 
    -  While the Yocto Project Team attempts to ensure all Yocto Project
       releases are one hundred percent compatible with each officially
-      supported Linux distribution, instances might exist where you
-      encounter a problem while using the Yocto Project on a specific
-      distribution.
+      supported Linux distribution, you may still encounter problems
+      that happen only with a specific distribution.
 
    -  Yocto Project releases are tested against the stable Linux
       distributions in the above list. The Yocto Project should work
@@ -119,8 +118,7 @@ supported Ubuntu or Debian Linux distribution:
    -  If your build system has the ``oss4-dev`` package installed, you
       might experience QEMU build failures due to the package installing
       its own custom ``/usr/include/linux/soundcard.h`` on the Debian
-      system. If you run into this situation, either of the following
-      solutions exist::
+      system. If you run into this situation, try either of these solutions::
 
          $ sudo apt-get build-dep qemu
          $ sudo apt-get remove oss4-dev

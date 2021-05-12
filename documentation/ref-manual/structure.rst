@@ -510,8 +510,8 @@ should be automatic, and recipes should not directly reference
 -----------------------
 
 Previous versions of the OpenEmbedded build system used to create a
-global shared sysroot per machine along with a native sysroot. Beginning
-with the 2.3 version of the Yocto Project, sysroots exist in
+global shared sysroot per machine along with a native sysroot. Since
+the 2.3 version of the Yocto Project, there are sysroots in
 recipe-specific :term:`WORKDIR` directories. Thus, the
 ``build/tmp/sysroots/`` directory is unused.
 
@@ -601,7 +601,7 @@ constructed using the architecture of the given build (e.g.
 name, and the version of the recipe (i.e.
 :term:`PE`\ ``:``\ :term:`PV`\ ``-``\ :term:`PR`).
 
-A number of key subdirectories exist within each recipe work directory:
+Here are key subdirectories within each recipe work directory:
 
 -  ``${WORKDIR}/temp``: Contains the log files of each task executed for
    this recipe, the "run" files for each executed task, which contain
@@ -624,7 +624,7 @@ A number of key subdirectories exist within each recipe work directory:
 
 -  ``${WORKDIR}/packages-split``: Contains the output of the
    ``do_package`` task after the output has been split into individual
-   packages. Subdirectories exist for each individual package created by
+   packages. There are subdirectories for each individual package created by
    the recipe.
 
 -  ``${WORKDIR}/recipe-sysroot``: A directory populated with the target

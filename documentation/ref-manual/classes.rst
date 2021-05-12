@@ -1006,7 +1006,7 @@ package name override, in this example ``${PN}``, must be used::
    INSANE_SKIP_${PN} += "dev-so"
 
 Please keep in mind that the QA checks
-exist in order to detect real or potential problems in the packaged
+are meant to detect real or potential problems in the packaged
 output. So exercise caution when disabling these checks.
 
 Here are the tests you can list with the ``WARN_QA`` and
@@ -1085,8 +1085,8 @@ Here are the tests you can list with the ``WARN_QA`` and
 -  ``dev-so:`` Checks that the ``.so`` symbolic links are in the
    ``-dev`` package and not in any of the other packages. In general,
    these symlinks are only useful for development purposes. Thus, the
-   ``-dev`` package is the correct location for them. Some very rare
-   cases do exist for dynamically loaded modules where these symlinks
+   ``-dev`` package is the correct location for them. In very rare
+   cases, such as dynamically loaded modules, these symlinks
    are needed instead in the main package.
 
 -  ``file-rdeps:`` Checks that file-level dependencies identified by
@@ -1676,7 +1676,7 @@ couple different ways:
            nativesdk-myrecipe.bb
 
 
-   Not doing so can lead to subtle problems because code exists that
+   Not doing so can lead to subtle problems because there is code that
    depends on the naming convention.
 
 Although applied differently, the ``nativesdk`` class is used with both
@@ -1714,10 +1714,10 @@ section in the Yocto Project Development Tasks Manual.
 ``oelint.bbclass``
 ==================
 
-The ``oelint`` class is an obsolete lint checking tool that exists in
+The ``oelint`` class is an obsolete lint checking tool available in
 ``meta/classes`` in the :term:`Source Directory`.
 
-A number of classes exist that could be generally useful in OE-Core but
+There are some classes that could be generally useful in OE-Core but
 are never actually used within OE-Core itself. The ``oelint`` class is
 one such example. However, being aware of this class can reduce the
 proliferation of different versions of similar classes across multiple
