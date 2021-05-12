@@ -578,7 +578,7 @@ recipe is processed.
 
 .. note::
 
-   Other methods exist to accomplish grouping and defining configuration
+   There are other ways of grouping and defining configuration
    options. For example, if you are working with a local clone of the
    kernel repository, you could checkout the kernel's ``meta`` branch,
    make your changes, and then push the changes to the local bare clone
@@ -781,8 +781,8 @@ the ":ref:`kernel-dev/common:getting ready to develop using \`\`devtool\`\``" Se
 
    .. note::
 
-      During the checkout operation, a bug exists that could cause
-      errors such as the following to appear:
+      During the checkout operation, there is a bug that could cause
+      errors such as the following:
 
       .. code-block:: none
 
@@ -1306,7 +1306,7 @@ steps:
       $ bitbake linux-yocto -c kernel_configme -f
 
    This step ensures that you create a
-   ``.config`` file from a known state. Because situations exist where
+   ``.config`` file from a known state. Because there are situations where
    your build state might become unknown, it is best to run this task
    prior to starting ``menuconfig``.
 
@@ -1536,7 +1536,7 @@ Working with a "Dirty" Kernel Version String
 ============================================
 
 If you build a kernel image and the version string has a "+" or a
-"-dirty" at the end, uncommitted modifications exist in the kernel's
+"-dirty" at the end, it means there are uncommitted modifications in the kernel's
 source directory. Follow these steps to clean up the version string:
 
 1. *Discover the Uncommitted Changes:* Go to the kernel's locally cloned
@@ -1615,7 +1615,7 @@ Here are some basic steps you can use to work with your own sources:
 
    Running the ``make defconfig`` command results in the default
    configuration for your architecture as defined by your kernel.
-   However, no guarantee exists that this configuration is valid for
+   However, there is no guarantee that this configuration is valid for
    your use case, or that your board will even boot. This is
    particularly true for non-x86 architectures.
 
