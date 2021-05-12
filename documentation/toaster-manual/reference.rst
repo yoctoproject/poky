@@ -9,8 +9,8 @@ concepts and have some basic command reference material available. This
 final chapter provides conceptual information on layer sources,
 releases, and JSON configuration files. Also provided is a quick look at
 some useful ``manage.py`` commands that are Toaster-specific.
-Information on ``manage.py`` commands does exist across the Web and the
-information in this manual by no means attempts to provide a command
+Information on ``manage.py`` commands is available across the Web and
+this manual by no means attempts to provide a command
 comprehensive reference.
 
 Layer Source
@@ -508,7 +508,7 @@ Useful Commands
 ===============
 
 In addition to the web user interface and the scripts that start and
-stop Toaster, command-line commands exist through the ``manage.py``
+stop Toaster, command-line commands are available through the ``manage.py``
 management script. You can find general documentation on ``manage.py``
 at the
 `Django <https://docs.djangoproject.com/en/2.2/topics/settings/>`__
