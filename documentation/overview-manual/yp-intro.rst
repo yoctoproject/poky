@@ -140,8 +140,7 @@ Here are challenges you might encounter when developing using the Yocto Project:
 
 -  *Steep Learning Curve:* The Yocto Project has a steep learning curve
    and has many different ways to accomplish similar tasks. It can be
-   difficult to choose how to proceed when varying methods exist by
-   which to accomplish a given task.
+   difficult to choose between such ways.
 
 -  *Understanding What Changes You Need to Make For Your Design Requires
    Some Research:* Beyond the simple tutorial stage, understanding what
@@ -156,7 +155,7 @@ Here are challenges you might encounter when developing using the Yocto Project:
    workflow <overview-manual/development-environment:the yocto project development environment>`
    could be confusing if you are used to traditional desktop and server
    software development.
-   In a desktop development environment, mechanisms exist to easily pull
+   In a desktop development environment, there are mechanisms to easily pull
    and install new packages, which are typically pre-compiled binaries
    from servers accessible over the Internet. Using the Yocto Project,
    you must modify your configuration and rebuild to add additional
@@ -430,8 +429,8 @@ Yocto Project:
    require system administrator privileges. For example, file ownership
    or permissions might need to be defined. Pseudo is a tool that you
    can either use directly or through the environment variable
-   ``LD_PRELOAD``. Either method allows these operations to succeed as
-   if system administrator privileges exist even when they do not.
+   ``LD_PRELOAD``. Either method allows these operations to succeed
+   even without system administrator privileges.
 
    Thanks to Pseudo, the Yocto Project never needs root privileges to
    build images for your target system.
@@ -579,8 +578,7 @@ software.
 This section provides an introduction to the choices or development
 methods you have when setting up your Build Host. Depending on your
 particular workflow preference and the type of operating system your
-Build Host runs, several choices exist that allow you to use the Yocto
-Project.
+Build Host runs, you have several choices.
 
 .. note::
 
@@ -790,7 +788,7 @@ Some Basic Terms
 ================
 
 It helps to understand some basic fundamental terms when learning the
-Yocto Project. Although a list of terms exists in the ":doc:`Yocto Project
+Yocto Project. Although there is a list of terms in the ":doc:`Yocto Project
 Terms </ref-manual/terms>`" section of the Yocto Project
 Reference Manual, this section provides the definitions of some terms
 helpful for getting started:
