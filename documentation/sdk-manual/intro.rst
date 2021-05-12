@@ -214,5 +214,5 @@ You just need to follow these general steps:
    within the Yocto Project.
 
 The remainder of this manual describes how to use the extensible and
-standard SDKs. Information also exists in appendix form that describes
+standard SDKs. There is also information in appendix form describing
 how you can build, install, and modify an SDK.
