@@ -41,7 +41,7 @@ distributions:
 
 -  Ubuntu 18.04 (LTS)
 
--  Ubuntu 20.04
+-  Ubuntu 20.04 (LTS)
 
 -  Fedora 30
 
