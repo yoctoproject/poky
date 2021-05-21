@@ -1524,10 +1524,10 @@ system and gives an overview of their function and contents.
 
    :term:`DEBUG_BUILD`
       Specifies to build packages with debugging information. This
-      influences the value of the ``SELECTED_OPTIMIZATION`` variable.
+      influences the value of the :term:`SELECTED_OPTIMIZATION` variable.
 
    :term:`DEBUG_OPTIMIZATION`
-      The options to pass in ``TARGET_CFLAGS`` and ``CFLAGS`` when
+      The options to pass in :term:`TARGET_CFLAGS` and :term:`CFLAGS` when
       compiling a system for debugging. This variable defaults to "-O
       -fno-omit-frame-pointer ${DEBUG_FLAGS} -pipe".
 
@@ -1537,7 +1537,7 @@ system and gives an overview of their function and contents.
       The most common usage of this is variable is to set it to "-1" within
       a recipe for a development version of a piece of software. Using the
       variable in this way causes the stable version of the recipe to build
-      by default in the absence of ``PREFERRED_VERSION`` being used to
+      by default in the absence of :term:`PREFERRED_VERSION` being used to
       build the development version.
 
       .. note::
@@ -2578,7 +2578,7 @@ system and gives an overview of their function and contents.
       Set the variable to "1" to force the removal of these packages.
 
    :term:`FULL_OPTIMIZATION`
-      The options to pass in ``TARGET_CFLAGS`` and ``CFLAGS`` when
+      The options to pass in :term:`TARGET_CFLAGS` and :term:`CFLAGS` when
       compiling an optimized system. This variable defaults to "-O2 -pipe
       ${DEBUG_FLAGS}".
 
@@ -6690,8 +6690,8 @@ system and gives an overview of their function and contents.
       value of the :term:`TARGET_CFLAGS` variable.
 
       The ``SELECTED_OPTIMIZATION`` variable takes the value of
-      ``FULL_OPTIMIZATION`` unless ``DEBUG_BUILD`` = "1". If that is the
-      case, the value of ``DEBUG_OPTIMIZATION`` is used.
+      :term:`FULL_OPTIMIZATION` unless :term:`DEBUG_BUILD` = "1", in which
+      case the value of :term:`DEBUG_OPTIMIZATION` is used.
 
    :term:`SERIAL_CONSOLE`
       Defines a serial console (TTY) to enable using
