@@ -1938,6 +1938,138 @@ another reason why a task-based approach is preferred over a
 recipe-based approach, which would have to install the output from every
 task.
 
+Hash Equivalence
+----------------
+
+The above section explained how BitBake skips the execution of tasks
+whose output can already be found in the Shared State cache.
+
+During a build, it may often be the case that the output / result of a task might
+be unchanged despite changes in the task's input values. An example might be
+whitespace changes in some input C code. In project terms, this is what we define
+as "equivalence".
+
+To keep track of such equivalence, BitBake has to manage three hashes
+for each task:
+
+- The *task hash* explained earlier: computed from the recipe metadata,
+  the task code and the task hash values from its dependencies.
+  When changes are made, these task hashes are therefore modified,
+  causing the task to re-execute. The task hashes of tasks depending on this
+  task are therefore modified too, causing the whole dependency
+  chain to re-execute.
+
+- The *output hash*, a new hash computed from the output of Shared State tasks,
+  tasks that save their resulting output to a Shared State tarball.
+  The mapping between the task hash and its output hash is reported
+  to a new *Hash Equivalence* server. This mapping is stored in a database
+  by the server for future reference.
+
+- The *unihash*, a new hash, initially set to the task hash for the task.
+  This is used to track the *unicity* of task output, and we will explain
+  how its value is maintained.
+
+When Hash Equivalence is enabled, BitBake computes the task hash
+for each task by using the unihash of its dependencies, instead
+of their task hash.
+
+Now, imagine that a Shared State task is modified because of a change in
+its code or metadata, or because of a change in its dependencies.
+Since this modifies its task hash, this task will need re-executing.
+Its output hash will therefore be computed again.
+
+Then, the new mapping between the new task hash and its output hash
+will be reported to the Hash Equivalence server. The server will
+let BitBake know whether this output hash is the same as a previously
+reported output hash, for a different task hash.
+
+If the output hash is already known, BitBake will update the task's
+unihash to match the original task hash that generated that output.
+Thanks to this, the depending tasks will keep a previously recorded
+task hash, and BitBake will be able to retrieve their output from
+the Shared State cache, instead of re-executing them. Similarly, the
+output of further downstream tasks can also be retrieved from Shared
+Shate.
+
+If the output hash is unknown, a new entry will be created on the Hash
+Equivalence server, matching the task hash to that output.
+The depending tasks, still having a new task hash because of the
+change, will need to re-execute as expected. The change propagates
+to the depending tasks.
+
+To summarize, when Hash Equivalence is enabled, a change in one of the
+tasks in BitBake's run queue doesn't have to propagate to all the
+downstream tasks that depend on the output of this task, causing a
+full rebuild of such tasks, and so on with the next depending tasks.
+Instead, when the output of this task remains identical to previously
+recorded output, BitBake can safely retrieve all the downstream
+task output from the Shared State cache.
+
+.. note::
+
+   Having :doc:`/test-manual/reproducible-builds` is a key ingredient for
+   the stability of the task's output hash. Therefore, the effectiveness
+   of Hash Equivalence strongly depends on it.
+
+This applies to multiple scenarios:
+
+-  A "trivial" change to a recipe that doesn't impact its generated output,
+   such as whitespace changes, modifications to unused code paths or
+   in the ordering of variables.
+
+-  Shared library updates, for example to fix a security vulnerability.
+   For sure, the programs using such a library should be rebuilt, but
+   their new binaries should remain identical. The corresponding tasks should
+   have a different output hash because of the change in the hash of their
+   library dependency, but thanks to their output being identical, Hash
+   Equivalence will stop the propagation down the dependency chain.
+
+-  Native tool updates. Though the depending tasks should be rebuilt,
+   it's likely that they will generate the same output and be marked
+   as equivalent.
+
+This mechanism is enabled by default in Poky, and is controlled by three
+variables:
+
+-  :term:`bitbake:BB_HASHSERVE`, specifying a local or remote Hash
+   Equivalence server to use.
+
+-  :term:`BB_HASHSERVE_UPSTREAM`, when ``BB_HASHSERVE = "auto"``,
+   allowing to connect the local server to an upstream one.
+
+-  :term:`bitbake:BB_SIGNATURE_HANDLER`, which must be set  to ``OEEquivHash``.
+
+Therefore, the default configuration in Poky corresponds to the
+below settings::
+
+   BB_HASHSERVE = "auto"
+   BB_SIGNATURE_HANDLER = "OEEquivHash"
+
+Rather than starting a local server, another possibility is to rely
+on a Hash Equivalence server on a network, by setting::
+
+   BB_HASHSERVE = "<HOSTNAME>:<PORT>"
+
+.. note::
+
+   The shared Hash Equivalence server needs to be maintained together with the
+   Shared State cache. Otherwise, the server could report Shared State hashes
+   that only exist on specific clients.
+
+   We therefore recommend that one Hash Equivalence server be set up to
+   correspond with a given Shared State cache, and to start this server
+   in *read-only mode*, so that it doesn't store equivalences for
+   Shared State caches that are local to clients.
+
+   See the :term:`BB_HASHSERVE` reference for details about starting
+   a Hash Equivalence server.
+
+See the `video <https://www.youtube.com/watch?v=zXEdqGS62Wc>`__
+of Joshua Watt's `Hash Equivalence and Reproducible Builds
+<https://elinux.org/images/3/37/Hash_Equivalence_and_Reproducible_Builds.pdf>`__
+presentation at ELC 2020 for a very synthetic introduction to the
+Hash Equivalence implementation in the Yocto Project.
+
 Automatically Added Runtime Dependencies
 ========================================
 
