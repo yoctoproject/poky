@@ -4806,6 +4806,13 @@ system and gives an overview of their function and contents.
          FILES_${PN}-dbg = "/usr/src/debug/"
          FILES_${QT_BASE_NAME}-demos-doc = "${docdir}/${QT_DIR_NAME}/qch/qt.qch"
 
+   :term:`NON_MULTILIB_RECIPES`
+      A list of recipes that should not be built for multilib. OE-Core's
+      ``multilib.conf`` file defines a reasonable starting point for this
+      list with::
+
+         NON_MULTILIB_RECIPES = "grub grub-efi make-mod-scripts ovmf u-boot"
+
    :term:`OBJCOPY`
       The minimal command and arguments to run ``objcopy``.
 
