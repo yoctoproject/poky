@@ -38,12 +38,6 @@ Welcome to the Yocto Project Documentation
 
 .. toctree::
    :maxdepth: 1
-   :caption: 'Mega' Manual
-
-   All-in-one 'Mega' Manual <https://docs.yoctoproject.org/singleindex.html>
-
-.. toctree::
-   :maxdepth: 1
    :caption: Manuals/Variable Index
 
    genindex
