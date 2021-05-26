@@ -3279,6 +3279,9 @@ system and gives an overview of their function and contents.
       - cpio.lzma
       - cpio.xz
       - cramfs
+      - erofs
+      - erofs-lz4
+      - erofs-lz4hc
       - ext2
       - ext2.bz2
       - ext2.gz
