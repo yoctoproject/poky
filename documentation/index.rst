@@ -39,6 +39,7 @@ Welcome to the Yocto Project Documentation
 .. toctree::
    :maxdepth: 1
    :caption: Manuals/Variable Index
+   :hidden:
 
    genindex
    Current/Previous Version Specific Manuals <releases>
