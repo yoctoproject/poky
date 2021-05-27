@@ -28,8 +28,8 @@ characters. This practice is now a requirement as BitBake's datastore
 now assumes lower-case characters in order to give a slight performance
 boost during parsing. In practical terms, this requirement means that
 anything that ends up in :term:`OVERRIDES` must now
-appear in lower-case characters (e.g. values for ``MACHINE``,
-``TARGET_ARCH``, ``DISTRO``, and also recipe names if
+appear in lower-case characters (e.g. values for :term:`MACHINE`,
+:term:`TARGET_ARCH`, :term:`DISTRO`, and also recipe names if
 ``_pn-``\ recipename overrides are to be effective).
 
 .. _migration-2.1-expand-parameter-to-getvar-and-getvarflag-now-mandatory:
@@ -68,7 +68,7 @@ was a historical accident that has required many classes (e.g.
 to work with sensible build systems. When upgrading to the release, you
 must edit any recipe that relies upon this old default by either setting
 ``EXTRA_OEMAKE`` back to "-e MAKEFLAGS=" or by explicitly setting any
-required variable value overrides using ``EXTRA_OEMAKE``, which is
+required variable value overrides using :term:`EXTRA_OEMAKE`, which is
 typically only needed when a Makefile sets a default value for a
 variable that is inappropriate for cross-compilation using the "="
 operator rather than the "?=" operator.
@@ -376,7 +376,7 @@ These additional changes exist:
       run-postinsts
 
    With the Yocto Project 2.1 release, these packages are
-   only removed if "read-only-rootfs" is in ``IMAGE_FEATURES``, since
+   only removed if "read-only-rootfs" is in :term:`IMAGE_FEATURES`, since
    they might still be needed for a read-write image even in the absence
    of a package manager (e.g. if users need to be added, modified, or
    removed at runtime).

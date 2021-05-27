@@ -91,7 +91,7 @@ This section provides information about packaging changes.
    package_name\ ``-src``). If you are currently using ``dbg-pkgs`` in
    :term:`IMAGE_FEATURES` to bring in debug
    symbols and you still need the sources, you must now also add
-   ``src-pkgs`` to ``IMAGE_FEATURES``. Source packages remain in the
+   ``src-pkgs`` to :term:`IMAGE_FEATURES`. Source packages remain in the
    target portion of the SDK by default, unless you have set your own
    value for :term:`SDKIMAGE_FEATURES` that
    does not include ``src-pkgs``.

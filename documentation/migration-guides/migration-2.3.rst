@@ -35,7 +35,7 @@ Consider the following:
    As an example, see the ``dbus`` recipe. You will see that this recipe
    has a ``pkg_postinst`` that calls ``systemctl`` if "systemd" is in
    :term:`DISTRO_FEATURES`. In the example,
-   ``systemd-systemctl-native`` is added to ``PACKAGE_WRITE_DEPS``,
+   ``systemd-systemctl-native`` is added to :term:`PACKAGE_WRITE_DEPS`,
    which is also conditional on "systemd" being in ``DISTRO_FEATURES``.
 
 -  Examine Recipes that Use ``SSTATEPOSTINSTFUNCS``: You need to
@@ -136,7 +136,7 @@ The following changes to scripts took place:
    removed because the script was found to be deleting files it should
    not have, which lead to broken build trees. Rather than trying to
    delete portions of :term:`TMPDIR` and getting it wrong,
-   it is recommended that you delete ``TMPDIR`` and have it restored
+   it is recommended that you delete :term:`TMPDIR` and have it restored
    from shared state (sstate) on subsequent builds.
 
 -  ``wipe-sysroot``: The ``wipe-sysroot`` script has been removed as
@@ -200,10 +200,10 @@ The following changes took place for BitBake:
    section in the BitBake
    User Manual for additional information.
 
--  ``BB_SETSCENE_VERIFY_FUNCTION`` and ``BB_SETSCENE_VERIFY_FUNCTION2``
+-  ``BB_SETSCENE_VERIFY_FUNCTION`` and :term:`BB_SETSCENE_VERIFY_FUNCTION2`
    Removed: Because the mechanism they were part of is no longer
    necessary with recipe-specific sysroots, the
-   ``BB_SETSCENE_VERIFY_FUNCTION`` and ``BB_SETSCENE_VERIFY_FUNCTION2``
+   ``BB_SETSCENE_VERIFY_FUNCTION`` and :term:`BB_SETSCENE_VERIFY_FUNCTION2`
    variables have been removed.
 
 .. _migration-2.3-absolute-symlinks:
@@ -426,10 +426,10 @@ The following miscellaneous changes have occurred:
 
 -  If the :term:`DISTRO_VERSION` value contains
    the value of the :term:`DATE` variable, which is the
-   default between Poky releases, the ``DATE`` value is explicitly
+   default between Poky releases, the :term:`DATE` value is explicitly
    excluded from ``/etc/issue`` and ``/etc/issue.net``, which is
    displayed at the login prompt, in order to avoid conflicts with
-   Multilib enabled. Regardless, the ``DATE`` value is inaccurate if the
+   Multilib enabled. Regardless, the :term:`DATE` value is inaccurate if the
    ``base-files`` recipe is restored from shared state (sstate) rather
    than rebuilt.
 
@@ -451,7 +451,7 @@ The following miscellaneous changes have occurred:
    tools.
 
 -  The ``USE_LDCONFIG`` variable has been replaced with the "ldconfig"
-   ``DISTRO_FEATURES`` feature. Distributions that previously set::
+   :term:`DISTRO_FEATURES` feature. Distributions that previously set::
 
       USE_LDCONFIG = "0"
 
@@ -494,12 +494,12 @@ The following miscellaneous changes have occurred:
    information.
 
 -  All native and nativesdk recipes now use a separate
-   ``DISTRO_FEATURES`` value instead of sharing the value used by
+   :term:`DISTRO_FEATURES` value instead of sharing the value used by
    recipes for the target, in order to avoid unnecessary rebuilds.
 
-   The ``DISTRO_FEATURES`` for ``native`` recipes is
+   The :term:`DISTRO_FEATURES` for ``native`` recipes is
    :term:`DISTRO_FEATURES_NATIVE` added to
-   an intersection of ``DISTRO_FEATURES`` and
+   an intersection of :term:`DISTRO_FEATURES` and
    :term:`DISTRO_FEATURES_FILTER_NATIVE`.
 
    For nativesdk recipes, the corresponding variables are

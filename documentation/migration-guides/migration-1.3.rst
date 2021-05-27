@@ -125,7 +125,7 @@ Image recipes that previously included ``apps-console-core`` in
 :term:`IMAGE_FEATURES` should now include ``splash``
 instead to enable the boot-up splash screen. Retaining
 ``apps-console-core`` will still include the splash screen but generates a
-warning. The ``apps-x11-core`` and ``apps-x11-games`` ``IMAGE_FEATURES``
+warning. The ``apps-x11-core`` and ``apps-x11-games`` :term:`IMAGE_FEATURES`
 features have been removed.
 
 .. _migration-1.3-removed-recipes:
@@ -185,7 +185,7 @@ include :term:`PE` as part of the filename::
 
    KERNEL_IMAGE_BASE_NAME ?= "${KERNEL_IMAGETYPE}-${PE}-${PV}-${PR}-${MACHINE}-${DATETIME}"
 
-Because the ``PE`` variable is not set by default, these binary files
+Because the :term:`PE` variable is not set by default, these binary files
 could result with names that include two dash characters. Here is an
 example::
 

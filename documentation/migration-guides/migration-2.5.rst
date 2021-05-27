@@ -281,7 +281,7 @@ The following are additional changes:
    ``IMAGE_FSTYPES``.
 
 -  Recipes with an unconditional dependency on ``libpam`` are only
-   buildable with ``pam`` in ``DISTRO_FEATURES``. If the dependency is
+   buildable with ``pam`` in :term:`DISTRO_FEATURES`. If the dependency is
    truly optional then it is recommended that the dependency be
    conditional upon ``pam`` being in ``DISTRO_FEATURES``.
 

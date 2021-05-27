@@ -140,9 +140,9 @@ part of the variable name. This change not only simplifies usage but
 also allows the values of these variables to be appropriately
 incorporated into task signatures and thus trigger the appropriate tasks
 to re-execute when changed. You should replace any references to
-``module_autoload_*`` with ``KERNEL_MODULE_AUTOLOAD``, and add any
+``module_autoload_*`` with :term:`KERNEL_MODULE_AUTOLOAD`, and add any
 modules for which ``module_conf_*`` is specified to
-``KERNEL_MODULE_PROBECONF``.
+:term:`KERNEL_MODULE_PROBECONF`.
 
 .. _migration-1.7-qa-check-changes:
 

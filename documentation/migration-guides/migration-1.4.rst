@@ -28,7 +28,7 @@ Differences include the following:
    and uninstall script functions ``pkg_preinst``, ``pkg_postinst``,
    ``pkg_prerm``, and ``pkg_postrm`` should always have a package name
    override. For example, use ``RDEPENDS_${PN}`` for the main package
-   instead of ``RDEPENDS``. BitBake uses more strict checks when it
+   instead of :term:`RDEPENDS`. BitBake uses more strict checks when it
    parses recipes.
 
 .. _migration-1.4-build-behavior:
@@ -53,10 +53,10 @@ Differences include the following:
    :term:`SRC_URI`, the build system now uses
    :term:`FILESOVERRIDES` instead of
    :term:`OVERRIDES` for the directory names. In
-   general, the values previously in ``OVERRIDES`` are now in
-   ``FILESOVERRIDES`` as well. However, if you relied upon an additional
-   value you previously added to ``OVERRIDES``, you might now need to
-   add it to ``FILESOVERRIDES`` unless you are already adding it through
+   general, the values previously in :term:`OVERRIDES` are now in
+   :term:`FILESOVERRIDES` as well. However, if you relied upon an additional
+   value you previously added to :term:`OVERRIDES`, you might now need to
+   add it to :term:`FILESOVERRIDES` unless you are already adding it through
    the :term:`MACHINEOVERRIDES` or
    :term:`DISTROOVERRIDES` variables, as
    appropriate. For more related changes, see the
@@ -105,7 +105,7 @@ Variables
 
 The following variables have changed:
 
--  ``SANITY_TESTED_DISTROS``: This variable now uses a distribution
+-  :term:`SANITY_TESTED_DISTROS`: This variable now uses a distribution
    ID, which is composed of the host distributor ID followed by the
    release. Previously,
    :term:`SANITY_TESTED_DISTROS` was
@@ -114,7 +114,7 @@ The following variables have changed:
    you are not specifically setting this variable, or if you are
    specifically setting it to "".
 
--  ``SRC_URI``: The ``${``\ :term:`PN`\ ``}``,
+-  :term:`SRC_URI`: The ``${``\ :term:`PN`\ ``}``,
    ``${``\ :term:`PF`\ ``}``,
    ``${``\ :term:`P`\ ``}``, and ``FILE_DIRNAME`` directories
    have been dropped from the default value of the

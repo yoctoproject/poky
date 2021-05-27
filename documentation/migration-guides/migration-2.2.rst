@@ -239,7 +239,7 @@ to catch recipes that are building software without using the
 OpenEmbedded :term:`LDFLAGS`. This change could result in
 seeing some "No GNU_HASH in the elf binary" QA issues when building such
 recipes. You need to fix these recipes so that they use the expected
-``LDFLAGS``. Depending on how the software is built, the build system
+:term:`LDFLAGS`. Depending on how the software is built, the build system
 used by the software (e.g. a Makefile) might need to be patched.
 However, sometimes making this fix is as simple as adding the following
 to the recipe::
@@ -291,7 +291,7 @@ The following changes took place for BitBake:
    :term:`SRC_URI` parameters to specify these. This
    change is more in-line with how the other fetchers work for source
    control systems. Recipes that fetch from Perforce will need to be
-   updated to use ``SRCREV`` in place of specifying the source revision
+   updated to use :term:`SRCREV` in place of specifying the source revision
    within ``SRC_URI``.
 
 -  Some of BitBake's internal code structures for accessing the recipe
@@ -308,7 +308,7 @@ The following changes took place for BitBake:
    to cause any problems for most users. However, the setscene
    verification function as pointed to by
    ``BB_SETSCENE_VERIFY_FUNCTION`` needed to change signature.
-   Consequently, a new variable named ``BB_SETSCENE_VERIFY_FUNCTION2``
+   Consequently, a new variable named :term:`BB_SETSCENE_VERIFY_FUNCTION2`
    has been added allowing multiple versions of BitBake to work with
    suitably written metadata, which includes OpenEmbedded-Core and Poky.
    Anyone with custom BitBake task scheduler code might also need to

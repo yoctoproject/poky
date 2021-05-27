@@ -156,11 +156,11 @@ Image/Kernel Artifact Naming Changes
 The following changes have been made:
 
 -  Name variables (e.g. :term:`IMAGE_NAME`) use a new
-   ``IMAGE_VERSION_SUFFIX`` variable instead of
-   :term:`DATETIME`. Using ``IMAGE_VERSION_SUFFIX``
+   :term:`IMAGE_VERSION_SUFFIX` variable instead of
+   :term:`DATETIME`. Using :term:`IMAGE_VERSION_SUFFIX`
    allows easier and more direct changes.
 
-   The ``IMAGE_VERSION_SUFFIX`` variable is set in the ``bitbake.conf``
+   The :term:`IMAGE_VERSION_SUFFIX` variable is set in the ``bitbake.conf``
    configuration file as follows::
 
       IMAGE_VERSION_SUFFIX = "-${DATETIME}"
@@ -212,19 +212,19 @@ The following changes have been made:
 The :term:`SERIAL_CONSOLE` variable has been
 functionally replaced by the
 :term:`SERIAL_CONSOLES` variable for some time.
-With the Yocto Project 2.6 release, ``SERIAL_CONSOLE`` has been
+With the Yocto Project 2.6 release, :term:`SERIAL_CONSOLE` has been
 officially deprecated.
 
-``SERIAL_CONSOLE`` will continue to work as before for the 2.6 release.
+:term:`SERIAL_CONSOLE` will continue to work as before for the 2.6 release.
 However, for the sake of future compatibility, it is recommended that
-you replace all instances of ``SERIAL_CONSOLE`` with
-``SERIAL_CONSOLES``.
+you replace all instances of :term:`SERIAL_CONSOLE` with
+:term:`SERIAL_CONSOLES`.
 
 .. note::
 
-   The only difference in usage is that ``SERIAL_CONSOLES``
+   The only difference in usage is that :term:`SERIAL_CONSOLES`
    expects entries to be separated using semicolons as compared to
-   ``SERIAL_CONSOLE``, which expects spaces.
+   :term:`SERIAL_CONSOLE`, which expects spaces.
 
 .. _migration-2.6-poky-sets-unknown-configure-option-to-qa-error:
 
@@ -387,14 +387,14 @@ QEMU (i.e. "qemu-usermode" is in
 default).
 
 If you wish to disable Python profile-guided optimization regardless of
-the value of ``MACHINE_FEATURES``, then ensure that
+the value of :term:`MACHINE_FEATURES`, then ensure that
 :term:`PACKAGECONFIG` for the ``python3`` recipe
 does not contain "pgo". You could accomplish the latter using the
 following at the configuration level::
 
    PACKAGECONFIG_remove_pn-python3 = "pgo"
 
-Alternatively, you can set ``PACKAGECONFIG`` using an append file
+Alternatively, you can set :term:`PACKAGECONFIG` using an append file
 for the ``python3`` recipe.
 
 .. _migration-2.6-miscellaneous-changes:

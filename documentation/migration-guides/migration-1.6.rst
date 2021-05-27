@@ -61,7 +61,7 @@ If you do not specify a branch, BitBake looks in the default "master" branch.
 
 Alternatively, if you need to bypass this check (e.g. if you are
 fetching a revision corresponding to a tag that is not on any branch),
-you can add ";nobranch=1" to the end of the URL within ``SRC_URI``.
+you can add ";nobranch=1" to the end of the URL within :term:`SRC_URI`.
 
 .. _migration-1.6-bitbake-deps:
 
@@ -134,9 +134,9 @@ OpenEmbedded build system variables, see the ":doc:`/ref-manual/variables`" Chap
 
 :term:`TMPDIR` can no longer be on an NFS mount. NFS does
 not offer full POSIX locking and inode consistency and can cause
-unexpected issues if used to store ``TMPDIR``.
+unexpected issues if used to store :term:`TMPDIR`.
 
-The check for this occurs on startup. If ``TMPDIR`` is detected on an
+The check for this occurs on startup. If :term:`TMPDIR` is detected on an
 NFS mount, an error occurs.
 
 .. _migration-1.6-variable-changes-PRINC:
@@ -274,7 +274,7 @@ In addition to ``core-image-basic`` being renamed,
 Licensing
 ---------
 
-The top-level ``LICENSE`` file has been changed to better describe the
+The top-level :term:`LICENSE` file has been changed to better describe the
 license of the various components of :term:`OpenEmbedded-Core (OE-Core)`. However,
 the licensing itself remains unchanged.
 
@@ -284,7 +284,7 @@ recipes point to this file within
 ``${COREBASE}/LICENSE``) and thus the accompanying checksum must be
 changed from 3f40d7994397109285ec7b81fdeb3b58 to
 4d92cd373abda3937c2bc47fbc49d690. A better alternative is to have
-``LIC_FILES_CHKSUM`` point to a file describing the license that is
+:term:`LIC_FILES_CHKSUM` point to a file describing the license that is
 distributed with the source that the recipe is building, if possible,
 rather than pointing to ``${COREBASE}/LICENSE``.
 
@@ -297,7 +297,7 @@ The "-fpermissive" option has been removed from the default
 :term:`CFLAGS` value. You need to take action on
 individual recipes that fail when building with this option. You need to
 either patch the recipes to fix the issues reported by the compiler, or
-you need to add "-fpermissive" to ``CFLAGS`` in the recipes.
+you need to add "-fpermissive" to :term:`CFLAGS` in the recipes.
 
 .. _migration-1.6-custom-images:
 

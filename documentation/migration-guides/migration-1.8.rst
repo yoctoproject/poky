@@ -153,8 +153,8 @@ The following QA Check and Validation Changes have occurred:
    instead of ``${D}``.
 
 -  :term:`S` now needs to be set to a valid value within a
-   recipe. If ``S`` is not set in the recipe, the directory is not
-   automatically created. If ``S`` does not point to a directory that
+   recipe. If :term:`S` is not set in the recipe, the directory is not
+   automatically created. If :term:`S` does not point to a directory that
    exists at the time the :ref:`ref-tasks-unpack` task
    finishes, a warning will be shown.
 

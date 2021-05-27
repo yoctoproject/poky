@@ -25,7 +25,7 @@ and the porting guide at
 https://gcc.gnu.org/gcc-5/porting_to.html.
 
 Alternatively, you can switch back to GCC 4.9 or 4.8 by setting
-``GCCVERSION`` in your configuration, as follows::
+:term:`GCCVERSION` in your configuration, as follows::
 
    GCCVERSION = "4.9%"
 
@@ -244,7 +244,7 @@ The following QA checks have been added:
 
 -  Added an "invalid-packageconfig" check for any options specified in
    :term:`PACKAGECONFIG` that do not match any
-   ``PACKAGECONFIG`` option defined for the recipe.
+   :term:`PACKAGECONFIG` option defined for the recipe.
 
 .. _migration-2.0-miscellaneous:
 

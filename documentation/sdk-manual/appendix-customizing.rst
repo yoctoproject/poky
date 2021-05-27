@@ -35,13 +35,13 @@ build system applies them against ``local.conf`` and ``auto.conf``:
 -  Variables listed in
    :term:`SDK_LOCAL_CONF_WHITELIST`
    are included. Including a variable in the value of
-   ``SDK_LOCAL_CONF_WHITELIST`` overrides either of the previous two
+   :term:`SDK_LOCAL_CONF_WHITELIST` overrides either of the previous two
    filters. The default value is blank.
 
 -  Classes inherited globally with
    :term:`INHERIT` that are listed in
    :term:`SDK_INHERIT_BLACKLIST`
-   are disabled. Using ``SDK_INHERIT_BLACKLIST`` to disable these
+   are disabled. Using :term:`SDK_INHERIT_BLACKLIST` to disable these
    classes is the typical method to disable classes that are problematic
    or unnecessary in the SDK context. The default value blacklists the
    :ref:`buildhistory <ref-classes-buildhistory>`
@@ -95,7 +95,7 @@ adjustments:
 
    -  Disable the tasks if they are added by a class and you do not need
       the functionality the class provides in the extensible SDK. To
-      disable the tasks, add the class to the ``SDK_INHERIT_BLACKLIST``
+      disable the tasks, add the class to the :term:`SDK_INHERIT_BLACKLIST`
       variable as described in the previous section.
 
 -  Generally, you want to have a shared state mirror set up so users of
@@ -142,12 +142,12 @@ section.
 
 By default, this title is derived from
 :term:`DISTRO_NAME` when it is
-set. If the ``DISTRO_NAME`` variable is not set, the title is derived
+set. If the :term:`DISTRO_NAME` variable is not set, the title is derived
 from the :term:`DISTRO` variable.
 
 The
 :ref:`populate_sdk_base <ref-classes-populate-sdk-*>`
-class defines the default value of the ``SDK_TITLE`` variable as
+class defines the default value of the :term:`SDK_TITLE` variable as
 follows::
 
    SDK_TITLE ??= "${@d.getVar('DISTRO_NAME') or d.getVar('DISTRO')} SDK"
@@ -158,7 +158,7 @@ creates an SDK installer title that applies across your distribution. As
 an example, assume you have your own layer for your distribution named
 "meta-mydistro" and you are using the same type of file hierarchy as
 does the default "poky" distribution. If so, you could update the
-``SDK_TITLE`` variable in the
+:term:`SDK_TITLE` variable in the
 ``~/meta-mydistro/conf/distro/mydistro.conf`` file using the following
 form::
 
@@ -220,7 +220,7 @@ class as follows::
 
 You can
 change this default installation directory by specifically setting the
-``SDKEXTPATH`` variable.
+:term:`SDKEXTPATH` variable.
 
 While there are several ways of setting this variable,
 the method that makes the most sense is to set the variable in your
@@ -229,7 +229,7 @@ default directory that applies across your distribution. As an example,
 assume you have your own layer for your distribution named
 "meta-mydistro" and you are using the same type of file hierarchy as
 does the default "poky" distribution. If so, you could update the
-``SDKEXTPATH`` variable in the
+:term:`SDKEXTPATH` variable in the
 ``~/meta-mydistro/conf/distro/mydistro.conf`` file using the following
 form::
 
@@ -284,11 +284,11 @@ source, you need to do a number of things:
 
          SDK_LOCAL_CONF_WHITELIST = "SSTATE_MIRRORS"
 
-   -  Alternatively, if you just want to set the ``SSTATE_MIRRORS``
+   -  Alternatively, if you just want to set the :term:`SSTATE_MIRRORS`
       variable's value for the SDK alone, create a
       ``conf/sdk-extra.conf`` file either in your
       :term:`Build Directory` or within any
-      layer and put your ``SSTATE_MIRRORS`` setting within that file.
+      layer and put your :term:`SSTATE_MIRRORS` setting within that file.
 
       .. note::
 
@@ -333,7 +333,7 @@ following::
 
 See the :term:`SDK_INCLUDE_PKGDATA` variable for additional information.
 
-Setting the ``SDK_INCLUDE_PKGDATA`` variable as shown causes the "world"
+Setting the :term:`SDK_INCLUDE_PKGDATA` variable as shown causes the "world"
 target to be built so that information for all of the recipes included
 within it are available. Having these recipes available increases build
 time significantly and increases the size of the SDK installer by 30-80
@@ -358,7 +358,7 @@ You can explicitly control whether or not to include the toolchain when
 you build an SDK by setting the
 :term:`SDK_INCLUDE_TOOLCHAIN`
 variable to "1". In particular, it is useful to include the toolchain
-when you have set ``SDK_EXT_TYPE`` to "minimal", which by default,
+when you have set :term:`SDK_EXT_TYPE` to "minimal", which by default,
 excludes the toolchain. Also, it is helpful if you are building a small
 SDK for use with an IDE or some other tool where you do not want to take
 extra steps to install a toolchain.

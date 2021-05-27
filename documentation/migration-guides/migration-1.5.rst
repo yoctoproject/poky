@@ -68,7 +68,7 @@ The following changes have been made that relate to BitBake:
 -  ``${``\ :term:`P`\ ``}`` and
    ``${``\ :term:`PF`\ ``}`` are no longer added to
    :term:`PROVIDES` by default in ``bitbake.conf``.
-   These version-specific ``PROVIDES`` items were seldom used.
+   These version-specific :term:`PROVIDES` items were seldom used.
    Attempting to use them could result in two versions being built
    simultaneously rather than just one version due to the way BitBake
    resolves dependencies.
@@ -84,9 +84,9 @@ The following changes have been made to the package QA checks:
    :term:`WARN_QA` values in your configuration, check
    that they contain all of the issues that you wish to be reported.
    Previous Yocto Project versions contained a bug that meant that any
-   item not mentioned in ``ERROR_QA`` or ``WARN_QA`` would be treated as
+   item not mentioned in :term:`ERROR_QA` or :term:`WARN_QA` would be treated as
    a warning. Consequently, several important items were not already in
-   the default value of ``WARN_QA``. All of the possible QA checks are
+   the default value of :term:`WARN_QA`. All of the possible QA checks are
    now documented in the ":ref:`insane.bbclass <ref-classes-insane>`"
    section.
 
@@ -97,7 +97,7 @@ The following changes have been made to the package QA checks:
 
 -  If you are using the ``buildhistory`` class, the check for the package
    version going backwards is now controlled using a standard QA check.
-   Thus, if you have customized your ``ERROR_QA`` or ``WARN_QA`` values
+   Thus, if you have customized your :term:`ERROR_QA` or :term:`WARN_QA` values
    and still wish to have this check performed, you should add
    "version-going-backwards" to your value for one or the other
    variables depending on how you wish it to be handled. See the
@@ -129,7 +129,7 @@ The following directory changes exist:
 -  When buildhistory is enabled, its output is now written under the
    :term:`Build Directory` rather than
    :term:`TMPDIR`. Doing so makes it easier to delete
-   ``TMPDIR`` and preserve the build history. Additionally, data for
+   :term:`TMPDIR` and preserve the build history. Additionally, data for
    produced SDKs is now split by :term:`IMAGE_NAME`.
 
 -  The ``pkgdata`` directory produced as part of the packaging process
@@ -157,20 +157,20 @@ major issue in the way the values are used.
 The following changes have been made that relate to
 :term:`IMAGE_FEATURES`:
 
--  The value of ``IMAGE_FEATURES`` is now validated to ensure invalid
+-  The value of :term:`IMAGE_FEATURES` is now validated to ensure invalid
    feature items are not added. Some users mistakenly add package names
    to this variable instead of using
    :term:`IMAGE_INSTALL` in order to have the
    package added to the image, which does not work. This change is
-   intended to catch those kinds of situations. Valid ``IMAGE_FEATURES``
+   intended to catch those kinds of situations. Valid :term:`IMAGE_FEATURES`
    are drawn from ``PACKAGE_GROUP`` definitions,
    :term:`COMPLEMENTARY_GLOB` and a new
-   "validitems" varflag on ``IMAGE_FEATURES``. The "validitems" varflag
+   "validitems" varflag on :term:`IMAGE_FEATURES`. The "validitems" varflag
    change allows additional features to be added if they are not
    provided using the previous two mechanisms.
 
--  The previously deprecated "apps-console-core" ``IMAGE_FEATURES`` item
-   is no longer supported. Add "splash" to ``IMAGE_FEATURES`` if you
+-  The previously deprecated "apps-console-core" :term:`IMAGE_FEATURES` item
+   is no longer supported. Add "splash" to :term:`IMAGE_FEATURES` if you
    wish to have the splash screen enabled, since this is all that
    apps-console-core was doing.
 
@@ -285,7 +285,7 @@ Following are changes to ``udev``:
    ``udev-extraconf`` to your image.
 
 -  ``udev`` no longer brings in ``pciutils-ids`` or ``usbutils-ids``
-   through ``RRECOMMENDS``. These are not needed by ``udev`` itself and
+   through :term:`RRECOMMENDS`. These are not needed by ``udev`` itself and
    removing them saves around 350KB.
 
 .. _migration-1.5-removed-renamed-recipes:

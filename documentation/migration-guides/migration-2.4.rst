@@ -63,7 +63,7 @@ occurred:
 
    -  The ``ionice`` program is now packaged in a separate
       "util-linux-ionice" package. The main ``util-linux`` package has a
-      recommended runtime dependency (i.e. ``RRECOMMENDS``) on the
+      recommended runtime dependency (i.e. :term:`RRECOMMENDS`) on the
       ``util-linux-ionice`` package.
 
 -  ``initscripts``: The ``sushell`` program is now packaged in a
@@ -71,7 +71,7 @@ occurred:
    systems to pull ``sushell`` in when ``selinux`` is enabled. The
    change also eliminates needing to pull in the entire ``initscripts``
    package. The main ``initscripts`` package has a runtime dependency
-   (i.e. ``RDEPENDS``) on the ``sushell`` package when "selinux" is in
+   (i.e. :term:`RDEPENDS`) on the ``sushell`` package when "selinux" is in
    ``DISTRO_FEATURES``.
 
 -  ``glib-2.0``: The ``glib-2.0`` package now has a recommended
