@@ -4632,7 +4632,7 @@ system and gives an overview of their function and contents.
 
          do_foo[depends] += "${MLPREFIX}recipe:do_foo"
 
-   module_autoload
+   :term:`module_autoload`
       This variable has been replaced by the ``KERNEL_MODULE_AUTOLOAD``
       variable. You should replace all occurrences of ``module_autoload``
       with additions to ``KERNEL_MODULE_AUTOLOAD``, for example::
@@ -4645,7 +4645,7 @@ system and gives an overview of their function and contents.
 
       See the :term:`KERNEL_MODULE_AUTOLOAD` variable for more information.
 
-   module_conf
+   :term:`module_conf`
       Specifies `modprobe.d <https://linux.die.net/man/5/modprobe.d>`_
       syntax lines for inclusion in the ``/etc/modprobe.d/modname.conf``
       file.
