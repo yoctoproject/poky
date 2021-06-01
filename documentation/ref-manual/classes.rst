@@ -289,21 +289,6 @@ is used during the build process for ``nativesdk``, ``cross``, and
 ``cross-canadian`` recipes to change ``RPATH`` records within binaries
 in order to make them relocatable.
 
-.. _ref-classes-clutter:
-
-``clutter.bbclass``
-===================
-
-The ``clutter`` class consolidates the major and minor version naming
-and other common items used by Clutter and related recipes.
-
-.. note::
-
-   Unlike some other classes related to specific libraries, recipes
-   building other software that uses Clutter do not need to inherit this
-   class unless they use the same recipe versioning scheme that the
-   Clutter and related recipes do.
-
 .. _ref-classes-cmake:
 
 ``cmake.bbclass``
