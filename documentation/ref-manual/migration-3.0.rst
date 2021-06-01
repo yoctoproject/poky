@@ -184,10 +184,9 @@ The following BitBake changes have occurred.
    exceptions. Remove this argument in any calls to
    ``bb.build.exec_func()`` in custom classes or scripts.
 
--  The
-   :term:`bitbake:BB_SETSCENE_VERIFY_FUNCTION2`
-   is no longer used. In the unlikely event that you have any references
-   to it, they should be removed.
+-  The ``BB_SETSCENE_VERIFY_FUNCTION2`` variable is no longer used. In
+   the unlikely event that you have any references to it, they should be
+   removed.
 
 -  The ``RunQueueExecuteScenequeue`` and ``RunQueueExecuteTasks`` events
    have been removed since setscene tasks are now executed as part of
