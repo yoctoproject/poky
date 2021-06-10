@@ -1,5 +1,5 @@
-Moving to the Yocto Project 2.6 Release (thud)
-==============================================
+Release 2.6 (thud)
+==================
 
 This section provides migration information for moving to the Yocto
 Project 2.6 Release (codename "thud") from the prior release.
@@ -110,7 +110,7 @@ upon the older ``*proto`` recipes need to be changed to depend on the
 newer ``xorgproto`` recipe instead.
 
 For names of recipes removed because of this repository change, see the
-:ref:`ref-manual/migration-2.6:removed recipes` section.
+:ref:`migration-guides/migration-2.6:removed recipes` section.
 
 .. _migration-2.6-distutils-distutils3-fetching-dependencies:
 

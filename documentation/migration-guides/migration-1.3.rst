@@ -1,7 +1,7 @@
 .. SPDX-License-Identifier: CC-BY-SA-2.0-UK
 
-Moving to the Yocto Project 1.3 Release (danny)
-===============================================
+Release 1.3 (danny)
+===================
 
 This section provides migration information for moving to the Yocto
 Project 1.3 Release (codename "danny") from the prior release.

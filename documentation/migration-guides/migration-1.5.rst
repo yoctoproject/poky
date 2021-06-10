@@ -1,5 +1,5 @@
-Moving to the Yocto Project 1.5 Release (dora)
-==============================================
+Release 1.5 (dora)
+==================
 
 This section provides migration information for moving to the Yocto
 Project 1.5 Release (codename "dora") from the prior release.

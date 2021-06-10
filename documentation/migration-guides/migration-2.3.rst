@@ -1,5 +1,5 @@
-Moving to the Yocto Project 2.3 Release (pyro)
-==============================================
+Release 2.3 (pyro)
+==================
 
 This section provides migration information for moving to the Yocto
 Project 2.3 Release (codename "pyro") from the prior release.

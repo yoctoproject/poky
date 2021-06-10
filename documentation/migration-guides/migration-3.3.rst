@@ -1,5 +1,5 @@
-Moving to the Yocto Project 3.3 Release (hardknott)
-===================================================
+Release 3.3 (hardknott)
+=======================
 
 This section provides migration information for moving to the Yocto
 Project 3.3 Release (codename "hardknott") from the prior release.

@@ -1,5 +1,5 @@
-Moving to the Yocto Project 1.7 Release (dizzy)
-===============================================
+Release 1.7 (dizzy)
+===================
 
 This section provides migration information for moving to the Yocto
 Project 1.7 Release (codename "dizzy") from the prior release.

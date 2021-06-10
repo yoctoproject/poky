@@ -1,5 +1,5 @@
-Moving to the Yocto Project 1.6 Release (daisy)
-===============================================
+Release 1.6 (daisy)
+===================
 
 This section provides migration information for moving to the Yocto
 Project 1.6 Release (codename "daisy") from the prior release.

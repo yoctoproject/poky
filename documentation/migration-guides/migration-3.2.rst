@@ -1,5 +1,5 @@
-Moving to the Yocto Project 3.2 Release (gatesgarth)
-====================================================
+Release 3.2 (gatesgarth)
+========================
 
 This section provides migration information for moving to the Yocto
 Project 3.2 Release (codename "gatesgarth") from the prior release.

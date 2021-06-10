@@ -1,5 +1,5 @@
-Moving to the Yocto Project 2.2 Release (morty)
-===============================================
+Release 2.2 (morty)
+===================
 
 This section provides migration information for moving to the Yocto
 Project 2.2 Release (codename "morty") from the prior release.
@@ -364,7 +364,7 @@ The following recipes have been removed:
 -  ``sato-icon-theme``: Became obsolete.
 
 -  ``swabber-native``: Swabber has been removed. See the :ref:`entry on
-   Swabber <ref-manual/migration-2.2:swabber has been removed>`.
+   Swabber <migration-guides/migration-2.2:swabber has been removed>`.
 
 -  ``tslib``: No longer needed and has been moved to ``meta-oe``.
 
@@ -390,7 +390,7 @@ The following classes have been removed:
 -  ``sip``: Mostly unused.
 
 -  ``swabber``: See the :ref:`entry on
-   Swabber <ref-manual/migration-2.2:swabber has been removed>`.
+   Swabber <migration-guides/migration-2.2:swabber has been removed>`.
 
 .. _migration-2.2-minor-packaging-changes:
 

@@ -1,5 +1,5 @@
-Moving to the Yocto Project 2.1 Release (krogoth)
-=================================================
+Release 2.1 (krogoth)
+=====================
 
 This section provides migration information for moving to the Yocto
 Project 2.1 Release (codename "krogoth") from the prior release.
@@ -179,7 +179,7 @@ The following recipes have been removed in the 2.1 release:
 -  ``python-pygtk``: Recipe became obsolete.
 
 -  ``adt-installer``: Recipe became obsolete. See the
-   ":ref:`ref-manual/migration-2.1:adt removed`" section for more information.
+   ":ref:`migration-guides/migration-2.1:adt removed`" section for more information.
 
 .. _migration-2.1-class-changes:
 

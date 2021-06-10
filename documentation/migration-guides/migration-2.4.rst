@@ -1,5 +1,5 @@
-Moving to the Yocto Project 2.4 Release (rocko)
-===============================================
+Release 2.4 (rocko)
+===================
 
 This section provides migration information for moving to the Yocto
 Project 2.4 Release (codename "rocko") from the prior release.

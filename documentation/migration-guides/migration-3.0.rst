@@ -1,5 +1,5 @@
-Moving to the Yocto Project 3.0 Release (zeus)
-==============================================
+Release 3.0 (zeus)
+==================
 
 This section provides migration information for moving to the Yocto
 Project 3.0 Release (codename "zeus") from the prior release.

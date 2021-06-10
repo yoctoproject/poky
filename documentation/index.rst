@@ -41,6 +41,7 @@ Welcome to the Yocto Project Documentation
    :caption: Releases manual
    :hidden:
 
+   Release Migration Guides <migration-guides/index>
    releases
 
 .. toctree::

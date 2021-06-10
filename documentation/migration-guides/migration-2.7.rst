@@ -1,5 +1,5 @@
-Moving to the Yocto Project 2.7 Release (warrior)
-=================================================
+Release 2.7 (warrior)
+=====================
 
 This section provides migration information for moving to the Yocto
 Project 2.7 Release (codename "warrior") from the prior release.

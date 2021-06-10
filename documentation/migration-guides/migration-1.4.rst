@@ -1,5 +1,5 @@
-Moving to the Yocto Project 1.4 Release (dylan)
-===============================================
+Release 1.4 (dylan)
+===================
 
 This section provides migration information for moving to the Yocto
 Project 1.4 Release (codename "dylan") from the prior release.
@@ -60,7 +60,7 @@ Differences include the following:
    the :term:`MACHINEOVERRIDES` or
    :term:`DISTROOVERRIDES` variables, as
    appropriate. For more related changes, see the
-   ":ref:`ref-manual/migration-1.4:variables`" section.
+   ":ref:`migration-guides/migration-1.4:variables`" section.
 
 .. _migration-1.4-proxies-and-fetching-source:
 
