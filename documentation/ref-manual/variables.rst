@@ -2946,7 +2946,7 @@ system and gives an overview of their function and contents.
       an override for the associated type. Here is an example::
 
          IMAGE_CMD_jffs2 = "mkfs.jffs2 --root=${IMAGE_ROOTFS} \
-             --faketime --output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.jffs2 \
+             --faketime --output=${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.jffs2 \
              ${EXTRA_IMAGECMD}"
 
       You typically do not need to set this variable unless you are adding
@@ -3095,10 +3095,10 @@ system and gives an overview of their function and contents.
       The :ref:`image <ref-classes-image>` class defines the manifest
       file as follows::
 
-         IMAGE_MANIFEST ="${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.manifest"
+         IMAGE_MANIFEST ="${IMGDEPLOYDIR}/${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.manifest"
 
       The location is
-      derived using the :term:`DEPLOY_DIR_IMAGE`
+      derived using the :term:`IMGDEPLOYDIR`
       and :term:`IMAGE_NAME` variables. You can find
       information on how the image is created in the ":ref:`overview-manual/concepts:image generation`"
       section in the Yocto Project Overview and Concepts Manual.
