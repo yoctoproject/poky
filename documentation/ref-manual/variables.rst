@@ -1673,6 +1673,13 @@ system and gives an overview of their function and contents.
       resides within the :term:`Build Directory` as
       ``${DEPLOY_DIR}/images/${MACHINE}/``.
 
+      It must not be used directly in recipes when deploying files. Instead,
+      it's only useful when a recipe needs to "read" a file already deployed
+      by a dependency. So, it should be filled with the contents of
+      :term:`DEPLOYDIR` by the :ref:`deploy <ref-classes-deploy>` class or
+      with the contents of :term:`IMGDEPLOYDIR` by the :ref:`image
+      <ref-classes-image>` class.
+
       For more information on the structure of the Build Directory, see
       ":ref:`ref-manual/structure:the build directory - \`\`build/\`\``" section.
       For more detail on the contents of the ``deploy`` directory, see the
@@ -3323,6 +3330,18 @@ system and gives an overview of their function and contents.
       version string that comes from your external build environment if
       desired, and this suffix would then be used consistently across
       the build artifacts.
+
+   :term:`IMGDEPLOYDIR`
+      When inheriting the :ref:`image <ref-classes-image>` class directly or
+      through the :ref:`core-image <ref-classes-core-image>` class, the
+      ``IMGDEPLOYDIR`` points to a temporary work area for deployed files
+      that is set in the ``image`` class as follows::
+
+         IMGDEPLOYDIR = "${WORKDIR}/deploy-${PN}-image-complete"
+
+      Recipes inheriting the ``image`` class should copy files to be
+      deployed into ``IMGDEPLOYDIR``, and the class will take care of
+      copying them into :term:`DEPLOY_DIR_IMAGE` afterwards.
 
    :term:`INC_PR`
       Helps define the recipe revision for recipes that share a common
