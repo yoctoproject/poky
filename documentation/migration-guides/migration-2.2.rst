@@ -263,6 +263,17 @@ If you have recipes or
 classes that use ``KERNEL_IMAGE_BASE_NAME`` directly, you might need to
 update the references to ensure they continue to work.
 
+.. _migration-2.2-imgdeploydir-replaces-deploy-dir-image-for-most-use-cases:
+
+``IMGDEPLOYDIR`` Replaces ``DEPLOY_DIR_IMAGE`` for Most Use Cases
+-----------------------------------------------------------------
+
+The :term:`IMGDEPLOYDIR` variable was introduced to allow sstate caching of
+image creation results. Image recipes defining custom :term:`IMAGE_CMD` or
+doing postprocessing on the generated images need to be adapted to use
+``IMGDEPLOYDIR`` instead of :term:`DEPLOY_DIR_IMAGE`. ``IMAGE_MANIFEST``
+creation and symlinking of the most recent image file will fail otherwise.
+
 .. _migration-2.2-bitbake-changes:
 
 BitBake Changes
