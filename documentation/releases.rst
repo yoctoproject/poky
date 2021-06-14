@@ -1,8 +1,8 @@
 .. SPDX-License-Identifier: CC-BY-SA-2.0-UK
 
-=========================
- Current Release Manuals
-=========================
+===========================
+ Supported Release Manuals
+===========================
 
 *******************************
 3.3 'hardknott' Release Series
@@ -36,7 +36,7 @@
 - :yocto_docs:`3.1.8 Documentation </3.1.8>`
 
 ==========================
- Previous Release Manuals
+ Outdated Release Manuals
 ==========================
 
 *************************
