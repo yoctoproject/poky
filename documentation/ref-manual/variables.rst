@@ -3099,7 +3099,7 @@ system and gives an overview of their function and contents.
 
           packagename packagearch version
 
-      The :ref:`image <ref-classes-image>` class defines the manifest
+      The :ref:`rootfs-postcommands <ref-classes-rootfs*>` class defines the manifest
       file as follows::
 
          IMAGE_MANIFEST ="${IMGDEPLOYDIR}/${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.manifest"
