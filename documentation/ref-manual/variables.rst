@@ -2952,8 +2952,8 @@ system and gives an overview of their function and contents.
       ``btrfs``, and so forth). When setting this variable, you should use
       an override for the associated type. Here is an example::
 
-         IMAGE_CMD_jffs2 = "mkfs.jffs2 --root=${IMAGE_ROOTFS} \
-             --faketime --output=${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.jffs2 \
+         IMAGE_CMD_jffs2 = "mkfs.jffs2 --root=${IMAGE_ROOTFS} --faketime \
+             --output=${IMGDEPLOYDIR}/${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.jffs2 \
              ${EXTRA_IMAGECMD}"
 
       You typically do not need to set this variable unless you are adding
