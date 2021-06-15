@@ -67,6 +67,8 @@ distributions:
 
 -  OpenSUSE Leap 15.1
 
+-  OpenSUSE Leap 15.2
+
 .. note::
 
    -  While the Yocto Project Team attempts to ensure all Yocto Project
