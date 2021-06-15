@@ -15,9 +15,8 @@ hardware, and ease integration into the rest of the
 .. note::
 
    For a side-by-side comparison of main features supported for an
-   extensible SDK as compared to a standard SDK, see the "
-   Introduction
-   " section.
+   extensible SDK as compared to a standard SDK, see the
+   :ref:`sdk-manual/intro:introduction` section.
 
 In addition to the functionality available through ``devtool``, you can
 alternatively make use of the toolchain directly, for example from
@@ -89,9 +88,9 @@ the SDK for ``core-image-sato`` and using the current &DISTRO; snapshot::
 .. note::
 
    As an alternative to downloading an SDK, you can build the SDK
-   installer. For information on building the installer, see the "
-   Building an SDK Installer
-   " section.
+   installer. For information on building the installer, see the
+   :ref:`sdk-manual/appendix-obtain:building an sdk installer`
+   section.
 
 The SDK and toolchains are self-contained and by default are installed
 into the ``poky_sdk`` folder in your home directory. You can choose to
@@ -606,9 +605,9 @@ counterparts.
    Several methods exist by which you can upgrade recipes -
    devtool upgrade
    happens to be one. You can read about all the methods by which you
-   can upgrade recipes in the "
-   Upgrading Recipes
-   " section of the Yocto Project Development Tasks Manual.
+   can upgrade recipes in the
+   :ref:`dev-manual/common-tasks:upgrading recipes` section
+   of the Yocto Project Development Tasks Manual.
 
 The ``devtool upgrade`` command is flexible enough to allow you to
 specify source code revision and versioning schemes, extract code into

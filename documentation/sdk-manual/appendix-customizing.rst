@@ -74,9 +74,9 @@ adjustments:
       is set using the "?=" operator. Consequently, you will need to
       either define the entire list by using the "=" operator, or you
       will need to append a value using either "_append" or the "+="
-      operator. You can learn more about these operators in the "
-      Basic Syntax
-      " section of the BitBake User Manual.
+      operator. You can learn more about these operators in the
+      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:basic syntax`"
+      section of the BitBake User Manual.
 
    .
 
@@ -350,9 +350,9 @@ in most cases.
    If you set
    SDK_EXT_TYPE
    to "minimal", then providing a shared state mirror is mandatory so
-   that items can be installed as needed. See the "
-   Providing Additional Installable Extensible SDK Content
-   " section for more information.
+   that items can be installed as needed. See the
+   :ref:`sdk-manual/appendix-customizing:providing additional installable extensible sdk content`
+   section for more information.
 
 You can explicitly control whether or not to include the toolchain when
 you build an SDK by setting the

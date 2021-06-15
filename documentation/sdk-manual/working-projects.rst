@@ -135,9 +135,8 @@ project:
 
       To learn about environment variables established when you run the
       cross-toolchain environment setup script and how they are used or
-      overridden when the Makefile, see the "
-      Makefile-Based Projects
-      " section.
+      overridden when the Makefile, see the
+      :ref:`sdk-manual/working-projects:makefile-based projects` section.
 
    This next command is a simple way to verify the installation of your
    project. Running the command prints the architecture on which the
