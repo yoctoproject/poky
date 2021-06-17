@@ -166,9 +166,8 @@ repository.
 
 .. note::
 
-   You can find all these branches in the Yocto Project
-   Source Repositories
-   .
+   You can find all these branches in the
+   :ref:`overview-manual/development-environment:yocto project source repositories`.
 
 Testing within these public branches ensures in a publicly visible way
 that all of the main supposed architectures and recipes in OE-Core

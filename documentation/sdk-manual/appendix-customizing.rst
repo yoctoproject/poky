@@ -78,8 +78,6 @@ adjustments:
       ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:basic syntax`"
       section of the BitBake User Manual.
 
-   .
-
 -  If you have classes or recipes that add additional tasks to the
    standard build flow (i.e. the tasks execute as the recipe builds as
    opposed to being called explicitly), then you need to do one of the
@@ -294,8 +292,7 @@ source, you need to do a number of things:
 
          This second option is the safest option should you have any
          doubts as to which method to use when setting
-         SSTATE_MIRRORS
-         .
+         :term:`SSTATE_MIRRORS`
 
 Minimizing the Size of the Extensible SDK Installer Download
 ============================================================

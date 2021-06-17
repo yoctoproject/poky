@@ -1462,12 +1462,9 @@ cross-compiler that is used internally within BitBake only.
 
 .. note::
 
-   The extensible SDK does not use
-   gcc-cross-canadian
+   The extensible SDK does not use ``gcc-cross-canadian``
    since this SDK ships a copy of the OpenEmbedded build system and the
-   sysroot within it contains
-   gcc-cross
-   .
+   sysroot within it contains ``gcc-cross``.
 
 The chain of events that occurs when the standard toolchain is bootstrapped::
 
