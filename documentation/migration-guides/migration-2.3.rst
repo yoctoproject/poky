@@ -200,10 +200,10 @@ The following changes took place for BitBake:
    section in the BitBake
    User Manual for additional information.
 
--  ``BB_SETSCENE_VERIFY_FUNCTION`` and :term:`BB_SETSCENE_VERIFY_FUNCTION2`
+-  ``BB_SETSCENE_VERIFY_FUNCTION`` and ``BB_SETSCENE_VERIFY_FUNCTION2``
    Removed: Because the mechanism they were part of is no longer
    necessary with recipe-specific sysroots, the
-   ``BB_SETSCENE_VERIFY_FUNCTION`` and :term:`BB_SETSCENE_VERIFY_FUNCTION2`
+   ``BB_SETSCENE_VERIFY_FUNCTION`` and ``BB_SETSCENE_VERIFY_FUNCTION2``
    variables have been removed.
 
 .. _migration-2.3-absolute-symlinks:

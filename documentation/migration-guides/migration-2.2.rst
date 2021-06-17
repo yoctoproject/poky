@@ -308,7 +308,7 @@ The following changes took place for BitBake:
    to cause any problems for most users. However, the setscene
    verification function as pointed to by
    ``BB_SETSCENE_VERIFY_FUNCTION`` needed to change signature.
-   Consequently, a new variable named :term:`BB_SETSCENE_VERIFY_FUNCTION2`
+   Consequently, a new variable named ``BB_SETSCENE_VERIFY_FUNCTION2``
    has been added allowing multiple versions of BitBake to work with
    suitably written metadata, which includes OpenEmbedded-Core and Poky.
    Anyone with custom BitBake task scheduler code might also need to
