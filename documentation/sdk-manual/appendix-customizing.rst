@@ -126,8 +126,7 @@ adjustments:
    .. note::
 
       You must also reflect this change in the value used for the
-      COREBASE_FILES
-      variable as previously described.
+      :term:`COREBASE_FILES` variable as previously described.
 
 Changing the Extensible SDK Installer Title
 ===========================================
@@ -268,8 +267,7 @@ source, you need to do a number of things:
 
       SSTATE_MIRRORS = "file://.* http://example.com/some_path/sstate-cache/PATH"
 
-   You can set the
-   ``SSTATE_MIRRORS`` variable in two different places:
+   You can set the :term:`SSTATE_MIRRORS` variable in two different places:
 
    -  If the mirror value you are setting is appropriate to be set for
       both the OpenEmbedded build system that is actually building the
