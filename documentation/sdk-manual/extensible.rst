@@ -603,7 +603,7 @@ counterparts.
 .. note::
 
    Several methods exist by which you can upgrade recipes -
-   devtool upgrade
+   ``devtool upgrade``
    happens to be one. You can read about all the methods by which you
    can upgrade recipes in the
    :ref:`dev-manual/common-tasks:upgrading recipes` section
