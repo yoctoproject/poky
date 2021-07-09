@@ -932,20 +932,6 @@ specified by :term:`EFI_PROVIDER` if
 Normally, you do not use this class directly. Instead, you add "live" to
 :term:`IMAGE_FSTYPES`.
 
-.. _ref-classes-image-mklibs:
-
-``image-mklibs.bbclass``
-========================
-
-The ``image-mklibs`` class enables the use of the ``mklibs`` utility
-during the :ref:`ref-tasks-rootfs` task, which optimizes
-the size of libraries contained in the image.
-
-By default, the class is enabled in the ``local.conf.template`` using
-the :term:`USER_CLASSES` variable as follows::
-
-   USER_CLASSES ?= "buildstats image-mklibs image-prelink"
-
 .. _ref-classes-image-prelink:
 
 ``image-prelink.bbclass``
@@ -959,7 +945,7 @@ time.
 By default, the class is enabled in the ``local.conf.template`` using
 the :term:`USER_CLASSES` variable as follows::
 
-   USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+   USER_CLASSES ?= "buildstats image-prelink"
 
 .. _ref-classes-insane:
 

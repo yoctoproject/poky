@@ -8002,7 +8002,7 @@ Here is an example of ``image-info.txt``:
 
    DISTRO = poky
    DISTRO_VERSION = 1.7
-   USER_CLASSES = buildstats image-mklibs image-prelink
+   USER_CLASSES = buildstats image-prelink
    IMAGE_CLASSES = image_types
    IMAGE_FEATURES = debug-tweaks
    IMAGE_LINGUAS =
