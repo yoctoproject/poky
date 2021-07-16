@@ -7288,7 +7288,8 @@ The ``devtool edit-recipe`` command lets you take a look at the recipe::
        npmsw://${THISDIR}/${BPN}/npm-shrinkwrap.json \
        "
    S = "${WORKDIR}/npm"
-   inherit npm LICENSE_${PN} = "MIT"
+   inherit npm
+   LICENSE_${PN} = "MIT"
    LICENSE_${PN}-accepts = "MIT"
    LICENSE_${PN}-array-flatten = "MIT"
    ...
