@@ -762,8 +762,7 @@ system and gives an overview of their function and contents.
 
          export BBSERVER=localhost:$port
 
-      By default, :term:`BBSERVER` also appears in
-      :term:`bitbake:BB_HASHBASE_WHITELIST`.
+      By default, :term:`BBSERVER` also appears in :term:`BB_HASHBASE_WHITELIST`.
       Consequently, :term:`BBSERVER` is excluded from checksum and dependency
       data.
 
@@ -6500,7 +6499,7 @@ system and gives an overview of their function and contents.
 
       - :term:`CONF_VERSION`
       - :term:`BB_NUMBER_THREADS`
-      - :term:`bitbake:BB_NUMBER_PARSE_THREADS`
+      - :term:`BB_NUMBER_PARSE_THREADS`
       - :term:`PARALLEL_MAKE`
       - :term:`PRSERV_HOST`
       - :term:`SSTATE_MIRRORS` :term:`DL_DIR`

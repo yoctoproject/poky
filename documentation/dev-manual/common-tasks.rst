@@ -4384,7 +4384,7 @@ directory:
    variable, inherit the
    :ref:`own-mirrors <ref-classes-own-mirrors>`
    class, and use the
-   :term:`bitbake:BB_NO_NETWORK`
+   :term:`BB_NO_NETWORK`
    variable to your ``local.conf``.
    ::
 
@@ -4457,7 +4457,7 @@ variable for more information:
 -  :term:`BB_NUMBER_THREADS`:
    The maximum number of threads BitBake simultaneously executes.
 
--  :term:`bitbake:BB_NUMBER_PARSE_THREADS`:
+-  :term:`BB_NUMBER_PARSE_THREADS`:
    The number of threads BitBake uses during parsing.
 
 -  :term:`PARALLEL_MAKE`: Extra
@@ -9121,7 +9121,7 @@ BitBake has determined by doing the following:
 
    The output of ``bitbake-dumpsig`` also includes the value each
    variable had, a list of dependencies for each variable, and
-   :term:`bitbake:BB_HASHBASE_WHITELIST`
+   :term:`BB_HASHBASE_WHITELIST`
    information.
 
 There is also a ``bitbake-diffsigs`` command for comparing two

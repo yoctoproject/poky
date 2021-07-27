@@ -1250,11 +1250,9 @@ download or setscene task fails, the build system then tries to install
 dependencies, such as the compiler, from the cache.
 
 The availability of objects in the sstate cache is handled by the
-function specified by the
-:term:`bitbake:BB_HASHCHECK_FUNCTION`
+function specified by the :term:`BB_HASHCHECK_FUNCTION`
 variable and returns a list of available objects. The function specified
-by the
-:term:`bitbake:BB_SETSCENE_DEPVALID`
+by the :term:`BB_SETSCENE_DEPVALID`
 variable is the function that determines whether a given dependency
 needs to be followed, and whether for any given relationship the
 function needs to be passed. The function returns a True or False value.
