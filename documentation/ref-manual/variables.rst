@@ -256,7 +256,7 @@ system and gives an overview of their function and contents.
       To add a tune to the list, be sure to append it with spaces using the
       "+=" BitBake operator. Do not simply replace the list by using the
       "=" operator. See the
-      ":ref:`Basic Syntax <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:basic syntax>`" section in the BitBake
+      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:basic syntax`" section in the BitBake
       User Manual for more information.
 
    :term:`AZ_SAS`
@@ -1638,8 +1638,8 @@ system and gives an overview of their function and contents.
 
       For information on runtime dependencies, see the
       :term:`RDEPENDS` variable. You can also see the
-      ":ref:`Tasks <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks>`" and
-      ":ref:`Dependencies <bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies>`" sections in the
+      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks`" and
+      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies`" sections in the
       BitBake User Manual for additional information on tasks and
       dependencies.
 
@@ -6105,8 +6105,8 @@ system and gives an overview of their function and contents.
 
       For information on build-time dependencies, see the
       :term:`DEPENDS` variable. You can also see the
-      ":ref:`Tasks <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks>`" and
-      ":ref:`Dependencies <bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies>`" sections in the
+      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks`" and
+      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies`" sections in the
       BitBake User Manual for additional information on tasks and
       dependencies.
 
@@ -6951,7 +6951,7 @@ system and gives an overview of their function and contents.
       protocols are highly dependent on particular BitBake Fetcher
       submodules. Depending on the fetcher BitBake uses, various URL
       parameters are employed. For specifics on the supported Fetchers, see
-      the ":ref:`Fetchers <bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers>`" section in the
+      the ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers`" section in the
       BitBake User Manual.
 
       -  ``file://`` - Fetches files, which are usually files shipped

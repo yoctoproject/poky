@@ -9358,7 +9358,7 @@ log to ``${T}/log.do_``\ `task`, and can also log to standard output
 
 -  ``bb.debug(level, msg)``: Writes "DEBUG: msg" to the
    log. Also logs to stdout if the log level is greater than or equal to
-   level. See the ":ref:`-D <bitbake:bitbake-user-manual/bitbake-user-manual-intro:usage and syntax>`" option
+   level. See the ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-intro:usage and syntax`" option
    in the BitBake User Manual for more information.
 
 -  ``bb.warn(msg)``: Writes "WARNING: msg" to the log while also
