@@ -872,7 +872,7 @@ a recipe and using :term:`EXTRA_IMAGE_FEATURES` from within your
 :term:`Build Directory`.
 
 To understand how these features work, the best reference is
-``meta/classes/core-image.bbclass``. This class lists out the available
+``meta/classes/image.bbclass``. This class lists out the available
 :term:`IMAGE_FEATURES` of which most map to package groups while some, such
 as ``debug-tweaks`` and ``read-only-rootfs``, resolve as general
 configuration settings.
