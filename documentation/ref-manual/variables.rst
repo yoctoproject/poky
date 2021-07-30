@@ -1471,6 +1471,18 @@ system and gives an overview of their function and contents.
          variable only in certain contexts (e.g. when building for kernel
          and kernel module recipes).
 
+   :term:`CVE_PRODUCT`
+      In a recipe, defines the name used to match the recipe name
+      against the name in the upstream `NIST CVE database <https://nvd.nist.gov/>`__.
+
+      The default is ${:term:`BPN`}. If it does not match the name in NIST CVE
+      database or matches with multiple entries in the database, the default
+      value needs to be changed.
+
+      Here is an example from the :oe_layerindex:`Berkeley DB recipe </layerindex/recipe/544>`::
+
+         CVE_PRODUCT = "oracle_berkeley_db berkeley_db"
+
    :term:`CVSDIR`
       The directory in which files checked out under the CVS system are
       stored.
