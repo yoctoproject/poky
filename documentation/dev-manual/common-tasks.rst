@@ -10929,7 +10929,7 @@ concerned with GPL code as identified by running the following script:
          p=${p%-*}
          # Only archive GPL packages (update *GPL* regex for your license check)
          numfiles=`ls tmp/deploy/licenses/$p/*GPL* 2> /dev/null | wc -l`
-         if [ $numfiles -gt 1 ]; then
+         if [ $numfiles -ge 1 ]; then
             echo Archiving $p
             mkdir -p $src_release_dir/$p/source
             cp $d/* $src_release_dir/$p/source 2> /dev/null
