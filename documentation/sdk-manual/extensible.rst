@@ -838,7 +838,7 @@ recipe.
 If you need to add runtime dependencies, you can do so by adding the
 following to your recipe::
 
-   RDEPENDS_${PN} += "dependency1 dependency2 ..."
+   RDEPENDS:${PN} += "dependency1 dependency2 ..."
 
 .. note::
 
