@@ -472,8 +472,8 @@ recipe that fetches from an alternative URI (e.g. Git) instead of a
 tarball. Following is an example::
 
    BBCLASSEXTEND = "devupstream:target"
-   SRC_URI_class-devupstream = "git://git.example.com/example"
-   SRCREV_class-devupstream = "abcd1234"
+   SRC_URI:class-devupstream = "git://git.example.com/example"
+   SRCREV:class-devupstream = "abcd1234"
 
 Adding the above statements to your recipe creates a variant that has
 :term:`DEFAULT_PREFERENCE` set to "-1".
@@ -481,8 +481,8 @@ Consequently, you need to select the variant of the recipe to use it.
 Any development-specific adjustments can be done by using the
 ``class-devupstream`` override. Here is an example::
 
-   DEPENDS_append_class-devupstream = " gperf-native"
-   do_configure_prepend_class-devupstream() {
+   DEPENDS:append:class-devupstream = " gperf-native"
+   do_configure:prepend:class-devupstream() {
        touch ${S}/README
    }
 
@@ -862,7 +862,7 @@ sure that all builders start with the same sstate signatures. After
 inheriting the class, you can then disable the feature by setting the
 :term:`ICECC_DISABLED` variable to "1" as follows::
 
-   INHERIT_DISTRO_append = " icecc"
+   INHERIT_DISTRO:append = " icecc"
    ICECC_DISABLED ??= "1"
 
 This practice
@@ -990,7 +990,7 @@ the check for symbolic link ``.so`` files in the main package of a
 recipe, add the following to the recipe. You need to realize that the
 package name override, in this example ``${PN}``, must be used::
 
-   INSANE_SKIP_${PN} += "dev-so"
+   INSANE_SKIP:${PN} += "dev-so"
 
 Please keep in mind that the QA checks
 are meant to detect real or potential problems in the packaged
@@ -2497,7 +2497,7 @@ indicate the package to which the value applies. If the value applies to
 the recipe's main package, use ``${``\ :term:`PN`\ ``}``. Here
 is an example from the connman recipe::
 
-   SYSTEMD_SERVICE_${PN} = "connman.service"
+   SYSTEMD_SERVICE:${PN} = "connman.service"
 
 Services are set up to start on boot automatically
 unless you have set

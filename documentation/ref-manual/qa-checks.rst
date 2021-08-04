@@ -223,7 +223,7 @@ Errors and Warnings
    software that reads :term:`CFLAGS` when you build it,
    you could add the following to your recipe::
 
-      CFLAGS_append = " -fPIC "
+      CFLAGS:append = " -fPIC "
 
    For more information on text relocations at runtime, see
    https://www.akkadia.org/drepper/textrelocs.html.
@@ -620,7 +620,7 @@ Errors and Warnings
 
 .. _qa-check-missing-update-alternatives:
 
-- ``<recipename>: recipe defines ALTERNATIVE_<packagename> but doesn't inherit update-alternatives. This might fail during do_rootfs later! [missing-update-alternatives]``
+- ``<recipename>: recipe defines ALTERNATIVE:<packagename> but doesn't inherit update-alternatives. This might fail during do_rootfs later! [missing-update-alternatives]``
 
     This check ensures that if a recipe sets the :term:`ALTERNATIVE` variable that the
     recipe also inherits :ref:`update-alternatives <ref-classes-update-alternatives>` such
