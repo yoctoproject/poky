@@ -1471,11 +1471,22 @@ system and gives an overview of their function and contents.
          variable only in certain contexts (e.g. when building for kernel
          and kernel module recipes).
 
+   :term:`CVE_CHECK_PN_WHITELIST`
+      The list of package names (:term:`PN`) for which
+      CVEs (Common Vulnerabilities and Exposures) are ignored.
+
+   :term:`CVE_CHECK_WHITELIST`
+      The list of CVE IDs which are ignored. Here is
+      an example from the :oe_layerindex:`Python3 recipe</layerindex/recipe/23823>`::
+
+         # This is windows only issue.
+         CVE_CHECK_WHITELIST += "CVE-2020-15523"
+
    :term:`CVE_PRODUCT`
       In a recipe, defines the name used to match the recipe name
       against the name in the upstream `NIST CVE database <https://nvd.nist.gov/>`__.
 
-      The default is ${:term:`BPN`}. If it does not match the name in NIST CVE
+      The default is ${:term:`BPN`}. If it does not match the name in the NIST CVE
       database or matches with multiple entries in the database, the default
       value needs to be changed.
 

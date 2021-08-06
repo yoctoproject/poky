@@ -404,6 +404,22 @@ cross-compilation tools used for building SDKs. See the
 section in the Yocto Project Overview and Concepts Manual for more
 discussion on these cross-compilation tools.
 
+.. _ref-classes-cve-check:
+
+``cve-check.bbclass``
+=====================
+
+The ``cve-check`` class looks for known CVEs (Common Vulnerabilities
+and Exposures) while building an image. This class is meant to be
+inherited globally from a configuration file::
+
+   INHERIT += "cve-check"
+
+You can also look for vulnerabilities in specific packages by passing
+``-c cve_check`` to BitBake. You will find details in the
+":ref:`dev-manual/common-tasks:checking for vulnerabilities`"
+section in the Development Tasks Manual.
+
 .. _ref-classes-debian:
 
 ``debian.bbclass``

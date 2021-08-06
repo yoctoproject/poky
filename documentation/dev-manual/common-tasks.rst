@@ -11131,6 +11131,75 @@ Enabling vulnerabily tracking in recipes
 The :term:`CVE_PRODUCT` variable defines the name used to match the recipe name
 against the name in the upstream `NIST CVE database <https://nvd.nist.gov/>`__.
 
+Editing recipes to fix vulnerabilities
+--------------------------------------
+
+To fix a given known vulnerability, you need to add a patch file to your recipe. Here's
+an example from the :oe_layerindex:`ffmpeg recipe</layerindex/recipe/47350>`::
+
+   SRC_URI = "https://www.ffmpeg.org/releases/${BP}.tar.xz \
+              file://0001-libavutil-include-assembly-with-full-path-from-sourc.patch \
+              file://fix-CVE-2020-20446.patch \
+              file://fix-CVE-2020-20453.patch \
+              file://fix-CVE-2020-22015.patch \
+              file://fix-CVE-2020-22021.patch \
+              file://fix-CVE-2020-22033-CVE-2020-22019.patch \
+              file://fix-CVE-2021-33815.patch \
+
+The :ref:`cve-check <ref-classes-cve-check>` class defines two ways of
+supplying a patch for a given CVE. The first
+way is to use a patch filename that matches the below pattern::
+
+   cve_file_name_match = re.compile(".*([Cc][Vv][Ee]\-\d{4}\-\d+)")
+
+As shown in the example above, multiple CVE IDs can appear in a patch filename,
+but the :ref:`cve-check <ref-classes-cve-check>` class will only consider
+the last CVE ID in the file name as patched.
+
+The second way to recognize a patched CVE ID is when a line matching the
+below pattern is found in any patch file provided by the recipe::
+
+  cve_match = re.compile("CVE:( CVE\-\d{4}\-\d+)+")
+
+This allows a single patch file to address multiple CVE IDs at the same time.
+
+Of course, another way to fix vulnerabilities is to upgrade to a version
+of the package which is not impacted, typically a more recent one.
+The NIST database knows which versions are vulnerable and which ones
+are not.
+
+Last but not least, you can choose to ignore vulnerabilities through
+the :term:`CVE_CHECK_PN_WHITELIST` and :term:`CVE_CHECK_WHITELIST`
+variables.
+
+Implementation details
+----------------------
+
+Here's what the :ref:`cve-check <ref-classes-cve-check>` class does to
+find unpatched CVE IDs.
+
+First the code goes through each patch file provided by a recipe. If a valid CVE ID
+is found in the name of the file, the corresponding CVE is considered as patched.
+Don't forget that if multiple CVE IDs are found in the file name, only the last
+one is considered. Then, the code looks for ``CVE: CVE-ID`` lines in the patch
+file. The found CVE IDs are also considered as patched.
+
+Then, the code looks up all the CVE IDs in the NIST database for all the
+products defined in :term:`CVE_PRODUCT`. Then, for each found CVE:
+
+ - If the package name (:term:`PN`) is part of
+   :term:`CVE_CHECK_PN_WHITELIST`, it is considered as patched.
+
+ - If the CVE ID is part of :term:`CVE_CHECK_WHITELIST`, it is
+   considered as patched too.
+
+ - If the CVE ID is part of the patched CVE for the recipe, it is
+   already considered as patched.
+
+ - Otherwise, the code checks whether the recipe version (:term:`PV`)
+   is within the range of versions impacted by the CVE. If so, the CVE
+   is considered as unpatched.
+
 The CVE database is stored in :term:`DL_DIR` and can be inspected using
 ``sqlite3`` command as follows::
 
