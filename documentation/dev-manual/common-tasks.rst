@@ -7737,9 +7737,9 @@ It is very important that you make sure all post-Installation
 (``pkg_postinst``) scripts for packages that are installed into the
 image can be run at the time when the root filesystem is created during
 the build on the host system. These scripts cannot attempt to run during
-first-boot on the target device. With the "read-only-rootfs" feature
-enabled, the build system checks during root filesystem creation to make
-sure all post-installation scripts succeed. If any of these scripts
+the first boot on the target device. With the "read-only-rootfs" feature
+enabled, the build system makes sure that all post-installation scripts
+succeed at file system creation time. If any of these scripts
 still need to be run after the root filesystem is created, the build
 immediately fails. These build-time checks ensure that the build fails
 rather than the target device fails later during its initial boot
