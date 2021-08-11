@@ -539,7 +539,7 @@ Errors and Warnings
    when a recipe has been renamed. However, if that is not the case, the
    message might indicate that a private version of a library is being
    erroneously picked up as the provider for a common library. If that
-   is the case, you should add the library's ``.so`` file name to
+   is the case, you should add the library's ``.so`` filename to
    :term:`PRIVATE_LIBS` in the recipe that provides
    the private version of the library.
 

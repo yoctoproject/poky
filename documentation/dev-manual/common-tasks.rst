@@ -465,7 +465,7 @@ have to manually merge changes as they occur.
 When you create an append file, you must use the same root name as the
 corresponding recipe file. For example, the append file
 ``someapp_3.1.bbappend`` must apply to ``someapp_3.1.bb``. This
-means the original recipe and append file names are version
+means the original recipe and append filenames are version
 number-specific. If the corresponding recipe is renamed to update to a
 newer version, you must also rename and possibly update the
 corresponding ``.bbappend`` as well. During the build process, BitBake
@@ -6618,7 +6618,7 @@ optional arguments::
       instead of the default False which appends them
    match_path
       match file_regex on the whole relative path to
-      the root rather than just the file name
+      the root rather than just the filename
    aux_files_pattern_verbatim
       Extra item(s) to be added to FILES for each
       package, using the actual derived module name
@@ -11154,7 +11154,7 @@ way is to use a patch filename that matches the below pattern::
 
 As shown in the example above, multiple CVE IDs can appear in a patch filename,
 but the :ref:`cve-check <ref-classes-cve-check>` class will only consider
-the last CVE ID in the file name as patched.
+the last CVE ID in the filename as patched.
 
 The second way to recognize a patched CVE ID is when a line matching the
 below pattern is found in any patch file provided by the recipe::
@@ -11180,7 +11180,7 @@ find unpatched CVE IDs.
 
 First the code goes through each patch file provided by a recipe. If a valid CVE ID
 is found in the name of the file, the corresponding CVE is considered as patched.
-Don't forget that if multiple CVE IDs are found in the file name, only the last
+Don't forget that if multiple CVE IDs are found in the filename, only the last
 one is considered. Then, the code looks for ``CVE: CVE-ID`` lines in the patch
 file. The found CVE IDs are also considered as patched.
 
