@@ -207,13 +207,13 @@ following list:
       To make sure your changes apply only when building machine "one",
       use a machine override with the :term:`DEPENDS` statement::
 
-         DEPENDS_one = "foo"
+         DEPENDS:one = "foo"
 
-      You should follow the same strategy when using ``_append``
-      and ``_prepend`` operations::
+      You should follow the same strategy when using ``:append``
+      and ``:prepend`` operations::
 
-         DEPENDS:append_one = " foo"
-         DEPENDS:prepend_one = "foo "
+         DEPENDS:append:one = " foo"
+         DEPENDS:prepend:one = "foo "
 
       As an actual example, here's a
       snippet from the generic kernel include file ``linux-yocto.inc``,
@@ -236,8 +236,8 @@ following list:
 
       .. note::
 
-         Avoiding "+=" and "=+" and using machine-specific ``_append``
-         and ``_prepend`` operations is recommended as well.
+         Avoiding "+=" and "=+" and using machine-specific ``:append``
+         and ``:prepend`` operations is recommended as well.
 
    -  *Place Machine-Specific Files in Machine-Specific Locations:* When
       you have a base recipe, such as ``base-files.bb``, that contains a
@@ -537,7 +537,7 @@ important as it ensures that items in the list remain colon-separated.
 .. note::
 
    BitBake automatically defines the :term:`THISDIR` variable. You should
-   never set this variable yourself. Using "_prepend" as part of the
+   never set this variable yourself. Using ":prepend" as part of the
    :term:`FILESEXTRAPATHS` ensures your path will be searched prior to other
    paths in the final list.
 
@@ -830,23 +830,23 @@ variable changes are in effect for every build and consequently affect
 all images, which might not be what you require.
 
 To add a package to your image using the local configuration file, use
-the :term:`IMAGE_INSTALL` variable with the ``_append`` operator::
+the :term:`IMAGE_INSTALL` variable with the ``:append`` operator::
 
    IMAGE_INSTALL:append = " strace"
 
 Use of the syntax is important -
 specifically, the space between the quote and the package name, which is
-``strace`` in this example. This space is required since the ``_append``
+``strace`` in this example. This space is required since the ``:append``
 operator does not add the space.
 
-Furthermore, you must use ``_append`` instead of the ``+=`` operator if
+Furthermore, you must use ``:append`` instead of the ``+=`` operator if
 you want to avoid ordering issues. The reason for this is because doing
 so unconditionally appends to the variable and avoids ordering problems
 due to the variable being set in image recipes and ``.bbclass`` files
-with operators like ``?=``. Using ``_append`` ensures the operation
+with operators like ``?=``. Using ``:append`` ensures the operation
 takes effect.
 
-As shown in its simplest use, ``IMAGE_INSTALL_append`` affects all
+As shown in its simplest use, ``IMAGE_INSTALL:append`` affects all
 images. It is possible to extend the syntax so that the variable applies
 to a specific image only. Here is an example::
 
@@ -1544,8 +1544,8 @@ package for a recipe has the same name as the recipe, and the recipe's
 name can be found through the
 ``${``\ :term:`PN`\ ``}`` variable, then
 you specify the dependencies for the main package by setting
-``RDEPENDS_${PN}``. If the package were named ``${PN}-tools``, then you
-would set ``RDEPENDS_${PN}-tools``, and so forth.
+``RDEPENDS:${PN}``. If the package were named ``${PN}-tools``, then you
+would set ``RDEPENDS:${PN}-tools``, and so forth.
 
 Some runtime dependencies will be set automatically at packaging time.
 These dependencies include any shared library dependencies (i.e. if a
@@ -1796,7 +1796,7 @@ the software being built:
    sure the install portion of the build completes with no issues.
    However, if you wish to install additional files not already being
    installed by ``make install``, you should do this using a
-   ``do_install_append`` function using the install command as described
+   ``do_install:append`` function using the install command as described
    in the "Manual" bulleted item later in this list.
 
 -  *Other (using* ``make install``\ *)*: You need to define a ``do_install``
@@ -1865,9 +1865,9 @@ additional definitions in your recipe.
 
 If you are adding services and the service initialization script or the
 service file itself is not installed, you must provide for that
-installation in your recipe using a ``do_install_append`` function. If
+installation in your recipe using a ``do_install:append`` function. If
 your recipe already has a ``do_install`` function, update the function
-near its end rather than adding an additional ``do_install_append``
+near its end rather than adding an additional ``do_install:append``
 function.
 
 When you create the installation for your services, you need to
@@ -1938,7 +1938,7 @@ take. The following list describes the process:
    discover problems, you can set
    :term:`PACKAGES`,
    :term:`FILES`,
-   ``do_install(_append)``, and so forth as needed.
+   ``do_install(:append)``, and so forth as needed.
 
 -  *Splitting an Application into Multiple Packages*: If you need to
    split an application into several packages, see the
@@ -2137,7 +2137,7 @@ Post-Installation Scripts
 Post-installation scripts run immediately after installing a package on
 the target or during image creation when a package is included in an
 image. To add a post-installation script to a package, add a
-``pkg_postinst_``\ `PACKAGENAME`\ ``()`` function to the recipe file
+``pkg_postinst:``\ `PACKAGENAME`\ ``()`` function to the recipe file
 (``.bb``) and replace `PACKAGENAME` with the name of the package you want
 to attach to the ``postinst`` script. To apply the post-installation
 script to the main package for the recipe, which is usually what is
@@ -2147,7 +2147,7 @@ PACKAGENAME.
 
 A post-installation function has the following structure::
 
-   pkg_postinst_PACKAGENAME() {
+   pkg_postinst:PACKAGENAME() {
        # Commands to carry out
    }
 
@@ -2367,7 +2367,7 @@ In the previous example, we want to ship the ``sxpm`` and ``cxpm``
 binaries in separate packages. Since ``bindir`` would be packaged into
 the main :term:`PN` package by default, we prepend the :term:`PACKAGES` variable
 so additional package names are added to the start of list. This results
-in the extra ``FILES_*`` variables then containing information that
+in the extra ``FILES:*`` variables then containing information that
 define which files and directories go into which packages. Files
 included by earlier packages are skipped by latter packages. Thus, the
 main :term:`PN` package does not include the above listed files.
@@ -2398,7 +2398,7 @@ configure and compile steps as well as sets things up to grab packages
 from the appropriate area. In particular, this class sets ``noexec`` on
 both the :ref:`ref-tasks-configure`
 and :ref:`ref-tasks-compile` tasks,
-sets ``FILES_${PN}`` to "/" so that it picks up all files, and sets up a
+sets ``FILES:${PN}`` to "/" so that it picks up all files, and sets up a
 :ref:`ref-tasks-install` task, which
 effectively copies all files from ``${S}`` to ``${D}``. The
 ``bin_package`` class works well when the files extracted into ``${S}``
@@ -2459,7 +2459,7 @@ doing the following:
 
 -  Ensure that you set up :term:`FILES`
    (usually
-   ``FILES_${``\ :term:`PN`\ ``}``) to
+   ``FILES:${``\ :term:`PN`\ ``}``) to
    point to the files you have installed, which of course depends on
    where you have installed them and whether those files are in
    different locations than the defaults.
@@ -2631,7 +2631,7 @@ in the BitBake User Manual.
 
       VAR =+ "Starts"
 
--  *Appending (_append):* Use the ``_append`` operator to append values
+-  *Appending (:append):* Use the ``:append`` operator to append values
    to existing variables. This operator does not add any additional
    space. Also, the operator is applied after all the ``+=``, and ``=+``
    operators have been applied and after all ``=`` assignments have
@@ -2644,12 +2644,12 @@ in the BitBake User Manual.
       SRC_URI:append = " file://fix-makefile.patch"
 
    You can also use
-   the ``_append`` operator with overrides, which results in the actions
+   the ``:append`` operator with overrides, which results in the actions
    only being performed for the specified target or machine::
 
       SRC_URI:append:sh4 = " file://fix-makefile.patch"
 
--  *Prepending (_prepend):* Use the ``_prepend`` operator to prepend
+-  *Prepending (:prepend):* Use the ``:prepend`` operator to prepend
    values to existing variables. This operator does not add any
    additional space. Also, the operator is applied after all the ``+=``,
    and ``=+`` operators have been applied and after all ``=``
@@ -2662,7 +2662,7 @@ in the BitBake User Manual.
       CFLAGS:prepend = "-I${S}/myincludes "
 
    You can also use the
-   ``_prepend`` operator with overrides, which results in the actions
+   ``:prepend`` operator with overrides, which results in the actions
    only being performed for the specified target or machine::
 
       CFLAGS:prepend:sh4 = "-I${S}/myincludes "
@@ -4538,7 +4538,7 @@ that can help you speed up the build:
    exceptions::
 
       STATICLIBCONF = "--disable-static"
-      STATICLIBCONF_sqlite3-native = ""
+      STATICLIBCONF:sqlite3-native = ""
       EXTRA_OECONF += "${STATICLIBCONF}"
 
    .. note::
@@ -4578,7 +4578,7 @@ can control which static library files (``*.a`` files) get included in
 the built library.
 
 The :term:`PACKAGES` and
-:term:`FILES_* <FILES>` variables in the
+:term:`FILES:* <FILES>` variables in the
 ``meta/conf/bitbake.conf`` configuration file define how files installed
 by the ``do_install`` task are packaged. By default, the :term:`PACKAGES`
 variable includes ``${PN}-staticdev``, which represents all static
@@ -6510,8 +6510,8 @@ function in your recipe. The ``do_split_packages`` function searches for
 a pattern of files or directories under a specified path and creates a
 package for each one it finds by appending to the
 :term:`PACKAGES` variable and
-setting the appropriate values for ``FILES_packagename``,
-``RDEPENDS_packagename``, ``DESCRIPTION_packagename``, and so forth.
+setting the appropriate values for ``FILES:packagename``,
+``RDEPENDS:packagename``, ``DESCRIPTION:packagename``, and so forth.
 Here is an example from the ``lighttpd`` recipe::
 
    python populate_packages:prepend () {
@@ -7389,11 +7389,11 @@ The variable can be used in multiple ways, including using suffixes to
 set it for a specific package type and/or package. Note that the order
 of precedence is the same as this list:
 
--  ``PACKAGE_ADD_METADATA_<PKGTYPE>_<PN>``
+-  ``PACKAGE_ADD_METADATA_<PKGTYPE>:<PN>``
 
 -  ``PACKAGE_ADD_METADATA_<PKGTYPE>``
 
--  ``PACKAGE_ADD_METADATA_<PN>``
+-  ``PACKAGE_ADD_METADATA:<PN>``
 
 -  :term:`PACKAGE_ADD_METADATA`
 
@@ -7664,11 +7664,11 @@ configuration file contains the line::
 This line pulls in the
 listed include file that contains numerous lines of exactly that form::
 
-   #SRCREV_pn-opkg-native ?= "${AUTOREV}"
-   #SRCREV_pn-opkg-sdk ?= "${AUTOREV}"
-   #SRCREV_pn-opkg ?= "${AUTOREV}"
-   #SRCREV_pn-opkg-utils-native ?= "${AUTOREV}"
-   #SRCREV_pn-opkg-utils ?= "${AUTOREV}"
+   #SRCREV:pn-opkg-native ?= "${AUTOREV}"
+   #SRCREV:pn-opkg-sdk ?= "${AUTOREV}"
+   #SRCREV:pn-opkg ?= "${AUTOREV}"
+   #SRCREV:pn-opkg-utils-native ?= "${AUTOREV}"
+   #SRCREV:pn-opkg-utils ?= "${AUTOREV}"
    SRCREV:pn-gconf-dbus ?= "${AUTOREV}"
    SRCREV:pn-matchbox-common ?= "${AUTOREV}"
    SRCREV:pn-matchbox-config-gtk ?= "${AUTOREV}"
@@ -8941,7 +8941,7 @@ In addition to variable values, the output of the ``bitbake -e`` and
 -  After the variable values, all functions appear in the output. For
    shell functions, variables referenced within the function body are
    expanded. If a function has been modified using overrides or using
-   override-style operators like ``_append`` and ``_prepend``, then the
+   override-style operators like ``:append`` and ``:prepend``, then the
    final assembled function body appears in the output.
 
 Viewing Package Information with ``oe-pkgdata-util``

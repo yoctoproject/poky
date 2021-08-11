@@ -502,23 +502,23 @@ strings in the file from the ``meta-yocto-bsp`` layer upstream.
    KMACHINE:genericx86 ?= "common-pc"
    KMACHINE:genericx86-64 ?= "common-pc-64"
    KBRANCH:edgerouter = "standard/edgerouter"
-   KBRANCH_beaglebone = "standard/beaglebone"
+   KBRANCH:beaglebone = "standard/beaglebone"
 
    SRCREV_machine:genericx86    ?= "d09f2ce584d60ecb7890550c22a80c48b83c2e19"
    SRCREV_machine:genericx86-64 ?= "d09f2ce584d60ecb7890550c22a80c48b83c2e19"
    SRCREV_machine:edgerouter ?= "b5c8cfda2dfe296410d51e131289fb09c69e1e7d"
-   SRCREV_machine_beaglebone ?= "b5c8cfda2dfe296410d51e131289fb09c69e1e7d"
+   SRCREV_machine:beaglebone ?= "b5c8cfda2dfe296410d51e131289fb09c69e1e7d"
 
 
    COMPATIBLE_MACHINE:genericx86 = "genericx86"
    COMPATIBLE_MACHINE:genericx86-64 = "genericx86-64"
    COMPATIBLE_MACHINE:edgerouter = "edgerouter"
-   COMPATIBLE_MACHINE_beaglebone = "beaglebone"
+   COMPATIBLE_MACHINE:beaglebone = "beaglebone"
 
    LINUX_VERSION:genericx86 = "4.12.7"
    LINUX_VERSION:genericx86-64 = "4.12.7"
    LINUX_VERSION:edgerouter = "4.12.10"
-   LINUX_VERSION_beaglebone = "4.12.10"
+   LINUX_VERSION:beaglebone = "4.12.10"
 
 This append file
 contains statements used to support several BSPs that ship with the
@@ -726,7 +726,7 @@ that assigns the :term:`KBUILD_DEFCONFIG` variable based on "raspberrypi2"
 and provides the path to the "in-tree" ``defconfig`` file to be used for
 a Raspberry Pi 2, which is based on the Broadcom 2708/2709 chipset::
 
-   KBUILD_DEFCONFIG_raspberrypi2 ?= "bcm2709_defconfig"
+   KBUILD_DEFCONFIG:raspberrypi2 ?= "bcm2709_defconfig"
 
 Aside from modifying your kernel recipe and providing your own
 ``defconfig`` file, you need to be sure no files or statements set

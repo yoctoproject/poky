@@ -1198,7 +1198,7 @@ Here are the tests you can list with the :term:`WARN_QA` and
    its :term:`PN` value matches something already in :term:`OVERRIDES` (e.g.
    :term:`PN` happens to be the same as :term:`MACHINE` or
    :term:`DISTRO`), it can have unexpected consequences.
-   For example, assignments such as ``FILES_${PN} = "xyz"`` effectively
+   For example, assignments such as ``FILES:${PN} = "xyz"`` effectively
    turn into ``FILES = "xyz"``.
 
 -  ``rpaths:`` Checks for rpaths in the binaries that contain build
@@ -1224,7 +1224,7 @@ Here are the tests you can list with the :term:`WARN_QA` and
 
 -  ``unlisted-pkg-lics:`` Checks that all declared licenses applying
    for a package are also declared on the recipe level (i.e. any license
-   in ``LICENSE_*`` should appear in :term:`LICENSE`).
+   in ``LICENSE:*`` should appear in :term:`LICENSE`).
 
 -  ``useless-rpaths:`` Checks for dynamic library load paths (rpaths)
    in the binaries that by default on a standard system are searched by
@@ -1621,7 +1621,7 @@ a couple different ways:
       BBCLASSEXTEND = "native"
 
    Inside the
-   recipe, use ``_class-native`` and ``_class-target`` overrides to
+   recipe, use ``:class-native`` and ``:class-target`` overrides to
    specify any functionality specific to the respective native or target
    case.
 
@@ -1652,7 +1652,7 @@ couple different ways:
        BBCLASSEXTEND = "nativesdk"
 
    Inside the
-   recipe, use ``_class-nativesdk`` and ``_class-target`` overrides to
+   recipe, use ``:class-nativesdk`` and ``:class-target`` overrides to
    specify any functionality specific to the respective SDK machine or
    target case.
 

@@ -724,7 +724,7 @@ If the BSP description is in recipe space, you cannot simply list the
 ``*.scc`` in the :term:`SRC_URI` statement. You need to use the following
 form from your kernel append file::
 
-   SRC_URI:append_myplatform = " \
+   SRC_URI:append:myplatform = " \
        file://myplatform;type=kmeta;destsuffix=myplatform \
        "
 

@@ -1768,7 +1768,7 @@ It is also worth noting that the end result of these signature
 generators is to make some dependency and hash information available to
 the build. This information includes:
 
--  ``BB_BASEHASH_task-``\ taskname: The base hashes for each task in the
+-  ``BB_BASEHASH:task-``\ taskname: The base hashes for each task in the
    recipe.
 
 -  ``BB_BASEHASH_``\ filename\ ``:``\ taskname: The base hashes for each
@@ -2027,7 +2027,7 @@ dependencies, you must manually declare the dependencies.
    .. note::
 
       By default, ``foo-dev`` also has an :term:`RDEPENDS`-style dependency on
-      ``foo``, because the default value of ``RDEPENDS_${PN}-dev`` (set in
+      ``foo``, because the default value of ``RDEPENDS:${PN}-dev`` (set in
       bitbake.conf) includes "${PN}".
 
    To ensure that the dependency chain is never broken, ``-dev`` and

@@ -575,7 +575,7 @@ system and gives an overview of their function and contents.
 
          Internally, the :term:`BBCLASSEXTEND` mechanism generates recipe
          variants by rewriting variable values and applying overrides such
-         as ``_class-native``. For example, to generate a native version of
+         as ``:class-native``. For example, to generate a native version of
          a recipe, a :term:`DEPENDS` on "foo" is rewritten
          to a :term:`DEPENDS` on "foo-native".
 
@@ -2358,7 +2358,7 @@ system and gives an overview of their function and contents.
             rather than ``/usr/bin``. You can find a list of these
             variables at the top of the ``meta/conf/bitbake.conf`` file in
             the :term:`Source Directory`. You will also
-            find the default values of the various ``FILES_*`` variables in
+            find the default values of the various ``FILES:*`` variables in
             this file.
 
       If some of the files you provide with the :term:`FILES` variable are
@@ -2427,7 +2427,7 @@ system and gives an overview of their function and contents.
       a :term:`MACHINE`-specific override, which is useful
       in a BSP layer::
 
-          FILESEXTRAPATHS:prepend_intel-x86-common := "${THISDIR}/${PN}:"
+          FILESEXTRAPATHS:prepend:intel-x86-common := "${THISDIR}/${PN}:"
 
       The previous statement appears in the
       ``linux-yocto-dev.bbappend`` file, which is found in the
@@ -3044,8 +3044,8 @@ system and gives an overview of their function and contents.
             :term:`IMAGE_FSTYPES` prior to using the "inherit image" line.
 
          -  Due to the way the OpenEmbedded build system processes this
-            variable, you cannot update its contents by using ``_append``
-            or ``_prepend``. You must use the ``+=`` operator to add one or
+            variable, you cannot update its contents by using ``:append``
+            or ``:prepend``. You must use the ``+=`` operator to add one or
             more options to the :term:`IMAGE_FSTYPES` variable.
 
    :term:`IMAGE_INSTALL`
@@ -3303,7 +3303,7 @@ system and gives an overview of their function and contents.
       Specifies a dependency from one image type on another. Here is an
       example from the :ref:`image-live <ref-classes-image-live>` class::
 
-         IMAGE_TYPEDEP_live = "ext3"
+         IMAGE_TYPEDEP:live = "ext3"
 
       In the previous example, the variable ensures that when "live" is
       listed with the :term:`IMAGE_FSTYPES` variable,
@@ -3763,7 +3763,7 @@ system and gives an overview of their function and contents.
          KBRANCH:genericx86 = "standard/base"
          KBRANCH:genericx86-64 = "standard/base"
          KBRANCH:edgerouter = "standard/edgerouter"
-         KBRANCH_beaglebone = "standard/beaglebone"
+         KBRANCH:beaglebone = "standard/beaglebone"
 
       The :term:`KBRANCH` statements
       identify the kernel branch to use when building for each supported
@@ -3791,11 +3791,11 @@ system and gives an overview of their function and contents.
       Here is an example from a "raspberrypi2" :term:`KMACHINE` build that uses
       a ``defconfig`` file named "bcm2709_defconfig"::
 
-         KBUILD_DEFCONFIG_raspberrypi2 = "bcm2709_defconfig"
+         KBUILD_DEFCONFIG:raspberrypi2 = "bcm2709_defconfig"
 
       As an alternative, you can use the following within your append file::
 
-         KBUILD_DEFCONFIG:pn-linux-yocto ?= defconfig_file
+         KBUILD_DEFCONFIG:pn-linux-yocto ?= "defconfig_file"
 
       For more
       information on how to use the :term:`KBUILD_DEFCONFIG` variable, see the
@@ -4128,13 +4128,13 @@ system and gives an overview of their function and contents.
       Kernel's ``meta`` branch. As an example take a look in the
       ``common/recipes-kernel/linux/linux-yocto_3.19.bbappend`` file::
 
-         LINUX_VERSION_core2-32-intel-common = "3.19.0"
-         COMPATIBLE_MACHINE_core2-32-intel-common = "${MACHINE}"
-         SRCREV_meta_core2-32-intel-common = "8897ef68b30e7426bc1d39895e71fb155d694974"
-         SRCREV_machine_core2-32-intel-common = "43b9eced9ba8a57add36af07736344dcc383f711"
-         KMACHINE_core2-32-intel-common = "intel-core2-32"
-         KBRANCH_core2-32-intel-common = "standard/base"
-         KERNEL_FEATURES:append_core2-32-intel-common = "${KERNEL_FEATURES_INTEL_COMMON}"
+         LINUX_VERSION:core2-32-intel-common = "3.19.0"
+         COMPATIBLE_MACHINE:core2-32-intel-common = "${MACHINE}"
+         SRCREV_meta:core2-32-intel-common = "8897ef68b30e7426bc1d39895e71fb155d694974"
+         SRCREV_machine:core2-32-intel-common = "43b9eced9ba8a57add36af07736344dcc383f711"
+         KMACHINE:core2-32-intel-common = "intel-core2-32"
+         KBRANCH:core2-32-intel-common = "standard/base"
+         KERNEL_FEATURES:append:core2-32-intel-common = "${KERNEL_FEATURES_INTEL_COMMON}"
 
       The :term:`KMACHINE` statement says
       that the kernel understands the machine name as "intel-core2-32".
@@ -4322,7 +4322,7 @@ system and gives an overview of their function and contents.
       build system to create an extra package (i.e.
       ``${``\ :term:`PN`\ ``}-lic``) for each recipe and to add
       those packages to the
-      :term:`RRECOMMENDS`\ ``_${PN}``.
+      :term:`RRECOMMENDS`\ ``:${PN}``.
 
       The ``${PN}-lic`` package installs a directory in
       ``/usr/share/licenses`` named ``${PN}``, which is the recipe's base
@@ -4852,7 +4852,7 @@ system and gives an overview of their function and contents.
 
    :term:`NOAUTOPACKAGEDEBUG`
       Disables auto package from splitting ``.debug`` files. If a recipe
-      requires ``FILES_${PN}-dbg`` to be set manually, the
+      requires ``FILES:${PN}-dbg`` to be set manually, the
       :term:`NOAUTOPACKAGEDEBUG` can be defined allowing you to define the
       content of the debug package. For example::
 
@@ -4955,7 +4955,7 @@ system and gives an overview of their function and contents.
       assignment will override ``FOO`` with the value "overridden" at the
       end of parsing::
 
-         FOO_an-override = "overridden"
+         FOO:an-override = "overridden"
 
       See the
       ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:conditional syntax (overrides)`"
@@ -5401,7 +5401,7 @@ system and gives an overview of their function and contents.
       (leftmost) package.
 
       Packages in the variable's list that are empty (i.e. where none of
-      the patterns in ``FILES_``\ pkg match any files installed by the
+      the patterns in ``FILES:``\ pkg match any files installed by the
       :ref:`ref-tasks-install` task) are not generated,
       unless generation is forced through the
       :term:`ALLOW_EMPTY` variable.
@@ -5552,7 +5552,7 @@ system and gives an overview of their function and contents.
 
       For example, when the :ref:`debian <ref-classes-debian>` class
       renames the output package, it does so by setting
-      ``PKG_packagename``.
+      ``PKG:packagename``.
 
    :term:`PKG_CONFIG_PATH`
       The path to ``pkg-config`` files for the current build context.
@@ -5796,7 +5796,7 @@ system and gives an overview of their function and contents.
 
       .. note::
 
-         The ``\_forcevariable`` override is not handled specially. This override
+         The ``:forcevariable`` override is not handled specially. This override
          only works because the default value of :term:`OVERRIDES` includes "forcevariable".
 
       If a recipe with the specified version is not available, a warning
@@ -6083,10 +6083,10 @@ system and gives an overview of their function and contents.
 
       .. note::
 
-         ``RDEPENDS_${PN}-dev`` includes ``${``\ :term:`PN`\ ``}``
+         ``RDEPENDS:${PN}-dev`` includes ``${``\ :term:`PN`\ ``}``
          by default. This default is set in the BitBake configuration file
          (``meta/conf/bitbake.conf``). Be careful not to accidentally remove
-         ``${PN}`` when modifying ``RDEPENDS_${PN}-dev``. Use the "+=" operator
+         ``${PN}`` when modifying ``RDEPENDS:${PN}-dev``. Use the "+=" operator
          rather than the "=" operator.
 
       The package names you use with :term:`RDEPENDS` must appear as they would
@@ -6873,7 +6873,7 @@ system and gives an overview of their function and contents.
       defined in the ``meta/conf/bitbake.conf`` configuration file.
 
       You will see this variable referenced in the default values of
-      ``FILES_${PN}``.
+      ``FILES:${PN}``.
 
    :term:`SOLIBSDEV`
       Defines the suffix for the development symbolic link (symlink) for
@@ -6882,7 +6882,7 @@ system and gives an overview of their function and contents.
       ``meta/conf/bitbake.conf`` configuration file.
 
       You will see this variable referenced in the default values of
-      ``FILES_${PN}-dev``.
+      ``FILES:${PN}-dev``.
 
    :term:`SOURCE_MIRROR_FETCH`
       When you are fetching files to create a mirror of sources (i.e.
