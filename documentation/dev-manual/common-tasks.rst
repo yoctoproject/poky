@@ -443,8 +443,8 @@ file. During the processing of each ``conf/layer.conf`` file, BitBake
 adds the recipes, classes and configurations contained within the
 particular layer to the source directory.
 
-Using .bbappend Files in Your Layer
------------------------------------
+Appending Other Layers Metadata With Your Layer
+-----------------------------------------------
 
 A recipe that appends Metadata to another recipe is called a BitBake
 append file. A BitBake append file uses the ``.bbappend`` file type
@@ -473,6 +473,9 @@ displays an error on starting if it detects a ``.bbappend`` file that
 does not have a corresponding recipe with a matching name. See the
 :term:`BB_DANGLINGAPPENDS_WARNONLY`
 variable for information on how to handle this error.
+
+Overlaying a File Using Your Layer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As an example, consider the main formfactor recipe and a corresponding
 formfactor append file both from the :term:`Source Directory`.
@@ -6091,7 +6094,7 @@ layer. The following steps provide some more detail:
 
    -  Add a ``psplash`` append file for a branded splash screen. For
       information on append files, see the
-      ":ref:`dev-manual/common-tasks:using .bbappend files in your layer`"
+      ":ref:`dev-manual/common-tasks:appending other layers metadata with your layer`"
       section.
 
    -  Add any other append files to make custom changes that are

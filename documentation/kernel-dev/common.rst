@@ -425,7 +425,7 @@ home directory:
    The :term:`FILESEXTRAPATHS` and :term:`SRC_URI` statements
    enable the OpenEmbedded build system to find patch files. For more
    information on using append files, see the
-   ":ref:`dev-manual/common-tasks:using .bbappend files in your layer`"
+   ":ref:`dev-manual/common-tasks:appending other layers metadata with your layer`"
    section in the Yocto Project Development Tasks Manual.
 
 Modifying an Existing Recipe
@@ -1070,7 +1070,7 @@ Section.
    For more information on append files and patches, see the
    ":ref:`kernel-dev/common:creating the append file`" and
    ":ref:`kernel-dev/common:applying patches`" sections. You can also see the
-   ":ref:`dev-manual/common-tasks:using .bbappend files in your layer`"
+   ":ref:`dev-manual/common-tasks:appending other layers metadata with your layer`"
    section in the Yocto Project Development Tasks Manual.
 
    .. note::
