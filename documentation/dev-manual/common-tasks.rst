@@ -545,6 +545,12 @@ important as it ensures that items in the list remain colon-separated.
    allow to add build options (e.g. ``systemd``). For these cases, your
    append file would not even use the :term:`FILESEXTRAPATHS` statement.
 
+The end result of this ``.bbappend`` file is that on a Raspberry Pi, where
+``rpi`` will exist in the list of :term:`OVERRIDES`, the file
+``meta-raspberrypi/recipes-bsp/formfactor/formfactor/rpi/machconfig`` will be
+used during :ref:`ref-tasks-fetch` and the test for a non-zero file size in
+:ref:`ref-tasks-install` will return true, and the file will be installed.
+
 Prioritizing Your Layer
 -----------------------
 
