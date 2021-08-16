@@ -1266,7 +1266,7 @@ located in the layer ``poky/meta-yocto-bsp/conf/machine`` and is named
    EXTRA_IMAGEDEPENDS += "u-boot"
 
    DEFAULTTUNE ?= "cortexa8hf-neon"
-   include conf/machine/include/tune-cortexa8.inc
+   include conf/machine/include/arm/armv7a/tune-cortexa8.inc
 
    IMAGE_FSTYPES += "tar.bz2 jffs2 wic wic.bmap"
    EXTRA_IMAGECMD:jffs2 = "-lnp "
@@ -1344,7 +1344,7 @@ Project Reference Manual.
    .. note::
 
       The include statement that pulls in the
-      ``conf/machine/include/tune-cortexa8.inc`` file provides many tuning
+      ``conf/machine/include/arm/tune-cortexa8.inc`` file provides many tuning
       possibilities.
 
 -  :term:`IMAGE_FSTYPES`: The
