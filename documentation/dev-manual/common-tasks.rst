@@ -5261,17 +5261,19 @@ command to return the available Wic images as follows::
 
    $ wic list images
      genericx86                    		Create an EFI disk image for genericx86*
-     beaglebone-yocto              		Create SD card image for Beaglebone
      edgerouter                    		Create SD card image for Edgerouter
-     qemux86-directdisk            		Create a QEMU machine 'pcbios' direct disk image
-     directdisk-gpt                		Create a 'pcbios' direct disk image
-     mkefidisk                     		Create an EFI disk image
-     directdisk                    		Create a 'pcbios' direct disk image
+     beaglebone-yocto              		Create SD card image for Beaglebone
+     qemux86-directdisk            		Create a qemu machine 'pcbios' direct disk image
      systemd-bootdisk              		Create an EFI disk image with systemd-boot
      mkhybridiso                   		Create a hybrid ISO image
+     mkefidisk                     		Create an EFI disk image
      sdimage-bootpart              		Create SD card image with a boot partition
      directdisk-multi-rootfs       		Create multi rootfs image using rootfs plugin
+     directdisk                    		Create a 'pcbios' direct disk image
      directdisk-bootloader-config  		Create a 'pcbios' direct disk image with custom bootloader config
+     qemuriscv                     		Create qcow2 image for RISC-V QEMU machines
+     directdisk-gpt                		Create a 'pcbios' direct disk image
+     efi-bootdisk
 
 Once you know the list of available
 Wic images, you can use ``help`` with the command to get help on a
