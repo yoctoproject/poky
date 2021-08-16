@@ -1,5 +1,5 @@
-include conf/machine/include/x86-base.inc
-require conf/machine/include/qemuboot-x86.inc
+include conf/machine/include/x86/x86-base.inc
+require conf/machine/include/x86/qemuboot-x86.inc
 MACHINE_FEATURES += "wifi efi pcbios"
 
 PREFERRED_VERSION_linux-yocto ?= "5.10%"
