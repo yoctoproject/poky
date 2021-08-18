@@ -1011,9 +1011,9 @@ If you plan on customizing a recipe for a particular BSP, you need to do
 the following:
 
 -  Create a ``*.bbappend`` file for the modified recipe. For information on using
-   append files, see the ":ref:`dev-manual/common-tasks:using
-   .bbappend files in your layer`" section in the Yocto Project Development
-   Tasks Manual.
+   append files, see the
+   ":ref:`dev-manual/common-tasks:appending other layers metadata with your layer`"
+   section in the Yocto Project Development Tasks Manual.
 
 -  Ensure your directory structure in the BSP layer that supports your
    machine is such that the OpenEmbedded build system can find it. See
