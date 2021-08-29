@@ -7503,6 +7503,7 @@ system and gives an overview of their function and contents.
              ${base_libdir} \
              ${nonarch_base_libdir} \
              ${datadir} \
+             /sysroot-only \
              "
 
    :term:`SYSROOT_DIRS_BLACKLIST`
@@ -7516,10 +7517,16 @@ system and gives an overview of their function and contents.
              ${mandir} \
              ${docdir} \
              ${infodir} \
-             ${datadir}/locale \
+             ${datadir}/X11/locale \
              ${datadir}/applications \
+             ${datadir}/bash-completion \
              ${datadir}/fonts \
+             ${datadir}/gtk-doc/html \
+             ${datadir}/installed-tests \
+             ${datadir}/locale \
              ${datadir}/pixmaps \
+             ${datadir}/terminfo \
+             ${libdir}/${BPN}/ptest \
              "
 
    :term:`SYSROOT_DIRS_NATIVE`
