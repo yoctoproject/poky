@@ -422,8 +422,9 @@ Before the OpenEmbedded build system can use your new layer, you need to
 enable it. To enable your layer, simply add your layer's path to the
 :term:`BBLAYERS` variable in your ``conf/bblayers.conf`` file, which is
 found in the :term:`Build Directory`.
-The following example shows how to enable a layer named
-``meta-mylayer``::
+The following example shows how to enable your new
+``meta-mylayer`` layer (note how your new layer exists outside of
+the official ``poky`` repository which you would have checked out earlier)::
 
    # POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
    # changes incompatibly
@@ -434,7 +435,7 @@ The following example shows how to enable a layer named
        /home/user/poky/meta \
        /home/user/poky/meta-poky \
        /home/user/poky/meta-yocto-bsp \
-       /home/user/poky/meta-mylayer \
+       /home/user/mystuff/meta-mylayer \
        "
 
 BitBake parses each ``conf/layer.conf`` file from the top down as
