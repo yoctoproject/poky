@@ -3486,7 +3486,7 @@ functions::
 
    pydevshell> d.getVar("STAGING_DIR")
    '/media/build1/poky/build/tmp/sysroots'
-   pydevshell> d.getVar("STAGING_DIR")
+   pydevshell> d.getVar("STAGING_DIR", False)
    '${TMPDIR}/sysroots'
    pydevshell> d.setVar("FOO", "bar")
    pydevshell> d.getVar("FOO")
