@@ -3476,7 +3476,7 @@ Similar to working within a development shell as described in the
 previous section, you can also spawn and work within an interactive
 Python development shell. When debugging certain commands or even when
 just editing packages, ``devpyshell`` can be a useful tool. When you
-invoke ``devpyshell``, all tasks up to and including
+invoke the ``devpyshell`` task, all tasks up to and including
 :ref:`ref-tasks-patch` are run for the
 specified target. Then a new terminal is opened. Additionally, key
 Python objects and code are available in the same way they are to
