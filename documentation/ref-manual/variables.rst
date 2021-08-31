@@ -5391,7 +5391,7 @@ system and gives an overview of their function and contents.
       The list of packages the recipe creates. The default value is the
       following::
 
-         ${PN}-dbg ${PN}-staticdev ${PN}-dev ${PN}-doc ${PN}-locale ${PACKAGE_BEFORE_PN} ${PN}
+         ${PN}-src ${PN}-dbg ${PN}-staticdev ${PN}-dev ${PN}-doc ${PN}-locale ${PACKAGE_BEFORE_PN} ${PN}
 
       During packaging, the :ref:`ref-tasks-package` task
       goes through :term:`PACKAGES` and uses the :term:`FILES`
