@@ -730,7 +730,7 @@ system and gives an overview of their function and contents.
       Each configuration file you
       use must reside in the :term:`Build Directory`
       ``conf/multiconfig`` directory (e.g.
-      build_directory\ ``/conf/multiconfig/configA.conf``).
+      ``build_directory/conf/multiconfig/configA.conf``).
 
       For information on how to use :term:`BBMULTICONFIG` in an environment
       that supports building targets with multiple configurations, see the
@@ -5364,7 +5364,7 @@ system and gives an overview of their function and contents.
       so one of two ways:
 
       -  *Append file:* Create an append file named
-         recipename\ ``.bbappend`` in your layer and override the value of
+         ``recipename.bbappend`` in your layer and override the value of
          :term:`PACKAGECONFIG`. You can either completely override the
          variable::
 
@@ -8745,7 +8745,7 @@ system and gives an overview of their function and contents.
    :term:`WKS_FILE`
       Specifies the location of the Wic kickstart file that is used by the
       OpenEmbedded build system to create a partitioned image
-      (image\ ``.wic``). For information on how to create a partitioned
+      (``image.wic``). For information on how to create a partitioned
       image, see the
       ":ref:`dev-manual/common-tasks:creating partitioned images using wic`"
       section in the Yocto Project Development Tasks Manual. For details on

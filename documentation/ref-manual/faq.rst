@@ -143,7 +143,7 @@ various proxy types and configuring proxy servers, see the
 ":yocto_wiki:`Working Behind a Network Proxy </Working_Behind_a_Network_Proxy>`"
 Wiki page.
 
-**Q:** What's the difference between target and target\ ``-native``?
+**Q:** What's the difference between ``target`` and ``target-native``?
 
 **A:** The ``*-native`` targets are designed to run on the system being
 used for the build. These are usually tools that are needed to assist

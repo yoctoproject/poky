@@ -1200,7 +1200,7 @@ usually made available in the form of a shared state (sstate) cache.
    :term:`SSTATE_MIRRORS`
    variables.
 
-The idea of a setscene task (i.e ``do_``\ taskname\ ``_setscene``) is a
+The idea of a setscene task (i.e ``do_taskname_setscene``) is a
 version of the task where instead of building something, BitBake can
 skip to the end result and simply place a set of files into specific
 locations as needed. In some cases, it makes sense to have a setscene

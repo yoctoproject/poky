@@ -9453,8 +9453,8 @@ log to ``${T}/log.do_``\ `task`, and can also log to standard output
 
       Calling this function does not cause the task to fail.
 
--  ``bb.fatal(``\ msg\ ``)``: This logging function is similar to
-   ``bb.error(``\ msg\ ``)`` but also causes the calling task to fail.
+-  ``bb.fatal(msg)``: This logging function is similar to
+   ``bb.error(msg)`` but also causes the calling task to fail.
 
    .. note::
 

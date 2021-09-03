@@ -1600,7 +1600,7 @@ or other tools from the build host).
 You can create a recipe that builds tools that run natively on the host
 a couple different ways:
 
--  Create a myrecipe\ ``-native.bb`` recipe that inherits the ``native``
+-  Create a ``myrecipe-native.bb`` recipe that inherits the ``native``
    class. If you use this method, you must order the inherit statement
    in the recipe after all other inherit statements so that the
    ``native`` class is inherited last.
@@ -1642,7 +1642,7 @@ wish to build tools to run as part of an SDK (i.e. tools that run on
 You can create a recipe that builds tools that run on the SDK machine a
 couple different ways:
 
--  Create a ``nativesdk-``\ myrecipe\ ``.bb`` recipe that inherits the
+-  Create a ``nativesdk-myrecipe.bb`` recipe that inherits the
    ``nativesdk`` class. If you use this method, you must order the
    inherit statement in the recipe after all other inherit statements so
    that the ``nativesdk`` class is inherited last.
