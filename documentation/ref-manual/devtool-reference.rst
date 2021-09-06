@@ -284,10 +284,7 @@ is identified using the ``EDITOR`` variable, on the specified recipe.
 When you use the ``devtool edit-recipe`` command, you must supply the
 root name of the recipe (i.e. no version, paths, or extensions). Also,
 the recipe file itself must reside in the workspace as a result of the
-``devtool add`` or ``devtool upgrade`` commands. However, you can
-override that requirement by using the "-a" or "--any-recipe" option.
-Using either of these options allows you to edit any recipe regardless
-of its location.
+``devtool add`` or ``devtool upgrade`` commands.
 
 .. _devtool-updating-a-recipe:
 
