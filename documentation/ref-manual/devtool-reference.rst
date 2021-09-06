@@ -78,7 +78,7 @@ has a number of sub-commands for each function. You can run
 
 As directed in the general help output, you can
 get more syntax on a specific command by providing the command name and
-using "--help"::
+using ``--help``::
 
    $ devtool add --help
    NOTE: Starting bitbake server...
@@ -471,7 +471,7 @@ Use the ``devtool build`` command to build your recipe. The
 
 When you use the ``devtool build`` command, you must supply the root
 name of the recipe (i.e. do not provide versions, paths, or extensions).
-You can use either the "-s" or the "--disable-parallel-make" options to
+You can use either the ``-s`` or the ``--disable-parallel-make`` options to
 disable parallel makes during the build. Here is an example::
 
    $ devtool build recipe
