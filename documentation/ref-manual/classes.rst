@@ -543,7 +543,7 @@ which the OpenEmbedded build system places the generated objects built
 from the recipes. By default, the :term:`B` directory is set to the
 following, which is separate from the source directory (:term:`S`)::
 
-   ${WORKDIR}/${BPN}/{PV}/
+   ${WORKDIR}/${BPN}-{PV}/
 
 See these variables for more information:
 :term:`WORKDIR`, :term:`BPN`, and
