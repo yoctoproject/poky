@@ -8497,7 +8497,7 @@ system and gives an overview of their function and contents.
 
    :term:`UPSTREAM_CHECK_GITTAGREGEX`
       You can perform a per-recipe check for what the latest upstream
-      source code version is by calling ``bitbake -c checkpkg`` recipe. If
+      source code version is by calling ``devtool latest-version recipe``. If
       the recipe source code is provided from Git repositories, the
       OpenEmbedded build system determines the latest upstream version by
       picking the latest tag from the list of all repository tags.
@@ -8520,7 +8520,7 @@ system and gives an overview of their function and contents.
 
    :term:`UPSTREAM_CHECK_URI`
       You can perform a per-recipe check for what the latest upstream
-      source code version is by calling ``bitbake -c checkpkg`` recipe. If
+      source code version is by calling ``devtool latest-version recipe``. If
       the source code is provided from tarballs, the latest version is
       determined by fetching the directory listing where the tarball is and
       attempting to find a later tarball. When this approach does not work,
