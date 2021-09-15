@@ -8483,6 +8483,18 @@ system and gives an overview of their function and contents.
       install initscripts package them in the main package for the recipe,
       you rarely need to set this variable in individual recipes.
 
+   :term:`UPSTREAM_CHECK_COMMITS`
+      You can perform a per-recipe check for what the latest upstream
+      source code version is by calling ``devtool latest-version recipe``. If
+      the recipe source code is provided from Git repositories, but
+      releases are not identified by Git tags, set :term:`UPSTREAM_CHECK_COMMITS`
+      to ``1`` in the recipe, and the OpenEmbedded build system
+      will compare the latest commit with the one currently specified
+      by the recipe (:term:`SRCREV`).
+      ::
+
+         UPSTREAM_CHECK_COMMITS = "1"
+
    :term:`UPSTREAM_CHECK_GITTAGREGEX`
       You can perform a per-recipe check for what the latest upstream
       source code version is by calling ``bitbake -c checkpkg`` recipe. If
@@ -8517,6 +8529,18 @@ system and gives an overview of their function and contents.
       ::
 
          UPSTREAM_CHECK_URI = "recipe_url"
+
+   :term:`UPSTREAM_VERSION_UNKNOWN`
+      You can perform a per-recipe check for what the latest upstream
+      source code version is by calling ``devtool latest-version recipe``.
+      If no combination of the :term:`UPSTREAM_CHECK_URI`, :term:`UPSTREAM_CHECK_REGEX`,
+      :term:`UPSTREAM_CHECK_GITTAGREGEX` and :term:`UPSTREAM_CHECK_COMMITS` variables in
+      the recipe allows to determine what the latest upstream version is,
+      you can set :term:`UPSTREAM_VERSION_UNKNOWN` to ``1`` in the recipe
+      to acknowledge that the check cannot be performed.
+      ::
+
+         UPSTREAM_VERSION_UNKNOWN = "1"
 
    :term:`USE_DEVFS`
       Determines if ``devtmpfs`` is used for ``/dev`` population. The
