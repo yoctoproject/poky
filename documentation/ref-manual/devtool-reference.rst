@@ -392,15 +392,12 @@ for an example.
 
    $ devtool check-upgrade-status
    ...
-   NOTE: acpid 2.0.30 2.0.31 Ross Burton <ross.burton@intel.com>
-   NOTE: u-boot-fw-utils 2018.11 2019.01 Marek Vasut <marek.vasut@gmail.com> d3689267f92c5956e09cc7d1baa4700141662bff
-   NOTE: u-boot-tools 2018.11 2019.01 Marek Vasut <marek.vasut@gmail.com> d3689267f92c5956e09cc7d1baa4700141662bff
-   .
-   .
-   .
-   NOTE: base-passwd 3.5.29 3.5.45 Anuj Mittal <anuj.mittal@intel.com> cannot be updated due to: Version 3.5.38 requires cdebconf for update-passwd utility
-   NOTE: busybox 1.29.2 1.30.0 Andrej Valek <andrej.valek@siemens.com>
-   NOTE: dbus-test 1.12.10 1.12.12 Chen Qi <Qi.Chen@windriver.com>
+   INFO: bind                      9.16.20         9.16.21         Armin Kuster <akuster808@gmail.com>
+   INFO: inetutils                 2.1             2.2             Tom Rini <trini@konsulko.com>
+   INFO: iproute2                  5.13.0          5.14.0          Changhyeok Bae <changhyeok.bae@gmail.com>
+   INFO: openssl                   1.1.1l          3.0.0           Alexander Kanavin <alex.kanavin@gmail.com>
+   INFO: base-passwd               3.5.29          3.5.51          Anuj Mittal <anuj.mittal@intel.com>  cannot be updated due to: Version 3.5.38 requires cdebconf for update-passwd utility
+   ...
 
 Last but not least, you may set :term:`UPSTREAM_VERSION_UNKNOWN` to ``1``
 in a recipe when there's currently no way to determine its latest upstream
