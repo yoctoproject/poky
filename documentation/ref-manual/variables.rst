@@ -6132,6 +6132,13 @@ system and gives an overview of their function and contents.
       BitBake User Manual for additional information on tasks and
       dependencies.
 
+   :term:`RECIPE_NO_UPDATE_REASON`
+      If a recipe should not be replaced by a more recent upstream version,
+      putting the reason why in this variable in a recipe allows
+      ``devtool check-upgrade-status`` command to display it, as explained
+      in the ":ref:`ref-manual/devtool-reference:checking on the upgrade status of a recipe`"
+      section.
+
    :term:`REQUIRED_DISTRO_FEATURES`
       When inheriting the
       :ref:`features_check <ref-classes-features_check>`

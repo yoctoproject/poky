@@ -383,15 +383,10 @@ Following is a partial example table that reports on all the recipes.
 Notice the reported reason for not upgrading the ``base-passwd`` recipe.
 In this example, while a new version is available upstream, you do not
 want to use it because the dependency on ``cdebconf`` is not easily
-satisfied.
-
-.. note::
-
-   When a reason for not upgrading displays, the reason is usually
-   written into the recipe using the ``RECIPE_NO_UPDATE_REASON``
-   variable. See the
-   :yocto_git:`base-passwd.bb </poky/tree/meta/recipes-core/base-passwd/base-passwd_3.5.29.bb>`
-   recipe for an example.
+satisfied. Maintainers can explicit the reason that is shown by adding
+the :term:`RECIPE_NO_UPDATE_REASON` variable to the corresponding recipe.
+See :yocto_git:`base-passwd.bb </poky/tree/meta/recipes-core/base-passwd/base-passwd_3.5.29.bb>`
+for an example.
 
 ::
 
