@@ -40,7 +40,7 @@ Reference Board Maintenance
 Send pull requests, patches, comments or questions about meta-yocto-bsps to poky@lists.yoctoproject.org
 
 Maintainers: Kevin Hao <kexin.hao@windriver.com>
-             Bruce Ashfield <bruce.ashfield@windriver.com>
+             Bruce Ashfield <bruce.ashfield@gmail.com>
 
 Consumer Devices
 ================
