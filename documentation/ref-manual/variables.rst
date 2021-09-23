@@ -5098,6 +5098,11 @@ system and gives an overview of their function and contents.
       -  "``debug-without-src``": The same behavior as with the ``.debug``
          setting, but no source is packaged at all.
 
+      .. note::
+
+         Much of the above package splitting can be overridden via
+         use of the :term:`INHIBIT_PACKAGE_DEBUG_SPLIT` variable.
+
       You can find out more about debugging using GDB by reading the
       ":ref:`dev-manual/common-tasks:debugging with the gnu project debugger (gdb) remotely`" section
       in the Yocto Project Development Tasks Manual.
