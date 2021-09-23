@@ -3589,6 +3589,12 @@ system and gives an overview of their function and contents.
 
       .. note::
 
+         Bundling the initramfs with the kernel conflates the code in the
+         initramfs with the GPLv2 licensed Linux kernel binary. Thus only GPLv2
+         compatible software may be part of a bundled initramfs.
+
+      .. note::
+
          Using an extra compilation pass to bundle the initramfs avoids a
          circular dependency between the kernel recipe and the initramfs
          recipe should the initramfs include kernel modules. Should that be
