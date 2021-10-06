@@ -80,7 +80,7 @@ distribution:
 
 .. code-block:: shell
 
-  $ sudo apt-get install &UBUNTU_HOST_PACKAGES_ESSENTIAL;
+  $ sudo apt install &UBUNTU_HOST_PACKAGES_ESSENTIAL;
 
 .. note::
 

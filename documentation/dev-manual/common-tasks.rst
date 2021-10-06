@@ -5874,7 +5874,7 @@ system image files much faster.
       use the tool without specifying ``PATH`` even from the root
       account::
 
-         $ sudo apt-get install bmap-tools
+         $ sudo apt install bmap-tools
 
    -  If you are unable to install the ``bmap-tools`` package, you will
       need to build Bmaptool before using it. Use the following command::
@@ -7066,7 +7066,7 @@ to fetch the repository information:
 
 .. code-block:: none
 
-  # apt-get update
+  $ sudo apt update
 
 After this step,
 ``apt`` is able to find, install, and upgrade packages from the
@@ -8249,7 +8249,7 @@ might be significant in human-readable form. Here is an example::
 
 
    Alternatively, you can install ``python3-git`` using the appropriate
-   distribution package manager (e.g. ``apt-get``, ``dnf``, or ``zipper``).
+   distribution package manager (e.g. ``apt``, ``dnf``, or ``zipper``).
 
 To see changes to the build history using a web interface, follow the
 instruction in the ``README`` file
