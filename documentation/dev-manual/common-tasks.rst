@@ -11159,8 +11159,8 @@ For more usage information refer to :yocto_git:`the meta-spdxscanner repository
 </meta-spdxscanner/>`.
 
 
-Copying Licenses that Do Not Exist
-----------------------------------
+Copying Non Standard Licenses
+-----------------------------
 
 Some packages, such as the linux-firmware package, have many licenses
 that are not in any way common. You can avoid adding a lot of these
