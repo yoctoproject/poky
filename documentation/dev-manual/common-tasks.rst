@@ -11158,6 +11158,26 @@ this function, you have to follow the following steps:
 For more usage information refer to :yocto_git:`the meta-spdxscanner repository
 </meta-spdxscanner/>`.
 
+Compliance Limitations with Executables Built from Static Libraries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When package A is added to an image via the :term:`RDEPENDS` or :term:`RRECOMMENDS`
+mechanisms as well as explicitly included in the image recipe with
+:term:`IMAGE_INSTALL`, and depends on a static linked library recipe B
+(``DEPENDS += "B"``), package B will neither appear in the generated license
+manifest nor in the generated source tarballs.  This occurs as the
+:ref:`license <ref-classes-license>` and :ref:`archiver <ref-classes-archiver>`
+classes assume that only packages included via :term:`RDEPENDS` or :term:`RRECOMMENDS`
+end up in the image.
+
+As a result, potential obligations regarding license compliance for package B
+may not be met.
+
+The Yocto Project doesn't enable static libraries by default, in part because
+of this issue. Before a solution to this limitation is found, you need to
+keep in mind that if your root filesystem is built from static libraries,
+you will need to manually ensure that your deliveries are compliant
+with the licenses of these libraries.
 
 Copying Non Standard Licenses
 -----------------------------
