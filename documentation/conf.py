@@ -139,3 +139,7 @@ latex_elements = {
     'passoptionstopackages': '\PassOptionsToPackage{bookmarksdepth=5}{hyperref}',
     'preamble': '\setcounter{tocdepth}{2}',
 }
+
+# Make the EPUB builder prefer PNG to SVG because of issues rendering Inkscape SVG
+from sphinx.builders.epub3 import Epub3Builder
+Epub3Builder.supported_image_types = ['image/png', 'image/gif', 'image/jpeg']
