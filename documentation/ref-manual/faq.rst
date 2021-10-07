@@ -302,10 +302,10 @@ attempt before any others by adding something like the following to the
 ``local.conf`` configuration file::
 
    PREMIRRORS:prepend = "\
-       git://.*/.* https://downloads.yoctoproject.org/mirror/sources/ \n \
-       ftp://.*/.* https://downloads.yoctoproject.org/mirror/sources/ \n \
-       http://.*/.* https://downloads.yoctoproject.org/mirror/sources/ \n \
-       https://.*/.* https://downloads.yoctoproject.org/mirror/sources/ \n"
+       git://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n \
+       ftp://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n \
+       http://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n \
+       https://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n"
 
 These changes cause the build system to intercept Git, FTP, HTTP, and
 HTTPS requests and direct them to the ``http://`` sources mirror. You
@@ -342,10 +342,10 @@ You could make the following changes to the ``local.conf`` configuration
 file as long as the :term:`PREMIRRORS` server is current::
 
    PREMIRRORS:prepend = "\
-       git://.*/.* https://downloads.yoctoproject.org/mirror/sources/ \n \
-       ftp://.*/.* https://downloads.yoctoproject.org/mirror/sources/ \n \
-       http://.*/.* https://downloads.yoctoproject.org/mirror/sources/ \n \
-       https://.*/.* https://downloads.yoctoproject.org/mirror/sources/ \n"
+       git://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n \
+       ftp://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n \
+       http://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n \
+       https://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n"
    BB_FETCH_PREMIRRORONLY = "1"
 
 These changes would cause the build system to successfully fetch source
