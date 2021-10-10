@@ -7,17 +7,18 @@ Project 3.4 Release (codename "honister") from the prior release.
 Override syntax changes
 -----------------------
 
-This release requires changes to the metadata to indicate where overrides are
-being used in variable key names. This is done with the ``:`` character replacing
-the use of ``_`` previously. This means that an entry like::
+In this release, the ``:`` character replaces the use of ``_`` to
+refer to an override, most commonly when making a conditional assignment
+of a variable. This means that an entry like::
 
    SRC_URI_qemux86 = "file://somefile"
 
-becomes::
+now becomes::
 
    SRC_URI:qemux86 = "file://somefile"
 
-since ``qemux86`` is an override. This applies to any use of override syntax so::
+since ``qemux86`` is an override. This applies to any use of override
+syntax, so the following::
 
    SRC_URI_append = " file://somefile"
    SRC_URI_append_qemux86 = " file://somefile2"
@@ -29,7 +30,7 @@ since ``qemux86`` is an override. This applies to any use of override syntax so:
    SRCREV_pn-bash = "abc"
    BB_TASK_NICE_LEVEL_task-testimage = '0'
 
-becomes::
+would now become::
 
    SRC_URI:append = " file://somefile"
    SRC_URI:append:qemux86 = " file://somefile2"
@@ -63,8 +64,8 @@ suffix to variables in ``layer.conf`` files such as :term:`BBFILE_PATTERN`,
 may be the same as a :term:`DISTRO` override causing some confusion. We do
 plan to try and improve consistency as these issues are identified.
 
-To help with migration of layers there is a script in OE-Core. Once configured
-with the overrides used by a layer, this can be run as::
+To help with migration of layers, a script has been provided in OE-Core.
+Once configured with the overrides used by a layer, this can be run as::
 
    <oe-core>/scripts/contrib/convert-overrides.py <layerdir>
 
@@ -74,10 +75,13 @@ with the overrides used by a layer, this can be run as::
    expected to handle every case. In particular, it needs to be told which overrides
    the layer uses (usually machine and distro names/overrides) and the result should
    be carefully checked since it can be a little enthusiastic and will convert
-   references to ``_append``, ``_remove`` and ``_prepend`` in function and variables names.
+   references to ``_append``, ``_remove`` and ``_prepend`` in function and variable
+   names.
 
-For reference, this conversion is important as it allows BitBake to know what is
-an override and what is not. This should allow us to proceed with other syntax
-improvements and simplifications for usability. It also means bitbake no longer
-has to guess and maintain large lookup lists just in case ``functionname`` in
-``my_functionname`` is an override and this should improve efficiency.
+For reference, this conversion is important as it allows BitBake to more reliably
+determine what is an override and what is not, as underscores are also used in
+variable names without intending to be overrides. This should allow us to proceed
+with other syntax improvements and simplifications for usability. It also means
+BitBake no longer has to guess and maintain large lookup lists just in case
+e.g. ``functionname`` in ``my_functionname`` is an override, and thus should improve
+efficiency.
