@@ -1494,15 +1494,6 @@ messages for various BitBake severity levels (i.e. ``bbplain``,
 This class is enabled by default since it is inherited by the ``base``
 class.
 
-.. _ref-classes-meta:
-
-``meta.bbclass``
-================
-
-The ``meta`` class is inherited by recipes that do not build any output
-packages themselves, but act as a "meta" target for building other
-recipes.
-
 .. _ref-classes-metadata_scm:
 
 ``metadata_scm.bbclass``
