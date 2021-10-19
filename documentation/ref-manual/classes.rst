@@ -2209,6 +2209,18 @@ commit, and log. From the information, report files using a JSON format
 are created and stored in
 ``${``\ :term:`LOG_DIR`\ ``}/error-report``.
 
+.. _ref-classes-reproducible-build:
+
+``reproducible_build.bbclass``
+==============================
+
+The ``reproducible_build.bbclass`` class enables
+:ref:`test-manual/reproducible-builds:reproducible builds` by computing
+a :term:`SOURCE_DATE_EPOCH` value in each component's build environment, so
+that the build is independent from the time when the component was built.
+
+Poky inherits this class by default since version 3.1.
+
 .. _ref-classes-rm-work:
 
 ``rm_work.bbclass``
