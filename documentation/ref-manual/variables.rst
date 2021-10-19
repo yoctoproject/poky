@@ -8158,6 +8158,15 @@ system and gives an overview of their function and contents.
       information on setting up a cross-development environment, see the
       :doc:`/sdk-manual/index` manual.
 
+      Note that this variable applies to building an SDK, not an eSDK,
+      in which case the term:`TOOLCHAIN_HOST_TASK_ESDK` setting should be
+      used instead.
+
+   :term:`TOOLCHAIN_HOST_TASK_ESDK`
+      This variable allows to extend what is installed in the host
+      portion of an eSDK. This is similar to :term:`TOOLCHAIN_HOST_TASK`
+      applying to SDKs.
+
    :term:`TOOLCHAIN_OUTPUTNAME`
       This variable defines the name used for the toolchain output. The
       :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class sets
