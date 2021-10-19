@@ -6925,6 +6925,23 @@ system and gives an overview of their function and contents.
       You will see this variable referenced in the default values of
       ``FILES:${PN}-dev``.
 
+   :term:`SOURCE_DATE_EPOCH`
+      This defines a date expressed in number of seconds since
+      the UNIX EPOCH (01 Jan 1970 00:00:00 UTC), which is used by
+      multiple build systems to force a timestamp in built binaries.
+      Many upstream projects already support this variable.
+
+      You will find more details in the `official specifications
+      <https://reproducible-builds.org/specs/source-date-epoch/>`__.
+
+      A value for each recipe is computed from the sources by
+      the :ref:`reproducible-build <ref-classes-reproducible-build>` class.
+
+      If a recipe wishes to override the default behavior, it should set its
+      own :term:`SOURCE_DATE_EPOCH` value::
+
+          SOURCE_DATE_EPOCH = "1613559011"
+
    :term:`SOURCE_MIRROR_FETCH`
       When you are fetching files to create a mirror of sources (i.e.
       creating a source mirror), setting :term:`SOURCE_MIRROR_FETCH` to "1" in
