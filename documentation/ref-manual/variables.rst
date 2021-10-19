@@ -906,6 +906,19 @@ system and gives an overview of their function and contents.
       :term:`TARGET_PREFIX` when building for
       ``native`` recipes.
 
+   :term:`BUILD_REPRODUCIBLE_BINARIES`
+      This variable allows the image building classes and recipes to produce
+      :ref:`reproducible binaries <test-manual/reproducible-builds:reproducible builds>`
+
+      If you inherit the
+      :ref:`reproducible-build <ref-classes-reproducible-build>` class,
+      which is the case of the Poky reference distribution, this sets this
+      variable to "1".
+
+      If your build inherits this classs but you wish to disable reproducible
+      binary generation for specific packages or images, you can set this
+      variable to "0" in the corresponding recipes.
+
    :term:`BUILD_STRIP`
       Specifies the command to be used to strip debugging symbols from
       binaries produced for the build host. By default, :term:`BUILD_STRIP`

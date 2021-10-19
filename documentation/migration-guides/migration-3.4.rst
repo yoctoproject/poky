@@ -243,7 +243,7 @@ Miscellaneous
   re-enable it, set ``AVAHI_GTK = "gtk3"`` in a bbappend for the
   ``avahi`` recipe or in your custom distro configuration file.
 
-- Setting the ``BUILD_REPRODUCIBLE_BINARIES`` variable to "0" no longer
+- Setting the :term:`BUILD_REPRODUCIBLE_BINARIES` variable to "0" no longer
   uses a strangely old fallback date of April 2011, it instead disables
   building reproducible binaries as you would logically expect.
 
