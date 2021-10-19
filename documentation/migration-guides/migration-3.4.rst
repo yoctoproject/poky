@@ -182,7 +182,7 @@ in this variable it uses native recipes instead - a very different
 approach. This has led to confusing errors when binaries are added
 to the SDK but not relocated.
 
-To avoid these issues, a new ``TOOLCHAIN_HOST_TASK_ESDK`` variable has
+To avoid these issues, a new :term:`TOOLCHAIN_HOST_TASK_ESDK` variable has
 been created. If you wish to extend what is installed in the host
 portion of the eSDK then you will now need to set this variable.
 
