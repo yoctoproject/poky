@@ -6935,7 +6935,7 @@ system and gives an overview of their function and contents.
       <https://reproducible-builds.org/specs/source-date-epoch/>`__.
 
       A value for each recipe is computed from the sources by
-      the :ref:`reproducible-build <ref-classes-reproducible-build>` class.
+      :oe_git:`meta/lib/oe/reproducible.py </openembedded-core/tree/meta/lib/oe/reproducible.py>`.
 
       If a recipe wishes to override the default behavior, it should set its
       own :term:`SOURCE_DATE_EPOCH` value::
