@@ -202,6 +202,15 @@ Package/recipe splitting
   in its own ``xwayland`` recipe. If you need Xwayland in your image
   then you may now need to add it explicitly.
 
+- The ``rpm`` package no longer has ``rpm-build`` in its :term:`RRECOMMENDS`;
+  if by chance  you still need rpm package building functionality in
+  your image and you have not already done so then you should add
+  ``rpm-build`` to your image explicitly.
+
+- The Python ``statistics`` standard module is now packaged in its own
+  ``python3-statistics`` package instead of ``python3-misc`` as
+  previously.
+
 
 Image / SDK generation changes
 ------------------------------
