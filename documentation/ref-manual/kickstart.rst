@@ -54,8 +54,9 @@ must also provide one of the ``--ondrive``, ``--ondisk``, or
 .. note::
 
    The mount program must understand the PARTUUID syntax you use with
-   ``--use-uuid`` and non-root *mountpoint*, including swap. The BusyBox
-   versions of these application are currently excluded.
+   ``--use-uuid`` and non-root *mountpoint*, including swap. The default
+   configuration of BusyBox in OpenEmbedded supports this, but this may
+   be disabled in custom configurations.
 
 Here is an example that uses "/" as the mountpoint. The command uses
 ``--ondisk`` to force the partition onto the ``sdb`` disk::
