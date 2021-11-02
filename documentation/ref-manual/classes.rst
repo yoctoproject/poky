@@ -1742,7 +1742,8 @@ Then you can specify writable directories on a recipe basis (e.g. in my-applicat
 
 To support several mount points you can use a different variable flag. Assuming we
 want to have a writable location on the file system, but do not need that the data
-survives a reboot, then we could have a ``mnt-overlay.mount`` unit for a ``tmpfs`` file system.
+survives a reboot, then we could have a ``mnt-overlay.mount`` unit for a ``tmpfs``
+file system.
 
 In your machine configuration::
 
@@ -1751,6 +1752,19 @@ In your machine configuration::
 and then in your recipe::
 
   OVERLAYFS_WRITABLE_PATHS[mnt-overlay] = "/usr/share/another-application"
+
+On a practical note, your application recipe might require multiple
+overlays to be mounted before running to avoid writing to the underlying
+file system (which can be forbidden in case of read-only file system)
+To achieve that :ref:`overlayfs <ref-classes-overlayfs>` provides a ``systemd``
+helper service for mounting overlays. This helper service is named
+``${PN}-overlays.service`` and can be depended on in your application recipe
+(named ``application`` in the following example) ``systemd`` unit by adding
+to the unit the following::
+
+  [Unit]
+  After=application-overlays.service
+  Requires=application-overlays.service
 
 .. note::
 
