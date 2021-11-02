@@ -6756,17 +6756,15 @@ system and gives an overview of their function and contents.
          $ bitbake -c populate_sdk imagename
 
    :term:`SDKMACHINE`
-      The machine for which the SDK is built. In other words, the SDK is
-      built such that it runs on the target you specify with the
-      :term:`SDKMACHINE` value. The value points to a corresponding ``.conf``
-      file under ``conf/machine-sdk/``.
+      The machine for which the SDK is built. In other words, the SDK is built
+      such that it runs on the target you specify with the :term:`SDKMACHINE`
+      value. The value points to a corresponding ``.conf`` file under
+      ``conf/machine-sdk/`` in the enabled layers, for example ``aarch64``,
+      ``i586``, ``i686``, ``ppc64``, ``ppc64le``, and ``x86_64`` are
+      :oe_git:`available in OpenEmbedded-Core </openembedded-core/tree/meta/conf/machine-sdk>`.
 
-      You can use "i686" and "x86_64" as possible values for this variable.
-      The variable defaults to "i686" and is set in the local.conf file in
-      the Build Directory.
-      ::
-
-         SDKMACHINE ?= "i686"
+      The variable defaults to :term:`BUILD_ARCH` so that SDKs are built for the
+      architecture of the build machine.
 
       .. note::
 
