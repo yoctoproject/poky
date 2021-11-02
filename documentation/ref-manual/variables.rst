@@ -1850,7 +1850,7 @@ system and gives an overview of their function and contents.
 
    :term:`DISTRO_EXTRA_RDEPENDS`
       Specifies a list of distro-specific packages to add to all images.
-      This variable takes affect through ``packagegroup-base`` so the
+      This variable takes effect through ``packagegroup-base`` so the
       variable only really applies to the more full-featured images that
       include ``packagegroup-base``. You can use this variable to keep
       distro policy out of generic images. As with all other distro
@@ -4116,7 +4116,7 @@ system and gives an overview of their function and contents.
    :term:`KERNEL_VERSION`
       Specifies the version of the kernel as extracted from ``version.h``
       or ``utsrelease.h`` within the kernel sources. Effects of setting
-      this variable do not take affect until the kernel has been
+      this variable do not take effect until the kernel has been
       configured. Consequently, attempting to refer to this variable in
       contexts prior to configuration will not work.
 
@@ -6770,7 +6770,7 @@ system and gives an overview of their function and contents.
 
          You cannot set the :term:`SDKMACHINE`
          variable in your distribution configuration file. If you do, the
-         configuration will not take affect.
+         configuration will not take effect.
 
    :term:`SDKPATH`
       Defines the path offered to the user for installation of the SDK that
