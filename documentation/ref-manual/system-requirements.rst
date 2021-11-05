@@ -49,6 +49,10 @@ distributions:
 
 -  Fedora 32
 
+-  Fedora 33
+
+-  Fedora 34
+
 -  CentOS 7.x
 
 -  CentOS 8.x
