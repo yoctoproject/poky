@@ -57,6 +57,8 @@ distributions:
 
 -  Fedora 33
 
+-  Fedora 34
+
 -  CentOS 7.x
 
 -  Debian GNU/Linux 8.x (Jessie)
