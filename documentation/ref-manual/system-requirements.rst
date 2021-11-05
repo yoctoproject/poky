@@ -59,8 +59,9 @@ distributions:
 
 -  Debian GNU/Linux 10.x (Buster)
 
--  openSUSE Leap 15.1
+-  Debian GNU/Linux 11.x (Bullseye)
 
+-  OpenSUSE Leap 15.1
 
 .. note::
 
