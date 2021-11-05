@@ -8211,11 +8211,6 @@ system and gives an overview of their function and contents.
       information on setting up a cross-development environment, see the
       :doc:`/sdk-manual/index` manual.
 
-   :term:`TOPDIR`
-      The top-level :term:`Build Directory`. BitBake
-      automatically sets this variable when you initialize your build
-      environment using :ref:`structure-core-script`.
-
    :term:`TRANSLATED_TARGET_ARCH`
       A sanitized version of :term:`TARGET_ARCH`. This
       variable is used where the architecture is needed in a value where
