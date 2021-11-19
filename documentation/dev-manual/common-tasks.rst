@@ -234,11 +234,6 @@ following list:
 
          KERNEL_FEATURES:append:qemuall=" features/debug/printk.scc"
 
-      .. note::
-
-         Avoiding "+=" and "=+" and using machine-specific ``:append``
-         and ``:prepend`` operations is recommended as well.
-
    -  *Place Machine-Specific Files in Machine-Specific Locations:* When
       you have a base recipe, such as ``base-files.bb``, that contains a
       :term:`SRC_URI` statement to a
