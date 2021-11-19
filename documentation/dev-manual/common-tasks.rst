@@ -6240,8 +6240,11 @@ Changing the listed common targets is as easy as editing your version of
 ``conf-notes.txt`` in your custom template configuration directory and
 making sure you have ``TEMPLATECONF`` set to your directory.
 
+Conserving Disk Space
+=====================
+
 Conserving Disk Space During Builds
-===================================
+-----------------------------------
 
 To help conserve disk space during builds, you can add the following
 statement to your project's ``local.conf`` configuration file found in
@@ -6254,6 +6257,26 @@ building a recipe once the recipe is built. For more information on
 "rm_work", see the
 :ref:`rm_work <ref-classes-rm-work>` class in the
 Yocto Project Reference Manual.
+
+Purging Duplicate Shared State Cache Files
+-------------------------------------------
+
+After multiple build iterations, the Shared State (sstate) cache can contain
+duplicate cache files for a given package, while only the most recent one
+is likely to be reusable. The following command purges all but the
+newest sstate cache file for each package::
+
+   sstate-cache-management.sh --remove-duplicated --cache-dir=build/sstate-cache
+
+This command will ask you to confirm the deletions it identifies.
+
+Note::
+
+   The duplicated sstate cache files of one package must have the same
+   architecture, which means that sstate cache files with multiple
+   architectures are not considered as duplicate.
+
+Run ``sstate-cache-management.sh`` for more details about this script.
 
 Working with Packages
 =====================
