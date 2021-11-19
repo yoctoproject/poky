@@ -41,12 +41,6 @@ distributions:
 
 -  Ubuntu 20.04 (LTS)
 
--  Fedora 30
-
--  Fedora 31
-
--  Fedora 32
-
 -  Fedora 33
 
 -  Fedora 34
