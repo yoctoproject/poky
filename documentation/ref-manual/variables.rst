@@ -5855,10 +5855,10 @@ system and gives an overview of their function and contents.
       :term:`Build Directory`::
 
          PREMIRRORS:prepend = "\
-             git://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n \
-             ftp://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n \
-             http://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n \
-             https://.*/.* &YOCTO_DL_URL;/mirror/sources/ \n"
+             git://.*/.* &YOCTO_DL_URL;/mirror/sources/ \
+             ftp://.*/.* &YOCTO_DL_URL;/mirror/sources/ \
+             http://.*/.* &YOCTO_DL_URL;/mirror/sources/ \
+             https://.*/.* &YOCTO_DL_URL;/mirror/sources/"
 
       These changes cause the
       build system to intercept Git, FTP, HTTP, and HTTPS requests and
