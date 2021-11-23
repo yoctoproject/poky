@@ -1800,7 +1800,7 @@ type of output occurs when a set of data is merged into a shared
 directory tree such as the sysroot.
 
 The Yocto Project team has tried to keep the details of the
-implementation hidden in ``sstate`` class. From a user's perspective,
+implementation hidden in the :ref:`sstate <ref-classes-sstate>` class. From a user's perspective,
 adding shared state wrapping to a task is as simple as this
 :ref:`ref-tasks-deploy` example taken
 from the :ref:`deploy <ref-classes-deploy>` class::
