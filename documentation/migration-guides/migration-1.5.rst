@@ -95,7 +95,8 @@ The following changes have been made to the package QA checks:
    this file within :ref:`ref-tasks-install` if "make
    install" is installing it.
 
--  If you are using the ``buildhistory`` class, the check for the package
+-  If you are using the :ref:`buildhistory <ref-classes-buildhistory>` class,
+   the check for the package
    version going backwards is now controlled using a standard QA check.
    Thus, if you have customized your :term:`ERROR_QA` or :term:`WARN_QA` values
    and still wish to have this check performed, you should add
