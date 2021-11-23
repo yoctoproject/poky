@@ -688,12 +688,11 @@ Recipe-Space Metadata
 ---------------------
 
 When stored in recipe-space, the kernel Metadata files reside in a
-directory hierarchy below
-:term:`FILESEXTRAPATHS`. For
-a linux-yocto recipe or for a Linux kernel recipe derived by copying and
-modifying
-``oe-core/meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb`` to
-a recipe in your layer, :term:`FILESEXTRAPATHS` is typically set to
+directory hierarchy below :term:`FILESEXTRAPATHS`. For
+a linux-yocto recipe or for a Linux kernel recipe derived by copying
+:oe_git:`meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb
+</openembedded-core/tree/meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb>`
+into your layer and modifying it, :term:`FILESEXTRAPATHS` is typically set to
 ``${``\ :term:`THISDIR`\ ``}/${``\ :term:`PN`\ ``}``.
 See the ":ref:`kernel-dev/common:modifying an existing recipe`"
 section for more information.

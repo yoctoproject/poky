@@ -4725,11 +4725,14 @@ optimizations.
 There are several examples in the ``meta-skeleton`` layer found in the
 :term:`Source Directory`:
 
--  ``conf/multilib-example.conf`` configuration file
+-  :oe_git:`conf/multilib-example.conf </openembedded-core/tree/meta-skeleton/conf/multilib-example.conf>`
+   configuration file.
 
--  ``conf/multilib-example2.conf`` configuration file
+-  :oe_git:`conf/multilib-example2.conf </openembedded-core/tree/meta-skeleton/conf/multilib-example2.conf>`
+   configuration file.
 
--  ``recipes-multilib/images/core-image-multilib-example.bb`` recipe
+-  :oe_git:`recipes-multilib/images/core-image-multilib-example.bb </openembedded-core/tree/meta-skeleton/recipes-multilib/images/core-image-multilib-example.bb>`
+   recipe
 
 Preparing to Use Multilib
 ~~~~~~~~~~~~~~~~~~~~~~~~~

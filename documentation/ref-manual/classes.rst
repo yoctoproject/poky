@@ -2810,11 +2810,10 @@ The ``useradd*`` classes support the addition of users or groups for
 usage by the package on the target. For example, if you have packages
 that contain system services that should be run under their own user or
 group, you can use these classes to enable creation of the user or
-group. The ``meta-skeleton/recipes-skeleton/useradd/useradd-example.bb``
+group. The :oe_git:`meta-skeleton/recipes-skeleton/useradd/useradd-example.bb
+</openembedded-core/tree/meta-skeleton/recipes-skeleton/useradd/useradd-example.bb>`
 recipe in the :term:`Source Directory` provides a simple
 example that shows how to add three users and groups to two packages.
-See the ``useradd-example.bb`` recipe for more information on how to use
-these classes.
 
 The ``useradd_base`` class provides basic functionality for user or
 groups settings.
