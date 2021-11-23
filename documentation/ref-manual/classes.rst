@@ -570,11 +570,11 @@ be performed using the
 .. note::
 
    The user and group operations added using the
-   extrausers
+   :ref:`extrausers <ref-classes-extrausers>`
    class are not tied to a specific recipe outside of the recipe for the
    image. Thus, the operations can be performed across the image as a
    whole. Use the
-   useradd
+   :ref:`useradd <ref-classes-useradd>`
    class to add user and group configuration to a specific recipe.
 
 Here is an example that uses this class in an image recipe::

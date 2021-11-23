@@ -773,7 +773,7 @@ system and gives an overview of their function and contents.
       :ref:`binconfig-disabled <ref-classes-binconfig-disabled>` class,
       this variable specifies binary configuration scripts to disable in
       favor of using ``pkg-config`` to query the information. The
-      ``binconfig-disabled`` class will modify the specified scripts to
+      :ref:`binconfig-disabled <ref-classes-binconfig-disabled>` class will modify the specified scripts to
       return an error so that calls to them can be easily found and
       replaced.
 
@@ -941,13 +941,13 @@ system and gives an overview of their function and contents.
       When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
       class, this variable specifies whether or not to commit the build
       history output in a local Git repository. If set to "1", this local
-      repository will be maintained automatically by the ``buildhistory``
+      repository will be maintained automatically by the :ref:`buildhistory <ref-classes-buildhistory>`
       class and a commit will be created on every build for changes to each
       top-level subdirectory of the build history output (images, packages,
       and sdk). If you want to track changes to build history over time,
       you should set this value to "1".
 
-      By default, the ``buildhistory`` class does not commit the build
+      By default, the :ref:`buildhistory <ref-classes-buildhistory>` class does not commit the build
       history output in a local Git repository::
 
          BUILDHISTORY_COMMIT ?= "0"
@@ -964,7 +964,7 @@ system and gives an overview of their function and contents.
       email@host". Providing an email address or host that is not valid
       does not produce an error.
 
-      By default, the ``buildhistory`` class sets the variable as follows::
+      By default, the :ref:`buildhistory <ref-classes-buildhistory>` class sets the variable as follows::
 
          BUILDHISTORY_COMMIT_AUTHOR ?= "buildhistory <buildhistory@${DISTRO}>"
 
@@ -972,9 +972,9 @@ system and gives an overview of their function and contents.
       When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
       class, this variable specifies the directory in which build history
       information is kept. For more information on how the variable works,
-      see the ``buildhistory.class``.
+      see the ``buildhistory.bbclass`` file.
 
-      By default, the ``buildhistory`` class sets the directory as follows::
+      By default, the :ref:`buildhistory <ref-classes-buildhistory>` class sets the directory as follows::
 
          BUILDHISTORY_DIR ?= "${TOPDIR}/buildhistory"
 
@@ -1001,7 +1001,7 @@ system and gives an overview of their function and contents.
          This saves one file per task and lists the SHA-256 checksums for
          each file staged (i.e. the output of the task).
 
-      By default, the ``buildhistory`` class enables the following
+      By default, the :ref:`buildhistory <ref-classes-buildhistory>` class enables the following
       features::
 
          BUILDHISTORY_FEATURES ?= "image package sdk"
@@ -1017,7 +1017,7 @@ system and gives an overview of their function and contents.
       any file. Specifying an invalid path does not produce an error.
       Consequently, you can include files that might not always be present.
 
-      By default, the ``buildhistory`` class provides paths to the
+      By default, the :ref:`buildhistory <ref-classes-buildhistory>` class provides paths to the
       following files::
 
          BUILDHISTORY_IMAGE_FILES ?= "/etc/passwd /etc/group"
@@ -1030,7 +1030,7 @@ system and gives an overview of their function and contents.
       useful when build history is populated from multiple sources that may not
       all use the same top level directory.
 
-      By default, the ``buildhistory`` class sets the variable as follows::
+      By default, the :ref:`buildhistory <ref-classes-buildhistory>` class sets the variable as follows::
 
          BUILDHISTORY_PATH_PREFIX_STRIP ?= ""
 
@@ -1049,7 +1049,7 @@ system and gives an overview of their function and contents.
       that you have set up manually using ``git remote`` within the local
       repository.
 
-      By default, the ``buildhistory`` class sets the variable as follows::
+      By default, the :ref:`buildhistory <ref-classes-buildhistory>` class sets the variable as follows::
 
          BUILDHISTORY_PUSH_REPO ?= ""
 
@@ -1323,7 +1323,7 @@ system and gives an overview of their function and contents.
       The default value, which is "CLOSED Proprietary", for
       :term:`COPYLEFT_LICENSE_EXCLUDE` is set by the
       :ref:`copyleft_filter <ref-classes-copyleft_filter>` class, which
-      is inherited by the ``archiver`` class.
+      is inherited by the :ref:`archiver <ref-classes-archiver>` class.
 
    :term:`COPYLEFT_LICENSE_INCLUDE`
       A space-separated list of licenses to include in the source archived
@@ -1334,7 +1334,7 @@ system and gives an overview of their function and contents.
 
       The default value is set by the
       :ref:`copyleft_filter <ref-classes-copyleft_filter>` class, which
-      is inherited by the ``archiver`` class. The default value includes
+      is inherited by the :ref:`archiver <ref-classes-archiver>` class. The default value includes
       "GPL*", "LGPL*", and "AGPL*".
 
    :term:`COPYLEFT_PN_EXCLUDE`
@@ -1349,7 +1349,7 @@ system and gives an overview of their function and contents.
       The default value, which is "" indicating to not explicitly exclude
       any recipes by name, for :term:`COPYLEFT_PN_EXCLUDE` is set by the
       :ref:`copyleft_filter <ref-classes-copyleft_filter>` class, which
-      is inherited by the ``archiver`` class.
+      is inherited by the :ref:`archiver <ref-classes-archiver>` class.
 
    :term:`COPYLEFT_PN_INCLUDE`
       A list of recipes to include in the source archived by the
@@ -1363,7 +1363,7 @@ system and gives an overview of their function and contents.
       The default value, which is "" indicating to not explicitly include
       any recipes by name, for :term:`COPYLEFT_PN_INCLUDE` is set by the
       :ref:`copyleft_filter <ref-classes-copyleft_filter>` class, which
-      is inherited by the ``archiver`` class.
+      is inherited by the :ref:`archiver <ref-classes-archiver>` class.
 
    :term:`COPYLEFT_RECIPE_TYPES`
       A space-separated list of recipe types to include in the source
@@ -1373,7 +1373,7 @@ system and gives an overview of their function and contents.
 
       The default value, which is "target*", for :term:`COPYLEFT_RECIPE_TYPES`
       is set by the :ref:`copyleft_filter <ref-classes-copyleft_filter>`
-      class, which is inherited by the ``archiver`` class.
+      class, which is inherited by the :ref:`archiver <ref-classes-archiver>` class.
 
    :term:`COPY_LIC_DIRS`
       If set to "1" along with the
@@ -1805,11 +1805,11 @@ system and gives an overview of their function and contents.
    :term:`DEPLOYDIR`
       When inheriting the :ref:`deploy <ref-classes-deploy>` class, the
       :term:`DEPLOYDIR` points to a temporary work area for deployed files that
-      is set in the ``deploy`` class as follows::
+      is set in the :ref:`deploy <ref-classes-deploy>` class as follows::
 
          DEPLOYDIR = "${WORKDIR}/deploy-${PN}"
 
-      Recipes inheriting the ``deploy`` class should copy files to be
+      Recipes inheriting the :ref:`deploy <ref-classes-deploy>` class should copy files to be
       deployed into :term:`DEPLOYDIR`, and the class will take care of copying
       them into :term:`DEPLOY_DIR_IMAGE`
       afterwards.
@@ -2293,7 +2293,7 @@ system and gives an overview of their function and contents.
       group configurations to a specific recipe.
 
       The set list of commands you can configure using the
-      :term:`EXTRA_USERS_PARAMS` is shown in the ``extrausers`` class. These
+      :term:`EXTRA_USERS_PARAMS` is shown in the :ref:`extrausers <ref-classes-extrausers>` class. These
       commands map to the normal Unix commands of the same names::
 
          # EXTRA_USERS_PARAMS = "\
@@ -2628,7 +2628,7 @@ system and gives an overview of their function and contents.
    :term:`FONT_PACKAGES`
       When inheriting the :ref:`fontcache <ref-classes-fontcache>` class,
       this variable identifies packages containing font files that need to
-      be cached by Fontconfig. By default, the ``fontcache`` class assumes
+      be cached by Fontconfig. By default, the :ref:`fontcache <ref-classes-fontcache>` class assumes
       that fonts are in the recipe's main package (i.e.
       ``${``\ :term:`PN`\ ``}``). Use this variable if fonts you
       need are in a package other than that main package.
@@ -3890,7 +3890,7 @@ system and gives an overview of their function and contents.
       typically append this variable to enable extended image types. An
       example is the "kernel-fitimage", which enables fitImage support and
       resides in ``meta/classes/kernel-fitimage.bbclass``. You can register
-      custom kernel image types with the ``kernel`` class using this
+      custom kernel image types with the :ref:`kernel <ref-classes-kernel>` class using this
       variable.
 
    :term:`KERNEL_DEVICETREE`
@@ -4285,7 +4285,7 @@ system and gives an overview of their function and contents.
       that the :ref:`debian <ref-classes-debian>` class applies its
       naming policy to given a recipe that packages multiple libraries.
 
-      This variable works in conjunction with the ``debian`` class.
+      This variable works in conjunction with the :ref:`debian <ref-classes-debian>` class.
 
    :term:`LIC_FILES_CHKSUM`
       Checksums of the license text in the recipe source code.
@@ -4910,9 +4910,7 @@ system and gives an overview of their function and contents.
 
       See the ``meta/classes/binconfig.bbclass`` in the
       :term:`Source Directory` for details on how this class
-      applies these additional sed command arguments. For general
-      information on the ``binconfig`` class, see the
-      ":ref:`binconfig.bbclass <ref-classes-binconfig>`" section.
+      applies these additional sed command arguments.
 
    :term:`OE_IMPORTS`
       An internal variable used to tell the OpenEmbedded build system what
@@ -6009,7 +6007,7 @@ system and gives an overview of their function and contents.
       names used when installing the Python headers and libraries in
       sysroot (e.g. ``.../python3.3m/...``).
 
-      Recipes that inherit the ``distutils3`` class during cross-builds also
+      Recipes that inherit the :ref:`distutils3 <ref-classes-distutils3>` class during cross-builds also
       use this variable to locate the headers and libraries of the
       appropriate Python that the extension is targeting.
 

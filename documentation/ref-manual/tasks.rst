@@ -80,7 +80,7 @@ task runs with the current working directory set to
 Recipes implementing this task should inherit the
 :ref:`deploy <ref-classes-deploy>` class and should write the output
 to ``${``\ :term:`DEPLOYDIR`\ ``}``, which is not to be
-confused with ``${DEPLOY_DIR}``. The ``deploy`` class sets up
+confused with ``${DEPLOY_DIR}``. The :ref:`deploy <ref-classes-deploy>` class sets up
 ``do_deploy`` as a shared state (sstate) task that can be accelerated
 through sstate use. The sstate mechanism takes care of copying the
 output from ``${DEPLOYDIR}`` to ``${DEPLOY_DIR_IMAGE}``.
@@ -102,7 +102,7 @@ Adding ``do_deploy`` after other tasks works the same way.
 .. note::
 
    You do not need to add ``before do_build`` to the ``addtask`` command
-   (though it is harmless), because the ``base`` class contains the following::
+   (though it is harmless), because the :ref:`base <ref-classes-base>` class contains the following::
 
            do_build[recrdeptask] += "do_deploy"
 
