@@ -24,15 +24,17 @@ section in the Yocto Project Overview and Concepts Manual.
 Creating Your Own Layer
 -----------------------
 
-It is very easy to create your own layers to use with the OpenEmbedded
-build system, as the Yocto Project ships with tools that speed up creating
-layers. This section describes the steps you perform by hand to create
-layers so that you can better understand them. For information about the
-layer-creation tools, see the
-":ref:`bsp-guide/bsp:creating a new bsp layer using the \`\`bitbake-layers\`\` script`"
-section in the Yocto Project Board Support Package (BSP) Developer's
-Guide and the ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
-section further down in this manual.
+.. note::
+
+   It is very easy to create your own layers to use with the OpenEmbedded
+   build system, as the Yocto Project ships with tools that speed up creating
+   layers. This section describes the steps you perform by hand to create
+   layers so that you can better understand them. For information about the
+   layer-creation tools, see the
+   ":ref:`bsp-guide/bsp:creating a new bsp layer using the \`\`bitbake-layers\`\` script`"
+   section in the Yocto Project Board Support Package (BSP) Developer's
+   Guide and the ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
+   section further down in this manual.
 
 Follow these general steps to create your layer without using tools:
 
