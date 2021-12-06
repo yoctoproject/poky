@@ -5598,13 +5598,13 @@ file::
      ./mkefidisk-201804191017-sda.direct
 
    The following build artifacts were used to create the image(s):
-     ROOTFS_DIR:                   /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/rootfs
-     BOOTIMG_DIR:                  /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
-     KERNEL_DIR:                   /home/stephano/build/master/build/tmp-glibc/deploy/images/qemux86
-     NATIVE_SYSROOT:               /home/stephano/build/master/build/tmp-glibc/work/i586-oe-linux/wic-tools/1.0-r0/recipe-sysroot-native
+     ROOTFS_DIR:                   /home/stephano/yocto/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/rootfs
+     BOOTIMG_DIR:                  /home/stephano/yocto/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
+     KERNEL_DIR:                   /home/stephano/yocto/build/tmp-glibc/deploy/images/qemux86
+     NATIVE_SYSROOT:               /home/stephano/yocto/build/tmp-glibc/work/i586-oe-linux/wic-tools/1.0-r0/recipe-sysroot-native
 
    INFO: The image(s) were created using OE kickstart file:
-     /home/stephano/build/master/openembedded-core/scripts/lib/wic/canned-wks/mkefidisk.wks
+     /home/stephano/yocto/openembedded-core/scripts/lib/wic/canned-wks/mkefidisk.wks
 
 The previous example shows the easiest way to create an image by running
 in cooked mode and supplying a kickstart file and the "-e" option to
@@ -5665,8 +5665,8 @@ in the ``scripts/lib/image/canned-wks`` directory and then by changing
 the lines that specify the target disk from which to boot.
 ::
 
-   $ cp /home/stephano/poky/scripts/lib/wic/canned-wks/directdisk-gpt.wks \
-        /home/stephano/poky/scripts/lib/wic/canned-wks/directdisksdb-gpt.wks
+   $ cp /home/stephano/yocto/poky/scripts/lib/wic/canned-wks/directdisk-gpt.wks \
+        /home/stephano/yocto/poky/scripts/lib/wic/canned-wks/directdisksdb-gpt.wks
 
 Next, the example modifies the ``directdisksdb-gpt.wks`` file and
 changes all instances of "``--ondisk sda``" to "``--ondisk sdb``". The
@@ -5698,13 +5698,13 @@ Computing (nuc) :term:`MACHINE` the
      ./directdisksdb-gpt-201710090938-sdb.direct
 
    The following build artifacts were used to create the image(s):
-     ROOTFS_DIR:                   /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/rootfs
-     BOOTIMG_DIR:                  /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
-     KERNEL_DIR:                   /home/stephano/build/master/build/tmp-glibc/deploy/images/qemux86
-     NATIVE_SYSROOT:               /home/stephano/build/master/build/tmp-glibc/work/i586-oe-linux/wic-tools/1.0-r0/recipe-sysroot-native
+     ROOTFS_DIR:                   /home/stephano/yocto/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/rootfs
+     BOOTIMG_DIR:                  /home/stephano/yocto/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
+     KERNEL_DIR:                   /home/stephano/yocto/build/tmp-glibc/deploy/images/qemux86
+     NATIVE_SYSROOT:               /home/stephano/yocto/build/tmp-glibc/work/i586-oe-linux/wic-tools/1.0-r0/recipe-sysroot-native
 
    INFO: The image(s) were created using OE kickstart file:
-     /home/stephano/poky/scripts/lib/wic/canned-wks/directdisksdb-gpt.wks
+     /home/stephano/yocto/poky/scripts/lib/wic/canned-wks/directdisksdb-gpt.wks
 
 Continuing with the example, you can now directly ``dd`` the image to a
 USB stick, or whatever media for which you built your image, and boot
@@ -5724,11 +5724,11 @@ Mode) and uses a modified kickstart file. The example also uses the
 ``-o`` option to cause Wic to create the output somewhere other than the
 default output directory, which is the current directory::
 
-   $ wic create /home/stephano/my_yocto/test.wks -o /home/stephano/testwic \
-        --rootfs-dir /home/stephano/build/master/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/rootfs \
-        --bootimg-dir /home/stephano/build/master/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share \
-        --kernel-dir /home/stephano/build/master/build/tmp/deploy/images/qemux86 \
-        --native-sysroot /home/stephano/build/master/build/tmp/work/i586-poky-linux/wic-tools/1.0-r0/recipe-sysroot-native
+   $ wic create test.wks -o /home/stephano/testwic \
+        --rootfs-dir /home/stephano/yocto/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/rootfs \
+        --bootimg-dir /home/stephano/yocto/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share \
+        --kernel-dir /home/stephano/yocto/build/tmp/deploy/images/qemux86 \
+        --native-sysroot /home/stephano/yocto/build/tmp/work/i586-poky-linux/wic-tools/1.0-r0/recipe-sysroot-native
 
    INFO: Creating image(s)...
 
@@ -5736,13 +5736,13 @@ default output directory, which is the current directory::
      /home/stephano/testwic/test-201710091445-sdb.direct
 
    The following build artifacts were used to create the image(s):
-     ROOTFS_DIR:                   /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/rootfs
-     BOOTIMG_DIR:                  /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
-     KERNEL_DIR:                   /home/stephano/build/master/build/tmp-glibc/deploy/images/qemux86
-     NATIVE_SYSROOT:               /home/stephano/build/master/build/tmp-glibc/work/i586-oe-linux/wic-tools/1.0-r0/recipe-sysroot-native
+     ROOTFS_DIR:                   /home/stephano/yocto/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/rootfs
+     BOOTIMG_DIR:                  /home/stephano/yocto/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
+     KERNEL_DIR:                   /home/stephano/yocto/build/tmp-glibc/deploy/images/qemux86
+     NATIVE_SYSROOT:               /home/stephano/yocto/build/tmp-glibc/work/i586-oe-linux/wic-tools/1.0-r0/recipe-sysroot-native
 
    INFO: The image(s) were created using OE kickstart file:
-     /home/stephano/my_yocto/test.wks
+     test.wks
 
 For this example,
 :term:`MACHINE` did not have to be
@@ -7097,7 +7097,7 @@ Generating and Using Signed Packages
 In order to add security to RPM packages used during a build, you can
 take steps to securely sign them. Once a signature is verified, the
 OpenEmbedded build system can use the package in the build. If security
-fails for a signed package, the build system aborts the build.
+fails for a signed package, the build system stops the build.
 
 This section describes how to sign RPM packages during a build and how
 to use signed package feeds (repositories) when doing a build.
@@ -8392,11 +8392,11 @@ The OpenEmbedded build system can run tests on real hardware, and for
 certain devices it can also deploy the image to be tested onto the
 device beforehand.
 
-For automated deployment, a "master image" is installed onto the
+For automated deployment, a "controller image" is installed onto the
 hardware once as part of setup. Then, each time tests are to be run, the
 following occurs:
 
-1. The master image is booted into and used to write the image to be
+1. The controller image is booted into and used to write the image to be
    tested to a second partition.
 
 2. The device is then rebooted using an external script that you need to
@@ -8465,15 +8465,15 @@ not need any information in this section. You can skip down to the
 ":ref:`dev-manual/common-tasks:running tests`" section.
 
 If you did set :term:`TEST_TARGET` to "SystemdbootTarget", you also need to
-perform a one-time setup of your master image by doing the following:
+perform a one-time setup of your controller image by doing the following:
 
 1. *Set EFI_PROVIDER:* Be sure that :term:`EFI_PROVIDER` is as follows::
 
       EFI_PROVIDER = "systemd-boot"
 
-2. *Build the master image:* Build the ``core-image-testmaster`` image.
+2. *Build the controller image:* Build the ``core-image-testmaster`` image.
    The ``core-image-testmaster`` recipe is provided as an example for a
-   "master" image and you can customize the image recipe as you would
+   "controller" image and you can customize the image recipe as you would
    any other recipe.
 
    Here are the image recipe requirements:
@@ -9588,51 +9588,51 @@ If you examine the output or the log file, you see the failure during
    | /bin/mkdir -p include/near
    | /bin/mkdir -p include/near
    | /bin/mkdir -p include/near
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/types.h include/near/types.h
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/log.h include/near/log.h
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/plugin.h include/near/plugin.h
    | /bin/mkdir -p include/near
    | /bin/mkdir -p include/near
    | /bin/mkdir -p include/near
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/tag.h include/near/tag.h
    | /bin/mkdir -p include/near
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/adapter.h include/near/adapter.h
    | /bin/mkdir -p include/near
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/ndef.h include/near/ndef.h
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/tlv.h include/near/tlv.h
    | /bin/mkdir -p include/near
    | /bin/mkdir -p include/near
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/setting.h include/near/setting.h
    | /bin/mkdir -p include/near
    | /bin/mkdir -p include/near
    | /bin/mkdir -p include/near
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/device.h include/near/device.h
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/nfc_copy.h include/near/nfc_copy.h
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/snep.h include/near/snep.h
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/version.h include/near/version.h
-   | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+   | ln -s /home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
      0.14-r0/neard-0.14/include/dbus.h include/near/dbus.h
    | ./src/genbuiltin nfctype1 nfctype2 nfctype3 nfctype4 p2p > src/builtin.h
-   | i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/
+   | i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/home/pokybuild/yocto-autobuilder/nightly-x86/
      build/build/tmp/sysroots/qemux86 -DHAVE_CONFIG_H -I. -I./include -I./src -I./gdbus  -I/home/pokybuild/
-     yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/sysroots/qemux86/usr/include/glib-2.0
-     -I/home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/sysroots/qemux86/usr/
-     lib/glib-2.0/include  -I/home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/
-     tmp/sysroots/qemux86/usr/include/dbus-1.0 -I/home/pokybuild/yocto-autobuilder/yocto-slave/
+     yocto-autobuilder/nightly-x86/build/build/tmp/sysroots/qemux86/usr/include/glib-2.0
+     -I/home/pokybuild/yocto-autobuilder/nightly-x86/build/build/tmp/sysroots/qemux86/usr/
+     lib/glib-2.0/include  -I/home/pokybuild/yocto-autobuilder/nightly-x86/build/build/
+     tmp/sysroots/qemux86/usr/include/dbus-1.0 -I/home/pokybuild/yocto-autobuilder/
      nightly-x86/build/build/tmp/sysroots/qemux86/usr/lib/dbus-1.0/include  -I/home/pokybuild/yocto-autobuilder/
-     yocto-slave/nightly-x86/build/build/tmp/sysroots/qemux86/usr/include/libnl3
+     nightly-x86/build/build/tmp/sysroots/qemux86/usr/include/libnl3
      -DNEAR_PLUGIN_BUILTIN -DPLUGINDIR=\""/usr/lib/near/plugins"\"
      -DCONFIGDIR=\""/etc/neard\"" -O2 -pipe -g -feliminate-unused-debug-types -c
      -o tools/snep-send.o tools/snep-send.c
@@ -10810,12 +10810,12 @@ package::
    LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly license_emgd_1.10"
 
 As a convenience, you do not need to specify the
-complete license string in the whitelist for every package. You can use
+complete license string for every package. You can use
 an abbreviated form, which consists of just the first portion or
 portions of the license string before the initial underscore character
 or characters. A partial string will match any license that contains the
 given string as the first portion of its license. For example, the
-following whitelist string will also match both of the packages
+following value will also match both of the packages
 previously mentioned as well as any other packages that have licenses
 starting with "commercial" or "license".
 ::
@@ -10828,8 +10828,8 @@ License Flag Matching
 License flag matching allows you to control what recipes the
 OpenEmbedded build system includes in the build. Fundamentally, the
 build system attempts to match :term:`LICENSE_FLAGS` strings found in
-recipes against :term:`LICENSE_FLAGS_WHITELIST` strings found in the
-whitelist. A match causes the build system to include a recipe in the
+recipes against strings found in :term:`LICENSE_FLAGS_WHITELIST`.
+A match causes the build system to include a recipe in the
 build, while failure to find a match causes the build system to exclude
 a recipe.
 
@@ -10837,18 +10837,19 @@ In general, license flag matching is simple. However, understanding some
 concepts will help you correctly and effectively use matching.
 
 Before a flag defined by a particular recipe is tested against the
-contents of the whitelist, the expanded string ``_${PN}`` is appended to
-the flag. This expansion makes each :term:`LICENSE_FLAGS` value
-recipe-specific. After expansion, the string is then matched against the
-whitelist. Thus, specifying ``LICENSE_FLAGS = "commercial"`` in recipe
-"foo", for example, results in the string ``"commercial_foo"``. And, to
-create a match, that string must appear in the whitelist.
+entries of :term:`LICENSE_FLAGS_WHITELIST`, the expanded
+string ``_${PN}`` is appended to the flag. This expansion makes each
+:term:`LICENSE_FLAGS` value recipe-specific. After expansion, the
+string is then matched against the entries. Thus, specifying
+``LICENSE_FLAGS = "commercial"`` in recipe "foo", for example, results
+in the string ``"commercial_foo"``. And, to create a match, that string
+must appear among the entries of :term:`LICENSE_FLAGS_WHITELIST`.
 
 Judicious use of the :term:`LICENSE_FLAGS` strings and the contents of the
 :term:`LICENSE_FLAGS_WHITELIST` variable allows you a lot of flexibility for
 including or excluding recipes based on licensing. For example, you can
 broaden the matching capabilities by using license flags string subsets
-in the whitelist.
+in :term:`LICENSE_FLAGS_WHITELIST`.
 
 .. note::
 
@@ -10856,43 +10857,44 @@ in the whitelist.
    string that precedes the appended underscore character (e.g.
    ``usethispart_1.3``, ``usethispart_1.4``, and so forth).
 
-For example, simply specifying the string "commercial" in the whitelist
-matches any expanded :term:`LICENSE_FLAGS` definition that starts with the
-string "commercial" such as "commercial_foo" and "commercial_bar", which
+For example, simply specifying the string "commercial" in the
+:term:`LICENSE_FLAGS_WHITELIST` variable matches any expanded
+:term:`LICENSE_FLAGS` definition that starts with the string
+"commercial" such as "commercial_foo" and "commercial_bar", which
 are the strings the build system automatically generates for
 hypothetical recipes named "foo" and "bar" assuming those recipes simply
 specify the following::
 
    LICENSE_FLAGS = "commercial"
 
-Thus, you can choose
-to exhaustively enumerate each license flag in the whitelist and allow
-only specific recipes into the image, or you can use a string subset
-that causes a broader range of matches to allow a range of recipes into
-the image.
+Thus, you can choose to exhaustively enumerate each license flag in the
+list and allow only specific recipes into the image, or you can use a
+string subset that causes a broader range of matches to allow a range of
+recipes into the image.
 
 This scheme works even if the :term:`LICENSE_FLAGS` string already has
 ``_${PN}`` appended. For example, the build system turns the license
 flag "commercial_1.2_foo" into "commercial_1.2_foo_foo" and would match
 both the general "commercial" and the specific "commercial_1.2_foo"
-strings found in the whitelist, as expected.
+strings found in the :term:`LICENSE_FLAGS_WHITELIST` variable, as expected.
 
 Here are some other scenarios:
 
 -  You can specify a versioned string in the recipe such as
    "commercial_foo_1.2" in a "foo" recipe. The build system expands this
    string to "commercial_foo_1.2_foo". Combine this license flag with a
-   whitelist that has the string "commercial" and you match the flag
-   along with any other flag that starts with the string "commercial".
+   :term:`LICENSE_FLAGS_WHITELIST` variable that has the string
+   "commercial" and you match the flag along with any other flag that
+   starts with the string "commercial".
 
--  Under the same circumstances, you can use "commercial_foo" in the
-   whitelist and the build system not only matches "commercial_foo_1.2"
-   but also matches any license flag with the string "commercial_foo",
-   regardless of the version.
+-  Under the same circumstances, you can add "commercial_foo" in the
+   :term:`LICENSE_FLAGS_WHITELIST` variable and the build system not only
+   matches "commercial_foo_1.2" but also matches any license flag with
+   the string "commercial_foo", regardless of the version.
 
 -  You can be very specific and use both the package and version parts
-   in the whitelist (e.g. "commercial_foo_1.2") to specifically match a
-   versioned recipe.
+   in the :term:`LICENSE_FLAGS_WHITELIST` list (e.g.
+   "commercial_foo_1.2") to specifically match a versioned recipe.
 
 Other Variables Related to Commercial Licenses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -10916,9 +10918,10 @@ file::
    LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly commercial_gst-plugins-bad commercial_qmmp"
 
 
-Of course, you could also create a matching whitelist for those
-components using the more general "commercial" in the whitelist, but
-that would also enable all the other packages with :term:`LICENSE_FLAGS`
+Of course, you could also create a matching list for those
+components using the more general "commercial" in the
+:term:`LICENSE_FLAGS_WHITELIST` variable, but that would also enable all
+the other packages with :term:`LICENSE_FLAGS`
 containing "commercial", which you may or may not want::
 
    LICENSE_FLAGS_WHITELIST = "commercial"

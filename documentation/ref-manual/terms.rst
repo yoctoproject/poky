@@ -404,7 +404,7 @@ universal, the list includes them just in case:
 
    :term:`Upstream`
       A reference to source code or repositories that are not
-      local to the development system but located in a master area that is
+      local to the development system but located in a remote area that is
       controlled by the maintainer of the source code. For example, in
       order for a developer to work on a particular piece of code, they
       need to first get a copy of it from an "upstream" source.

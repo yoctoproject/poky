@@ -214,13 +214,13 @@ the class.
 =====================
 
 The ``blacklist`` class prevents the OpenEmbedded build system from
-building specific recipes (blacklists them). To use this class, inherit
+building specific recipes. To use this class, inherit
 the class globally and set :term:`PNBLACKLIST` for
-each recipe you wish to blacklist. Specify the :term:`PN`
+each recipe you wish to ignore. Specify the :term:`PN`
 value as a variable flag (varflag) and provide a reason, which is
 reported, if the package is requested to be built as the value. For
-example, if you want to blacklist a recipe called "exoticware", you add
-the following to your ``local.conf`` or distribution configuration::
+example, if you want to ignore a recipe called "exoticware", you
+add the following to your ``local.conf`` or distribution configuration::
 
    INHERIT += "blacklist"
    PNBLACKLIST[exoticware] = "Not supported by our organization."
@@ -845,10 +845,10 @@ provided by the recipe ``icecc-create-env-native.bb``.
    icecc.
 
 If you do not want the Icecream distributed compile support to apply to
-specific recipes or classes, you can effectively "blacklist" them by
-listing the recipes and classes using the
+specific recipes or classes, you can ask them to be ignored by Icecream
+by listing the recipes and classes using the
 :term:`ICECC_USER_PACKAGE_BL` and
-:term:`ICECC_USER_CLASS_BL`, variables,
+:term:`ICECC_USER_CLASS_BL` variables,
 respectively, in your ``local.conf`` file. Doing so causes the
 OpenEmbedded build system to handle these compilations locally.
 

@@ -231,7 +231,7 @@ Build Changes
 -------------
 
 Separate build and source directories have been enabled by default for
-selected recipes where it is known to work (a whitelist) and for all
+selected recipes where it is known to work and for all
 recipes that inherit the :ref:`cmake <ref-classes-cmake>` class. In
 future releases the :ref:`autotools <ref-classes-autotools>` class
 will enable a separate build directory by default as well. Recipes

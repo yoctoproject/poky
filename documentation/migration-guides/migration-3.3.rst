@@ -89,7 +89,7 @@ example::
    S = "${WORKDIR}/git/python/pythonmodule"
 
 then in ``setup.py`` it works with source code in a relative fashion, such
-as ``../../src``. This causes pseudo to abort as it isn't able to track
+as ``../../src``. This causes pseudo to fail as it isn't able to track
 the paths properly. This release introduces a new :term:`DISTUTILS_SETUP_PATH`
 variable so that recipes can specify it explicitly, for example::
 

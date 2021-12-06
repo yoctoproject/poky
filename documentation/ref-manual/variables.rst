@@ -400,7 +400,7 @@ system and gives an overview of their function and contents.
          where:
 
             action is:
-               ABORT:     Immediately abort the build when
+               ABORT:     Immediately stop the build when
                           a threshold is broken.
                STOPTASKS: Stop the build after the currently
                           executing tasks have finished when
@@ -438,7 +438,7 @@ system and gives an overview of their function and contents.
       The first example works only if you also provide the
       :term:`BB_DISKMON_WARNINTERVAL`
       variable in the ``conf/local.conf``. This example causes the build
-      system to immediately abort when either the disk space in
+      system to immediately stop when either the disk space in
       ``${TMPDIR}`` drops below 1 Gbyte or the available free inodes drops
       below 100 Kbytes. Because two directories are provided with the
       variable, the build system also issue a warning when the disk space
@@ -452,7 +452,7 @@ system and gives an overview of their function and contents.
       directory drops below 1 Gbyte. No disk monitoring occurs for the free
       inodes in this case.
 
-      The final example immediately aborts the build when the number of
+      The final example immediately stops the build when the number of
       free inodes in the ``${TMPDIR}`` directory drops below 100 Kbytes. No
       disk space monitoring for the directory itself occurs in this case.
 
@@ -652,7 +652,7 @@ system and gives an overview of their function and contents.
             "
 
       This next example shows an error message that occurs because invalid
-      entries are found, which cause parsing to abort:
+      entries are found, which cause parsing to fail:
 
       .. code-block:: none
 
@@ -2894,9 +2894,9 @@ system and gives an overview of their function and contents.
       :ref:`icecc <ref-classes-icecc>` class. You set this variable in
       your ``local.conf`` file.
 
-      When you list classes using this variable, you are "blacklisting"
-      them from distributed compilation across remote hosts. Any classes
-      you list will be distributed and compiled locally.
+      When you list classes using this variable, the recipes inheriting
+      those classes will not benefit from distributed compilation across
+      remote hosts. Instead they will be built locally.
 
    :term:`ICECC_USER_PACKAGE_BL`
       Identifies user recipes that you do not want the Icecream distributed
@@ -2904,9 +2904,9 @@ system and gives an overview of their function and contents.
       :ref:`icecc <ref-classes-icecc>` class. You set this variable in
       your ``local.conf`` file.
 
-      When you list packages using this variable, you are "blacklisting"
-      them from distributed compilation across remote hosts. Any packages
-      you list will be distributed and compiled locally.
+      When you list recipes using this variable, you are excluding them
+      from distributed compilation across remote hosts. Instead they will
+      be built locally.
 
    :term:`ICECC_USER_PACKAGE_WL`
       Identifies user recipes that use an empty
@@ -4366,9 +4366,9 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Development Tasks Manual.
 
    :term:`LICENSE_FLAGS`
-      Specifies additional flags for a recipe you must whitelist through
+      Specifies additional flags for a recipe you must allow through
       :term:`LICENSE_FLAGS_WHITELIST` in
-      order to allow the recipe to be built. When providing multiple flags,
+      order for the recipe to be built. When providing multiple flags,
       separate them with spaces.
 
       This value is independent of :term:`LICENSE` and is
@@ -4381,8 +4381,7 @@ system and gives an overview of their function and contents.
    :term:`LICENSE_FLAGS_WHITELIST`
       Lists license flags that when specified in
       :term:`LICENSE_FLAGS` within a recipe should not
-      prevent that recipe from being built. This practice is otherwise
-      known as "whitelisting" license flags. For more information, see the
+      prevent that recipe from being built.  For more information, see the
       ":ref:`dev-manual/common-tasks:enabling commercially licensed recipes`"
       section in the Yocto Project Development Tasks Manual.
 
@@ -5186,8 +5185,8 @@ system and gives an overview of their function and contents.
       .. note::
 
          You can use the :term:`PACKAGE_FEED_ARCHS`
-         variable to whitelist specific package architectures. If you do
-         not need to whitelist specific architectures, which is a common
+         variable to allow specific package architectures. If you do
+         not need to allow specific architectures, which is a common
          case, you can omit this variable. Omitting the variable results in
          all available architectures for the current machine being included
          into remote package feeds.
@@ -6583,9 +6582,9 @@ system and gives an overview of their function and contents.
       :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class.
 
       This list overrides the variables specified using the
-      :term:`SDK_LOCAL_CONF_BLACKLIST`
-      variable as well as any variables identified by automatic
-      blacklisting due to the "/" character being found at the start of the
+      :term:`SDK_LOCAL_CONF_BLACKLIST` variable as well as
+      other variables automatically added due to the "/" character
+      being found at the start of the
       value, which is usually indicative of being a path and thus might not
       be valid on the system where the SDK is installed.
 
@@ -8244,7 +8243,7 @@ system and gives an overview of their function and contents.
       variable is used.
 
    :term:`TUNEABI_WHITELIST`
-      A whitelist of permissible :term:`TUNEABI` values. If
+      A list of permissible :term:`TUNEABI` values. If
       :term:`TUNEABI_WHITELIST` is not set, all tunes are allowed. Providers
       that use prebuilt libraries can use the :term:`TUNEABI_WHITELIST`,
       :term:`TUNEABI_OVERRIDE`, and :term:`TUNEABI`

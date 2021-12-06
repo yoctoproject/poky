@@ -1718,7 +1718,7 @@ inputs still exits - items already built and present in the
 :term:`Build Directory`. The checksum (or
 signature) for a particular task needs to add the hashes of all the
 tasks on which the particular task depends. Choosing which dependencies
-to add is a policy decision. However, the effect is to generate a master
+to add is a policy decision. However, the effect is to generate a
 checksum that combines the basehash and the hashes of the task's
 dependencies.
 
@@ -1735,12 +1735,8 @@ included in any checksum)::
        PRSERV_DUMPDIR PRSERV_DUMPFILE PRSERV_LOCKDOWN PARALLEL_MAKE \\
        CCACHE_DIR EXTERNAL_TOOLCHAIN CCACHE CCACHE_DISABLE LICENSE_PATH SDKPKGSUFFIX"
 
-The
-previous example excludes
-:term:`WORKDIR` since that variable
-is actually constructed as a path within
-:term:`TMPDIR`, which is on the
-whitelist.
+The previous example does not include :term:`WORKDIR` since that variable is
+actually constructed as a path within :term:`TMPDIR`, which is included above.
 
 The rules for deciding which hashes of dependent tasks to include
 through dependency chains are more complex and are generally
