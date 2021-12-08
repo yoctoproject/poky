@@ -17,6 +17,7 @@ import sys
 import datetime
 
 current_version = "3.3.4"
+bitbake_version = "1.50"
 
 # String used in sidebar
 version = 'Version: ' + current_version
@@ -89,7 +90,7 @@ extlinks = {
 
 # Intersphinx config to use cross reference with Bitbake user manual
 intersphinx_mapping = {
-    'bitbake': ('https://docs.yoctoproject.org/bitbake/', None)
+    'bitbake': ('https://docs.yoctoproject.org/bitbake/' + bitbake_version, None)
 }
 
 # -- Options for HTML output -------------------------------------------------
