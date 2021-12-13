@@ -1,3 +1,11 @@
+/*
+NOTE FOR RELEASE MAINTAINERS:
+This file only needs updating in the development release ("master" branch)
+When documentation for stable releases is built,
+the latest version from "master" is used
+by https://git.yoctoproject.org/yocto-autobuilder-helper/tree/scripts/run-docs-build
+*/
+
 (function() {
   'use strict';
 
