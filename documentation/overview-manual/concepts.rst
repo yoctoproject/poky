@@ -1570,7 +1570,7 @@ that parts do not need to be rebuilt. Fundamentally, building from
 scratch is attractive as it means all parts are built fresh and there is
 no possibility of stale data that can cause problems. When
 developers hit problems, they typically default back to building from
-scratch so they have a know state from the start.
+scratch so they have a known state from the start.
 
 Building an image from scratch is both an advantage and a disadvantage
 to the process. As mentioned in the previous paragraph, building from
