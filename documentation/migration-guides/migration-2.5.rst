@@ -287,7 +287,7 @@ The following are additional changes:
 
 -  For EFI-based machines, the bootloader (``grub-efi`` by default) is
    installed into the image at /boot. Wic can be used to split the
-   bootloader into separate boot and rootfs partitions if necessary.
+   bootloader into separate boot and root filesystem partitions if necessary.
 
 -  Patches whose context does not match exactly (i.e. where patch
    reports "fuzz" when applying) will generate a warning. For an example

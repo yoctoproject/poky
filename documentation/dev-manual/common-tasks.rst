@@ -2243,12 +2243,13 @@ error during the
 
 If you have recipes that use ``pkg_postinst`` function and they require
 the use of non-standard native tools that have dependencies during
-rootfs construction, you need to use the
+root filesystem construction, you need to use the
 :term:`PACKAGE_WRITE_DEPS`
 variable in your recipe to list these tools. If you do not use this
 variable, the tools might be missing and execution of the
 post-installation script is deferred until first boot. Deferring the
-script to first boot is undesirable and for read-only rootfs impossible.
+script to the first boot is undesirable and impossible for read-only
+root filesystems.
 
 .. note::
 
@@ -8487,14 +8488,14 @@ perform a one-time setup of your controller image by doing the following:
 
    -  Uses a custom Initial RAM Disk (initramfs) image with a custom
       installer. A normal image that you can install usually creates a
-      single rootfs partition. This image uses another installer that
+      single root filesystem partition. This image uses another installer that
       creates a specific partition layout. Not all Board Support
       Packages (BSPs) can use an installer. For such cases, you need to
       manually create the following partition layout on the target:
 
       -  First partition mounted under ``/boot``, labeled "boot".
 
-      -  The main rootfs partition where this image gets installed,
+      -  The main root filesystem partition where this image gets installed,
          which is mounted under ``/``.
 
       -  Another partition labeled "testrootfs" where test images get

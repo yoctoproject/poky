@@ -5302,7 +5302,7 @@ system and gives an overview of their function and contents.
    :term:`PACKAGE_WRITE_DEPS`
       Specifies a list of dependencies for post-installation and
       pre-installation scripts on native/cross tools. If your
-      post-installation or pre-installation script can execute at rootfs
+      post-installation or pre-installation script can execute at root filesystem
       creation time rather than on the target but depends on a native tool
       in order to execute, you need to list the tools in
       :term:`PACKAGE_WRITE_DEPS`.

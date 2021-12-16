@@ -1362,9 +1362,9 @@ is set to 0.
 
 Only a single Initramfs bundle can be added to the FIT image created by
 ``kernel-fitimage`` and the Initramfs bundle in FIT is optional.
-In case of Initramfs, the kernel is configured to be bundled with the rootfs
+In case of Initramfs, the kernel is configured to be bundled with the root filesystem
 in the same binary (example: zImage-initramfs-:term:`MACHINE`.bin).
-When the kernel is copied to RAM and executed, it unpacks the Initramfs rootfs.
+When the kernel is copied to RAM and executed, it unpacks the Initramfs root filesystem.
 The Initramfs bundle can be enabled when :term:`INITRAMFS_IMAGE`
 is specified and that :term:`INITRAMFS_IMAGE_BUNDLE` is set to 1.
 The address where the Initramfs bundle is to be loaded by U-boot is specified
@@ -1712,13 +1712,13 @@ layers.
 ``overlayfs.bbclass``
 =======================
 
-It's often desired in Embedded System design to have a read-only rootfs.
+It's often desired in Embedded System design to have a read-only root filesystem.
 But a lot of different applications might want to have read-write access to
 some parts of a filesystem. It can be especially useful when your update mechanism
-overwrites the whole rootfs, but you may want your application data to be preserved
+overwrites the whole root filesystem, but you may want your application data to be preserved
 between updates. The :ref:`overlayfs <ref-classes-overlayfs>` class provides a way
 to achieve that by means of ``overlayfs`` and at the same time keeping the base
-rootfs read-only.
+root filesystem read-only.
 
 To use this class, set a mount point for a partition ``overlayfs`` is going to use as upper
 layer in your machine configuration. The underlying file system can be anything that
