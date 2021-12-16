@@ -1769,6 +1769,52 @@ to the unit the following::
 .. note::
 
    The class does not support the ``/etc`` directory itself, because ``systemd`` depends on it.
+   In order to get ``/etc`` in overlayfs, see :ref:`overlayfs-etc <ref-classes-overlayfs-etc>`.
+
+.. _ref-classes-overlayfs-etc:
+
+``overlayfs-etc.bbclass``
+=========================
+
+In order to have the ``/etc`` directory in overlayfs a special handling at early
+boot stage is required. The idea is to supply a custom init script that mounts
+``/etc`` before launching the actual init program, because the latter already
+requires ``/etc`` to be mounted.
+
+Example usage in image recipe::
+
+   IMAGE_FEATURES += "overlayfs-etc"
+
+.. note::
+
+   This class must not be inherited directly. Use :term:`IMAGE_FEATURES` or :term:`EXTRA_IMAGE_FEATURES`
+
+Your machine configuration should define at least the device, mount point, and file system type
+you are going to use for ``overlayfs``::
+
+  OVERLAYFS_ETC_MOUNT_POINT = "/data"
+  OVERLAYFS_ETC_DEVICE = "/dev/mmcblk0p2"
+  OVERLAYFS_ETC_FSTYPE ?= "ext4"
+
+To control more mount options you should consider setting mount options
+(``defaults`` is used by default)::
+
+  OVERLAYFS_ETC_MOUNT_OPTIONS = "wsync"
+
+The class provides two options for ``/sbin/init`` generation:
+
+- The default option is to rename the original ``/sbin/init`` to ``/sbin/init.orig``
+  and place the generated init under original name, i.e. ``/sbin/init``. It has an advantage
+  that you won't need to change any kernel parameters in order to make it work,
+  but it poses a restriction that package-management can't be used, because updating
+  the init manager would remove the generated script.
+
+- If you wish to keep original init as is, you can set::
+
+   OVERLAYFS_ETC_USE_ORIG_INIT_NAME = "0"
+
+  Then the generated init will be named ``/sbin/preinit`` and you would need to extend your
+  kernel parameters manually in your bootloader configuration.
 
 .. _ref-classes-own-mirrors:
 
