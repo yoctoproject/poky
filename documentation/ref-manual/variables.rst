@@ -4734,7 +4734,7 @@ system and gives an overview of their function and contents.
       configuration file, a distribution configuration file, an append file
       for the recipe, or the recipe itself). If you use this variable, you
       must also be sure to list the module name in the
-      :term:`KERNEL_MODULE_AUTOLOAD`
+      :term:`KERNEL_MODULE_PROBECONF`
       variable.
 
       Here is the general syntax::
