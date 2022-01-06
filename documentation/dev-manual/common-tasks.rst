@@ -4668,7 +4668,7 @@ Following is part of the BitBake configuration file, where you can see
 how the static library files are defined::
 
    PACKAGE_BEFORE_PN ?= ""
-   PACKAGES = "${PN}-dbg ${PN}-staticdev ${PN}-dev ${PN}-doc ${PN}-locale ${PACKAGE_BEFORE_PN} ${PN}"
+   PACKAGES = "${PN}-src ${PN}-dbg ${PN}-staticdev ${PN}-dev ${PN}-doc ${PN}-locale ${PACKAGE_BEFORE_PN} ${PN}"
    PACKAGES_DYNAMIC = "^${PN}-locale-.*"
    FILES = ""
 
@@ -4676,7 +4676,8 @@ how the static library files are defined::
                ${sysconfdir} ${sharedstatedir} ${localstatedir} \
                ${base_bindir}/* ${base_sbindir}/* \
                ${base_libdir}/*${SOLIBS} \
-               ${base_prefix}/lib/udev/rules.d ${prefix}/lib/udev/rules.d \
+               ${base_prefix}/lib/udev ${prefix}/lib/udev \
+               ${base_libdir}/udev ${libdir}/udev \
                ${datadir}/${BPN} ${libdir}/${BPN}/* \
                ${datadir}/pixmaps ${datadir}/applications \
                ${datadir}/idl ${datadir}/omf ${datadir}/sounds \
@@ -4692,7 +4693,8 @@ how the static library files are defined::
    FILES:${PN}-dev = "${includedir} ${FILES_SOLIBSDEV} ${libdir}/*.la \
                    ${libdir}/*.o ${libdir}/pkgconfig ${datadir}/pkgconfig \
                    ${datadir}/aclocal ${base_libdir}/*.o \
-                   ${libdir}/${BPN}/*.la ${base_libdir}/*.la"
+                   ${libdir}/${BPN}/*.la ${base_libdir}/*.la \
+                   ${libdir}/cmake ${datadir}/cmake"
    SECTION:${PN}-dev = "devel"
    ALLOW_EMPTY:${PN}-dev = "1"
    RDEPENDS:${PN}-dev = "${PN} (= ${EXTENDPKGV})"
