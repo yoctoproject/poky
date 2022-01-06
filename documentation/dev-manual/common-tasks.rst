@@ -4949,8 +4949,7 @@ the x32 psABI. Here is an example::
 Enabling GObject Introspection Support
 ======================================
 
-`GObject
-introspection <https://wiki.gnome.org/Projects/GObjectIntrospection>`__
+`GObject introspection <https://gi.readthedocs.io/en/latest/>`__
 is the standard mechanism for accessing GObject-based software from
 runtime environments. GObject is a feature of the GLib library that
 provides an object framework for the GNOME desktop and related software.
@@ -4962,7 +4961,7 @@ introspection is the only way to do it.
 
 This section describes the Yocto Project support for generating and
 packaging GObject introspection data. GObject introspection data is a
-description of the API provided by libraries built on top of GLib
+description of the API provided by libraries built on top of the GLib
 framework, and, in particular, that framework's GObject mechanism.
 GObject Introspection Repository (GIR) files go to ``-dev`` packages,
 ``typelib`` files go to main packages as they are packaged together with
@@ -5008,7 +5007,7 @@ library package involves the following:
    .. note::
 
       See recipes in the ``oe-core`` repository that use that
-      ``GIR_EXTRA_LIBS_PATH`` variable as an example.
+      :term:`GIR_EXTRA_LIBS_PATH` variable as an example.
 
 4. Look for any other errors, which probably mean that introspection
    support in a package is not entirely standard, and thus breaks down

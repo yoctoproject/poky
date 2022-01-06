@@ -2667,6 +2667,13 @@ system and gives an overview of their function and contents.
    :term:`GDB`
       The minimal command and arguments to run the GNU Debugger.
 
+   :term:`GIR_EXTRA_LIBS_PATH`
+      Allows to specify an extra search path for ``.so`` files
+      in GLib related recipes using GObject introspection,
+      and which do not compile without this setting.
+      See the ":ref:`dev-manual/common-tasks:enabling gobject introspection support`"
+      section for details.
+
    :term:`GITDIR`
       The directory in which a local copy of a Git repository is stored
       when it is cloned.
