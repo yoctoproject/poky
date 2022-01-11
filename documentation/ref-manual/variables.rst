@@ -56,7 +56,7 @@ system and gives an overview of their function and contents.
          ALTERNATIVE:busybox = "sh sed test bracket"
 
       For more information on the alternatives system, see the
-      ":ref:`update-alternatives.bbclass <ref-classes-update-alternatives>`"
+      ":ref:`ref-classes-update-alternatives`"
       section.
 
    :term:`ALTERNATIVE_LINK_NAME`
@@ -76,7 +76,7 @@ system and gives an overview of their function and contents.
          If :term:`ALTERNATIVE_LINK_NAME` is not defined, it defaults to ``${bindir}/name``.
 
       For more information on the alternatives system, see the
-      ":ref:`update-alternatives.bbclass <ref-classes-update-alternatives>`"
+      ":ref:`ref-classes-update-alternatives`"
       section.
 
    :term:`ALTERNATIVE_PRIORITY`
@@ -92,7 +92,7 @@ system and gives an overview of their function and contents.
          ALTERNATIVE_PRIORITY_pkg[name] = "priority"
 
       For more information on the alternatives system, see the
-      ":ref:`update-alternatives.bbclass <ref-classes-update-alternatives>`"
+      ":ref:`ref-classes-update-alternatives`"
       section.
 
    :term:`ALTERNATIVE_TARGET`
@@ -122,8 +122,7 @@ system and gives an overview of their function and contents.
          task while retaining support for the command if necessary.
 
       For more information on the alternatives system, see the
-      ":ref:`update-alternatives.bbclass <ref-classes-update-alternatives>`"
-      section.
+      ":ref:`ref-classes-update-alternatives`" section.
 
    :term:`ANY_OF_DISTRO_FEATURES`
       When inheriting the
@@ -803,7 +802,7 @@ system and gives an overview of their function and contents.
       ``meta/classes/binconfig.bbclass`` in the :term:`Source Directory`.
       You can also find general
       information on the class in the
-      ":ref:`binconfig.bbclass <ref-classes-binconfig>`" section.
+      ":ref:`ref-classes-binconfig`" section.
 
    :term:`BP`
       The base recipe name and version but without any special recipe name
@@ -2079,7 +2078,7 @@ system and gives an overview of their function and contents.
       errors by the OpenEmbedded build system. You set this variable in
       your distribution configuration file. For a list of the checks you
       can control with this variable, see the
-      ":ref:`insane.bbclass <ref-classes-insane>`" section.
+      ":ref:`ref-classes-insane`" section.
 
    :term:`EXCLUDE_FROM_SHLIBS`
       Triggers the OpenEmbedded build system's shared libraries resolver to
@@ -2158,7 +2157,7 @@ system and gives an overview of their function and contents.
       system uses to locate unpacked recipe source code.
 
       For more information on ``externalsrc.bbclass``, see the
-      ":ref:`externalsrc.bbclass <ref-classes-externalsrc>`" section. You
+      ":ref:`ref-classes-externalsrc`" section. You
       can also find information on how to use this variable in the
       ":ref:`dev-manual/common-tasks:building software from an external source`"
       section in the Yocto Project Development Tasks Manual.
@@ -2172,7 +2171,7 @@ system and gives an overview of their function and contents.
       Directory.
 
       For more information on ``externalsrc.bbclass``, see the
-      ":ref:`externalsrc.bbclass <ref-classes-externalsrc>`" section. You
+      ":ref:`ref-classes-externalsrc`" section. You
       can also find information on how to use this variable in the
       ":ref:`dev-manual/common-tasks:building software from an external source`"
       section in the Yocto Project Development Tasks Manual.
@@ -2843,7 +2842,7 @@ system and gives an overview of their function and contents.
    :term:`ICECC_DISABLED`
       Disables or enables the ``icecc`` (Icecream) function. For more
       information on this function and best practices for using this
-      variable, see the ":ref:`icecc.bbclass <ref-classes-icecc>`"
+      variable, see the ":ref:`ref-classes-icecc`"
       section.
 
       Setting this variable to "1" in your ``local.conf`` disables the
@@ -3740,7 +3739,7 @@ system and gives an overview of their function and contents.
 
          INSANE_SKIP:${PN} += "dev-so"
 
-      See the ":ref:`insane.bbclass <ref-classes-insane>`" section for a
+      See the ":ref:`ref-classes-insane`" section for a
       list of the valid QA checks you can specify using this variable.
 
    :term:`INSTALL_TIMEZONE_FILE`
@@ -5090,7 +5089,7 @@ system and gives an overview of their function and contents.
 
       For information on packaging and build performance effects as a
       result of the package manager in use, see the
-      ":ref:`package.bbclass <ref-classes-package>`" section.
+      ":ref:`ref-classes-package`" section.
 
    :term:`PACKAGE_DEBUG_SPLIT_STYLE`
       Determines how to split up and package debug and source information
@@ -6204,7 +6203,7 @@ system and gives an overview of their function and contents.
    :term:`RM_WORK_EXCLUDE`
       With ``rm_work`` enabled, this variable specifies a list of recipes
       whose work directories should not be removed. See the
-      ":ref:`rm_work.bbclass <ref-classes-rm-work>`" section for more
+      ":ref:`ref-classes-rm-work`" section for more
       details.
 
    :term:`ROOT_HOME`
@@ -8016,7 +8015,7 @@ system and gives an overview of their function and contents.
       on enabling, running, and writing these tests, see the
       ":ref:`dev-manual/common-tasks:performing automated runtime testing`"
       section in the Yocto Project Development Tasks Manual and the
-      ":ref:`testimage*.bbclass <ref-classes-testimage*>`" section.
+      ":ref:`ref-classes-testimage*`" section.
 
    :term:`THISDIR`
       The directory in which the file BitBake is currently parsing is
@@ -8675,7 +8674,7 @@ system and gives an overview of their function and contents.
       warnings by the OpenEmbedded build system. You set this variable in
       your distribution configuration file. For a list of the checks you
       can control with this variable, see the
-      ":ref:`insane.bbclass <ref-classes-insane>`" section.
+      ":ref:`ref-classes-insane`" section.
 
    :term:`WKS_FILE`
       Specifies the location of the Wic kickstart file that is used by the
