@@ -515,6 +515,14 @@ used.
 -  Extensions that use ``distutils``-based build systems require the
    ``distutils`` class in their recipes.
 
+   .. note::
+
+      ``distutils`` has been deprecated in Python 3.10 and will be removed
+      in Python 3.12. For this reason the ``distutils3*`` classes are now
+      deprecated and will be removed from core in the near future. Instead,
+      use the ``setuptools3*`` classes.
+
+
 -  Extensions that use build systems based on ``setuptools3`` require
    the :ref:`setuptools3 <ref-classes-setuptools3>` class in their
    recipes.
@@ -2375,6 +2383,17 @@ the Simple DirectMedia Layer (SDL) library.
 The ``setuptools3`` class supports Python version 3.x extensions that
 use build systems based on ``setuptools``. If your recipe uses these
 build systems, the recipe needs to inherit the ``setuptools3`` class.
+
+.. _ref-classes-setuptools3-base:
+
+``setuptools3-base.bbclass``
+============================
+
+The ``setuptools3-base`` class provides a reusable base for other classes
+that support building Python version 3.x extensions. If you need
+functionality that is not provided by the :ref:`setuptools3 <ref-classes-setuptools3>` class, you may
+want to ``inherit setuptools3-base``. Some recipes do not need the tasks
+in the :ref:`setuptools3 <ref-classes-setuptools3>` class and inherit this class instead.
 
 .. _ref-classes-sign_rpm:
 
