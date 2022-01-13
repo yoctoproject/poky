@@ -1984,8 +1984,7 @@ system and gives an overview of their function and contents.
 
    :term:`DISTUTILS_SETUP_PATH`
       When used by recipes that inherit the
-      :ref:`distutils3 <ref-classes-distutils3>` or
-      :ref:`setuptools3 <ref-classes-setuptools3>` class, this variable should
+      :ref:`distutils3 <ref-classes-distutils3>` class, this variable should
       be used to specify the directory in which the ``setup.py`` file is
       located if it is not at the root of the source tree (as specified by
       :term:`S`). For example, in a recipe where the sources are fetched from
@@ -1994,6 +1993,13 @@ system and gives an overview of their function and contents.
 
          S = "${WORKDIR}/git"
          DISTUTILS_SETUP_PATH = "${S}/python/pythonmodule"
+
+      .. note::
+
+         ``distutils`` has been deprecated in Python 3.10 and will be removed
+         in Python 3.12. For this reason, the use of :ref:`distutils3 <ref-classes-distutils3>`
+         is deprecated. Instead use :ref:`setuptools3 <ref-classes-setuptools3>` and the
+         :term:`SETUPTOOLS_SETUP_PATH` variable.
 
    :term:`DL_DIR`
       The central download directory used by the build process to store
@@ -6839,6 +6845,18 @@ system and gives an overview of their function and contents.
       incompatible with customizations such as the following::
 
          EXTRA_IMAGE_FEATURES += "read-only-rootfs"
+
+   :term:`SETUPTOOLS_SETUP_PATH`
+      When used by recipes that inherit the
+      :ref:`setuptools3 <ref-classes-setuptools3>` class, this variable should
+      be used to specify the directory in which the ``setup.py`` file is
+      located if it is not at the root of the source tree (as specified by
+      :term:`S`). For example, in a recipe where the sources are fetched from
+      a Git repository and ``setup.py`` is in a ``python/pythonmodule``
+      subdirectory, you would have this::
+
+         S = "${WORKDIR}/git"
+         SETUPTOOLS_SETUP_PATH = "${S}/python/pythonmodule"
 
    :term:`SIGGEN_EXCLUDE_SAFE_RECIPE_DEPS`
       A list of recipe dependencies that should not be used to determine
