@@ -8255,40 +8255,6 @@ system and gives an overview of their function and contents.
 
          TUNE_PKGARCH:tune-core2-32 = "core2-32"
 
-   :term:`TUNEABI`
-      An underlying Application Binary Interface (ABI) used by a particular
-      tuning in a given toolchain layer. Providers that use prebuilt
-      libraries can use the :term:`TUNEABI`,
-      :term:`TUNEABI_OVERRIDE`, and
-      :term:`TUNEABI_WHITELIST` variables to check
-      compatibility of tunings against their selection of libraries.
-
-      If :term:`TUNEABI` is undefined, then every tuning is allowed. See the
-      :ref:`sanity <ref-classes-sanity>` class to see how the variable is
-      used.
-
-   :term:`TUNEABI_OVERRIDE`
-      If set, the OpenEmbedded system ignores the
-      :term:`TUNEABI_WHITELIST` variable.
-      Providers that use prebuilt libraries can use the
-      :term:`TUNEABI_OVERRIDE`, :term:`TUNEABI_WHITELIST`, and
-      :term:`TUNEABI` variables to check compatibility of a
-      tuning against their selection of libraries.
-
-      See the :ref:`sanity <ref-classes-sanity>` class to see how the
-      variable is used.
-
-   :term:`TUNEABI_WHITELIST`
-      A list of permissible :term:`TUNEABI` values. If
-      :term:`TUNEABI_WHITELIST` is not set, all tunes are allowed. Providers
-      that use prebuilt libraries can use the :term:`TUNEABI_WHITELIST`,
-      :term:`TUNEABI_OVERRIDE`, and :term:`TUNEABI`
-      variables to check compatibility of a tuning against their selection
-      of libraries.
-
-      See the :ref:`sanity <ref-classes-sanity>` class to see how the
-      variable is used.
-
    :term:`TUNECONFLICTS[feature]`
       Specifies CPU or Application Binary Interface (ABI) tuning features
       that conflict with feature.
