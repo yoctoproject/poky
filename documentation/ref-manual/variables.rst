@@ -971,7 +971,7 @@ system and gives an overview of their function and contents.
       When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
       class, this variable specifies the directory in which build history
       information is kept. For more information on how the variable works,
-      see the ``buildhistory.bbclass`` file.
+      see the :ref:`ref-classes-buildhistory` class.
 
       By default, the :ref:`buildhistory <ref-classes-buildhistory>` class sets the directory as follows::
 
@@ -2162,8 +2162,7 @@ system and gives an overview of their function and contents.
       :term:`S` variable, which is what the OpenEmbedded build
       system uses to locate unpacked recipe source code.
 
-      For more information on ``externalsrc.bbclass``, see the
-      ":ref:`ref-classes-externalsrc`" section. You
+      See the ":ref:`ref-classes-externalsrc`" section for details. You
       can also find information on how to use this variable in the
       ":ref:`dev-manual/common-tasks:building software from an external source`"
       section in the Yocto Project Development Tasks Manual.
@@ -2176,8 +2175,7 @@ system and gives an overview of their function and contents.
       which is what the OpenEmbedded build system uses to locate the Build
       Directory.
 
-      For more information on ``externalsrc.bbclass``, see the
-      ":ref:`ref-classes-externalsrc`" section. You
+      See the ":ref:`ref-classes-externalsrc`" section for details. You
       can also find information on how to use this variable in the
       ":ref:`dev-manual/common-tasks:building software from an external source`"
       section in the Yocto Project Development Tasks Manual.
@@ -2501,7 +2499,7 @@ system and gives an overview of their function and contents.
       :term:`SRC_URI` statements.
 
       The default value for the :term:`FILESPATH` variable is defined in the
-      ``base.bbclass`` class found in ``meta/classes`` in the
+      :ref:`ref-classes-base` class found in ``meta/classes`` in the
       :term:`Source Directory`::
 
          FILESPATH = "${@base_set_filespath(["${FILE_DIRNAME}/${BP}", \
@@ -3085,7 +3083,7 @@ system and gives an overview of their function and contents.
       :term:`IMAGE_INSTALL` variable with care to avoid ordering issues.
 
       Image recipes set :term:`IMAGE_INSTALL` to specify the packages to
-      install into an image through ``image.bbclass``. Additionally,
+      install into an image through :ref:`ref-classes-image`. Additionally,
       there are "helper" classes such as the
       :ref:`core-image <ref-classes-core-image>` class which can
       take lists used with :term:`IMAGE_FEATURES` and turn them into
@@ -3118,7 +3116,7 @@ system and gives an overview of their function and contents.
             BitBake operator within the ``/conf/local.conf`` file or from
             within an image recipe is not recommended. Use of this operator
             in these ways can cause ordering issues. Since
-            ``core-image.bbclass`` sets :term:`IMAGE_INSTALL` to a default
+            :ref:`ref-classes-core-image` sets :term:`IMAGE_INSTALL` to a default
             value using the
             :ref:`?= <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:setting a default value (?=)>`
             operator, using a ``+=`` operation against :term:`IMAGE_INSTALL`
@@ -3708,7 +3706,7 @@ system and gives an overview of their function and contents.
       The filename of the initialization script as installed to
       ``${sysconfdir}/init.d``.
 
-      This variable is used in recipes when using ``update-rc.d.bbclass``.
+      This variable is used in recipes when using :ref:`ref-classes-update-rc.d`.
       The variable is mandatory.
 
    :term:`INITSCRIPT_PACKAGES`
@@ -3716,7 +3714,7 @@ system and gives an overview of their function and contents.
       are specified, you need to append the package name to the other
       ``INITSCRIPT_*`` as an override.
 
-      This variable is used in recipes when using ``update-rc.d.bbclass``.
+      This variable is used in recipes when using :ref:`ref-classes-update-rc.d`.
       The variable is optional and defaults to the :term:`PN`
       variable.
 
@@ -6346,7 +6344,7 @@ system and gives an overview of their function and contents.
       In the
       example, the package name (``${PN}-dev``) must appear as it would in
       the :term:`PACKAGES` namespace before any renaming of the output package
-      by classes such as ``debian.bbclass``.
+      by classes such as :ref:`ref-classes-debian`.
 
       BitBake, which the OpenEmbedded build system uses, supports
       specifying versioned recommends. Although the syntax varies depending

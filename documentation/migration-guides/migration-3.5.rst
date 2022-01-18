@@ -52,5 +52,5 @@ Recipe changes
   and :ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:removal (override style syntax)`.
 
 - :ref:`allarch <ref-classes-allarch>` packagegroups can no longer depend on packages
-  which use :term:`PKG` renaming such as :ref:`debian.bbclass <ref-classes-debian>`.
+  which use :term:`PKG` renaming such as :ref:`ref-classes-debian`.
 

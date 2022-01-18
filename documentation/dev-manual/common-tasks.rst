@@ -4393,7 +4393,7 @@ This next example shows how to accomplish the same thing by setting
    locally inherit the :ref:`externalsrc <ref-classes-externalsrc>`
    class.
 
-By default, ``externalsrc.bbclass`` builds the source code in a
+By default, :ref:`ref-classes-externalsrc` builds the source code in a
 directory separate from the external source directory as specified by
 :term:`EXTERNALSRC`. If you need
 to have the source built in the same directory in which it resides, or
@@ -6246,8 +6246,7 @@ system to make your images more secure:
    :ref:`extrausers <ref-classes-extrausers>`
    class, which is the preferred method. For an example on how to set up
    both root and user passwords, see the
-   ":ref:`extrausers.bbclass <ref-classes-extrausers>`"
-   section.
+   ":ref:`ref-classes-extrausers`" section.
 
    .. note::
 
