@@ -6131,7 +6131,7 @@ layer. The following steps provide some more detail:
       variables that differ as compared to ``defaultsetup.conf``.
       Alternatively, you can create a distribution configuration file
       from scratch using the ``defaultsetup.conf`` file or configuration files
-      from other distributions such as Poky or Angstrom as references.
+      from another distribution such as Poky as a reference.
 
 -  *Provide miscellaneous variables:* Be sure to define any other
    variables for which you want to create a default or enforce as part
@@ -7540,7 +7540,7 @@ Setting up Effective Mirrors
 
 A good deal that goes into a Yocto Project build is simply downloading
 all of the source tarballs. Maybe you have been working with another
-build system (OpenEmbedded or Angstrom) for which you have built up a
+build system for which you have built up a
 sizable directory of source tarballs. Or, perhaps someone else has such
 a directory for which you have read access. If so, you can save time by
 adding statements to your configuration file so that the build process
