@@ -7032,7 +7032,7 @@ variables were set.
 
 The ``opkg`` application uses configuration files to find available
 package databases. Thus, you need to create a configuration file inside
-the ``/etc/opkg/`` direction, which informs ``opkg`` of any repository
+the ``/etc/opkg/`` directory, which informs ``opkg`` of any repository
 you want to use.
 
 As an example, suppose you are serving packages from a ``ipk/``
