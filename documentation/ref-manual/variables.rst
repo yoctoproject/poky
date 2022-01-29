@@ -7213,7 +7213,7 @@ system and gives an overview of their function and contents.
       following maps the local search path ``universal-4.9`` to the
       server-provided path server_url_sstate_path::
 
-         SSTATE_MIRRORS ?= "file://universal-4.9/(.*) https://server_url_sstate_path/universal-4.8/\1 \n"
+         SSTATE_MIRRORS ?= "file://universal-4.9/(.*) https://server_url_sstate_path/universal-4.8/\1"
 
       If a mirror uses the same structure as
       :term:`SSTATE_DIR`, you need to add "PATH" at the
@@ -7222,7 +7222,7 @@ system and gives an overview of their function and contents.
       ::
 
          SSTATE_MIRRORS ?= "\
-             file://.* https://someserver.tld/share/sstate/PATH;downloadfilename=PATH \n \
+             file://.* https://someserver.tld/share/sstate/PATH;downloadfilename=PATH \
              file://.* file:///some-local-dir/sstate/PATH"
 
    :term:`SSTATE_SCAN_FILES`
