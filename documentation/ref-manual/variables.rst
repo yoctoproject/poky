@@ -7806,10 +7806,9 @@ system and gives an overview of their function and contents.
 
    :term:`TCLIBC`
       Specifies the GNU standard C library (``libc``) variant to use during
-      the build process. This variable replaces ``POKYLIBC``, which is no
-      longer supported.
+      the build process.
 
-      You can select "glibc", "musl", "newlib", or "baremetal"
+      You can select "glibc", "musl", "newlib", or "baremetal".
 
    :term:`TCLIBCAPPEND`
       Specifies a suffix to be appended onto the
