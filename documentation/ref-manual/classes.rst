@@ -208,23 +208,6 @@ scripts to be disabled should be specified using the
 :term:`BINCONFIG` variable within the recipe inheriting
 the class.
 
-.. _ref-classes-blacklist:
-
-``blacklist.bbclass``
-=====================
-
-The ``blacklist`` class prevents the OpenEmbedded build system from
-building specific recipes. To use this class, inherit
-the class globally and set :term:`PNBLACKLIST` for
-each recipe you wish to ignore. Specify the :term:`PN`
-value as a variable flag (varflag) and provide a reason, which is
-reported, if the package is requested to be built as the value. For
-example, if you want to ignore a recipe called "exoticware", you
-add the following to your ``local.conf`` or distribution configuration::
-
-   INHERIT += "blacklist"
-   PNBLACKLIST[exoticware] = "Not supported by our organization."
-
 .. _ref-classes-buildhistory:
 
 ``buildhistory.bbclass``

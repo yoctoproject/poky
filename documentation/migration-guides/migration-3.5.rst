@@ -56,3 +56,13 @@ Recipe changes
 
 - The `distutils*.bbclasses` have been moved to `meta-python`. The classes and
   `DISTUTILS*` variables have been removed from the documentation.
+
+Class changes
+-------------
+
+- ``blacklist.bbclass`` is removed and the functionality moved to the
+  :ref:`base <ref-classes-base>` class with a more descriptive
+  ``varflag`` named :term:`SKIP_RECIPE` which will use the `SkipRecipe()`
+  function. The usage will remain the same::
+
+     SKIP_RECIPE[my-recipe] = "Reason for skipping recipe"

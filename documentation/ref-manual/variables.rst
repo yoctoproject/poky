@@ -5700,18 +5700,6 @@ system and gives an overview of their function and contents.
       packages for the target and for Multilib, :term:`PN` would be ``bash``
       and ``lib64-bash``, respectively.
 
-   :term:`PNBLACKLIST`
-      Lists recipes you do not want the OpenEmbedded build system to build.
-      This variable works in conjunction with the
-      :ref:`blacklist <ref-classes-blacklist>` class, which is inherited
-      globally.
-
-      To prevent a recipe from being built, use the :term:`PNBLACKLIST`
-      variable in your ``local.conf`` file. Here is an example that
-      prevents ``myrecipe`` from being built::
-
-         PNBLACKLIST[myrecipe] = "Not supported by our organization."
-
    :term:`POPULATE_SDK_POST_HOST_COMMAND`
       Specifies a list of functions to call once the OpenEmbedded build
       system has created the host part of the SDK. You can specify
@@ -6946,6 +6934,18 @@ system and gives an overview of their function and contents.
       ::
 
          SKIP_FILEDEPS = "1"
+
+   :term:`SKIP_RECIPE`
+      Used to prevent the OpenEmbedded build system from building a given
+      recipe. Specify the :term:`PN` value as a variable flag (``varflag``)
+      and provide a reason, which will be reported when attempting to
+      build the recipe.
+
+      To prevent a recipe from being built, use the :term:`SKIP_RECIPE`
+      variable in your ``local.conf`` file or distribution configuration.
+      Here is an example which prevents ``myrecipe`` from being built::
+
+         SKIP_RECIPE[myrecipe] = "Not supported by our organization."
 
    :term:`SOC_FAMILY`
       Groups together machines based upon the same family of SOC (System On
