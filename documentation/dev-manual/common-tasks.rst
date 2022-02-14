@@ -2114,7 +2114,7 @@ statement that essentially identifies itself as being able to provide
 ``virtual/kernel``. Here is one way through the
 :ref:`kernel <ref-classes-kernel>` class::
 
-   PROVIDES += "${@ "virtual/kernel" if (d.getVar("KERNEL_PACKAGE_NAME") == "kernel") else "" }"
+   PROVIDES += "virtual/kernel"
 
 Any recipe that inherits the :ref:`kernel <ref-classes-kernel>` class is
 going to utilize a :term:`PROVIDES` statement that identifies that recipe as
