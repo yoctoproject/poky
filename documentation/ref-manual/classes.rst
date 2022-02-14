@@ -953,21 +953,6 @@ specified by :term:`EFI_PROVIDER` if
 Normally, you do not use this class directly. Instead, you add "live" to
 :term:`IMAGE_FSTYPES`.
 
-.. _ref-classes-image-prelink:
-
-``image-prelink.bbclass``
-=========================
-
-The ``image-prelink`` class enables the use of the ``prelink`` utility
-during the :ref:`ref-tasks-rootfs` task, which optimizes
-the dynamic linking of shared libraries to reduce executable startup
-time.
-
-By default, the class is enabled in the ``local.conf.template`` using
-the :term:`USER_CLASSES` variable as follows::
-
-   USER_CLASSES ?= "buildstats image-prelink"
-
 .. _ref-classes-insane:
 
 ``insane.bbclass``

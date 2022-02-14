@@ -8537,12 +8537,11 @@ system and gives an overview of their function and contents.
 
    :term:`USER_CLASSES`
       A list of classes to globally inherit. These classes are used by the
-      OpenEmbedded build system to enable extra features (e.g.
-      ``buildstats``, ``image-prelink``, and so forth).
+      OpenEmbedded build system to enable extra features.
 
       The default list is set in your ``local.conf`` file::
 
-         USER_CLASSES ?= "buildstats image-prelink"
+         USER_CLASSES ?= "buildstats"
 
       For more information, see
       ``meta-poky/conf/local.conf.sample`` in the :term:`Source Directory`.

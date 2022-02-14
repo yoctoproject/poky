@@ -1036,12 +1036,10 @@ for example, to determine whether or not to run specific tests. See the
 :term:`IMAGE_MANIFEST`
 variable for additional information.
 
-Optimizing processes that are run across the image include ``mklibs``,
-``prelink``, and any other post-processing commands as defined by the
+Optimizing processes that are run across the image include ``mklibs``
+and any other post-processing commands as defined by the
 :term:`ROOTFS_POSTPROCESS_COMMAND`
-variable. The ``mklibs`` process optimizes the size of the libraries,
-while the ``prelink`` process optimizes the dynamic linking of shared
-libraries to reduce start up time of executables.
+variable. The ``mklibs`` process optimizes the size of the libraries.
 
 After the root filesystem is built, processing begins on the image
 through the :ref:`ref-tasks-image`

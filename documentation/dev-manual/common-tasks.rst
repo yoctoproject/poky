@@ -2534,13 +2534,6 @@ doing the following:
    where you have installed them and whether those files are in
    different locations than the defaults.
 
-.. note::
-
-  If image prelinking is enabled (e.g. :ref:`image-prelink <ref-classes-image-prelink>` is in :term:`USER_CLASSES`
-  which it is by default), prelink will change the binaries in the generated images
-  and this often catches people out. Remove that class to ensure binaries are
-  preserved exactly if that is necessary.
-
 Following Recipe Style Guidelines
 ---------------------------------
 
@@ -8273,26 +8266,39 @@ in a format suitable for use in global configuration (e.g.,
 output from this command::
 
    $ buildhistory-collect-srcrevs -a
-   # i586-poky-linux
-   SRCREV:pn-glibc = "b8079dd0d360648e4e8de48656c5c38972621072"
-   SRCREV:pn-glibc-initial = "b8079dd0d360648e4e8de48656c5c38972621072"
-   SRCREV:pn-opkg-utils = "53274f087565fd45d8452c5367997ba6a682a37a"
-   SRCREV:pn-kmod = "fd56638aed3fe147015bfa10ed4a5f7491303cb4"
-   # x86_64-linux
-   SRCREV:pn-gtk-doc-stub-native = "1dea266593edb766d6d898c79451ef193eb17cfa"
-   SRCREV:pn-dtc-native = "65cc4d2748a2c2e6f27f1cf39e07a5dbabd80ebf"
-   SRCREV:pn-update-rc.d-native = "eca680ddf28d024954895f59a241a622dd575c11"
-   SRCREV_glibc:pn-cross-localedef-native = "b8079dd0d360648e4e8de48656c5c38972621072"
-   SRCREV_localedef:pn-cross-localedef-native = "c833367348d39dad7ba018990bfdaffaec8e9ed3"
-   SRCREV:pn-prelink-native = "faa069deec99bf61418d0bab831c83d7c1b797ca"
-   SRCREV:pn-opkg-utils-native = "53274f087565fd45d8452c5367997ba6a682a37a"
-   SRCREV:pn-kern-tools-native = "23345b8846fe4bd167efdf1bd8a1224b2ba9a5ff"
-   SRCREV:pn-kmod-native = "fd56638aed3fe147015bfa10ed4a5f7491303cb4"
-   # qemux86-poky-linux
-   SRCREV_machine:pn-linux-yocto = "38cd560d5022ed2dbd1ab0dca9642e47c98a0aa1"
-   SRCREV_meta:pn-linux-yocto = "a227f20eff056e511d504b2e490f3774ab260d6f"
    # all-poky-linux
-   SRCREV:pn-update-rc.d = "eca680ddf28d024954895f59a241a622dd575c11"
+   SRCREV:pn-ca-certificates = "07de54fdcc5806bde549e1edf60738c6bccf50e8"
+   SRCREV:pn-update-rc.d = "8636cf478d426b568c1be11dbd9346f67e03adac"
+   # core2-64-poky-linux
+   SRCREV:pn-binutils = "87d4632d36323091e731eb07b8aa65f90293da66"
+   SRCREV:pn-btrfs-tools = "8ad326b2f28c044cb6ed9016d7c3285e23b673c8"
+   SRCREV_bzip2-tests:pn-bzip2 = "f9061c030a25de5b6829e1abf373057309c734c0"
+   SRCREV:pn-e2fsprogs = "02540dedd3ddc52c6ae8aaa8a95ce75c3f8be1c0"
+   SRCREV:pn-file = "504206e53a89fd6eed71aeaf878aa3512418eab1"
+   SRCREV_glibc:pn-glibc = "24962427071fa532c3c48c918e9d64d719cc8a6c"
+   SRCREV:pn-gnome-desktop-testing = "e346cd4ed2e2102c9b195b614f3c642d23f5f6e7"
+   SRCREV:pn-init-system-helpers = "dbd9197569c0935029acd5c9b02b84c68fd937ee"
+   SRCREV:pn-kmod = "b6ecfc916a17eab8f93be5b09f4e4f845aabd3d1"
+   SRCREV:pn-libnsl2 = "82245c0c58add79a8e34ab0917358217a70e5100"
+   SRCREV:pn-libseccomp = "57357d2741a3b3d3e8425889a6b79a130e0fa2f3"
+   SRCREV:pn-libxcrypt = "50cf2b6dd4fdf04309445f2eec8de7051d953abf"
+   SRCREV:pn-ncurses = "51d0fd9cc3edb975f04224f29f777f8f448e8ced"
+   SRCREV:pn-procps = "19a508ea121c0c4ac6d0224575a036de745eaaf8"
+   SRCREV:pn-psmisc = "5fab6b7ab385080f1db725d6803136ec1841a15f"
+   SRCREV:pn-ptest-runner = "bcb82804daa8f725b6add259dcef2067e61a75aa"
+   SRCREV:pn-shared-mime-info = "18e558fa1c8b90b86757ade09a4ba4d6a6cf8f70"
+   SRCREV:pn-zstd = "e47e674cd09583ff0503f0f6defd6d23d8b718d3"
+   # qemux86_64-poky-linux
+   SRCREV_machine:pn-linux-yocto = "20301aeb1a64164b72bc72af58802b315e025c9c"
+   SRCREV_meta:pn-linux-yocto = "2d38a472b21ae343707c8bd64ac68a9eaca066a0"
+   # x86_64-linux
+   SRCREV:pn-binutils-cross-x86_64 = "87d4632d36323091e731eb07b8aa65f90293da66"
+   SRCREV_glibc:pn-cross-localedef-native = "24962427071fa532c3c48c918e9d64d719cc8a6c"
+   SRCREV_localedef:pn-cross-localedef-native = "794da69788cbf9bf57b59a852f9f11307663fa87"
+   SRCREV:pn-debianutils-native = "de14223e5bffe15e374a441302c528ffc1cbed57"
+   SRCREV:pn-libmodulemd-native = "ee80309bc766d781a144e6879419b29f444d94eb"
+   SRCREV:pn-virglrenderer-native = "363915595e05fb252e70d6514be2f0c0b5ca312b"
+   SRCREV:pn-zstd-native = "e47e674cd09583ff0503f0f6defd6d23d8b718d3"
 
 .. note::
 
@@ -8354,21 +8360,18 @@ Here is an example of ``image-info.txt``:
 .. code-block:: none
 
    DISTRO = poky
-   DISTRO_VERSION = 1.7
-   USER_CLASSES = buildstats image-prelink
-   IMAGE_CLASSES = image_types
+   DISTRO_VERSION = 3.4+snapshot-a0245d7be08f3d24ea1875e9f8872aa6bbff93be
+   USER_CLASSES = buildstats
+   IMAGE_CLASSES = qemuboot qemuboot license_image
    IMAGE_FEATURES = debug-tweaks
    IMAGE_LINGUAS =
-   IMAGE_INSTALL = packagegroup-core-boot run-postinsts
+   IMAGE_INSTALL = packagegroup-core-boot speex speexdsp
    BAD_RECOMMENDATIONS =
    NO_RECOMMENDATIONS =
    PACKAGE_EXCLUDE =
-   ROOTFS_POSTPROCESS_COMMAND = write_package_manifest; license_create_manifest; \
-      write_image_manifest ; buildhistory_list_installed_image ; \
-      buildhistory_get_image_installed ; ssh_allow_empty_password;  \
-      postinst_enable_logging; rootfs_update_timestamp ; ssh_disable_dns_lookup ;
-   IMAGE_POSTPROCESS_COMMAND =   buildhistory_get_imageinfo ;
-   IMAGESIZE = 6900
+   ROOTFS_POSTPROCESS_COMMAND = write_package_manifest; license_create_manifest; cve_check_write_rootfs_manifest;   ssh_allow_empty_password;  ssh_allow_root_login;  postinst_enable_logging;  rootfs_update_timestamp;   write_image_test_data;   empty_var_volatile;   sort_passwd; rootfs_reproducible;
+   IMAGE_POSTPROCESS_COMMAND =  buildhistory_get_imageinfo ;
+   IMAGESIZE = 9265
 
 Other than ``IMAGESIZE``,
 which is the total size of the files in the image in Kbytes, the
