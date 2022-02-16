@@ -3554,6 +3554,13 @@ system and gives an overview of their function and contents.
          even if the toolchain's binaries are strippable, there are other files
          needed for the build that are not strippable.
 
+   :term:`INITRAMFS_DEPLOY_DIR_IMAGE`
+      Indicates the deploy directory used by ``do_bundle_initramfs`` where the
+      :term:`INITRAMFS_IMAGE` will be fetched from.
+      This variable is set by default to ``${DEPLOY_DIR_IMAGE}`` in the
+      :ref:`kernel <ref-classes-kernel>` class and it's only meant to be changed
+      when building an initramfs image from a separate multiconfig via :term:`INITRAMFS_MULTICONFIG`.
+
    :term:`INITRAMFS_FSTYPES`
       Defines the format for the output image of an initial RAM filesystem
       (initramfs), which is used during boot. Supported formats are the
@@ -3672,6 +3679,16 @@ system and gives an overview of their function and contents.
 
       See the :term:`MACHINE` variable for additional
       information.
+
+   :term:`INITRAMFS_MULTICONFIG`
+      Defines the multiconfig to create a multiconfig dependency to be used by the :ref:`kernel <ref-classes-kernel>` class.
+
+      This allows the kernel to bundle an :term:`INITRAMFS_IMAGE` coming from
+      a separate multiconfig, this is meant to be used in addition to :term:`INITRAMFS_DEPLOY_DIR_IMAGE`.
+
+      For more information on how to bundle an initramfs image from a separate
+      multiconfig see the ":ref:`dev-manual/common-tasks:Bundling an Initramfs Image From a Separate Multiconfig`"
+      section in the Yocto Project Development Tasks Manual.
 
    :term:`INITRAMFS_NAME`
       The base name of the initial RAM filesystem image. This variable is

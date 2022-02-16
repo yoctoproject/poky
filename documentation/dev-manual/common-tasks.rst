@@ -3919,6 +3919,48 @@ Follow these steps to create an initramfs image:
    :term:`INITRAMFS_IMAGE_BUNDLE`
    variable described earlier.
 
+Bundling an Initramfs Image From a Separate Multiconfig
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There may be a case where we want to build an initramfs image which does not
+inherit the same distro policy as our main image, for example, we may want
+our main image to use ``TCLIBC="glibc"``, but to use ``TCLIBC="musl"`` in our initramfs
+image to keep a smaller footprint. However, by performing the steps mentioned
+above the initramfs image will inherit ``TCLIBC="glibc"`` without allowing us
+to override it.
+
+To achieve this, you need to perform some additional steps:
+
+1. *Create a multiconfig for your initramfs image:* You can perform the steps
+   on ":ref:`dev-manual/common-tasks:building images for multiple targets using multiple configurations`" to create a separate multiconfig.
+   For the sake of simplicity let's assume such multiconfig is called: ``initramfscfg.conf`` and
+   contains the variables::
+
+      TMPDIR="${TOPDIR}/tmp-initramfscfg"
+      TCLIBC="musl"
+
+2. *Set additional initramfs variables on your main configuration:*
+   Additionally, on your main configuration (``local.conf``) you need to set the
+   variables::
+
+     INITRAMFS_MULTICONFIG = "initramfscfg"
+     INITRAMFS_DEPLOY_DIR_IMAGE = "${TOPDIR}/tmp-initramfscfg/deploy/images/${MACHINE}"
+
+   The variables :term:`INITRAMFS_MULTICONFIG` and :term:`INITRAMFS_DEPLOY_DIR_IMAGE`
+   are used to create a multiconfig dependency from the kernel to the :term:`INITRAMFS_IMAGE`
+   to be built coming from the ``initramfscfg`` multiconfig, and to let the
+   buildsystem know where the :term:`INITRAMFS_IMAGE` will be located.
+
+   Building a system with such configuration will build the kernel using the
+   main configuration but the ``do_bundle_initramfs`` task will grab the
+   selected :term:`INITRAMFS_IMAGE` from :term:`INITRAMFS_DEPLOY_DIR_IMAGE`
+   instead, resulting in a musl based initramfs image bundled in the kernel
+   but a glibc based main image.
+
+   The same is applicable to avoid inheriting :term:`DISTRO_FEATURES` on :term:`INITRAMFS_IMAGE`
+   or to build a different :term:`DISTRO` for it such as ``poky-tiny``.
+
+
 Building a Tiny System
 ----------------------
 
