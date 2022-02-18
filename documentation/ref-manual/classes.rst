@@ -574,12 +574,11 @@ Here is an example that uses this class in an image recipe::
        "
 
 Here is an example that adds two users named "tester-jim" and "tester-sue" and assigns
-passwords. First on host, create the password hash::
+passwords. First on host, create the (escaped) password hash::
 
-   mkpasswd -m sha256crypt tester01
+   printf "%q" $(mkpasswd -m sha256crypt tester01)
 
-The resulting hash is set to a variable and used in ``useradd`` command parameters.
-Remember to escape the character ``$``::
+The resulting hash is set to a variable and used in ``useradd`` command parameters::
 
    inherit extrausers
    PASSWD = "\$X\$ABC123\$A-Long-Hash"
