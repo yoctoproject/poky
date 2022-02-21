@@ -11,7 +11,7 @@ by https://git.yoctoproject.org/yocto-autobuilder-helper/tree/scripts/run-docs-b
 
   var all_versions = {
     'dev': 'dev (3.5)',
-    '3.4.1': '3.4.1',
+    '3.4.2': '3.4.2',
     '3.3.4': '3.3.4',
     '3.2.4': '3.2.4',
     '3.1.14': '3.1.14',
