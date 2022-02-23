@@ -9474,7 +9474,7 @@ BitBake has determined by doing the following:
 
    The output of ``bitbake-dumpsig`` also includes the value each
    variable had, a list of dependencies for each variable, and
-   :term:`BB_HASHBASE_WHITELIST`
+   :term:`BB_BASEHASH_IGNORE_VARS`
    information.
 
 There is also a ``bitbake-diffsigs`` command for comparing two
