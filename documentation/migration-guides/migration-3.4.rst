@@ -266,4 +266,4 @@ Miscellaneous
 
 .. include:: release-notes-3.4.rst
 .. include:: release-notes-3.4.1.rst
-
+.. include:: release-notes-3.4.2.rst
