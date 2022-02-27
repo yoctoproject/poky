@@ -564,7 +564,7 @@ Directory`.  Here is the main ``xserver-xf86-config`` recipe, which is named
    SUMMARY = "X.Org X server configuration file"
    HOMEPAGE = "http://www.x.org"
    SECTION = "x11/base"
-   LICENSE = "MIT-X"
+   LICENSE = "MIT"
    LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
    PR = "r33"
 
@@ -1543,7 +1543,7 @@ variables:
    given a piece of software licensed under the GNU General Public
    License version 2, you would set :term:`LICENSE` as follows::
 
-      LICENSE = "GPLv2"
+      LICENSE = "GPL-2.0-only"
 
    The licenses you specify within :term:`LICENSE` can have any name as long
    as you do not use spaces, since spaces are used as separators between
@@ -2338,7 +2338,7 @@ Following is one example: (``hello_2.3.bb``)
 
    SUMMARY = "GNU Helloworld application"
    SECTION = "examples"
-   LICENSE = "GPLv2+"
+   LICENSE = "GPL-2.0-or-later"
    LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 
    SRC_URI = "${GNU_MIRROR}/hello/hello-${PV}.tar.gz"
@@ -2378,7 +2378,7 @@ In the following example, ``mtd-utils`` is a makefile-based package::
    SECTION = "base"
    DEPENDS = "zlib lzo e2fsprogs util-linux"
    HOMEPAGE = "http://www.linux-mtd.infradead.org/"
-   LICENSE = "GPLv2+"
+   LICENSE = "GPL-2.0-or-later"
    LIC_FILES_CHKSUM = "file://COPYING;md5=0636e73ff0215e8d672dc4c32c317bb3 \
        file://include/common.h;beginline=1;endline=17;md5=ba05b07912a44ea2bf81ce409380049c"
 

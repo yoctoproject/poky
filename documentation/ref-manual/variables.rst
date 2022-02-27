@@ -4348,9 +4348,9 @@ system and gives an overview of their function and contents.
 
       Here are some examples::
 
-         LICENSE = "LGPLv2.1 | GPLv3"
-         LICENSE = "MPL-1 & LGPLv2.1"
-         LICENSE = "GPLv2+"
+         LICENSE = "LGPL-2.1-only | GPL-3.0-only"
+         LICENSE = "MPL-1.0 & LGPL-2.1-only"
+         LICENSE = "GPL-2.0-or-later"
 
       The first example is from the
       recipes for Qt, which the user may choose to distribute under either
@@ -4365,8 +4365,8 @@ system and gives an overview of their function and contents.
       but has accompanying documentation licensed under the GNU Free
       Documentation License 1.2 could be specified as follows::
 
-         LICENSE = "GFDL-1.2 & GPLv2"
-         LICENSE:${PN} = "GPLv2"
+         LICENSE = "GFDL-1.2 & GPL-2.0-only"
+         LICENSE:${PN} = "GPL-2.0.only"
          LICENSE:${PN}-doc = "GFDL-1.2"
 
    :term:`LICENSE_CREATE_PACKAGE`
