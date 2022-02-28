@@ -621,6 +621,22 @@ variables are not met, the recipe will be skipped, and if the
 build system attempts to build the recipe then an error will be
 triggered.
 
+.. _ref-classes-flit_core:
+
+``flit_core.bbclass``
+=====================
+
+The ``flit_core`` class enables building Python modules which declare
+the  `PEP-517 <https://www.python.org/dev/peps/pep-0517/>`__ compliant
+``flit_core.buildapi`` ``build-backend`` in the ``[build-system]``
+section of ``pyproject.toml`` (See `PEP-518 <https://www.python.org/dev/peps/pep-0518/>`__).
+
+Python modules built with ``flit_core.buildapi`` are pure Python (no
+``C`` or ``Rust`` extensions).
+
+The resulting ``wheel`` (See `PEP-427 <https://www.python.org/dev/peps/pep-0427/>`__)
+is installed with the :ref:`pip_install_wheel <ref-classes-pip_install_wheel>` class.
+
 .. _ref-classes-fontcache:
 
 ``fontcache.bbclass``
@@ -1996,6 +2012,26 @@ When inherited by a recipe, the ``perlnative`` class supports using the
 native version of Perl built by the build system rather than using the
 version provided by the build host.
 
+.. _ref-classes-pip_install_wheel:
+
+``pip_install_wheel.bbclass``
+=============================
+
+The ``pip_install_wheel`` class uses ``pip`` to install a Python ``wheel``
+binary archive format (See `PEP-427 <https://www.python.org/dev/peps/pep-0427/>`__)
+
+The Python ``wheel`` can be built with several classes, including :ref:`flit_core <ref-classes-flit_core>`,
+:ref:`setuptools_build_meta <ref-classes-setuptools_build_meta>`, and :ref:`setuptools3 <ref-classes-setuptools3>`.
+
+The absolute path to the built ``wheel`` to be installed is defined by :term:`PYPA_WHEEL` which can be
+overriden for recipes where the filename or version number of the wheel are not easily
+determined by the defaults. Other variables which can be used to customize the behavior
+of the ``pip_install_wheel`` class include:
+
+- :term:`PIP_INSTALL_ARGS`
+- :term:`PIP_INSTALL_PACKAGE`
+- :term:`PIP_INSTALL_DIST_PATH`
+
 .. _ref-classes-pixbufcache:
 
 ``pixbufcache.bbclass``
@@ -2350,6 +2386,23 @@ additional configuration options you want to pass SCons command line.
 
 The ``sdl`` class supports recipes that need to build software that uses
 the Simple DirectMedia Layer (SDL) library.
+
+.. _ref-classes-setuptools_build_meta:
+
+``setuptools_build_meta.bbclass``
+=================================
+
+The ``setuptools_build_meta`` class enables building Python modules which
+declare the
+`PEP-517 <https://www.python.org/dev/peps/pep-0517/>`__ compliant
+``setuptools.build_meta`` ``build-backend`` in the ``[build-system]``
+section of ``pyproject.toml`` (See `PEP-518 <https://www.python.org/dev/peps/pep-0518/>`__).
+
+Python modules built with ``setuptools.build_meta`` can be pure Python or
+include ``C`` or ``Rust`` extensions).
+
+The resulting ``wheel`` (See `PEP-427 <https://www.python.org/dev/peps/pep-0427/>`__)
+is installed with the :ref:`pip_install_wheel <ref-classes-pip_install_wheel>` class.
 
 .. _ref-classes-setuptools3:
 
