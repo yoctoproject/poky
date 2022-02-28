@@ -2386,8 +2386,26 @@ the Simple DirectMedia Layer (SDL) library.
 =======================
 
 The ``setuptools3`` class supports Python version 3.x extensions that
-use build systems based on ``setuptools``. If your recipe uses these
-build systems, the recipe needs to inherit the ``setuptools3`` class.
+use build systems based on ``setuptools`` (e.g. only have a ``setup.py`` and
+have not migrated to the official ``pyproject.toml`` format). If your recipe
+uses these build systems, the recipe needs to inherit the ``setuptools3`` class.
+
+   .. note::
+
+      The ``setuptools3`` class ``do_compile()`` task now calls
+      ``setup.py bdist_wheel`` to build the ``wheel`` binary archive format
+      (See `PEP-427 <https://www.python.org/dev/peps/pep-0427/>`__).
+
+      A consequence of this is that legacy software still using deprecated
+      ``distutils`` from the Python standard library cannot be packaged as
+      ``wheels``. A common solution is the replace
+      ``from distutils.core import setup`` with ``from setuptools import setup``.
+
+   .. note::
+
+     The ``setuptools3`` class ``do_install()`` task now calls ``pip install``
+     to install the ``wheel`` binary archive. In current versions of
+     ``setuptools`` the legacy ``setup.py install`` method is deprecated.
 
 .. _ref-classes-setuptools3-base:
 
