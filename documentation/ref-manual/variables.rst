@@ -1982,25 +1982,6 @@ system and gives an overview of their function and contents.
       is included in the default value of
       :term:`OVERRIDES`.
 
-   :term:`DISTUTILS_SETUP_PATH`
-      When used by recipes that inherit the
-      :ref:`distutils3 <ref-classes-distutils3>` class, this variable should
-      be used to specify the directory in which the ``setup.py`` file is
-      located if it is not at the root of the source tree (as specified by
-      :term:`S`). For example, in a recipe where the sources are fetched from
-      a Git repository and ``setup.py`` is in a ``python/pythonmodule``
-      subdirectory, you would have this::
-
-         S = "${WORKDIR}/git"
-         DISTUTILS_SETUP_PATH = "${S}/python/pythonmodule"
-
-      .. note::
-
-         ``distutils`` has been deprecated in Python 3.10 and will be removed
-         in Python 3.12. For this reason, the use of :ref:`distutils3 <ref-classes-distutils3>`
-         is deprecated. Instead use :ref:`setuptools3 <ref-classes-setuptools3>` and the
-         :term:`SETUPTOOLS_SETUP_PATH` variable.
-
    :term:`DL_DIR`
       The central download directory used by the build process to store
       downloads. By default, :term:`DL_DIR` gets files suitable for mirroring
@@ -6023,8 +6004,7 @@ system and gives an overview of their function and contents.
 
    :term:`PYTHON_ABI`
       When used by recipes that inherit the
-      :ref:`distutils3 <ref-classes-distutils3>`,
-      :ref:`setuptools3 <ref-classes-setuptools3>` classes, denotes the
+      :ref:`setuptools3 <ref-classes-setuptools3>` class, denotes the
       Application Binary Interface (ABI) currently in use for Python. By
       default, the ABI is "m". You do not have to set this variable as the
       OpenEmbedded build system sets it for you.
@@ -6033,14 +6013,9 @@ system and gives an overview of their function and contents.
       names used when installing the Python headers and libraries in
       sysroot (e.g. ``.../python3.3m/...``).
 
-      Recipes that inherit the :ref:`distutils3 <ref-classes-distutils3>` class during cross-builds also
-      use this variable to locate the headers and libraries of the
-      appropriate Python that the extension is targeting.
-
    :term:`PYTHON_PN`
       When used by recipes that inherit the
-      `distutils3 <ref-classes-distutils3>`,
-      :ref:`setuptools3 <ref-classes-setuptools3>` classes, specifies the
+      :ref:`setuptools3 <ref-classes-setuptools3>` classe, specifies the
       major Python version being built. For Python 3.x, :term:`PYTHON_PN` would
       be "python3". You do not have to set this variable as the
       OpenEmbedded build system automatically sets it for you.
