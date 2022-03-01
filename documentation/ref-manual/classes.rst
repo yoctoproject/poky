@@ -503,35 +503,6 @@ Support for other version control systems such as Subversion is limited
 due to BitBake's automatic fetch dependencies (e.g.
 ``subversion-native``).
 
-.. _ref-classes-distutils3:
-
-``distutils3*.bbclass``
-=======================
-
-The ``distutils3*`` classes support recipes for Python version 3.x
-extensions, which are simple. These recipes usually only need to point
-to the source's archive and then inherit the proper class. Building is
-split into three methods depending on which method the module authors
-used.
-
--  Extensions that use an Autotools-based build system require Autotools
-   and ``distutils``-based classes in their recipes.
-
--  Extensions that use ``distutils``-based build systems require the
-   ``distutils`` class in their recipes.
-
-   .. note::
-
-      ``distutils`` has been deprecated in Python 3.10 and will be removed
-      in Python 3.12. For this reason the ``distutils3*`` classes are now
-      deprecated and will be removed from core in the near future. Instead,
-      use the ``setuptools3*`` classes.
-
-
--  Extensions that use build systems based on ``setuptools3`` require
-   the :ref:`setuptools3 <ref-classes-setuptools3>` class in their
-   recipes.
-
 .. _ref-classes-externalsrc:
 
 ``externalsrc.bbclass``
