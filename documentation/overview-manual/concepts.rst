@@ -1372,15 +1372,15 @@ associated with an extensible SDK:
    Specifies whether or not the toolchain is included when building the
    extensible SDK.
 
--  :term:`SDK_LOCAL_CONF_WHITELIST`:
+-  :term:`ESDK_LOCALCONF_ALLOW`:
    A list of variables allowed through from the build system
    configuration into the extensible SDK configuration.
 
--  :term:`SDK_LOCAL_CONF_BLACKLIST`:
+-  :term:`ESDK_LOCALCONF_REMOVE`:
    A list of variables not allowed through from the build system
    configuration into the extensible SDK configuration.
 
--  :term:`SDK_INHERIT_BLACKLIST`:
+-  :term:`ESDK_CLASS_INHERIT_DISABLE`:
    A list of classes to remove from the
    :term:`INHERIT` value globally
    within the extensible SDK configuration.
@@ -1722,7 +1722,7 @@ it construct the basehash. The following statement effectively results
 in a list of global variable dependency excludes (i.e. variables never
 included in any checksum)::
 
-   BB_HASHBASE_WHITELIST ?= "TMPDIR FILE PATH PWD BB_TASKHASH BBPATH DL_DIR \\
+   BB_BASEHASH_IGNORE_VARS ?= "TMPDIR FILE PATH PWD BB_TASKHASH BBPATH DL_DIR \\
        SSTATE_DIR THISDIR FILESEXTRAPATHS FILE_DIRNAME HOME LOGNAME SHELL TERM \\
        USER FILESPATH STAGING_DIR_HOST STAGING_DIR_TARGET COREBASE PRSERV_HOST \\
        PRSERV_DUMPDIR PRSERV_DUMPFILE PRSERV_LOCKDOWN PARALLEL_MAKE \\

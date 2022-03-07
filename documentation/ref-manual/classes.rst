@@ -828,13 +828,13 @@ provided by the recipe ``icecc-create-env-native.bb``.
 If you do not want the Icecream distributed compile support to apply to
 specific recipes or classes, you can ask them to be ignored by Icecream
 by listing the recipes and classes using the
-:term:`ICECC_USER_PACKAGE_BL` and
-:term:`ICECC_USER_CLASS_BL` variables,
+:term:`ICECC_RECIPE_DISABLE` and
+:term:`ICECC_CLASS_DISABLE` variables,
 respectively, in your ``local.conf`` file. Doing so causes the
 OpenEmbedded build system to handle these compilations locally.
 
 Additionally, you can list recipes using the
-:term:`ICECC_USER_PACKAGE_WL` variable in
+:term:`ICECC_RECIPE_ENABLE` variable in
 your ``local.conf`` file to force ``icecc`` to be enabled for recipes
 using an empty :term:`PARALLEL_MAKE` variable.
 
@@ -2497,7 +2497,7 @@ stages:
    subset of files is controlled by the
    :term:`SYSROOT_DIRS`,
    :term:`SYSROOT_DIRS_NATIVE`, and
-   :term:`SYSROOT_DIRS_BLACKLIST`
+   :term:`SYSROOT_DIRS_IGNORE`
    variables.
 
    .. note::

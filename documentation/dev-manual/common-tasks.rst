@@ -11037,17 +11037,17 @@ name and version (after variable expansion)::
 In order for a component restricted by a
 :term:`LICENSE_FLAGS` definition to be enabled and included in an image, it
 needs to have a matching entry in the global
-:term:`LICENSE_FLAGS_WHITELIST`
+:term:`LICENSE_FLAGS_ACCEPTED`
 variable, which is a variable typically defined in your ``local.conf``
 file. For example, to enable the
 ``poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly`` package, you
 could add either the string "commercial_gst-plugins-ugly" or the more
-general string "commercial" to :term:`LICENSE_FLAGS_WHITELIST`. See the
+general string "commercial" to :term:`LICENSE_FLAGS_ACCEPTED`. See the
 ":ref:`dev-manual/common-tasks:license flag matching`" section for a full
 explanation of how :term:`LICENSE_FLAGS` matching works. Here is the
 example::
 
-   LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly"
+   LICENSE_FLAGS_ACCEPTED = "commercial_gst-plugins-ugly"
 
 Likewise, to additionally enable the package built from the recipe
 containing ``LICENSE_FLAGS = "license_${PN}_${PV}"``, and assuming that
@@ -11055,7 +11055,7 @@ the actual recipe name was ``emgd_1.10.bb``, the following string would
 enable that package as well as the original ``gst-plugins-ugly``
 package::
 
-   LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly license_emgd_1.10"
+   LICENSE_FLAGS_ACCEPTED = "commercial_gst-plugins-ugly license_emgd_1.10"
 
 As a convenience, you do not need to specify the
 complete license string for every package. You can use
@@ -11068,7 +11068,7 @@ previously mentioned as well as any other packages that have licenses
 starting with "commercial" or "license".
 ::
 
-   LICENSE_FLAGS_WHITELIST = "commercial license"
+   LICENSE_FLAGS_ACCEPTED = "commercial license"
 
 License Flag Matching
 ~~~~~~~~~~~~~~~~~~~~~
@@ -11076,7 +11076,7 @@ License Flag Matching
 License flag matching allows you to control what recipes the
 OpenEmbedded build system includes in the build. Fundamentally, the
 build system attempts to match :term:`LICENSE_FLAGS` strings found in
-recipes against strings found in :term:`LICENSE_FLAGS_WHITELIST`.
+recipes against strings found in :term:`LICENSE_FLAGS_ACCEPTED`.
 A match causes the build system to include a recipe in the
 build, while failure to find a match causes the build system to exclude
 a recipe.
@@ -11085,19 +11085,19 @@ In general, license flag matching is simple. However, understanding some
 concepts will help you correctly and effectively use matching.
 
 Before a flag defined by a particular recipe is tested against the
-entries of :term:`LICENSE_FLAGS_WHITELIST`, the expanded
+entries of :term:`LICENSE_FLAGS_ACCEPTED`, the expanded
 string ``_${PN}`` is appended to the flag. This expansion makes each
 :term:`LICENSE_FLAGS` value recipe-specific. After expansion, the
 string is then matched against the entries. Thus, specifying
 ``LICENSE_FLAGS = "commercial"`` in recipe "foo", for example, results
 in the string ``"commercial_foo"``. And, to create a match, that string
-must appear among the entries of :term:`LICENSE_FLAGS_WHITELIST`.
+must appear among the entries of :term:`LICENSE_FLAGS_ACCEPTED`.
 
 Judicious use of the :term:`LICENSE_FLAGS` strings and the contents of the
-:term:`LICENSE_FLAGS_WHITELIST` variable allows you a lot of flexibility for
+:term:`LICENSE_FLAGS_ACCEPTED` variable allows you a lot of flexibility for
 including or excluding recipes based on licensing. For example, you can
 broaden the matching capabilities by using license flags string subsets
-in :term:`LICENSE_FLAGS_WHITELIST`.
+in :term:`LICENSE_FLAGS_ACCEPTED`.
 
 .. note::
 
@@ -11106,7 +11106,7 @@ in :term:`LICENSE_FLAGS_WHITELIST`.
    ``usethispart_1.3``, ``usethispart_1.4``, and so forth).
 
 For example, simply specifying the string "commercial" in the
-:term:`LICENSE_FLAGS_WHITELIST` variable matches any expanded
+:term:`LICENSE_FLAGS_ACCEPTED` variable matches any expanded
 :term:`LICENSE_FLAGS` definition that starts with the string
 "commercial" such as "commercial_foo" and "commercial_bar", which
 are the strings the build system automatically generates for
@@ -11124,24 +11124,24 @@ This scheme works even if the :term:`LICENSE_FLAGS` string already has
 ``_${PN}`` appended. For example, the build system turns the license
 flag "commercial_1.2_foo" into "commercial_1.2_foo_foo" and would match
 both the general "commercial" and the specific "commercial_1.2_foo"
-strings found in the :term:`LICENSE_FLAGS_WHITELIST` variable, as expected.
+strings found in the :term:`LICENSE_FLAGS_ACCEPTED` variable, as expected.
 
 Here are some other scenarios:
 
 -  You can specify a versioned string in the recipe such as
    "commercial_foo_1.2" in a "foo" recipe. The build system expands this
    string to "commercial_foo_1.2_foo". Combine this license flag with a
-   :term:`LICENSE_FLAGS_WHITELIST` variable that has the string
+   :term:`LICENSE_FLAGS_ACCEPTED` variable that has the string
    "commercial" and you match the flag along with any other flag that
    starts with the string "commercial".
 
 -  Under the same circumstances, you can add "commercial_foo" in the
-   :term:`LICENSE_FLAGS_WHITELIST` variable and the build system not only
+   :term:`LICENSE_FLAGS_ACCEPTED` variable and the build system not only
    matches "commercial_foo_1.2" but also matches any license flag with
    the string "commercial_foo", regardless of the version.
 
 -  You can be very specific and use both the package and version parts
-   in the :term:`LICENSE_FLAGS_WHITELIST` list (e.g.
+   in the :term:`LICENSE_FLAGS_ACCEPTED` list (e.g.
    "commercial_foo_1.2") to specifically match a versioned recipe.
 
 Other Variables Related to Commercial Licenses
@@ -11163,20 +11163,20 @@ file::
        gst-plugins-ugly-mpegaudioparse"
    COMMERCIAL_VIDEO_PLUGINS = "gst-plugins-ugly-mpeg2dec \
        gst-plugins-ugly-mpegstream gst-plugins-bad-mpegvideoparse"
-   LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly commercial_gst-plugins-bad commercial_qmmp"
+   LICENSE_FLAGS_ACCEPTED = "commercial_gst-plugins-ugly commercial_gst-plugins-bad commercial_qmmp"
 
 
 Of course, you could also create a matching list for those
 components using the more general "commercial" in the
-:term:`LICENSE_FLAGS_WHITELIST` variable, but that would also enable all
+:term:`LICENSE_FLAGS_ACCEPTED` variable, but that would also enable all
 the other packages with :term:`LICENSE_FLAGS`
 containing "commercial", which you may or may not want::
 
-   LICENSE_FLAGS_WHITELIST = "commercial"
+   LICENSE_FLAGS_ACCEPTED = "commercial"
 
 Specifying audio and video plugins as part of the
 ``COMMERCIAL_AUDIO_PLUGINS`` and ``COMMERCIAL_VIDEO_PLUGINS`` statements
-(along with the enabling :term:`LICENSE_FLAGS_WHITELIST`) includes the
+(along with the enabling :term:`LICENSE_FLAGS_ACCEPTED`) includes the
 plugins or components into built images, thus adding support for media
 formats or components.
 
@@ -11540,7 +11540,7 @@ The NIST database knows which versions are vulnerable and which ones
 are not.
 
 Last but not least, you can choose to ignore vulnerabilities through
-the :term:`CVE_CHECK_PN_WHITELIST` and :term:`CVE_CHECK_WHITELIST`
+the :term:`CVE_CHECK_SKIP_RECIPE` and :term:`CVE_CHECK_IGNORE`
 variables.
 
 Implementation details
@@ -11559,9 +11559,9 @@ Then, the code looks up all the CVE IDs in the NIST database for all the
 products defined in :term:`CVE_PRODUCT`. Then, for each found CVE:
 
  - If the package name (:term:`PN`) is part of
-   :term:`CVE_CHECK_PN_WHITELIST`, it is considered as patched.
+   :term:`CVE_CHECK_SKIP_RECIPE`, it is considered as patched.
 
- - If the CVE ID is part of :term:`CVE_CHECK_WHITELIST`, it is
+ - If the CVE ID is part of :term:`CVE_CHECK_IGNORE`, it is
    considered as patched too.
 
  - If the CVE ID is part of the patched CVE for the recipe, it is

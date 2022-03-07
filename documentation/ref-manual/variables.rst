@@ -1472,16 +1472,16 @@ system and gives an overview of their function and contents.
          variable only in certain contexts (e.g. when building for kernel
          and kernel module recipes).
 
-   :term:`CVE_CHECK_PN_WHITELIST`
+   :term:`CVE_CHECK_SKIP_RECIPE`
       The list of package names (:term:`PN`) for which
       CVEs (Common Vulnerabilities and Exposures) are ignored.
 
-   :term:`CVE_CHECK_WHITELIST`
+   :term:`CVE_CHECK_IGNORE`
       The list of CVE IDs which are ignored. Here is
       an example from the :oe_layerindex:`Python3 recipe</layerindex/recipe/23823>`::
 
          # This is windows only issue.
-         CVE_CHECK_WHITELIST += "CVE-2020-15523"
+         CVE_CHECK_IGNORE += "CVE-2020-15523"
 
    :term:`CVE_PRODUCT`
       In a recipe, defines the name used to match the recipe name
@@ -2879,7 +2879,7 @@ system and gives an overview of their function and contents.
       this variable, the :ref:`icecc <ref-classes-icecc>` class attempts
       to define it by locating ``icecc`` using ``which``.
 
-   :term:`ICECC_USER_CLASS_BL`
+   :term:`ICECC_CLASS_DISABLE`
       Identifies user classes that you do not want the Icecream distributed
       compile support to consider. This variable is used by the
       :ref:`icecc <ref-classes-icecc>` class. You set this variable in
@@ -2889,7 +2889,7 @@ system and gives an overview of their function and contents.
       those classes will not benefit from distributed compilation across
       remote hosts. Instead they will be built locally.
 
-   :term:`ICECC_USER_PACKAGE_BL`
+   :term:`ICECC_RECIPE_DISABLE`
       Identifies user recipes that you do not want the Icecream distributed
       compile support to consider. This variable is used by the
       :ref:`icecc <ref-classes-icecc>` class. You set this variable in
@@ -2899,7 +2899,7 @@ system and gives an overview of their function and contents.
       from distributed compilation across remote hosts. Instead they will
       be built locally.
 
-   :term:`ICECC_USER_PACKAGE_WL`
+   :term:`ICECC_RECIPE_ENABLE`
       Identifies user recipes that use an empty
       :term:`PARALLEL_MAKE` variable that you want to
       force remote distributed compilation on using the Icecream
@@ -4375,7 +4375,7 @@ system and gives an overview of their function and contents.
 
    :term:`LICENSE_FLAGS`
       Specifies additional flags for a recipe you must allow through
-      :term:`LICENSE_FLAGS_WHITELIST` in
+      :term:`LICENSE_FLAGS_ACCEPTED` in
       order for the recipe to be built. When providing multiple flags,
       separate them with spaces.
 
@@ -4386,7 +4386,7 @@ system and gives an overview of their function and contents.
       ":ref:`dev-manual/common-tasks:enabling commercially licensed recipes`"
       section in the Yocto Project Development Tasks Manual.
 
-   :term:`LICENSE_FLAGS_WHITELIST`
+   :term:`LICENSE_FLAGS_ACCEPTED`
       Lists license flags that when specified in
       :term:`LICENSE_FLAGS` within a recipe should not
       prevent that recipe from being built.  For more information, see the
@@ -6548,13 +6548,13 @@ system and gives an overview of their function and contents.
       :term:`SDK_EXT_TYPE` is set to "minimal", and defaults to "1" if
       :term:`SDK_EXT_TYPE` is set to "full".
 
-   :term:`SDK_INHERIT_BLACKLIST`
+   :term:`ESDK_CLASS_INHERIT_DISABLE`
       A list of classes to remove from the :term:`INHERIT`
       value globally within the extensible SDK configuration. The
       :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class sets the
       default value::
 
-         SDK_INHERIT_BLACKLIST ?= "buildhistory icecc"
+         ESDK_CLASS_INHERIT_DISABLE ?= "buildhistory icecc"
 
       Some classes are not generally applicable within the extensible SDK
       context. You can use this variable to disable those classes.
@@ -6565,14 +6565,14 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Application Development and the
       Extensible Software Development Kit (eSDK) manual.
 
-   :term:`SDK_LOCAL_CONF_BLACKLIST`
+   :term:`ESDK_LOCALCONF_REMOVE`
       A list of variables not allowed through from the OpenEmbedded build
       system configuration into the extensible SDK configuration. Usually,
       these are variables that are specific to the machine on which the
       build system is running and thus would be potentially problematic
       within the extensible SDK.
 
-      By default, :term:`SDK_LOCAL_CONF_BLACKLIST` is set in the
+      By default, :term:`ESDK_LOCALCONF_REMOVE` is set in the
       :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class and
       excludes the following variables:
 
@@ -6591,14 +6591,14 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Application Development and the
       Extensible Software Development Kit (eSDK) manual.
 
-   :term:`SDK_LOCAL_CONF_WHITELIST`
+   :term:`ESDK_LOCALCONF_ALLOW`
       A list of variables allowed through from the OpenEmbedded build
       system configuration into the extensible SDK configuration. By
       default, the list of variables is empty and is set in the
       :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class.
 
       This list overrides the variables specified using the
-      :term:`SDK_LOCAL_CONF_BLACKLIST` variable as well as
+      :term:`ESDK_LOCALCONF_REMOVE` variable as well as
       other variables automatically added due to the "/" character
       being found at the start of the
       value, which is usually indicative of being a path and thus might not
@@ -7506,14 +7506,14 @@ system and gives an overview of their function and contents.
              /sysroot-only \
              "
 
-   :term:`SYSROOT_DIRS_BLACKLIST`
+   :term:`SYSROOT_DIRS_IGNORE`
       Directories that are not staged into the sysroot by the
       :ref:`ref-tasks-populate_sysroot` task. You
       can use this variable to exclude certain subdirectories of
       directories listed in :term:`SYSROOT_DIRS` from
       staging. By default, the following directories are not staged::
 
-         SYSROOT_DIRS_BLACKLIST = " \
+         SYSROOT_DIRS_IGNORE = " \
              ${mandir} \
              ${docdir} \
              ${infodir} \
@@ -8426,7 +8426,7 @@ system and gives an overview of their function and contents.
       passes and uses "all" for the target during the U-Boot building
       process.
 
-   :term:`UNKNOWN_CONFIGURE_WHITELIST`
+   :term:`UNKNOWN_CONFIGURE_OPT_IGNORE`
       Specifies a list of options that, if reported by the configure script
       as being invalid, should not generate a warning during the
       :ref:`ref-tasks-configure` task. Normally, invalid
@@ -8436,10 +8436,10 @@ system and gives an overview of their function and contents.
       However, there are common options that are passed to all
       configure scripts at a class level, but might not be valid for some
       configure scripts. Therefore warnings about these options are useless.
-      For these cases, the options are added to :term:`UNKNOWN_CONFIGURE_WHITELIST`.
+      For these cases, the options are added to :term:`UNKNOWN_CONFIGURE_OPT_IGNORE`.
 
       The configure arguments check that uses
-      :term:`UNKNOWN_CONFIGURE_WHITELIST` is part of the
+      :term:`UNKNOWN_CONFIGURE_OPT_IGNORE` is part of the
       :ref:`insane <ref-classes-insane>` class and is only enabled if the
       recipe inherits the :ref:`autotools <ref-classes-autotools>` class.
 
