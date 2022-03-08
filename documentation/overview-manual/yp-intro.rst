@@ -221,7 +221,7 @@ your Metadata, the easier it is to cope with future changes.
       possible.
 
    -  Familiarize yourself with the `Yocto Project curated layer
-      index <https://www.yoctoproject.org/software-overview/layers/>`__
+      index :yocto_home:`/software-overview/layers/`
       or the :oe_layerindex:`OpenEmbedded layer index <>`.
       The latter contains more layers but they are less universally
       validated.
