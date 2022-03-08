@@ -300,13 +300,8 @@ in the ``meta-poky`` layer:
 
 .. note::
 
-   Configurations set in the
-   conf/local.conf
-   file can also be set in the
-   conf/site.conf
-   and
-   conf/auto.conf
-   configuration files.
+   Configurations set in the ``conf/local.conf`` file can also be set
+   in the ``conf/site.conf`` and ``conf/auto.conf`` configuration files.
 
 The ``bblayers.conf`` file tells BitBake what layers you want considered
 during the build. By default, the layers listed in this file include
