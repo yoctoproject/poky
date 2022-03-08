@@ -59,6 +59,8 @@ distributions:
 
 -  Fedora 34
 
+-  Fedora 35
+
 -  CentOS 7.x
 
 -  Debian GNU/Linux 8.x (Jessie)
@@ -73,6 +75,9 @@ distributions:
 
 -  OpenSUSE Leap 15.2
 
+-  OpenSUSE Leap 15.3
+
+-  AlmaLinux 8.5
 
 .. note::
 
