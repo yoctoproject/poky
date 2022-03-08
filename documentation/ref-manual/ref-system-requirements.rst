@@ -351,7 +351,7 @@ Downloading a Pre-Built ``buildtools`` Tarball
 Downloading and running a pre-built buildtools installer is the easiest
 of the two methods by which you can get these tools:
 
-1. Locate and download the ``*.sh`` at &YOCTO_RELEASE_DL_URL;/buildtools/
+1. Locate and download the ``*.sh`` at :yocto_dl:`/releases/yocto/&DISTRO_REL_TAG;/buildtools/`
 
 2. Execute the installation script. Here is an example for the
    traditional installer:
