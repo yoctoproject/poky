@@ -1476,6 +1476,22 @@ compressed suffixes such as ``diff.gz`` and ``patch.bz2``, for example.
 The build system automatically applies patches as described in the
 ":ref:`dev-manual/common-tasks:patching code`" section.
 
+Fetching Code Through Firewalls
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some users are behind firewalls and need to fetch code through a proxy.
+See the ":doc:`/ref-manual/faq`" chapter for advice.
+
+Limiting the Number of Parallel Connections
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some users are behind firewalls or use servers where the number of parallel
+connections is limited. In such cases, you can limit the number of fetch
+tasks being run in parallel by adding the following to your ``local.conf``
+file::
+
+   do_fetch[number_threads] = "4"
+
 Unpacking Code
 --------------
 
