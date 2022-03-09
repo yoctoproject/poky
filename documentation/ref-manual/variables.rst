@@ -6443,7 +6443,7 @@ system and gives an overview of their function and contents.
       from the default value of :term:`S`, you must set it specifically so the
       source can be located::
 
-         SRC_URI = "git://path/to/repo.git"
+         SRC_URI = "git://path/to/repo.git;branch=main"
          S = "${WORKDIR}/git"
 
    :term:`SANITY_REQUIRED_UTILITIES`

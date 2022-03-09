@@ -1396,19 +1396,14 @@ another example that specifies these types of files, see the
 ":ref:`dev-manual/common-tasks:autotooled package`" section.
 
 Another way of specifying source is from an SCM. For Git repositories,
-you must specify :term:`SRCREV` and
-you should specify :term:`PV` to include
-the revision with :term:`SRCPV`. Here
-is an example from the recipe
-``meta/recipes-kernel/blktrace/blktrace_git.bb``::
+you must specify :term:`SRCREV` and you should specify :term:`PV` to include
+the revision with :term:`SRCPV`. Here is an example from the recipe
+``meta/recipes-core/musl/gcompat_git.bb``::
 
-   SRCREV = "d6918c8832793b4205ed3bfede78c2f915c23385"
+   SRC_URI = "git://git.adelielinux.org/adelie/gcompat.git;protocol=https;branch=current"
 
-   PR = "r6"
-   PV = "1.0.5+git${SRCPV}"
-
-   SRC_URI = "git://git.kernel.dk/blktrace.git \
-              file://ldflags.patch"
+   PV = "1.0.0+1.1+git${SRCPV}"
+   SRCREV = "af5a49e489fdc04b9cf02547650d7aeaccd43793"
 
 If your :term:`SRC_URI` statement includes URLs pointing to individual files
 fetched from a remote server other than a version control system,
@@ -2372,41 +2367,39 @@ following example shows this::
 
    CFLAGS:prepend = "-I ${S}/include "
 
-In the following example, ``mtd-utils`` is a makefile-based package::
+In the following example, ``lz4`` is a makefile-based package::
 
-   SUMMARY = "Tools for managing memory technology devices"
-   SECTION = "base"
-   DEPENDS = "zlib lzo e2fsprogs util-linux"
-   HOMEPAGE = "http://www.linux-mtd.infradead.org/"
-   LICENSE = "GPL-2.0-or-later"
-   LIC_FILES_CHKSUM = "file://COPYING;md5=0636e73ff0215e8d672dc4c32c317bb3 \
-       file://include/common.h;beginline=1;endline=17;md5=ba05b07912a44ea2bf81ce409380049c"
+   SUMMARY = "Extremely Fast Compression algorithm"
+   DESCRIPTION = "LZ4 is a very fast lossless compression algorithm, providing compression speed at 400 MB/s per core, scalable with multi-cores CPU. It also features an extremely fast decoder, with speed in multiple GB/s per core, typically reaching RAM speed limits on multi-core systems."
+   HOMEPAGE = "https://github.com/lz4/lz4"
 
-   # Use the latest version at 26 Oct, 2013
-   SRCREV = "9f107132a6a073cce37434ca9cda6917dd8d866b"
-   SRC_URI = "git://git.infradead.org/mtd-utils.git \
-       file://add-exclusion-to-mkfs-jffs2-git-2.patch \
-       "
+   LICENSE = "BSD-2-Clause | GPL-2.0-only"
+   LIC_FILES_CHKSUM = "file://lib/LICENSE;md5=ebc2ea4814a64de7708f1571904b32cc \
+                       file://programs/COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
+                       file://LICENSE;md5=d57c0d21cb917fb4e0af2454aa48b956 \
+                       "
 
-   PV = "1.5.1+git${SRCPV}"
+   PE = "1"
+
+   SRCREV = "d44371841a2f1728a3f36839fd4b7e872d0927d3"
+
+   SRC_URI = "git://github.com/lz4/lz4.git;branch=release;protocol=https \
+              file://CVE-2021-3520.patch \
+              "
+   UPSTREAM_CHECK_GITTAGREGEX = "v(?P<pver>.*)"
 
    S = "${WORKDIR}/git"
 
-   EXTRA_OEMAKE = "'CC=${CC}' 'RANLIB=${RANLIB}' 'AR=${AR}' 'CFLAGS=${CFLAGS} -I${S}/include -DWITHOUT_XATTR' 'BUILDDIR=${S}'"
+   # Fixed in r118, which is larger than the current version.
+   CVE_CHECK_IGNORE += "CVE-2014-4715"
 
-   do_install () {
-       oe_runmake install DESTDIR=${D} SBINDIR=${sbindir} MANDIR=${mandir} INCLUDEDIR=${includedir}
+   EXTRA_OEMAKE = "PREFIX=${prefix} CC='${CC}' CFLAGS='${CFLAGS}' DESTDIR=${D} LIBDIR=${libdir} INCLUDEDIR=${includedir} BUILD_STATIC=no"
+
+   do_install() {
+           oe_runmake install
    }
 
-   PACKAGES =+ "mtd-utils-jffs2 mtd-utils-ubifs mtd-utils-misc"
-
-   FILES:mtd-utils-jffs2 = "${sbindir}/mkfs.jffs2 ${sbindir}/jffs2dump ${sbindir}/jffs2reader ${sbindir}/sumtool"
-   FILES:mtd-utils-ubifs = "${sbindir}/mkfs.ubifs ${sbindir}/ubi*"
-   FILES:mtd-utils-misc = "${sbindir}/nftl* ${sbindir}/ftl* ${sbindir}/rfd* ${sbindir}/doc* ${sbindir}/serve_image ${sbindir}/recv_image"
-
-   PARALLEL_MAKE = ""
-
-   BBCLASSEXTEND = "native"
+   BBCLASSEXTEND = "native nativesdk"
 
 Splitting an Application into Multiple Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

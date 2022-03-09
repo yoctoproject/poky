@@ -170,8 +170,7 @@ example use for this class.
    are extracted into the subdirectory expected by the default value of
    :term:`S`::
 
-           SRC_URI = "git://example.com/downloads/somepackage.rpm;subpath=${BP}"
-
+      SRC_URI = "git://example.com/downloads/somepackage.rpm;branch=main;subpath=${BP}"
 
    See the ":ref:`bitbake-user-manual/bitbake-user-manual-fetching:fetchers`" section in the BitBake User Manual for
    more information on supported BitBake Fetchers.
@@ -460,7 +459,7 @@ recipe that fetches from an alternative URI (e.g. Git) instead of a
 tarball. Following is an example::
 
    BBCLASSEXTEND = "devupstream:target"
-   SRC_URI:class-devupstream = "git://git.example.com/example"
+   SRC_URI:class-devupstream = "git://git.example.com/example;branch=main"
    SRCREV:class-devupstream = "abcd1234"
 
 Adding the above statements to your recipe creates a variant that has
