@@ -3438,7 +3438,7 @@ system and gives an overview of their function and contents.
          This functionality is only regularly tested using the following
          setting::
 
-                 INCOMPATIBLE_LICENSE = "GPL-3.0 LGPL-3.0 AGPL-3.0"
+                 INCOMPATIBLE_LICENSE = "GPL-3.0* LGPL-3.0* AGPL-3.0*"
 
 
          Although you can use other settings, you might be required to
