@@ -616,7 +616,7 @@ Python modules built with ``flit_core.buildapi`` are pure Python (no
 ``C`` or ``Rust`` extensions).
 
 The resulting ``wheel`` (See `PEP-427 <https://www.python.org/dev/peps/pep-0427/>`__)
-is installed with the :ref:`pip_install_wheel <ref-classes-pip_install_wheel>` class.
+is installed with the :ref:`python_pep517 <ref-classes-python_pep517>` class.
 
 .. _ref-classes-fontcache:
 
@@ -1978,25 +1978,20 @@ When inherited by a recipe, the ``perlnative`` class supports using the
 native version of Perl built by the build system rather than using the
 version provided by the build host.
 
-.. _ref-classes-pip_install_wheel:
+.. _ref-classes-python_pep517:
 
-``pip_install_wheel.bbclass``
+``python_pep517.bbclass``
 =============================
 
-The ``pip_install_wheel`` class uses ``pip`` to install a Python ``wheel``
-binary archive format (See `PEP-427 <https://www.python.org/dev/peps/pep-0427/>`__)
+The ``python_pep517`` class installs a Python ``wheel`` binary archive (see
+`PEP-517 <https://peps.python.org/pep-0517/>`__).
 
 The Python ``wheel`` can be built with several classes, including :ref:`flit_core <ref-classes-flit_core>`,
 :ref:`setuptools_build_meta <ref-classes-setuptools_build_meta>`, and :ref:`setuptools3 <ref-classes-setuptools3>`.
 
-The absolute path to the built ``wheel`` to be installed is defined by :term:`PYPA_WHEEL` which can be
-overriden for recipes where the filename or version number of the wheel are not easily
-determined by the defaults. Other variables which can be used to customize the behavior
-of the ``pip_install_wheel`` class include:
-
-- :term:`PIP_INSTALL_ARGS`
-- :term:`PIP_INSTALL_PACKAGE`
-- :term:`PIP_INSTALL_DIST_PATH`
+The path to the wheel to be installed is defined by :term:`PEP517_WHEEL_PATH`.
+This defaults to ``${D}/dist`` and should be respected by the builder class
+(such as :ref:`flit_core <ref-classes-flit_core>`).
 
 .. _ref-classes-pixbufcache:
 
@@ -2368,7 +2363,7 @@ Python modules built with ``setuptools.build_meta`` can be pure Python or
 include ``C`` or ``Rust`` extensions).
 
 The resulting ``wheel`` (See `PEP-427 <https://www.python.org/dev/peps/pep-0427/>`__)
-is installed with the :ref:`pip_install_wheel <ref-classes-pip_install_wheel>` class.
+is installed with the :ref:`python_pep517 <ref-classes-python_pep517>` class.
 
 .. _ref-classes-setuptools3:
 
@@ -2393,9 +2388,25 @@ uses these build systems, the recipe needs to inherit the ``setuptools3`` class.
 
    .. note::
 
-     The ``setuptools3`` class ``do_install()`` task now calls ``pip install``
-     to install the ``wheel`` binary archive. In current versions of
-     ``setuptools`` the legacy ``setup.py install`` method is deprecated.
+     The ``setuptools3`` class ``do_install()`` task now installs the ``wheel``
+     binary archive. In current versions of ``setuptools`` the legacy ``setup.py
+     install`` method is deprecated. If the ``setup.py`` cannot be used with
+     wheels, for example it creates files outside of the Python module or
+     standard entry points, then :ref:`setuptools3_legacy
+     <ref-classes-setuptools3_legacy>` should be used.
+
+.. _ref-classes-setuptools3_legacy:
+
+``setuptools3_legacy.bbclass``
+==============================
+
+The ``setuptools3_legacy`` class supports Python version 3.x extensions that use
+build systems based on ``setuptools`` (e.g. only have a ``setup.py`` and have
+not migrated to the official ``pyproject.toml`` format). Unlike
+``setuptools3.bbclass``, this uses the traditional ``setup.py`` ``build`` and
+``install`` commands and not wheels. This use of ``setuptools`` like this is
+`deprecated <https://github.com/pypa/setuptools/blob/main/CHANGES.rst#v5830>`_
+but still relatively common.
 
 .. _ref-classes-setuptools3-base:
 
