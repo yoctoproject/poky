@@ -17,6 +17,7 @@ system and gives an overview of their function and contents.
 :term:`W <WARN_QA>` :term:`X <XSERVER>`
 
 .. glossary::
+   :sorted:
 
    :term:`ABIEXTENSION`
       Extension to the Application Binary Interface (ABI) field of the GNU
