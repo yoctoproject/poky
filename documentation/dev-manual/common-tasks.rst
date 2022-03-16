@@ -7910,6 +7910,20 @@ image cannot use this package group. However, it can install SysVinit
 and the appropriate packages will have support for both systemd and
 SysVinit.
 
+Using systemd-journald without a traditional syslog daemon
+----------------------------------------------------------
+
+Counter-intuitively, ``systemd-journald`` is not a syslog runtime or provider,
+and the proper way to use systemd-journald as your sole logging mechanism is to
+effectively disable syslog entirely by setting these variables in your distribution
+configuration file::
+
+   VIRTUAL-RUNTIME_syslog = ""
+   VIRTUAL-RUNTIME_base-utils-syslog = ""
+
+Doing so will prevent ``rsyslog`` / ``busybox-syslog`` from being pulled in by
+default, leaving only ``journald``.
+
 Selecting a Device Manager
 ==========================
 
