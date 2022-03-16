@@ -54,11 +54,11 @@ Recipe changes
 - :ref:`allarch <ref-classes-allarch>` packagegroups can no longer depend on packages
   which use :term:`PKG` renaming such as :ref:`ref-classes-debian`.
 
-- The `distutils*.bbclasses` have been moved to `meta-python`. The classes and
-  `DISTUTILS*` variables have been removed from the documentation.
-
 Class changes
 -------------
+
+- The `distutils*.bbclasses` have been moved to `meta-python`. The classes and
+  `DISTUTILS*` variables have been removed from the documentation.
 
 - ``blacklist.bbclass`` is removed and the functionality moved to the
   :ref:`base <ref-classes-base>` class with a more descriptive
