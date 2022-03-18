@@ -39,6 +39,13 @@ bitbake_mapping = {
     "dunfell" : "1.46",
 }
 
+# 3.4 onwards doesn't have poky version
+poky_mapping = {
+    "3.3" : "25.0",
+    "3.2" : "24.0",
+    "3.1" : "23.0",
+}
+
 ourversion = None
 ourseries = None
 ourbranch = None
@@ -125,6 +132,10 @@ replacements = {
     "DOCCONF_VERSION" : docconfver,
     "BITBAKE_SERIES" : bitbakeversion,
 }
+
+if release_series[ourseries] in poky_mapping:
+    pokyversion = poky_mapping[release_series[ourseries]] + "." + ourversion.rsplit(".", 1)[1]
+    replacements["POKYVERSION"] = pokyversion
 
 with open("poky.yaml.in", "r") as r, open("poky.yaml", "w") as w:
     lines = r.readlines()
