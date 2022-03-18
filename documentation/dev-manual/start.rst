@@ -647,9 +647,7 @@ Follow these steps to locate and download a particular tarball:
 
 3. *Find the Tarball:* Drill down to find the associated tarball. For
    example, click on ``yocto-&DISTRO;`` to view files associated with the
-   Yocto Project &DISTRO; release (e.g.
-   ``&YOCTO_POKY;.tar.bz2``, which is the
-   released Poky tarball).
+   Yocto Project &DISTRO; release.
 
 4. *Download the Tarball:* Click the tarball to download and save a
    snapshot of the given component.
