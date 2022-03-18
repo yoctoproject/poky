@@ -149,3 +149,22 @@ with open("poky.yaml.in", "r") as r, open("poky.yaml", "w") as w:
 
 print("poky.yaml generated from poky.yaml.in")
 
+with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switchers.js", "w") as w:
+    lines = r.readlines()
+    for line in lines:
+        if "VERSIONS_PLACEHOLDER" in line:
+            w.write("    'dev': 'dev (%s)',\n" % release_series[devbranch])
+            for branch in activereleases:
+                if branch == devbranch:
+                    continue
+                versions = subprocess.run('git tag --list yocto-%s*' % (release_series[branch]), shell=True, capture_output=True, text=True).stdout.split()
+                versions = sorted([v.replace("yocto-" +  release_series[branch] + ".", "").replace("yocto-" +  release_series[branch], "0") for v in versions], key=int)
+                version = release_series[branch]
+                if versions[-1] != "0":
+                    version = version + "." + versions[-1]
+                w.write("    '%s': '%s',\n" % (version, version))
+        else:
+            w.write(line)
+
+print("switchers.js generated from switchers.js.in")
+
