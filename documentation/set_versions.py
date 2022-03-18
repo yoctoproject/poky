@@ -12,6 +12,12 @@
 import subprocess
 import collections
 import sys
+import os
+import itertools
+
+ourversion = None
+if len(sys.argv) == 2:
+    ourversion = sys.argv[1]
 
 ourversion = None
 if len(sys.argv) == 2:
@@ -29,6 +35,27 @@ release_series["honister"] = "3.4"
 release_series["hardknott"] = "3.3"
 release_series["gatesgarth"] = "3.2"
 release_series["dunfell"] = "3.1"
+release_series["zeus"] = "3.0"
+release_series["warrior"] = "2.7"
+release_series["thud"] = "2.6"
+release_series["sumo"] = "2.5"
+release_series["rocko"] = "2.4"
+release_series["pyro"] = "2.3"
+release_series["morty"] = "2.2"
+release_series["krogoth"] = "2.1"
+release_series["jethro"] = "2.0"
+release_series["jethro-pre"] = "1.9"
+release_series["fido"] = "1.8"
+release_series["dizzy"] = "1.7"
+release_series["daisy"] = "1.6"
+release_series["dora"] = "1.5"
+release_series["dylan"] = "1.4"
+release_series["danny"] = "1.3"
+release_series["denzil"] = "1.2"
+release_series["edison"] = "1.1"
+release_series["bernard"] = "1.0"
+release_series["laverne"] = "0.9"
+
 
 #    "langdale" : "2.2",
 bitbake_mapping = {
@@ -40,13 +67,14 @@ bitbake_mapping = {
 }
 
 # 3.4 onwards doesn't have poky version
+# Early 3.4 release docs do reference it though
 poky_mapping = {
+    "3.4" : "26.0",
     "3.3" : "25.0",
     "3.2" : "24.0",
     "3.1" : "23.0",
 }
 
-ourversion = None
 ourseries = None
 ourbranch = None
 bitbakeversion = None
@@ -73,31 +101,38 @@ if ourversion:
         if release_series[i] == baseversion:
             ourseries = i
             ourbranch = i
-            bitbakeversion = bitbake_mapping[i]
+            if i in bitbake_mapping:
+                bitbakeversion = bitbake_mapping[i]
 else:
     # We're floating on a branch
     branch = subprocess.run(["git", "branch", "--show-current"], capture_output=True, text=True).stdout.strip()
     ourbranch = branch
     if branch != "master" and branch not in release_series:
-        possible_branches = []
-        for b in release_series.keys():
-            result = subprocess.run(["git", "show-ref", "heads/" + b], capture_output=True, text=True)
+        # We're not on a known release branch so we have to guess. Compare the numbers of commits
+        # from each release branch and assume the smallest number of commits is the one we're based off
+        possible_branch = None
+        branch_count = 0
+        for b in itertools.chain(release_series.keys(), ["master"]):
+            result = subprocess.run(["git", "log", "--format=oneline",  "HEAD..origin/" + b], capture_output=True, text=True)
             if result.returncode == 0:
-                possible_branches.append(b)
-                continue
-            result = subprocess.run(["git", "show-ref", "origin/" + b], capture_output=True, text=True)
-            if result.returncode == 0:
-                possible_branches.append("origin/" + b)
-        nearestbranch = subprocess.run('git show-branch master ' + ' '.join(possible_branches) + ' | grep "*" | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1', shell=True, capture_output=True, text=True).stdout
-        branch = nearestbranch.split('[')[1].split('~')[0]
-        print("Nearest release branch esimtated to be %s" % branch)
+                count = result.stdout.count('\n')
+                if not possible_branch or count < branch_count:
+                    print("Branch %s has count %s" % (b, count))
+                    possible_branch = b
+                    branch_count = count
+        if possible_branch:
+            branch = possible_branch
+        else:
+            branch = "master"
+        print("Nearest release branch estimated to be %s" % branch)
     if branch == "master":
         ourseries = devbranch
         docconfver = "dev"
         bitbakeversion = ""
     elif branch in release_series:
         ourseries = branch
-        bitbakeversion = bitbake_mapping[branch]
+        if branch in bitbake_mapping:
+            bitbakeversion = bitbake_mapping[branch]
     else:
         sys.exit("Unknown series for branch %s" % branch)
 
@@ -115,8 +150,8 @@ else:
         docconfver = ourversion
 
 series = [k for k in release_series]
-previousseries = series[series.index(ourseries)+1:]
-lastlts = [k for k in previousseries if k in ltsseries]
+previousseries = series[series.index(ourseries)+1:] or [""]
+lastlts = [k for k in previousseries if k in ltsseries] or "dunfell"
 
 print("Version calculated to be %s" % ourversion)
 print("Release series calculated to be %s" % ourseries)
@@ -134,21 +169,40 @@ replacements = {
 }
 
 if release_series[ourseries] in poky_mapping:
-    pokyversion = poky_mapping[release_series[ourseries]] + "." + ourversion.rsplit(".", 1)[1]
+    pokyversion = poky_mapping[release_series[ourseries]]
+    if ourversion != release_series[ourseries]:
+        pokyversion = pokyversion + "." + ourversion.rsplit(".", 1)[1]
+    else:
+        pokyversion = pokyversion + ".0"
     replacements["POKYVERSION"] = pokyversion
 
-with open("poky.yaml.in", "r") as r, open("poky.yaml", "w") as w:
-    lines = r.readlines()
-    for line in lines:
-        data = line.split(":")
-        k = data[0].strip()
-        if k in replacements:
-            w.write("%s : \"%s\"\n" % (k, replacements[k]))
-        else:
-            w.write(line)
+if os.path.exists("poky.yaml.in"):
+    with open("poky.yaml.in", "r") as r, open("poky.yaml", "w") as w:
+        lines = r.readlines()
+        for line in lines:
+            data = line.split(":")
+            k = data[0].strip()
+            if k in replacements:
+                w.write("%s : \"%s\"\n" % (k, replacements[k]))
+            else:
+                w.write(line)
 
-print("poky.yaml generated from poky.yaml.in")
+    print("poky.yaml generated from poky.yaml.in")
 
+
+# In the switcher list of versions we display:
+#  - latest dev
+#  - latest stable release
+#  - latest LTS
+#  - latest for each releases listed as active
+#  - latest doc version in current series
+#  - current doc version
+# (with duplicates removed)
+
+if ourseries not in activereleases:
+    activereleases.append(ourseries)
+
+versions = []
 with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switchers.js", "w") as w:
     lines = r.readlines()
     for line in lines:
@@ -159,10 +213,15 @@ with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switch
                     continue
                 versions = subprocess.run('git tag --list yocto-%s*' % (release_series[branch]), shell=True, capture_output=True, text=True).stdout.split()
                 versions = sorted([v.replace("yocto-" +  release_series[branch] + ".", "").replace("yocto-" +  release_series[branch], "0") for v in versions], key=int)
+                if not versions:
+                    continue
                 version = release_series[branch]
                 if versions[-1] != "0":
                     version = version + "." + versions[-1]
+                versions.append(version)
                 w.write("    '%s': '%s',\n" % (version, version))
+            if ourversion not in versions:
+                w.write("    '%s': '%s',\n" % (ourversion, ourversion))
         else:
             w.write(line)
 
