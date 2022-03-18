@@ -30,9 +30,20 @@ release_series["hardknott"] = "3.3"
 release_series["gatesgarth"] = "3.2"
 release_series["dunfell"] = "3.1"
 
+#    "langdale" : "2.2",
+bitbake_mapping = {
+    "kirkstone" : "2.0",
+    "honister" : "1.52",
+    "hardknott" : "1.50",
+    "gatesgarth" : "1.48",
+    "dunfell" : "1.46",
+}
+
 ourversion = None
 ourseries = None
 ourbranch = None
+bitbakeversion = None
+docconfver = None
 
 # Test tags exist and inform the user to fetch if not
 try:
@@ -50,10 +61,12 @@ if ourversion:
     # We're a tagged release
     components = ourversion.split(".")
     baseversion = components[0] + "." + components[1]
+    docconfver = ourversion
     for i in release_series:
         if release_series[i] == baseversion:
             ourseries = i
             ourbranch = i
+            bitbakeversion = bitbake_mapping[i]
 else:
     # We're floating on a branch
     branch = subprocess.run(["git", "branch", "--show-current"], capture_output=True, text=True).stdout.strip()
@@ -73,8 +86,11 @@ else:
         print("Nearest release branch esimtated to be %s" % branch)
     if branch == "master":
         ourseries = devbranch
+        docconfver = "dev"
+        bitbakeversion = ""
     elif branch in release_series:
         ourseries = branch
+        bitbakeversion = bitbake_mapping[branch]
     else:
         sys.exit("Unknown series for branch %s" % branch)
 
@@ -88,6 +104,8 @@ else:
         ourversion = previoustags[-1] + ".999"
     else:
         ourversion = release_series[ourseries] + ".999"
+    if not docconfver:
+        docconfver = ourversion
 
 series = [k for k in release_series]
 previousseries = series[series.index(ourseries)+1:]
@@ -104,6 +122,8 @@ replacements = {
     "DISTRO_NAME_NO_CAP_LTS" : lastlts[0],
     "YOCTO_DOC_VERSION" : ourversion,
     "DISTRO_REL_TAG" : "yocto-" + ourversion,
+    "DOCCONF_VERSION" : docconfver,
+    "BITBAKE_SERIES" : bitbakeversion,
 }
 
 with open("poky.yaml.in", "r") as r, open("poky.yaml", "w") as w:
