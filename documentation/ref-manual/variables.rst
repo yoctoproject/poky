@@ -5632,6 +5632,11 @@ system and gives an overview of their function and contents.
 
       :term:`PE` is the default value of the :term:`PKGE` variable.
 
+   :term:`PEP517_BUILD_API`
+      When used by recipes that inherit the :ref:`python_pep517
+      <ref-classes-python_pep517>` class, specifies the entry point to the
+      PEP-517 compliant build API (such as ``flit_core.buildapi``).
+
    :term:`PEP517_WHEEL_PATH`
       When used by recipes that inherit the
       :ref:`python_pep517 <ref-classes-python_pep517>` class,
@@ -5643,12 +5648,6 @@ system and gives an overview of their function and contents.
       revision numbers (i.e. ``glibc-2.13-r20+svnr15508/`` and
       ``bash-4.2-r1/``). This variable is comprised of the following:
       ${:term:`PN`}-${:term:`EXTENDPE`}${:term:`PV`}-${:term:`PR`}
-
-   :term:`PIP_INSTALL_ARGS`
-      When used by recipes that inherit the
-      :ref:`python_pep517 <ref-classes-python_pep517>` class,
-      denotes the arguments passed to ``pip install`` to adjust the
-      behavior of how the ``wheel`` is installed.
 
    :term:`PIXBUF_PACKAGES`
       When inheriting the :ref:`pixbufcache <ref-classes-pixbufcache>`
