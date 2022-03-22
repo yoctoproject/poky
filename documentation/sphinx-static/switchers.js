@@ -14,7 +14,7 @@ by https://git.yoctoproject.org/yocto-autobuilder-helper/tree/scripts/run-docs-b
     '3.4.2': '3.4.2',
     '3.3.5': '3.3.5',
     '3.2.4': '3.2.4',
-    '3.1.14': '3.1.14',
+    '3.1.15': '3.1.15',
     '3.0.4': '3.0.4',
     '2.7.4': '2.7.4',
   };
