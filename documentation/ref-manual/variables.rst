@@ -231,17 +231,6 @@ system and gives an overview of their function and contents.
       must set this variable in your recipe. The
       :ref:`syslinux <ref-classes-syslinux>` class checks this variable.
 
-   :term:`AVAILABLE_LICENSES`
-      List of licenses found in the directories specified by
-      :term:`COMMON_LICENSE_DIR` and
-      :term:`LICENSE_PATH`.
-
-      .. note::
-
-         It is assumed that all changes to :term:`COMMON_LICENSE_DIR` and
-         :term:`LICENSE_PATH` have been done before :term:`AVAILABLE_LICENSES`
-         is defined (in :ref:`ref-classes-license`).
-
    :term:`AVAILTUNES`
       The list of defined CPU and Application Binary Interface (ABI)
       tunings (i.e. "tunes") available for use by the OpenEmbedded build
@@ -3507,21 +3496,6 @@ system and gives an overview of their function and contents.
          Although you can use other settings, you might be required to
          remove dependencies on or provide alternatives to components that
          are required to produce a functional system image.
-
-      .. note::
-
-         It is possible to define a list of licenses that are allowed to be
-         used instead of the licenses that are excluded. To do this, define
-         a variable ``COMPATIBLE_LICENSES`` with the names of the licenses
-         that are allowed. Then define :term:`INCOMPATIBLE_LICENSE` as::
-
-                 INCOMPATIBLE_LICENSE = "${@' '.join(sorted(set(d.getVar('AVAILABLE_LICENSES').split()) - set(d.getVar('COMPATIBLE_LICENSES').split())))}"
-
-
-         This will result in :term:`INCOMPATIBLE_LICENSE` containing the names of
-         all licenses from :term:`AVAILABLE_LICENSES` except the ones specified
-         in ``COMPATIBLE_LICENSES``, thus only allowing the latter licenses to
-         be used.
 
    :term:`INHERIT`
       Causes the named class or classes to be inherited globally. Anonymous
