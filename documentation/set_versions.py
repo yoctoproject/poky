@@ -220,7 +220,7 @@ with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switch
                     version = version + "." + versions[-1]
                 versions.append(version)
                 w.write("    '%s': '%s',\n" % (version, version))
-            if ourversion not in versions:
+            if ourversion not in versions and ourbranch != devbranch:
                 w.write("    '%s': '%s',\n" % (ourversion, ourversion))
         else:
             w.write(line)
