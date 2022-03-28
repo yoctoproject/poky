@@ -550,11 +550,11 @@ descriptions and strategies on how to use these commands:
    You need to be in a local branch other than the one you are deleting
    in order to delete branch-name.
 
--  *git pull --rebase:* Retrieves information from an upstream Git
+-  *git pull \-\-rebase*: Retrieves information from an upstream Git
    repository and places it in your local Git repository. You use this
    command to make sure you are synchronized with the repository from
    which you are basing changes (e.g. the "&DISTRO_NAME_NO_CAP;"
-   branch). The "--rebase" option ensures that any local commits you
+   branch). The ``--rebase`` option ensures that any local commits you
    have in your branch are preserved at the top of your local branch.
 
 -  *git push repo-name local-branch:upstream-branch:* Sends
