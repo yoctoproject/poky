@@ -17,7 +17,6 @@ using ``scripts/install-buildtools``) --- see
 :ref:`ref-manual/system-requirements:required git, tar, python, make and gcc versions`
 for details.
 
-
 .. _migration-3.3-removed-recipes:
 
 Removed recipes
