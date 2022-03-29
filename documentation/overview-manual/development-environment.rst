@@ -427,7 +427,7 @@ other branches represent offshoots of the "master" branch.
 When you create a local copy of a Git repository, the copy has the same
 set of branches as the original. This means you can use Git to create a
 local working area (also called a branch) that tracks a specific
-development branch from the upstream source Git repository. in other
+development branch from the upstream source Git repository. In other
 words, you can define your local Git environment to work on any
 development branch in the repository. To help illustrate, consider the
 following example Git commands::
