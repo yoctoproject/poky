@@ -591,7 +591,7 @@ system and gives an overview of their function and contents.
       This variable is useful in situations where the same recipe appears
       in more than one layer. Setting this variable allows you to
       prioritize a layer against other layers that contain the same recipe
-      - effectively letting you control the precedence for the multiple
+      --- effectively letting you control the precedence for the multiple
       layers. The precedence established through this variable stands
       regardless of a recipe's version (:term:`PV` variable). For
       example, a layer that has a recipe with a higher :term:`PV` value but for
@@ -889,7 +889,7 @@ system and gives an overview of their function and contents.
    :term:`BUILD_OS`
       Specifies the operating system in use on the build host (e.g.
       "linux"). The OpenEmbedded build system sets the value of
-      :term:`BUILD_OS` from the OS reported by the ``uname`` command - the
+      :term:`BUILD_OS` from the OS reported by the ``uname`` command --- the
       first word, converted to lower-case characters.
 
    :term:`BUILD_PREFIX`
@@ -1689,7 +1689,7 @@ system and gives an overview of their function and contents.
       ``${TMPDIR}/deploy``.
 
       For more information on the structure of the Build Directory, see
-      ":ref:`ref-manual/structure:the build directory - \`\`build/\`\``" section.
+      ":ref:`ref-manual/structure:the build directory --- \`\`build/\`\``" section.
       For more detail on the contents of the ``deploy`` directory, see the
       ":ref:`overview-manual/concepts:images`",
       ":ref:`overview-manual/concepts:package feeds`", and
@@ -1733,7 +1733,7 @@ system and gives an overview of their function and contents.
       <ref-classes-image>` class.
 
       For more information on the structure of the Build Directory, see
-      ":ref:`ref-manual/structure:the build directory - \`\`build/\`\``" section.
+      ":ref:`ref-manual/structure:the build directory --- \`\`build/\`\``" section.
       For more detail on the contents of the ``deploy`` directory, see the
       ":ref:`overview-manual/concepts:images`" and
       ":ref:`overview-manual/concepts:application development sdk`" sections both in
@@ -2248,24 +2248,24 @@ system and gives an overview of their function and contents.
 
       Here are some examples of features you can add:
 
-        - "dbg-pkgs" - Adds -dbg packages for all installed packages including
+        - "dbg-pkgs" --- adds -dbg packages for all installed packages including
           symbol information for debugging and profiling.
 
-        - "debug-tweaks" - Makes an image suitable for debugging. For example, allows root logins without passwords and
+        - "debug-tweaks" --- makes an image suitable for debugging. For example, allows root logins without passwords and
           enables post-installation logging. See the 'allow-empty-password' and
           'post-install-logging' features in the ":ref:`ref-features-image`"
           section for more information.
-        - "dev-pkgs" - Adds -dev packages for all installed packages. This is
+        - "dev-pkgs" --- adds -dev packages for all installed packages. This is
           useful if you want to develop against the libraries in the image.
-        - "read-only-rootfs" - Creates an image whose root filesystem is
+        - "read-only-rootfs" --- creates an image whose root filesystem is
           read-only. See the
           ":ref:`dev-manual/common-tasks:creating a read-only root filesystem`"
           section in the Yocto Project Development Tasks Manual for more
           information
-        - "tools-debug" - Adds debugging tools such as gdb and strace.
-        - "tools-sdk" - Adds development tools such as gcc, make,
+        - "tools-debug" --- adds debugging tools such as gdb and strace.
+        - "tools-sdk" --- adds development tools such as gcc, make,
           pkgconfig and so forth.
-        - "tools-testapps" - Adds useful testing tools
+        - "tools-testapps" --- adds useful testing tools
           such as ts_print, aplay, arecord and so forth.
 
       For a complete list of image features that ships with the Yocto
@@ -3259,7 +3259,7 @@ system and gives an overview of their function and contents.
          IMAGE_NAME ?= "${IMAGE_BASENAME}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
    :term:`IMAGE_NAME_SUFFIX`
-      Suffix used for the image output filename - defaults to ``".rootfs"``
+      Suffix used for the image output filename --- defaults to ``".rootfs"``
       to distinguish the image file from other files created during image
       building; however if this suffix is redundant or not desired you can
       clear the value of this variable (set the value to ""). For example,
@@ -6217,7 +6217,7 @@ system and gives an overview of their function and contents.
       ``baz``.
 
       The names of the packages you list within :term:`RDEPENDS` must be the
-      names of other packages - they cannot be recipe names. Although
+      names of other packages --- they cannot be recipe names. Although
       package names and recipe names usually match, the important point
       here is that you are providing package names within the :term:`RDEPENDS`
       variable. For an example of the default list of packages created from
@@ -7120,35 +7120,35 @@ system and gives an overview of their function and contents.
 
       There are standard and recipe-specific options. Here are standard ones:
 
-      -  ``apply`` - Whether to apply the patch or not. The default
+      -  ``apply`` --- whether to apply the patch or not. The default
          action is to apply the patch.
 
-      -  ``striplevel`` - Which striplevel to use when applying the
+      -  ``striplevel`` --- which striplevel to use when applying the
          patch. The default level is 1.
 
-      -  ``patchdir`` - Specifies the directory in which the patch should
+      -  ``patchdir`` --- specifies the directory in which the patch should
          be applied. The default is ``${``\ :term:`S`\ ``}``.
 
       Here are options specific to recipes building code from a revision
       control system:
 
-      -  ``mindate`` - Apply the patch only if
+      -  ``mindate`` --- apply the patch only if
          :term:`SRCDATE` is equal to or greater than
          ``mindate``.
 
-      -  ``maxdate`` - Apply the patch only if :term:`SRCDATE` is not later
+      -  ``maxdate`` --- apply the patch only if :term:`SRCDATE` is not later
          than ``maxdate``.
 
-      -  ``minrev`` - Apply the patch only if :term:`SRCREV` is equal to or
+      -  ``minrev`` --- apply the patch only if :term:`SRCREV` is equal to or
          greater than ``minrev``.
 
-      -  ``maxrev`` - Apply the patch only if :term:`SRCREV` is not later
+      -  ``maxrev`` --- apply the patch only if :term:`SRCREV` is not later
          than ``maxrev``.
 
-      -  ``rev`` - Apply the patch only if :term:`SRCREV` is equal to
+      -  ``rev`` --- apply the patch only if :term:`SRCREV` is equal to
          ``rev``.
 
-      -  ``notrev`` - Apply the patch only if :term:`SRCREV` is not equal to
+      -  ``notrev`` --- apply the patch only if :term:`SRCREV` is not equal to
          ``rev``.
 
       .. note::
@@ -8857,8 +8857,8 @@ system and gives an overview of their function and contents.
       -  :term:`TMPDIR`: The top-level build output directory
       -  :term:`MULTIMACH_TARGET_SYS`: The target system identifier
       -  :term:`PN`: The recipe name
-      -  :term:`EXTENDPE`: The epoch - (if :term:`PE` is not specified, which
-         is usually the case for most recipes, then `EXTENDPE` is blank)
+      -  :term:`EXTENDPE`: The epoch --- if :term:`PE` is not specified, which
+         is usually the case for most recipes, then `EXTENDPE` is blank.
       -  :term:`PV`: The recipe version
       -  :term:`PR`: The recipe revision
 

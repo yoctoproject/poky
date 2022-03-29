@@ -270,7 +270,7 @@ universal, the list includes them just in case:
       your Linux distribution.
 
       Another point worth noting is that historically within the Yocto
-      Project, recipes were referred to as packages - thus, the existence
+      Project, recipes were referred to as packages --- thus, the existence
       of several BitBake variables that are seemingly mis-named, (e.g.
       :term:`PR`, :term:`PV`, and
       :term:`PE`).
@@ -369,7 +369,7 @@ universal, the list includes them just in case:
      Directory created by unpacking a released tarball as compared to
      cloning ``git://git.yoctoproject.org/poky``. When you unpack a
      tarball, you have an exact copy of the files based on the time of
-     release - a fixed release point. Any changes you make to your local
+     release --- a fixed release point. Any changes you make to your local
      files in the Source Directory are on top of the release and will
      remain local only. On the other hand, when you clone the ``poky`` Git
      repository, you have an active development repository with access to

@@ -2306,7 +2306,7 @@ under ``files``) requires a recipe that has the file listed in the
 :term:`SRC_URI` variable. Additionally, you need to manually write the
 ``do_compile`` and ``do_install`` tasks. The :term:`S` variable defines the
 directory containing the source code, which is set to
-:term:`WORKDIR` in this case - the
+:term:`WORKDIR` in this case --- the
 directory BitBake uses for the build.
 ::
 
@@ -2780,7 +2780,7 @@ in the BitBake User Manual.
    functionality. The same considerations apply to various system
    utilities (e.g. ``sed``, ``grep``, ``awk``, and so forth) that you
    might wish to use. If in doubt, you should check with multiple
-   implementations - including those from BusyBox.
+   implementations --- including those from BusyBox.
 
 Adding a New Machine
 ====================
@@ -3348,9 +3348,9 @@ The actual directory depends on several things:
 
 -  :term:`PN`: The recipe name.
 
--  :term:`EXTENDPE`: The epoch - (if
+-  :term:`EXTENDPE`: The epoch --- if
    :term:`PE` is not specified, which is
-   usually the case for most recipes, then :term:`EXTENDPE` is blank).
+   usually the case for most recipes, then :term:`EXTENDPE` is blank.
 
 -  :term:`PV`: The recipe version.
 
@@ -6602,7 +6602,7 @@ the following:
    installed into an image.
 
 -  Binary Package Version: The binary package version is composed of two
-   components - a version and a revision.
+   components --- a version and a revision.
 
    .. note::
 
@@ -6939,7 +6939,7 @@ optional arguments::
       Postinstall script to use for all packages
       (as a string)
    recursive
-      True to perform a recursive search - default
+      True to perform a recursive search --- default
       False
    hook
       A hook function to be called for every match.
@@ -6960,7 +6960,7 @@ optional arguments::
       Extra runtime dependencies (RDEPENDS) to be
       set for all packages. The default value of None
       causes a dependency on the main package
-      (${PN}) - if you do not want this, pass empty
+      (${PN}) --- if you do not want this, pass empty
       string '' for this parameter.
    aux_files_pattern
       Extra item(s) to be added to FILES for each
@@ -6986,7 +6986,7 @@ optional arguments::
       or a list of strings for multiple items. Must
       include %s.
    allow_links
-      True to allow symlinks to be matched - default
+      True to allow symlinks to be matched --- default
       False
    summary
       Summary to set for each package. Must include %s;
@@ -7431,7 +7431,7 @@ A Package Test (ptest) runs tests against packages built by the
 OpenEmbedded build system on the target machine. A ptest contains at
 least two items: the actual test, and a shell script (``run-ptest``)
 that starts the test. The shell script that starts the test must not
-contain the actual test - the script only starts the test. On the other
+contain the actual test --- the script only starts the test. On the other
 hand, the test can be anything from a simple shell script that runs a
 binary and checks the output to an elaborate system of test binaries and
 data files.
@@ -9132,13 +9132,13 @@ The JSON file must include an object with the test name as keys of an
 object or an array. This object (or array of objects) uses the following
 data:
 
--  "pkg" - A mandatory string that is the name of the package to be
+-  "pkg" --- a mandatory string that is the name of the package to be
    installed.
 
--  "rm" - An optional boolean, which defaults to "false", that specifies
+-  "rm" --- an optional boolean, which defaults to "false", that specifies
    to remove the package after the test.
 
--  "extract" - An optional boolean, which defaults to "false", that
+-  "extract" --- an optional boolean, which defaults to "false", that
    specifies if the package must be extracted from the package format.
    When set to "true", the package is not automatically installed into
    the DUT.
@@ -9803,7 +9803,7 @@ Logging With Bash
 ~~~~~~~~~~~~~~~~~
 
 When creating recipes using Bash and inserting code that handles build
-logs, you have the same goals - informative with minimal console output.
+logs, you have the same goals --- informative with minimal console output.
 The syntax you use for recipes written in Bash is similar to that of
 recipes written in Python described in the previous section.
 
@@ -10076,7 +10076,7 @@ to use GDB directly on the remote target to debug applications. These
 constraints arise because GDB needs to load the debugging information
 and the binaries of the process being debugged. Additionally, GDB needs
 to perform many computations to locate information such as function
-names, variable names and values, stack traces and so forth - even
+names, variable names and values, stack traces and so forth --- even
 before starting the debugging process. These extra computations place
 more load on the target system and can alter the characteristics of the
 program being debugged.
@@ -10653,7 +10653,7 @@ Preparing Changes for Submission
    -  If the change addresses a specific bug or issue that is associated
       with a bug-tracking ID, include a reference to that ID in your
       detailed description. For example, the Yocto Project uses a
-      specific convention for bug references - any commit that addresses
+      specific convention for bug references --- any commit that addresses
       a specific bug should use the following form for the detailed
       description. Be sure to use the actual bug-tracking ID from
       Bugzilla for bug-id::
@@ -10916,20 +10916,20 @@ follows:
    result in the most straightforward path into the stable branch for the
    fix.
 
-   a. *If the fix is present in the master branch - Submit a backport request
+   a. *If the fix is present in the master branch --- submit a backport request
       by email:* You should send an email to the relevant stable branch
       maintainer and the mailing list with details of the bug or CVE to be
       fixed, the commit hash on the master branch that fixes the issue and
       the stable branches which you would like this fix to be backported to.
 
-   b. *If the fix is not present in the master branch - Submit the fix to the
+   b. *If the fix is not present in the master branch --- submit the fix to the
       master branch first:* This will ensure that the fix passes through the
       project's usual patch review and test processes before being accepted.
       It will also ensure that bugs are not left unresolved in the master
       branch itself. Once the fix is accepted in the master branch a backport
       request can be submitted as above.
 
-   c. *If the fix is unsuitable for the master branch - Submit a patch
+   c. *If the fix is unsuitable for the master branch --- submit a patch
       directly for the stable branch:* This method should be considered as a
       last resort. It is typically necessary when the master branch is using
       a newer version of the software which includes an upstream fix for the
@@ -11260,7 +11260,7 @@ Providing the Source Code
 
 Compliance activities should begin before you generate the final image.
 The first thing you should look at is the requirement that tops the list
-for most compliance groups - providing the source. The Yocto Project has
+for most compliance groups --- providing the source. The Yocto Project has
 a few ways of meeting this requirement.
 
 One of the easiest ways to meet this requirement is to provide the
