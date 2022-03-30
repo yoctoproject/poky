@@ -12,10 +12,50 @@ Recipe changes
   deleted. BitBake will stop with an error when renamed or removed variables
   still exist in your recipes or configuration.
 
+  Please note that the change applies also to environmental variables, so
+  make sure you use a fresh environment for your build.
+
+  The following variables have changed their names:
+
+  - ``BB_ENV_WHITELIST`` became :term:`BB_ENV_PASSTHROUGH`
+  - ``BB_ENV_EXTRAWHITE`` became :term:`BB_ENV_PASSTHROUGH_ADDITIONS`
+  - ``BB_HASHBASE_WHITELIST`` became :term:`BB_BASEHASH_IGNORE_VARS`
+  - ``BB_HASHCONFIG_WHITELIST`` became :term:`BB_HASHCONFIG_IGNORE_VARS`
+  - ``BB_HASHTASK_WHITELIST`` became ``BB_TASKHASH_IGNORE_TASKS``
+  - ``BB_SETSCENE_ENFORCE_WHITELIST`` became ``BB_SETSCENE_ENFORCE_IGNORE_TASKS``
+  - ``CVE_CHECK_PN_WHITELIST`` became :term:`CVE_CHECK_SKIP_RECIPE`
+  - ``CVE_CHECK_WHITELIST`` became :term:`CVE_CHECK_IGNORE`
+  - ``ICECC_USER_CLASS_BL`` became :term:`ICECC_CLASS_DISABLE`
+  - ``ICECC_SYSTEM_CLASS_BL`` became :term:`ICECC_CLASS_DISABLE`
+  - ``ICECC_USER_PACKAGE_WL`` became :term:`ICECC_RECIPE_ENABLE`
+  - ``ICECC_USER_PACKAGE_BL`` became :term:`ICECC_RECIPE_DISABLE`
+  - ``ICECC_SYSTEM_PACKAGE_BL`` became :term:`ICECC_RECIPE_DISABLE`
+  - ``LICENSE_FLAGS_WHITELIST`` became :term:`LICENSE_FLAGS_ACCEPTED`
+  - ``MULTI_PROVIDER_WHITELIST`` became :term:`BB_MULTI_PROVIDER_ALLOWED`
+  - ``PNBLACKLIST`` became :term:`SKIP_RECIPE`
+  - ``SDK_LOCAL_CONF_BLACKLIST`` became :term:`ESDK_LOCALCONF_REMOVE`
+  - ``SDK_LOCAL_CONF_WHITELIST`` became :term:`ESDK_LOCALCONF_ALLOW`
+  - ``SDK_INHERIT_BLACKLIST`` became :term:`ESDK_CLASS_INHERIT_DISABLE`
+  - ``SSTATE_DUPWHITELIST`` became ``SSTATE_ALLOW_OVERLAP_FILES``
+  - ``SYSROOT_DIRS_BLACKLIST`` became :term:`SYSROOT_DIRS_IGNORE`
+  - ``UNKNOWN_CONFIGURE_WHITELIST`` became :term:`UNKNOWN_CONFIGURE_OPT_IGNORE`
+
+  In addition, ``BB_STAMP_WHITELIST``, ``BB_STAMP_POLICY``, ``INHERIT_BLACKLIST``
+  and ``TUNEABI_WHITELIST`` have been removed.
+
+  Many internal variable names have been also renamed accordingly.
+
+  In addition, in the ``cve-check`` output, the CVE issue status ``Whitelisted``
+  has been renamed to ``Ignored``.
+
   A :oe_git:`convert-variable-renames.py
   </openembedded-core/tree/scripts/contrib/convert-variable-renames.py>`
   script is provided to convert your recipes and configuration,
-  and also warns you about the use of problematic words.
+  and also warns you about the use of problematic words. The script performs
+  changes and you need to review them before committing. An example warning
+  looks like::
+
+     poky/scripts/lib/devtool/upgrade.py needs further work at line 275 since it contains abort
 
 - Because of the uncertainty in future default branch names in git repositories,
   it is now required to add a branch name to all URLs described
