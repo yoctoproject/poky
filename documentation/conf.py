@@ -16,7 +16,7 @@ import os
 import sys
 import datetime
 
-current_version = "3.3.5"
+current_version = "3.3.6"
 bitbake_version = "1.50"
 
 # String used in sidebar
