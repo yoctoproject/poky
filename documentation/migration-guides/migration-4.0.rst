@@ -1,8 +1,8 @@
-Release 3.5 (kirkstone)
+Release 4.0 (kirkstone)
 =======================
 
 This section provides migration information for moving to the Yocto
-Project 3.5 Release (codename "kirkstone") from the prior release.
+Project 4.0 Release (codename "kirkstone") from the prior release.
 
 Recipe changes
 --------------
