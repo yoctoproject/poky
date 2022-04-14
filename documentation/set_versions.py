@@ -207,7 +207,7 @@ with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switch
     lines = r.readlines()
     for line in lines:
         if "VERSIONS_PLACEHOLDER" in line:
-            w.write("    'dev': 'dev (%s)',\n" % release_series[devbranch])
+            w.write("    'dev': { 'title': 'dev (%s)', 'obsolete': false,},\n" % release_series[devbranch])
             for branch in activereleases:
                 if branch == devbranch:
                     continue
@@ -219,9 +219,9 @@ with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switch
                 if versions[-1] != "0":
                     version = version + "." + versions[-1]
                 versions.append(version)
-                w.write("    '%s': '%s',\n" % (version, version))
+                w.write("    '%s': {'title': '%s', 'obsolete': %s,},\n" % (version, version, str(branch == ourseries).lower()))
             if ourversion not in versions and ourseries != devbranch:
-                w.write("    '%s': '%s',\n" % (ourversion, ourversion))
+                w.write("    '%s': {'title': '%s', 'obsolete': true,},\n" % (ourversion, ourversion))
         else:
             w.write(line)
 

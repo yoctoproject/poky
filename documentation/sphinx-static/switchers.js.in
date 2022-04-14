@@ -65,15 +65,15 @@ by https://git.yoctoproject.org/yocto-autobuilder-helper/tree/scripts/run-docs-b
   function build_version_select(current_series, current_version) {
     var buf = ['<select>'];
 
-    $.each(all_versions, function(version, title) {
+    $.each(all_versions, function(version, vers_data) {
       var series = version.substr(0, 3);
       if (series == current_series) {
         if (version == current_version)
-            buf.push('<option value="' + version + '" selected="selected">' + title + '</option>');
-        else
-            buf.push('<option value="' + version + '">' + title + '</option>');
+            buf.push('<option value="' + version + '" selected="selected">' + vers_data["title"] + '</option>');
+	      else
+            buf.push('<option value="' + version + '">' + vers_data["title"] + '</option>');
       } else {
-        buf.push('<option value="' + version + '">' + title + '</option>');
+        buf.push('<option value="' + version + '">' + vers_data["title"] + '</option>');
       }
     });
 
@@ -223,7 +223,7 @@ by https://git.yoctoproject.org/yocto-autobuilder-helper/tree/scripts/run-docs-b
       $('#outdated-warning').html('Version ' + release + ' of the project is now considered obsolete, please select and use a more recent version');
       $('#outdated-warning').css('padding', '.5em');
     } else if (release != "dev") {
-      $.each(all_versions, function(version, title) {
+      $.each(all_versions, function(version, vers_data) {
         var series = version.substr(0, 3);
         if (series == current_series && version != release) {
           $('#outdated-warning').html('This document is for outdated version ' + release + ', you should select the latest release version in this series, ' + version + '.');
