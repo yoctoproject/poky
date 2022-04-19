@@ -128,7 +128,7 @@ else:
     if branch == "master":
         ourseries = devbranch
         docconfver = "dev"
-        bitbakeversion = ""
+        bitbakeversion = "dev"
     elif branch in release_series:
         ourseries = branch
         if branch in bitbake_mapping:

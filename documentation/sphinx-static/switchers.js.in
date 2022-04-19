@@ -149,11 +149,9 @@ by https://git.yoctoproject.org/yocto-autobuilder-helper/tree/scripts/run-docs-b
     var docroot = get_docroot_url()
 
     var new_versionpath = selected_version + '/';
-    if (selected_version == "dev")
-        new_versionpath = '';
 
-    // dev versions have no version prefix
-    if (current_version == "dev") {
+    // latest tag is also the default page (without version information)
+    if (docroot.endsWith(current_version + '/') == false) {
         var new_url = docroot + new_versionpath + url.replace(docroot, "");
         var fallback_url = docroot + new_versionpath;
     } else {
