@@ -199,16 +199,13 @@ if os.path.exists("poky.yaml.in"):
 #  - current doc version
 # (with duplicates removed)
 
-if ourseries not in activereleases:
-    activereleases.append(ourseries)
-
 versions = []
 with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switchers.js", "w") as w:
     lines = r.readlines()
     for line in lines:
         if "VERSIONS_PLACEHOLDER" in line:
             w.write("    'dev': { 'title': 'dev (%s)', 'obsolete': false,},\n" % release_series[devbranch])
-            for branch in activereleases:
+            for branch in activereleases + ([ourseries] if ourseries not in activereleases else []):
                 if branch == devbranch:
                     continue
                 branch_versions = subprocess.run('git tag --list yocto-%s*' % (release_series[branch]), shell=True, capture_output=True, text=True).stdout.split()
@@ -219,7 +216,7 @@ with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switch
                 if branch_versions[-1] != "0":
                     version = version + "." + branch_versions[-1]
                 versions.append(version)
-                w.write("    '%s': {'title': '%s', 'obsolete': %s,},\n" % (version, version, str(branch == ourseries).lower()))
+                w.write("    '%s': {'title': '%s', 'obsolete': %s,},\n" % (version, version, str(branch not in activereleases).lower()))
             if ourversion not in versions and ourseries != devbranch:
                 w.write("    '%s': {'title': '%s', 'obsolete': true,},\n" % (ourversion, ourversion))
         else:
