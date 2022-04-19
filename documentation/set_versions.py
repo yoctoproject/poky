@@ -211,13 +211,13 @@ with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switch
             for branch in activereleases:
                 if branch == devbranch:
                     continue
-                versions = subprocess.run('git tag --list yocto-%s*' % (release_series[branch]), shell=True, capture_output=True, text=True).stdout.split()
-                versions = sorted([v.replace("yocto-" +  release_series[branch] + ".", "").replace("yocto-" +  release_series[branch], "0") for v in versions], key=int)
-                if not versions:
+                branch_versions = subprocess.run('git tag --list yocto-%s*' % (release_series[branch]), shell=True, capture_output=True, text=True).stdout.split()
+                branch_versions = sorted([v.replace("yocto-" +  release_series[branch] + ".", "").replace("yocto-" +  release_series[branch], "0") for v in branch_versions], key=int)
+                if not branch_versions:
                     continue
                 version = release_series[branch]
-                if versions[-1] != "0":
-                    version = version + "." + versions[-1]
+                if branch_versions[-1] != "0":
+                    version = version + "." + branch_versions[-1]
                 versions.append(version)
                 w.write("    '%s': {'title': '%s', 'obsolete': %s,},\n" % (version, version, str(branch == ourseries).lower()))
             if ourversion not in versions and ourseries != devbranch:
