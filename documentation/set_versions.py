@@ -218,7 +218,7 @@ with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switch
                 versions.append(version)
                 w.write("    '%s': {'title': '%s', 'obsolete': %s,},\n" % (version, version, str(branch not in activereleases).lower()))
             if ourversion not in versions and ourseries != devbranch:
-                w.write("    '%s': {'title': '%s', 'obsolete': true,},\n" % (ourversion, ourversion))
+                w.write("    '%s': {'title': '%s', 'obsolete': %s,},\n" % (ourversion, ourversion, str(ourseries not in activereleases).lower()))
         else:
             w.write(line)
 
