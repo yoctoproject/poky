@@ -203,6 +203,9 @@ versions = []
 with open("sphinx-static/switchers.js.in", "r") as r, open("sphinx-static/switchers.js", "w") as w:
     lines = r.readlines()
     for line in lines:
+        if "ALL_RELEASES_PLACEHOLDER" in line:
+            w.write(str(list(release_series.keys())))
+            continue
         if "VERSIONS_PLACEHOLDER" in line:
             w.write("    'dev': { 'title': 'dev (%s)', 'obsolete': false,},\n" % release_series[devbranch])
             for branch in activereleases + ([ourseries] if ourseries not in activereleases else []):

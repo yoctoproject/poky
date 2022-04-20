@@ -9,6 +9,10 @@ by https://git.yoctoproject.org/yocto-autobuilder-helper/tree/scripts/run-docs-b
 (function() {
   'use strict';
 
+  var all_releases =
+	ALL_RELEASES_PLACEHOLDER
+  ;
+
   var switcher_versions = {
     VERSIONS_PLACEHOLDER
   };
@@ -155,6 +159,14 @@ by https://git.yoctoproject.org/yocto-autobuilder-helper/tree/scripts/run-docs-b
         var new_url = docroot + new_versionpath + url.replace(docroot, "");
         var fallback_url = docroot + new_versionpath;
     } else {
+	// check for named releases (e.g. dunfell) in the subpath
+        $.each(all_releases, function(idx, release) {
+		if (docroot.endsWith('/' + release + '/')) {
+			current_version = release;
+			return false;
+		}
+	});
+
         var new_url = url.replace('/' + current_version + '/', '/' + new_versionpath);
         var fallback_url = new_url.replace(url.replace(docroot, ""), "");
     }
