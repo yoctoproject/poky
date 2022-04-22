@@ -6084,6 +6084,28 @@ system and gives an overview of their function and contents.
       In the previous example,
       the version of the dependency is :term:`PYTHON_PN`.
 
+   :term:`QA_EMPTY_DIRS`
+      Specifies a list of directories that are expected to be empty when
+      packaging; if ``empty-dirs`` appears in :term:`ERROR_QA` or
+      :term:`WARN_QA` these will be checked and an error or warning
+      (respectively) will be produced.
+
+      The default :term:`QA_EMPTY_DIRS` value is set in
+      :ref:`insane.bbclass <ref-classes-insane>`.
+
+   :term:`QA_EMPTY_DIRS_RECOMMENDATION`
+      Specifies a recommendation for why a directory must be empty,
+      which will be included in the error message if a specific directory
+      is found to contain files. Must be overridden with the directory
+      path to match on.
+
+      If no recommendation is specified for a directory, then the default
+      "but it is expected to be empty" will be used.
+
+      An example message shows if files were present in '/dev'::
+
+         QA_EMPTY_DIRS_RECOMMENDATION:/dev = "but all devices must be created at runtime"
+
    :term:`RANLIB`
       The minimal command and arguments to run ``ranlib``.
 
