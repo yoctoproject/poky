@@ -3485,6 +3485,14 @@ system and gives an overview of their function and contents.
       incompatible licenses are not built. Packages that are individually
       licensed with the specified incompatible licenses will be deleted.
 
+      There is some support for wildcards in this variable's value,
+      however it is restricted to specific licenses. Currently only
+      these wildcards are allowed and expand as follows:
+
+      - ``AGPL-3.0*"``: ``AGPL-3.0-only``, ``AGPL-3.0-or-later``
+      - ``GPL-3.0*``: ``GPL-3.0-only``, ``GPL-3.0-or-later``
+      - ``LGPL-3.0*``: ``LGPL-3.0-only``, ``LGPL-3.0-or-later``
+
       .. note::
 
          This functionality is only regularly tested using the following
