@@ -2338,6 +2338,37 @@ system and gives an overview of their function and contents.
          # usermod -s /bin/sh tester; \
          # "
 
+      Hardcoded passwords are supported via the ``-p`` parameters for
+      ``useradd`` or ``usermod``, but only hashed.
+
+      Here is an example that adds two users named "tester-jim" and "tester-sue" and assigns
+      passwords. First on host, create the (escaped) password hash::
+
+         printf "%q" $(mkpasswd -m sha256crypt tester01)
+
+      The resulting hash is set to a variable and used in ``useradd`` command parameters::
+
+         inherit extrausers
+         PASSWD = "\$X\$ABC123\$A-Long-Hash"
+         EXTRA_USERS_PARAMS = "\
+             useradd -p '${PASSWD}' tester-jim; \
+             useradd -p '${PASSWD}' tester-sue; \
+             "
+
+      Finally, here is an example that sets the root password::
+
+         inherit extrausers
+         EXTRA_USERS_PARAMS = "\
+             usermod -p '${PASSWD}' root; \
+             "
+
+      .. note::
+
+         From a security perspective, hardcoding a default password is not
+         generally a good idea or even legal in some jurisdictions. It is 
+         recommended that you do not do this if you are building a production 
+         image.
+
       Additionally there is a special ``passwd-expire`` command that will
       cause the password for a user to be expired and thus force changing it
       on first login, for example::
