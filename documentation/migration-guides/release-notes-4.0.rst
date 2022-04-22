@@ -152,7 +152,7 @@ New Features / Enhancements in 4.0
       - rust: add support for big endian 64-bit PowerPC
       - rust: Add snapshot checksums for powerpc64le
 
-   - RiscV:
+   - RISC-V:
 
       - libunwind: Enable for rv64
       - systemtap: Enable for riscv64
