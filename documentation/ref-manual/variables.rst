@@ -1485,6 +1485,13 @@ system and gives an overview of their function and contents.
 
          CVE_PRODUCT = "oracle_berkeley_db berkeley_db"
 
+      Sometimes the product name is not specific enough, for example
+      "tar" has been matching CVEs for the GNU ``tar`` package and also
+      the ``node-tar`` node.js extension. To avoid this problem, use the
+      vendor name as a prefix. The syntax for this is::
+
+         CVE_PRODUCT = "vendor:package"
+
    :term:`CVSDIR`
       The directory in which files checked out under the CVS system are
       stored.
