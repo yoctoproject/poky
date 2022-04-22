@@ -265,6 +265,13 @@ Miscellaneous
   built-in override support in the fetcher or overrides in general
   instead.
 
+- The ``-P`` (``--clear-password``) option can no longer be used with
+  ``useradd`` and ``usermod`` entries in :term:`EXTRA_USERS_PARAMS`.
+  It was being implemented using a custom patch to the ``shadow`` recipe
+  which clashed with a ``-P`` option that was added upstream in
+  ``shadow`` version 4.9, and in any case is fundamentally insecure.
+
+
 .. include:: release-notes-3.4.rst
 .. include:: release-notes-3.4.1.rst
 .. include:: release-notes-3.4.2.rst
