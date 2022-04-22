@@ -576,6 +576,14 @@ Finally, here is an example that sets the root password::
        usermod -p '${PASSWD}' root; \
        "
 
+.. note::
+
+   From a security perspective, hardcoding a default password is not
+   generally a good idea or even legal in some jurisdictions. It is 
+   recommended that you do not do this if you are building a production 
+   image.
+
+
 .. _ref-classes-features_check:
 
 ``features_check.bbclass``
