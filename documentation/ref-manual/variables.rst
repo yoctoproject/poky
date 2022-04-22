@@ -3953,6 +3953,11 @@ system and gives an overview of their function and contents.
       custom kernel image types with the :ref:`kernel <ref-classes-kernel>` class using this
       variable.
 
+   :term:`KERNEL_DEBUG_TIMESTAMPS`
+      If set to "1", enables timestamping functionality during building
+      the kernel. The default is "0" to disable this for reproducibility
+      reasons.
+
    :term:`KERNEL_DEVICETREE`
       Specifies the name of the generated Linux kernel device tree (i.e.
       the ``.dtb``) file.
