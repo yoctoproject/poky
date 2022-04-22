@@ -1040,6 +1040,11 @@ Here are the tests you can list with the :term:`WARN_QA` and
    cases, such as dynamically loaded modules, these symlinks
    are needed instead in the main package.
 
+-  ``empty-dirs:`` Checks that packages are not installing files to
+   directories that are normally expected to be empty (such as ``/tmp``)
+   The list of directories that are checked is specified by the
+   :term:`QA_EMPTY_DIRS` variable.
+
 -  ``file-rdeps:`` Checks that file-level dependencies identified by
    the OpenEmbedded build system at packaging time are satisfied. For
    example, a shell script might start with the line ``#!/bin/bash``.
