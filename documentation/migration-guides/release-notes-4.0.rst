@@ -184,7 +184,7 @@ New Features / Enhancements in 4.0
    - New ``FIT_CONF_PREFIX`` variable to allow overriding FIT configuration prefix
    - Use 'bbnote' for better logging
 
-- New :term:`PACKAGECONFIG` options in ``curl``, ``dtc``, ``epiphany``, ``git``, ``git``, ``gstreamer1.0-plugins-bad``, (kernel), ``kmod``, ``mesa``, ``piglit``, ``qemu``, ``rpm``, ``systemd``, ``webkitgtk``, ``weston-init``
+- New :term:`PACKAGECONFIG` options in ``curl``, ``dtc``, ``epiphany``, ``git``, ``git``, ``gstreamer1.0-plugins-bad``, ``linux-yocto-dev``, ``kmod``, ``mesa``, ``piglit``, ``qemu``, ``rpm``, ``systemd``, ``webkitgtk``, ``weston-init``
 - ptest enhancements in ``findutils``, ``lttng-tools``, ``openssl``, ``gawk``, ``strace``, ``lttng-tools``, ``valgrind``, ``perl``, ``libxml-parser-perl``, ``openssh``, ``python3-cryptography``, ``popt``
 
 - Sysroot dependencies have been further optimised
