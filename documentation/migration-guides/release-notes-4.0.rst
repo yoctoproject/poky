@@ -861,4 +861,71 @@ Thanks to the following people who contributed to this release:
 Repositories / Downloads for 4.0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-TBD
+
+poky
+
+-  Repository Location: https://git.yoctoproject.org/git/poky
+-  Branch: :yocto_git:`kirkstone </poky/log/?h=kirkstone>`
+-  Tag: :yocto_git:`yocto-4.0 </poky/tag/?h=yocto-4.0>`
+-  Git Revision: :yocto_git:`00cfdde791a0176c134f31e5a09eff725e75b905 </poky/commit/?id=00cfdde791a0176c134f31e5a09eff725e75b905>`
+-  Release Artefact: poky-00cfdde791a0176c134f31e5a09eff725e75b905
+-  sha: 4cedb491b7bf0d015768c61690f30d7d73f4266252d6fba907bba97eac83648c
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-4.0/poky-00cfdde791a0176c134f31e5a09eff725e75b905.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-4.0/poky-00cfdde791a0176c134f31e5a09eff725e75b905.tar.bz2
+
+openembedded-core
+
+-  Repository Location: :oe_git:`/openembedded-core`
+-  Branch: :oe_git:`kirkstone </openembedded-core/log/?h=kirkstone>`
+-  Tag: :oe_git:`yocto-4.0 </openembedded-core/tag/?h=yocto-4.0>`
+-  Git Revision: :oe_git:`92fcb6570bddd0c5717d8cfdf38ecf3e44942b0f </openembedded-core/commit/?id=92fcb6570bddd0c5717d8cfdf38ecf3e44942b0f>`
+-  Release Artefact: oecore-92fcb6570bddd0c5717d8cfdf38ecf3e44942b0f
+-  sha: c042629752543a10b0384b2076b1ee8742fa5e8112aef7b00b3621f8387a51c6
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-4.0/oecore-92fcb6570bddd0c5717d8cfdf38ecf3e44942b0f.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-4.0/oecore-92fcb6570bddd0c5717d8cfdf38ecf3e44942b0f.tar.bz2
+
+meta-mingw
+
+-  Repository Location: https://git.yoctoproject.org/git/meta-mingw
+-  Branch: :yocto_git:`kirkstone </meta-mingw/log/?h=kirkstone>`
+-  Tag: :yocto_git:`yocto-4.0 </meta-mingw/tag/?h=yocto-4.0>`
+-  Git Revision: :yocto_git:`a90614a6498c3345704e9611f2842eb933dc51c1 </meta-mingw/commit/?id=a90614a6498c3345704e9611f2842eb933dc51c1>`
+-  Release Artefact: meta-mingw-a90614a6498c3345704e9611f2842eb933dc51c1
+-  sha: 49f9900bfbbc1c68136f8115b314e95d0b7f6be75edf36a75d9bcd1cca7c6302
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-4.0/meta-mingw-a90614a6498c3345704e9611f2842eb933dc51c1.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-4.0/meta-mingw-a90614a6498c3345704e9611f2842eb933dc51c1.tar.bz2
+
+meta-gplv2
+
+-  Repository Location: https://git.yoctoproject.org/git/meta-gplv2
+-  Branch: :yocto_git:`kirkstone </meta-gplv2/log/?h=kirkstone>`
+-  Tag: :yocto_git:`yocto-4.0 </meta-gplv2/tag/?h=yocto-4.0>`
+-  Git Revision: :yocto_git:`d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a </meta-mingw/commit/?id=d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a>`
+-  Release Artefact: meta-gplv2-d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a
+-  sha: c386f59f8a672747dc3d0be1d4234b6039273d0e57933eb87caa20f56b9cca6d
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-4.0/meta-gplv2-d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-4.0/meta-gplv2-d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a.tar.bz2
+
+bitbake
+
+-  Repository Location: :oe_git:`/bitbake`
+-  Branch: :oe_git:`2.0 </bitbake/log/?h=2.0>`
+-  Tag: :oe_git:`yocto-4.0 </bitbake/tag/?h=yocto-4.0>`
+-  Git Revision: :oe_git:`c212b0f3b542efa19f15782421196b7f4b64b0b9 </bitbake/commit/?id=c212b0f3b542efa19f15782421196b7f4b64b0b9>`
+-  Release Artefact: bitbake-c212b0f3b542efa19f15782421196b7f4b64b0b9
+-  sha: 6872095c7d7be5d791ef3e18b6bab2d1e0e237962f003d2b00dc7bd6fb6d2ef7
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-4.0/bitbake-c212b0f3b542efa19f15782421196b7f4b64b0b9.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-4.0/bitbake-c212b0f3b542efa19f15782421196b7f4b64b0b9.tar.bz2
+
+yocto-docs
+
+-  Repository Location: https://git.yoctoproject.org/git/yocto-docs
+-  Branch: :yocto_git:`kirkstone </yocto-docs/log/?h=kirkstone>`
+-  Tag: :yocto_git:`yocto-4.0 </yocto-docs/tag/?h=yocto-4.0>`
+-  Git Revision: :yocto_git:`a6f571ad5b087385cad8765ed455c4b4eaeebca6 </yocto-docs/commit/?id=a6f571ad5b087385cad8765ed455c4b4eaeebca6>`
+
