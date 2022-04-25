@@ -109,10 +109,10 @@ Classes
 Class files (``.bbclass``) contain information that is useful to share
 between recipes files. An example is the
 :ref:`autotools <ref-classes-autotools>` class,
-which contains common settings for any application that Autotools uses.
-The ":ref:`ref-manual/classes:Classes`" chapter in the
-Yocto Project Reference Manual provides details about classes and how to
-use them.
+which contains common settings for any application that is built with
+the `GNU Autotools <https://en.wikipedia.org/wiki/GNU_Autotools>`__.
+The ":ref:`ref-manual/classes:Classes`" chapter in the Yocto Project
+Reference Manual provides details about classes and how to use them.
 
 Configurations
 --------------

@@ -78,7 +78,8 @@ about the variable flags (varflags) that help control archive creation.
 ``autotools*.bbclass``
 ======================
 
-The ``autotools*`` classes support Autotooled packages.
+The ``autotools*`` classes support packages built with the
+`GNU Autotools <https://en.wikipedia.org/wiki/GNU_Autotools>`__.
 
 The ``autoconf``, ``automake``, and ``libtool`` packages bring
 standardization. This class defines a set of tasks (e.g. ``configure``,
