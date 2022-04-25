@@ -140,7 +140,7 @@ using a different layer where that metadata might be common across
 several pieces of hardware.
 
 There are many layers working in the Yocto Project development environment. The
-:yocto_home:`Yocto Project Curated Layer Index </software-overview/layers/>`
+:yocto_home:`Yocto Project Compatible Layer Index </software-overview/layers/>`
 and :oe_layerindex:`OpenEmbedded Layer Index <>` both contain layers from
 which you can use or leverage.
 
