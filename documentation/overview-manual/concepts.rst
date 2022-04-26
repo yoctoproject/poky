@@ -313,7 +313,7 @@ section in the Yocto Project Development Tasks Manual.
 
 The files ``site.conf`` and ``auto.conf`` are not created by the
 environment initialization script. If you want the ``site.conf`` file,
-you need to create that yourself. The ``auto.conf`` file is typically
+you need to create it yourself. The ``auto.conf`` file is typically
 created by an autobuilder:
 
 -  *site.conf:* You can use the ``conf/site.conf`` configuration
@@ -321,17 +321,7 @@ created by an autobuilder:
    you had several build environments and they shared some common
    features. You can set these default build properties here. A good
    example is perhaps the packaging format to use through the
-   :term:`PACKAGE_CLASSES`
-   variable.
-
-   One useful scenario for using the ``conf/site.conf`` file is to
-   extend your :term:`BBPATH` variable
-   to include the path to a ``conf/site.conf``. Then, when BitBake looks
-   for Metadata using :term:`BBPATH`, it finds the ``conf/site.conf`` file
-   and applies your common configurations found in the file. To override
-   configurations in a particular build directory, alter the similar
-   configurations within that build directory's ``conf/local.conf``
-   file.
+   :term:`PACKAGE_CLASSES` variable.
 
 -  *auto.conf:* The file is usually created and written to by an
    autobuilder. The settings put into the file are typically the same as
