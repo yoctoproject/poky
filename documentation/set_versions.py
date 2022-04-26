@@ -23,13 +23,12 @@ ourversion = None
 if len(sys.argv) == 2:
     ourversion = sys.argv[1]
 
-activereleases = ["honister", "hardknott", "dunfell"]
-#devbranch = "langdale"
-devbranch = "kirkstone"
+activereleases = ["kirkstone", "honister", "hardknott", "dunfell"]
+devbranch = "langdale"
 ltsseries = ["kirkstone", "dunfell"]
 
 release_series = collections.OrderedDict()
-#release_series["langdale"] = "4.1"
+release_series["langdale"] = "4.1"
 release_series["kirkstone"] = "4.0"
 release_series["honister"] = "3.4"
 release_series["hardknott"] = "3.3"
@@ -57,8 +56,8 @@ release_series["bernard"] = "1.0"
 release_series["laverne"] = "0.9"
 
 
-#    "langdale" : "2.2",
 bitbake_mapping = {
+    "langdale" : "2.2",
     "kirkstone" : "2.0",
     "honister" : "1.52",
     "hardknott" : "1.50",
