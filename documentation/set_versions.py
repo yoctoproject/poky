@@ -27,6 +27,11 @@ activereleases = ["kirkstone", "honister", "hardknott", "dunfell"]
 devbranch = "langdale"
 ltsseries = ["kirkstone", "dunfell"]
 
+# used by run-docs-builds to get the default page
+if ourversion == "getlatest":
+    print(activereleases[0])
+    sys.exit(0)
+
 release_series = collections.OrderedDict()
 release_series["langdale"] = "4.1"
 release_series["kirkstone"] = "4.0"
