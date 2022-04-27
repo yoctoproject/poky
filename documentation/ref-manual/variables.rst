@@ -7899,6 +7899,21 @@ system and gives an overview of their function and contents.
       toolchain. You can use ``meta-sourcery`` as a template for adding
       support for other external toolchains.
 
+   :term:`TEMPLATECONF`
+      Specifies the directory used by the build system to find templates
+      from which to build the ``bblayers.conf`` and ``local.conf`` files.
+      Use this variable if you wish to customize such files, and the default
+      BitBake targets shown when sourcing the ``oe-init-build-env`` script.
+
+      For details, see the
+      :ref:`dev-manual/common-tasks:creating a custom template configuration directory`
+      section in the Yocto Project Development Tasks manual.
+
+      .. note::
+
+         You must set this variable in the external environment in order
+         for it to work.
+
    :term:`TEST_EXPORT_DIR`
       The location the OpenEmbedded build system uses to export tests when
       the :term:`TEST_EXPORT_ONLY` variable is set

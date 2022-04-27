@@ -6434,10 +6434,10 @@ files (i.e. ``local.conf`` and ``bblayers.conf``) that are created in a
 new build directory.
 
 The OpenEmbedded build system uses the environment variable
-``TEMPLATECONF`` to locate the directory from which it gathers
+:term:`TEMPLATECONF` to locate the directory from which it gathers
 configuration information that ultimately ends up in the
 :term:`Build Directory` ``conf`` directory.
-By default, ``TEMPLATECONF`` is set as follows in the ``poky``
+By default, :term:`TEMPLATECONF` is set as follows in the ``poky``
 repository::
 
    TEMPLATECONF=${TEMPLATECONF:-meta-poky/conf}
@@ -6452,7 +6452,7 @@ list of BitBake targets when running the setup script.
 
 To override these default configuration files with configurations you
 want used within every new Build Directory, simply set the
-``TEMPLATECONF`` variable to your directory. The ``TEMPLATECONF``
+:term:`TEMPLATECONF` variable to your directory. The :term:`TEMPLATECONF`
 variable is set in the ``.templateconf`` file, which is in the top-level
 :term:`Source Directory` folder
 (e.g. ``poky``). Edit the ``.templateconf`` so that it can locate your
@@ -6492,7 +6492,7 @@ either of the setup scripts::
 
 Changing the listed common targets is as easy as editing your version of
 ``conf-notes.txt`` in your custom template configuration directory and
-making sure you have ``TEMPLATECONF`` set to your directory.
+making sure you have :term:`TEMPLATECONF` set to your directory.
 
 Conserving Disk Space
 =====================
