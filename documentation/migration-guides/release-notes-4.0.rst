@@ -1,6 +1,8 @@
 Release notes for 4.0 (kirkstone)
 ---------------------------------
 
+This is a Long Term Support release, published in April 2022, and supported at least for two years (April 2024).
+
 New Features / Enhancements in 4.0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
