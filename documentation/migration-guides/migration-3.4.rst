@@ -1,6 +1,3 @@
-Release 3.4 (honister)
-======================
-
 Migration notes for 3.4 (honister)
 ----------------------------------
 
@@ -274,6 +271,3 @@ Miscellaneous
   examples in :term:`EXTRA_USERS_PARAMS`.
 
 
-.. include:: release-notes-3.4.rst
-.. include:: release-notes-3.4.1.rst
-.. include:: release-notes-3.4.2.rst

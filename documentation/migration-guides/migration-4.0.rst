@@ -265,5 +265,3 @@ Miscellaneous changes
   when parsing recipes. Any code depending on the previous behaviour will no longer
   work - change any such code to explicitly use appropriate path variables instead.
 
-
-.. include:: release-notes-4.0.rst
