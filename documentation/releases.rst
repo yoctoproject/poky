@@ -58,6 +58,7 @@ Release Series 3.1 (dunfell)
 - :yocto_docs:`3.1.13 Documentation </3.1.13>`
 - :yocto_docs:`3.1.14 Documentation </3.1.14>`
 - :yocto_docs:`3.1.15 Documentation </3.1.15>`
+- :yocto_docs:`3.1.16 Documentation </3.1.16>`
 
 ==========================
  Outdated Release Manuals
