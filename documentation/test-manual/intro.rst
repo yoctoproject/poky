@@ -83,6 +83,7 @@ topology that includes a controller and a cluster of workers:
 
 .. image:: figures/ab-test-cluster.png
    :align: center
+   :width: 70%
 
 Yocto Project Tests - Types of Testing Overview
 ===============================================

@@ -1125,6 +1125,7 @@ The remainder of the section provides details for the steps.
 
 .. image:: figures/recipe-workflow.png
    :align: center
+   :width: 50%
 
 Locate or Automatically Create a Base Recipe
 --------------------------------------------
@@ -3618,7 +3619,7 @@ Yocto Project Overview and Concepts Manual.
 The following figure and list overviews the build process:
 
 .. image:: figures/bitbake-build-flow.png
-   :align: center
+   :width: 100%
 
 1. *Set up Your Host Development System to Support Development Using the
    Yocto Project*: See the ":doc:`start`" section for options on how to get a
@@ -3736,6 +3737,7 @@ Follow these steps to set up and execute multiple configuration builds:
 
    .. image:: figures/multiconfig_files.png
       :align: center
+      :width: 50%
 
    The reason for this required file hierarchy is because the :term:`BBPATH`
    variable is not constructed until the layers are parsed.
@@ -7691,7 +7693,7 @@ On a browser,
 go to ``http://192.168.7.2:3000`` and you see the following:
 
 .. image:: figures/cute-files-npm-example.png
-   :align: center
+   :width: 100%
 
 You can find the recipe in ``workspace/recipes/cute-files``. You can use
 the recipe in any layer you choose.
@@ -8215,6 +8217,7 @@ variable. Here is an example abbreviated listing:
 
 .. image:: figures/buildhistory.png
    :align: center
+   :width: 50%
 
 At the top level, there is a ``metadata-revs`` file that lists the
 revisions of the repositories for the enabled layers when the build was
@@ -8555,7 +8558,7 @@ instruction in the ``README`` file
 Here is a sample screenshot of the interface:
 
 .. image:: figures/buildhistory-web.png
-   :align: center
+   :width: 100%
 
 Performing Automated Runtime Testing
 ====================================

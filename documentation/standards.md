@@ -48,8 +48,14 @@ To include a screenshot in PNG format:
     .. image:: figures/user-configuration.png
        :align: center
 
-Depending on the size of the image, you may also shrink it
-to prevent it from filling the whole page width:
+A diagram with many details usually needs to use
+the whole page width to be readable on all media.
+In this case, the `:align:` directive is unnecessary:
+
+       :scale: 100%
+
+Conversely, you may also shrink some images to
+to prevent them from filling the whole page width:
 
        :scale: 50%
 

@@ -24,7 +24,7 @@ software customizations and build interchange for multiple hardware
 platforms as well as software stacks that can be maintained and scaled.
 
 .. image:: figures/key-dev-elements.png
-    :align: center
+    :width: 100%
 
 For further introductory information on the Yocto Project, you might be
 interested in this
@@ -638,7 +638,7 @@ these items that make up the Poky repository in the
 The following figure illustrates what generally comprises Poky:
 
 .. image:: figures/poky-reference-distribution.png
-    :align: center
+    :width: 100%
 
 -  BitBake is a task executor and scheduler that is the heart of the
    OpenEmbedded build system.
@@ -720,7 +720,7 @@ accomplish image and SDK generation. The following figure overviews that
 workflow:
 
 .. image:: figures/YP-flow-diagram.png
-    :align: center
+    :width: 100%
 
 Following is a brief summary of the "workflow":
 

@@ -98,6 +98,7 @@ contact us with other suggestions.
    be going wrong.
 
    .. image:: figures/yp-how-it-works-new-diagram.png
+      :width: 100%
 
 #. **Know that you can generate a dependency graph and learn how to do it:**
    A dependency graph shows dependencies between recipes, tasks, and targets.
