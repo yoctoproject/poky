@@ -7,7 +7,29 @@ It is currently a work in progress.
 
 ## Text standards
 
-This section has not been filled yet
+### Project names
+
+Project names should be capitalized in the same
+way they are on Wikipedia, in particular:
+
+* BitBake
+* OpenEmbedded
+
+There are exceptions in which such names can be used
+in lower case:
+
+* When referring to a package name
+* When referring to the corresponding command name
+* When used in a cross-reference title. Such
+  titles are usually in lower case.
+
+### File names
+
+File names should be quoted as in the below example:
+
+     ``conf/local.conf``
+
+Using "conf/local/conf" would be wrong.
 
 ## ReStructured Text Syntax standards
 
