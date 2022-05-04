@@ -740,7 +740,7 @@ entry/exit events we recorded::
    root@crownbay:~# perf script -g python
    generated Python script: perf-script.py
 
-The skeleton script simply creates a python function for each event type in the
+The skeleton script simply creates a Python function for each event type in the
 perf.data file. The body of each function simply prints the event name along
 with its parameters. For example:
 
@@ -859,7 +859,7 @@ goes a little way to support the idea mentioned previously that given
 the right kind of trace data, higher-level profiling-type summaries can
 be derived from it.
 
-Documentation on using the `'perf script' python
+Documentation on using the `'perf script' Python
 binding <https://linux.die.net/man/1/perf-script-python>`__.
 
 System-Wide Tracing and Profiling
@@ -1149,7 +1149,7 @@ section can be found here:
 -  The `'perf script'
    manpage <https://linux.die.net/man/1/perf-script>`__.
 
--  Documentation on using the `'perf script' python
+-  Documentation on using the `'perf script' Python
    binding <https://linux.die.net/man/1/perf-script-python>`__.
 
 -  The top-level `perf(1) manpage <https://linux.die.net/man/1/perf>`__.

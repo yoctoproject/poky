@@ -318,7 +318,7 @@ tree specific to your kernel from which to generate the new kernel
 image.
 
 The following figure shows the temporary file structure created on your
-host system when you build the kernel using Bitbake. This
+host system when you build the kernel using BitBake. This
 :term:`Build Directory` contains all the
 source files used during the build.
 

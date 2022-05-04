@@ -179,7 +179,7 @@ contact us with other suggestions.
    * understand devtool and how it simplifies your workflow
    * improve build speeds with shared downloads and shared state cache
    * generate and understand a dependency graph
-   * generate and understand bitbake environment
+   * generate and understand BitBake environment
    * build an Extensible SDK for applications development
 
 #. **Depending on what you primary interests are with the Yocto Project, you

@@ -3551,7 +3551,7 @@ system and gives an overview of their function and contents.
 
       For more information on :term:`INHERIT`, see the
       :ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:\`\`inherit\`\` configuration directive`"
-      section in the Bitbake User Manual.
+      section in the BitBake User Manual.
 
    :term:`INHERIT_DISTRO`
       Lists classes that will be inherited at the distribution level. It is
