@@ -283,7 +283,7 @@ Image artifact name variables now centralised in image-artifact-names class
 ---------------------------------------------------------------------------
 
 The defaults for the following image artifact name variables have been moved
-from bitbake.conf to a new ``image-artifact-names`` class:
+from ``bitbake.conf`` to a new ``image-artifact-names`` class:
 
 - :term:`IMAGE_BASENAME`
 - :term:`IMAGE_LINK_NAME`
