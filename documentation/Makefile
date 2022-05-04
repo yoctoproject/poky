@@ -58,9 +58,11 @@ sphinx-lint:
 	sphinx-lint $(SPHINXLINTDOCS)
 
 epub: $(PNGs)
+	$(SOURCEDIR)/set_versions.py
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 latexpdf: $(PDFs)
+	$(SOURCEDIR)/set_versions.py
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 all: html epub latexpdf
