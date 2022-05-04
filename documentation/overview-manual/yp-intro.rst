@@ -688,8 +688,8 @@ Sato.
 
 One of the most powerful properties of Poky is that every aspect of a
 build is controlled by the metadata. You can use metadata to augment
-these base image types by adding metadata
-`layers <overview-manual/yp-intro:the yocto project layer model>` that extend
+these base image types by adding metadata :ref:`layers
+<overview-manual/yp-intro:the yocto project layer model>` that extend
 functionality.
 These layers can provide, for example, an additional software stack for
 an image type, add a board support package (BSP) for additional
