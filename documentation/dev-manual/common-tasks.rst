@@ -10312,24 +10312,20 @@ debug on the target hardware.
 
 To support this kind of debugging, you need do the following:
 
--  Ensure that GDB is on the target. You can do this by adding "gdb" to
-   :term:`IMAGE_INSTALL`::
+-  Ensure that GDB is on the target. You can do this by making
+   the following addition to your ``local.conf`` file::
 
-      IMAGE_INSTALL:append = " gdb"
+      EXTRA_IMAGE_FEATURES:append = " tools-debug"
 
-   Alternatively, you can add "tools-debug" to :term:`IMAGE_FEATURES`::
+-  Ensure that debug symbols are present. You can do so by adding the
+   corresponding ``-dbg`` package to :term:`IMAGE_INSTALL`::
 
-      IMAGE_FEATURES:append = " tools-debug"
+      IMAGE_INSTALL:append = " packagename-dbg"
 
--  Ensure that debug symbols are present. You can make sure these
-   symbols are present by installing ``-dbg``::
-
-      IMAGE_INSTALL:append = "packagename-dbg"
-
-   Alternatively, you can do the following to include
+   Alternatively, you can add the following to ``local.conf`` to include
    all the debug symbols::
 
-      IMAGE_FEATURES:append = " dbg-pkgs"
+      EXTRA_IMAGE_FEATURES:append = " dbg-pkgs"
 
 .. note::
 
