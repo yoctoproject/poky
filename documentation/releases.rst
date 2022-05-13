@@ -25,6 +25,7 @@ Release Series 3.4 (honister)
 - :yocto_docs:`3.4.1 Documentation </3.4.1>`
 - :yocto_docs:`3.4.2 Documentation </3.4.2>`
 - :yocto_docs:`3.4.3 Documentation </3.4.3>`
+- :yocto_docs:`3.4.4 Documentation </3.4.4>`
 
 ******************************
 Release Series 3.3 (hardknott)
