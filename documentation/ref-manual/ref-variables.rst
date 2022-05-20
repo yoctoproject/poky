@@ -3846,10 +3846,10 @@ system and gives an overview of their function and contents.
       ::
 
          KERNEL_EXTRA_FEATURES ?= "features/netfilter/netfilter.scc features/taskstats/taskstats.scc"
-         KERNEL_FEATURES_append = "${KERNEL_EXTRA_FEATURES}"
-         KERNEL_FEATURES_append_qemuall = "cfg/virtio.scc"
+         KERNEL_FEATURES_append = " ${KERNEL_EXTRA_FEATURES}"
+         KERNEL_FEATURES_append_qemuall = " cfg/virtio.scc"
          KERNEL_FEATURES_append_qemux86 = " cfg/sound.scc cfg/paravirt_kvm.scc"
-         KERNEL_FEATURES_append_qemux86-64 = "cfg/sound.scc"
+         KERNEL_FEATURES_append_qemux86-64 = " cfg/sound.scc"
 
    :term:`KERNEL_FIT_LINK_NAME`
       The link name of the kernel flattened image tree (FIT) image. This
@@ -4048,7 +4048,7 @@ system and gives an overview of their function and contents.
          SRCREV_machine_core2-32-intel-common = "43b9eced9ba8a57add36af07736344dcc383f711"
          KMACHINE_core2-32-intel-common = "intel-core2-32"
          KBRANCH_core2-32-intel-common = "standard/base"
-         KERNEL_FEATURES_append_core2-32-intel-common = "${KERNEL_FEATURES_INTEL_COMMON}"
+         KERNEL_FEATURES_append_core2-32-intel-common = " ${KERNEL_FEATURES_INTEL_COMMON}"
 
       The ``KMACHINE`` statement says
       that the kernel understands the machine name as "intel-core2-32".
