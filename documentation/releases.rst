@@ -16,6 +16,7 @@ Release Series 4.0 (kirkstone)
 ******************************
 
 - :yocto_docs:`4.0 Documentation </4.0>`
+- :yocto_docs:`4.0.1 Documentation </4.0.1>`
 
 ******************************
 Release Series 3.4 (honister)
