@@ -175,7 +175,13 @@ Tests map into the codebase as follows:
    which include the fetchers. The tests are located in
    ``bitbake/lib/*/tests``.
 
+   Some of these tests run the ``bitbake`` command, so ``bitbake/bin``
+   must be added to the ``PATH`` before running ``bitbake-selftest``.
    From within the BitBake repository, run the following::
+
+      $ export PATH=$PWD/bin:$PATH
+
+   After that, you can run the selftest script::
 
       $ bitbake-selftest
 
