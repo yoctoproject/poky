@@ -7664,6 +7664,10 @@ system and gives an overview of their function and contents.
 
          SYSTEMD_SERVICE:${PN} = "connman.service"
 
+      The package overrides that can be specified are directly related to the value of
+      term:`SYSTEMD_PACKAGES`. Overrides not included in term:`SYSTEMD_PACKAGES`
+      will be silently ignored.
+
    :term:`SYSVINIT_ENABLED_GETTYS`
       When using
       :ref:`SysVinit <dev-manual/common-tasks:enabling system services>`,
