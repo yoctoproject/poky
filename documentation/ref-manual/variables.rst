@@ -718,10 +718,11 @@ system and gives an overview of their function and contents.
 
          BBMULTICONFIG = "configA configB configC"
 
-      Each configuration file you
-      use must reside in the :term:`Build Directory`
-      ``conf/multiconfig`` directory (e.g.
-      ``build_directory/conf/multiconfig/configA.conf``).
+      Each configuration file you use must reside in a ``multiconfig``
+      subdirectory of a configuration directory within a layer, or
+      within the :term:`Build Directory` (e.g.
+      ``build_directory/conf/multiconfig/configA.conf`` or
+      ``mylayer/conf/multiconfig/configB.conf``).
 
       For information on how to use :term:`BBMULTICONFIG` in an environment
       that supports building targets with multiple configurations, see the
