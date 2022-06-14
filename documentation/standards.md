@@ -7,6 +7,31 @@ It is currently a work in progress.
 
 ## Text standards
 
+### Bulleted lists
+
+Though Sphinx supports both the ``*`` and ``-`` characters
+for introducing bulleted lists, we have chosen to use
+only ``-`` for this purpose.
+
+Though not strictly required by Sphinx, we have also chosen
+to use two space characters after ``-`` to introduce each
+list item:
+
+    -  Paragraph 1
+
+    -  Paragraph 2
+
+As shown in the above example, there should also be an empty
+line between each list item.
+
+An exception to this rule is when the list items are just made
+of a few words, instead of entire paragraphs:
+
+    -  Item 1
+    -  Item 2
+
+This is again a matter of style, not syntax.
+
 ### Line wrapping
 
 Source code for the documentation shouldn't have lines
