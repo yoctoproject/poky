@@ -7666,6 +7666,24 @@ system and gives an overview of their function and contents.
       For information on Systemd-boot, see the `Systemd-boot
       documentation <https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__.
 
+   :term:`SYSTEMD_DEFAULT_TARGET`
+
+      This variable allows to set the default unit that systemd starts at bootup.
+      Usually, this is either ``multi-user.target`` or ``graphical.target``.
+      This works by creating a ``default.target`` symbolic link to the chosen systemd
+      target file.
+
+      See `systemd's documentation
+      <https://www.freedesktop.org/software/systemd/man/systemd.special.html>`__
+      for details.
+
+      For example, this variable is used in the
+      `core-image-minimal-xfce.bb
+      <https://git.openembedded.org/meta-openembedded/tree/meta-xfce/recipes-core/images/core-image-minimal-xfce.bb>`__
+      recipe::
+
+          SYSTEMD_DEFAULT_TARGET = "graphical.target"
+
    :term:`SYSTEMD_PACKAGES`
       When inheriting the :ref:`systemd <ref-classes-systemd>` class,
       this variable locates the systemd unit files when they are not found
