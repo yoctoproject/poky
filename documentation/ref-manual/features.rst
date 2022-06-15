@@ -218,8 +218,19 @@ Here are the image features available for all images:
 -  *doc-pkgs:* Installs documentation packages for all packages
    installed in a given image.
 
--  *empty-root-password:* Sets the root password to an empty string,
-   which allows logins with a blank password.
+-  *empty-root-password:* This feature or ``debug-tweaks`` is required if
+   you want to allow root login with an empty password. If these features
+   are not present in :term:`IMAGE_FEATURES`, a non-empty password is
+   forced in ``/etc/passwd`` and ``/etc/shadow`` if such files exist.
+
+   .. note::
+       ``empty-root-passwd`` doesn't set an empty root password by itself.
+       You get an initial empty root password thanks to the
+       :oe_git:`base-passwd </openembedded-core/tree/meta/recipes-core/base-passwd/>`
+       and :oe_git:`shadow </openembedded-core/tree/meta/recipes-extended/shadow/>`
+       recipes, and the presence of ``empty-root-passwd`` or ``debug-tweaks``
+       just disables the mechanism which forces an non-empty password for the
+       root user.
 
 -  *overlayfs-etc:* Configures the ``/etc`` directory to be in ``overlayfs``.
    This allows to store device specific information elsewhere, especially
