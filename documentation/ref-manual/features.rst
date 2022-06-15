@@ -198,17 +198,19 @@ application problems or profile applications.
 
 Here are the image features available for all images:
 
--  *allow-empty-password:* Allows Dropbear and OpenSSH to accept root
-   logins and logins from accounts having an empty password string.
+-  *allow-empty-password:* Allows Dropbear and OpenSSH to accept
+   logins from accounts having an empty password string.
+
+-  *allow-root-login:* Allows Dropbear and OpenSSH to accept root logins.
 
 -  *dbg-pkgs:* Installs debug symbol packages for all packages installed
    in a given image.
 
 -  *debug-tweaks:* Makes an image suitable for development (e.g. allows
-   root logins without passwords and enables post-installation logging).
-   See the 'allow-empty-password', 'empty-root-password', and
-   'post-install-logging' features in this list for additional
-   information.
+   root logins, logins without passwords ---including root ones, and enables
+   post-installation logging). See the ``allow-empty-password``,
+   ``allow-root-login``, ``empty-root-password``, and ``post-install-logging``
+   features in this list for additional information.
 
 -  *dev-pkgs:* Installs development packages (headers and extra library
    links) for all packages installed in a given image.
