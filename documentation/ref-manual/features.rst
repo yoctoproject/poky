@@ -100,7 +100,9 @@ packages, and they can go beyond simply controlling the installation of
 a package or packages. In most cases, the presence or absence of a
 feature translates to the appropriate option supplied to the configure
 script during the :ref:`ref-tasks-configure` task for
-the recipes that optionally support the feature.
+the recipes that optionally support the feature. Appropriate options
+must be supplied, and enabling/disabling :term:`PACKAGECONFIG` for the
+concerned packages is one way of supplying such options.
 
 Some distro features are also machine features. These select features
 make sense to be controlled both at the machine and distribution

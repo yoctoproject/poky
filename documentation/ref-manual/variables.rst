@@ -1873,7 +1873,10 @@ system and gives an overview of their function and contents.
       optionally support the feature. For example, specifying "x11" in
       :term:`DISTRO_FEATURES`, causes every piece of software built for the
       target that can optionally support X11 to have its X11 support
-      enabled.
+      enabled. Note: just enabling :term:`DISTRO_FEATURES` alone doesn't
+      enable feature support for packages, mechanisms such as making
+      :term:`PACKAGECONFIG` track :term:`DISTRO_FEATURES` are used
+      to enable/disable package features.
 
       Two more examples are Bluetooth and NFS support. For a more complete
       list of features that ships with the Yocto Project and that you can
