@@ -3547,6 +3547,14 @@ system and gives an overview of their function and contents.
          remove dependencies on or provide alternatives to components that
          are required to produce a functional system image.
 
+   :term:`INCOMPATIBLE_LICENSE_EXCEPTIONS`
+      Specifies a space-separated list of package and license pairs that
+      are allowed to be used even if the license is specified in
+      :term:`INCOMPATIBLE_LICENSE`. The package and license pairs are
+      separated using a colon. Example::
+
+         INCOMPATIBLE_LICENSE_EXCEPTIONS = "gdbserver:GPL-3.0-only gdbserver:LGPL-3.0-only"
+
    :term:`INHERIT`
       Causes the named class or classes to be inherited globally. Anonymous
       functions in the class or classes are not executed for the base
