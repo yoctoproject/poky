@@ -1297,6 +1297,19 @@ system and gives an overview of their function and contents.
       the recipe will be skipped, and if the build system attempts to build
       the recipe then an error will be triggered.
 
+   :term:`CONVERSION_CMD`
+      This variable is used for storing image conversion commands.
+      Image conversion can convert an image into different objects like:
+
+      -   Compressed version of the image
+
+      -   Checksums for the image
+
+      An example of :term:`CONVERSION_CMD` from :ref:`image-types
+      <ref-classes-image_types>` class is::
+
+         CONVERSION_CMD:lzo = "lzop -9 ${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.${type}"
+
    :term:`COPY_LIC_DIRS`
       If set to "1" along with the
       :term:`COPY_LIC_MANIFEST` variable, the

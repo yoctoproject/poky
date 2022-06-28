@@ -252,7 +252,7 @@ Miscellaneous
 
 - The previously deprecated ``COMPRESS_CMD`` and
   ``CVE_CHECK_CVE_WHITELIST`` variables have been removed. Use
-  ``CONVERSION_CMD`` and ``CVE_CHECK_WHITELIST`` (replaced by
+  :term:`CONVERSION_CMD` and ``CVE_CHECK_WHITELIST`` (replaced by
   :term:`CVE_CHECK_IGNORE` in version 3.5) respectively
   instead.
 
