@@ -53,7 +53,7 @@ author = 'The Linux Foundation'
 # -- General configuration ---------------------------------------------------
 
 # Prevent building with an outdated version of sphinx
-needs_sphinx = "3.1"
+needs_sphinx = "4.0"
 
 # to load local extension from the folder 'sphinx'
 sys.path.insert(0, os.path.abspath('sphinx'))
