@@ -2000,9 +2000,7 @@ The ``python_pep517`` class builds and installs a Python ``wheel`` binary
 archive (see `PEP-517 <https://peps.python.org/pep-0517/>`__).
 
 Recipes wouldn't inherit this directly, instead typically another class will
-inherit this, add the relevant native dependencies, and set
-:term:`PEP517_BUILD_API` to the Python class which implements the PEP-517 build
-API.
+inherit this and add the relevant native dependencies.
 
 Examples of classes which do this are :ref:`python_flit_core
 <ref-classes-python_flit_core>`, :ref:`python_setuptools_build_meta

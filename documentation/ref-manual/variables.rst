@@ -5682,11 +5682,6 @@ system and gives an overview of their function and contents.
 
       :term:`PE` is the default value of the :term:`PKGE` variable.
 
-   :term:`PEP517_BUILD_API`
-      When used by recipes that inherit the :ref:`python_pep517
-      <ref-classes-python_pep517>` class, specifies the entry point to the
-      PEP-517 compliant build API (such as ``flit_core.buildapi``).
-
    :term:`PEP517_WHEEL_PATH`
       When used by recipes that inherit the
       :ref:`python_pep517 <ref-classes-python_pep517>` class,
