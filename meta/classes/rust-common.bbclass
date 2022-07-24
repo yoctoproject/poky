@@ -1,38 +1,17 @@
 inherit python3native
+inherit rust-target-config
 
 # Common variables used by all Rust builds
-export rustlibdir = "${libdir}/rust"
+export rustlibdir = "${libdir}/rustlib/${RUST_HOST_SYS}/lib"
 FILES:${PN} += "${rustlibdir}/*.so"
 FILES:${PN}-dev += "${rustlibdir}/*.rlib ${rustlibdir}/*.rmeta"
 FILES:${PN}-dbg += "${rustlibdir}/.debug"
 
-RUSTLIB = "-L ${STAGING_LIBDIR}/rust"
+RUSTLIB = "-L ${STAGING_DIR_HOST}${rustlibdir}"
 RUST_DEBUG_REMAP = "--remap-path-prefix=${WORKDIR}=/usr/src/debug/${PN}/${EXTENDPE}${PV}-${PR}"
 RUSTFLAGS += "${RUSTLIB} ${RUST_DEBUG_REMAP}"
 RUSTLIB_DEP ?= "libstd-rs"
-export RUST_TARGET_PATH = "${STAGING_LIBDIR_NATIVE}/rustlib"
 RUST_PANIC_STRATEGY ?= "unwind"
-
-# Native builds are not effected by TCLIBC. Without this, rust-native
-# thinks it's "target" (i.e. x86_64-linux) is a musl target.
-RUST_LIBC = "${TCLIBC}"
-RUST_LIBC:class-crosssdk = "glibc"
-RUST_LIBC:class-native = "glibc"
-
-def determine_libc(d, thing):
-    '''Determine which libc something should target'''
-
-    # BUILD is never musl, TARGET may be musl or glibc,
-    # HOST could be musl, but only if a compiler is built to be run on
-    # target in which case HOST_SYS != BUILD_SYS.
-    if thing == 'TARGET':
-        libc = d.getVar('RUST_LIBC')
-    elif thing == 'BUILD' and (d.getVar('HOST_SYS') != d.getVar('BUILD_SYS')):
-        libc = d.getVar('RUST_LIBC')
-    else:
-        libc = d.getVar('RUST_LIBC:class-native')
-
-    return libc
 
 def target_is_armv7(d):
     '''Determine if target is armv7'''
@@ -63,31 +42,28 @@ def rust_base_triple(d, thing):
     '''
 
     # The llvm-target for armv7 is armv7-unknown-linux-gnueabihf
-    if thing == "TARGET" and target_is_armv7(d):
+    if d.getVar('{}_ARCH'.format(thing)) == d.getVar('TARGET_ARCH') and target_is_armv7(d):
         arch = "armv7"
     else:
         arch = oe.rust.arch_to_rust_arch(d.getVar('{}_ARCH'.format(thing)))
 
-    # All the Yocto targets are Linux and are 'unknown'
-    vendor = "-unknown"
+    # When bootstrapping rust-native, BUILD must be the same as upstream snapshot tarballs
+    pn = d.getVar('PN')
+    if thing == "BUILD" and pn in ["rust-native", "nativesdk-rust", "nativesdk-rust-tools", "rust", "rust-tools"]:
+        return arch + "-unknown-linux-gnu"
+
+    vendor = d.getVar('{}_VENDOR'.format(thing))
+
+    # Default to glibc
+    libc = "-gnu"
     os = d.getVar('{}_OS'.format(thing))
-    libc = determine_libc(d, thing)
-
-    # Prefix with a dash and convert glibc -> gnu
-    if libc == "glibc":
-        libc = "-gnu"
-    elif libc == "musl":
-        libc = "-musl"
-
-    # Don't double up musl (only appears to be the case on aarch64)
-    if os == "linux-musl":
-        if libc != "-musl":
-            bb.fatal("{}_OS was '{}' but TCLIBC was not 'musl'".format(thing, os))
-        os = "linux"
-
     # This catches ARM targets and appends the necessary hard float bits
     if os == "linux-gnueabi" or os == "linux-musleabi":
         libc = bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'hf', '', d)
+    elif "musl" in os:
+        libc = "-musl"
+        os = "linux"
+
     return arch + vendor + '-' + os + libc
 
 

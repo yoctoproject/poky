@@ -69,16 +69,25 @@ cargo_common_do_configure () {
 	cat <<- EOF >> ${CARGO_HOME}/config
 
 	# HOST_SYS
-	[target.${HOST_SYS}]
+	[target.${RUST_HOST_SYS}]
 	linker = "${CARGO_RUST_TARGET_CCLD}"
 	EOF
 
-	if [ "${HOST_SYS}" != "${BUILD_SYS}" ]; then
+	if [ "${RUST_HOST_SYS}" != "${RUST_BUILD_SYS}" ]; then
 		cat <<- EOF >> ${CARGO_HOME}/config
 
 		# BUILD_SYS
-		[target.${BUILD_SYS}]
+		[target.${RUST_BUILD_SYS}]
 		linker = "${RUST_BUILD_CCLD}"
+		EOF
+	fi
+
+	if [ "${RUST_TARGET_SYS}" != "${RUST_BUILD_SYS}" -a "${RUST_TARGET_SYS}" != "${RUST_HOST_SYS}"]; then
+		cat <<- EOF >> ${CARGO_HOME}/config
+
+		# TARGET_SYS
+		[target.${RUST_TARGET_SYS}]
+		linker = "${RUST_TARGET_CCLD}"
 		EOF
 	fi
 

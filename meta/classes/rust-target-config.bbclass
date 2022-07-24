@@ -283,14 +283,21 @@ llvm_cpu[vardepvalue] = "${@llvm_cpu(d)}"
 
 def rust_gen_target(d, thing, wd, arch):
     import json
+
+    build_sys = d.getVar('BUILD_SYS')
+    target_sys = d.getVar('TARGET_SYS')
+
     sys = d.getVar('{}_SYS'.format(thing))
     prefix = d.getVar('{}_PREFIX'.format(thing))
+    rustsys = d.getVar('RUST_{}_SYS'.format(thing))
 
     abi = None
     cpu = "generic"
     features = ""
 
-    if thing == "TARGET":
+    # Need to apply the target tuning conssitently, only if the triplet applies to the target
+    # and not in the native case
+    if sys == target_sys and sys != build_sys:
         abi = d.getVar('ABIEXTENSION')
         cpu = llvm_cpu(d)
         if bb.data.inherits_class('native', d):
@@ -311,14 +318,12 @@ def rust_gen_target(d, thing, wd, arch):
     features = features or d.getVarFlag('FEATURES', arch_abi) or ""
     features = features.strip()
 
-    llvm_target = d.getVar('RUST_TARGET_SYS')
-    if thing == "BUILD":
-        llvm_target = d.getVar('RUST_HOST_SYS')
-
     # build tspec
     tspec = {}
-    tspec['llvm-target'] = llvm_target
+    tspec['llvm-target'] = rustsys
     tspec['data-layout'] = d.getVarFlag('DATA_LAYOUT', arch_abi)
+    if tspec['data-layout'] is None:
+        bb.fatal("No rust target defined for %s" % arch_abi)
     tspec['max-atomic-width'] = int(d.getVarFlag('MAX_ATOMIC_WIDTH', arch_abi))
     tspec['target-pointer-width'] = d.getVarFlag('TARGET_POINTER_WIDTH', arch_abi)
     tspec['target-c-int-width'] = d.getVarFlag('TARGET_C_INT_WIDTH', arch_abi)
@@ -349,18 +354,21 @@ def rust_gen_target(d, thing, wd, arch):
     tspec['panic-strategy'] = d.getVar("RUST_PANIC_STRATEGY")
 
     # write out the target spec json file
-    with open(wd + sys + '.json', 'w') as f:
+    with open(wd + rustsys + '.json', 'w') as f:
         json.dump(tspec, f, indent=4)
 
 # These are accounted for in tmpdir path names so don't need to be in the task sig
-rust_gen_target[vardepsexclude] += "RUST_HOST_SYS RUST_TARGET_SYS ABIEXTENSION llvm_cpu"
+rust_gen_target[vardepsexclude] += "ABIEXTENSION llvm_cpu"
 
 do_rust_gen_targets[vardeps] += "DATA_LAYOUT TARGET_ENDIAN TARGET_POINTER_WIDTH TARGET_C_INT_WIDTH MAX_ATOMIC_WIDTH FEATURES"
 
-RUST_TARGETGENS = "BUILD"
+RUST_TARGETS_DIR = "${WORKDIR}/rust-targets/"
+export RUST_TARGET_PATH = "${RUST_TARGETS_DIR}"
+
+RUST_TARGETGENS = "BUILD HOST TARGET"
 
 python do_rust_gen_targets () {
-    wd = d.getVar('WORKDIR') + '/targets/'
+    wd = d.getVar('RUST_TARGETS_DIR')
     # Order of BUILD, HOST, TARGET is important in case the files overwrite, most specific last
     rust_gen_target(d, 'BUILD', wd, d.getVar('BUILD_ARCH'))
     if "HOST" in d.getVar("RUST_TARGETGENS"):
@@ -370,5 +378,5 @@ python do_rust_gen_targets () {
 }
 
 addtask rust_gen_targets after do_patch before do_compile
-do_rust_gen_targets[dirs] += "${WORKDIR}/targets"
+do_rust_gen_targets[dirs] += "${RUST_TARGETS_DIR}"
 
