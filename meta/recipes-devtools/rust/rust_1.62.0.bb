@@ -47,6 +47,8 @@ rust_do_install:class-nativesdk() {
 
     chown root:root ${D}/ -R
     rm ${D}${libdir}/rustlib/uninstall.sh
+    rm ${D}${libdir}/rustlib/install.log
+    rm ${D}${libdir}/rustlib/manifest*
 }
 
 rust_do_install:class-target() {
@@ -60,6 +62,12 @@ rust_do_install:class-target() {
 
     chown root:root ${D}/ -R
     rm ${D}${libdir}/rustlib/uninstall.sh
+    rm ${D}${libdir}/rustlib/install.log
+    rm ${D}${libdir}/rustlib/manifest*
 }
 
 RUSTLIB_DEP:class-nativesdk = ""
+
+# musl builds include libunwind.a
+INSANE_SKIP:${PN} = "staticdev"
+

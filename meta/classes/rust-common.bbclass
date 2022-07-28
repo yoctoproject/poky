@@ -48,8 +48,8 @@ def rust_base_triple(d, thing):
         arch = oe.rust.arch_to_rust_arch(d.getVar('{}_ARCH'.format(thing)))
 
     # When bootstrapping rust-native, BUILD must be the same as upstream snapshot tarballs
-    pn = d.getVar('PN')
-    if thing == "BUILD" and pn in ["rust-native", "nativesdk-rust", "nativesdk-rust-tools", "rust", "rust-tools"]:
+    bpn = d.getVar('BPN')
+    if thing == "BUILD" and bpn in ["rust"]:
         return arch + "-unknown-linux-gnu"
 
     vendor = d.getVar('{}_VENDOR'.format(thing))
@@ -153,7 +153,7 @@ do_rust_create_wrappers () {
 	# Yocto Target / Rust Target C compiler
 	create_wrapper "${RUST_TARGET_CC}" "${WRAPPER_TARGET_CC}" "${WRAPPER_TARGET_LDFLAGS}"
 	# Yocto Target / Rust Target C++ compiler
-	create_wrapper "${RUST_TARGET_CXX}" "${WRAPPER_TARGET_CXX}"
+	create_wrapper "${RUST_TARGET_CXX}" "${WRAPPER_TARGET_CXX}" "${CXXFLAGS}"
 	# Yocto Target / Rust Target linker
 	create_wrapper "${RUST_TARGET_CCLD}" "${WRAPPER_TARGET_CCLD}" "${WRAPPER_TARGET_LDFLAGS}"
 	# Yocto Target / Rust Target archiver
