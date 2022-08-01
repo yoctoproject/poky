@@ -133,7 +133,7 @@ supported Ubuntu or Debian Linux distribution:
 -  *Documentation:* Packages needed if you are going to build out the
    Yocto Project documentation manuals::
 
-      $ sudo apt install make python3-pip
+      $ sudo apt install make python3-pip inkscape texlive-latex-extra
       &PIP3_HOST_PACKAGES_DOC;
 
    .. note::
@@ -156,7 +156,7 @@ supported Fedora Linux distribution:
 -  *Documentation:* Packages needed if you are going to build out the
    Yocto Project documentation manuals::
 
-      $ sudo dnf install make python3-pip which
+      $ sudo dnf install make python3-pip which inkscape texlive-fncychap
       &PIP3_HOST_PACKAGES_DOC;
 
 openSUSE Packages
@@ -173,7 +173,7 @@ supported openSUSE Linux distribution:
 -  *Documentation:* Packages needed if you are going to build out the
    Yocto Project documentation manuals::
 
-      $ sudo zypper install make python3-pip which
+      $ sudo zypper install make python3-pip which inkscape texlive-fncychap
       &PIP3_HOST_PACKAGES_DOC;
 
 
@@ -201,7 +201,7 @@ supported CentOS-7 Linux distribution:
 -  *Documentation:* Packages needed if you are going to build out the
    Yocto Project documentation manuals::
 
-      $ sudo yum install make python3-pip which
+      $ sudo yum install make python3-pip which inkscape texlive-fncychap
       &PIP3_HOST_PACKAGES_DOC;
 
 CentOS-8 Packages
@@ -231,7 +231,7 @@ supported CentOS-8 Linux distribution:
 -  *Documentation:* Packages needed if you are going to build out the
    Yocto Project documentation manuals::
 
-      $ sudo dnf install make python3-pip which
+      $ sudo dnf install make python3-pip which inkscape texlive-fncychap
       &PIP3_HOST_PACKAGES_DOC;
 
 Required Git, tar, Python, make and gcc Versions
