@@ -135,7 +135,6 @@ system and gives an overview of their function and contents.
       appear in :term:`DISTRO_FEATURES` within the current configuration, then
       the recipe will be skipped, and if the build system attempts to build
       the recipe then an error will be triggered.
-      
 
    :term:`APPEND`
       An override list of append strings for each target specified with
@@ -2386,8 +2385,8 @@ system and gives an overview of their function and contents.
       .. note::
 
          From a security perspective, hardcoding a default password is not
-         generally a good idea or even legal in some jurisdictions. It is 
-         recommended that you do not do this if you are building a production 
+         generally a good idea or even legal in some jurisdictions. It is
+         recommended that you do not do this if you are building a production
          image.
 
       Additionally there is a special ``passwd-expire`` command that will
@@ -3690,10 +3689,10 @@ system and gives an overview of their function and contents.
          to "core-image-minimal-initramfs".
 
       You can also find more information by referencing the
-      ``meta-poky/conf/local.conf.sample.extended`` configuration file in
-      the Source Directory, the :ref:`image <ref-classes-image>` class,
-      and the :ref:`kernel <ref-classes-kernel>` class to see how to use
-      the :term:`INITRAMFS_IMAGE` variable.
+      ``meta-poky/conf/templates/default/local.conf.sample.extended``
+      configuration file in the Source Directory, the :ref:`image
+      <ref-classes-image>` class, and the :ref:`kernel <ref-classes-kernel>`
+      class to see how to use the :term:`INITRAMFS_IMAGE` variable.
 
       If :term:`INITRAMFS_IMAGE` is empty, which is the default, then no
       initramfs image is built.
@@ -3752,7 +3751,7 @@ system and gives an overview of their function and contents.
          configuration file. You cannot set the variable in a recipe file.
 
       See the
-      :yocto_git:`local.conf.sample.extended </poky/tree/meta-poky/conf/local.conf.sample.extended>`
+      :yocto_git:`local.conf.sample.extended </poky/tree/meta-poky/conf/templates/default/local.conf.sample.extended>`
       file for additional information. Also, for information on creating an
       initramfs, see the ":ref:`dev-manual/common-tasks:building an initial ram filesystem (initramfs) image`" section
       in the Yocto Project Development Tasks Manual.
@@ -6075,9 +6074,9 @@ system and gives an overview of their function and contents.
    :term:`PRSERV_HOST`
       The network based :term:`PR` service host and port.
 
-      The ``conf/local.conf.sample.extended`` configuration file in the
-      :term:`Source Directory` shows how the
-      :term:`PRSERV_HOST` variable is set::
+      The ``conf/templates/default/local.conf.sample.extended`` configuration
+      file in the :term:`Source Directory` shows how the :term:`PRSERV_HOST`
+      variable is set::
 
          PRSERV_HOST = "localhost:0"
 
@@ -8666,7 +8665,8 @@ system and gives an overview of their function and contents.
          USER_CLASSES ?= "buildstats"
 
       For more information, see
-      ``meta-poky/conf/local.conf.sample`` in the :term:`Source Directory`.
+      ``meta-poky/conf/templates/default/local.conf.sample`` in the
+      :term:`Source Directory`.
 
    :term:`USERADD_ERROR_DYNAMIC`
       If set to ``error``, forces the OpenEmbedded build system to produce
@@ -8924,4 +8924,3 @@ system and gives an overview of their function and contents.
 
       On systems where many tasks run in parallel, setting a limit to this
       can be helpful in controlling system resource usage.
-

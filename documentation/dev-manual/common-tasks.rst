@@ -11417,12 +11417,12 @@ example:
    # clean up the .git repos
    $ find . -name ".git" -type d -exec rm -rf {} \;
 
-One
-thing a development organization might want to consider for end-user
-convenience is to modify ``meta-poky/conf/bblayers.conf.sample`` to
-ensure that when the end user utilizes the released build system to
-build an image, the development organization's layers are included in
-the ``bblayers.conf`` file automatically::
+One thing a development organization might want to consider for end-user
+convenience is to modify
+``meta-poky/conf/templates/default/bblayers.conf.sample`` to ensure that when
+the end user utilizes the released build system to build an image, the
+development organization's layers are included in the ``bblayers.conf`` file
+automatically::
 
    # POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
    # changes incompatibly
@@ -11451,9 +11451,9 @@ The spdx module has been integrated to a layer named meta-spdxscanner.
 meta-spdxscanner provides several kinds of scanner. If you want to enable
 this function, you have to follow the following steps:
 
-1. Add meta-spdxscanner layer into ``bblayers.conf``. 
+1. Add meta-spdxscanner layer into ``bblayers.conf``.
 
-2. Refer to the README in meta-spdxscanner to setup the environment (e.g, 
+2. Refer to the README in meta-spdxscanner to setup the environment (e.g,
    setup a fossology server) needed for the scanner.
 
 3. Meta-spdxscanner provides several methods within the bbclass to create spdx files.
