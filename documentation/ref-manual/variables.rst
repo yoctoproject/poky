@@ -7972,6 +7972,12 @@ system and gives an overview of their function and contents.
       toolchain. You can use ``meta-sourcery`` as a template for adding
       support for other external toolchains.
 
+   :term:`TC_CXX_RUNTIME`
+      Specifies the C/C++ STL and runtime variant to use during
+      the build process. Default value is 'gnu'
+
+      You can select "gnu", "llvm", or "android".
+
    :term:`TEMPLATECONF`
       Specifies the directory used by the build system to find templates
       from which to build the ``bblayers.conf`` and ``local.conf`` files.
