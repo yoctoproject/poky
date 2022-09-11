@@ -189,7 +189,7 @@ Directory named ``mybuilds/`` that is outside of the :term:`Source Directory`::
    $ source oe-init-build-env ~/mybuilds
 
 The OpenEmbedded build system uses the template configuration files, which
-are found by default in the ``meta-poky/conf/`` directory in the Source
+are found by default in the ``meta-poky/conf/templates/default`` directory in the Source
 Directory. See the
 ":ref:`dev-manual/common-tasks:creating a custom template configuration directory`"
 section in the Yocto Project Development Tasks Manual for more
@@ -261,15 +261,15 @@ OpenEmbedded build system creates it from ``local.conf.sample`` when you
 :ref:`structure-core-script`.
 
 The source ``local.conf.sample`` file used depends on the
-:term:`TEMPLATECONF` script variable, which defaults to ``meta-poky/conf/``
+:term:`TEMPLATECONF` script variable, which defaults to ``meta-poky/conf/templates/default``
 when you are building from the Yocto Project development environment,
-and to ``meta/conf/`` when you are building from the OpenEmbedded-Core
+and to ``meta/conf/templates/default`` when you are building from the OpenEmbedded-Core
 environment. Because the script variable points to the source of the
 ``local.conf.sample`` file, this implies that you can configure your
 build environment from any layer by setting the variable in the
 top-level build environment setup script as follows::
 
-   TEMPLATECONF=your_layer/conf
+   TEMPLATECONF=your_layer/conf/templates/your_template_name
 
 Once the build process gets the sample
 file, it uses ``sed`` to substitute final
@@ -281,7 +281,7 @@ file, it uses ``sed`` to substitute final
    You can see how the :term:`TEMPLATECONF` variable is used by looking at the
    ``scripts/oe-setup-builddir`` script in the :term:`Source Directory`.
    You can find the Yocto Project version of the ``local.conf.sample`` file in
-   the ``meta-poky/conf`` directory.
+   the ``meta-poky/conf/templates/default`` directory.
 
 .. _structure-build-conf-bblayers.conf:
 
@@ -301,14 +301,14 @@ you ``source`` the top-level build environment setup script (i.e.
 
 As with the ``local.conf`` file, the source ``bblayers.conf.sample``
 file used depends on the :term:`TEMPLATECONF` script variable, which
-defaults to ``meta-poky/conf/`` when you are building from the Yocto
-Project development environment, and to ``meta/conf/`` when you are
+defaults to ``meta-poky/conf/templates/default`` when you are building from the Yocto
+Project development environment, and to ``meta/conf/templates/default`` when you are
 building from the OpenEmbedded-Core environment. Because the script
 variable points to the source of the ``bblayers.conf.sample`` file, this
 implies that you can base your build from any layer by setting the
 variable in the top-level build environment setup script as follows::
 
-   TEMPLATECONF=your_layer/conf
+   TEMPLATECONF=your_layer/conf/templates/your_template_name
 
 Once the build process gets the sample file, it uses ``sed`` to substitute final
 ``${``\ :term:`OEROOT`\ ``}`` values for all ``##OEROOT##`` values.
@@ -317,7 +317,7 @@ Once the build process gets the sample file, it uses ``sed`` to substitute final
 
    You can see how the :term:`TEMPLATECONF` variable is defined by the ``scripts/oe-setup-builddir``
    script in the :term:`Source Directory`. You can find the Yocto Project
-   version of the ``bblayers.conf.sample`` file in the ``meta-poky/conf/``
+   version of the ``bblayers.conf.sample`` file in the ``meta-poky/conf/templates/default``
    directory.
 
 .. _structure-build-conf-sanity_info:
