@@ -6466,71 +6466,51 @@ Creating a Custom Template Configuration Directory
 ==================================================
 
 If you are producing your own customized version of the build system for
-use by other users, you might want to customize the message shown by the
-setup script or you might want to change the template configuration
-files (i.e. ``local.conf`` and ``bblayers.conf``) that are created in a
-new build directory.
+use by other users, you might want to provide a custom build configuration
+that includes all the necessary settings and layers (i.e. ``local.conf`` and
+``bblayers.conf`` that are created in a new build directory) and a custom
+message that is shown when setting up the build. This can be done by
+creating one or more template configuration directories in your
+custom distribution layer.
+
+This can be done by using ``bitbake-layers save-build-conf``::
+
+   $ bitbake-layers save-build-conf ../../meta-alex/ test-1
+   NOTE: Starting bitbake server...
+   NOTE: Configuration template placed into /srv/work/alex/meta-alex/conf/templates/test-1
+   Please review the files in there, and particularly provide a configuration description in /srv/work/alex/meta-alex/conf/templates/test-1/conf-notes.txt
+   You can try out the configuration with
+   TEMPLATECONF=/srv/work/alex/meta-alex/conf/templates/test-1 . /srv/work/alex/poky/oe-init-build-env build-try-test-1
+
+The above command takes the config files from the currently active build directory under ``conf``,
+replaces site-specific paths in ``bblayers.conf`` with ``##OECORE##``-relative paths, and copies
+the config files into a specified layer under a specified template name.
+
+To use those saved templates as a starting point for a build, users should point
+to one of them with :term:`TEMPLATECONF` environment variable::
+
+   TEMPLATECONF=/srv/work/alex/meta-alex/conf/templates/test-1 . /srv/work/alex/poky/oe-init-build-env build-try-test-1
 
 The OpenEmbedded build system uses the environment variable
 :term:`TEMPLATECONF` to locate the directory from which it gathers
 configuration information that ultimately ends up in the
 :term:`Build Directory` ``conf`` directory.
-By default, :term:`TEMPLATECONF` is set as follows in the ``poky``
-repository::
 
-   TEMPLATECONF=${TEMPLATECONF:-meta-poky/conf}
+If :term:`TEMPLATECONF` is not set, the default value is obtained
+from ``.templateconf`` file that is read from the same directory as
+``oe-init-build-env`` script. For the Poky reference distribution this
+would be::
 
-This is the
-directory used by the build system to find templates from which to build
-some key configuration files. If you look at this directory, you will
+   TEMPLATECONF=${TEMPLATECONF:-meta-poky/conf/templates/default}
+
+If you look at a configuration template directory, you will
 see the ``bblayers.conf.sample``, ``local.conf.sample``, and
 ``conf-notes.txt`` files. The build system uses these files to form the
-respective ``bblayers.conf`` file, ``local.conf`` file, and display the
-list of BitBake targets when running the setup script.
-
-To override these default configuration files with configurations you
-want used within every new Build Directory, simply set the
-:term:`TEMPLATECONF` variable to your directory. The :term:`TEMPLATECONF`
-variable is set in the ``.templateconf`` file, which is in the top-level
-:term:`Source Directory` folder
-(e.g. ``poky``). Edit the ``.templateconf`` so that it can locate your
-directory.
-
-Best practices dictate that you should keep your template configuration
-directory in your custom distribution layer. For example, suppose you
-have a layer named ``meta-mylayer`` located in your home directory and
-you want your template configuration directory named ``myconf``.
-Changing the ``.templateconf`` as follows causes the OpenEmbedded build
-system to look in your directory and base its configuration files on the
-``*.sample`` configuration files it finds. The final configuration files
-(i.e. ``local.conf`` and ``bblayers.conf`` ultimately still end up in
-your Build Directory, but they are based on your ``*.sample`` files.
-::
-
-   TEMPLATECONF=${TEMPLATECONF:-meta-mylayer/myconf}
-
-Aside from the ``*.sample`` configuration files, the ``conf-notes.txt``
-also resides in the default ``meta-poky/conf`` directory. The script
-that sets up the build environment (i.e.
-:ref:`structure-core-script`) uses this file to
-display BitBake targets as part of the script output. Customizing this
-``conf-notes.txt`` file is a good way to make sure your list of custom
-targets appears as part of the script's output.
-
-Here is the default list of targets displayed as a result of running
-either of the setup scripts::
-
-   You can now run 'bitbake <target>'
-
-   Common targets are:
-       core-image-minimal
-       core-image-sato
-       meta-toolchain
-       meta-ide-support
-
-Changing the listed common targets is as easy as editing your version of
-``conf-notes.txt`` in your custom template configuration directory and
-making sure you have :term:`TEMPLATECONF` set to your directory.
+respective ``bblayers.conf`` file, ``local.conf`` file, and show
+users a note about the build they're setting up
+when running the ``oe-init-build-env`` setup script. These can be
+edited further if needed to improve or change the build configurations
+available to the users.
 
 Conserving Disk Space
 =====================
