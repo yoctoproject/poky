@@ -847,6 +847,62 @@ enables the build system to locate the layer during the build.
    During a build, the OpenEmbedded build system looks in the layers
    from the top of the list down to the bottom in that order.
 
+Saving and restoring the layers setup
+-------------------------------------
+
+Once you have a working build with the correct set of layers, it is beneficial
+to capture the layer setup --- what they are, which repositories they come from
+and which SCM revisions they're at --- into a configuration file, so that this
+setup can be easily replicated later, perhaps on a different machine. Here's
+how to do this::
+
+   $ bitbake-layers create-layers-setup /srv/work/alex/meta-alex/
+   NOTE: Starting bitbake server...
+   NOTE: Created /srv/work/alex/meta-alex/setup-layers.json
+   NOTE: Created /srv/work/alex/meta-alex/setup-layers
+
+The tool needs a single argument which tells where to place the output, consisting
+of a json formatted layer configuration, and a ``setup-layers`` script that can use that configuration
+to restore the layers in a different location, or on a different host machine. The argument
+can point to a custom layer (which is then deemed a "bootstrap" layer that needs to be
+checked out first), or into a completely independent location.
+
+The replication of the layers is performed by running the ``setup-layers`` script provided
+above:
+
+1. Clone the bootstrap layer or some other repository to obtain
+   the json config and the setup script that can use it.
+
+2. Run the script directly with no options::
+
+      alex@Zen2:/srv/work/alex/my-build$ meta-alex/setup-layers
+      Note: not checking out source meta-alex, use --force-bootstraplayer-checkout to override.
+
+      Setting up source meta-intel, revision 15.0-hardknott-3.3-310-g0a96edae, branch master
+      Running 'git init -q /srv/work/alex/my-build/meta-intel'
+      Running 'git remote remove origin > /dev/null 2>&1; git remote add origin git://git.yoctoproject.org/meta-intel' in /srv/work/alex/my-build/meta-intel
+      Running 'git fetch -q origin || true' in /srv/work/alex/my-build/meta-intel
+      Running 'git checkout -q 0a96edae609a3f48befac36af82cf1eed6786b4a' in /srv/work/alex/my-build/meta-intel
+
+      Setting up source poky, revision 4.1_M1-372-g55483d28f2, branch akanavin/setup-layers
+      Running 'git init -q /srv/work/alex/my-build/poky'
+      Running 'git remote remove origin > /dev/null 2>&1; git remote add origin git://git.yoctoproject.org/poky' in /srv/work/alex/my-build/poky
+      Running 'git fetch -q origin || true' in /srv/work/alex/my-build/poky
+      Running 'git remote remove poky-contrib > /dev/null 2>&1; git remote add poky-contrib ssh://git@push.yoctoproject.org/poky-contrib' in /srv/work/alex/my-build/poky
+      Running 'git fetch -q poky-contrib || true' in /srv/work/alex/my-build/poky
+      Running 'git checkout -q 11db0390b02acac1324e0f827beb0e2e3d0d1d63' in /srv/work/alex/my-build/poky
+
+.. note::
+   This will work to update an existing checkout as well.
+
+.. note::
+   The script is self-sufficient and requires only python3
+   and git on the build machine.
+
+.. note::
+   Both the ``create-layers-setup`` and the ``setup-layers`` provided several additional options
+   that customize their behavior - you are welcome to study them via ``--help`` command line parameter.
+
 Customizing Images
 ==================
 
