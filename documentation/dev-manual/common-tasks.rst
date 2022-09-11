@@ -726,7 +726,17 @@ The following list describes the available commands:
 -  ``layerindex-show-depends``: Finds layer dependencies from the
    layer index.
 
+-  ``save-build-conf``: Saves the currently active build configuration
+   (``conf/local.conf``, ``conf/bblayers.conf``) as a template into a layer.
+   This template can later be used for setting up builds via :term:``TEMPLATECONF``.
+   For information about saving and using configuration templates, see
+   ":ref:`dev-manual/common-tasks:creating a custom template configuration directory`".
+
 -  ``create-layer``: Creates a basic layer.
+
+-  ``create-layers-setup``: Writes out a configuration file and/or a script that
+   can replicate the directory structure and revisions of the layers in a current build.
+   For more information, see ":ref:`dev-manual/common-tasks:saving and restoring the layers setup`".
 
 Creating a General Layer Using the ``bitbake-layers`` Script
 ------------------------------------------------------------
