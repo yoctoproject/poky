@@ -2966,8 +2966,10 @@ system and gives an overview of their function and contents.
 
       If you do not point to a script that you provide, the OpenEmbedded
       build system uses the default script provided by the
-      ``icecc-create-env.bb`` recipe, which is a modified version and not
-      the one that comes with ``icecc``.
+      :oe_git:`icecc-create-env_0.1.bb
+      </openembedded-core/tree/meta/recipes-devtools/icecc-create-env/icecc-create-env_0.1.bb>`
+      recipe, which is a modified version and not the one that comes with
+      ``icecream``.
 
    :term:`ICECC_PARALLEL_MAKE`
       Extra options passed to the ``make`` command during the
