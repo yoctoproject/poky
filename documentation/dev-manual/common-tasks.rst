@@ -2577,7 +2577,7 @@ chapter of the BitBake User Manual.
 
       S = "${WORKDIR}/postfix-${PV}"
       CFLAGS += "-DNO_ASM"
-      SRC_URI:append = " file://fixup.patch"
+      CFLAGS:append = " --enable-important-feature"
 
 -  *Functions:* Functions provide a series of actions to be performed.
    You usually use functions to override the default implementation of a
@@ -2708,19 +2708,21 @@ in the BitBake User Manual.
    to existing variables. This operator does not add any additional
    space. Also, the operator is applied after all the ``+=``, and ``=+``
    operators have been applied and after all ``=`` assignments have
-   occurred.
+   occurred. This means that if ``:append`` is used in a recipe, it can
+   only be overridden by another layer using the  special ``:remove``
+   operator, which in turn will prevent further layers from adding it back.
 
    The following example shows the space being explicitly added to the
    start to ensure the appended value is not merged with the existing
    value::
 
-      SRC_URI:append = " file://fix-makefile.patch"
+      CFLAGS:append = " --enable-important-feature"
 
    You can also use
    the ``:append`` operator with overrides, which results in the actions
    only being performed for the specified target or machine::
 
-      SRC_URI:append:sh4 = " file://fix-makefile.patch"
+      CFLAGS:append:sh4 = " --enable-important-sh4-specific-feature"
 
 -  *Prepending (:prepend):* Use the ``:prepend`` operator to prepend
    values to existing variables. This operator does not add any
