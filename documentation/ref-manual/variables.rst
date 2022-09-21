@@ -3985,11 +3985,10 @@ system and gives an overview of their function and contents.
 
          KCONFIG_MODE = "alldefconfig"
 
-
    :term:`KERNEL_ALT_IMAGETYPE`
       Specifies an alternate kernel image type for creation in addition to
-      the kernel image type specified using the
-      :term:`KERNEL_IMAGETYPE` variable.
+      the kernel image type specified using the :term:`KERNEL_IMAGETYPE` and
+      :term:`KERNEL_IMAGETYPES` variables.
 
    :term:`KERNEL_ARTIFACT_NAME`
       Specifies the name of all of the build artifacts. You can change the
@@ -4173,9 +4172,12 @@ system and gives an overview of their function and contents.
       when building the kernel and is passed to ``make`` as the target to
       build.
 
-      If you want to build an alternate kernel image type in addition to that
-      specified by :term:`KERNEL_IMAGETYPE`, use the :term:`KERNEL_ALT_IMAGETYPE`
-      variable.
+      To build additional kernel image types, use :term:`KERNEL_IMAGETYPES`.
+
+   :term:`KERNEL_IMAGETYPES`
+      Lists additional types of kernel images to build for a device in addition
+      to image type specified in :term:`KERNEL_IMAGETYPE`. Usually set by the
+      machine configuration files.
 
    :term:`KERNEL_MODULE_AUTOLOAD`
       Lists kernel modules that need to be auto-loaded during boot.
