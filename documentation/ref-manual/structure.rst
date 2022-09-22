@@ -373,14 +373,14 @@ remove the ``build/sstate-cache`` directory.
 .. _structure-build-tmp-buildstats:
 
 ``build/tmp/buildstats/``
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This directory stores the build statistics.
 
 .. _structure-build-tmp-cache:
 
 ``build/tmp/cache/``
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 When BitBake parses the metadata (recipes and configuration files), it
 caches the results in ``build/tmp/cache/`` to speed up future builds.
@@ -396,7 +396,7 @@ cache is reused. If the file has changed, it is reparsed.
 .. _structure-build-tmp-deploy:
 
 ``build/tmp/deploy/``
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 This directory contains any "end result" output from the OpenEmbedded
 build process. The :term:`DEPLOY_DIR` variable points
@@ -409,7 +409,7 @@ Project Overview and Concepts Manual.
 .. _structure-build-tmp-deploy-deb:
 
 ``build/tmp/deploy/deb/``
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This directory receives any ``.deb`` packages produced by the build
 process. The packages are sorted into feeds for different architecture
@@ -418,7 +418,7 @@ types.
 .. _structure-build-tmp-deploy-rpm:
 
 ``build/tmp/deploy/rpm/``
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This directory receives any ``.rpm`` packages produced by the build
 process. The packages are sorted into feeds for different architecture
@@ -427,14 +427,14 @@ types.
 .. _structure-build-tmp-deploy-ipk:
 
 ``build/tmp/deploy/ipk/``
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This directory receives ``.ipk`` packages produced by the build process.
 
 .. _structure-build-tmp-deploy-licenses:
 
 ``build/tmp/deploy/licenses/``
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This directory receives package licensing information. For example, the
 directory contains sub-directories for ``bash``, ``busybox``, and
@@ -447,7 +447,7 @@ section in the Yocto Project Development Tasks Manual.
 .. _structure-build-tmp-deploy-images:
 
 ``build/tmp/deploy/images/``
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This directory is populated with the basic output objects of the build
 (think of them as the "generated artifacts" of the build process),
@@ -474,7 +474,7 @@ the kernel files::
 .. _structure-build-tmp-deploy-sdk:
 
 ``build/tmp/deploy/sdk/``
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The OpenEmbedded build system creates this directory to hold toolchain
 installer scripts which, when executed, install the sysroot that matches
@@ -486,7 +486,7 @@ Software Development Kit (eSDK) manual.
 .. _structure-build-tmp-sstate-control:
 
 ``build/tmp/sstate-control/``
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The OpenEmbedded build system uses this directory for the shared state
 manifest files. The shared state code uses these files to record the
@@ -499,7 +499,7 @@ another.
 .. _structure-build-tmp-sysroots-components:
 
 ``build/tmp/sysroots-components/``
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This directory is the location of the sysroot contents that the task
 :ref:`ref-tasks-prepare_recipe_sysroot`
@@ -514,7 +514,7 @@ should be automatic, and recipes should not directly reference
 .. _structure-build-tmp-sysroots:
 
 ``build/tmp/sysroots/``
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Previous versions of the OpenEmbedded build system used to create a
 global shared sysroot per machine along with a native sysroot. Since
@@ -532,7 +532,7 @@ recipe-specific :term:`WORKDIR` directories. Thus, the
 .. _structure-build-tmp-stamps:
 
 ``build/tmp/stamps/``
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 This directory holds information that BitBake uses for accounting
 purposes to track what tasks have run and when they have run. The
@@ -552,7 +552,7 @@ section in the Yocto Project Overview and Concepts Manual.
 .. _structure-build-tmp-log:
 
 ``build/tmp/log/``
-------------------
+~~~~~~~~~~~~~~~~~~
 
 This directory contains general logs that are not otherwise placed using
 the package's :term:`WORKDIR`. Examples of logs are the output from the
@@ -562,7 +562,7 @@ necessarily mean this directory is created.
 .. _structure-build-tmp-work:
 
 ``build/tmp/work/``
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 This directory contains architecture-specific work sub-directories for
 packages built by BitBake. All tasks execute from the appropriate work
@@ -594,7 +594,7 @@ install" places its output that is then split into sub-packages within
 .. _structure-build-tmp-work-tunearch-recipename-version:
 
 ``build/tmp/work/tunearch/recipename/version/``
------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The recipe work directory --- ``${WORKDIR}``.
 
@@ -652,7 +652,7 @@ Here are key subdirectories within each recipe work directory:
 .. _structure-build-work-shared:
 
 ``build/tmp/work-shared/``
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For efficiency, the OpenEmbedded build system creates and uses this
 directory to hold recipes that share a work directory with other
@@ -702,7 +702,7 @@ distribution configuration file.
 .. _structure-meta-conf-machine:
 
 ``meta/conf/machine/``
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 This directory contains all the machine configuration files. If you set
 ``MACHINE = "qemux86"``, the OpenEmbedded build system looks for a
@@ -713,7 +713,7 @@ support for a new machine to the Yocto Project, look in this directory.
 .. _structure-meta-conf-distro:
 
 ``meta/conf/distro/``
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 The contents of this directory controls any distribution-specific
 configurations. For the Yocto Project, the ``defaultsetup.conf`` is the
@@ -725,7 +725,7 @@ file mainly inherits its configuration from Poky.
 .. _structure-meta-conf-machine-sdk:
 
 ``meta/conf/machine-sdk/``
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The OpenEmbedded build system searches this directory for configuration
 files that correspond to the value of
