@@ -6575,7 +6575,7 @@ system and gives an overview of their function and contents.
 
    :term:`SDK_CUSTOM_TEMPLATECONF`
       When building the extensible SDK, if :term:`SDK_CUSTOM_TEMPLATECONF` is set to
-      "1" and a ``conf/templateconf.conf`` file exists in the build directory
+      "1" and a ``conf/templateconf.cfg`` file exists in the build directory
       (:term:`TOPDIR`) then this will be copied into the SDK.
 
    :term:`SDK_DEPLOY`
