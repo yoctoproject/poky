@@ -728,22 +728,6 @@ system and gives an overview of their function and contents.
       ":ref:`dev-manual/common-tasks:building images for multiple targets using multiple configurations`"
       section in the Yocto Project Development Tasks Manual.
 
-   :term:`BBPATH`
-      Used by BitBake to locate ``.bbclass`` and configuration files. This
-      variable is analogous to the ``PATH`` variable.
-
-      .. note::
-
-         If you run BitBake from a directory outside of the
-         :term:`Build Directory`, you must be sure to set :term:`BBPATH`
-         to point to the Build Directory. Set the variable as you would any
-         environment variable and then run BitBake::
-
-                 $ BBPATH = "build_directory"
-                 $ export BBPATH
-                 $ bitbake target
-
-
    :term:`BBSERVER`
       If defined in the BitBake environment, :term:`BBSERVER` points to the
       BitBake remote server.
