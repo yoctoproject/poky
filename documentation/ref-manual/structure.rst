@@ -68,6 +68,9 @@ information on separating output from your local Source Directory files
 (commonly described as an "out of tree" build), see the
 ":ref:`structure-core-script`" section.
 
+See the ":ref:`The Build Directory --- build/ <structure-build>`" section for details
+about the contents of the :term:`Build Directory`.
+
 .. _handbook:
 
 ``documentation/``
