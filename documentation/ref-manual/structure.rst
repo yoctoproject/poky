@@ -240,6 +240,18 @@ subdirectories. For information on the build history feature, see the
 ":ref:`dev-manual/common-tasks:maintaining build output quality`"
 section in the Yocto Project Development Tasks Manual.
 
+.. _structure-build-cache:
+
+``build/cache/``
+----------------
+
+This directory contains several internal files used by the OpenEmbedded
+build system.
+
+It also contains ``sanity_info``, a text file keeping track of important
+build information such as the values of :term:`TMPDIR`, :term:`SSTATE_DIR`,
+as well as the name and version of the host distribution.
+
 .. _structure-build-conf-local.conf:
 
 ``build/conf/local.conf``
@@ -322,14 +334,6 @@ Once the build process gets the sample file, it uses ``sed`` to substitute final
    script in the :term:`Source Directory`. You can find the Yocto Project
    version of the ``bblayers.conf.sample`` file in the ``meta-poky/conf/templates/default``
    directory.
-
-.. _structure-build-conf-sanity_info:
-
-``build/cache/sanity_info``
----------------------------
-
-This file indicates the state of the sanity checks and is created during
-the build.
 
 .. _structure-build-downloads:
 
