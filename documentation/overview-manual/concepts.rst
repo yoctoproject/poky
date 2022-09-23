@@ -1801,14 +1801,14 @@ from the :ref:`deploy <ref-classes-deploy>` class::
 
 The following list explains the previous example:
 
--  Adding "do_deploy" to ``SSTATETASKS`` adds some required
+-  Adding ``do_deploy`` to ``SSTATETASKS`` adds some required
    sstate-related processing, which is implemented in the
    :ref:`sstate <ref-classes-sstate>` class, to
    before and after the
    :ref:`ref-tasks-deploy` task.
 
 -  The ``do_deploy[sstate-inputdirs] = "${DEPLOYDIR}"`` declares that
-   ``do_deploy`` places its output in ``${DEPLOYDIR}`` when run normally
+   :ref:`ref-tasks-deploy` places its output in ``${DEPLOYDIR}`` when run normally
    (i.e. when not using the sstate cache). This output becomes the input
    to the shared state cache.
 
@@ -1818,15 +1818,15 @@ The following list explains the previous example:
 
    .. note::
 
-      If ``do_deploy`` is not already in the shared state cache or if its input
+      If :ref:`ref-tasks-deploy` is not already in the shared state cache or if its input
       checksum (signature) has changed from when the output was cached, the task
       runs to populate the shared state cache, after which the contents of the
       shared state cache is copied to ${:term:`DEPLOY_DIR_IMAGE`}. If
-      ``do_deploy`` is in the shared state cache and its signature indicates
+      :ref:`ref-tasks-deploy` is in the shared state cache and its signature indicates
       that the cached output is still valid (i.e. if no relevant task inputs
       have changed), then the contents of the shared state cache copies
       directly to ${:term:`DEPLOY_DIR_IMAGE`} by the ``do_deploy_setscene`` task
-      instead, skipping the ``do_deploy`` task.
+      instead, skipping the :ref:`ref-tasks-deploy` task.
 
 -  The following task definition is glue logic needed to make the
    previous settings effective::
@@ -1836,16 +1836,16 @@ The following list explains the previous example:
       }
       addtask do_deploy_setscene
 
-  ``sstate_setscene()`` takes the flags above as input and accelerates the ``do_deploy`` task
+  ``sstate_setscene()`` takes the flags above as input and accelerates the :ref:`ref-tasks-deploy` task
   through the shared state cache if possible. If the task was
   accelerated, ``sstate_setscene()`` returns True. Otherwise, it
-  returns False, and the normal ``do_deploy`` task runs. For more
+  returns False, and the normal :ref:`ref-tasks-deploy` task runs. For more
   information, see the ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-execution:setscene`"
   section in the BitBake User Manual.
 
 -  The ``do_deploy[dirs] = "${DEPLOYDIR} ${B}"`` line creates
-   ``${DEPLOYDIR}`` and ``${B}`` before the ``do_deploy`` task runs, and
-   also sets the current working directory of ``do_deploy`` to ``${B}``.
+   ``${DEPLOYDIR}`` and ``${B}`` before the :ref:`ref-tasks-deploy` task runs, and
+   also sets the current working directory of :ref:`ref-tasks-deploy` to ``${B}``.
    For more information, see the ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags`"
    section in the BitBake
    User Manual.

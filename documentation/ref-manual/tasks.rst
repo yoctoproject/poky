@@ -81,7 +81,7 @@ Recipes implementing this task should inherit the
 :ref:`deploy <ref-classes-deploy>` class and should write the output
 to ``${``\ :term:`DEPLOYDIR`\ ``}``, which is not to be
 confused with ``${DEPLOY_DIR}``. The :ref:`deploy <ref-classes-deploy>` class sets up
-``do_deploy`` as a shared state (sstate) task that can be accelerated
+:ref:`ref-tasks-deploy` as a shared state (sstate) task that can be accelerated
 through sstate use. The sstate mechanism takes care of copying the
 output from ``${DEPLOYDIR}`` to ``${DEPLOY_DIR_IMAGE}``.
 
@@ -90,14 +90,14 @@ output from ``${DEPLOYDIR}`` to ``${DEPLOY_DIR_IMAGE}``.
    Do not write the output directly to ``${DEPLOY_DIR_IMAGE}``, as this causes
    the sstate mechanism to malfunction.
 
-The ``do_deploy`` task is not added as a task by default and
+The :ref:`ref-tasks-deploy` task is not added as a task by default and
 consequently needs to be added manually. If you want the task to run
 after :ref:`ref-tasks-compile`, you can add it by doing
 the following::
 
       addtask deploy after do_compile
 
-Adding ``do_deploy`` after other tasks works the same way.
+Adding :ref:`ref-tasks-deploy` after other tasks works the same way.
 
 .. note::
 
@@ -110,7 +110,7 @@ Adding ``do_deploy`` after other tasks works the same way.
    See the ":ref:`bitbake-user-manual/bitbake-user-manual-execution:dependencies`"
    section in the BitBake User Manual for more information.
 
-If the ``do_deploy`` task re-executes, any previous output is removed
+If the :ref:`ref-tasks-deploy` task re-executes, any previous output is removed
 (i.e. "cleaned").
 
 .. _ref-tasks-fetch:

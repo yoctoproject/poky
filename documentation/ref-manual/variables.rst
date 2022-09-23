@@ -6754,7 +6754,7 @@ system and gives an overview of their function and contents.
       - do_populate_lic
       - do_package_qa
       - do_populate_sysroot
-      - do_deploy
+      - :ref:`ref-tasks-deploy`
 
       Despite the default value of "" for the
       :term:`SDK_RECRDEP_TASKS` variable, the above four tasks are always added
