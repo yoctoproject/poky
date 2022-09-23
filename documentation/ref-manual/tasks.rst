@@ -473,7 +473,7 @@ use the :ref:`ref-tasks-cleansstate` task instead
 Removes all output files, shared state
 (:ref:`sstate <overview-manual/concepts:shared state cache>`) cache, and
 downloaded source files for a target (i.e. the contents of
-:term:`DL_DIR`). Essentially, the ``do_cleanall`` task is
+:term:`DL_DIR`). Essentially, the :ref:`ref-tasks-cleanall` task is
 identical to the :ref:`ref-tasks-cleansstate` task
 with the added removal of downloaded source files.
 
@@ -481,7 +481,7 @@ You can run this task using BitBake as follows::
 
    $ bitbake -c cleanall recipe
 
-Typically, you would not normally use the ``cleanall`` task. Do so only
+Typically, you would not normally use the :ref:`ref-tasks-cleanall` task. Do so only
 if you want to start fresh with the :ref:`ref-tasks-fetch`
 task.
 
