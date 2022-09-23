@@ -892,7 +892,7 @@ following as well as other items: splitting out debugging symbols,
 looking at shared library dependencies between packages, and looking at
 package relationships.
 
-The ``do_packagedata`` task creates package metadata based on the
+The :ref:`ref-tasks-packagedata` task creates package metadata based on the
 analysis such that the build system can generate the final packages. The
 :ref:`ref-tasks-populate_sysroot`
 task stages (copies) a subset of the files installed by the
@@ -2106,7 +2106,7 @@ dependencies, you must manually declare the dependencies.
    located. For each module, the package that contains the module is
    registered as providing the module. The resulting module-to-package
    mapping is saved globally in :term:`PKGDATA_DIR` by the
-   ``do_packagedata`` task.
+   :ref:`ref-tasks-packagedata` task.
 
    Simultaneously, all pkg-config modules installed by the recipe are
    inspected to see what other pkg-config modules they depend on. A
@@ -2147,7 +2147,7 @@ dependencies, you must manually declare the dependencies.
    :term:`ALLOW_EMPTY` variable
    for more information.
 
-The :ref:`ref-tasks-package` task depends on the ``do_packagedata`` task of each
+The :ref:`ref-tasks-package` task depends on the :ref:`ref-tasks-packagedata` task of each
 recipe in :term:`DEPENDS` through use
 of a ``[``\ :ref:`deptask <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]``
 declaration, which guarantees that the required
