@@ -717,7 +717,7 @@ information on this configuration tool.
 
 Collects all the features required for a given kernel build, whether the
 features come from :term:`SRC_URI` or from Git
-repositories. After collection, the ``do_kernel_metadata`` task
+repositories. After collection, the :ref:`ref-tasks-kernel_metadata` task
 processes the features into a series of config fragments and patches,
 which can then be applied by subsequent tasks such as
 :ref:`ref-tasks-patch` and
