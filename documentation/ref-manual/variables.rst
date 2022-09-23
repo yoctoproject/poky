@@ -6751,7 +6751,7 @@ system and gives an overview of their function and contents.
       A list of shared state tasks added to the extensible SDK. By default,
       the following tasks are added:
 
-      - do_populate_lic
+      - :ref:`ref-tasks-populate_lic`
       - :ref:`ref-tasks-package_qa`
       - do_populate_sysroot
       - :ref:`ref-tasks-deploy`
