@@ -1209,7 +1209,7 @@ The build system has knowledge of the relationship between these tasks
 and other preceding tasks. For example, if BitBake runs
 ``do_populate_sysroot_setscene`` for something, it does not make sense
 to run any of the :ref:`ref-tasks-fetch`, ``do_unpack``, ``do_patch``,
-``do_configure``, ``do_compile``, and ``do_install`` tasks. However, if
+``do_configure``, ``do_compile``, and :ref:`ref-tasks-install` tasks. However, if
 ``do_package`` needs to be run, BitBake needs to run those other tasks.
 
 It becomes more complicated if everything can come from an sstate cache
@@ -2163,7 +2163,7 @@ operations that are normally reserved for the root user (e.g.
 :ref:`do_package_write* <ref-tasks-package_write_deb>`,
 :ref:`ref-tasks-rootfs`, and
 :ref:`do_image* <ref-tasks-image>`). For example,
-the ``do_install`` task benefits from being able to set the UID and GID
+the :ref:`ref-tasks-install` task benefits from being able to set the UID and GID
 of installed files to arbitrary values.
 
 One approach to allowing tasks to perform root-only operations would be

@@ -1081,12 +1081,12 @@ Here are the tests you can list with the :term:`WARN_QA` and
    might result in host contamination of the build output.
 
 -  ``installed-vs-shipped:`` Reports when files have been installed
-   within ``do_install`` but have not been included in any package by
+   within :ref:`ref-tasks-install` but have not been included in any package by
    way of the :term:`FILES` variable. Files that do not
    appear in any package cannot be present in an image later on in the
    build process. Ideally, all installed files should be packaged or not
    installed at all. These files can be deleted at the end of
-   ``do_install`` if the files are not needed in any package.
+   :ref:`ref-tasks-install` if the files are not needed in any package.
 
 -  ``invalid-chars:`` Checks that the recipe metadata variables
    :term:`DESCRIPTION`,
@@ -1339,7 +1339,7 @@ Only a single U-boot boot script can be added to the FIT image created by
 ``kernel-fitimage`` and the boot script is optional.
 The boot script is specified in the ITS file as a text file containing
 U-boot commands. When using a boot script the user should configure the
-U-boot ``do_install`` task to copy the script to sysroot.
+U-boot :ref:`ref-tasks-install` task to copy the script to sysroot.
 So the script can be included in the FIT image by the ``kernel-fitimage``
 class. At run-time, U-boot CONFIG_BOOTCOMMAND define can be configured to
 load the boot script from the FIT image and executes it.
@@ -2412,7 +2412,7 @@ uses these build systems, the recipe needs to inherit the ``setuptools3`` class.
 
    .. note::
 
-     The ``setuptools3`` class ``do_install()`` task now installs the ``wheel``
+     The ``setuptools3`` class :ref:`ref-tasks-install` task now installs the ``wheel``
      binary archive. In current versions of ``setuptools`` the legacy ``setup.py
      install`` method is deprecated. If the ``setup.py`` cannot be used with
      wheels, for example it creates files outside of the Python module or

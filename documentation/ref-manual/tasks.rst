@@ -168,7 +168,7 @@ section in the Yocto Project Overview and Concepts Manual.
 Copies files that are to be packaged into the holding area
 ``${``\ :term:`D`\ ``}``. This task runs with the current
 working directory set to ``${``\ :term:`B`\ ``}``, which is the
-compilation directory. The ``do_install`` task, as well as other tasks
+compilation directory. The :ref:`ref-tasks-install` task, as well as other tasks
 that either directly or indirectly depend on the installed files (e.g.
 :ref:`ref-tasks-package`, ``do_package_write_*``, and
 :ref:`ref-tasks-rootfs`), run under

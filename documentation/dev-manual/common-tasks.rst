@@ -1731,7 +1731,7 @@ your software is built:
 
       If you need to install one or more custom CMake toolchain files
       that are supplied by the application you are building, install the
-      files to ``${D}${datadir}/cmake/Modules`` during ``do_install``.
+      files to ``${D}${datadir}/cmake/Modules`` during :ref:`ref-tasks-install`.
 
 -  *Other:* If your source files do not have a ``configure.ac`` or
    ``CMakeLists.txt`` file, then your software is built using some
@@ -1888,7 +1888,7 @@ Here are some common issues that cause failures.
 Installing
 ----------
 
-During ``do_install``, the task copies the built files along with their
+During :ref:`ref-tasks-install`, the task copies the built files along with their
 hierarchy to locations that would mirror their locations on the target
 device. The installation process copies files from the
 ``${``\ :term:`S`\ ``}``,
@@ -1906,14 +1906,14 @@ the software being built:
 -  *Autotools and CMake:* If the software your recipe is building uses
    Autotools or CMake, the OpenEmbedded build system understands how to
    install the software. Consequently, you do not have to have a
-   ``do_install`` task as part of your recipe. You just need to make
+   :ref:`ref-tasks-install` task as part of your recipe. You just need to make
    sure the install portion of the build completes with no issues.
    However, if you wish to install additional files not already being
    installed by ``make install``, you should do this using a
    ``do_install:append`` function using the install command as described
    in the "Manual" bulleted item later in this list.
 
--  *Other (using* ``make install``\ *)*: You need to define a ``do_install``
+-  *Other (using* ``make install``\ *)*: You need to define a :ref:`ref-tasks-install`
    function in your recipe. The function should call
    ``oe_runmake install`` and will likely need to pass in the
    destination directory as well. How you pass that path is dependent on
@@ -1923,7 +1923,7 @@ the software being built:
    For an example recipe using ``make install``, see the
    ":ref:`dev-manual/common-tasks:makefile-based package`" section.
 
--  *Manual:* You need to define a ``do_install`` function in your
+-  *Manual:* You need to define a :ref:`ref-tasks-install` function in your
    recipe. The function must first use ``install -d`` to create the
    directories under
    ``${``\ :term:`D`\ ``}``. Once the
@@ -1946,10 +1946,10 @@ installed correctly.
       might need to replace hard-coded paths in an initscript with
       values of variables provided by the build system, such as
       replacing ``/usr/bin/`` with ``${bindir}``. If you do perform such
-      modifications during ``do_install``, be sure to modify the
+      modifications during :ref:`ref-tasks-install`, be sure to modify the
       destination file after copying rather than before copying.
       Modifying after copying ensures that the build system can
-      re-execute ``do_install`` if needed.
+      re-execute :ref:`ref-tasks-install` if needed.
 
    -  ``oe_runmake install``, which can be run directly or can be run
       indirectly by the
@@ -1958,7 +1958,7 @@ installed correctly.
       runs ``make install`` in parallel. Sometimes, a Makefile can have
       missing dependencies between targets that can result in race
       conditions. If you experience intermittent failures during
-      ``do_install``, you might be able to work around them by disabling
+      :ref:`ref-tasks-install`, you might be able to work around them by disabling
       parallel Makefile installs by adding the following to the recipe::
 
          PARALLEL_MAKEINST = ""
@@ -1980,7 +1980,7 @@ additional definitions in your recipe.
 If you are adding services and the service initialization script or the
 service file itself is not installed, you must provide for that
 installation in your recipe using a ``do_install:append`` function. If
-your recipe already has a ``do_install`` function, update the function
+your recipe already has a :ref:`ref-tasks-install` function, update the function
 near its end rather than adding an additional ``do_install:append``
 function.
 
@@ -2337,7 +2337,7 @@ Single .c File Package (Hello World!)
 Building an application from a single file that is stored locally (e.g.
 under ``files``) requires a recipe that has the file listed in the
 :term:`SRC_URI` variable. Additionally, you need to manually write the
-``do_compile`` and ``do_install`` tasks. The :term:`S` variable defines the
+``do_compile`` and :ref:`ref-tasks-install` tasks. The :term:`S` variable defines the
 directory containing the source code, which is set to
 :term:`WORKDIR` in this case --- the
 directory BitBake uses for the build.
@@ -2407,8 +2407,8 @@ should store them in the
 :term:`EXTRA_OEMAKE` or
 :term:`PACKAGECONFIG_CONFARGS`
 variables. BitBake passes these options into the GNU ``make``
-invocation. Note that a ``do_install`` task is still required.
-Otherwise, BitBake runs an empty ``do_install`` task by default.
+invocation. Note that a :ref:`ref-tasks-install` task is still required.
+Otherwise, BitBake runs an empty :ref:`ref-tasks-install` task by default.
 
 Some applications might require extra parameters to be passed to the
 compiler. For example, the application might need an additional header
@@ -2567,7 +2567,7 @@ doing the following:
    :ref:`ref-tasks-patch` tasks to the
    :ref:`ref-tasks-install` task.
 
--  Make sure your ``do_install`` task installs the binaries
+-  Make sure your :ref:`ref-tasks-install` task installs the binaries
    appropriately.
 
 -  Ensure that you set up :term:`FILES`
@@ -4700,7 +4700,7 @@ the built library.
 The :term:`PACKAGES` and
 :term:`FILES:* <FILES>` variables in the
 ``meta/conf/bitbake.conf`` configuration file define how files installed
-by the ``do_install`` task are packaged. By default, the :term:`PACKAGES`
+by the :ref:`ref-tasks-install` task are packaged. By default, the :term:`PACKAGES`
 variable includes ``${PN}-staticdev``, which represents all static
 library files.
 
@@ -6862,7 +6862,7 @@ The previous example specifies a number of things in the call to
 ``do_split_packages``.
 
 -  A directory within the files installed by your recipe through
-   ``do_install`` in which to search.
+   :ref:`ref-tasks-install` in which to search.
 
 -  A regular expression used to match module files in that directory. In
    the example, note the parentheses () that mark the part of the
@@ -9594,7 +9594,7 @@ Running Specific Tasks
 
 Any given recipe consists of a set of tasks. The standard BitBake
 behavior in most cases is: :ref:`ref-tasks-fetch`, ``do_unpack``, ``do_patch``,
-``do_configure``, ``do_compile``, ``do_install``, ``do_package``,
+``do_configure``, ``do_compile``, :ref:`ref-tasks-install`, ``do_package``,
 ``do_package_write_*``, and ``do_build``. The default task is
 ``do_build`` and any tasks on which it depends build first. Some tasks,
 such as ``do_devshell``, are not part of the default build chain. If you

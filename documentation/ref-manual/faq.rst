@@ -437,7 +437,7 @@ practice very effective.
 **Q:** The files provided by my ``*-native`` recipe do not appear to be
 available to other recipes. Files are missing from the native sysroot,
 my recipe is installing to the wrong place, or I am getting permissions
-errors during the do_install task in my recipe! What is wrong?
+errors during the :ref:`ref-tasks-install` task in my recipe! What is wrong?
 
 **A:** This situation results when a build system does not recognize the
 environment variables supplied to it by :term:`BitBake`. The
