@@ -128,7 +128,7 @@ when the :ref:`ref-tasks-configure` task needs to be
 re-executed.
 
 One of the improvements is to attempt to run "make clean" during the
-``do_configure`` task if a ``Makefile`` exists. Some software packages
+:ref:`ref-tasks-configure` task if a ``Makefile`` exists. Some software packages
 do not provide a working clean target within their make files. If you
 have such recipes, you need to set
 :term:`CLEANBROKEN` to "1" within the recipe, for example::

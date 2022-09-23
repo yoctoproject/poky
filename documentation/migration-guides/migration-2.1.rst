@@ -108,12 +108,12 @@ this change should not be a problem. However, if you have a recipe that
 bypasses the standard :ref:`ref-tasks-configure` task
 from the :ref:`autotools <ref-classes-autotools>` class and the software the recipe is building
 uses a very old version of ``autoconf``, the recipe might be incapable
-of determining the correct size of ``off_t`` during ``do_configure``.
+of determining the correct size of ``off_t`` during :ref:`ref-tasks-configure`.
 
 The best course of action is to patch the software as necessary to allow
 the default implementation from the :ref:`autotools <ref-classes-autotools>` class to work such
 that ``autoreconf`` succeeds and produces a working configure script,
-and to remove the overridden ``do_configure`` task such that the default
+and to remove the overridden :ref:`ref-tasks-configure` task such that the default
 implementation does get used.
 
 .. _migration-2.1-image-generation-split-out-from-filesystem-generation:

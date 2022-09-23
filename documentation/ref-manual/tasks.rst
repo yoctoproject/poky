@@ -58,7 +58,7 @@ The default behavior of this task is to run ``oe_runmake clean`` if a
 makefile (``Makefile``, ``makefile``, or ``GNUmakefile``) is found and
 :term:`CLEANBROKEN` is not set to "1". If no such
 file is found or the :term:`CLEANBROKEN` variable is set to "1", the
-``do_configure`` task does nothing.
+:ref:`ref-tasks-configure` task does nothing.
 
 .. _ref-tasks-configure_ptest_base:
 

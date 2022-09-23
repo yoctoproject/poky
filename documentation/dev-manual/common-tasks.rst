@@ -2551,7 +2551,7 @@ doing the following:
    ``${``\ :term:`S`\ ``}``.
 
    If ``${S}`` might contain a Makefile, or if you inherit some class
-   that replaces ``do_configure`` and ``do_compile`` with custom
+   that replaces :ref:`ref-tasks-configure` and ``do_compile`` with custom
    versions, then you can use the
    ``[``\ :ref:`noexec <bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]``
    flag to turn the tasks into no-ops, as follows::
@@ -2881,7 +2881,7 @@ you can use as references.
 If you are creating a new kernel recipe, normal recipe-writing rules
 apply for setting up a :term:`SRC_URI`. Thus, you need to specify any
 necessary patches and set :term:`S` to point at the source code. You need to
-create a ``do_configure`` task that configures the unpacked kernel with
+create a :ref:`ref-tasks-configure` task that configures the unpacked kernel with
 a ``defconfig`` file. You can do this by using a ``make defconfig``
 command or, more commonly, by copying in a suitable ``defconfig`` file
 and then running ``make oldconfig``. By making use of ``inherit kernel``
@@ -9594,7 +9594,7 @@ Running Specific Tasks
 
 Any given recipe consists of a set of tasks. The standard BitBake
 behavior in most cases is: :ref:`ref-tasks-fetch`, ``do_unpack``, ``do_patch``,
-``do_configure``, ``do_compile``, :ref:`ref-tasks-install`, ``do_package``,
+:ref:`ref-tasks-configure`, ``do_compile``, :ref:`ref-tasks-install`, ``do_package``,
 ``do_package_write_*``, and :ref:`ref-tasks-build`. The default task is
 :ref:`ref-tasks-build` and any tasks on which it depends build first. Some tasks,
 such as ``do_devshell``, are not part of the default build chain. If you

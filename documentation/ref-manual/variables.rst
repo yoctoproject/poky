@@ -1620,7 +1620,7 @@ system and gives an overview of their function and contents.
       the appropriate staging sysroot, given by the
       :term:`STAGING_DIR* <STAGING_DIR>` variables, by the time the
       :ref:`ref-tasks-configure` task for ``foo`` runs.
-      This mechanism is implemented by having ``do_configure`` depend on
+      This mechanism is implemented by having :ref:`ref-tasks-configure` depend on
       the :ref:`ref-tasks-populate_sysroot` task of
       each recipe listed in :term:`DEPENDS`, through a
       ``[``\ :ref:`deptask <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]``
@@ -5563,7 +5563,7 @@ system and gives an overview of their function and contents.
       :ref:`cmake <ref-classes-cmake>` use :term:`PACKAGECONFIG_CONFARGS` to
       pass :term:`PACKAGECONFIG` options to ``configure`` and ``cmake``,
       respectively. If you are using :term:`PACKAGECONFIG` but not a class that
-      handles the ``do_configure`` task, then you need to use
+      handles the :ref:`ref-tasks-configure` task, then you need to use
       :term:`PACKAGECONFIG_CONFARGS` appropriately.
 
    :term:`PACKAGEGROUP_DISABLE_COMPLEMENTARY`
