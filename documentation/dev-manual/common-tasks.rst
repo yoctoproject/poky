@@ -9597,7 +9597,7 @@ behavior in most cases is: :ref:`ref-tasks-fetch`, :ref:`ref-tasks-unpack`, :ref
 :ref:`ref-tasks-configure`, :ref:`ref-tasks-compile`, :ref:`ref-tasks-install`, :ref:`ref-tasks-package`,
 :ref:`do_package_write_* <ref-tasks-package_write_deb>`, and :ref:`ref-tasks-build`. The default task is
 :ref:`ref-tasks-build` and any tasks on which it depends build first. Some tasks,
-such as ``do_devshell``, are not part of the default build chain. If you
+such as :ref:`ref-tasks-devshell`, are not part of the default build chain. If you
 wish to run a task that is not part of the default build chain, you can
 use the ``-c`` option in BitBake. Here is an example::
 

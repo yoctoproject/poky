@@ -444,7 +444,7 @@ staging the files from :term:`DEPLOYDIR` to :term:`DEPLOY_DIR_IMAGE`.
 ``devshell.bbclass``
 ====================
 
-The ``devshell`` class adds the ``do_devshell`` task. Distribution
+The ``devshell`` class adds the :ref:`ref-tasks-devshell` task. Distribution
 policy dictates whether to include this class. See the ":ref:`dev-manual/common-tasks:using a development shell`"
 section in the Yocto Project Development Tasks Manual for more
 information about using ``devshell``.
