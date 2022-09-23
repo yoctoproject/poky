@@ -9595,8 +9595,8 @@ Running Specific Tasks
 Any given recipe consists of a set of tasks. The standard BitBake
 behavior in most cases is: :ref:`ref-tasks-fetch`, ``do_unpack``, ``do_patch``,
 ``do_configure``, ``do_compile``, :ref:`ref-tasks-install`, ``do_package``,
-``do_package_write_*``, and ``do_build``. The default task is
-``do_build`` and any tasks on which it depends build first. Some tasks,
+``do_package_write_*``, and :ref:`ref-tasks-build`. The default task is
+:ref:`ref-tasks-build` and any tasks on which it depends build first. Some tasks,
 such as ``do_devshell``, are not part of the default build chain. If you
 wish to run a task that is not part of the default build chain, you can
 use the ``-c`` option in BitBake. Here is an example::

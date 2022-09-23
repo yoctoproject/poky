@@ -206,7 +206,7 @@ Package/recipe splitting
 Image / SDK generation changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Recursive dependencies on the ``do_build`` task are now disabled when
+- Recursive dependencies on the :ref:`ref-tasks-build` task are now disabled when
   building SDKs. These are generally not needed; in the unlikely event
   that you do encounter problems then it will probably be as a result of
   missing explicit dependencies that need to be added.
