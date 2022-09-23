@@ -1106,7 +1106,7 @@ built for the target hardware and includes libraries and headers. The
 host part is the part of the SDK that runs on the
 :term:`SDKMACHINE`.
 
-The ``do_populate_sdk_ext`` task helps create the extensible SDK and
+The :ref:`ref-tasks-populate_sdk_ext` task helps create the extensible SDK and
 handles host and target parts differently than its counter part does for
 the standard SDK. For the extensible SDK, the task encapsulates the
 build system, which includes everything needed (host and target) for the
