@@ -6752,7 +6752,7 @@ system and gives an overview of their function and contents.
       the following tasks are added:
 
       - do_populate_lic
-      - do_package_qa
+      - :ref:`ref-tasks-package_qa`
       - do_populate_sysroot
       - :ref:`ref-tasks-deploy`
 
