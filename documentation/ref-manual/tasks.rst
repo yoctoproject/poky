@@ -392,7 +392,7 @@ For information on what directories are copied by default, see the
 these variables inside your recipe if you need to make additional (or
 fewer) directories available to other recipes at build time.
 
-The ``do_populate_sysroot`` task is a shared state (sstate) task, which
+The :ref:`ref-tasks-populate_sysroot` task is a shared state (sstate) task, which
 means that the task can be accelerated through sstate use. Realize also
 that if the task is re-executed, any previous output is removed (i.e.
 "cleaned").

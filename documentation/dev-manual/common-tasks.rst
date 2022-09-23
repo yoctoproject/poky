@@ -8441,7 +8441,7 @@ The following list shows the files produced for SDKs:
    information.
 
 -  ``sstate-task-sizes.txt:`` A text file containing name-value pairs
-   with information about task group sizes (e.g. ``do_populate_sysroot``
+   with information about task group sizes (e.g. :ref:`ref-tasks-populate_sysroot`
    tasks have a total size). The ``sstate-task-sizes.txt`` file exists
    only when an extensible SDK is created.
 

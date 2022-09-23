@@ -2527,7 +2527,7 @@ stages:
    want to share with other recipes that have dependencies on the
    originating recipe. Normally these dependencies are installed through
    the :ref:`ref-tasks-install` task into
-   ``${``\ :term:`D`\ ``}``. The ``do_populate_sysroot`` task
+   ``${``\ :term:`D`\ ``}``. The :ref:`ref-tasks-populate_sysroot` task
    copies a subset of these files into ``${SYSROOT_DESTDIR}``. This
    subset of files is controlled by the
    :term:`SYSROOT_DIRS`,

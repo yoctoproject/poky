@@ -6753,7 +6753,7 @@ system and gives an overview of their function and contents.
 
       - :ref:`ref-tasks-populate_lic`
       - :ref:`ref-tasks-package_qa`
-      - do_populate_sysroot
+      - :ref:`ref-tasks-populate_sysroot`
       - :ref:`ref-tasks-deploy`
 
       Despite the default value of "" for the
@@ -7424,7 +7424,7 @@ system and gives an overview of their function and contents.
       For most recipes, this sysroot is the one in which that recipe's
       :ref:`ref-tasks-populate_sysroot` task copies
       files. Exceptions include ``-native`` recipes, where the
-      ``do_populate_sysroot`` task instead uses
+      :ref:`ref-tasks-populate_sysroot` task instead uses
       :term:`STAGING_DIR_NATIVE`. Depending on
       the type of recipe and the build target, :term:`STAGING_DIR_HOST` can
       have the following values:
