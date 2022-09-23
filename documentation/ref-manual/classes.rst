@@ -1256,9 +1256,9 @@ package installs all packages with modules and various other kernel
 packages such as ``kernel-vmlinux``.
 
 The ``kernel`` class contains logic that allows you to embed an initial
-RAM filesystem (initramfs) image when you build the kernel image. For
-information on how to build an initramfs, see the
-":ref:`dev-manual/common-tasks:building an initial ram filesystem (initramfs) image`" section in
+RAM filesystem (:term:`Initramfs`) image when you build the kernel image. For
+information on how to build an :term:`Initramfs`, see the
+":ref:`dev-manual/common-tasks:building an initial ram filesystem (Initramfs) image`" section in
 the Yocto Project Development Tasks Manual.
 
 Various other classes are used by the ``kernel`` and ``module`` classes

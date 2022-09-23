@@ -575,10 +575,8 @@ information on live image types.
 ``do_bundle_initramfs``
 -----------------------
 
-Combines an initial RAM disk (initramfs) image and kernel together to
-form a single image. The
-:term:`CONFIG_INITRAMFS_SOURCE` variable
-has some more information about these types of images.
+Combines an :term:`Initramfs` image and kernel together to
+form a single image.
 
 .. _ref-tasks-rootfs:
 

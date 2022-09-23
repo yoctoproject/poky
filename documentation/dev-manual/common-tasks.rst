@@ -3882,99 +3882,59 @@ and have separate configuration files, BitBake places the artifacts for
 each build in the respective temporary build directories (i.e.
 :term:`TMPDIR`).
 
-Building an Initial RAM Filesystem (initramfs) Image
+Building an Initial RAM Filesystem (Initramfs) Image
 ----------------------------------------------------
 
-An initial RAM filesystem (initramfs) image provides a temporary root
-filesystem used for early system initialization (e.g. loading of modules
-needed to locate and mount the "real" root filesystem).
+An initial RAM filesystem (:term:`Initramfs`) image provides a temporary root
+filesystem used for early system initialization, typically providing tools and
+loading modules needed to locate and mount the final root filesystem.
 
-.. note::
+Follow these steps to create an :term:`Initramfs` image:
 
-   The initramfs image is the successor of initial RAM disk (initrd). It
-   is a "copy in and out" (cpio) archive of the initial filesystem that
-   gets loaded into memory during the Linux startup process. Because
-   Linux uses the contents of the archive during initialization, the
-   initramfs image needs to contain all of the device drivers and tools
-   needed to mount the final root filesystem.
-
-Follow these steps to create an initramfs image:
-
-1. *Create the initramfs Image Recipe:* You can reference the
+1. *Create the Initramfs Image Recipe:* You can reference the
    ``core-image-minimal-initramfs.bb`` recipe found in the
    ``meta/recipes-core`` directory of the :term:`Source Directory`
-   as an example
-   from which to work.
+   as an example from which to work.
 
-2. *Decide if You Need to Bundle the initramfs Image Into the Kernel
-   Image:* If you want the initramfs image that is built to be bundled
-   in with the kernel image, set the
-   :term:`INITRAMFS_IMAGE_BUNDLE`
-   variable to "1" in your ``local.conf`` configuration file and set the
-   :term:`INITRAMFS_IMAGE`
-   variable in the recipe that builds the kernel image.
+2. *Decide if You Need to Bundle the Initramfs Image Into the Kernel
+   Image:* If you want the :term:`Initramfs` image that is built to be bundled
+   in with the kernel image, set the :term:`INITRAMFS_IMAGE_BUNDLE`
+   variable to ``"1"`` in your ``local.conf`` configuration file and set the
+   :term:`INITRAMFS_IMAGE` variable in the recipe that builds the kernel image.
 
-   .. note::
-
-      It is recommended that you bundle the initramfs image with the
-      kernel image to avoid circular dependencies between the kernel
-      recipe and the initramfs recipe should the initramfs image include
-      kernel modules.
-
-   Setting the :term:`INITRAMFS_IMAGE_BUNDLE` flag causes the initramfs
+   Setting the :term:`INITRAMFS_IMAGE_BUNDLE` flag causes the :term:`Initramfs`
    image to be unpacked into the ``${B}/usr/`` directory. The unpacked
-   initramfs image is then passed to the kernel's ``Makefile`` using the
-   :term:`CONFIG_INITRAMFS_SOURCE`
-   variable, allowing the initramfs image to be built into the kernel
-   normally.
+   :term:`Initramfs` image is then passed to the kernel's ``Makefile`` using the
+   :term:`CONFIG_INITRAMFS_SOURCE` variable, allowing the :term:`Initramfs`
+   image to be built into the kernel normally.
 
-   .. note::
+3. *Optionally Add Items to the Initramfs Image Through the Initramfs
+   Image Recipe:* If you add items to the :term:`Initramfs` image by way of its
+   recipe, you should use :term:`PACKAGE_INSTALL` rather than
+   :term:`IMAGE_INSTALL`. :term:`PACKAGE_INSTALL` gives more direct control of
+   what is added to the image as compared to the defaults you might not
+   necessarily want that are set by the :ref:`image <ref-classes-image>`
+   or :ref:`core-image <ref-classes-core-image>` classes.
 
-      Bundling the initramfs with the kernel conflates the code in the initramfs
-      with the GPLv2 licensed Linux kernel binary. Thus only GPLv2 compatible
-      software may be part of a bundled initramfs.
-
-   .. note::
-
-      If you choose to not bundle the initramfs image with the kernel
-      image, you are essentially using an
-      `Initial RAM Disk (initrd) <https://en.wikipedia.org/wiki/Initrd>`__.
-      Creating an initrd is handled primarily through the :term:`INITRD_IMAGE`,
-      ``INITRD_LIVE``, and ``INITRD_IMAGE_LIVE`` variables. For more
-      information, see the :ref:`ref-classes-image-live` file.
-
-3. *Optionally Add Items to the initramfs Image Through the initramfs
-   Image Recipe:* If you add items to the initramfs image by way of its
-   recipe, you should use
-   :term:`PACKAGE_INSTALL`
-   rather than
-   :term:`IMAGE_INSTALL`.
-   :term:`PACKAGE_INSTALL` gives more direct control of what is added to the
-   image as compared to the defaults you might not necessarily want that
-   are set by the :ref:`image <ref-classes-image>`
-   or :ref:`core-image <ref-classes-core-image>`
-   classes.
-
-4. *Build the Kernel Image and the initramfs Image:* Build your kernel
-   image using BitBake. Because the initramfs image recipe is a
-   dependency of the kernel image, the initramfs image is built as well
+4. *Build the Kernel Image and the Initramfs Image:* Build your kernel
+   image using BitBake. Because the :term:`Initramfs` image recipe is a
+   dependency of the kernel image, the :term:`Initramfs` image is built as well
    and bundled with the kernel image if you used the
-   :term:`INITRAMFS_IMAGE_BUNDLE`
-   variable described earlier.
+   :term:`INITRAMFS_IMAGE_BUNDLE` variable described earlier.
 
 Bundling an Initramfs Image From a Separate Multiconfig
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There may be a case where we want to build an initramfs image which does not
+There may be a case where we want to build an :term:`Initramfs` image which does not
 inherit the same distro policy as our main image, for example, we may want
-our main image to use ``TCLIBC="glibc"``, but to use ``TCLIBC="musl"`` in our initramfs
+our main image to use ``TCLIBC="glibc"``, but to use ``TCLIBC="musl"`` in our :term:`Initramfs`
 image to keep a smaller footprint. However, by performing the steps mentioned
-above the initramfs image will inherit ``TCLIBC="glibc"`` without allowing us
+above the :term:`Initramfs` image will inherit ``TCLIBC="glibc"`` without allowing us
 to override it.
 
 To achieve this, you need to perform some additional steps:
 
-1. *Create a multiconfig for your initramfs image:* You can perform the steps
+1. *Create a multiconfig for your Initramfs image:* You can perform the steps
    on ":ref:`dev-manual/common-tasks:building images for multiple targets using multiple configurations`" to create a separate multiconfig.
    For the sake of simplicity let's assume such multiconfig is called: ``initramfscfg.conf`` and
    contains the variables::
@@ -3982,7 +3942,7 @@ To achieve this, you need to perform some additional steps:
       TMPDIR="${TOPDIR}/tmp-initramfscfg"
       TCLIBC="musl"
 
-2. *Set additional initramfs variables on your main configuration:*
+2. *Set additional Initramfs variables on your main configuration:*
    Additionally, on your main configuration (``local.conf``) you need to set the
    variables::
 
@@ -3997,7 +3957,7 @@ To achieve this, you need to perform some additional steps:
    Building a system with such configuration will build the kernel using the
    main configuration but the ``do_bundle_initramfs`` task will grab the
    selected :term:`INITRAMFS_IMAGE` from :term:`INITRAMFS_DEPLOY_DIR_IMAGE`
-   instead, resulting in a musl based initramfs image bundled in the kernel
+   instead, resulting in a musl based :term:`Initramfs` image bundled in the kernel
    but a glibc based main image.
 
    The same is applicable to avoid inheriting :term:`DISTRO_FEATURES` on :term:`INITRAMFS_IMAGE`
@@ -4171,7 +4131,7 @@ file::
 Finally, you should consider exactly the type of root filesystem you
 need to meet your needs while also reducing its size. For example,
 consider ``cramfs``, ``squashfs``, ``ubifs``, ``ext2``, or an
-``initramfs`` using ``initramfs``. Be aware that ``ext3`` requires a 1
+:term:`Initramfs` using ``initramfs``. Be aware that ``ext3`` requires a 1
 Mbyte journal. If you are okay with running read-only, you do not need
 this journal.
 
@@ -8802,7 +8762,7 @@ perform a one-time setup of your controller image by doing the following:
    -  Installs normal linux utilities not BusyBox ones (e.g. ``bash``,
       ``coreutils``, ``tar``, ``gzip``, and ``kmod``).
 
-   -  Uses a custom Initial RAM Disk (initramfs) image with a custom
+   -  Uses a custom :term:`Initramfs` image with a custom
       installer. A normal image that you can install usually creates a
       single root filesystem partition. This image uses another installer that
       creates a specific partition layout. Not all Board Support

@@ -265,10 +265,10 @@ using the GL options.
 
 .. _migration-3.2-initramfs-suffix:
 
-initramfs images now use a blank suffix
+Initramfs images now use a blank suffix
 ---------------------------------------
 
-The reference initramfs images (``core-image-minimal-initramfs``,
+The reference :term:`Initramfs` images (``core-image-minimal-initramfs``,
 ``core-image-tiny-initramfs`` and ``core-image-testmaster-initramfs``) now
 set an empty string for :term:`IMAGE_NAME_SUFFIX`, which otherwise defaults
 to ``".rootfs"``. These images aren't root filesystems and thus the rootfs
