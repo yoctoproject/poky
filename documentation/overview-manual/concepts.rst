@@ -905,7 +905,7 @@ the analysis and package splitting process use several areas:
    individual packages.
 
 -  :term:`PKGDESTWORK`: A
-   temporary work area (i.e. ``pkgdata``) used by the ``do_package``
+   temporary work area (i.e. ``pkgdata``) used by the :ref:`ref-tasks-package`
    task to save package metadata.
 
 -  :term:`PKGDEST`: The parent
@@ -1210,13 +1210,13 @@ and other preceding tasks. For example, if BitBake runs
 ``do_populate_sysroot_setscene`` for something, it does not make sense
 to run any of the :ref:`ref-tasks-fetch`, ``do_unpack``, ``do_patch``,
 :ref:`ref-tasks-configure`, :ref:`ref-tasks-compile`, and :ref:`ref-tasks-install` tasks. However, if
-``do_package`` needs to be run, BitBake needs to run those other tasks.
+:ref:`ref-tasks-package` needs to be run, BitBake needs to run those other tasks.
 
 It becomes more complicated if everything can come from an sstate cache
 because some objects are simply not required at all. For example, you do
 not need a compiler or native tools, such as quilt, if there isn't anything
 to compile or patch. If the ``do_package_write_*`` packages are available
-from sstate, BitBake does not need the ``do_package`` task data.
+from sstate, BitBake does not need the :ref:`ref-tasks-package` task data.
 
 To handle all these complexities, BitBake runs in two phases. The first
 is the "setscene" stage. During this stage, BitBake first checks the
@@ -1854,7 +1854,7 @@ The following list explains the previous example:
 
       In cases where ``sstate-inputdirs`` and ``sstate-outputdirs`` would be
       the same, you can use ``sstate-plaindirs``. For example, to preserve the
-      ${:term:`PKGD`} and ${:term:`PKGDEST`} output from the ``do_package``
+      ${:term:`PKGD`} and ${:term:`PKGDEST`} output from the :ref:`ref-tasks-package`
       task, use the following::
 
               do_package[sstate-plaindirs] = "${PKGD} ${PKGDEST}"
@@ -2101,7 +2101,7 @@ dependencies, you must manually declare the dependencies.
    :term:`PRIVATE_LIBS` inside
    the package's recipe.
 
--  ``pcdeps``: During the ``do_package`` task of each recipe, all
+-  ``pcdeps``: During the :ref:`ref-tasks-package` task of each recipe, all
    pkg-config modules (``*.pc`` files) installed by the recipe are
    located. For each module, the package that contains the module is
    registered as providing the module. The resulting module-to-package
@@ -2147,7 +2147,7 @@ dependencies, you must manually declare the dependencies.
    :term:`ALLOW_EMPTY` variable
    for more information.
 
-The ``do_package`` task depends on the ``do_packagedata`` task of each
+The :ref:`ref-tasks-package` task depends on the ``do_packagedata`` task of each
 recipe in :term:`DEPENDS` through use
 of a ``[``\ :ref:`deptask <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]``
 declaration, which guarantees that the required

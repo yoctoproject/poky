@@ -212,7 +212,7 @@ based on available packages and files. This task makes use of the
 :term:`PACKAGES` and :term:`FILES`
 variables.
 
-The ``do_package`` task, in conjunction with the
+The :ref:`ref-tasks-package` task, in conjunction with the
 :ref:`ref-tasks-packagedata` task, also saves some
 important package metadata. For additional information, see the
 :term:`PKGDESTWORK` variable and the
