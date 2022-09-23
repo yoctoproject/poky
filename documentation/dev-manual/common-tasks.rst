@@ -3955,7 +3955,7 @@ To achieve this, you need to perform some additional steps:
    buildsystem know where the :term:`INITRAMFS_IMAGE` will be located.
 
    Building a system with such configuration will build the kernel using the
-   main configuration but the ``do_bundle_initramfs`` task will grab the
+   main configuration but the :ref:`ref-tasks-bundle_initramfs` task will grab the
    selected :term:`INITRAMFS_IMAGE` from :term:`INITRAMFS_DEPLOY_DIR_IMAGE`
    instead, resulting in a musl based :term:`Initramfs` image bundled in the kernel
    but a glibc based main image.

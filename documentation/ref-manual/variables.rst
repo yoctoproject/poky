@@ -3675,7 +3675,7 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Development Tasks Manual.
 
    :term:`INITRAMFS_DEPLOY_DIR_IMAGE`
-      Indicates the deploy directory used by ``do_bundle_initramfs`` where the
+      Indicates the deploy directory used by :ref:`ref-tasks-bundle_initramfs` where the
       :term:`INITRAMFS_IMAGE` will be fetched from.
       This variable is set by default to ``${DEPLOY_DIR_IMAGE}`` in the
       :ref:`kernel <ref-classes-kernel>` class and it's only meant to be changed
