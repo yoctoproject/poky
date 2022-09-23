@@ -703,16 +703,12 @@ the source files and unpack them into the
 
 .. note::
 
-   For every local file (e.g.
-   file://
-   ) that is part of a recipe's
-   SRC_URI
-   statement, the OpenEmbedded build system takes a checksum of the file
-   for the recipe and inserts the checksum into the signature for the
-   do_fetch
-   task. If any local file has been modified, the
-   do_fetch
-   task and all tasks that depend on it are re-executed.
+   For every local file (e.g. ``file://``) that is part of a recipe's
+   :term:`SRC_URI` statement, the OpenEmbedded build system takes a
+   checksum of the file for the recipe and inserts the checksum into
+   the signature for the :ref:`ref-tasks-fetch` task. If any local
+   file has been modified, the :ref:`ref-tasks-fetch` task and all
+   tasks that depend on it are re-executed.
 
 By default, everything is accomplished in the Build Directory, which has
 a defined structure. For additional general information on the Build
