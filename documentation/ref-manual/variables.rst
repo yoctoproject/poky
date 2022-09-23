@@ -6242,7 +6242,7 @@ system and gives an overview of their function and contents.
       The practical effect of the above :term:`RDEPENDS` assignment is that
       ``bar`` and ``baz`` will be declared as dependencies inside the
       package ``foo`` when it is written out by one of the
-      :ref:`do_package_write_\* <ref-tasks-package_write_deb>` tasks.
+      :ref:`do_package_write_* <ref-tasks-package_write_deb>` tasks.
       Exactly how this is done depends on which package format is used,
       which is determined by
       :term:`PACKAGE_CLASSES`. When the
@@ -6254,7 +6254,7 @@ system and gives an overview of their function and contents.
       added. This dependency is from the recipe's
       :ref:`ref-tasks-build` (not to be confused with
       :ref:`ref-tasks-compile`) task to the
-      ``do_package_write_*`` task of the recipes that build ``bar`` and
+      :ref:`do_package_write_* <ref-tasks-package_write_deb>` task of the recipes that build ``bar`` and
       ``baz``.
 
       The names of the packages you list within :term:`RDEPENDS` must be the

@@ -170,7 +170,7 @@ Copies files that are to be packaged into the holding area
 working directory set to ``${``\ :term:`B`\ ``}``, which is the
 compilation directory. The :ref:`ref-tasks-install` task, as well as other tasks
 that either directly or indirectly depend on the installed files (e.g.
-:ref:`ref-tasks-package`, ``do_package_write_*``, and
+:ref:`ref-tasks-package`, :ref:`do_package_write_* <ref-tasks-package_write_deb>`, and
 :ref:`ref-tasks-rootfs`), run under
 :ref:`fakeroot <overview-manual/concepts:fakeroot and pseudo>`.
 

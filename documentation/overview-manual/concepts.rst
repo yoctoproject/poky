@@ -1198,7 +1198,7 @@ the work involved would be equal to or greater than the underlying task.
 
 In the build system, the common tasks that have setscene variants are
 :ref:`ref-tasks-package`,
-``do_package_write_*``,
+:ref:`do_package_write_* <ref-tasks-package_write_deb>`,
 :ref:`ref-tasks-deploy`,
 :ref:`ref-tasks-packagedata`, and
 :ref:`ref-tasks-populate_sysroot`.
@@ -1215,7 +1215,7 @@ to run any of the :ref:`ref-tasks-fetch`, ``do_unpack``, :ref:`ref-tasks-patch`,
 It becomes more complicated if everything can come from an sstate cache
 because some objects are simply not required at all. For example, you do
 not need a compiler or native tools, such as quilt, if there isn't anything
-to compile or patch. If the ``do_package_write_*`` packages are available
+to compile or patch. If the :ref:`do_package_write_* <ref-tasks-package_write_deb>` packages are available
 from sstate, BitBake does not need the :ref:`ref-tasks-package` task data.
 
 To handle all these complexities, BitBake runs in two phases. The first
