@@ -5645,7 +5645,7 @@ system and gives an overview of their function and contents.
       .. note::
 
          If the software being built experiences dependency issues during
-         the ``do_compile`` task that result in race conditions, you can clear
+         the :ref:`ref-tasks-compile` task that result in race conditions, you can clear
          the :term:`PARALLEL_MAKE` variable within the recipe as a workaround. For
          information on addressing race conditions, see the
          ":ref:`dev-manual/common-tasks:debugging parallel make races`"

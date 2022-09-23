@@ -36,7 +36,7 @@ directory set to ``${``\ :term:`B`\ ``}``.
 
 The default behavior of this task is to run the ``oe_runmake`` function
 if a makefile (``Makefile``, ``makefile``, or ``GNUmakefile``) is found.
-If no such file is found, the ``do_compile`` task does nothing.
+If no such file is found, the :ref:`ref-tasks-compile` task does nothing.
 
 .. _ref-tasks-compile_ptest_base:
 
