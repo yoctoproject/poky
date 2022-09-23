@@ -447,7 +447,7 @@ Validates the :term:`SRC_URI` value.
 ------------
 
 Removes all output files for a target from the
-:ref:`ref-tasks-unpack` task forward (i.e. ``do_unpack``,
+:ref:`ref-tasks-unpack` task forward (i.e. :ref:`ref-tasks-unpack`,
 :ref:`ref-tasks-configure`,
 :ref:`ref-tasks-compile`,
 :ref:`ref-tasks-install`, and
