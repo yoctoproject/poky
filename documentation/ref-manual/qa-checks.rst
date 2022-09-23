@@ -677,7 +677,7 @@ Errors and Warnings
 
 - ``Fuzz detected: <patch output> [patch-fuzz]``
 
-    This check looks for evidence of "fuzz" when applying patches within the ``do_patch``
+    This check looks for evidence of "fuzz" when applying patches within the :ref:`ref-tasks-patch`
     task. Patch fuzz is a situation when the ``patch`` tool ignores some of the context
     lines in order to apply the patch. Consider this example:
 

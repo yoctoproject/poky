@@ -327,7 +327,7 @@ file as a patch file::
        "
 
 Conversely, if you have a file whose file type is ``.patch`` or ``.diff``
-and you want to exclude it so that the ``do_patch`` task does not apply
+and you want to exclude it so that the :ref:`ref-tasks-patch` task does not apply
 it during the patch phase, you can use the "apply=no" parameter with the
 :term:`SRC_URI` statement::
 
