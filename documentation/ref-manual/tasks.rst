@@ -492,7 +492,7 @@ task.
 
 Removes all output files and shared state
 (:ref:`sstate <overview-manual/concepts:shared state cache>`) cache for a
-target. Essentially, the ``do_cleansstate`` task is identical to the
+target. Essentially, the :ref:`ref-tasks-cleansstate` task is identical to the
 :ref:`ref-tasks-clean` task with the added removal of
 shared state (:ref:`sstate <overview-manual/concepts:shared state cache>`)
 cache.
@@ -501,13 +501,13 @@ You can run this task using BitBake as follows::
 
    $ bitbake -c cleansstate recipe
 
-When you run the ``do_cleansstate`` task, the OpenEmbedded build system
+When you run the :ref:`ref-tasks-cleansstate` task, the OpenEmbedded build system
 no longer uses any sstate. Consequently, building the recipe from
 scratch is guaranteed.
 
 .. note::
 
-   The ``do_cleansstate`` task cannot remove sstate from a remote sstate
+   The :ref:`ref-tasks-cleansstate` task cannot remove sstate from a remote sstate
    mirror. If you need to build a target from scratch using remote mirrors, use
    the "-f" option as follows::
 
