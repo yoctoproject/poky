@@ -1036,7 +1036,7 @@ the
 variable. This variable specifies a list of functions to call before the
 build system creates the final image output files.
 
-The build system dynamically creates ``do_image_*`` tasks as needed,
+The build system dynamically creates :ref:`do_image_* <ref-tasks-image>` tasks as needed,
 based on the image types specified in the
 :term:`IMAGE_FSTYPES` variable.
 The process turns everything into an image file or a set of image files
@@ -2162,7 +2162,7 @@ operations that are normally reserved for the root user (e.g.
 :ref:`ref-tasks-install`,
 :ref:`do_package_write* <ref-tasks-package_write_deb>`,
 :ref:`ref-tasks-rootfs`, and
-:ref:`do_image* <ref-tasks-image>`). For example,
+:ref:`do_image_* <ref-tasks-image>`). For example,
 the :ref:`ref-tasks-install` task benefits from being able to set the UID and GID
 of installed files to arbitrary values.
 

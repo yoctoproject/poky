@@ -128,15 +128,15 @@ module.
 ``do_image``
 ------------
 
-Starts the image generation process. The ``do_image`` task runs after
+Starts the image generation process. The :ref:`ref-tasks-image` task runs after
 the OpenEmbedded build system has run the
 :ref:`ref-tasks-rootfs` task during which packages are
 identified for installation into the image and the root filesystem is
 created, complete with post-processing.
 
-The ``do_image`` task performs pre-processing on the image through the
+The :ref:`ref-tasks-image` task performs pre-processing on the image through the
 :term:`IMAGE_PREPROCESS_COMMAND` and
-dynamically generates supporting ``do_image_*`` tasks as needed.
+dynamically generates supporting :ref:`do_image_* <ref-tasks-image>` tasks as needed.
 
 For more information on image creation, see the ":ref:`overview-manual/concepts:image generation`"
 section in the Yocto Project Overview and Concepts Manual.
@@ -149,7 +149,7 @@ section in the Yocto Project Overview and Concepts Manual.
 Completes the image generation process. The ``do_image_complete`` task
 runs after the OpenEmbedded build system has run the
 :ref:`ref-tasks-image` task during which image
-pre-processing occurs and through dynamically generated ``do_image_*``
+pre-processing occurs and through dynamically generated :ref:`do_image_* <ref-tasks-image>`
 tasks the image is constructed.
 
 The ``do_image_complete`` task performs post-processing on the image

@@ -3853,7 +3853,7 @@ to be added to the recipe that builds the ``core-image-sato`` image::
    do_image[mcdepends] = "mc:x86:arm:core-image-minimal:do_rootfs"
 
 In this example, the `from_multiconfig` is "x86". The `to_multiconfig` is "arm". The
-task on which the ``do_image`` task in the recipe depends is the
+task on which the :ref:`ref-tasks-image` task in the recipe depends is the
 ``do_rootfs`` task from the ``core-image-minimal`` recipe associated
 with the "arm" multiconfig.
 
