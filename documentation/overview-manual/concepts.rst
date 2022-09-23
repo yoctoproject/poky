@@ -1085,7 +1085,7 @@ the extensible SDK (eSDK):
    For more information on the cross-development toolchain generation,
    see the ":ref:`overview-manual/concepts:cross-development toolchain generation`"
    section. For information on advantages gained when building a
-   cross-development toolchain using the do_populate_sdk task, see the
+   cross-development toolchain using the :ref:`ref-tasks-populate_sdk` task, see the
    ":ref:`sdk-manual/appendix-obtain:building an sdk installer`" section in
    the Yocto Project Application Development and the Extensible Software
    Development Kit (eSDK) manual.
@@ -1100,7 +1100,7 @@ actually install. For information on the variables listed in the figure,
 see the ":ref:`overview-manual/concepts:application development sdk`"
 section.
 
-The ``do_populate_sdk`` task helps create the standard SDK and handles
+The :ref:`ref-tasks-populate_sdk` task helps create the standard SDK and handles
 two parts: a target part and a host part. The target part is the part
 built for the target hardware and includes libraries and headers. The
 host part is the part of the SDK that runs on the
