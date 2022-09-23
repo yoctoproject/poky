@@ -93,8 +93,8 @@ Fetching changes
 
      do_mytask[network] = "1"
 
-  This is allowed by default from ``do_fetch`` but not from any of our other standard
-  tasks. Recipes shouldn't be accessing the network outside of ``do_fetch`` as it
+  This is allowed by default from :ref:`ref-tasks-fetch` but not from any of our other standard
+  tasks. Recipes shouldn't be accessing the network outside of :ref:`ref-tasks-fetch` as it
   usually undermines fetcher source mirroring, image and licence manifests, software
   auditing and supply chain security.
 

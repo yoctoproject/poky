@@ -1208,7 +1208,7 @@ end result.
 The build system has knowledge of the relationship between these tasks
 and other preceding tasks. For example, if BitBake runs
 ``do_populate_sysroot_setscene`` for something, it does not make sense
-to run any of the ``do_fetch``, ``do_unpack``, ``do_patch``,
+to run any of the :ref:`ref-tasks-fetch`, ``do_unpack``, ``do_patch``,
 ``do_configure``, ``do_compile``, and ``do_install`` tasks. However, if
 ``do_package`` needs to be run, BitBake needs to run those other tasks.
 

@@ -191,7 +191,7 @@ Globbing no longer supported in ``file://`` entries in ``SRC_URI``
 
 Globbing (``*`` and ``?`` wildcards) in ``file://`` URLs within :term:`SRC_URI`
 did not properly support file checksums, thus changes to the source files
-would not always change the do_fetch task checksum, and consequently would
+would not always change the :ref:`ref-tasks-fetch` task checksum, and consequently would
 not ensure that the changed files would be incorporated in subsequent builds.
 
 Unfortunately it is not practical to make globbing work generically here, so
