@@ -22,7 +22,7 @@ syntax, so the following::
 
    SRC_URI_append = " file://somefile"
    SRC_URI_append_qemux86 = " file://somefile2"
-   SRC_URI_remove_qemux86-64 = " file://somefile3"
+   SRC_URI_remove_qemux86-64 = "file://somefile3"
    SRC_URI_prepend_qemuarm = "file://somefile4 "
    FILES_${PN}-ptest = "${bindir}/xyz"
    IMAGE_CMD_tar = "tar"
@@ -34,7 +34,7 @@ would now become::
 
    SRC_URI:append = " file://somefile"
    SRC_URI:append:qemux86 = " file://somefile2"
-   SRC_URI:remove:qemux86-64 = " file://somefile3"
+   SRC_URI:remove:qemux86-64 = "file://somefile3"
    SRC_URI:prepend:qemuarm = "file://somefile4 "
    FILES:${PN}-ptest = "${bindir}/xyz"
    IMAGE_CMD:tar = "tar"
