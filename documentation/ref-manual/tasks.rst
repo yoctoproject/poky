@@ -146,13 +146,13 @@ section in the Yocto Project Overview and Concepts Manual.
 ``do_image_complete``
 ---------------------
 
-Completes the image generation process. The ``do_image_complete`` task
+Completes the image generation process. The :ref:`do_image_complete <ref-tasks-image-complete>` task
 runs after the OpenEmbedded build system has run the
 :ref:`ref-tasks-image` task during which image
 pre-processing occurs and through dynamically generated :ref:`do_image_* <ref-tasks-image>`
 tasks the image is constructed.
 
-The ``do_image_complete`` task performs post-processing on the image
+The :ref:`do_image_complete <ref-tasks-image-complete>` task performs post-processing on the image
 through the
 :term:`IMAGE_POSTPROCESS_COMMAND`.
 
