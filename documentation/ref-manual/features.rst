@@ -322,6 +322,21 @@ these valid features is as follows:
 
 -  *ssh-server-dropbear:* Installs the Dropbear minimal SSH server.
 
+   .. note::
+
+      As of the 4.1 release, the ``ssh-server-dropbear`` feature also
+      recommends the ``openssh-sftp-server`` package, which by default
+      will be pulled into the image. This is because recent versions of
+      the OpenSSH ``scp`` client now use the SFTP protocol, and thus
+      require an SFTP server to be present to connect to. However, if
+      you wish to use the Dropbear ssh server `without` the SFTP server
+      installed, you can either remove ``ssh-server-dropbear`` from
+      ``IMAGE_FEATURES`` and add ``dropbear`` to :term:`IMAGE_INSTALL`
+      instead, or alternatively still use the feature but set
+      :term:`BAD_RECOMMENDATIONS` as follows::
+
+         BAD_RECOMMENDATIONS += "openssh-sftp-server"
+
 -  *ssh-server-openssh:* Installs the OpenSSH SSH server, which is more
    full-featured than Dropbear. Note that if both the OpenSSH SSH server
    and the Dropbear minimal SSH server are present in
