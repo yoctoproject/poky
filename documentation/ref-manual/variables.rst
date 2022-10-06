@@ -3546,7 +3546,7 @@ system and gives an overview of their function and contents.
 
 
          Although you can use other settings, you might be required to
-         remove dependencies on or provide alternatives to components that
+         remove dependencies on (or provide alternatives to) components that
          are required to produce a functional system image.
 
    :term:`INCOMPATIBLE_LICENSE_EXCEPTIONS`
