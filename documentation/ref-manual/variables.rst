@@ -3053,6 +3053,17 @@ system and gives an overview of their function and contents.
       material for Wic is located in the
       ":doc:`/ref-manual/kickstart`" chapter.
 
+   :term:`IMAGE_BUILDINFO_FILE`
+      When using the :ref:`image-buildinfo <ref-classes-image-buildinfo>` class,
+      specifies the file in the image to write the build information into. The
+      default value is "``${sysconfdir}/buildinfo``".
+
+   :term:`IMAGE_BUILDINFO_VARS`
+      When using the :ref:`image-buildinfo <ref-classes-image-buildinfo>` class,
+      specifies the list of variables to include in the `Build Configuration`
+      section of the output file (as a space-separated list). Defaults to
+      ":term:`DISTRO` :term:`DISTRO_VERSION`".
+
    :term:`IMAGE_CLASSES`
       A list of classes that all images should inherit. You typically use
       this variable to specify the list of classes that register the
@@ -6626,6 +6637,11 @@ system and gives an overview of their function and contents.
    :term:`SDK_ARCH`
       The target architecture for the SDK. Typically, you do not directly
       set this variable. Instead, use :term:`SDKMACHINE`.
+
+   :term:`SDK_BUILDINFO_FILE`
+      When using the :ref:`image-buildinfo <ref-classes-image-buildinfo>` class,
+      specifies the file in the SDK to write the build information into. The
+      default value is "``/buildinfo``".
 
    :term:`SDK_CUSTOM_TEMPLATECONF`
       When building the extensible SDK, if :term:`SDK_CUSTOM_TEMPLATECONF` is set to

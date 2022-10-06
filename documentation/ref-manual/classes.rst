@@ -881,8 +881,22 @@ Yocto Project Overview and Concepts Manual.
 ``image-buildinfo.bbclass``
 ===========================
 
-The ``image-buildinfo`` class writes information to the target
-filesystem on ``/etc/build``.
+The ``image-buildinfo`` class writes a plain text file containing
+build information to the target filesystem at ``${sysconfdir}/buildinfo``
+by default (as specified by :term:`IMAGE_BUILDINFO_FILE`.
+This can be useful for manually determining the origin of any given
+image. It writes out two sections:
+
+1. `Build Configuration`: a list of variables and their values (specified
+   by :term:`IMAGE_BUILDINFO_VARS`, which defaults to :term:`DISTRO` and
+   :term:`DISTRO_VERSION`)
+
+2. `Layer Revisions`: the revisions of all of the layers used in the
+   build.
+
+Additionally, when building an SDK it will write the same contents
+to ``/buildinfo`` by default (as specified by
+:term:`SDK_BUILDINFO_FILE`).
 
 .. _ref-classes-image_types:
 
