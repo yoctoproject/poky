@@ -1008,8 +1008,8 @@ Here are the tests you can list with the :term:`WARN_QA` and
    software, like bootloaders, might need to bypass this check.
 
 -  ``buildpaths:`` Checks for paths to locations on the build host
-   inside the output files. Currently, this test triggers too many false
-   positives and thus is not normally enabled.
+   inside the output files. Not only can these leak information about
+   the build environment, they also hinder binary reproducibility.
 
 -  ``build-deps:`` Determines if a build-time dependency that is
    specified through :term:`DEPENDS`, explicit
