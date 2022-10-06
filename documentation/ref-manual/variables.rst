@@ -6854,6 +6854,10 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Application Development and the
       Extensible Software Development Kit (eSDK) manual.
 
+   :term:`SDK_TOOLCHAIN_LANGS`
+      Specifies programming languages to support in the SDK, as a
+      space-separated list. Currently supported items are ``rust`` and ``go``.
+
    :term:`SDK_UPDATE_URL`
       An optional URL for an update server for the extensible SDK. If set,
       the value is used as the default update server when running
