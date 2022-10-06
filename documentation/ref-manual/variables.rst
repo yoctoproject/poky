@@ -8872,6 +8872,10 @@ system and gives an overview of their function and contents.
       can control with this variable, see the
       ":ref:`ref-classes-insane`" section.
 
+   :term:`WATCHDOG_TIMEOUT`
+      Specifies the timeout in seconds used by the ``watchdog`` recipe and
+      also by ``systemd`` during reboot. The default is 60 seconds.
+
    :term:`WKS_FILE`
       Specifies the location of the Wic kickstart file that is used by the
       OpenEmbedded build system to create a partitioned image
