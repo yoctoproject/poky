@@ -2005,6 +2005,21 @@ When inherited by a recipe, the ``perlnative`` class supports using the
 native version of Perl built by the build system rather than using the
 version provided by the build host.
 
+.. _ref-classes-pypi:
+
+``pypi.bbclass``
+================
+
+The ``pypi`` class sets variables appropriately for recipes that build
+Python modules from `PyPI <https://pypi.org/>`__, the Python Package Index.
+By default it determines the PyPI package name based upon :term:`BPN`
+(stripping the "python-" or "python3-" prefix off if present), however in
+some cases you may need to set it manually in the recipe by setting
+:term:`PYPI_PACKAGE`.
+
+Variables set by the ``pypi`` class include :term:`SRC_URI`, :term:`SECTION`,
+:term:`HOMEPAGE`, :term:`UPSTREAM_CHECK_URI`, and :term:`UPSTREAM_CHECK_REGEX`.
+
 .. _ref-classes-python_flit_core:
 
 ``python_flit_core.bbclass``
