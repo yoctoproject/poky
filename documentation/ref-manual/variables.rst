@@ -1812,6 +1812,11 @@ system and gives an overview of their function and contents.
       :term:`DESCRIPTION` takes the value of the :term:`SUMMARY`
       variable.
 
+   :term:`DEV_PKG_DEPENDENCY`
+      Provides an easy way for recipes to disable or adjust the runtime
+      dependency (:term:`RDEPENDS`) of the ``${PN}-dev`` package on the main
+      (``${PN}``) package, particularly where the main package may be empty.
+
    :term:`DISABLE_STATIC`
       Used in order to disable static linking by default (in order to save
       space, since static libraries are often unused in embedded systems.)
