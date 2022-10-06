@@ -2018,7 +2018,8 @@ some cases you may need to set it manually in the recipe by setting
 :term:`PYPI_PACKAGE`.
 
 Variables set by the ``pypi`` class include :term:`SRC_URI`, :term:`SECTION`,
-:term:`HOMEPAGE`, :term:`UPSTREAM_CHECK_URI`, and :term:`UPSTREAM_CHECK_REGEX`.
+:term:`HOMEPAGE`, :term:`UPSTREAM_CHECK_URI`, :term:`UPSTREAM_CHECK_REGEX`
+and :term:`CVE_PRODUCT`.
 
 .. _ref-classes-python_flit_core:
 

@@ -1474,7 +1474,9 @@ system and gives an overview of their function and contents.
       In a recipe, defines the name used to match the recipe name
       against the name in the upstream `NIST CVE database <https://nvd.nist.gov/>`__.
 
-      The default is ${:term:`BPN`}. If it does not match the name in the NIST CVE
+      The default is ${:term:`BPN`} (except for recipes that inherit the
+      :ref:`pypi <ref-classes-pypi>` class where it is set based upon
+      :term:`PYPI_PACKAGE`). If it does not match the name in the NIST CVE
       database or matches with multiple entries in the database, the default
       value needs to be changed.
 
