@@ -659,6 +659,20 @@ the GNU ``gettext`` internationalization and localization system. All
 recipes building software that use ``gettext`` should inherit this
 class.
 
+.. _ref-classes-github-releases:
+
+``github-releases``
+===================
+
+For recipes that fetch release tarballs from github, the ``github-releases``
+class sets up a standard way for checking available upstream versions
+(to support ``devtool upgrade`` and the Automated Upgrade Helper (AUH)).
+
+To use it, add ``github-releases`` to the inherit line in the recipe,
+and if the default value of :term:`GITHUB_BASE_URI` is not suitable,
+then set your own value in the recipe. You should then use ``${GITHUB_BASE_URI}``
+in the value you set for :term:`SRC_URI` within the recipe.
+
 .. _ref-classes-gnomebase:
 
 ``gnomebase.bbclass``

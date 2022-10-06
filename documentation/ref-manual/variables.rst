@@ -2768,6 +2768,13 @@ system and gives an overview of their function and contents.
       The directory in which a local copy of a Git repository is stored
       when it is cloned.
 
+   :term:`GITHUB_BASE_URI`
+      When inheriting the :ref:`github-releases <ref-classes-github-releases>`
+      class, specifies the base URL for fetching releases for the github
+      project you wish to fetch sources from. The default value is as follows::
+
+         GITHUB_BASE_URI ?= "https://github.com/${BPN}/${BPN}/releases/"
+
    :term:`GLIBC_GENERATE_LOCALES`
       Specifies the list of GLIBC locales to generate should you not wish
       to generate all LIBC locals, which can be time consuming.
