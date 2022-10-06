@@ -1466,6 +1466,13 @@ system and gives an overview of their function and contents.
          # This is windows only issue.
          CVE_CHECK_IGNORE += "CVE-2020-15523"
 
+   :term:`CVE_CHECK_SHOW_WARNINGS`
+      Specifies whether or not the :ref:`cve-check <ref-classes-cve-check>`
+      class should generate warning messages on the console when unpatched
+      CVEs are found. The default is "1", but you may wish to set it to "0" if
+      you are already examining/processing the logs after the build has
+      completed and thus do not need the warning messages.
+
    :term:`CVE_CHECK_SKIP_RECIPE`
       The list of package names (:term:`PN`) for which
       CVEs (Common Vulnerabilities and Exposures) are ignored.
