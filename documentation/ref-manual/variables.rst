@@ -920,10 +920,10 @@ system and gives an overview of their function and contents.
       and sdk). If you want to track changes to build history over time,
       you should set this value to "1".
 
-      By default, the :ref:`buildhistory <ref-classes-buildhistory>` class does not commit the build
-      history output in a local Git repository::
+      By default, the :ref:`buildhistory <ref-classes-buildhistory>` class
+      enables committing the buildhistory output in a local Git repository::
 
-         BUILDHISTORY_COMMIT ?= "0"
+         BUILDHISTORY_COMMIT ?= "1"
 
    :term:`BUILDHISTORY_COMMIT_AUTHOR`
       When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
