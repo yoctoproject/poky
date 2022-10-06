@@ -8564,6 +8564,10 @@ system and gives an overview of their function and contents.
       If :term:`UBOOT_MKIMAGE_DTCOPTS` is not set then kernel-fitimage will not
       pass the ``-D`` option to mkimage.
 
+   :term:`UBOOT_MKIMAGE_KERNEL_TYPE`
+      Specifies the type argument for the kernel as passed to ``uboot-mkimage``.
+      The default value is "kernel".
+
    :term:`UBOOT_MKIMAGE_SIGN`
       Specifies the name of the mkimage command as used by the
       :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class to sign
