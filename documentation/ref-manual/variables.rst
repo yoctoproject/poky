@@ -4099,6 +4099,12 @@ system and gives an overview of their function and contents.
       the kernel. The default is "0" to disable this for reproducibility
       reasons.
 
+   :term:`KERNEL_DEPLOY_DEPEND`
+      Provides a means of controlling the dependency of an image recipe
+      on the kernel. The default value is "virtual/kernel:do_deploy",
+      however for a small initramfs image or other images that do not
+      need the kernel, this can be set to "" in the image recipe.
+
    :term:`KERNEL_DEVICETREE`
       Specifies the name of the generated Linux kernel device tree (i.e.
       the ``.dtb``) file.
