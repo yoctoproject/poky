@@ -2713,6 +2713,10 @@ system and gives an overview of their function and contents.
       Specifies the signature algorithm used in creating the FIT Image.
       For e.g. rsa2048.
 
+   :term:`FIT_PAD_ALG`
+      Specifies the padding algorithm used in creating the FIT Image.
+      The default value is "pkcs-1.5".
+
    :term:`FIT_SIGN_INDIVIDUAL`
       If set to "1", then the :ref:`kernel-fitimage <ref-classes-kernel-fitimage>`
       class will sign the kernel, dtb and ramdisk images individually in addition
