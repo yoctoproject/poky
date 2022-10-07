@@ -1477,6 +1477,13 @@ system and gives an overview of their function and contents.
       The list of package names (:term:`PN`) for which
       CVEs (Common Vulnerabilities and Exposures) are ignored.
 
+   :term:`CVE_DB_UPDATE_INTERVAL`
+      Specifies the CVE database update interval in seconds, as used by
+      ``cve-update-db-native``. The default value is "86400" i.e. once a day
+      (24*60*60). If the value is set to "0" then the update will be forced
+      every time. Alternatively, a negative value e.g. "-1" will disable
+      updates entirely.
+
    :term:`CVE_PRODUCT`
       In a recipe, defines the name used to match the recipe name
       against the name in the upstream `NIST CVE database <https://nvd.nist.gov/>`__.
