@@ -5001,6 +5001,11 @@ system and gives an overview of their function and contents.
 
          KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
+   :term:`MOUNT_BASE`
+      On non-systemd systems (where ``udev-extraconf`` is being used),
+      specifies the base directory for auto-mounting filesystems. The
+      default value is "/run/media".
+
    :term:`MULTIMACH_TARGET_SYS`
       Uniquely identifies the type of the target system for which packages
       are being built. This variable allows output for different types of
