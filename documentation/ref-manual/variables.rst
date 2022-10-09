@@ -5196,6 +5196,12 @@ system and gives an overview of their function and contents.
 
          OVERLAYFS_ETC_DEVICE = "/dev/mmcblk0p2"
 
+   :term:`OVERLAYFS_ETC_EXPOSE_LOWER`
+      When the :ref:`overlayfs-etc <ref-classes-overlayfs-etc>` class is
+      inherited, if set to "1" then a read-only access to the original
+      ``/etc`` content will be provided as a ``lower/`` subdirectory of
+      :term:`OVERLAYFS_ETC_MOUNT_POINT`. The default value is "0".
+
    :term:`OVERLAYFS_ETC_FSTYPE`
       When the :ref:`overlayfs-etc <ref-classes-overlayfs-etc>` class is
       inherited, specifies the file system type for the read/write
