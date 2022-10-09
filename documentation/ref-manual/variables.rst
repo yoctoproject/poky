@@ -5187,6 +5187,44 @@ system and gives an overview of their function and contents.
       default by setting the variable in a custom distribution
       configuration file.
 
+   :term:`OVERLAYFS_ETC_DEVICE`
+      When the :ref:`overlayfs-etc <ref-classes-overlayfs-etc>` class is
+      inherited, specifies the device to be mounted for the read/write
+      layer of ``/etc``. There is no default, so you must set this if you
+      wish to enable :ref:`overlayfs-etc <ref-classes-overlayfs-etc>`, for
+      example, assuming ``/dev/mmcblk0p2`` was the desired device::
+
+         OVERLAYFS_ETC_DEVICE = "/dev/mmcblk0p2"
+
+   :term:`OVERLAYFS_ETC_FSTYPE`
+      When the :ref:`overlayfs-etc <ref-classes-overlayfs-etc>` class is
+      inherited, specifies the file system type for the read/write
+      layer of ``/etc``. There is no default, so you must set this if you
+      wish to enable :ref:`overlayfs-etc <ref-classes-overlayfs-etc>`,
+      for example, assuming the file system is ext4::
+
+         OVERLAYFS_ETC_FSTYPE = "ext4"
+
+   :term:`OVERLAYFS_ETC_MOUNT_OPTIONS`
+      When the :ref:`overlayfs-etc <ref-classes-overlayfs-etc>` class is
+      inherited, specifies the mount options for the read-write layer.
+      The default value is "defaults".
+
+   :term:`OVERLAYFS_ETC_MOUNT_POINT`
+      When the :ref:`overlayfs-etc <ref-classes-overlayfs-etc>` class is
+      inherited, specifies the parent mount path for the filesystem layers.
+      There is no default, so you must set this if you wish to enable
+      :ref:`overlayfs-etc <ref-classes-overlayfs-etc>`, for example if
+      the desired path is "/data"::
+
+         OVERLAYFS_ETC_MOUNT_POINT = "/data"
+
+   :term:`OVERLAYFS_ETC_USE_ORIG_INIT_NAME`
+      When the :ref:`overlayfs-etc <ref-classes-overlayfs-etc>` class is
+      inherited, controls how the generated init will be named. For more
+      information, see the :ref:`overlayfs-etc <ref-classes-overlayfs-etc>`
+      class documentation. The default value is "1".
+
    :term:`OVERRIDES`
       A colon-separated list of overrides that currently apply. Overrides
       are a BitBake mechanism that allows variables to be selectively
