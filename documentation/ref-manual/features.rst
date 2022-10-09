@@ -152,9 +152,6 @@ metadata, as extra layers can define their own:
 -  *keyboard:* Include keyboard support (e.g. keymaps will be loaded
    during boot).
 
--  *largefile:* Enable building applications with
-   `argefile support <https://en.wikipedia.org/wiki/Large-file_support>`__.
-
 -  *multiarch:* Enable building applications with multiple architecture
    support.
 
