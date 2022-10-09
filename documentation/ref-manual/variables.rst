@@ -1171,12 +1171,10 @@ system and gives an overview of their function and contents.
       packages for all the packages explicitly (or implicitly) installed in
       an image.
 
-      .. note::
-
-         The :term:`COMPLEMENTARY_GLOB` variable uses Unix filename pattern matching
-         (`fnmatch <https://docs.python.org/3/library/fnmatch.html#module-fnmatch>`__),
-         which is similar to the Unix style pathname pattern expansion
-         (`glob <https://docs.python.org/3/library/glob.html>`__).
+      The :term:`COMPLEMENTARY_GLOB` variable uses Unix filename pattern matching
+      (`fnmatch <https://docs.python.org/3/library/fnmatch.html#module-fnmatch>`__),
+      which is similar to the Unix style pathname pattern expansion
+      (`glob <https://docs.python.org/3/library/glob.html>`__).
 
       The resulting list of complementary packages is associated with an
       item that can be added to
@@ -1190,6 +1188,11 @@ system and gives an overview of their function and contents.
       wildcard. Here is an example::
 
          COMPLEMENTARY_GLOB[dev-pkgs] = '*-dev'
+
+      .. note::
+
+         When installing complementary packages, recommends relationships
+         (set via :term:`RRECOMMENDS`) are always ignored.
 
    :term:`COMPONENTS_DIR`
       Stores sysroot components for each recipe. The OpenEmbedded build
