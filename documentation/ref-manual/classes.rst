@@ -2768,12 +2768,12 @@ session needs to be started. For example, the
 :ref:`devshell <ref-classes-devshell>` class all use the ``terminal``
 class.
 
-.. _ref-classes-testimage*:
+.. _ref-classes-testimage:
 
-``testimage*.bbclass``
-======================
+``testimage.bbclass``
+=====================
 
-The ``testimage*`` classes support running automated tests against
+The ``testimage`` class supports running automated tests against
 images using QEMU and on actual hardware. The classes handle loading the
 tests and starting the image. To use the classes, you need to perform
 steps to set up the environment.
@@ -2787,14 +2787,15 @@ steps to set up the environment.
 The tests are commands that run on the target system over ``ssh``. Each
 test is written in Python and makes use of the ``unittest`` module.
 
-The ``testimage.bbclass`` runs tests on an image when called using the
+The ``testimage`` class runs tests on an image when called using the
 following::
 
    $ bitbake -c testimage image
 
-The ``testimage-auto`` class
-runs tests on an image after the image is constructed (i.e.
-:term:`TESTIMAGE_AUTO` must be set to "1").
+Alternatively, if you wish to have tests automatically run for each image
+after it is built, you can set :term:`TESTIMAGE_AUTO`::
+
+   TESTIMAGE_AUTO = "1"
 
 For information on how to enable, run, and create new tests, see the
 ":ref:`dev-manual/common-tasks:performing automated runtime testing`"

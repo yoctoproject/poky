@@ -3048,7 +3048,7 @@ The following steps describe how to set up the AUH utility:
       your build directory.
 
    -  If you want to enable testing through the
-      :ref:`testimage <ref-classes-testimage*>`
+      :ref:`testimage <ref-classes-testimage>`
       class, which is optional, you need to have the following set in
       your ``conf/local.conf`` file::
 
@@ -8893,7 +8893,7 @@ You can start the tests automatically or manually:
 
 -  *Manually running tests:* To manually run the tests, first globally
    inherit the
-   :ref:`testimage <ref-classes-testimage*>` class
+   :ref:`testimage <ref-classes-testimage>` class
    by editing your ``local.conf`` file::
 
       INHERIT += "testimage"
