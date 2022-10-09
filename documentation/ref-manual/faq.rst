@@ -109,7 +109,7 @@ I prevent this?
 but make sure the package is manually marked as machine-specific for the
 case that needs it. The code that handles
 :term:`SRC_URI_OVERRIDES_PACKAGE_ARCH` is in the
-``meta/classes/base.bbclass`` file.
+``meta/classes-global/base.bbclass`` file.
 
 **Q:** I'm behind a firewall and need to use a proxy server. How do I do
 that?

@@ -13,8 +13,14 @@ some default behavior.
 
 Any :term:`Metadata` usually found in a recipe can also be
 placed in a class file. Class files are identified by the extension
-``.bbclass`` and are usually placed in a ``classes/`` directory beneath
-the ``meta*/`` directory found in the :term:`Source Directory`.
+``.bbclass`` and are usually placed in one of a set of subdirectories
+beneath the ``meta*/`` directory found in the :term:`Source Directory`:
+
+  - ``classes-recipe/`` - classes intended to be inherited by recipes
+    individually
+  - ``classes-global/`` - classes intended to be inherited globally
+  - ``classes/`` - classes whose usage context is not clearly defined
+
 Class files can also be pointed to by
 :term:`BUILDDIR` (e.g. ``build/``) in the same way as
 ``.conf`` files in the ``conf`` directory. Class files are searched for
@@ -22,7 +28,7 @@ in :term:`BBPATH` using the same method by which ``.conf``
 files are searched.
 
 This chapter discusses only the most useful and important classes. Other
-classes do exist within the ``meta/classes`` directory in the Source
+classes do exist within the ``meta/classes*`` directories in the Source
 Directory. You can reference the ``.bbclass`` files directly for more
 information.
 
@@ -2778,11 +2784,9 @@ images using QEMU and on actual hardware. The classes handle loading the
 tests and starting the image. To use the classes, you need to perform
 steps to set up the environment.
 
-.. note::
+To enable this class, add the following to your configuration::
 
-   Best practices include using :term:`IMAGE_CLASSES` rather than
-   :term:`INHERIT` to inherit the ``testimage`` class for automated image
-   testing.
+   IMAGE_CLASSES += "testimage"
 
 The tests are commands that run on the target system over ``ssh``. Each
 test is written in Python and makes use of the ``unittest`` module.
@@ -2937,7 +2941,7 @@ To use this class, you need to define a number of variables:
 These variables list alternative commands needed by a package, provide
 pathnames for links, default links for targets, and so forth. For
 details on how to use this class, see the comments in the
-:yocto_git:`update-alternatives.bbclass </poky/tree/meta/classes/update-alternatives.bbclass>`
+:yocto_git:`update-alternatives.bbclass </poky/tree/meta/classes-recipe/update-alternatives.bbclass>`
 file.
 
 .. note::
