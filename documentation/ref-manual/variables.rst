@@ -8985,6 +8985,11 @@ system and gives an overview of their function and contents.
       Specifies the timeout in seconds used by the ``watchdog`` recipe and
       also by ``systemd`` during reboot. The default is 60 seconds.
 
+   :term:`WIRELESS_DAEMON`
+      For ``connman`` and ``packagegroup-base``, specifies the wireless
+      daemon to use. The default is "wpa-supplicant" (note that the value
+      uses a dash and not an underscore).
+
    :term:`WKS_FILE`
       Specifies the location of the Wic kickstart file that is used by the
       OpenEmbedded build system to create a partitioned image
