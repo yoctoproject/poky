@@ -5248,6 +5248,19 @@ system and gives an overview of their function and contents.
          inherited by individual recipes, :term:`OVERLAYFS_MOUNT_POINT`
          should be set in your machine configuration.
 
+   :term:`OVERLAYFS_QA_SKIP`
+      When inheriting the :ref:`overlayfs <ref-classes-overlayfs>` class,
+      provides the ability to disable QA checks for particular overlayfs
+      mounts. For example::
+
+         OVERLAYFS_QA_SKIP[data] = "mount-configured"
+
+      .. note::
+
+         Although the :ref:`overlayfs <ref-classes-overlayfs>` class is
+         inherited by individual recipes, :term:`OVERLAYFS_QA_SKIP`
+         should be set in your machine configuration.
+
    :term:`OVERLAYFS_WRITABLE_PATHS`
       When inheriting the :ref:`overlayfs <ref-classes-overlayfs>` class,
       specifies writable paths used at runtime for the recipe. For
