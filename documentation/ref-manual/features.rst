@@ -337,6 +337,12 @@ Here are the image features available for all images:
    writeable for the first boot; this feature does not do anything to
    ensure that - it just disables the check for post-install scripts.)
 
+-  *serial-autologin-root:* when specified in conjunction with
+   ``empty-root-password`` will automatically login as root on the
+   serial console. This of course opens up a security hole if the
+   serial console is potentially accessible to an attacker, so use
+   with caution.
+
 -  *splash:* Enables showing a splash screen during boot. By default,
    this screen is provided by ``psplash``, which does allow
    customization. If you prefer to use an alternative splash screen
