@@ -5231,6 +5231,30 @@ system and gives an overview of their function and contents.
       information, see the :ref:`overlayfs-etc <ref-classes-overlayfs-etc>`
       class documentation. The default value is "1".
 
+   :term:`OVERLAYFS_MOUNT_POINT`
+      When inheriting the :ref:`overlayfs <ref-classes-overlayfs>` class,
+      specifies mount point(s) to be used. For example::
+
+         OVERLAYFS_MOUNT_POINT[data] = "/data"
+
+      The assumes you have a ``data.mount`` systemd unit defined elsewhere
+      in your BSP (e.g. in ``systemd-machine-units`` recipe) and it is
+      installed into the image. For more information see
+      :ref:`overlayfs <ref-classes-overlayfs>`.
+
+      .. note::
+
+         Although the :ref:`overlayfs <ref-classes-overlayfs>` class is
+         inherited by individual recipes, :term:`OVERLAYFS_MOUNT_POINT`
+         should be set in your machine configuration.
+
+   :term:`OVERLAYFS_WRITABLE_PATHS`
+      When inheriting the :ref:`overlayfs <ref-classes-overlayfs>` class,
+      specifies writable paths used at runtime for the recipe. For
+      example::
+
+         OVERLAYFS_WRITABLE_PATHS[data] = "/usr/share/my-custom-application"
+
    :term:`OVERRIDES`
       A colon-separated list of overrides that currently apply. Overrides
       are a BitBake mechanism that allows variables to be selectively
