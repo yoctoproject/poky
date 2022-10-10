@@ -368,6 +368,14 @@ authors used.
 Both build methods inherit the ``cpan-base`` class for basic Perl
 support.
 
+.. _ref-classes-create-spdx:
+
+``create-spdx.bbclass``
+=======================
+
+The ``create-spdx`` class provides support for automatically creating
+SPDX SBoM documents based upon image and SDK contents.
+
 .. _ref-classes-cross:
 
 ``cross.bbclass``
