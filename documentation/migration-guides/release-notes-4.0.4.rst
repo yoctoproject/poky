@@ -226,7 +226,7 @@ Contributors to Yocto-4.0.4
 -  Yongxin Liu
 -  ghassaneben
 -  pgowda
--  wangmy
+-  Wang Mingyu
 
 Repositories / Downloads for Yocto-4.0.4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

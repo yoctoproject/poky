@@ -81,7 +81,7 @@ Contributors to 3.4.4
 -  Richard Purdie
 -  Ross Burton
 -  Tim Orling
--  wangmy
+-  Wang Mingyu
 -  zhengruoqin
 
 Repositories / Downloads for 3.4.4
