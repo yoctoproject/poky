@@ -282,8 +282,8 @@ The following miscellaneous changes have occurred.
 -  You must change the host distro identifier used in
    :term:`NATIVELSBSTRING` to use all lowercase
    characters even if it does not contain a version number. This change
-   is necessary only if you are not using ``uninative`` and
-   :term:`SANITY_TESTED_DISTROS`.
+   is necessary only if you are not using
+   :ref:`uninative <ref-classes-uninative>` and :term:`SANITY_TESTED_DISTROS`.
 
 -  In the ``base-files`` recipe, writing the hostname into
    ``/etc/hosts`` and ``/etc/hostname`` is now done within the main

@@ -217,7 +217,13 @@ Most recipes and classes that inherit the :ref:`deploy <ref-classes-deploy>` cla
 Custom SDK / SDK-style recipes need to include ``nativesdk-sdk-provides-dummy``
 -------------------------------------------------------------------------------
 
-All ``nativesdk`` packages require ``/bin/sh`` due to their postinstall scriptlets, thus this package has to be dummy-provided within the SDK and ``nativesdk-sdk-provides-dummy`` now does this. If you have a custom SDK recipe (or your own SDK-style recipe similar to e.g. ``buildtools-tarball``), you will need to ensure ``nativesdk-sdk-provides-dummy`` or an equivalent is included in :term:`TOOLCHAIN_HOST_TASK`.
+All :ref:`nativesdk <ref-classes-nativesdk>` packages require ``/bin/sh`` due
+to their postinstall scriptlets, thus this package has to be dummy-provided
+within the SDK and ``nativesdk-sdk-provides-dummy`` now does this. If you have
+a custom SDK recipe (or your own SDK-style recipe similar to e.g.
+``buildtools-tarball``), you will need to ensure
+``nativesdk-sdk-provides-dummy`` or an equivalent is included in
+:term:`TOOLCHAIN_HOST_TASK`.
 
 
 ``ld.so.conf`` now moved back to main ``glibc`` package

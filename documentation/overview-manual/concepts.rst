@@ -921,7 +921,7 @@ the analysis and package splitting process use several areas:
 -  :term:`STAGING_DIR_TARGET`:
    The path for the sysroot used when a component that is built to
    execute on a system and it generates code for yet another machine
-   (e.g. cross-canadian recipes).
+   (e.g. :ref:`cross-canadian <ref-classes-cross-canadian>` recipes).
 
 The :term:`FILES` variable defines the
 files that go into each package in

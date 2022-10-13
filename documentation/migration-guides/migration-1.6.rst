@@ -220,9 +220,10 @@ Package Test (ptest)
 
 Package Tests (ptest) are built but not installed by default. For
 information on using Package Tests, see the
-":ref:`dev-manual/common-tasks:testing packages with ptest`"
-section in the Yocto Project Development Tasks Manual. For information on the
-``ptest`` class, see the ":ref:`ref-classes-ptest`" section.
+":ref:`dev-manual/common-tasks:testing packages with ptest`" section in the
+Yocto Project Development Tasks Manual. For information on the
+:ref:`ptest <ref-classes-ptest>` class, see the ":ref:`ref-classes-ptest`"
+section.
 
 .. _migration-1.6-build-changes:
 
@@ -237,7 +238,7 @@ will enable a separate :term:`Build Directory` by default as well. Recipes
 building Autotools-based software that fails to build with a separate
 :term:`Build Directory` should be changed to inherit from the
 :ref:`autotools-brokensep <ref-classes-autotools>` class instead of
-the ``autotools`` or ``autotools_stage``\ classes.
+the :ref:`autotools <ref-classes-autotools>` or ``autotools_stage`` classes.
 
 .. _migration-1.6-building-qemu-native:
 

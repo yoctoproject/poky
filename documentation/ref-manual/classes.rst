@@ -1406,7 +1406,7 @@ an optional Initramfs bundle, an optional RAM disk, and any number of
 device tree.
 
 To create a FIT image, it is required that :term:`KERNEL_CLASSES`
-is set to include "kernel-fitimage" and :term:`KERNEL_IMAGETYPE`
+is set to include ":ref:`kernel-fitimage <ref-classes-kernel-fitimage>`" and :term:`KERNEL_IMAGETYPE`
 is set to "fitImage".
 
 The options for the device tree compiler passed to ``mkimage -D``
@@ -2566,11 +2566,12 @@ uses these build systems, the recipe needs to inherit the :ref:`setuptools3 <ref
 ``setuptools3_legacy.bbclass``
 ==============================
 
-The :ref:`setuptools3_legacy <ref-classes-setuptools3_legacy>` class supports Python version 3.x extensions that use
-build systems based on ``setuptools`` (e.g. only have a ``setup.py`` and have
-not migrated to the official ``pyproject.toml`` format). Unlike
-``setuptools3.bbclass``, this uses the traditional ``setup.py`` ``build`` and
-``install`` commands and not wheels. This use of ``setuptools`` like this is
+The :ref:`setuptools3_legacy <ref-classes-setuptools3_legacy>` class supports
+Python version 3.x extensions that use build systems based on ``setuptools``
+(e.g. only have a ``setup.py`` and have not migrated to the official
+``pyproject.toml`` format). Unlike :ref:`setuptools3 <ref-classes-setuptools3>`,
+this uses the traditional ``setup.py`` ``build`` and ``install`` commands and
+not wheels. This use of ``setuptools`` like this is
 `deprecated <https://github.com/pypa/setuptools/blob/main/CHANGES.rst#v5830>`__
 but still relatively common.
 

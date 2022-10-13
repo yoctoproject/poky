@@ -61,13 +61,15 @@ need to update those.
 New ``python3targetconfig`` class
 ---------------------------------
 
-A new :ref:`python3targetconfig <ref-classes-python3targetconfig>` class has been
-created for situations where you would previously have inherited the
-:ref:`python3native <ref-classes-python3native>` class but need access to target configuration data (such as
-correct installation directories). Recipes where this situation applies should
-be changed to inherit ``python3targetconfig`` instead of ``python3native``. This
-also adds a dependency on target ``python3``, so it should only be used where
-appropriate in order to avoid unnecessarily lengthening builds.
+A new :ref:`python3targetconfig <ref-classes-python3targetconfig>` class has
+been created for situations where you would previously have inherited the
+:ref:`python3native <ref-classes-python3native>` class but need access to
+target configuration data (such as correct installation directories). Recipes
+where this situation applies should be changed to inherit
+:ref:`python3targetconfig <ref-classes-python3targetconfig>` instead of
+:ref:`python3native <ref-classes-python3native>`. This also adds a dependency
+on target ``python3``, so it should only be used where appropriate in order to
+avoid unnecessarily lengthening builds.
 
 Some example recipes where this change has been made: ``gpgme``, ``libcap-ng``,
 ``python3-pycairo``.

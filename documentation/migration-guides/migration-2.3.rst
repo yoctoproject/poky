@@ -481,9 +481,9 @@ The following miscellaneous changes have occurred:
    is an unnecessary burden.
 
    If you need to preserve these ``.la`` files (e.g. in a custom
-   distribution), you must change
-   :term:`INHERIT_DISTRO` such that
-   "remove-libtool" is not included in the value.
+   distribution), you must change :term:`INHERIT_DISTRO` such that
+   ":ref:`remove-libtool <ref-classes-remove-libtool>`" is not included
+   in the value.
 
 -  Extensible SDKs built for GCC 5+ now refuse to install on a
    distribution where the host GCC version is 4.8 or 4.9. This change
@@ -492,18 +492,17 @@ The following miscellaneous changes have occurred:
    the :ref:`uninative <ref-classes-uninative>` class for additional
    information.
 
--  All native and nativesdk recipes now use a separate
+-  All :ref:`native <ref-classes-native>` and
+   :ref:`nativesdk <ref-classes-nativesdk>` recipes now use a separate
    :term:`DISTRO_FEATURES` value instead of sharing the value used by
    recipes for the target, in order to avoid unnecessary rebuilds.
 
-   The :term:`DISTRO_FEATURES` for ``native`` recipes is
-   :term:`DISTRO_FEATURES_NATIVE` added to
-   an intersection of :term:`DISTRO_FEATURES` and
-   :term:`DISTRO_FEATURES_FILTER_NATIVE`.
+   The :term:`DISTRO_FEATURES` for :ref:`native <ref-classes-native>` recipes
+   is :term:`DISTRO_FEATURES_NATIVE` added to an intersection of
+   :term:`DISTRO_FEATURES` and :term:`DISTRO_FEATURES_FILTER_NATIVE`.
 
-   For nativesdk recipes, the corresponding variables are
-   :term:`DISTRO_FEATURES_NATIVESDK`
-   and
+   For :ref:`nativesdk <ref-classes-nativesdk>` recipes, the corresponding
+   variables are :term:`DISTRO_FEATURES_NATIVESDK` and
    :term:`DISTRO_FEATURES_FILTER_NATIVESDK`.
 
 -  The ``FILESDIR`` variable, which was previously deprecated and rarely

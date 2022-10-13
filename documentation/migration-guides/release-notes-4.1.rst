@@ -58,7 +58,7 @@ New Features / Enhancements in 4.1
 - Dependency of -dev package on main package is now an :term:`RRECOMMENDS` and can be easily set via new :term:`DEV_PKG_DEPENDENCY` variable
 
 - Support for CPU, I/O and memory pressure regulation in BitBake
-- Pressure data gathering in ``buildstats`` and rendering in ``pybootchartgui``
+- Pressure data gathering in :ref:`buildstats <ref-classes-buildstats>` and rendering in ``pybootchartgui``
 
 - New Picobuild system for lightweight Python PEP-517 build support in the :ref:`python_pep517 <ref-classes-python_pep517>` class
 
@@ -99,8 +99,8 @@ New Features / Enhancements in 4.1
    - :ref:`Support for using the regular build system as an SDK <sdk-manual/extensible:Setting up the Extensible SDK environment directly in a Yocto build>`
    - :ref:`image-buildinfo <ref-classes-image-buildinfo>` class now also writes build information to SDKs
    - New :term:`SDK_TOOLCHAIN_LANGS` variable to control support of rust / go in SDK
-   - rust-llvm: enabled nativesdk variant
-   - python3-pluggy: enabled for native/nativesdk
+   - rust-llvm: enabled :ref:`nativesdk <ref-classes-nativesdk>` variant
+   - python3-pluggy: enabled for :ref:`native <ref-classes-native>` / :ref:`nativesdk <ref-classes-nativesdk>`
 
 -  QEMU/runqemu enhancements:
 
@@ -113,7 +113,8 @@ New Features / Enhancements in 4.1
    - New variable :term:`UBOOT_MKIMAGE_KERNEL_TYPE`
    - New variable :term:`FIT_PAD_ALG` to control FIT image padding algorithm
    - New :term:`KERNEL_DEPLOY_DEPEND` variable to allow disabling image dependency on deploying the kernel
-   - image_types: isolate the write of UBI configuration to a ``write_ubi_config`` function that can be easily overridden
+   - :ref:`image_types <ref-classes-image_types>`: isolate the write of UBI
+     configuration to a ``write_ubi_config`` function that can be easily overridden
 
 - openssh: add support for config snippet includes to ssh and sshd
 - :ref:`create-spdx <ref-classes-create-spdx>`: Add ``SPDX_PRETTY`` option

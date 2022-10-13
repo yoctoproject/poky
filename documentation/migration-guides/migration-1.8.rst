@@ -76,15 +76,15 @@ particular, users need to ensure that ``${S}`` (source files) and
 ``${B}`` (build artifacts) are used correctly in functions such as
 :ref:`ref-tasks-configure` and
 :ref:`ref-tasks-install`. For kernel recipes that do not
-inherit from ``kernel-yocto`` or include ``linux-yocto.inc``, you might
+inherit from :ref:`kernel-yocto <ref-classes-kernel-yocto>` or include ``linux-yocto.inc``, you might
 wish to refer to the ``linux.inc`` file in the ``meta-oe`` layer for the
 kinds of changes you need to make. For reference, here is the
 :oe_git:`commit </meta-openembedded/commit/meta-oe/recipes-kernel/linux/linux.inc?id=fc7132ede27ac67669448d3d2845ce7d46c6a1ee>`
 where the ``linux.inc`` file in ``meta-oe`` was updated.
 
 Recipes that rely on the kernel source code and do not inherit the
-module classes might need to add explicit dependencies on the
-:ref:`ref-tasks-shared_workdir` kernel task, for example::
+:ref:`module <ref-classes-module>` classes might need to add explicit
+dependencies on the :ref:`ref-tasks-shared_workdir` kernel task, for example::
 
    do_configure[depends] += "virtual/kernel:do_shared_workdir"
 

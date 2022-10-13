@@ -1855,9 +1855,10 @@ Here are some common issues that cause failures.
    ":ref:`dev-manual/common-tasks:debugging parallel make races`" section.
 
 -  *Improper host path usage:* This failure applies to recipes building
-   for the target or ``nativesdk`` only. The failure occurs when the
-   compilation process uses improper headers, libraries, or other files
-   from the host system when cross-compiling for the target.
+   for the target or ":ref:`nativesdk <ref-classes-nativesdk>`" only. The
+   failure occurs when the compilation process uses improper headers,
+   libraries, or other files from the host system when cross-compiling for
+   the target.
 
    To fix the problem, examine the ``log.do_compile`` file to identify
    the host paths being used (e.g. ``/usr/include``, ``/usr/lib``, and
@@ -3404,7 +3405,7 @@ form of a patch all using Quilt.
 .. note::
 
    With regard to preserving changes to source files, if you clean a
-   recipe or have ``rm_work`` enabled, the
+   recipe or have :ref:`rm_work <ref-classes-rm-work>` enabled, the
    :ref:`devtool workflow <sdk-manual/extensible:using \`\`devtool\`\` in your sdk workflow>`
    as described in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual is a safer
@@ -3450,11 +3451,11 @@ Follow these general steps:
    .. note::
 
       All the modifications you make to the temporary source code disappear
-      once you run the :ref:`ref-tasks-clean` or :ref:`ref-tasks-cleanall` tasks using BitBake
-      (i.e. ``bitbake -c clean package`` and ``bitbake -c cleanall package``).
-      Modifications will also disappear if you use the ``rm_work`` feature as
-      described in the
-      ":ref:`dev-manual/common-tasks:conserving disk space during builds`"
+      once you run the :ref:`ref-tasks-clean` or :ref:`ref-tasks-cleanall`
+      tasks using BitBake (i.e. ``bitbake -c clean package`` and
+      ``bitbake -c cleanall package``). Modifications will also disappear if
+      you use the :ref:`rm_work <ref-classes-rm-work>` feature as described in
+      the ":ref:`dev-manual/common-tasks:conserving disk space during builds`"
       section.
 
 7. *Generate the Patch:* Once your changes work as expected, you need to
@@ -7143,7 +7144,8 @@ Lighttpd, or Nginx), take the appropriate steps to do so.
 From within the :term:`Build Directory` where you have built an image based on
 your packaging choice (i.e. the :term:`PACKAGE_CLASSES` setting), simply start
 the server. The following example assumes a :term:`Build Directory` of ``poky/build``
-and a :term:`PACKAGE_CLASSES` setting of "package_rpm"::
+and a :term:`PACKAGE_CLASSES` setting of
+":ref:`package_rpm <ref-classes-package_rpm>`"::
 
    $ cd poky/build/tmp/deploy/rpm
    $ python3 -m http.server
@@ -7491,8 +7493,8 @@ test. Here is what you have to do for each recipe:
    special configurations prior to compiling the test code, you must
    insert a ``do_configure_ptest`` function into the recipe.
 
--  *Install the test suite:* The ``ptest`` class automatically copies
-   the file ``run-ptest`` to the target and then runs make
+-  *Install the test suite:* The :ref:`ptest <ref-classes-ptest>` class
+   automatically copies the file ``run-ptest`` to the target and then runs make
    ``install-ptest`` to run the tests. If this is not enough, you need
    to create a ``do_install_ptest`` function and make sure it gets
    called after the "make install-ptest" completes.
@@ -11237,7 +11239,7 @@ an :ref:`archiver <ref-classes-archiver>` class to
 help avoid some of these concerns.
 
 Before you employ :term:`DL_DIR` or the :ref:`archiver <ref-classes-archiver>` class, you need to
-decide how you choose to provide source. The source ``archiver`` class
+decide how you choose to provide source. The source :ref:`archiver <ref-classes-archiver>` class
 can generate tarballs and SRPMs and can create them with various levels
 of compliance in mind.
 
@@ -11325,7 +11327,7 @@ generation are included on your image.
    adds a separate package and an upgrade path for adding licenses to an
    image.
 
-As the source ``archiver`` class has already archived the original
+As the source :ref:`archiver <ref-classes-archiver>` class has already archived the original
 unmodified source that contains the license files, you would have
 already met the requirements for inclusion of the license information
 with source as defined by the GPL and other open source licenses.

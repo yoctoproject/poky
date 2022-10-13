@@ -64,7 +64,7 @@ Makefile Environment Changes
 :term:`EXTRA_OEMAKE` now defaults to "" instead of
 "-e MAKEFLAGS=". Setting :term:`EXTRA_OEMAKE` to "-e MAKEFLAGS=" by default
 was a historical accident that has required many classes (e.g.
-``autotools``, ``module``) and recipes to override this default in order
+:ref:`autotools <ref-classes-autotools>`, ``module``) and recipes to override this default in order
 to work with sensible build systems. When upgrading to the release, you
 must edit any recipe that relies upon this old default by either setting
 :term:`EXTRA_OEMAKE` back to "-e MAKEFLAGS=" or by explicitly setting any
@@ -191,7 +191,7 @@ The following classes have changed:
 -  ``autotools_stage``: Removed because the
    :ref:`autotools <ref-classes-autotools>` class now provides its
    functionality. Recipes that inherited from ``autotools_stage`` should
-   now inherit from ``autotools`` instead.
+   now inherit from :ref:`autotools <ref-classes-autotools>` instead.
 
 -  ``boot-directdisk``: Merged into the ``image-vm`` class. The
    ``boot-directdisk`` class was rarely directly used. Consequently,
@@ -401,9 +401,9 @@ These additional changes exist:
    as these directories are automatically found and added.
 
 -  Inaccurate disk and CPU percentage data has been dropped from
-   ``buildstats`` output. This data has been replaced with
+   :ref:`buildstats <ref-classes-buildstats>` output. This data has been replaced with
    ``getrusage()`` data and corrected IO statistics. You will probably
-   need to update any custom code that reads the ``buildstats`` data.
+   need to update any custom code that reads the :ref:`buildstats <ref-classes-buildstats>` data.
 
 -  The ``meta/conf/distro/include/package_regex.inc`` is now deprecated.
    The contents of this file have been moved to individual recipes.

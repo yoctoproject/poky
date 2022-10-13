@@ -124,7 +124,7 @@ Removed classes
 - ``image-mklibs``: not actively tested and upstream mklibs still
   requires Python 2
 - ``meta``: no longer useful. Recipes that need to skip installing
-  packages should inherit ``nopackages`` instead.
+  packages should inherit :ref:`nopackages <ref-classes-nopackages>` instead.
 
 Prelinking disabled by default
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

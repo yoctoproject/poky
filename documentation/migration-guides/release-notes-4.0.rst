@@ -8,9 +8,10 @@ New Features / Enhancements in 4.0
 
 - Linux kernel 5.15, glibc 2.35 and ~300 other recipe upgrades
 
-- Reproducibility: this release fixes the reproducibility issues with ``rust-llvm`` and
-  ``golang``. Recipes in OpenEmbedded-Core are now fully reproducible. Functionality
-  previously in the optional "reproducible" class has been merged into the base class.
+- Reproducibility: this release fixes the reproducibility issues with
+  ``rust-llvm`` and ``golang``. Recipes in OpenEmbedded-Core are now fully
+  reproducible. Functionality previously in the optional "reproducible"
+  class has been merged into the :ref:`base <ref-classes-base>` class.
 
 - Network access is now disabled by default for tasks other than where it is expected to ensure build integrity (where host kernel supports it)
 
@@ -215,7 +216,7 @@ New Features / Enhancements in 4.0
    - Ensure addition of patch-fuzz retriggers do_qa_patch
    - Added a sanity check for allarch packagegroups
 
-- create-spdx class improvements:
+- :ref:`create-spdx <ref-classes-create-spdx>` class improvements:
 
    - Get SPDX-License-Identifier from source files
    - Generate manifest also for SDKs
@@ -235,8 +236,10 @@ New Features / Enhancements in 4.0
    
 - SDK-related enhancements:
 
-   - Extended recipes to ``nativesdk``: ``cargo``, ``librsvg``, ``libstd-rs``, ``libva``, ``python3-docutil``, ``python3-packaging``
-   - Enabled nativesdk recipes to find a correct version of the rust cross compiler
+   - Extended recipes to :ref:`nativesdk <ref-classes-nativesdk>`: ``cargo``,
+     ``librsvg``, ``libstd-rs``, ``libva``, ``python3-docutil``, ``python3-packaging``
+   - Enabled :ref:`nativesdk <ref-classes-nativesdk>` recipes to find a correct version
+     of the rust cross compiler
    - Support creating per-toolchain cmake file in SDK
 
 - Rust enhancements:
