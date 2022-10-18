@@ -175,7 +175,7 @@ Contributors to 4.0.1
 -  Russ Dill
 -  Steve Sakoman
 -  Wang Mingyu
--  zhengruoqin
+-  Zheng Ruoqin
 
 Repositories / Downloads for 4.0.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

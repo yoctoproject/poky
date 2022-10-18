@@ -82,7 +82,7 @@ Contributors to 3.4.4
 -  Ross Burton
 -  Tim Orling
 -  Wang Mingyu
--  zhengruoqin
+-  Zheng Ruoqin
 
 Repositories / Downloads for 3.4.4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
