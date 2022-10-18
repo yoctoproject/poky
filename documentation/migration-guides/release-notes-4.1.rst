@@ -195,9 +195,17 @@ Known Issues in 4.1
   into the image.  Filed as :yocto_bugs:`bug 14928 </show_bug.cgi?id=14928>`.
 
 - There is a known issue with eSDKs where sstate objects may be missing,
-  resulting in packages being unavailable to install in the sysroot. This is
-  under investigation and appears to be related to hash equivalence. Filed as
-  :yocto_bugs:`bug 14626 </show_bug.cgi?id=14626>`.
+  resulting in packages being unavailable to install in the sysroot. This is due
+  to image generation optimisations having unintended consequences in eSDK
+  generation. This will be resolved in the next point release.  Filed as
+  :yocto_bugs:`bug 14626 </show_bug.cgi?id=14626>`, which also details the fix.
+
+- The change to :ref:`migration-4.1-classes-split` inadvertently moved the
+  :ref:`externalsrc <ref-classes-externalsrc>` class to ``meta/classes-recipe``,
+  when it is not recipe-specific and can also be used in a global context.  The
+  class will be moved back to ``meta/classes`` in the next point release.  Filed
+  as :yocto_bugs:`bug 14940 </show_bug.cgi?id=14940>`.
+
 
 Recipe License changes in 4.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
