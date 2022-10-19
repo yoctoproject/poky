@@ -1335,7 +1335,7 @@ device trees, a U-boot script, a Initramfs bundle and a RAM disk
 into a single FIT image. In theory, a FIT image can support any number
 of kernels, U-boot scripts, Initramfs bundles, RAM disks and device-trees.
 However, ``kernel-fitimage`` currently only supports
-limited usescases: just one kernel image, an optional U-boot script,
+limited usecases: just one kernel image, an optional U-boot script,
 an optional Initramfs bundle, an optional RAM disk, and any number of
 device tree.
 
