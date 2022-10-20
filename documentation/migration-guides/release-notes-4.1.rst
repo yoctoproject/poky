@@ -18,7 +18,7 @@ New Features / Enhancements in 4.1
 
   - New ``scripts/oe-setup-layers`` standalone script to restore the layer
     configuration from a json file
-  - New ``bitbake-layers create-layers-setup destdir`` command to save the
+  - New ``bitbake-layers create-layers-setup`` command to save the
     layer configuration to a json file
   - New ``bitbake-layers save-build-conf`` command to save the active build
     configuration as a template into a layer
