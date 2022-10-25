@@ -699,8 +699,6 @@ Thanks to the following people who contributed to this release:
 - Zheng Ruoqin
 - Zoltán Böszörményi
 
-
-
 Repositories / Downloads for 4.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
