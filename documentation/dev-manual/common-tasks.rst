@@ -6231,6 +6231,13 @@ more secure:
    vulnerabilities discovered in the future. This consideration
    especially applies when your device is network-enabled.
 
+-  Regularly scan and apply fixes for CVE security issues affecting
+   all software components in the product, see ":ref:`dev-manual/common-tasks:checking for vulnerabilities`".
+
+-  Regularly update your version of Poky and OE-Core from their upstream
+   developers, e.g. to apply updates and security fixes from stable
+   and LTS branches.
+
 -  Ensure you remove or disable debugging functionality before producing
    the final image. For information on how to do this, see the
    ":ref:`dev-manual/common-tasks:considerations specific to the openembedded build system`"
