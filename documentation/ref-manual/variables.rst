@@ -1508,6 +1508,18 @@ system and gives an overview of their function and contents.
 
          CVE_PRODUCT = "vendor:package"
 
+   :term:`CVE_VERSION`
+      In a recipe, defines the version used to match the recipe version
+      against the version in the `NIST CVE database <https://nvd.nist.gov/>`__
+      when usign :ref:`cve-check <ref-classes-cve-check>`.
+
+      The default is ${:term:`PV`} but if recipes use custom version numbers
+      which do not map to upstream software component release versions and the versions
+      used in the CVE database, then this variable can be used to set the
+      version number for :ref:`cve-check <ref-classes-cve-check>`. Example::
+
+          CVE_VERSION = "2.39"
+
    :term:`CVSDIR`
       The directory in which files checked out under the CVS system are
       stored.
