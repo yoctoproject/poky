@@ -7908,9 +7908,8 @@ system and gives an overview of their function and contents.
       <https://www.freedesktop.org/software/systemd/man/systemd.special.html>`__
       for details.
 
-      For example, this variable is used in the
-      `core-image-minimal-xfce.bb
-      <https://git.openembedded.org/meta-openembedded/tree/meta-xfce/recipes-core/images/core-image-minimal-xfce.bb>`__
+      For example, this variable is used in the :oe_git:`core-image-minimal-xfce.bb
+      </meta-openembedded/tree/meta-xfce/recipes-core/images/core-image-minimal-xfce.bb>`
       recipe::
 
           SYSTEMD_DEFAULT_TARGET = "graphical.target"

@@ -7562,8 +7562,8 @@ NPM packages:
 
 -  The NPM host tools need the native ``nodejs-npm`` package, which is
    part of the OpenEmbedded environment. You need to get the package by
-   cloning the https://github.com/openembedded/meta-openembedded
-   repository out of GitHub. Be sure to add the path to your local copy
+   cloning the :oe_git:`meta-openembedded </meta-openembedded>`
+   repository. Be sure to add the path to your local copy
    to your ``bblayers.conf`` file.
 
 -  ``devtool`` cannot detect native libraries in module dependencies.
