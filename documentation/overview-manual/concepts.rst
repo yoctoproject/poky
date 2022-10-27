@@ -1482,12 +1482,11 @@ relocatable SDK used to develop applications. When you run the
 installer, it installs the toolchain, which contains the development
 tools (e.g., ``gcc-cross-canadian``, ``binutils-cross-canadian``, and
 other ``nativesdk-*`` tools), which are tools native to the SDK (i.e.
-native to :term:`SDK_ARCH`), you
-need to cross-compile and test your software. The figure shows the
-commands you use to easily build out this toolchain. This
-cross-development toolchain is built to execute on the
-:term:`SDKMACHINE`, which might or
-might not be the same machine as the Build Host.
+native to :term:`SDK_ARCH`), you need to cross-compile and test your
+software. The figure shows the commands you use to easily build out
+this toolchain. This cross-development toolchain is built to execute on the
+:term:`SDKMACHINE`, which might or might not be the same machine as
+the Build Host.
 
 .. note::
 

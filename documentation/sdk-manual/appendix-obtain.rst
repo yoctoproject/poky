@@ -132,22 +132,21 @@ build the SDK installer. Follow these steps:
 5. *Make Sure Your SDK Machine is Correctly Set:* If you are building a
    toolchain designed to run on an architecture that differs from your
    current development host machine (i.e. the build host), be sure that
-   the :term:`SDKMACHINE` variable
-   in the ``local.conf`` file in your Build Directory is correctly set.
+   the :term:`SDKMACHINE` variable in the ``local.conf`` file in your
+   Build Directory is correctly set.
 
    .. note::
 
       If you are building an SDK installer for the Extensible SDK, the
-      SDKMACHINE
-      value must be set for the architecture of the machine you are
-      using to build the installer. If
-      SDKMACHINE
+      :term:`SDKMACHINE` value must be set for the architecture of the
+      machine you are using to build the installer. If :term:`SDKMACHINE`
       is not set appropriately, the build fails and provides an error
       message similar to the following::
 
-              The extensible SDK can currently only be built for the same architecture as the machine being built on - SDK_ARCH is
-              set to i686 (likely via setting SDKMACHINE) which is different from the architecture of the build machine (x86_64).
-              Unable to continue.
+         The extensible SDK can currently only be built for the same
+         architecture as the machine being built on --- :term:`SDK_ARCH`
+         is set to ``i686`` (likely via setting :term:`SDKMACHINE`) which is
+         different from the architecture of the build machine (``x86_64``).
 
 
 6. *Build the SDK Installer:* To build the SDK installer for a standard
