@@ -224,13 +224,13 @@ an entire Linux distribution, including the toolchain, from source.
 
    Among other things, the script creates the :term:`Build Directory`, which is
    ``build`` in this case and is located in the :term:`Source Directory`.  After
-   the script runs, your current working directory is set to the Build
-   Directory. Later, when the build completes, the Build Directory contains all the
-   files created during the build.
+   the script runs, your current working directory is set to the
+   :term:`Build Directory`. Later, when the build completes, the
+   :term:`Build Directory` contains all the files created during the build.
 
 #. **Examine Your Local Configuration File:** When you set up the build
    environment, a local configuration file named ``local.conf`` becomes
-   available in a ``conf`` subdirectory of the Build Directory. For this
+   available in a ``conf`` subdirectory of the :term:`Build Directory`. For this
    example, the defaults are set to build for a ``qemux86`` target,
    which is suitable for emulation. The package manager used is set to
    the RPM package manager.
@@ -345,9 +345,7 @@ Follow these steps to add a hardware layer:
 
 #. **Add Your Layer to the Layer Configuration File:** Before you can use
    a layer during a build, you must add it to your ``bblayers.conf``
-   file, which is found in the
-   :term:`Build Directory` ``conf``
-   directory.
+   file, which is found in the :term:`Build Directory` ``conf`` directory.
 
    Use the ``bitbake-layers add-layer`` command to add the layer to the
    configuration file:

@@ -1912,10 +1912,10 @@ package-specific classes:
 You can control the list of resulting package formats by using the
 :term:`PACKAGE_CLASSES` variable defined in your ``conf/local.conf``
 configuration file, which is located in the :term:`Build Directory`.
-When defining the variable, you can
-specify one or more package types. Since images are generated from
-packages, a packaging class is needed to enable image generation. The
-first class listed in this variable is used for image generation.
+When defining the variable, you can specify one or more package types.
+Since images are generated from packages, a packaging class is needed
+to enable image generation. The first class listed in this variable is
+used for image generation.
 
 If you take the optional step to set up a repository (package feed) on
 the development host that can be used by DNF, you can install packages
@@ -2401,8 +2401,7 @@ recipe are no longer needed. However, by default, the build system
 preserves these files for inspection and possible debugging purposes. If
 you would rather have these files deleted to save disk space as the
 build progresses, you can enable :ref:`rm_work <ref-classes-rm-work>` by adding the following to
-your ``local.conf`` file, which is found in the :term:`Build Directory`.
-::
+your ``local.conf`` file, which is found in the :term:`Build Directory`::
 
    INHERIT += "rm_work"
 

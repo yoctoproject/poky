@@ -558,8 +558,8 @@ your Yocto Project build host:
    access to external devices such as those connected through a USB
    port, but it automatically mounts your ``C:`` drive on ``/mnt/c/``
    (and others), which you can use to share deploy artifacts to be later
-   flashed on hardware through Windows, but your build directory should
-   not reside inside this mountpoint.
+   flashed on hardware through Windows, but your :term:`Build Directory`
+   should not reside inside this mountpoint.
 
 Once you have WSL 2 set up, everything is in place to develop just as if
 you were running on a native Linux machine. If you are going to use the

@@ -242,7 +242,7 @@ of post-build steps, including:
 #. Call ``scripts/upload-error-reports`` to send any error reports
    generated to the remote server.
 
-#. Cleanup the build directory using
+#. Cleanup the :term:`Build Directory` using
    :ref:`test-manual/understand-autobuilder:clobberdir` if the build was successful,
    else rename it to "build-renamed" for potential future debugging.
 

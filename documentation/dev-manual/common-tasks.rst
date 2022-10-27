@@ -418,10 +418,10 @@ Enabling Your Layer
 Before the OpenEmbedded build system can use your new layer, you need to
 enable it. To enable your layer, simply add your layer's path to the
 :term:`BBLAYERS` variable in your ``conf/bblayers.conf`` file, which is
-found in the :term:`Build Directory`.
-The following example shows how to enable your new
-``meta-mylayer`` layer (note how your new layer exists outside of
-the official ``poky`` repository which you would have checked out earlier)::
+found in the :term:`Build Directory`. The following example shows how to
+enable your new ``meta-mylayer`` layer (note how your new layer exists
+outside of the official ``poky`` repository which you would have checked
+out earlier)::
 
    # POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
    # changes incompatibly
@@ -969,8 +969,7 @@ high-level image features by using the
 variables. Although the functions for both variables are nearly
 equivalent, best practices dictate using :term:`IMAGE_FEATURES` from within
 a recipe and using :term:`EXTRA_IMAGE_FEATURES` from within your
-``local.conf`` file, which is found in the
-:term:`Build Directory`.
+``local.conf`` file, which is found in the :term:`Build Directory`.
 
 To understand how these features work, the best reference is
 :ref:`meta/classes-recipe/image.bbclass <ref-classes-image>`.
@@ -1206,11 +1205,10 @@ application that builds using Autotools. Creating the base recipe using
 ``recipetool`` results in a recipe that has the pre-build dependencies,
 license requirements, and checksums configured.
 
-To run the tool, you just need to be in your
-:term:`Build Directory` and have sourced the
-build environment setup script (i.e.
-:ref:`structure-core-script`).
-To get help on the tool, use the following command::
+To run the tool, you just need to be in your :term:`Build Directory` and
+have sourced the build environment setup script (i.e.
+:ref:`structure-core-script`). To get help on the tool, use the following
+command::
 
    $ recipetool -h
    NOTE: Starting bitbake server...
@@ -1342,8 +1340,7 @@ using BitBake to process the recipe multiple times in order to
 progressively discover and add information to the recipe file.
 
 Assuming you have sourced the build environment setup script (i.e.
-:ref:`structure-core-script`) and you are in
-the :term:`Build Directory`, use
+:ref:`structure-core-script`) and you are in the :term:`Build Directory`, use
 BitBake to process your recipe. All you need to provide is the
 ``basename`` of the recipe as described in the previous section::
 
@@ -1362,7 +1359,7 @@ is to have BitBake return it by running the following::
    $ bitbake -e basename | grep ^WORKDIR=
 
 As an example, assume a Source Directory
-top-level folder named ``poky``, a default Build Directory at
+top-level folder named ``poky``, a default :term:`Build Directory` at
 ``poky/build``, and a ``qemux86-poky-linux`` machine target system.
 Furthermore, suppose your recipe is named ``foo_1.3.0.bb``. In this
 case, the work directory the build system uses to build the package
@@ -3017,15 +3014,14 @@ The following steps describe how to set up the AUH utility:
    AUH is not part of the :term:`OpenEmbedded-Core (OE-Core)` or
    :term:`Poky` repositories.
 
-4. *Create a Dedicated Build Directory:* Run the
-   :ref:`structure-core-script`
-   script to create a fresh build directory that you use exclusively for
-   running the AUH utility::
+4. *Create a Dedicated Build Directory:* Run the :ref:`structure-core-script`
+   script to create a fresh :term:`Build Directory` that you use exclusively
+   for running the AUH utility::
 
       $ cd poky
       $ source oe-init-build-env your_AUH_build_directory
 
-   Re-using an existing build directory and its configurations is not
+   Re-using an existing :term:`Build Directory` and its configurations is not
    recommended as existing settings could cause AUH to fail or behave
    undesirably.
 
@@ -3045,7 +3041,7 @@ The following steps describe how to set up the AUH utility:
       With this configuration and a successful
       upgrade, a build history "diff" file appears in the
       ``upgrade-helper/work/recipe/buildhistory-diff.txt`` file found in
-      your build directory.
+      your :term:`Build Directory`.
 
    -  If you want to enable testing through the
       :ref:`testimage <ref-classes-testimage>`
@@ -3070,7 +3066,7 @@ The following steps describe how to set up the AUH utility:
 
 7. *Create and Edit an AUH Configuration File:* You need to have the
    ``upgrade-helper/upgrade-helper.conf`` configuration file in your
-   build directory. You can find a sample configuration file in the
+   :term:`Build Directory`. You can find a sample configuration file in the
    :yocto_git:`AUH source repository </auto-upgrade-helper/tree/>`.
 
    Read through the sample file and make configurations as needed. For
@@ -3118,7 +3114,7 @@ This next set of examples describes how to use the AUH:
       $ upgrade-helper.py -e all
 
 Once you have run the AUH utility, you can find the results in the AUH
-build directory::
+:term:`Build Directory`::
 
    ${BUILDDIR}/upgrade-helper/timestamp
 
@@ -3179,8 +3175,7 @@ example, assume that the layer has been cloned into following area::
 
    /home/scottrif/meta-openembedded
 
-The following command from your
-:term:`Build Directory` adds the layer to
+The following command from your :term:`Build Directory` adds the layer to
 your build configuration (i.e. ``${BUILDDIR}/conf/bblayers.conf``)::
 
    $ bitbake-layers add-layer /home/scottrif/meta-openembedded/meta-oe
@@ -3341,16 +3336,14 @@ source code used by recipes to build packages. For example, suppose you
 are developing a patch and you need to experiment a bit to figure out
 your solution. After you have initially built the package, you can
 iteratively tweak the source code, which is located in the
-:term:`Build Directory`, and then you can
-force a re-compile and quickly test your altered code. Once you settle
-on a solution, you can then preserve your changes in the form of
-patches.
+:term:`Build Directory`, and then you can force a re-compile and quickly
+test your altered code. Once you settle on a solution, you can then preserve
+your changes in the form of patches.
 
 During a build, the unpacked temporary source code used by recipes to
-build packages is available in the Build Directory as defined by the
-:term:`S` variable. Below is the default
-value for the :term:`S` variable as defined in the
-``meta/conf/bitbake.conf`` configuration file in the
+build packages is available in the :term:`Build Directory` as defined by the
+:term:`S` variable. Below is the default value for the :term:`S` variable as
+defined in the ``meta/conf/bitbake.conf`` configuration file in the
 :term:`Source Directory`::
 
    S = "${WORKDIR}/${BP}"
@@ -3392,7 +3385,7 @@ The actual directory depends on several things:
 -  :term:`PR`: The recipe revision.
 
 As an example, assume a Source Directory top-level folder named
-``poky``, a default Build Directory at ``poky/build``, and a
+``poky``, a default :term:`Build Directory` at ``poky/build``, and a
 ``qemux86-poky-linux`` machine target system. Furthermore, suppose your
 recipe is named ``foo_1.3.0.bb``. In this case, the work directory the
 build system uses to build the package would be as follows::
@@ -3420,8 +3413,7 @@ form of a patch all using Quilt.
 Follow these general steps:
 
 1. *Find the Source Code:* Temporary source code used by the
-   OpenEmbedded build system is kept in the
-   :term:`Build Directory`. See the
+   OpenEmbedded build system is kept in the :term:`Build Directory`. See the
    ":ref:`dev-manual/common-tasks:finding temporary source code`" section to
    learn how to locate the directory that has the temporary source code for a
    particular package.
@@ -3649,10 +3641,10 @@ build host running Linux.
       :doc:`/brief-yoctoprojectqs/index` document.
 
 The build process creates an entire Linux distribution from source and
-places it in your :term:`Build Directory` under
-``tmp/deploy/images``. For detailed information on the build process
-using BitBake, see the ":ref:`overview-manual/concepts:images`" section in the
-Yocto Project Overview and Concepts Manual.
+places it in your :term:`Build Directory` under ``tmp/deploy/images``. For
+detailed information on the build process using BitBake, see the
+":ref:`overview-manual/concepts:images`" section in the Yocto Project Overview
+and Concepts Manual.
 
 The following figure and list overviews the build process:
 
@@ -3672,25 +3664,23 @@ The following figure and list overviews the build process:
    When you use the initialization script, the OpenEmbedded build system
    uses ``build`` as the default :term:`Build Directory` in your current work
    directory. You can use a `build_dir` argument with the script to
-   specify a different build directory.
+   specify a different :term:`Build Directory`.
 
    .. note::
 
-      A common practice is to use a different Build Directory for
+      A common practice is to use a different :term:`Build Directory` for
       different targets; for example, ``~/build/x86`` for a ``qemux86``
       target, and ``~/build/arm`` for a ``qemuarm`` target. In any
-      event, it's typically cleaner to locate the build directory
+      event, it's typically cleaner to locate the :term:`Build Directory`
       somewhere outside of your source directory.
 
 3. *Make Sure Your* ``local.conf`` *File is Correct*: Ensure the
-   ``conf/local.conf`` configuration file, which is found in the Build
-   Directory, is set up how you want it. This file defines many aspects
-   of the build environment including the target machine architecture
+   ``conf/local.conf`` configuration file, which is found in the
+   :term:`Build Directory`, is set up how you want it. This file defines many
+   aspects of the build environment including the target machine architecture
    through the :term:`MACHINE` variable, the packaging format used during
-   the build
-   (:term:`PACKAGE_CLASSES`),
-   and a centralized tarball download directory through the
-   :term:`DL_DIR` variable.
+   the build (:term:`PACKAGE_CLASSES`), and a centralized tarball download
+   directory through the :term:`DL_DIR` variable.
 
 4. *Build the Image:* Build the image using the ``bitbake`` command::
 
@@ -3718,7 +3708,7 @@ The following figure and list overviews the build process:
    Once an
    image has been built, it often needs to be installed. The images and
    kernels built by the OpenEmbedded build system are placed in the
-   Build Directory in ``tmp/deploy/images``. For information on how to
+   :term:`Build Directory` in ``tmp/deploy/images``. For information on how to
    run pre-built images such as ``qemux86`` and ``qemuarm``, see the
    :doc:`/sdk-manual/index` manual. For
    information about how to install these images, see the documentation
@@ -3772,7 +3762,7 @@ Follow these steps to set up and execute multiple configuration builds:
       TMPDIR = "${TOPDIR}/tmpmultix86"
 
    The location for these multiconfig configuration files is specific.
-   They must reside in the current build directory in a sub-directory of
+   They must reside in the current :term:`Build Directory` in a sub-directory of
    ``conf`` named ``multiconfig`` or within a layer's ``conf`` directory
    under a directory named ``multiconfig``. Following is an example that defines
    two configuration files for the "x86" and "arm" multiconfigs:
@@ -4275,15 +4265,13 @@ If build speed and package feed maintenance are considerations, you
 should consider the points in this section that can help you optimize
 your tunings to best consider build times and package feed maintenance.
 
--  *Share the Build Directory:* If at all possible, share the
-   :term:`TMPDIR` across builds. The
-   Yocto Project supports switching between different
-   :term:`MACHINE` values in the same
-   :term:`TMPDIR`. This practice is well supported and regularly used by
-   developers when building for multiple machines. When you use the same
-   :term:`TMPDIR` for multiple machine builds, the OpenEmbedded build system
-   can reuse the existing native and often cross-recipes for multiple
-   machines. Thus, build time decreases.
+-  *Share the :term:`Build Directory`:* If at all possible, share the
+   :term:`TMPDIR` across builds. The Yocto Project supports switching between
+   different :term:`MACHINE` values in the same :term:`TMPDIR`. This practice
+   is well supported and regularly used by developers when building for
+   multiple machines. When you use the same :term:`TMPDIR` for multiple
+   machine builds, the OpenEmbedded build system can reuse the existing native
+   and often cross-recipes for multiple machines. Thus, build time decreases.
 
    .. note::
 
@@ -4399,10 +4387,10 @@ your tunings to best consider build times and package feed maintenance.
 Building Software from an External Source
 -----------------------------------------
 
-By default, the OpenEmbedded build system uses the
-:term:`Build Directory` when building source
-code. The build process involves fetching the source files, unpacking
-them, and then patching them if necessary before the build takes place.
+By default, the OpenEmbedded build system uses the :term:`Build Directory`
+when building source code. The build process involves fetching the source
+files, unpacking them, and then patching them if necessary before the build
+takes place.
 
 There are situations where you might want to build software from source
 files that are external to and thus outside of the OpenEmbedded build
@@ -4519,9 +4507,8 @@ directory:
    from your "own-mirror" are used.
 
 2. *Start With a Clean Build:* You can start with a clean build by
-   removing the
-   ``${``\ :term:`TMPDIR`\ ``}``
-   directory or using a new :term:`Build Directory`.
+   removing the ``${``\ :term:`TMPDIR`\ ``}`` directory or using a new
+   :term:`Build Directory`.
 
 3. *Build Your Target:* Use BitBake to build your target::
 
@@ -4622,8 +4609,7 @@ Following are additional factors that can affect build speed:
    the benefits are limited due to the compiler using ``-pipe``. The
    build system goes to some lengths to avoid ``sync()`` calls into the
    file system on the principle that if there was a significant failure,
-   the :term:`Build Directory`
-   contents could easily be rebuilt.
+   the :term:`Build Directory` contents could easily be rebuilt.
 
 -  Inheriting the
    :ref:`rm_work <ref-classes-rm-work>` class:
@@ -4820,8 +4806,7 @@ Using Multilib
 After you have set up the recipes, you need to define the actual
 combination of multiple libraries you want to build. You accomplish this
 through your ``local.conf`` configuration file in the
-:term:`Build Directory`. An example
-configuration would be as follows::
+:term:`Build Directory`. An example configuration would be as follows::
 
    MACHINE = "qemux86-64"
    require conf/multilib.conf
@@ -4871,10 +4856,9 @@ Here are the implementation details for the RPM Package Management System:
 
 -  A unique architecture is defined for the Multilib packages, along
    with creating a unique deploy folder under ``tmp/deploy/rpm`` in the
-   :term:`Build Directory`. For
-   example, consider ``lib32`` in a ``qemux86-64`` image. The possible
-   architectures in the system are "all", "qemux86_64",
-   "lib32:qemux86_64", and "lib32:x86".
+   :term:`Build Directory`. For example, consider ``lib32`` in a
+   ``qemux86-64`` image. The possible architectures in the system are "all",
+   "qemux86_64", "lib32:qemux86_64", and "lib32:x86".
 
 -  The ``${MLPREFIX}`` variable is stripped from ``${PN}`` during RPM
    packaging. The naming for a normal RPM package and a Multilib RPM
@@ -5460,8 +5444,7 @@ system needs to meet the following requirements:
    your development host system.
 
 -  You must have sourced the build environment setup script (i.e.
-   :ref:`structure-core-script`) found in the
-   :term:`Build Directory`.
+   :ref:`structure-core-script`) found in the :term:`Build Directory`.
 
 -  You need to have the build artifacts already available, which
    typically means that you must have already created an image using the
@@ -5569,11 +5552,10 @@ Raw Mode
 
 Running Wic in raw mode allows you to specify all the partitions through
 the ``wic`` command line. The primary use for raw mode is if you have
-built your kernel outside of the Yocto Project
-:term:`Build Directory`. In other words, you
-can point to arbitrary kernel, root filesystem locations, and so forth.
-Contrast this behavior with cooked mode where Wic looks in the Build
-Directory (e.g. ``tmp/deploy/images/``\ machine).
+built your kernel outside of the Yocto Project :term:`Build Directory`.
+In other words, you can point to arbitrary kernel, root filesystem locations,
+and so forth. Contrast this behavior with cooked mode where Wic looks in the
+:term:`Build Directory` (e.g. ``tmp/deploy/images/``\ machine).
 
 The general form of the ``wic`` command in raw mode is::
 
@@ -5626,11 +5608,11 @@ The general form of the ``wic`` command in raw mode is::
 Cooked Mode
 ~~~~~~~~~~~
 
-Running Wic in cooked mode leverages off artifacts in the Build
-Directory. In other words, you do not have to specify kernel or root
-filesystem locations as part of the command. All you need to provide is
+Running Wic in cooked mode leverages off artifacts in the
+:term:`Build Directory`. In other words, you do not have to specify kernel or
+root filesystem locations as part of the command. All you need to provide is
 a kickstart file and the name of the image from which to use artifacts
-by using the "-e" option. Wic looks in the Build Directory (e.g.
+by using the "-e" option. Wic looks in the :term:`Build Directory` (e.g.
 ``tmp/deploy/images/``\ machine) for artifacts.
 
 The general form of the ``wic`` command using Cooked Mode is as follows::
@@ -5878,9 +5860,9 @@ and kickstart file information.
    You should always verify the details provided in the output to make
    sure that the image was indeed created exactly as expected.
 
-Continuing with the example, you can now write the image from the Build
-Directory onto a USB stick, or whatever media for which you built your
-image, and boot from the media. You can write the image by using
+Continuing with the example, you can now write the image from the
+:term:`Build Directory` onto a USB stick, or whatever media for which you
+built your image, and boot from the media. You can write the image by using
 ``bmaptool`` or ``dd``::
 
    $ oe-run-native bmap-tools-native bmaptool copy mkefidisk-201804191017-sda.direct /dev/sdX
@@ -6152,7 +6134,7 @@ any type of image. Use these steps to flash an image using Bmaptool:
 
 3. *Flash the Device:* Flash the device with the image by using Bmaptool
    depending on your particular setup. The following commands assume the
-   image resides in the Build Directory's ``deploy/images/`` area:
+   image resides in the :term:`Build Directory`'s ``deploy/images/`` area:
 
    -  If you have write access to the media, use this command form::
 
@@ -6399,11 +6381,9 @@ layer. The following steps provide some more detail:
    variable from the ``local.conf`` file. The variables you use are not
    limited to the list in the previous bulleted item.
 
--  *Point to Your distribution configuration file:* In your
-   ``local.conf`` file in the :term:`Build Directory`,
-   set your
-   :term:`DISTRO` variable to point to
-   your distribution's configuration file. For example, if your
+-  *Point to Your distribution configuration file:* In your ``local.conf``
+   file in the :term:`Build Directory`, set your :term:`DISTRO` variable to
+   point to your distribution's configuration file. For example, if your
    distribution's configuration file is named ``mydistro.conf``, then
    you point to it as follows::
 
@@ -6438,7 +6418,7 @@ Creating a Custom Template Configuration Directory
 If you are producing your own customized version of the build system for
 use by other users, you might want to provide a custom build configuration
 that includes all the necessary settings and layers (i.e. ``local.conf`` and
-``bblayers.conf`` that are created in a new build directory) and a custom
+``bblayers.conf`` that are created in a new :term:`Build Directory`) and a custom
 message that is shown when setting up the build. This can be done by
 creating one or more template configuration directories in your
 custom distribution layer.
@@ -6452,7 +6432,7 @@ This can be done by using ``bitbake-layers save-build-conf``::
    You can try out the configuration with
    TEMPLATECONF=/srv/work/alex/meta-alex/conf/templates/test-1 . /srv/work/alex/poky/oe-init-build-env build-try-test-1
 
-The above command takes the config files from the currently active build directory under ``conf``,
+The above command takes the config files from the currently active :term:`Build Directory` under ``conf``,
 replaces site-specific paths in ``bblayers.conf`` with ``##OECORE##``-relative paths, and copies
 the config files into a specified layer under a specified template name.
 
@@ -6684,10 +6664,9 @@ generated are just "self consistent". The build system adds and removes
 packages and there are no guarantees about upgrade paths but images will
 be consistent and correct with the latest changes.
 
-The simplest form for a PR Service is for a single host
-development system that builds the package feed (building system). For
-this scenario, you can enable a local PR Service by setting
-:term:`PRSERV_HOST` in your
+The simplest form for a PR Service is for a single host development system
+that builds the package feed (building system). For this scenario, you can
+enable a local PR Service by setting :term:`PRSERV_HOST` in your
 ``local.conf`` file in the :term:`Build Directory`::
 
    PRSERV_HOST = "localhost:0"
@@ -7043,7 +7022,7 @@ machine does not necessarily have to be the package server. The build
 machine could push its artifacts to another machine that acts as the
 server (e.g. Internet-facing). In fact, doing so is advantageous for a
 production environment as getting the packages away from the development
-system's build directory prevents accidental overwrites.
+system's :term:`Build Directory` prevents accidental overwrites.
 
 A simple build that targets just one device produces more than one
 package database. In other words, the packages produced by a build are
@@ -7075,8 +7054,7 @@ to use. In your configuration, you use the
 :term:`PACKAGE_CLASSES`
 variable to specify the format:
 
-1. Open the ``local.conf`` file inside your
-   :term:`Build Directory` (e.g.
+1. Open the ``local.conf`` file inside your :term:`Build Directory` (e.g.
    ``poky/build/conf/local.conf``).
 
 2. Select the desired package format as follows::
@@ -7162,12 +7140,10 @@ environment, the setup is simple and straight forward. Should you want
 to use a different server more suited for production (e.g. Apache 2,
 Lighttpd, or Nginx), take the appropriate steps to do so.
 
-From within the build directory where you have built an image based on
-your packaging choice (i.e. the
-:term:`PACKAGE_CLASSES`
-setting), simply start the server. The following example assumes a build
-directory of ``poky/build/tmp/deploy/rpm`` and a :term:`PACKAGE_CLASSES`
-setting of "package_rpm"::
+From within the :term:`Build Directory` where you have built an image based on
+your packaging choice (i.e. the :term:`PACKAGE_CLASSES` setting), simply start
+the server. The following example assumes a :term:`Build Directory` of ``poky/build``
+and a :term:`PACKAGE_CLASSES` setting of "package_rpm"::
 
    $ cd poky/build/tmp/deploy/rpm
    $ python3 -m http.server
@@ -7439,11 +7415,9 @@ see the :yocto_wiki:`Ptest </Ptest>` wiki page.
 Adding ptest to Your Build
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To add package testing to your build, add the
-:term:`DISTRO_FEATURES` and
-:term:`EXTRA_IMAGE_FEATURES`
-variables to your ``local.conf`` file, which is found in the
-:term:`Build Directory`::
+To add package testing to your build, add the :term:`DISTRO_FEATURES` and
+:term:`EXTRA_IMAGE_FEATURES` variables to your ``local.conf`` file, which
+is found in the :term:`Build Directory`::
 
    DISTRO_FEATURES:append = " ptest"
    EXTRA_IMAGE_FEATURES += "ptest-pkgs"
@@ -8093,7 +8067,7 @@ image's recipe file via the :term:`IMAGE_FEATURES` variable::
    IMAGE_FEATURES += "read-only-rootfs"
 
 As an alternative, you can add the same feature
-from within your build directory's ``local.conf`` file with the
+from within your :term:`Build Directory`'s ``local.conf`` file with the
 associated :term:`EXTRA_IMAGE_FEATURES` variable, as in::
 
    EXTRA_IMAGE_FEATURES = "read-only-rootfs"
@@ -8188,9 +8162,8 @@ Enabling and Disabling Build History
 ------------------------------------
 
 Build history is disabled by default. To enable it, add the following
-:term:`INHERIT` statement and set the
-:term:`BUILDHISTORY_COMMIT`
-variable to "1" at the end of your ``conf/local.conf`` file found in the
+:term:`INHERIT` statement and set the :term:`BUILDHISTORY_COMMIT` variable to
+"1" at the end of your ``conf/local.conf`` file found in the
 :term:`Build Directory`::
 
    INHERIT += "buildhistory"
@@ -8213,10 +8186,8 @@ your ``conf/local.conf`` file.
 Understanding What the Build History Contains
 ---------------------------------------------
 
-Build history information is kept in
-``${``\ :term:`TOPDIR`\ ``}/buildhistory``
-in the Build Directory as defined by the
-:term:`BUILDHISTORY_DIR`
+Build history information is kept in ``${``\ :term:`TOPDIR`\ ``}/buildhistory``
+in the :term:`Build Directory` as defined by the :term:`BUILDHISTORY_DIR`
 variable. Here is an example abbreviated listing:
 
 .. image:: figures/buildhistory.png
@@ -8883,11 +8854,9 @@ Running Tests
 
 You can start the tests automatically or manually:
 
--  *Automatically running tests:* To run the tests automatically after
-   the OpenEmbedded build system successfully creates an image, first
-   set the
-   :term:`TESTIMAGE_AUTO`
-   variable to "1" in your ``local.conf`` file in the
+-  *Automatically running tests:* To run the tests automatically after the
+   OpenEmbedded build system successfully creates an image, first set the
+   :term:`TESTIMAGE_AUTO` variable to "1" in your ``local.conf`` file in the
    :term:`Build Directory`::
 
       TESTIMAGE_AUTO = "1"
@@ -8982,10 +8951,9 @@ following BitBake command form::
 
    $ bitbake image -c testexport
 
-Exporting the tests places them in the
-:term:`Build Directory` in
-``tmp/testexport/``\ image, which is controlled by the
-:term:`TEST_EXPORT_DIR` variable.
+Exporting the tests places them in the :term:`Build Directory` in
+``tmp/testexport/``\ image, which is controlled by the :term:`TEST_EXPORT_DIR`
+variable.
 
 You can now run the tests outside of the build environment::
 
@@ -9212,9 +9180,8 @@ section:
 
 -  ":ref:`dev-manual/common-tasks:viewing task variable dependencies`" describes
    how to use the ``bitbake-dumpsig`` command in conjunction with key
-   subdirectories in the
-   :term:`Build Directory` to determine
-   variable dependencies.
+   subdirectories in the :term:`Build Directory` to determine variable
+   dependencies.
 
 -  ":ref:`dev-manual/common-tasks:running specific tasks`" describes
    how to use several BitBake options (e.g. ``-c``, ``-C``, and ``-f``)
@@ -10363,13 +10330,11 @@ Here are some other tips that you might find useful:
    is also possible to switch out of the splashscreen by switching the
    virtual console (e.g. Fn+Left or Fn+Right on a Zaurus).
 
--  Removing :term:`TMPDIR` (usually
-   ``tmp/``, within the
-   :term:`Build Directory`) can often fix
-   temporary build issues. Removing :term:`TMPDIR` is usually a relatively
-   cheap operation, because task output will be cached in
-   :term:`SSTATE_DIR` (usually
-   ``sstate-cache/``, which is also in the Build Directory).
+-  Removing :term:`TMPDIR` (usually ``tmp/``, within the
+   :term:`Build Directory`) can often fix temporary build issues. Removing
+   :term:`TMPDIR` is usually a relatively cheap operation, because task output
+   will be cached in :term:`SSTATE_DIR` (usually ``sstate-cache/``, which is
+   also in the :term:`Build Directory`).
 
    .. note::
 
@@ -10383,8 +10348,8 @@ Here are some other tips that you might find useful:
 
    Using GNU Grep, you can use the following shell function to
    recursively search through common recipe-related files, skipping
-   binary files, ``.git`` directories, and the Build Directory (assuming
-   its name starts with "build")::
+   binary files, ``.git`` directories, and the :term:`Build Directory`
+   (assuming its name starts with "build")::
 
       g() {
           grep -Ir \
@@ -11282,8 +11247,7 @@ of compliance in mind.
 
 One way of doing this (but certainly not the only way) is to release
 just the source as a tarball. You can do this by adding the following to
-the ``local.conf`` file found in the
-:term:`Build Directory`::
+the ``local.conf`` file found in the :term:`Build Directory`::
 
    INHERIT += "archiver"
    ARCHIVER_MODE[src] = "original"
@@ -11442,9 +11406,9 @@ this function, you have to follow the following steps:
 
 3. Meta-spdxscanner provides several methods within the bbclass to create spdx files.
    Please choose one that you want to use and enable the spdx task. You have to
-   add some config options in ``local.conf`` file in your :term:`Build
-   Directory`. Here is an example showing how to generate spdx files
-   during BitBake using the fossology-python.bbclass::
+   add some config options in ``local.conf`` file in your :term:`Build Directory`.
+   Here is an example showing how to generate spdx files during BitBake using the
+   fossology-python.bbclass::
 
       # Select fossology-python.bbclass.
       INHERIT += "fossology-python"
@@ -11737,12 +11701,9 @@ Enabling and Using the Tool
 ---------------------------
 
 By default, the error reporting tool is disabled. You can enable it by
-inheriting the
-:ref:`report-error <ref-classes-report-error>`
+inheriting the :ref:`report-error <ref-classes-report-error>`
 class by adding the following statement to the end of your
-``local.conf`` file in your
-:term:`Build Directory`.
-::
+``local.conf`` file in your :term:`Build Directory`::
 
    INHERIT += "report-error"
 

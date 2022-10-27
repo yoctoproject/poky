@@ -116,24 +116,21 @@ build the SDK installer. Follow these steps:
 
       $ source oe-init-build-env
 
-   Among other things, the script
-   creates the :term:`Build Directory`,
-   which is
-   ``build`` in this case and is located in the Source Directory. After
-   the script runs, your current working directory is set to the
-   ``build`` directory.
+   Among other things, the script creates the :term:`Build Directory`, which
+   is ``build`` in this case and is located in the Source Directory. After
+   the script runs, your current working directory is set to the ``build``
+   directory.
 
 4. *Make Sure You Are Building an Installer for the Correct Machine:*
-   Check to be sure that your
-   :term:`MACHINE` variable in the
-   ``local.conf`` file in your Build Directory matches the architecture
+   Check to be sure that your :term:`MACHINE` variable in the ``local.conf``
+   file in your :term:`Build Directory` matches the architecture
    for which you are building.
 
 5. *Make Sure Your SDK Machine is Correctly Set:* If you are building a
    toolchain designed to run on an architecture that differs from your
    current development host machine (i.e. the build host), be sure that
    the :term:`SDKMACHINE` variable in the ``local.conf`` file in your
-   Build Directory is correctly set.
+   :term:`Build Directory` is correctly set.
 
    .. note::
 
@@ -163,7 +160,7 @@ build the SDK installer. Follow these steps:
    that matches your target root filesystem.
 
    When the ``bitbake`` command completes, the SDK installer will be in
-   ``tmp/deploy/sdk`` in the Build Directory.
+   ``tmp/deploy/sdk`` in the :term:`Build Directory`.
 
    .. note::
 
@@ -180,7 +177,7 @@ build the SDK installer. Follow these steps:
          libc-staticdev"
 
 7. *Run the Installer:* You can now run the SDK installer from
-   ``tmp/deploy/sdk`` in the Build Directory. Following is an example::
+   ``tmp/deploy/sdk`` in the :term:`Build Directory`. Following is an example::
 
       $ cd poky/build/tmp/deploy/sdk
       $ ./poky-glibc-x86_64-core-image-sato-core2-64-toolchain-ext-&DISTRO;.sh
