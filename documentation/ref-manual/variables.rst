@@ -615,7 +615,7 @@ system and gives an overview of their function and contents.
       software.
 
       When specifying recipe files, you can pattern match using Python's
-      `glob <https://docs.python.org/3/library/glob.html>`_ syntax.
+      `glob <https://docs.python.org/3/library/glob.html>`__ syntax.
       For details on the syntax, see the documentation by following the
       previous link.
 
@@ -2493,7 +2493,7 @@ system and gives an overview of their function and contents.
 
          -  When specifying files or paths, you can pattern match using
             Python's
-            `glob <https://docs.python.org/3/library/glob.html>`_
+            `glob <https://docs.python.org/3/library/glob.html>`__
             syntax. For details on the syntax, see the documentation by
             following the previous link.
 
@@ -4955,7 +4955,7 @@ system and gives an overview of their function and contents.
       See the :term:`KERNEL_MODULE_AUTOLOAD` variable for more information.
 
    :term:`module_conf`
-      Specifies `modprobe.d <https://linux.die.net/man/5/modprobe.d>`_
+      Specifies `modprobe.d <https://linux.die.net/man/5/modprobe.d>`__
       syntax lines for inclusion in the ``/etc/modprobe.d/modname.conf``
       file.
 

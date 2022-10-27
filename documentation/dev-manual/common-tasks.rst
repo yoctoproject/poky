@@ -7554,9 +7554,8 @@ NPM packages:
 -  Of the two methods that you can use ``devtool`` to create NPM
    packages, the registry approach is slightly simpler. However, you
    might consider the project approach because you do not have to
-   publish your module in the NPM registry
-   (`npm-registry <https://docs.npmjs.com/misc/registry>`_), which
-   is NPM's public registry.
+   publish your module in the `NPM registry <https://docs.npmjs.com/misc/registry>`__,
+   which is NPM's public registry.
 
 -  Be familiar with
    :doc:`devtool </ref-manual/devtool-reference>`.

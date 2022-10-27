@@ -1786,7 +1786,7 @@ is supported by ``overlayfs``. This has to be done in your machine configuration
   * QA checks fail to catch file existence if you redefine this variable in your recipe!
   * Only the existence of the systemd mount unit file is checked, not its contents.
   * To get more details on ``overlayfs``, its internals and supported operations, please refer
-    to the official documentation of the `Linux kernel <https://www.kernel.org/doc/html/latest/filesystems/overlayfs.html>`_.
+    to the official documentation of the `Linux kernel <https://www.kernel.org/doc/html/latest/filesystems/overlayfs.html>`__.
 
 The class assumes you have a ``data.mount`` systemd unit defined elsewhere in your BSP
 (e.g. in ``systemd-machine-units`` recipe) and it's installed into the image.
@@ -2533,7 +2533,7 @@ build systems based on ``setuptools`` (e.g. only have a ``setup.py`` and have
 not migrated to the official ``pyproject.toml`` format). Unlike
 ``setuptools3.bbclass``, this uses the traditional ``setup.py`` ``build`` and
 ``install`` commands and not wheels. This use of ``setuptools`` like this is
-`deprecated <https://github.com/pypa/setuptools/blob/main/CHANGES.rst#v5830>`_
+`deprecated <https://github.com/pypa/setuptools/blob/main/CHANGES.rst#v5830>`__
 but still relatively common.
 
 .. _ref-classes-setuptools3-base:

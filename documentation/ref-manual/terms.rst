@@ -139,12 +139,12 @@ universal, the list includes them just in case:
       be included independently in your project's ``bblayers.conf`` file.
 
       In some cases, such as with OpenEmbedded's
-      `meta-openembedded <https://github.com/openembedded/meta-openembedded>`_
+      `meta-openembedded <https://github.com/openembedded/meta-openembedded>`__
       layer, the top level ``meta-openembedded/`` directory is not itself an actual layer,
       so you would never explicitly include it in a ``bblayers.conf`` file;
       rather, you would include any number of its layer subdirectories, such as
-      `meta-openembedded/meta-oe <https://github.com/openembedded/meta-openembedded/tree/master/meta-oe>`_,
-      `meta-openembedded/meta-python <https://github.com/openembedded/meta-openembedded/tree/master/meta-python>`_
+      `meta-openembedded/meta-oe <https://github.com/openembedded/meta-openembedded/tree/master/meta-oe>`__,
+      `meta-openembedded/meta-python <https://github.com/openembedded/meta-openembedded/tree/master/meta-python>`__
       and so on.
 
       On the other hand, some container layers (such as
