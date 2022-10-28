@@ -405,7 +405,9 @@ universal, the list includes them just in case:
       <https://spdx.dev/>`__ and is used by the OpenEmbedded Build System to
       provide an :term:`SBOM` associated to each a software image.
 
-      For details, see Wikipedia's `SPDX page <https://en.wikipedia.org/wiki/Software_Package_Data_Exchange>`__.
+      For details, see Wikipedia's `SPDX page <https://en.wikipedia.org/wiki/Software_Package_Data_Exchange>`__
+      and the ":ref:`dev-manual/common-tasks:creating a software bill of materials`"
+      section of the Development Tasks manual.
 
    :term:`Sysroot`
       When cross-compiling, the target file system may be differently laid
