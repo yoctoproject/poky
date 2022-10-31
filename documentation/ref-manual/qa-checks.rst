@@ -590,7 +590,7 @@ Errors and Warnings
 - ``package contains desktop file with key 'MimeType' but does not inhert mime-xdg: <packagename> path '<file>' [mime-xdg]``
 
     The specified package contains a .desktop file with a 'MimeType' key
-    present, but does not inherit the :ref:`ref-classes-mime-xdg`
+    present, but does not inherit the :ref:`mime-xdg <ref-classes-mime-xdg>`
     class that is required in order for that to be activated. Either add
     ``inherit mime`` to the recipe or remove the files at the
     :ref:`ref-tasks-install` step if they are not needed.
