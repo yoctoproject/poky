@@ -1604,6 +1604,27 @@ The :ref:`mime <ref-classes-mime>` class generates the proper post-install and p
 These scriptlets call ``update-mime-database`` to add the MIME types to
 the shared database.
 
+.. _ref-classes-mime-xdg:
+
+``mime-xdg.bbclass``
+====================
+
+The :ref:`mime-xdg <ref-classes-mime-xdg>` class generates the proper
+post-install and post-remove (postinst/postrm) scriptlets for packages
+that install ``.desktop`` files containing ``MimeType`` entries.
+These scriptlets call ``update-desktop-database`` to add the MIME types
+to the database of MIME types handled by desktop files.
+
+Thanks to this class, when users open a file through a file browser
+on recently created images, they don't have to choose the application
+to open the file from the pool of all known applications, even the ones
+that cannot open the selected file.
+
+If you have recipes installing their ``.desktop`` files as absolute
+symbolic links, the detection of such files cannot be done by the current
+implementation of this class. In this case, you have to add the corresponding
+package names to the :term:`MIME_XDG_PACKAGES` variable.
+
 .. _ref-classes-mirrors:
 
 ``mirrors.bbclass``

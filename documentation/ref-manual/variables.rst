@@ -4894,6 +4894,13 @@ system and gives an overview of their function and contents.
       The revision currently checked out for the OpenEmbedded-Core layer (path
       determined by :term:`COREBASE`).
 
+   :term:`MIME_XDG_PACKAGES`
+      The current implementation of the :ref:`mime-xdg <ref-classes-mime-xdg>`
+      class cannot detect ``.desktop`` files installed through absolute
+      symbolic links. Use this setting to make the class create post-install
+      and post-remove scripts for these packages anyway, to invoke the
+      ``update-destop-database`` command.
+
    :term:`MIRRORS`
       Specifies additional paths from which the OpenEmbedded build system
       gets source code. When the build system searches for source code, it
