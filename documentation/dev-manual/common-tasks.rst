@@ -7157,8 +7157,7 @@ system. This section provides information for RPM, IPK, and DEB.
 Using RPM
 ^^^^^^^^^
 
-The `Dandified Packaging
-Tool <https://en.wikipedia.org/wiki/DNF_(software)>`__ (DNF) performs
+The :wikipedia:`Dandified Packaging <DNF_(software)>` (DNF) performs
 runtime package management of RPM packages. In order to use DNF for
 runtime package management, you must perform an initial setup on the
 target machine for cases where the ``PACKAGE_FEED_*`` variables were not
@@ -7501,7 +7500,7 @@ test. Here is what you have to do for each recipe:
 Creating Node Package Manager (NPM) Packages
 --------------------------------------------
 
-`NPM <https://en.wikipedia.org/wiki/Npm_(software)>`__ is a package
+:wikipedia:`NPM <Npm_(software)>` is a package
 manager for the JavaScript programming language. The Yocto Project
 supports the NPM :ref:`fetcher <bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers>`. You can
 use this fetcher in combination with
@@ -9374,8 +9373,7 @@ This command writes the following files in the current directory:
 
 -  ``task-depends.dot``: A graph showing dependencies between tasks.
 
-The graphs are in
-`DOT <https://en.wikipedia.org/wiki/DOT_%28graph_description_language%29>`__
+The graphs are in :wikipedia:`DOT <DOT_%28graph_description_language%29>`
 format and can be converted to images (e.g. using the ``dot`` tool from
 `Graphviz <https://www.graphviz.org/>`__).
 
@@ -11435,7 +11433,7 @@ Vulnerabilities in Poky and OE-Core
 
 The Yocto Project has an infrastructure to track and address unfixed
 known security vulnerabilities, as tracked by the public
-`Common Vulnerabilities and Exposures (CVE) <https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures>`__
+:wikipedia:`Common Vulnerabilities and Exposures (CVE) <Common_Vulnerabilities_and_Exposures>`
 database.
 
 The Yocto Project maintains a `list of known vulnerabilities
@@ -11791,7 +11789,7 @@ Instructions on how to set it up are in the README document.
 Using Wayland and Weston
 ========================
 
-`Wayland <https://en.wikipedia.org/wiki/Wayland_(display_server_protocol)>`__
+:wikipedia:`Wayland <Wayland_(display_server_protocol)>`
 is a computer display server protocol that provides a method for
 compositing window managers to communicate directly with applications
 and video hardware and expects them to communicate with input hardware
@@ -11800,20 +11798,18 @@ in better control over graphics frame rendering than an application
 might otherwise achieve.
 
 The Yocto Project provides the Wayland protocol libraries and the
-reference
-`Weston <https://en.wikipedia.org/wiki/Wayland_(display_server_protocol)#Weston>`__
+reference :wikipedia:`Weston <Wayland_(display_server_protocol)#Weston>`
 compositor as part of its release. You can find the integrated packages
 in the ``meta`` layer of the :term:`Source Directory`.
 Specifically, you
 can find the recipes that build both Wayland and Weston at
 ``meta/recipes-graphics/wayland``.
 
-You can build both the Wayland and Weston packages for use only with
-targets that accept the `Mesa 3D and Direct Rendering
-Infrastructure <https://en.wikipedia.org/wiki/Mesa_(computer_graphics)>`__,
-which is also known as Mesa DRI. This implies that you cannot build and
-use the packages if your target uses, for example, the Intel Embedded
-Media and Graphics Driver (Intel EMGD) that overrides Mesa DRI.
+You can build both the Wayland and Weston packages for use only with targets
+that accept the :wikipedia:`Mesa 3D and Direct Rendering Infrastructure
+<Mesa_(computer_graphics)>`, which is also known as Mesa DRI. This implies that
+you cannot build and use the packages if your target uses, for example, the
+Intel Embedded Media and Graphics Driver (Intel EMGD) that overrides Mesa DRI.
 
 .. note::
 

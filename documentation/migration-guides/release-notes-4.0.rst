@@ -32,7 +32,7 @@ New Features / Enhancements in 4.0
   :ref:`overlayfs-etc <ref-classes-overlayfs-etc>` classes and
   ``overlayroot`` support in the :term:`Initramfs` framework to make it easier to
   overlay read-only filesystems (for example) with
-  `OverlayFS <https://en.wikipedia.org/wiki/OverlayFS>`__.
+  :wikipedia:`OverlayFS <OverlayFS>`.
 
 - Inclusive language adjustments to some variable names - see the
   :ref:`4.0 migration guide <migration-4.0-inclusive-language>` for details.
@@ -104,7 +104,7 @@ New Features / Enhancements in 4.0
 
 - Shared state (sstate) improvements:
 
-   - Switched to `ZStandard (zstd) <https://en.wikipedia.org/wiki/Zstd>`__ instead
+   - Switched to :wikipedia:`ZStandard (zstd) <Zstd>` instead
      of Gzip, for better performance.
    - Allow validation of sstate signatures against a list of keys
    - Improved error messages and exception handling

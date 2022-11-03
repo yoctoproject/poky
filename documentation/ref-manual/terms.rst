@@ -330,7 +330,7 @@ universal, the list includes them just in case:
       This can be used by the recipients of the software to assess
       their exposure to license compliance and security vulnerability issues.
 
-      See the `Software Supply Chain <https://en.wikipedia.org/wiki/Software_supply_chain>`__
+      See the :wikipedia:`Software Supply Chain <Software_supply_chain>`
       article on Wikipedia for more details.
 
       The OpenEmbedded Build System can generate such documentation for your
@@ -405,7 +405,7 @@ universal, the list includes them just in case:
       <https://spdx.dev/>`__ and is used by the OpenEmbedded Build System to
       provide an :term:`SBOM` associated to each a software image.
 
-      For details, see Wikipedia's `SPDX page <https://en.wikipedia.org/wiki/Software_Package_Data_Exchange>`__
+      For details, see Wikipedia's :wikipedia:`SPDX page <Software_Package_Data_Exchange>`
       and the ":ref:`dev-manual/common-tasks:creating a software bill of materials`"
       section of the Development Tasks manual.
 

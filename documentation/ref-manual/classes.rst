@@ -85,7 +85,7 @@ about the variable flags (varflags) that help control archive creation.
 ======================
 
 The :ref:`autotools* <ref-classes-autotools>` classes support packages built with the
-`GNU Autotools <https://en.wikipedia.org/wiki/GNU_Autotools>`__.
+:wikipedia:`GNU Autotools <GNU_Autotools>`.
 
 The ``autoconf``, ``automake``, and ``libtool`` packages bring
 standardization. This class defines a set of tasks (e.g. ``configure``,
@@ -1775,8 +1775,8 @@ is not needed.
 ``npm.bbclass``
 ===============
 
-Provides support for building Node.js software fetched using the `node
-package manager (NPM) <https://en.wikipedia.org/wiki/Npm_(software)>`__.
+Provides support for building Node.js software fetched using the
+:wikipedia:`node package manager (NPM) <Npm_(software)>`.
 
 .. note::
 

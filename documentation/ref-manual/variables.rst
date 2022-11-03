@@ -3699,8 +3699,8 @@ system and gives an overview of their function and contents.
 
    :term:`Initramfs`
       An Initial RAM Filesystem (:term:`Initramfs`) is an optionally compressed
-      `cpio <https://en.wikipedia.org/wiki/Cpio>`__ archive which is extracted
-      by the Linux kernel into RAM in a special `tmpfs <https://en.wikipedia.org/wiki/Tmpfs>`__
+      :wikipedia:`cpio <Cpio>` archive which is extracted
+      by the Linux kernel into RAM in a special :wikipedia:`tmpfs <Tmpfs>`
       instance, used as the initial root filesystem.
 
       This is a replacement for the legacy init RAM disk ("initrd")
@@ -3756,7 +3756,7 @@ system and gives an overview of their function and contents.
       ``meta/conf/bitbake.conf`` configuration file in the
       :term:`Source Directory`, is "cpio.gz". The Linux kernel's
       :term:`Initramfs` mechanism, as opposed to the initial RAM filesystem
-      `initrd <https://en.wikipedia.org/wiki/Initrd>`__ mechanism, expects
+      :wikipedia:`initrd <Initrd>` mechanism, expects
       an optionally compressed cpio archive.
 
    :term:`INITRAMFS_IMAGE`
