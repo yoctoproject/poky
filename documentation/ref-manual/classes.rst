@@ -741,8 +741,8 @@ class.
 
 .. _ref-classes-github-releases:
 
-``github-releases``
-===================
+``github-releases.bbclass``
+===========================
 
 For recipes that fetch release tarballs from github, the :ref:`github-releases <ref-classes-github-releases>`
 class sets up a standard way for checking available upstream versions
