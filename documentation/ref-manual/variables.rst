@@ -530,6 +530,33 @@ system and gives an overview of their function and contents.
       ":ref:`dev-manual/common-tasks:speeding up a build`"
       section in the Yocto Project Development Tasks Manual.
 
+      On the other hand, if your goal is to limit the amount of system
+      resources consumed by BitBake tasks, setting :term:`BB_NUMBER_THREADS`
+      to a number lower than the number of CPU threads in your machine
+      won't be sufficient. That's because each package will still be built
+      and installed through a number of parallel jobs specified by the
+      :term:`PARALLEL_MAKE` variable, which is by default the number of CPU
+      threads in your system, and is not impacted by the
+      :term:`BB_NUMBER_THREADS` value.
+
+      So, if you set :term:`BB_NUMBER_THREADS` to "1" but don't set
+      :term:`PARALLEL_MAKE`, most of your system resources will be consumed
+      anyway.
+
+      Therefore, if you intend to reduce the load of your build system by
+      setting :term:`BB_NUMBER_THREADS` to a relatively low value compared
+      to the number of CPU threads on your system, you should also set
+      :term:`PARALLEL_MAKE` to a similarly low value.
+
+      An alternative to using :term:`BB_NUMBER_THREADS` to keep the usage
+      of build system resources under control is to use the smarter
+      :term:`BB_PRESSURE_MAX_CPU`, :term:`BB_PRESSURE_MAX_IO` or
+      :term:`BB_PRESSURE_MAX_MEMORY` controls. They will prevent BitBake
+      from starting new tasks as long as thresholds are exceeded. Anyway,
+      as with :term:`BB_NUMBER_THREADS`, such controls won't prevent the
+      tasks already being run from using all CPU threads on the system
+      if :term:`PARALLEL_MAKE` is not set to a low value.
+
    :term:`BB_SERVER_TIMEOUT`
       Specifies the time (in seconds) after which to unload the BitBake
       server due to inactivity. Set :term:`BB_SERVER_TIMEOUT` to determine how
