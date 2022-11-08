@@ -129,7 +129,7 @@ Repositories / Downloads for Yocto-4.0.5
 
 poky
 
--  Repository Location: https://git.yoctoproject.org/poky
+-  Repository Location: :yocto_git:`/poky`
 -  Branch: :yocto_git:`kirkstone </poky/log/?h=kirkstone>`
 -  Tag:  :yocto_git:`yocto-4.0.5 </poky/log/?h=yocto-4.0.5>`
 -  Git Revision: :yocto_git:`2e79b199114b25d81bfaa029ccfb17676946d20d </poky/commit/?id=2e79b199114b25d81bfaa029ccfb17676946d20d>`
@@ -141,7 +141,7 @@ poky
 
 openembedded-core
 
--  Repository Location: https://git.openembedded.org/openembedded-core
+-  Repository Location: :oe_git:`/openembedded-core`
 -  Branch: :oe_git:`kirkstone </openembedded-core/log/?h=kirkstone>`
 -  Tag:  :oe_git:`yocto-4.0.5 </openembedded-core/log/?h=yocto-4.0.5>`
 -  Git Revision: :oe_git:`fbdf93f43ff4b876487e1f26752598ec8abcb46e </openembedded-core/commit/?id=fbdf93f43ff4b876487e1f26752598ec8abcb46e>`
@@ -153,7 +153,7 @@ openembedded-core
 
 meta-mingw
 
--  Repository Location: https://git.yoctoproject.org/meta-mingw
+-  Repository Location: :yocto_git:`/meta-mingw`
 -  Branch: :yocto_git:`kirkstone </meta-mingw/log/?h=kirkstone>`
 -  Tag:  :yocto_git:`yocto-4.0.5 </meta-mingw/log/?h=yocto-4.0.5>`
 -  Git Revision: :yocto_git:`a90614a6498c3345704e9611f2842eb933dc51c1 </meta-mingw/commit/?id=a90614a6498c3345704e9611f2842eb933dc51c1>`
@@ -165,7 +165,7 @@ meta-mingw
 
 meta-gplv2
 
--  Repository Location: https://git.yoctoproject.org/meta-gplv2
+-  Repository Location: :yocto_git:`/meta-gplv2`
 -  Branch: :yocto_git:`kirkstone </meta-gplv2/log/?h=kirkstone>`
 -  Tag:  :yocto_git:`yocto-4.0.5 </meta-gplv2/log/?h=yocto-4.0.5>`
 -  Git Revision: :yocto_git:`d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a </meta-gplv2/commit/?id=d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a>`
@@ -177,7 +177,7 @@ meta-gplv2
 
 bitbake
 
--  Repository Location: https://git.openembedded.org/bitbake
+-  Repository Location: :oe_git:`/bitbake`
 -  Branch: :oe_git:`2.0 </bitbake/log/?h=2.0>`
 -  Tag:  :oe_git:`yocto-4.0.5 </bitbake/log/?h=yocto-4.0.5>`
 -  Git Revision: :oe_git:`c90d57497b9bcd237c3ae810ee8edb5b0d2d575a </bitbake/commit/?id=c90d57497b9bcd237c3ae810ee8edb5b0d2d575a>`
@@ -189,7 +189,7 @@ bitbake
 
 yocto-docs
 
--  Repository Location: https://git.yoctoproject.org/yocto-docs
+-  Repository Location: :yocto_git:`/yocto-docs`
 -  Branch: :yocto_git:`kirkstone </yocto-docs/log/?h=kirkstone>`
 -  Tag: :yocto_git:`yocto-4.0.5 </yocto-docs/log/?h=yocto-4.0.5>`
 -  Git Revision: :yocto_git:`8c2f9f54e29781f4ee72e81eeaa12ceaa82dc2d3 </yocto-docs/commit/?id=8c2f9f54e29781f4ee72e81eeaa12ceaa82dc2d3>`
