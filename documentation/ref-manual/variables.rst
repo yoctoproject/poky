@@ -5818,17 +5818,20 @@ system and gives an overview of their function and contents.
       desired splitting.
 
    :term:`PARALLEL_MAKE`
-      Extra options passed to the ``make`` command during the
-      :ref:`ref-tasks-compile` task in order to specify
-      parallel compilation on the local build host. This variable is
-      usually in the form "-j x", where x represents the maximum number of
-      parallel threads ``make`` can run.
+
+      Extra options passed to the build tool command (``make``,
+      ``ninja`` or more specific build engines, like the Go language one)
+      during the :ref:`ref-tasks-compile` task, to specify parallel compilation
+      on the local build host. This variable is usually in the form "-j x",
+      where x represents the maximum number of parallel threads such engines
+      can run.
 
       .. note::
 
-         In order for :term:`PARALLEL_MAKE` to be effective, ``make`` must be
-         called with ``${``\ :term:`EXTRA_OEMAKE`\ ``}``. An easy way to ensure
-         this is to use the ``oe_runmake`` function.
+         For software compiled by ``make``, in order for :term:`PARALLEL_MAKE`
+         to be effective, ``make`` must be called with
+         ``${``\ :term:`EXTRA_OEMAKE`\ ``}``. An easy
+         way to ensure this is to use the ``oe_runmake`` function.
 
       By default, the OpenEmbedded build system automatically sets this
       variable to be equal to the number of cores the build system uses.
@@ -5853,15 +5856,16 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Development Tasks Manual.
 
    :term:`PARALLEL_MAKEINST`
-      Extra options passed to the ``make install`` command during the
-      :ref:`ref-tasks-install` task in order to specify
+      Extra options passed to the build tool install command
+      (``make install``, ``ninja install`` or more specific ones)
+      during the :ref:`ref-tasks-install` task in order to specify
       parallel installation. This variable defaults to the value of
       :term:`PARALLEL_MAKE`.
 
       .. note::
 
-         In order for :term:`PARALLEL_MAKEINST` to be effective, ``make`` must
-         be called with
+         For software compiled by ``make``, in order for :term:`PARALLEL_MAKEINST`
+         to be effective, ``make`` must be called with
          ``${``\ :term:`EXTRA_OEMAKE`\ ``}``. An easy
          way to ensure this is to use the ``oe_runmake`` function.
 
