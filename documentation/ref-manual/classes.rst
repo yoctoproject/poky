@@ -2591,14 +2591,6 @@ in the :ref:`setuptools3 <ref-classes-setuptools3>` class and inherit this class
 
 The :ref:`sign_rpm <ref-classes-sign_rpm>` class supports generating signed RPM packages.
 
-.. _ref-classes-sip:
-
-``sip.bbclass``
-===============
-
-The :ref:`sip <ref-classes-sip>` class supports recipes that build or package SIP-based
-Python bindings.
-
 .. _ref-classes-siteconfig:
 
 ``siteconfig.bbclass``
