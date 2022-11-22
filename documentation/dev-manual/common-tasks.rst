@@ -1703,26 +1703,21 @@ your software is built:
    need to modify the configuration.
 
    When using Autotools, your recipe needs to inherit the
-   :ref:`autotools <ref-classes-autotools>` class
-   and your recipe does not have to contain a
-   :ref:`ref-tasks-configure` task.
-   However, you might still want to make some adjustments. For example,
-   you can set
-   :term:`EXTRA_OECONF` or
-   :term:`PACKAGECONFIG_CONFARGS`
-   to pass any needed configure options that are specific to the recipe.
+   :ref:`autotools <ref-classes-autotools>` class and it does not have to
+   contain a :ref:`ref-tasks-configure` task. However, you might still want to
+   make some adjustments. For example, you can set :term:`EXTRA_OECONF` or
+   :term:`PACKAGECONFIG_CONFARGS` to pass any needed configure options that
+   are specific to the recipe.
 
 -  *CMake:* If your source files have a ``CMakeLists.txt`` file, then
    your software is built using CMake. If this is the case, you just
    need to modify the configuration.
 
    When you use CMake, your recipe needs to inherit the
-   :ref:`cmake <ref-classes-cmake>` class and your
-   recipe does not have to contain a
-   :ref:`ref-tasks-configure` task.
-   You can make some adjustments by setting
-   :term:`EXTRA_OECMAKE` to
-   pass any needed configure options that are specific to the recipe.
+   :ref:`cmake <ref-classes-cmake>` class and it does not have to contain a
+   :ref:`ref-tasks-configure` task. You can make some adjustments by setting
+   :term:`EXTRA_OECMAKE` to pass any needed configure options that are
+   specific to the recipe.
 
    .. note::
 
@@ -1997,9 +1992,8 @@ different ways:
    shutdown of all other programs.
 
    To enable a service using SysVinit, your recipe needs to inherit the
-   :ref:`update-rc.d <ref-classes-update-rc.d>`
-   class. The class helps facilitate safely installing the package on
-   the target.
+   :ref:`update-rc.d <ref-classes-update-rc.d>` class. The class helps
+   facilitate safely installing the package on the target.
 
    You will need to set the
    :term:`INITSCRIPT_PACKAGES`,
@@ -2014,10 +2008,8 @@ different ways:
    https://freedesktop.org/wiki/Software/systemd/.
 
    To enable a service using systemd, your recipe needs to inherit the
-   :ref:`systemd <ref-classes-systemd>` class. See
-   the ``systemd.bbclass`` file located in your :term:`Source Directory`
-   section for
-   more information.
+   :ref:`systemd <ref-classes-systemd>` class. See the ``systemd.bbclass`` file
+   located in your :term:`Source Directory` section for more information.
 
 Packaging
 ---------
@@ -2370,8 +2362,7 @@ Autotooled Package
 
 Applications that use Autotools such as ``autoconf`` and ``automake``
 require a recipe that has a source archive listed in :term:`SRC_URI` and
-also inherit the
-:ref:`autotools <ref-classes-autotools>` class,
+also inherit the :ref:`autotools <ref-classes-autotools>` class,
 which contains the definitions of all the steps needed to build an
 Autotool-based application. The result of the build is automatically
 packaged. And, if the application uses NLS for localization, packages
@@ -4404,13 +4395,10 @@ where the development occurs. You want the recipe's
 :term:`SRC_URI` variable to point to
 the external directory and use it as is, not copy it.
 
-To build from software that comes from an external source, all you need
-to do is inherit the
-:ref:`externalsrc <ref-classes-externalsrc>` class
-and then set the
-:term:`EXTERNALSRC` variable to
-point to your external source code. Here are the statements to put in
-your ``local.conf`` file::
+To build from software that comes from an external source, all you need to do
+is inherit the :ref:`externalsrc <ref-classes-externalsrc>` class and then set
+the :term:`EXTERNALSRC` variable to point to your external source code. Here
+are the statements to put in your ``local.conf`` file::
 
    INHERIT += "externalsrc"
    EXTERNALSRC:pn-myrecipe = "path-to-your-source-tree"
@@ -4494,8 +4482,7 @@ directory:
 1. *Using Local Files Only:* Inside your ``local.conf`` file, add the
    :term:`SOURCE_MIRROR_URL` variable, inherit the
    :ref:`own-mirrors <ref-classes-own-mirrors>` class, and use the
-   :term:`BB_NO_NETWORK` variable to your ``local.conf``.
-   ::
+   :term:`BB_NO_NETWORK` variable to your ``local.conf``::
 
       SOURCE_MIRROR_URL ?= "file:///home/your-download-dir/"
       INHERIT += "own-mirrors"
@@ -7441,8 +7428,7 @@ In order to enable a recipe to run installed ptests on target hardware,
 you need to prepare the recipes that build the packages you want to
 test. Here is what you have to do for each recipe:
 
--  *Be sure the recipe inherits
-   the* :ref:`ptest <ref-classes-ptest>` *class:*
+-  *Be sure the recipe inherits the* :ref:`ptest <ref-classes-ptest>` *class:*
    Include the following line in each recipe::
 
       inherit ptest
@@ -8868,8 +8854,7 @@ You can start the tests automatically or manually:
       bitbake core-image-sato
 
 -  *Manually running tests:* To manually run the tests, first globally
-   inherit the
-   :ref:`testimage <ref-classes-testimage>` class
+   inherit the :ref:`testimage <ref-classes-testimage>` class
    by editing your ``local.conf`` file::
 
       INHERIT += "testimage"
@@ -9287,8 +9272,7 @@ In addition to variable values, the output of the ``bitbake -e`` and
    classes included globally, recursively listing the files they include
    or inherit in turn. Much of the behavior of the OpenEmbedded build
    system (including the behavior of the :ref:`ref-manual/tasks:normal recipe build tasks`) is
-   implemented in the
-   :ref:`base <ref-classes-base>` class and the
+   implemented in the :ref:`base <ref-classes-base>` class and the
    classes it inherits, rather than being built into BitBake itself.
 
 -  After the variable values, all functions appear in the output. For

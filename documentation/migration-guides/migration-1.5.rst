@@ -221,8 +221,8 @@ Task Recipes
 
 The previously deprecated ``task.bbclass`` has now been dropped. For
 recipes that previously inherited from this class, you should rename
-them from ``task-*`` to ``packagegroup-*`` and inherit packagegroup
-instead.
+them from ``task-*`` to ``packagegroup-*`` and inherit
+:ref:`packagegroup <ref-classes-packagegroup>` instead.
 
 For more information, see the ":ref:`ref-classes-packagegroup`" section.
 

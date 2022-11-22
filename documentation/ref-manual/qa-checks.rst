@@ -579,10 +579,10 @@ Errors and Warnings
 - ``package contains mime types but does not inherit mime: <packagename> path '<file>' [mime]``
 
    The specified package contains mime type files (``.xml`` files in
-   ``${datadir}/mime/packages``) and yet does not inherit the mime
-   class which will ensure that these get properly installed. Either
-   add ``inherit mime`` to the recipe or remove the files at the
-   :ref:`ref-tasks-install` step if they are not needed.
+   ``${datadir}/mime/packages``) and yet does not inherit the
+   :ref:`mime <ref-classes-mime>` class which will ensure that these get
+   properly installed. Either add ``inherit mime`` to the recipe or remove the
+   files at the :ref:`ref-tasks-install` step if they are not needed.
 
 
 .. _qa-check-mime-xdg:
@@ -620,11 +620,13 @@ Errors and Warnings
 
 - ``<recipename>: recipe doesn't inherit features_check [unhandled-features-check]``
 
-    This check ensures that if one of the variables that the :ref:`features_check <ref-classes-features_check>`
-    class supports (e.g. :term:`REQUIRED_DISTRO_FEATURES`) is used, then the recipe
-    inherits ``features_check`` in order for the requirement to actually work. If
-    you are seeing this message, either add ``inherit features_check`` to your recipe
-    or remove the reference to the variable if it is not needed.
+    This check ensures that if one of the variables that the
+    :ref:`features_check <ref-classes-features_check>` class supports (e.g.
+    :term:`REQUIRED_DISTRO_FEATURES`) is used, then the recipe
+    inherits :ref:`features_check <ref-classes-features_check>` in order for
+    the requirement to actually work. If you are seeing this message, either
+    add ``inherit features_check`` to your recipe or remove the reference to
+    the variable if it is not needed.
 
 
 .. _qa-check-missing-update-alternatives:

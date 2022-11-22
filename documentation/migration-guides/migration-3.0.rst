@@ -259,7 +259,9 @@ The following miscellaneous changes have occurred.
 
 -  The ``gnome`` class has been removed because it now does very little.
    You should update recipes that previously inherited this class to do
-   the following: inherit gnomebase gtk-icon-cache gconf mime
+   the following::
+
+      inherit gnomebase gtk-icon-cache gconf mime
 
 -  The ``meta/recipes-kernel/linux/linux-dtb.inc`` file has been
    removed. This file was previously deprecated in favor of setting

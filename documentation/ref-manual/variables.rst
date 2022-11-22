@@ -126,8 +126,7 @@ system and gives an overview of their function and contents.
       ":ref:`ref-classes-update-alternatives`" section.
 
    :term:`ANY_OF_DISTRO_FEATURES`
-      When inheriting the
-      :ref:`features_check <ref-classes-features_check>`
+      When inheriting the :ref:`features_check <ref-classes-features_check>`
       class, this variable identifies a list of distribution features where
       at least one must be enabled in the current configuration in order
       for the OpenEmbedded build system to build the recipe. In other words,
@@ -215,12 +214,11 @@ system and gives an overview of their function and contents.
 
       If you use the previous statement to retrieve the latest version of
       software, you need to be sure :term:`PV` contains
-      ``${``\ :term:`SRCPV`\ ``}``. For example, suppose you
-      have a kernel recipe that inherits the
-      :ref:`kernel <ref-classes-kernel>` class and you use the previous
-      statement. In this example, ``${SRCPV}`` does not automatically get
-      into :term:`PV`. Consequently, you need to change :term:`PV` in your recipe
-      so that it does contain ``${SRCPV}``.
+      ``${``\ :term:`SRCPV`\ ``}``. For example, suppose you have a kernel
+      recipe that inherits the :ref:`kernel <ref-classes-kernel>` class and you
+      use the previous statement. In this example, ``${SRCPV}`` does not
+      automatically get into :term:`PV`. Consequently, you need to change
+      :term:`PV` in your recipe so that it does contain ``${SRCPV}``.
 
       For more information see the
       ":ref:`dev-manual/common-tasks:automatically incrementing a package version number`"
@@ -3566,9 +3564,9 @@ system and gives an overview of their function and contents.
 
          IMGDEPLOYDIR = "${WORKDIR}/deploy-${PN}-image-complete"
 
-      Recipes inheriting the ``image`` class should copy files to be
-      deployed into :term:`IMGDEPLOYDIR`, and the class will take care of
-      copying them into :term:`DEPLOY_DIR_IMAGE` afterwards.
+      Recipes inheriting the :ref:`image <ref-classes-image>` class should copy
+      files to be deployed into :term:`IMGDEPLOYDIR`, and the class will take
+      care of copying them into :term:`DEPLOY_DIR_IMAGE` afterwards.
 
    :term:`INC_PR`
       Helps define the recipe revision for recipes that share a common
@@ -6542,8 +6540,7 @@ system and gives an overview of their function and contents.
       section.
 
    :term:`REQUIRED_DISTRO_FEATURES`
-      When inheriting the
-      :ref:`features_check <ref-classes-features_check>`
+      When inheriting the :ref:`features_check <ref-classes-features_check>`
       class, this variable identifies distribution features that must exist
       in the current configuration in order for the OpenEmbedded build
       system to build the recipe. In other words, if the

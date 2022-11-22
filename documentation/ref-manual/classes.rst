@@ -210,9 +210,8 @@ information.
 An alternative version of the :ref:`binconfig <ref-classes-binconfig>`
 class, which disables binary configuration scripts by making them return
 an error in favor of using ``pkg-config`` to query the information. The
-scripts to be disabled should be specified using the
-:term:`BINCONFIG` variable within the recipe inheriting
-the class.
+scripts to be disabled should be specified using the :term:`BINCONFIG`
+variable within the recipe inheriting the class.
 
 .. _ref-classes-buildhistory:
 
@@ -580,8 +579,7 @@ By default, the OpenEmbedded build system uses the :term:`S`
 and :term:`B` variables to locate unpacked recipe source code
 and to build it, respectively. When your recipe inherits the
 :ref:`externalsrc <ref-classes-externalsrc>` class, you use the
-:term:`EXTERNALSRC` and
-:term:`EXTERNALSRC_BUILD` variables to
+:term:`EXTERNALSRC` and :term:`EXTERNALSRC_BUILD` variables to
 ultimately define :term:`S` and :term:`B`.
 
 By default, this class expects the source code to support recipe builds
@@ -734,9 +732,9 @@ register and unregister the schemas in the target image.
 ``gettext.bbclass``
 ===================
 
-The :ref:`gettext <ref-classes-gettext>` class provides support for building software that uses
-the GNU ``gettext`` internationalization and localization system. All
-recipes building software that use ``gettext`` should inherit this
+The :ref:`gettext <ref-classes-gettext>` class provides support for building
+software that uses the GNU ``gettext`` internationalization and localization
+system. All recipes building software that use ``gettext`` should inherit this
 class.
 
 .. _ref-classes-github-releases:

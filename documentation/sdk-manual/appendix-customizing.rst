@@ -44,14 +44,13 @@ build system applies them against ``local.conf`` and ``auto.conf``:
    :term:`ESDK_LOCALCONF_ALLOW` overrides either of the previous two
    filters. The default value is blank.
 
--  Classes inherited globally with
-   :term:`INHERIT` that are listed in
-   :term:`ESDK_CLASS_INHERIT_DISABLE`
-   are disabled. Using :term:`ESDK_CLASS_INHERIT_DISABLE` to disable these
-   classes is the typical method to disable classes that are problematic
-   or unnecessary in the SDK context. The default value disables the
-   :ref:`buildhistory <ref-classes-buildhistory>`
-   and :ref:`icecc <ref-classes-icecc>` classes.
+-  Classes inherited globally with :term:`INHERIT` that are listed in
+   :term:`ESDK_CLASS_INHERIT_DISABLE` are disabled. Using
+   :term:`ESDK_CLASS_INHERIT_DISABLE` to disable these classes is the typical
+   method to disable classes that are problematic or unnecessary in the SDK
+   context. The default value disables the
+   :ref:`buildhistory <ref-classes-buildhistory>` and
+   :ref:`icecc <ref-classes-icecc>` classes.
 
 Additionally, the contents of ``conf/sdk-extra.conf``, when present, are
 appended to the end of ``conf/local.conf`` within the produced SDK,
