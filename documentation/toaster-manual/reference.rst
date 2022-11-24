@@ -65,7 +65,7 @@ layers.
 For general information on layers, see the
 ":ref:`overview-manual/yp-intro:the yocto project layer model`"
 section in the Yocto Project Overview and Concepts Manual. For information on how
-to create layers, see the ":ref:`dev-manual/common-tasks:understanding and creating layers`"
+to create layers, see the ":ref:`dev-manual/layers:understanding and creating layers`"
 section in the Yocto Project Development Tasks Manual.
 
 Configuring Toaster to Hook Into Your Layer Index

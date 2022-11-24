@@ -343,7 +343,7 @@ while ``file2.patch`` would not be applied.
 You can find out more about the patching process in the
 ":ref:`overview-manual/concepts:patching`" section in
 the Yocto Project Overview and Concepts Manual and the
-":ref:`dev-manual/common-tasks:patching code`" section in the
+":ref:`dev-manual/new-recipe:patching code`" section in the
 Yocto Project Development Tasks Manual.
 
 .. _ref-tasks-populate_lic:
@@ -522,7 +522,7 @@ scratch is guaranteed.
 Starts a shell in which an interactive Python interpreter allows you to
 interact with the BitBake build environment. From within this shell, you
 can directly examine and set bits from the data store and execute
-functions as if within the BitBake environment. See the ":ref:`dev-manual/common-tasks:using a Python development shell`" section in
+functions as if within the BitBake environment. See the ":ref:`dev-manual/python-development-shell:using a Python development shell`" section in
 the Yocto Project Development Tasks Manual for more information about
 using ``pydevshell``.
 
@@ -532,7 +532,7 @@ using ``pydevshell``.
 ---------------
 
 Starts a shell whose environment is set up for development, debugging,
-or both. See the ":ref:`dev-manual/common-tasks:using a development shell`" section in the
+or both. See the ":ref:`dev-manual/development-shell:using a development shell`" section in the
 Yocto Project Development Tasks Manual for more information about using
 ``devshell``.
 
@@ -595,7 +595,7 @@ information on how the root filesystem is created.
 
 Boots an image and performs runtime tests within the image. For
 information on automatically testing images, see the
-":ref:`dev-manual/common-tasks:performing automated runtime testing`"
+":ref:`dev-manual/runtime-testing:performing automated runtime testing`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _ref-tasks-testimage_auto:
@@ -608,7 +608,7 @@ after it has been built. This task is enabled when you set
 :term:`TESTIMAGE_AUTO` equal to "1".
 
 For information on automatically testing images, see the
-":ref:`dev-manual/common-tasks:performing automated runtime testing`"
+":ref:`dev-manual/runtime-testing:performing automated runtime testing`"
 section in the Yocto Project Development Tasks Manual.
 
 Kernel-Related Tasks

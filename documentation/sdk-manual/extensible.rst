@@ -652,7 +652,7 @@ counterparts.
    ``devtool upgrade``
    happens to be one. You can read about all the methods by which you
    can upgrade recipes in the
-   :ref:`dev-manual/common-tasks:upgrading recipes` section
+   :ref:`dev-manual/upgrading-recipes:upgrading recipes` section
    of the Yocto Project Development Tasks Manual.
 
 The ``devtool upgrade`` command is flexible enough to allow you to
@@ -1114,7 +1114,7 @@ links created within the source tree:
    -  ``sysroot-destdir/``: Contains a subset of files installed within
       :ref:`ref-tasks-install` that have been put into the shared sysroot. For
       more information, see the
-      ":ref:`dev-manual/common-tasks:sharing files between recipes`" section.
+      ":ref:`dev-manual/new-recipe:sharing files between recipes`" section.
 
    -  ``packages-split/``: Contains subdirectories for each package
       produced by the recipe. For more information, see the

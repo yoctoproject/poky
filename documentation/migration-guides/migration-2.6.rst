@@ -367,7 +367,7 @@ Any failure of a ``pkg_postinst()`` script (including exit 1) triggers
 an error during the :ref:`ref-tasks-rootfs` task.
 
 For more information on post-installation behavior, see the
-":ref:`dev-manual/common-tasks:post-installation scripts`"
+":ref:`dev-manual/new-recipe:post-installation scripts`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _migration-2.6-python-3-profile-guided-optimizations:

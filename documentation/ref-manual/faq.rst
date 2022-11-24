@@ -291,7 +291,7 @@ How do I make the Yocto Project support my board?
 Support for an additional board is added by creating a Board
 Support Package (BSP) layer for it. For more information on how to
 create a BSP layer, see the
-":ref:`dev-manual/common-tasks:understanding and creating layers`"
+":ref:`dev-manual/layers:understanding and creating layers`"
 section in the Yocto Project Development Tasks Manual and the
 :doc:`/bsp-guide/index`.
 
@@ -303,7 +303,7 @@ How do I make the Yocto Project support my package?
 
 To add a package, you need to create a BitBake recipe. For
 information on how to create a BitBake recipe, see the
-":ref:`dev-manual/common-tasks:writing a new recipe`"
+":ref:`dev-manual/new-recipe:writing a new recipe`"
 section in the Yocto Project Development Tasks Manual.
 
 What do I need to ship for license compliance?
@@ -320,7 +320,7 @@ configured and built.
 You can find more information on licensing in the
 ":ref:`overview-manual/development-environment:licensing`"
 section in the Yocto Project Overview and Concepts Manual and also in the
-":ref:`dev-manual/common-tasks:maintaining open source license compliance during your product's lifecycle`"
+":ref:`dev-manual/licenses:maintaining open source license compliance during your product's lifecycle`"
 section in the Yocto Project Development Tasks Manual.
 
 Do I have to make a full reflash after recompiling one package?

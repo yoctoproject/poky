@@ -223,7 +223,7 @@ particular working environment and set of practices.
     -  Maintain your Metadata in layers that make sense for your
        situation. See the ":ref:`overview-manual/yp-intro:the yocto project layer model`"
        section in the Yocto Project Overview and Concepts Manual and the
-       ":ref:`dev-manual/common-tasks:understanding and creating layers`"
+       ":ref:`dev-manual/layers:understanding and creating layers`"
        section for more information on layers.
 
     -  Separate the project's Metadata and code by using separate Git
@@ -247,13 +247,13 @@ particular working environment and set of practices.
        project to fix bugs or add features. If you do submit patches,
        follow the project commit guidelines for writing good commit
        messages. See the
-       ":ref:`dev-manual/common-tasks:submitting a change to the yocto project`"
+       ":ref:`dev-manual/changes:submitting a change to the yocto project`"
        section.
 
     -  Send changes to the core sooner than later as others are likely
        to run into the same issues. For some guidance on mailing lists
        to use, see the list in the
-       ":ref:`dev-manual/common-tasks:submitting a change to the yocto project`"
+       ":ref:`dev-manual/changes:submitting a change to the yocto project`"
        section. For a description
        of the available mailing lists, see the ":ref:`resources-mailinglist`" section in
        the Yocto Project Reference Manual.

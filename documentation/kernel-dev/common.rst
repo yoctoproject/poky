@@ -97,13 +97,13 @@ section:
 
       For background information on working with common and BSP layers,
       see the
-      ":ref:`dev-manual/common-tasks:understanding and creating layers`"
+      ":ref:`dev-manual/layers:understanding and creating layers`"
       section in the Yocto Project Development Tasks Manual and the
       ":ref:`bsp-guide/bsp:bsp layers`" section in the Yocto Project Board
       Support (BSP) Developer's Guide, respectively. For information on how to
       use the ``bitbake-layers create-layer`` command to quickly set up a layer,
       see the
-      ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
+      ":ref:`dev-manual/layers:creating a general layer using the \`\`bitbake-layers\`\` script`"
       section in the Yocto Project Development Tasks Manual.
 
 4. *Inform the BitBake Build Environment About Your Layer:* As directed
@@ -213,13 +213,13 @@ section:
 
       For background information on working with common and BSP layers,
       see the
-      ":ref:`dev-manual/common-tasks:understanding and creating layers`"
+      ":ref:`dev-manual/layers:understanding and creating layers`"
       section in the Yocto Project Development Tasks Manual and the
       ":ref:`bsp-guide/bsp:bsp layers`" section in the Yocto Project Board
       Support (BSP) Developer's Guide, respectively. For information on how to
       use the ``bitbake-layers create-layer`` command to quickly set up a layer,
       see the
-      ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
+      ":ref:`dev-manual/layers:creating a general layer using the \`\`bitbake-layers\`\` script`"
       section in the Yocto Project Development Tasks Manual.
 
 4. *Inform the BitBake Build Environment About Your Layer:* As directed
@@ -299,7 +299,7 @@ layer contains its own :term:`BitBake`
 append files (``.bbappend``) and provides a convenient mechanism to
 create your own recipe files (``.bb``) as well as store and use kernel
 patch files. For background information on working with layers, see the
-":ref:`dev-manual/common-tasks:understanding and creating layers`"
+":ref:`dev-manual/layers:understanding and creating layers`"
 section in the Yocto Project Development Tasks Manual.
 
 .. note::
@@ -307,7 +307,7 @@ section in the Yocto Project Development Tasks Manual.
    The Yocto Project comes with many tools that simplify tasks you need
    to perform. One such tool is the ``bitbake-layers create-layer``
    command, which simplifies creating a new layer. See the
-   ":ref:`dev-manual/common-tasks:creating a general layer using the \`\`bitbake-layers\`\` script`"
+   ":ref:`dev-manual/layers:creating a general layer using the \`\`bitbake-layers\`\` script`"
    section in the Yocto Project Development Tasks Manual for
    information on how to use this script to quick set up a new layer.
 
@@ -360,7 +360,7 @@ home directory:
    The :term:`FILESEXTRAPATHS` and :term:`SRC_URI` statements
    enable the OpenEmbedded build system to find patch files. For more
    information on using append files, see the
-   ":ref:`dev-manual/common-tasks:appending other layers metadata with your layer`"
+   ":ref:`dev-manual/layers:appending other layers metadata with your layer`"
    section in the Yocto Project Development Tasks Manual.
 
 Modifying an Existing Recipe
@@ -1002,7 +1002,7 @@ Section.
    For more information on append files and patches, see the
    ":ref:`kernel-dev/common:creating the append file`" and
    ":ref:`kernel-dev/common:applying patches`" sections. You can also see the
-   ":ref:`dev-manual/common-tasks:appending other layers metadata with your layer`"
+   ":ref:`dev-manual/layers:appending other layers metadata with your layer`"
    section in the Yocto Project Development Tasks Manual.
 
    .. note::

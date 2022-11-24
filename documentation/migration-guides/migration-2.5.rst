@@ -264,7 +264,7 @@ The following are additional changes:
    will trigger a warning during :ref:`ref-tasks-rootfs`.
 
    For more information, see the
-   ":ref:`dev-manual/common-tasks:post-installation scripts`"
+   ":ref:`dev-manual/new-recipe:post-installation scripts`"
    section in the Yocto Project Development Tasks Manual.
 
 -  The ``elf`` image type has been removed. This image type was removed
