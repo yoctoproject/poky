@@ -9,7 +9,8 @@ each software component are all identified (see
 fixes are applied (see ":ref:`dev-manual/vulnerabilities:checking
 for vulnerabilities`"), the OpenEmbedded build system can generate
 a description of all the components you used, their licenses, their dependencies,
-the changes that were applied and the known vulnerabilities that were fixed.
+their sources, the changes that were applied to them and the known
+vulnerabilities that were fixed.
 
 This description is generated in the form of a *Software Bill of Materials*
 (:term:`SBOM`), using the :term:`SPDX` standard.
@@ -42,9 +43,9 @@ The :ref:`create-spdx <ref-classes-create-spdx>` class offers options to include
 more information in the output :term:`SPDX` data, such as making the generated
 files more human readable (:term:`SPDX_PRETTY`), adding compressed archives of
 the files in the generated target packages (:term:`SPDX_ARCHIVE_PACKAGED`),
-adding a description of the source files handled by the target recipes
-(:term:`SPDX_INCLUDE_SOURCES`) and adding archives of these source files
-themselves (:term:`SPDX_ARCHIVE_SOURCES`).
+adding a description of the source files used to generate host tools and target
+packages (:term:`SPDX_INCLUDE_SOURCES`) and adding archives of these source
+files themselves (:term:`SPDX_ARCHIVE_SOURCES`).
 
 Though the toplevel :term:`SPDX` output is available in
 ``tmp/deploy/images/MACHINE/`` inside the :term:`Build Directory`, ancillary
