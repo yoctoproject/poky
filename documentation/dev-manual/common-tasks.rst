@@ -8902,21 +8902,21 @@ You can start the tests automatically or manually:
 
       bitbake -c testimage image
 
-All test files reside in ``meta/lib/oeqa/runtime`` in the
+All test files reside in ``meta/lib/oeqa/runtime/cases`` in the
 :term:`Source Directory`. A test name maps
 directly to a Python module. Each test module may contain a number of
 individual tests. Tests are usually grouped together by the area tested
-(e.g tests for systemd reside in ``meta/lib/oeqa/runtime/systemd.py``).
+(e.g tests for systemd reside in ``meta/lib/oeqa/runtime/cases/systemd.py``).
 
 You can add tests to any layer provided you place them in the proper
 area and you extend :term:`BBPATH` in
 the ``local.conf`` file as normal. Be sure that tests reside in
-``layer/lib/oeqa/runtime``.
+``layer/lib/oeqa/runtime/cases``.
 
 .. note::
 
    Be sure that module names do not collide with module names used in
-   the default set of test modules in ``meta/lib/oeqa/runtime``.
+   the default set of test modules in ``meta/lib/oeqa/runtime/cases``.
 
 You can change the set of tests run by appending or overriding
 :term:`TEST_SUITES` variable in
@@ -9009,7 +9009,7 @@ Writing New Tests
 As mentioned previously, all new test files need to be in the proper
 place for the build system to find them. New tests for additional
 functionality outside of the core should be added to the layer that adds
-the functionality, in ``layer/lib/oeqa/runtime`` (as long as
+the functionality, in ``layer/lib/oeqa/runtime/cases`` (as long as
 :term:`BBPATH` is extended in the
 layer's ``layer.conf`` file as normal). Just remember the following:
 
