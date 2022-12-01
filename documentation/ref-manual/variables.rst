@@ -353,6 +353,18 @@ system and gives an overview of their function and contents.
       host listed in :term:`SRC_URI` after a successful fetch from the
       :term:`PREMIRRORS` occurs.
 
+   :term:`BB_BASEHASH_IGNORE_VARS`
+      See :term:`bitbake:BB_BASEHASH_IGNORE_VARS` in the BitBake manual.
+
+   :term:`BB_CHECK_SSL_CERTS`
+      See :term:`bitbake:BB_CHECK_SSL_CERTS` in the BitBake manual.
+
+   :term:`BB_CONSOLELOG`
+      See :term:`bitbake:BB_CONSOLELOG` in the BitBake manual.
+
+   :term:`BB_CURRENTTASK`
+      See :term:`bitbake:BB_CURRENTTASK` in the BitBake manual.
+
    :term:`BB_DANGLINGAPPENDS_WARNONLY`
       Defines how BitBake handles situations where an append file
       (``.bbappend``) has no corresponding recipe file (``.bb``). This
@@ -370,6 +382,12 @@ system and gives an overview of their function and contents.
       :term:`Build Directory`: Here is an example::
 
          BB_DANGLINGAPPENDS_WARNONLY = "1"
+
+   :term:`BB_DEFAULT_TASK`
+      See :term:`bitbake:BB_DEFAULT_TASK` in the BitBake manual.
+
+   :term:`BB_DEFAULT_UMASK`
+      See :term:`bitbake:BB_DEFAULT_UMASK` in the BitBake manual.
 
    :term:`BB_DISKMON_DIRS`
       Monitors disk space and available inodes during the build and allows
@@ -492,6 +510,18 @@ system and gives an overview of their function and contents.
       a respective interval is reached beyond the initial warning (i.e. 1
       Gbytes and 100 Kbytes).
 
+   :term:`BB_ENV_PASSTHROUGH`
+      See :term:`bitbake:BB_ENV_PASSTHROUGH` in the BitBake manual.
+
+   :term:`BB_ENV_PASSTHROUGH_ADDITIONS`
+      See :term:`bitbake:BB_ENV_PASSTHROUGH_ADDITIONS` in the BitBake manual.
+
+   :term:`BB_FETCH_PREMIRRORONLY`
+      See :term:`bitbake:BB_FETCH_PREMIRRORONLY` in the BitBake manual.
+
+   :term:`BB_FILENAME`
+      See :term:`bitbake:BB_FILENAME` in the BitBake manual.
+
    :term:`BB_GENERATE_MIRROR_TARBALLS`
       Causes tarballs of the source control repositories (e.g. Git
       repositories), including metadata, to be placed in the
@@ -510,6 +540,48 @@ system and gives an overview of their function and contents.
       Once you have the tarballs containing your source files, you can
       clean up your :term:`DL_DIR` directory by deleting any Git or other
       source control work directories.
+
+   :term:`BB_GENERATE_SHALLOW_TARBALLS`
+      See :term:`bitbake:BB_GENERATE_SHALLOW_TARBALLS` in the BitBake manual.
+
+   :term:`BB_GIT_SHALLOW`
+      See :term:`bitbake:BB_GIT_SHALLOW` in the BitBake manual.
+
+   :term:`BB_GIT_SHALLOW_DEPTH`
+      See :term:`bitbake:BB_GIT_SHALLOW_DEPTH` in the BitBake manual.
+
+   :term:`BB_HASHCHECK_FUNCTION`
+      See :term:`bitbake:BB_HASHCHECK_FUNCTION` in the BitBake manual.
+
+   :term:`BB_HASHCONFIG_IGNORE_VARS`
+      See :term:`bitbake:BB_HASHCONFIG_IGNORE_VARS` in the BitBake manual.
+
+   :term:`BB_HASHSERVE`
+      See :term:`bitbake:BB_HASHSERVE` in the BitBake manual.
+
+   :term:`BB_HASHSERVE_UPSTREAM`
+      See :term:`bitbake:BB_HASHSERVE_UPSTREAM` in the BitBake manual.
+
+   :term:`BB_INVALIDCONF`
+      See :term:`bitbake:BB_INVALIDCONF` in the BitBake manual.
+
+   :term:`BB_LOGCONFIG`
+      See :term:`bitbake:BB_LOGCONFIG` in the BitBake manual.
+
+   :term:`BB_LOGFMT`
+      See :term:`bitbake:BB_LOGFMT` in the BitBake manual.
+
+   :term:`BB_MULTI_PROVIDER_ALLOWED`
+      See :term:`bitbake:BB_MULTI_PROVIDER_ALLOWED` in the BitBake manual.
+
+   :term:`BB_NICE_LEVEL`
+      See :term:`bitbake:BB_NICE_LEVEL` in the BitBake manual.
+
+   :term:`BB_NO_NETWORK`
+      See :term:`bitbake:BB_NO_NETWORK` in the BitBake manual.
+
+   :term:`BB_NUMBER_PARSE_THREADS`
+      See :term:`bitbake:BB_NUMBER_PARSE_THREADS` in the BitBake manual.
 
    :term:`BB_NUMBER_THREADS`
       The maximum number of tasks BitBake should run in parallel at any one
@@ -556,6 +628,33 @@ system and gives an overview of their function and contents.
       tasks already being run from using all CPU threads on the system
       if :term:`PARALLEL_MAKE` is not set to a low value.
 
+   :term:`BB_ORIGENV`
+      See :term:`bitbake:BB_ORIGENV` in the BitBake manual.
+
+   :term:`BB_PRESERVE_ENV`
+      See :term:`bitbake:BB_PRESERVE_ENV` in the BitBake manual.
+
+   :term:`BB_PRESSURE_MAX_CPU`
+      See :term:`bitbake:BB_PRESSURE_MAX_CPU` in the BitBake manual.
+
+   :term:`BB_PRESSURE_MAX_IO`
+      See :term:`bitbake:BB_PRESSURE_MAX_IO` in the BitBake manual.
+
+   :term:`BB_PRESSURE_MAX_MEMORY`
+      See :term:`bitbake:BB_PRESSURE_MAX_MEMORY` in the BitBake manual.
+
+   :term:`BB_RUNFMT`
+      See :term:`bitbake:BB_RUNFMT` in the BitBake manual.
+
+   :term:`BB_RUNTASK`
+      See :term:`bitbake:BB_RUNTASK` in the BitBake manual.
+
+   :term:`BB_SCHEDULER`
+      See :term:`bitbake:BB_SCHEDULER` in the BitBake manual.
+
+   :term:`BB_SCHEDULERS`
+      See :term:`bitbake:BB_SCHEDULERS` in the BitBake manual.
+
    :term:`BB_SERVER_TIMEOUT`
       Specifies the time (in seconds) after which to unload the BitBake
       server due to inactivity. Set :term:`BB_SERVER_TIMEOUT` to determine how
@@ -568,6 +667,36 @@ system and gives an overview of their function and contents.
 
       If you want the server to never be unloaded,
       set :term:`BB_SERVER_TIMEOUT` to "-1".
+
+   :term:`BB_SETSCENE_DEPVALID`
+      See :term:`bitbake:BB_SETSCENE_DEPVALID` in the BitBake manual.
+
+   :term:`BB_SIGNATURE_EXCLUDE_FLAGS`
+      See :term:`bitbake:BB_SIGNATURE_EXCLUDE_FLAGS` in the BitBake manual.
+
+   :term:`BB_SIGNATURE_HANDLER`
+      See :term:`bitbake:BB_SIGNATURE_HANDLER` in the BitBake manual.
+
+   :term:`BB_SRCREV_POLICY`
+      See :term:`bitbake:BB_SRCREV_POLICY` in the BitBake manual.
+
+   :term:`BB_STRICT_CHECKSUM`
+      See :term:`bitbake:BB_STRICT_CHECKSUM` in the BitBake manual.
+
+   :term:`BB_TASK_IONICE_LEVEL`
+      See :term:`bitbake:BB_TASK_IONICE_LEVEL` in the BitBake manual.
+
+   :term:`BB_TASK_NICE_LEVEL`
+      See :term:`bitbake:BB_TASK_NICE_LEVEL` in the BitBake manual.
+
+   :term:`BB_TASKHASH`
+      See :term:`bitbake:BB_TASKHASH` in the BitBake manual.
+
+   :term:`BB_VERBOSE_LOGS`
+      See :term:`bitbake:BB_VERBOSE_LOGS` in the BitBake manual.
+
+   :term:`BB_WORKERCONTEXT`
+      See :term:`bitbake:BB_WORKERCONTEXT` in the BitBake manual.
 
    :term:`BBCLASSEXTEND`
       Allows you to extend a recipe so that it builds variants of the
@@ -598,6 +727,9 @@ system and gives an overview of their function and contents.
          possible to include a different file depending on the variant,
          since ``include`` statements are processed when the recipe is
          parsed.
+
+   :term:`BBDEBUG`
+      See :term:`bitbake:BBDEBUG` in the BitBake manual.
 
    :term:`BBFILE_COLLECTIONS`
       Lists the names of configured layers. These names are used to find
@@ -674,6 +806,9 @@ system and gives an overview of their function and contents.
              /work/my-layer/bbappends/meta-security-isafw/*/*/*.bbappend
              /work/my-layer/bbappends/openembedded-core/meta/*/*/*.bbappend
 
+   :term:`BBINCLUDED`
+      See :term:`bitbake:BBINCLUDED` in the BitBake manual.
+
    :term:`BBINCLUDELOGS`
       Variable that controls how BitBake displays logs on build failure.
 
@@ -697,6 +832,9 @@ system and gives an overview of their function and contents.
 
       This example enables four layers, one of which is a custom,
       user-defined layer named ``meta-mykernel``.
+
+   :term:`BBLAYERS_FETCH_DIR`
+      See :term:`bitbake:BBLAYERS_FETCH_DIR` in the BitBake manual.
 
    :term:`BBMASK`
       Prevents BitBake from processing recipes and recipe append files.
@@ -754,6 +892,9 @@ system and gives an overview of their function and contents.
       ":ref:`dev-manual/building:building images for multiple targets using multiple configurations`"
       section in the Yocto Project Development Tasks Manual.
 
+   :term:`BBPATH`
+      See :term:`bitbake:BBPATH` in the BitBake manual.
+
    :term:`BBSERVER`
       If defined in the BitBake environment, :term:`BBSERVER` points to the
       BitBake remote server.
@@ -766,6 +907,9 @@ system and gives an overview of their function and contents.
       By default, :term:`BBSERVER` also appears in :term:`BB_BASEHASH_IGNORE_VARS`.
       Consequently, :term:`BBSERVER` is excluded from checksum and dependency
       data.
+
+   :term:`BBTARGETS`
+      See :term:`bitbake:BBTARGETS` in the BitBake manual.
 
    :term:`BINCONFIG`
       When inheriting the
@@ -803,6 +947,9 @@ system and gives an overview of their function and contents.
       You can also find general
       information on the class in the
       ":ref:`ref-classes-binconfig`" section.
+
+   :term:`BITBAKE_UI`
+      See :term:`bitbake:BITBAKE_UI` in the BitBake manual.
 
    :term:`BP`
       The base recipe name and version but without any special recipe name
@@ -1051,6 +1198,9 @@ system and gives an overview of their function and contents.
 
          BUILDHISTORY_PUSH_REPO ?= ""
 
+   :term:`BUILDNAME`
+      See :term:`bitbake:BUILDNAME` in the BitBake manual.
+
    :term:`BUILDSDK_CFLAGS`
       Specifies the flags to pass to the C compiler when building for the
       SDK. When building in the ``nativesdk-`` context,
@@ -1091,6 +1241,9 @@ system and gives an overview of their function and contents.
       The :term:`BUSYBOX_SPLIT_SUID` variable defaults to "1", which results in
       splitting the output executable file. Set the variable to "0" to get
       a single output executable file.
+
+   :term:`BZRDIR`
+      See :term:`bitbake:BZRDIR` in the BitBake manual.
 
    :term:`CACHE`
       Specifies the directory BitBake uses to store a cache of the
@@ -2461,6 +2614,24 @@ system and gives an overview of their function and contents.
 
          EXTRANATIVEPATH = "foo bar"
 
+   :term:`FAKEROOT`
+      See :term:`bitbake:FAKEROOT` in the BitBake manual.
+
+   :term:`FAKEROOTBASEENV`
+      See :term:`bitbake:FAKEROOTBASEENV` in the BitBake manual.
+
+   :term:`FAKEROOTCMD`
+      See :term:`bitbake:FAKEROOTCMD` in the BitBake manual.
+
+   :term:`FAKEROOTDIRS`
+      See :term:`bitbake:FAKEROOTDIRS` in the BitBake manual.
+
+   :term:`FAKEROOTENV`
+      See :term:`bitbake:FAKEROOTENV` in the BitBake manual.
+
+   :term:`FAKEROOTNOENV`
+      See :term:`bitbake:FAKEROOTNOENV` in the BitBake manual.
+
    :term:`FEATURE_PACKAGES`
       Defines one or more packages to include in an image when a specific
       item is included in :term:`IMAGE_FEATURES`.
@@ -2495,6 +2666,12 @@ system and gives an overview of their function and contents.
       document-root. In this case, the OpenEmbedded build system generates
       a set of configuration files for you in your target that work with
       the feed.
+
+   :term:`FETCHCMD`
+      See :term:`bitbake:FETCHCMD` in the BitBake manual.
+
+   :term:`FILE`
+      See :term:`bitbake:FILE` in the BitBake manual.
 
    :term:`FILES`
       The list of files and directories that are placed in a package. The
@@ -2902,6 +3079,9 @@ system and gives an overview of their function and contents.
       this variable specifies the packages that contain the GTK+ input
       method modules being installed when the modules are in packages other
       than the main package.
+
+   :term:`HGDIR`
+      See :term:`bitbake:HGDIR` in the BitBake manual.
 
    :term:`HOMEPAGE`
       Website where more information about the software the recipe is
@@ -4456,6 +4636,9 @@ system and gives an overview of their function and contents.
       available outside of ``layer.conf`` and references are expanded
       immediately when parsing of the file completes.
 
+   :term:`LAYERDIR_RE`
+      See :term:`bitbake:LAYERDIR_RE` in the BitBake manual.
+
    :term:`LAYERRECOMMENDS`
       Lists the layers, separated by spaces, recommended for use with this
       layer.
@@ -5349,6 +5532,9 @@ system and gives an overview of their function and contents.
 
          ${PN}-${PV}
 
+   :term:`P4DIR`
+      See :term:`bitbake:P4DIR` in the BitBake manual.
+
    :term:`PACKAGE_ADD_METADATA`
       This variable defines additional metadata to add to packages.
 
@@ -5915,6 +6101,9 @@ system and gives an overview of their function and contents.
       denotes the path to ``dist/`` (short for distribution) where the
       binary archive ``wheel`` is built.
 
+   :term:`PERSISTENT_DIR`
+      See :term:`bitbake:PERSISTENT_DIR` in the BitBake manual.
+
    :term:`PF`
       Specifies the recipe or package name and includes all version and
       revision numbers (i.e. ``glibc-2.13-r20+svnr15508/`` and
@@ -6117,6 +6306,9 @@ system and gives an overview of their function and contents.
          by :term:`PREFERRED_PROVIDER` is prevented from building, which is usually
          desirable since this mechanism is designed to select between mutually
          exclusive alternative providers.
+
+   :term:`PREFERRED_PROVIDERS`
+      See :term:`bitbake:PREFERRED_PROVIDERS` in the BitBake manual.
 
    :term:`PREFERRED_VERSION`
       If there are multiple versions of a recipe available, this variable
@@ -6538,6 +6730,9 @@ system and gives an overview of their function and contents.
       ``devtool check-upgrade-status`` command to display it, as explained
       in the ":ref:`ref-manual/devtool-reference:checking on the upgrade status of a recipe`"
       section.
+
+   :term:`REPODIR`
+      See :term:`bitbake:REPODIR` in the BitBake manual.
 
    :term:`REQUIRED_DISTRO_FEATURES`
       When inheriting the :ref:`features_check <ref-classes-features_check>`
@@ -7444,6 +7639,9 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Board Support Package Developer's Guide
       for additional information.
 
+   :term:`SRCREV_FORMAT`
+      See :term:`bitbake:SRCREV_FORMAT` in the BitBake manual.
+
    :term:`SRC_URI`
 
       See the BitBake manual for the initial description for this variable:
@@ -7825,6 +8023,9 @@ system and gives an overview of their function and contents.
       :term:`PN`, :term:`EXTENDPE`,
       :term:`PV`, and :term:`PR` for related variable
       information.
+
+   :term:`STAMPCLEAN`
+      See :term:`bitbake:STAMPCLEAN` in the BitBake manual.
 
    :term:`STAMPS_DIR`
       Specifies the base directory in which the OpenEmbedded build system
@@ -8600,6 +8801,9 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Overview and Concepts Manual. For
       information on setting up a cross-development environment, see the
       :doc:`/sdk-manual/index` manual.
+
+   :term:`TOPDIR`
+      See :term:`bitbake:TOPDIR` in the BitBake manual.
 
    :term:`TRANSLATED_TARGET_ARCH`
       A sanitized version of :term:`TARGET_ARCH`. This
