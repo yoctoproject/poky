@@ -373,8 +373,26 @@ support.
 ``create-spdx.bbclass``
 =======================
 
-The :ref:`create-spdx <ref-classes-create-spdx>` class provides support for automatically creating
-SPDX SBoM documents based upon image and SDK contents.
+The :ref:`create-spdx <ref-classes-create-spdx>` class provides support for
+automatically creating :term:`SPDX` :term:`SBOM` documents based upon image
+and SDK contents.
+
+This class is meant to be inherited globally from a configuration file::
+
+   INHERIT += "create-spdx"
+
+The toplevel :term:`SPDX` output file is generated in JSON format as a
+``IMAGE-MACHINE.spdx.json`` file in ``tmp/deploy/images/MACHINE/`` inside the
+:term:`Build Directory`. There are other related files in the same directory,
+as well as in ``tmp/deploy/spdx``.
+
+The exact behaviour of this class, and the amount of output can be controlled
+by the :term:`SPDX_PRETTY`, :term:`SPDX_ARCHIVE_PACKAGED`,
+:term:`SPDX_ARCHIVE_SOURCES` and :term:`SPDX_INCLUDE_SOURCES` variables.
+
+See the description of these variables and the
+":ref:`dev-manual/common-tasks:creating a software bill of materials`"
+section in the Yocto Project Development Manual for more details.
 
 .. _ref-classes-cross:
 
