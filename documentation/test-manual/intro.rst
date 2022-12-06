@@ -512,14 +512,14 @@ workers, consider the following:
 
 **Running "cleanall" is not permitted.**
 
-This can delete files from DL_DIR which would potentially break other
-builds running in parallel. If this is required, DL_DIR must be set to
+This can delete files from :term:`DL_DIR` which would potentially break other
+builds running in parallel. If this is required, :term:`DL_DIR` must be set to
 an isolated directory.
 
 **Running "cleansstate" is not permitted.**
 
-This can delete files from SSTATE_DIR which would potentially break
-other builds running in parallel. If this is required, SSTATE_DIR must
+This can delete files from :term:`SSTATE_DIR` which would potentially break
+other builds running in parallel. If this is required, :term:`SSTATE_DIR` must
 be set to an isolated directory. Alternatively, you can use the "-f"
 option with the ``bitbake`` command to "taint" tasks by changing the
 sstate checksums to ensure sstate cache items will not be reused.

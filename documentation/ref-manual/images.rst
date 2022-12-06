@@ -20,7 +20,7 @@ image you want.
    file before using the BitBake command to build the minimal or base
    image::
 
-           1. Comment out the EXTRA_IMAGE_FEATURES line
+           1. Comment out the :term:`EXTRA_IMAGE_FEATURES` line
            2. Set INCOMPATIBLE_LICENSE = "GPL-3.0* LGPL-3.0* AGPL-3.0*"
 
 

@@ -3922,7 +3922,7 @@ system and gives an overview of their function and contents.
       This kind of mechanism is typically used for two reasons:
 
       -  For booting the same kernel binary on multiple systems requiring
-         different device drivers. The Initramfs image is then customized
+         different device drivers. The :term:`Initramfs` image is then customized
 	 for each type of system, to include the specific  kernel modules
          necessary to access the final root filesystem. This technique
 	 is used on all GNU / Linux distributions for desktops and servers.
@@ -6456,7 +6456,7 @@ system and gives an overview of their function and contents.
       .. note::
 
          A recipe's own recipe name (:term:`PN`) is always implicitly prepended
-         to `PROVIDES`, so while using "+=" in the above example may not be
+         to :term:`PROVIDES`, so while using "+=" in the above example may not be
          strictly necessary it is recommended to avoid confusion.
 
       In addition to providing recipes under alternate names, the
@@ -7772,7 +7772,7 @@ system and gives an overview of their function and contents.
       prevented the reuse of prebuilt artifacts stored in the Shared
       State Cache.
 
-      ``SSTATE_EXCLUDEDEPS_SYSROOT`` is evaluated as two regular
+      :term:`SSTATE_EXCLUDEDEPS_SYSROOT` is evaluated as two regular
       expressions of recipe and dependency to ignore. An example
       is the rule in :oe_git:`meta/conf/layer.conf </meta/conf/layer.conf>`::
 
@@ -8254,7 +8254,7 @@ system and gives an overview of their function and contents.
          SYSTEMD_SERVICE:${PN} = "connman.service"
 
       The package overrides that can be specified are directly related to the value of
-      term:`SYSTEMD_PACKAGES`. Overrides not included in term:`SYSTEMD_PACKAGES`
+      :term:`SYSTEMD_PACKAGES`. Overrides not included in :term:`SYSTEMD_PACKAGES`
       will be silently ignored.
 
    :term:`SYSVINIT_ENABLED_GETTYS`
@@ -8765,7 +8765,7 @@ system and gives an overview of their function and contents.
       :doc:`/sdk-manual/index` manual.
 
       Note that this variable applies to building an SDK, not an eSDK,
-      in which case the term:`TOOLCHAIN_HOST_TASK_ESDK` setting should be
+      in which case the :term:`TOOLCHAIN_HOST_TASK_ESDK` setting should be
       used instead.
 
    :term:`TOOLCHAIN_HOST_TASK_ESDK`
@@ -9417,7 +9417,7 @@ system and gives an overview of their function and contents.
       -  :term:`MULTIMACH_TARGET_SYS`: The target system identifier
       -  :term:`PN`: The recipe name
       -  :term:`EXTENDPE`: The epoch --- if :term:`PE` is not specified, which
-         is usually the case for most recipes, then `EXTENDPE` is blank.
+         is usually the case for most recipes, then :term:`EXTENDPE` is blank.
       -  :term:`PV`: The recipe version
       -  :term:`PR`: The recipe revision
 
@@ -9453,7 +9453,7 @@ system and gives an overview of their function and contents.
       On systems where many tasks run in parallel, setting a limit to this
       can be helpful in controlling system resource usage.
 
-    :term:`XZ_MEMLIMIT`
+   :term:`XZ_MEMLIMIT`
       Specifies the maximum memory the xz compression should use as a percentage
       of system memory. If unconstrained the xz compressor can use large amounts of
       memory and become problematic with parallelism elsewhere in the build.

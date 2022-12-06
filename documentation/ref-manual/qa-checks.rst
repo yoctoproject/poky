@@ -602,7 +602,7 @@ Errors and Warnings
 
     GitHub provides "archive" tarballs, however these can be re-generated
     on the fly and thus the file's signature will not necessarily match that
-    in the SRC_URI checksums in future leading to build failures. It is
+    in the :term:`SRC_URI` checksums in future leading to build failures. It is
     recommended that you use an official release tarball or switch to
     pulling the corresponding revision in the actual git repository instead.
 

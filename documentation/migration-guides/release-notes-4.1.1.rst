@@ -29,7 +29,7 @@ Fixes in Yocto-4.1.1
 -  bitbake: tests/fetch: Allow handling of a file:// url within a submodule
 -  bitbake: tests: bb.tests.fetch.URLHandle: add 2 new tests
 -  bitbake: utils/ply: Update md5 to better report errors with hashlib
--  bluez5: add dbus to RDEPENDS
+-  bluez5: add dbus to :term:`RDEPENDS`
 -  build-appliance-image: Update to langdale head revision
 -  buildconf: compare abspath
 -  buildtools-tarball: export certificates to python and curl
@@ -40,7 +40,7 @@ Fixes in Yocto-4.1.1
 -  dev-manual: common-tasks.rst: add reference to "do_clean" task
 -  dev-manual: common-tasks.rst: add reference to "do_listtasks" task
 -  docs: add support for langdale (4.1) release
--  dropbear: add pam to PACKAGECONFIG
+-  dropbear: add pam to :term:`PACKAGECONFIG`
 -  externalsrc.bbclass: fix git repo detection
 -  externalsrc.bbclass: Remove a trailing slash from ${B}
 -  externalsrc: move back to classes
@@ -56,7 +56,7 @@ Fixes in Yocto-4.1.1
 -  kern-tools: fix relative path processing
 -  kernel-fitimage: Use KERNEL_OUTPUT_DIR where appropriate
 -  kernel-yocto: improve fatal error messages of symbol_why.py
--  kernel: Clear SYSROOT_DIRS instead of replacing sysroot_stage_all
+-  kernel: Clear :term:`SYSROOT_DIRS` instead of replacing sysroot_stage_all
 -  libcap: upgrade 2.65 -> 2.66
 -  libical: upgrade 3.0.14 -> 3.0.15
 -  libksba: upgrade 1.6.0 -> 1.6.2
@@ -124,37 +124,37 @@ Fixes in Yocto-4.1.1
 -  poky.conf: remove Ubuntu 21.10
 -  populate_sdk_base: ensure ptest-pkgs pulls in ptest-runner
 -  psplash: add psplash-default in rdepends
--  qemu-native: Add PACKAGECONFIG option for jack
+-  qemu-native: Add :term:`PACKAGECONFIG` option for jack
 -  quilt: backport a patch to address grep 3.8 failures
 -  ref-manual/faq.rst: update references to products built with OE / Yocto Project
 -  ref-manual/variables.rst: clarify sentence
 -  ref-manual: add a note to ssh-server-dropbear feature
--  ref-manual: add CVE_CHECK_SHOW_WARNINGS
--  ref-manual: add CVE_DB_UPDATE_INTERVAL
--  ref-manual: add DEV_PKG_DEPENDENCY
--  ref-manual: add DISABLE_STATIC
--  ref-manual: add FIT_PAD_ALG
--  ref-manual: add KERNEL_DEPLOY_DEPEND
+-  ref-manual: add :term:`CVE_CHECK_SHOW_WARNINGS`
+-  ref-manual: add :term:`CVE_DB_UPDATE_INTERVAL`
+-  ref-manual: add :term:`DEV_PKG_DEPENDENCY`
+-  ref-manual: add :term:`DISABLE_STATIC`
+-  ref-manual: add :term:`FIT_PAD_ALG`
+-  ref-manual: add :term:`KERNEL_DEPLOY_DEPEND`
 -  ref-manual: add missing features
--  ref-manual: add MOUNT_BASE variable
+-  ref-manual: add :term:`MOUNT_BASE` variable
 -  ref-manual: add overlayfs class variables
--  ref-manual: add OVERLAYFS_ETC_EXPOSE_LOWER
--  ref-manual: add OVERLAYFS_QA_SKIP
+-  ref-manual: add :term:`OVERLAYFS_ETC_EXPOSE_LOWER`
+-  ref-manual: add :term:`OVERLAYFS_QA_SKIP`
 -  ref-manual: add previous overlayfs-etc variables
 -  ref-manual: add pypi class
--  ref-manual: add SDK_TOOLCHAIN_LANGS
+-  ref-manual: add :term:`SDK_TOOLCHAIN_LANGS`
 -  ref-manual: add section for create-spdx class
--  ref-manual: add serial-autologin-root to IMAGE_FEATURES documentation
--  ref-manual: add UBOOT_MKIMAGE_KERNEL_TYPE
--  ref-manual: add WATCHDOG_TIMEOUT to variable glossary
--  ref-manual: add WIRELESS_DAEMON
+-  ref-manual: add serial-autologin-root to :term:`IMAGE_FEATURES` documentation
+-  ref-manual: add :term:`UBOOT_MKIMAGE_KERNEL_TYPE`
+-  ref-manual: add :term:`WATCHDOG_TIMEOUT` to variable glossary
+-  ref-manual: add :term:`WIRELESS_DAEMON`
 -  ref-manual: classes.rst: add links to all references to a class
 -  ref-manual: complementary package installation recommends
--  ref-manual: correct default for BUILDHISTORY_COMMIT
+-  ref-manual: correct default for :term:`BUILDHISTORY_COMMIT`
 -  ref-manual: document new github-releases class
 -  ref-manual: expand documentation on image-buildinfo class
 -  ref-manual: faq.rst: reorganize into subsections, contents at top
--  ref-manual: remove reference to largefile in DISTRO_FEATURES
+-  ref-manual: remove reference to largefile in :term:`DISTRO_FEATURES`
 -  ref-manual: remove reference to testimage-auto class
 -  ref-manual: system-requirements: Ubuntu 22.04 now supported
 -  ref-manual: tasks.rst: add reference to the "do_image_complete" task
@@ -163,7 +163,7 @@ Fixes in Yocto-4.1.1
 -  ref-manual: tasks.rst: add reference to the "do_validate_branches" task
 -  ref-manual: tasks.rst: add references to the "do_cleansstate" task
 -  ref-manual: update buildpaths QA check documentation
--  ref-manual: update pypi documentation for CVE_PRODUCT default in 4.1
+-  ref-manual: update pypi documentation for :term:`CVE_PRODUCT` default in 4.1
 -  ref-manual: variables.rst: add reference to "do_populate_lic" task
 -  release-notes-4.1.rst remove bitbake-layers subcommand argument
 -  runqemu: Do not perturb script environment
@@ -183,8 +183,8 @@ Fixes in Yocto-4.1.1
 -  uboot-sign: Fix using wrong KEY_REQ_ARGS
 -  Update documentation for classes split
 -  vim: upgrade to 9.0.0820
--  vulkan-samples: add lfs=0 to SRC_URI to avoid git smudge errors in do_unpack
--  wic: honor the SOURCE_DATE_EPOCH in case of updated fstab
+-  vulkan-samples: add lfs=0 to :term:`SRC_URI` to avoid git smudge errors in do_unpack
+-  wic: honor the :term:`SOURCE_DATE_EPOCH` in case of updated fstab
 -  wic: swap partitions are not added to fstab
 -  wpebackend-fdo: upgrade 1.12.1 -> 1.14.0
 -  xserver-xorg: move some recommended dependencies in required

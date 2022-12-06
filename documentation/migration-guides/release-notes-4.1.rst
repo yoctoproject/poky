@@ -81,7 +81,7 @@ New Features / Enhancements in 4.1
    - linux-yocto: Enable mdio for qemu
    - linux-yocto/5.15: base: enable kernel crypto userspace API
    - kern-tools: allow 'y' or 'm' to avoid config audit warnings
-   - kernel-yocto.bbclass: say what SRC_URI entry is being dropped
+   - kernel-yocto.bbclass: say what :term:`SRC_URI` entry is being dropped
    - kernel.bbclass: Do not overwrite recipe's custom postinst
    - kmod: Enable xz support by default
    - Run depmod(wrapper) against each compiled kernel when multiple kernels are enabled
@@ -117,7 +117,7 @@ New Features / Enhancements in 4.1
      configuration to a ``write_ubi_config`` function that can be easily overridden
 
 - openssh: add support for config snippet includes to ssh and sshd
-- :ref:`create-spdx <ref-classes-create-spdx>`: Add ``SPDX_PRETTY`` option
+- :ref:`create-spdx <ref-classes-create-spdx>`: Add :term:`SPDX_PRETTY` option
 - wpa-supplicant: build static library if not disabled via :term:`DISABLE_STATIC`
 - wpa-supplicant: package dynamic modules
 - openssl: extract legacy provider module to a separate package
@@ -170,7 +170,7 @@ New Features / Enhancements in 4.1
 - meson: provide relocation script and native/cross wrappers also for meson-native
 - meson.bbclass: add cython binary to cross/native toolchain config
 - New ``musl-locales`` recipe to provide a limited set of locale data for musl based systems
-- gobject-introspection: use ``OBJDUMP`` environment variable so that objdump tool can be picked up from the environment
+- gobject-introspection: use :term:`OBJDUMP` environment variable so that objdump tool can be picked up from the environment
 - The Python ``zoneinfo`` module is now split out to its own ``python3-zoneinfo`` package.
 - busybox: added devmem 128-bit support
 - vim: split xxd out into its own package
@@ -211,7 +211,7 @@ Known Issues in 4.1
 Recipe License changes in 4.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following corrections have been made to the LICENSE values set by recipes:
+The following corrections have been made to the :term:`LICENSE` values set by recipes:
 
 - alsa-state: add GPL-2.0-or-later because of alsa-state-init file
 - git: add GPL-2.0-or-later & BSD-3-Clause & MIT & BSL-1.0 & LGPL-2.1-or-later due to embedded code

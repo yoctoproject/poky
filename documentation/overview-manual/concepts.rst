@@ -582,8 +582,7 @@ module.
 .. note::
 
    For information on how to have the OpenEmbedded build system generate
-   tarballs for Git repositories and place them in the
-   DL_DIR
+   tarballs for Git repositories and place them in the :term:`DL_DIR`
    directory, see the :term:`BB_GENERATE_MIRROR_TARBALLS`
    variable in the Yocto Project Reference Manual.
 
@@ -1122,8 +1121,7 @@ checksum <overview-manual/concepts:checksums (signatures)>`.
 
 .. note::
 
-   This naming scheme assumes that
-   BB_SIGNATURE_HANDLER
+   This naming scheme assumes that :term:`BB_SIGNATURE_HANDLER`
    is "OEBasicHash", which is almost always the case in current
    OpenEmbedded.
 

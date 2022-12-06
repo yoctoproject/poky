@@ -222,7 +222,7 @@ The following sanity check changes occurred.
 
    -  Github archive tarballs --- these are not guaranteed to be stable.
       Consequently, it is likely that the tarballs will be refreshed and
-      thus the SRC_URI checksums will fail to apply. It is recommended
+      thus the :term:`SRC_URI` checksums will fail to apply. It is recommended
       that you fetch either an official release tarball or a specific
       revision from the actual Git repository instead.
 

@@ -1395,12 +1395,12 @@ generation.
 ===========================
 
 The :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` class provides support to pack a kernel image,
-device trees, a U-boot script, a Initramfs bundle and a RAM disk
+device trees, a U-boot script, a :term:`Initramfs` bundle and a RAM disk
 into a single FIT image. In theory, a FIT image can support any number
-of kernels, U-boot scripts, Initramfs bundles, RAM disks and device-trees.
+of kernels, U-boot scripts, :term:`Initramfs` bundles, RAM disks and device-trees.
 However, :ref:`kernel-fitimage <ref-classes-kernel-fitimage>` currently only supports
 limited usecases: just one kernel image, an optional U-boot script,
-an optional Initramfs bundle, an optional RAM disk, and any number of
+an optional :term:`Initramfs` bundle, an optional RAM disk, and any number of
 device tree.
 
 To create a FIT image, it is required that :term:`KERNEL_CLASSES`
@@ -1431,14 +1431,14 @@ is specified by :term:`UBOOT_RD_LOADADDRESS` and the entrypoint by
 :term:`INITRAMFS_IMAGE` is specified and that :term:`INITRAMFS_IMAGE_BUNDLE`
 is set to 0.
 
-Only a single Initramfs bundle can be added to the FIT image created by
-:ref:`kernel-fitimage <ref-classes-kernel-fitimage>` and the Initramfs bundle in FIT is optional.
-In case of Initramfs, the kernel is configured to be bundled with the root filesystem
+Only a single :term:`Initramfs` bundle can be added to the FIT image created by
+:ref:`kernel-fitimage <ref-classes-kernel-fitimage>` and the :term:`Initramfs` bundle in FIT is optional.
+In case of :term:`Initramfs`, the kernel is configured to be bundled with the root filesystem
 in the same binary (example: zImage-initramfs-:term:`MACHINE`.bin).
-When the kernel is copied to RAM and executed, it unpacks the Initramfs root filesystem.
-The Initramfs bundle can be enabled when :term:`INITRAMFS_IMAGE`
+When the kernel is copied to RAM and executed, it unpacks the :term:`Initramfs` root filesystem.
+The :term:`Initramfs` bundle can be enabled when :term:`INITRAMFS_IMAGE`
 is specified and that :term:`INITRAMFS_IMAGE_BUNDLE` is set to 1.
-The address where the Initramfs bundle is to be loaded by U-boot is specified
+The address where the :term:`Initramfs` bundle is to be loaded by U-boot is specified
 by :term:`UBOOT_LOADADDRESS` and the entrypoint by :term:`UBOOT_ENTRYPOINT`.
 
 Only a single U-boot boot script can be added to the FIT image created by

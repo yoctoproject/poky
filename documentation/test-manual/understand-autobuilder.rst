@@ -170,7 +170,7 @@ the system can checkout repositories.
 Shared DL_DIR
 -------------
 
-The Workers are all connected over NFS which allows DL_DIR to be shared
+The Workers are all connected over NFS which allows :term:`DL_DIR` to be shared
 between them. This reduces network accesses from the system and allows
 the build to be sped up. Usage of the directory within the build system
 is designed to be able to be shared over NFS.

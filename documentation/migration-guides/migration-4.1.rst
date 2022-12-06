@@ -182,7 +182,7 @@ Miscellaneous changes
 - The Python ``zoneinfo`` module is now split out to its own ``python3-zoneinfo``
   package.
 - The :term:`PACKAGECONFIG` option to enable wpa_supplicant in the ``connman``
-  recipe has been renamed to "wpa-supplicant". If you have set PACKAGECONFIG for
+  recipe has been renamed to "wpa-supplicant". If you have set :term:`PACKAGECONFIG` for
   the ``connman`` recipe to include this option you will need to update
   your configuration. Related to this, the :term:`WIRELESS_DAEMON` variable
   now expects the new ``wpa-supplicant`` naming and affects ``packagegroup-base``

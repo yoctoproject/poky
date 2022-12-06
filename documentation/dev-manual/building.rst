@@ -138,7 +138,7 @@ Follow these steps to set up and execute multiple configuration builds:
    temporary directory (:term:`TMPDIR`) can be shared will depend on what is
    similar and what is different between the configurations. Multiple MACHINE
    targets can share the same (:term:`TMPDIR`) as long as the rest of the
-   configuration is the same, multiple DISTRO settings would need separate
+   configuration is the same, multiple :term:`DISTRO` settings would need separate
    (:term:`TMPDIR`) directories.
 
    For example, consider a scenario with two different multiconfigs for the same
@@ -273,12 +273,12 @@ loading modules needed to locate and mount the final root filesystem.
 
 Follow these steps to create an :term:`Initramfs` image:
 
-1. *Create the Initramfs Image Recipe:* You can reference the
+1. *Create the :term:`Initramfs` Image Recipe:* You can reference the
    ``core-image-minimal-initramfs.bb`` recipe found in the
    ``meta/recipes-core`` directory of the :term:`Source Directory`
    as an example from which to work.
 
-2. *Decide if You Need to Bundle the Initramfs Image Into the Kernel
+2. *Decide if You Need to Bundle the :term:`Initramfs` Image Into the Kernel
    Image:* If you want the :term:`Initramfs` image that is built to be bundled
    in with the kernel image, set the :term:`INITRAMFS_IMAGE_BUNDLE`
    variable to ``"1"`` in your ``local.conf`` configuration file and set the

@@ -220,7 +220,7 @@ The alternative to setting up a PR Service is to manually "bump" the
 :term:`PR` variable.
 
 If a committed change results in changing the package output, then the
-value of the PR variable needs to be increased (or "bumped") as part of
+value of the :term:`PR` variable needs to be increased (or "bumped") as part of
 that commit. For new recipes you should add the :term:`PR` variable and set
 its initial value equal to "r0", which is the default. Even though the
 default value is "r0", the practice of adding it to a new recipe makes

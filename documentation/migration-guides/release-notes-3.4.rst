@@ -38,7 +38,7 @@ New Features / Enhancements in 3.4
 
    -  Support zstd-compressed modules and :term:`Initramfs` images
    -  Allow opt-out of split kernel modules
-   -  linux-yocto-dev: base AUTOREV on specified version
+   -  linux-yocto-dev: base :term:`AUTOREV` on specified version
    -  kernel-yocto: provide debug / summary information for metadata
    -  kernel-uboot: Handle gzip and lzo compression options
    -  linux-yocto/5.14: added devupstream support
@@ -172,47 +172,47 @@ Known Issues in 3.4
 Recipe Licenses changes in 3.4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following corrections have been made to the LICENSE values set by recipes:
+The following corrections have been made to the :term:`LICENSE` values set by recipes:
 
--  acpica: correct LICENSE to "Intel | BSD-3-Clause | GPLv2"
--  dtc: correct LICENSE to "GPLv2 | BSD-2-Clause"
--  e2fsprogs: correct LICENSE to "GPLv2 & LGPLv2 & BSD-3-Clause & MIT"
--  ffmpeg: correct LICENSE to "GPLv2+ & LGPLv2.1+ & ISC & MIT & BSD-2-Clause & BSD-3-Clause & IJG"
--  flac: correct LICENSE to "GFDL-1.2 & GPLv2+ & LGPLv2.1+ & BSD-3-Clause"
--  flex: correct LICENSE to "BSD-3-Clause & LGPL-2.0+"
--  font-util: correct LICENSE to "MIT & MIT-style & BSD-4-Clause & BSD-2-Clause"
--  glib-2.0: correct LICENSE to "LGPLv2.1+ & BSD-3-Clause & PD"
--  gobject-introspection: correct LICENSE to "LGPLv2+ & GPLv2+ & MIT" (add MIT license)
--  hdparm: correct LICENSE to "BSD-2-Clause & GPLv2 & hdparm"
--  iputils: correct LICENSE to "BSD-3-Clause & GPLv2+"
--  libcap: correct LICENSE to "BSD-3-Clause | GPLv2"
--  libevent: correct LICENSE to "BSD-3-Clause & MIT"
--  libjitterentropy: correct LICENSE to "GPLv2+ | BSD-3-Clause"
--  libpam: correct LICENSE to "GPLv2+ | BSD-3-Clause"
--  libwpe: correct LICENSE to "BSD-2-Clause"
--  libx11-compose-data: correct LICENSE to "MIT & MIT-style & BSD-4-Clause & BSD-2-Clause"
--  libx11: correct LICENSE to "MIT & MIT-style & BSD-4-Clause & BSD-2-Clause"
--  libxfont2: correct LICENSE to "MIT & MIT-style & BSD-4-Clause & BSD-2-Clause"
--  libxfont: correct LICENSE to "MIT & MIT-style & BSD-3-Clause"
--  lsof: correct LICENSE to reflect that it uses a BSD-like (but not exactly BSD) license ("Spencer-94")
--  nfs-utils: correct LICENSE to "MIT & GPLv2+ & BSD-3-Clause"
+-  acpica: correct :term:`LICENSE` to "Intel | BSD-3-Clause | GPLv2"
+-  dtc: correct :term:`LICENSE` to "GPLv2 | BSD-2-Clause"
+-  e2fsprogs: correct :term:`LICENSE` to "GPLv2 & LGPLv2 & BSD-3-Clause & MIT"
+-  ffmpeg: correct :term:`LICENSE` to "GPLv2+ & LGPLv2.1+ & ISC & MIT & BSD-2-Clause & BSD-3-Clause & IJG"
+-  flac: correct :term:`LICENSE` to "GFDL-1.2 & GPLv2+ & LGPLv2.1+ & BSD-3-Clause"
+-  flex: correct :term:`LICENSE` to "BSD-3-Clause & LGPL-2.0+"
+-  font-util: correct :term:`LICENSE` to "MIT & MIT-style & BSD-4-Clause & BSD-2-Clause"
+-  glib-2.0: correct :term:`LICENSE` to "LGPLv2.1+ & BSD-3-Clause & PD"
+-  gobject-introspection: correct :term:`LICENSE` to "LGPLv2+ & GPLv2+ & MIT" (add MIT license)
+-  hdparm: correct :term:`LICENSE` to "BSD-2-Clause & GPLv2 & hdparm"
+-  iputils: correct :term:`LICENSE` to "BSD-3-Clause & GPLv2+"
+-  libcap: correct :term:`LICENSE` to "BSD-3-Clause | GPLv2"
+-  libevent: correct :term:`LICENSE` to "BSD-3-Clause & MIT"
+-  libjitterentropy: correct :term:`LICENSE` to "GPLv2+ | BSD-3-Clause"
+-  libpam: correct :term:`LICENSE` to "GPLv2+ | BSD-3-Clause"
+-  libwpe: correct :term:`LICENSE` to "BSD-2-Clause"
+-  libx11-compose-data: correct :term:`LICENSE` to "MIT & MIT-style & BSD-4-Clause & BSD-2-Clause"
+-  libx11: correct :term:`LICENSE` to "MIT & MIT-style & BSD-4-Clause & BSD-2-Clause"
+-  libxfont2: correct :term:`LICENSE` to "MIT & MIT-style & BSD-4-Clause & BSD-2-Clause"
+-  libxfont: correct :term:`LICENSE` to "MIT & MIT-style & BSD-3-Clause"
+-  lsof: correct :term:`LICENSE` to reflect that it uses a BSD-like (but not exactly BSD) license ("Spencer-94")
+-  nfs-utils: correct :term:`LICENSE` to "MIT & GPLv2+ & BSD-3-Clause"
 -  ovmf: correct license to "BSD-2-Clause-Patent"
--  ppp: correct LICENSE to "BSD-3-Clause & BSD-3-Clause-Attribution & GPLv2+ & LGPLv2+ & PD"
--  python3-packaging: correct LICENSE to "Apache-2.0 | BSD-2-Clause"
--  python-async-test: correct LICENSE to "BSD-3-Clause"
+-  ppp: correct :term:`LICENSE` to "BSD-3-Clause & BSD-3-Clause-Attribution & GPLv2+ & LGPLv2+ & PD"
+-  python3-packaging: correct :term:`LICENSE` to "Apache-2.0 | BSD-2-Clause"
+-  python-async-test: correct :term:`LICENSE` to "BSD-3-Clause"
 -  quota: remove BSD license (only BSD licensed part of the code was removed in 4.05)
--  shadow: correct LICENSE to "BSD-3-Clause | Artistic-1.0"
--  shadow-sysroot: set LICENSE the same as shadow
--  sudo: correct LICENSE to "ISC & BSD-3-Clause & BSD-2-Clause & Zlib"
--  swig: correct LICENSE to "BSD-3-Clause & GPLv3"
+-  shadow: correct :term:`LICENSE` to "BSD-3-Clause | Artistic-1.0"
+-  shadow-sysroot: set :term:`LICENSE` the same as shadow
+-  sudo: correct :term:`LICENSE` to "ISC & BSD-3-Clause & BSD-2-Clause & Zlib"
+-  swig: correct :term:`LICENSE` to "BSD-3-Clause & GPLv3"
 -  valgrind: correct license to "GPLv2 & GPLv2+ & BSD-3-Clause"
--  webkitgtk: correct LICENSE to "BSD-2-Clause & LGPLv2+"
--  wpebackend-fdo: correct LICENSE to "BSD-2-Clause"
--  xinetd: correct LICENSE to reflect that it uses a unique BSD-like (but not exactly BSD) license
+-  webkitgtk: correct :term:`LICENSE` to "BSD-2-Clause & LGPLv2+"
+-  wpebackend-fdo: correct :term:`LICENSE` to "BSD-2-Clause"
+-  xinetd: correct :term:`LICENSE` to reflect that it uses a unique BSD-like (but not exactly BSD) license
 
 Other license-related notes:
 
--  When creating recipes for Python software, recipetool will now treat "BSD" as "BSD-3-Clause" for the purposes of setting LICENSE, as that is the most common understanding.
+-  When creating recipes for Python software, recipetool will now treat "BSD" as "BSD-3-Clause" for the purposes of setting :term:`LICENSE`, as that is the most common understanding.
 -  Please be aware that an :term:`Initramfs` bundled with the kernel using :term:`INITRAMFS_IMAGE_BUNDLE` should only contain GPLv2-compatible software; this is now mentioned in the documentation.
 
 Security Fixes in 3.4

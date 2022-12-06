@@ -73,8 +73,7 @@ adjustments:
 
    .. note::
 
-      The default value of
-      ESDK_CLASS_INHERIT_DISABLE
+      The default value of :term:`ESDK_CLASS_INHERIT_DISABLE`
       is set using the "?=" operator. Consequently, you will need to
       either define the entire list by using the "=" operator, or you
       will need to append a value using either ":append" or the "+="
