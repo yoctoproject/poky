@@ -15,14 +15,26 @@ follows:
    ``bblayers.conf`` file through the
    :term:`BBLAYERS` variable.
 
--  Set the ``EXTERNAL_TOOLCHAIN`` variable in your ``local.conf`` file
+-  Set the :term:`EXTERNAL_TOOLCHAIN` variable in your ``local.conf`` file
    to the location in which you installed the toolchain.
 
-A good example of an external toolchain used with the Yocto Project is
-Mentor Graphics Sourcery G++ Toolchain. You can see information on how
-to use that particular layer in the ``README`` file at
-https://github.com/MentorEmbedded/meta-sourcery/. You can find
-further information by reading about the
-:term:`TCMODE` variable in the Yocto
-Project Reference Manual's variable glossary.
+The toolchain configuration is very flexible and customizable. It
+is primarily controlled with the :term:`TCMODE` variable. This variable
+controls which ``tcmode-*.inc`` file to include from the
+``meta/conf/distro/include`` directory within the :term:`Source Directory`.
 
+The default value of :term:`TCMODE` is "default", which tells the
+OpenEmbedded build system to use its internally built toolchain (i.e.
+``tcmode-default.inc``). However, other patterns are accepted. In
+particular, "external-\*" refers to external toolchains. One example is
+the Mentor Graphics Sourcery G++ Toolchain. Support for this toolchain resides
+in the separate ``meta-sourcery`` layer at
+https://github.com/MentorEmbedded/meta-sourcery/.
+See its ``README`` file for details about how to use this layer.
+
+Another example of external toolchain layer is
+:yocto_git:`meta-arm-toolchain </meta-arm/tree/meta-arm-toolchain/>`
+supporting GNU toolchains released by ARM.
+
+You can find further information by reading about the :term:`TCMODE` variable
+in the Yocto Project Reference Manual's variable glossary.

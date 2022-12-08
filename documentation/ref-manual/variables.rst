@@ -2417,6 +2417,12 @@ system and gives an overview of their function and contents.
       :ref:`kernel-yocto <ref-classes-kernel-yocto>` class in
       ``meta/classes-recipe`` to see how the variable is used.
 
+   :term:`EXTERNAL_TOOLCHAIN`
+      When you intend to use an
+      :ref:`external toolchain <dev-manual/external-toolchain:optionally using an external toolchain>`,
+      this variable allows to specify the directory where this toolchain was
+      installed.
+
    :term:`EXTERNALSRC`
       When inheriting the :ref:`externalsrc <ref-classes-externalsrc>`
       class, this variable points to the source tree, which is outside of
@@ -8475,15 +8481,19 @@ system and gives an overview of their function and contents.
       https://github.com/MentorEmbedded/meta-sourcery/.
 
       The layer's ``README`` file contains information on how to use the
-      Sourcery G++ Toolchain as an external toolchain. In summary, you must
-      be sure to add the layer to your ``bblayers.conf`` file in front of
-      the ``meta`` layer and then set the ``EXTERNAL_TOOLCHAIN`` variable
-      in your ``local.conf`` file to the location in which you installed
-      the toolchain.
+      Sourcery G++ Toolchain as an external toolchain. You will have to
+      add the layer to your ``bblayers.conf`` file and then set the
+      :term:`EXTERNAL_TOOLCHAIN` variable in your ``local.conf`` file to
+      the location of the toolchain.
 
       The fundamentals used for this example apply to any external
       toolchain. You can use ``meta-sourcery`` as a template for adding
       support for other external toolchains.
+
+      In addition to toolchain configuration, you will also need a
+      corresponding toolchain recipe file. This recipe file needs to package
+      up any pre-built objects in the toolchain such as ``libgcc``,
+      ``libstdcc++``, any locales, and ``libc``.
 
    :term:`TC_CXX_RUNTIME`
       Specifies the C/C++ STL and runtime variant to use during
