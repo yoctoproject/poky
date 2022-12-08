@@ -1,3 +1,5 @@
+.. SPDX-License-Identifier: CC-BY-SA-2.0-UK
+
 Releae notes for Yocto-4.0.4 (Kirkstone)
 -----------------------------------------
 

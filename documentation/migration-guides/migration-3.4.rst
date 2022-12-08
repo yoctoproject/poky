@@ -1,3 +1,5 @@
+.. SPDX-License-Identifier: CC-BY-SA-2.0-UK
+
 Migration notes for 3.4 (honister)
 ----------------------------------
 
