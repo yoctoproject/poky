@@ -109,8 +109,7 @@ Following are some syntax examples:
 
  - Use this syntax to generate a recipe using code that
    you extract from source. The extracted code is placed in its own layer
-   defined by :term:`EXTERNALSRC`.
-   ::
+   defined by :term:`EXTERNALSRC`::
 
       recipetool create -o OUTFILE -x EXTERNALSRC source
 
@@ -147,8 +146,7 @@ get started. Here are some points on both methods:
 -  *Use and modify the following skeleton recipe:* If for some reason
    you do not want to use ``recipetool`` and you cannot find an existing
    recipe that is close to meeting your needs, you can use the following
-   structure to provide the fundamental areas of a new recipe.
-   ::
+   structure to provide the fundamental areas of a new recipe::
 
       DESCRIPTION = ""
       HOMEPAGE = ""
@@ -347,9 +345,7 @@ paste them into your recipe and then run the build again to continue.
 This final example is a bit more complicated and is from the
 ``meta/recipes-sato/rxvt-unicode/rxvt-unicode_9.20.bb`` recipe. The
 example's :term:`SRC_URI` statement identifies multiple files as the source
-files for the recipe: a tarball, a patch file, a desktop file, and an
-icon.
-::
+files for the recipe: a tarball, a patch file, a desktop file, and an icon::
 
    SRC_URI = "http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-${PV}.tar.bz2 \
               file://xwc.patch \
@@ -1196,8 +1192,7 @@ under ``files``) requires a recipe that has the file listed in the
 :ref:`ref-tasks-compile` and :ref:`ref-tasks-install` tasks. The :term:`S` variable defines the
 directory containing the source code, which is set to
 :term:`WORKDIR` in this case --- the
-directory BitBake uses for the build.
-::
+directory BitBake uses for the build::
 
    SUMMARY = "Simple helloworld application"
    SECTION = "examples"
@@ -1233,8 +1228,7 @@ which contains the definitions of all the steps needed to build an
 Autotool-based application. The result of the build is automatically
 packaged. And, if the application uses NLS for localization, packages
 with local information are generated (one package per language).
-Following is one example: (``hello_2.3.bb``)
-::
+Following is one example: (``hello_2.3.bb``)::
 
    SUMMARY = "GNU Helloworld application"
    SECTION = "examples"

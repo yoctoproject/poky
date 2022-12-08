@@ -71,8 +71,7 @@ Disabling the Tool
 
 To disable the error reporting feature, simply remove or comment out the
 following statement from the end of your ``local.conf`` file in your
-:term:`Build Directory`.
-::
+:term:`Build Directory`::
 
    INHERIT += "report-error"
 

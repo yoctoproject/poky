@@ -250,8 +250,7 @@ system and gives an overview of their function and contents.
       Azure Storage Shared Access Signature, when using the
       :ref:`Azure Storage fetcher (az://) <bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers>`
       This variable can be defined to be used by the fetcher to authenticate
-      and gain access to non-public artifacts.
-      ::
+      and gain access to non-public artifacts::
 
          AZ_SAS = ""se=2021-01-01&sp=r&sv=2018-11-09&sr=c&skoid=<skoid>&sig=<signature>""
 
@@ -324,8 +323,7 @@ system and gives an overview of their function and contents.
 
       -  There is limited support for wildcard matching against the beginning of
          host names. For example, the following setting matches
-         ``git.gnu.org``, ``ftp.gnu.org``, and ``foo.git.gnu.org``.
-         ::
+         ``git.gnu.org``, ``ftp.gnu.org``, and ``foo.git.gnu.org``::
 
             BB_ALLOWED_NETWORKS = "*.gnu.org"
 
@@ -529,8 +527,7 @@ system and gives an overview of their function and contents.
 
       For performance reasons, creating and placing tarballs of these
       repositories is not the default action by the OpenEmbedded build
-      system.
-      ::
+      system::
 
          BB_GENERATE_MIRROR_TARBALLS = "1"
 
@@ -3020,8 +3017,7 @@ system and gives an overview of their function and contents.
          :term:`IMAGE_LINGUAS` appropriately.
 
       You can set :term:`GLIBC_GENERATE_LOCALES` in your ``local.conf`` file.
-      By default, all locales are generated.
-      ::
+      By default, all locales are generated::
 
          GLIBC_GENERATE_LOCALES = "en_GB.UTF-8 en_US.UTF-8"
 
@@ -5889,8 +5885,7 @@ system and gives an overview of their function and contents.
 
       Consider the following :term:`PACKAGECONFIG` block taken from the
       ``librsvg`` recipe. In this example the feature is ``gtk``, which has
-      three arguments that determine the feature's behavior.
-      ::
+      three arguments that determine the feature's behavior::
 
          PACKAGECONFIG[gtk] = "--with-gtk3,--without-gtk3,gtk+3"
 
@@ -7821,8 +7816,7 @@ system and gives an overview of their function and contents.
       If a mirror uses the same structure as
       :term:`SSTATE_DIR`, you need to add "PATH" at the
       end as shown in the examples below. The build system substitutes the
-      correct path within the directory structure.
-      ::
+      correct path within the directory structure::
 
          SSTATE_MIRRORS ?= "\
              file://.* https://someserver.tld/share/sstate/PATH;downloadfilename=PATH \
@@ -8616,8 +8610,7 @@ system and gives an overview of their function and contents.
 
       Alternatively, you can
       provide the "auto" option to have all applicable tests run against
-      the image.
-      ::
+      the image::
 
          TEST_SUITES:append = " auto"
 
@@ -9115,8 +9108,7 @@ system and gives an overview of their function and contents.
       releases are not identified by Git tags, set :term:`UPSTREAM_CHECK_COMMITS`
       to ``1`` in the recipe, and the OpenEmbedded build system
       will compare the latest commit with the one currently specified
-      by the recipe (:term:`SRCREV`).
-      ::
+      by the recipe (:term:`SRCREV`)::
 
          UPSTREAM_CHECK_COMMITS = "1"
 
@@ -9129,8 +9121,7 @@ system and gives an overview of their function and contents.
 
       You can use the :term:`UPSTREAM_CHECK_GITTAGREGEX` variable to provide a
       regular expression to filter only the relevant tags should the
-      default filter not work correctly.
-      ::
+      default filter not work correctly::
 
          UPSTREAM_CHECK_GITTAGREGEX = "git_tag_regex"
 
@@ -9138,8 +9129,7 @@ system and gives an overview of their function and contents.
       Use the :term:`UPSTREAM_CHECK_REGEX` variable to specify a different
       regular expression instead of the default one when the package
       checking system is parsing the page found using
-      :term:`UPSTREAM_CHECK_URI`.
-      ::
+      :term:`UPSTREAM_CHECK_URI`::
 
          UPSTREAM_CHECK_REGEX = "package_regex"
 
@@ -9150,8 +9140,7 @@ system and gives an overview of their function and contents.
       determined by fetching the directory listing where the tarball is and
       attempting to find a later tarball. When this approach does not work,
       you can use :term:`UPSTREAM_CHECK_URI` to provide a different URI that
-      contains the link to the latest tarball.
-      ::
+      contains the link to the latest tarball::
 
          UPSTREAM_CHECK_URI = "recipe_url"
 
@@ -9162,8 +9151,7 @@ system and gives an overview of their function and contents.
       :term:`UPSTREAM_CHECK_GITTAGREGEX` and :term:`UPSTREAM_CHECK_COMMITS` variables in
       the recipe allows to determine what the latest upstream version is,
       you can set :term:`UPSTREAM_VERSION_UNKNOWN` to ``1`` in the recipe
-      to acknowledge that the check cannot be performed.
-      ::
+      to acknowledge that the check cannot be performed::
 
          UPSTREAM_VERSION_UNKNOWN = "1"
 

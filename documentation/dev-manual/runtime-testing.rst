@@ -578,8 +578,7 @@ data:
 
 Following is an example JSON file that handles test "foo" installing
 package "bar" and test "foobar" installing packages "foo" and "bar".
-Once the test is complete, the packages are removed from the DUT.
-::
+Once the test is complete, the packages are removed from the DUT::
 
      {
          "foo": {

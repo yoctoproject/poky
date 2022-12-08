@@ -138,16 +138,7 @@ must be writable for whichever users need to use the SDK.
 The following command shows how to run the installer given a toolchain
 tarball for a 64-bit x86 development host system and a 64-bit x86 target
 architecture. The example assumes the SDK installer is located in
-``~/Downloads/`` and has execution rights.
-
-.. note::
-
-   If you do not have write permissions for the directory into which you
-   are installing the SDK, the installer notifies you and exits. For
-   that case, set up the proper permissions in the directory and run the
-   installer again.
-
-::
+``~/Downloads/`` and has execution rights::
 
    $ ./Downloads/poky-glibc-x86_64-core-image-minimal-core2-64-toolchain-ext-2.5.sh
    Poky (Yocto Project Reference Distro) Extensible SDK installer version 2.5
@@ -167,6 +158,13 @@ architecture. The example assumes the SDK installer is located in
    SDK has been successfully set up and is ready to be used.
    Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
     $ . /home/scottrif/poky_sdk/environment-setup-core2-64-poky-linux
+
+.. note::
+
+   If you do not have write permissions for the directory into which you
+   are installing the SDK, the installer notifies you and exits. For
+   that case, set up the proper permissions in the directory and run the
+   installer again.
 
 Running the Extensible SDK Environment Setup Script
 ===================================================
@@ -406,8 +404,7 @@ command:
    creates any patches corresponding to commits in the local Git
    repository, moves the new recipe to a more permanent layer, and then
    resets the recipe so that the recipe is built normally rather than
-   from the workspace.
-   ::
+   from the workspace::
 
       $ devtool finish recipe layer
 
@@ -605,8 +602,7 @@ command:
    repository, updates the recipe to point to them (or creates a
    ``.bbappend`` file to do so, depending on the specified destination
    layer), and then resets the recipe so that the recipe is built
-   normally rather than from the workspace.
-   ::
+   normally rather than from the workspace::
 
       $ devtool finish recipe layer
 
@@ -780,8 +776,7 @@ The following diagram shows the common development flow used with the
 
    If you specify a destination layer that is the same as the original
    source, then the old version of the recipe and associated files are
-   removed prior to adding the new version.
-   ::
+   removed prior to adding the new version::
 
       $ devtool finish recipe layer
 

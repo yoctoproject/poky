@@ -103,7 +103,9 @@ available. Follow these general steps to run QEMU:
       automatically finds the ``bzImage-qemux86-64.bin`` image file and
       the ``core-image-minimal-qemux86-64-20200218002850.rootfs.ext4``
       (assuming the current build created a ``core-image-minimal``
-      image).
+      image)::
+
+        $ runqemu qemux86-64
 
       .. note::
 
@@ -111,14 +113,9 @@ available. Follow these general steps to run QEMU:
          and uses the most recently built image according to the
          timestamp.
 
-      ::
-
-        $ runqemu qemux86-64
-
    -  This example produces the exact same results as the previous
       example. This command, however, specifically provides the image
-      and root filesystem type.
-      ::
+      and root filesystem type::
 
          $ runqemu qemux86-64 core-image-minimal ext4
 
@@ -127,23 +124,20 @@ available. Follow these general steps to run QEMU:
       variable ``FSTYPE`` to ``cpio.gz``. Also, for audio to be enabled,
       an appropriate driver must be installed (see the ``audio`` option
       in :ref:`dev-manual/qemu:\`\`runqemu\`\` command-line options`
-      for more information).
-      ::
+      for more information)::
 
          $ runqemu qemux86-64 ramfs audio
 
    -  This example does not provide enough information for QEMU to
       launch. While the command does provide a root filesystem type, it
-      must also minimally provide a `MACHINE`, `KERNEL`, or `VM` option.
-      ::
+      must also minimally provide a `MACHINE`, `KERNEL`, or `VM` option::
 
          $ runqemu ext4
 
    -  This example specifies to boot a virtual machine image
       (``.wic.vmdk`` file). From the ``.wic.vmdk``, ``runqemu``
       determines the QEMU architecture (`MACHINE`) to be "qemux86-64" and
-      the root filesystem type to be "vmdk".
-      ::
+      the root filesystem type to be "vmdk"::
 
          $ runqemu /home/scott-lenovo/vm/core-image-minimal-qemux86-64.wic.vmdk
 

@@ -327,8 +327,7 @@ BitBake has determined by doing the following:
    In the output of the above command, you will find a line like the
    following, which lists all the (inferred) variable dependencies for
    the task. This list also includes indirect dependencies from
-   variables depending on other variables, recursively.
-   ::
+   variables depending on other variables, recursively::
 
       Task dependencies: ['PV', 'SRCREV', 'SRC_URI', 'SRC_URI[md5sum]', 'SRC_URI[sha256sum]', 'base_do_fetch']
 
@@ -641,8 +640,7 @@ The syntax you use for recipes written in Bash is similar to that of
 recipes written in Python described in the previous section.
 
 Following is an example written in Bash. The code logs the progress of
-the ``do_my_function`` function.
-::
+the ``do_my_function`` function::
 
    do_my_function() {
        bbdebug 2 "Running do_my_function"

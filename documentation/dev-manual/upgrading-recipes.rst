@@ -260,14 +260,7 @@ your build configuration (i.e. ``${BUILDDIR}/conf/bblayers.conf``)::
 For this example, assume that the ``nano.bb`` recipe that
 is upstream has a 2.9.3 version number. However, the version in the
 local repository is 2.7.4. The following command from your build
-directory automatically upgrades the recipe for you:
-
-.. note::
-
-   Using the ``-V`` option is not necessary. Omitting the version number causes
-   ``devtool upgrade`` to upgrade the recipe to the most recent version.
-
-::
+directory automatically upgrades the recipe for you::
 
    $ devtool upgrade nano -V 2.9.3
    NOTE: Starting bitbake server...
@@ -285,6 +278,11 @@ directory automatically upgrades the recipe for you:
    Adding changed files: 100% |#####################################| Time: 0:00:00
    NOTE: Upgraded source extracted to /home/scottrif/poky/build/workspace/sources/nano
    NOTE: New recipe is /home/scottrif/poky/build/workspace/recipes/nano/nano_2.9.3.bb
+
+.. note::
+
+   Using the ``-V`` option is not necessary. Omitting the version number causes
+   ``devtool upgrade`` to upgrade the recipe to the most recent version.
 
 Continuing with this example, you can use ``devtool build`` to build the
 newly upgraded recipe::

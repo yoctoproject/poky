@@ -154,8 +154,7 @@ or characters. A partial string will match any license that contains the
 given string as the first portion of its license. For example, the
 following value will also match both of the packages
 previously mentioned as well as any other packages that have licenses
-starting with "commercial" or "license".
-::
+starting with "commercial" or "license"::
 
    LICENSE_FLAGS_ACCEPTED = "commercial license"
 

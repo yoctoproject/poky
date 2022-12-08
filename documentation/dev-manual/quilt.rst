@@ -67,8 +67,7 @@ Follow these general steps:
 
 7. *Generate the Patch:* Once your changes work as expected, you need to
    use Quilt to generate the final patch that contains all your
-   modifications.
-   ::
+   modifications::
 
       $ quilt refresh
 

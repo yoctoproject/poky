@@ -33,8 +33,7 @@ project:
 
 1. *Create a Working Directory and Populate It:* Create a clean
    directory for your project and then make that directory your working
-   location.
-   ::
+   location::
 
       $ mkdir $HOME/helloworld
       $ cd $HOME/helloworld
@@ -146,8 +145,7 @@ project:
    This next command is a simple way to verify the installation of your
    project. Running the command prints the architecture on which the
    binary file can run. This architecture should be the same
-   architecture that the installed cross-toolchain supports.
-   ::
+   architecture that the installed cross-toolchain supports::
 
       $ file ./tmp/usr/local/bin/hello
 
@@ -210,8 +208,7 @@ demonstrates these variable behaviors.
 In a new shell environment variables are not established for the SDK
 until you run the setup script. For example, the following commands show
 a null value for the compiler variable (i.e.
-:term:`CC`).
-::
+:term:`CC`)::
 
    $ echo ${CC}
 
@@ -232,8 +229,7 @@ example:
 
 1. *Create a Working Directory and Populate It:* Create a clean
    directory for your project and then make that directory your working
-   location.
-   ::
+   location::
 
       $ mkdir $HOME/helloworld
       $ cd $HOME/helloworld
@@ -322,8 +318,7 @@ example:
 
    You can override the :term:`CC` environment variable with the same
    variable as set from the Makefile by uncommenting the line in the
-   Makefile and running ``make`` again.
-   ::
+   Makefile and running ``make`` again::
 
       $ make clean
       rm -rf *.o

@@ -166,8 +166,7 @@ section:
    checked out for ``poky`` is the Yocto Project &DISTRO_NAME; branch. If
    you need to checkout out the &DISTRO_NAME; branch, see the
    ":ref:`dev-manual/start:checking out by branch in poky`"
-   section in the Yocto Project Development Tasks Manual.
-   ::
+   section in the Yocto Project Development Tasks Manual::
 
       $ cd poky
       $ git branch
@@ -244,16 +243,7 @@ section:
    ``standard/base`` branch.
 
    The following commands show how to create a local copy of the
-   ``linux-yocto-4.12`` kernel and be in the ``standard/base`` branch.
-
-   .. note::
-
-      The ``linux-yocto-4.12`` kernel can be used with the Yocto Project 2.4
-      release and forward.
-      You cannot use the ``linux-yocto-4.12`` kernel with releases prior to
-      Yocto Project 2.4.
-
-   ::
+   ``linux-yocto-4.12`` kernel and be in the ``standard/base`` branch::
 
       $ cd ~
       $ git clone git://git.yoctoproject.org/linux-yocto-4.12 --branch standard/base
@@ -264,6 +254,13 @@ section:
       Receiving objects: 100% (6097195/6097195), 1.24 GiB | 7.81 MiB/s, done.
       Resolving deltas: 100% (5152604/5152604), done. Checking connectivity... done.
       Checking out files: 100% (59846/59846), done.
+
+   .. note::
+
+      The ``linux-yocto-4.12`` kernel can be used with the Yocto Project 2.4
+      release and forward.
+      You cannot use the ``linux-yocto-4.12`` kernel with releases prior to
+      Yocto Project 2.4.
 
 6. *Create a Local Copy of the Kernel Cache Git Repository:* For
    simplicity, it is recommended that you create your copy of the kernel
@@ -428,8 +425,7 @@ As an example, consider the following append file used by the BSPs in
 
 Here are the contents of this file. Be aware that the actual commit ID
 strings in this example listing might be different than the actual
-strings in the file from the ``meta-yocto-bsp`` layer upstream.
-::
+strings in the file from the ``meta-yocto-bsp`` layer upstream::
 
    KBRANCH:genericx86  = "standard/base"
    KBRANCH:genericx86-64  = "standard/base"
@@ -490,8 +486,7 @@ For example, suppose you had some configuration options in a file called
 ``network_configs.cfg``. You can place that file inside a directory
 named ``linux-yocto`` and then add a :term:`SRC_URI` statement such as the
 following to the append file. When the OpenEmbedded build system builds
-the kernel, the configuration options are picked up and applied.
-::
+the kernel, the configuration options are picked up and applied::
 
    SRC_URI += "file://network_configs.cfg"
 
@@ -766,7 +761,10 @@ the ":ref:`kernel-dev/common:getting ready to develop using \`\`devtool\`\``" Se
 
 4. *Create the Image With the New Kernel:* Use the
    ``devtool build-image`` command to create a new image that has the
-   new kernel.
+   new kernel::
+
+      $ cd ~
+      $ devtool build-image core-image-minimal
 
    .. note::
 
@@ -775,11 +773,6 @@ the ":ref:`kernel-dev/common:getting ready to develop using \`\`devtool\`\``" Se
       updated kernel. For an example, see the steps in the
       :yocto_wiki:`TipsAndTricks/KernelDevelopmentWithEsdk </TipsAndTricks/KernelDevelopmentWithEsdk>`
       Wiki Page.
-
-   ::
-
-      $ cd ~
-      $ devtool build-image core-image-minimal
 
 5. *Test the New Image:* For this example, you can run the new image
    using QEMU to verify your changes:
@@ -812,8 +805,7 @@ the ":ref:`kernel-dev/common:getting ready to develop using \`\`devtool\`\``" Se
 
 7. *Export the Patches and Create an Append File:* To export your
    commits as patches and create a ``.bbappend`` file, use the following
-   command. This example uses the previously established layer named ``meta-mylayer``.
-   ::
+   command. This example uses the previously established layer named ``meta-mylayer``::
 
       $ devtool finish linux-yocto ~/meta-mylayer
 
@@ -1760,8 +1752,7 @@ Here is an example that looks at what has changed in the ``emenlow``
 branch of the ``linux-yocto-3.19`` kernel. The lower commit range is the
 commit associated with the ``standard/base`` branch, while the upper
 commit range is the commit associated with the ``standard/emenlow``
-branch.
-::
+branch::
 
    $ git whatchanged origin/standard/base..origin/standard/emenlow
 

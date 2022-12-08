@@ -539,8 +539,7 @@ will need to boot from ``sdb`` instead of ``sda``, which is what the
 
 The example begins by making a copy of the ``directdisk-gpt.wks`` file
 in the ``scripts/lib/image/canned-wks`` directory and then by changing
-the lines that specify the target disk from which to boot.
-::
+the lines that specify the target disk from which to boot::
 
    $ cp /home/stephano/yocto/poky/scripts/lib/wic/canned-wks/directdisk-gpt.wks \
         /home/stephano/yocto/poky/scripts/lib/wic/canned-wks/directdisksdb-gpt.wks
@@ -557,8 +556,7 @@ Once the lines are changed, the
 example generates the ``directdisksdb-gpt`` image. The command points
 the process at the ``core-image-minimal`` artifacts for the Next Unit of
 Computing (nuc) :term:`MACHINE` the
-``local.conf``.
-::
+``local.conf``::
 
    $ wic create directdisksdb-gpt -e core-image-minimal
    INFO: Building wic-tools...

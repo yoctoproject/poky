@@ -111,8 +111,7 @@ build the SDK installer. Follow these steps:
    the Source Directory (i.e. ``poky``), run the
    :ref:`structure-core-script` environment
    setup script to define the OpenEmbedded build environment on your
-   build host.
-   ::
+   build host::
 
       $ source oe-init-build-env
 
