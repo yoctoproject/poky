@@ -8459,12 +8459,10 @@ system and gives an overview of their function and contents.
          If :term:`TCMODE` is set to a value other than "default", then it is your
          responsibility to ensure that the toolchain is compatible with the
          default toolchain. Using older or newer versions of these
-         components might cause build problems. See the Release Notes for
-         the Yocto Project release for the specific components with which
-         the toolchain must be compatible. To access the Release Notes, go
-         to the :yocto_home:`Downloads </software-overview/downloads>`
-         page on the Yocto Project website and click on the "RELEASE
-         INFORMATION" link for the appropriate release.
+         components might cause build problems. See
+         :yocto_docs:`Release Information </migration-guides/>` for your
+         version of the Yocto Project, to find the specific components with
+         which the toolchain must be compatible.
 
       The :term:`TCMODE` variable is similar to :term:`TCLIBC`,
       which controls the variant of the GNU standard C library (``libc``)

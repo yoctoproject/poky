@@ -171,11 +171,9 @@ Here is a list of resources you might find helpful:
 -  :yocto_wiki:`FAQ </FAQ>`: A list of commonly asked
    questions and their answers.
 
--  Release Notes: Features, updates and known issues for the current
-   release of the Yocto Project. To access the Release Notes, go to the
-   :yocto_home:`Downloads </software-overview/downloads>` page on
-   the Yocto Project website and click on the "RELEASE INFORMATION" link
-   for the appropriate release.
+-  :yocto_docs:`Release Information </migration-guides/>`:
+   Migration guides, release notes, new features, updates and known issues
+   for the current and past releases of the Yocto Project.
 
 -  :yocto_bugs:`Bugzilla <>`: The bug tracking application
    the Yocto Project uses. If you find problems with the Yocto Project,
