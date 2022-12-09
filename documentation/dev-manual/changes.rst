@@ -22,40 +22,40 @@ steps, see the Yocto Project
 
 Use the following general steps to submit a bug:
 
-1.  Open the Yocto Project implementation of :yocto_bugs:`Bugzilla <>`.
+#.  Open the Yocto Project implementation of :yocto_bugs:`Bugzilla <>`.
 
-2.  Click "File a Bug" to enter a new bug.
+#.  Click "File a Bug" to enter a new bug.
 
-3.  Choose the appropriate "Classification", "Product", and "Component"
+#.  Choose the appropriate "Classification", "Product", and "Component"
     for which the bug was found. Bugs for the Yocto Project fall into
     one of several classifications, which in turn break down into
     several products and components. For example, for a bug against the
     ``meta-intel`` layer, you would choose "Build System, Metadata &
     Runtime", "BSPs", and "bsps-meta-intel", respectively.
 
-4.  Choose the "Version" of the Yocto Project for which you found the
+#.  Choose the "Version" of the Yocto Project for which you found the
     bug (e.g. &DISTRO;).
 
-5.  Determine and select the "Severity" of the bug. The severity
+#.  Determine and select the "Severity" of the bug. The severity
     indicates how the bug impacted your work.
 
-6.  Choose the "Hardware" that the bug impacts.
+#.  Choose the "Hardware" that the bug impacts.
 
-7.  Choose the "Architecture" that the bug impacts.
+#.  Choose the "Architecture" that the bug impacts.
 
-8.  Choose a "Documentation change" item for the bug. Fixing a bug might
+#.  Choose a "Documentation change" item for the bug. Fixing a bug might
     or might not affect the Yocto Project documentation. If you are
     unsure of the impact to the documentation, select "Don't Know".
 
-9.  Provide a brief "Summary" of the bug. Try to limit your summary to
+#.  Provide a brief "Summary" of the bug. Try to limit your summary to
     just a line or two and be sure to capture the essence of the bug.
 
-10. Provide a detailed "Description" of the bug. You should provide as
+#.  Provide a detailed "Description" of the bug. You should provide as
     much detail as you can about the context, behavior, output, and so
     forth that surrounds the bug. You can even attach supporting files
     for output from logs by using the "Add an attachment" button.
 
-11. Click the "Submit Bug" button submit the bug. A new Bugzilla number
+#.  Click the "Submit Bug" button submit the bug. A new Bugzilla number
     is assigned to the bug and the defect is logged in the bug tracking
     system.
 
@@ -162,16 +162,16 @@ The following sections provide procedures for submitting a change.
 Preparing Changes for Submission
 --------------------------------
 
-1. *Make Your Changes Locally:* Make your changes in your local Git
+#. *Make Your Changes Locally:* Make your changes in your local Git
    repository. You should make small, controlled, isolated changes.
    Keeping changes small and isolated aids review, makes
    merging/rebasing easier and keeps the change history clean should
    anyone need to refer to it in future.
 
-2. *Stage Your Changes:* Stage your changes by using the ``git add``
+#. *Stage Your Changes:* Stage your changes by using the ``git add``
    command on each file you changed.
 
-3. *Commit Your Changes:* Commit the change by using the ``git commit``
+#. *Commit Your Changes:* Commit the change by using the ``git commit``
    command. Make sure your commit information follows standards by
    following these accepted conventions:
 
@@ -257,7 +257,7 @@ Here is the general procedure on how to submit a patch through email
 without using the scripts once the steps in
 :ref:`dev-manual/changes:preparing changes for submission` have been followed:
 
-1. *Format the Commit:* Format the commit into an email message. To
+#. *Format the Commit:* Format the commit into an email message. To
    format commits, use the ``git format-patch`` command. When you
    provide the command, you must include a revision list or a number of
    patches as part of the command. For example, either of these two
@@ -289,7 +289,7 @@ without using the scripts once the steps in
       or to OpenEmbedded, you might consider requesting a contrib area
       and the necessary associated rights.
 
-2. *Send the patches via email:* Send the patches to the recipients and
+#. *Send the patches via email:* Send the patches to the recipients and
    relevant mailing lists by using the ``git send-email`` command.
 
    .. note::
@@ -352,7 +352,7 @@ been followed:
    in the
    `Git Community Book <https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows>`__.
 
-1. *Push Your Commits to a "Contrib" Upstream:* If you have arranged for
+#. *Push Your Commits to a "Contrib" Upstream:* If you have arranged for
    permissions to push to an upstream contrib repository, push the
    change to that repository::
 
@@ -367,7 +367,7 @@ been followed:
 
       $ git push meta-intel-contrib your_name/README
 
-2. *Determine Who to Notify:* Determine the maintainer or the mailing
+#. *Determine Who to Notify:* Determine the maintainer or the mailing
    list that you need to notify for the change.
 
    Before submitting any change, you need to be sure who the maintainer
@@ -395,7 +395,7 @@ been followed:
       lists <resources-mailinglist>`" section in
       the Yocto Project Reference Manual.
 
-3. *Make a Pull Request:* Notify the maintainer or the mailing list that
+#. *Make a Pull Request:* Notify the maintainer or the mailing list that
    you have pushed a change by making a pull request.
 
    The Yocto Project provides two scripts that conveniently let you
@@ -486,30 +486,30 @@ branch can be obtained from the
 With this in mind, the steps to submit a change for a stable branch are as
 follows:
 
-1. *Identify the bug or CVE to be fixed:* This information should be
+#. *Identify the bug or CVE to be fixed:* This information should be
    collected so that it can be included in your submission.
 
    See :ref:`dev-manual/vulnerabilities:checking for vulnerabilities`
    for details about CVE tracking.
 
-2. *Check if the fix is already present in the master branch:* This will
+#. *Check if the fix is already present in the master branch:* This will
    result in the most straightforward path into the stable branch for the
    fix.
 
-   a. *If the fix is present in the master branch --- submit a backport request
+   #. *If the fix is present in the master branch --- submit a backport request
       by email:* You should send an email to the relevant stable branch
       maintainer and the mailing list with details of the bug or CVE to be
       fixed, the commit hash on the master branch that fixes the issue and
       the stable branches which you would like this fix to be backported to.
 
-   b. *If the fix is not present in the master branch --- submit the fix to the
+   #. *If the fix is not present in the master branch --- submit the fix to the
       master branch first:* This will ensure that the fix passes through the
       project's usual patch review and test processes before being accepted.
       It will also ensure that bugs are not left unresolved in the master
       branch itself. Once the fix is accepted in the master branch a backport
       request can be submitted as above.
 
-   c. *If the fix is unsuitable for the master branch --- submit a patch
+   #. *If the fix is unsuitable for the master branch --- submit a patch
       directly for the stable branch:* This method should be considered as a
       last resort. It is typically necessary when the master branch is using
       a newer version of the software which includes an upstream fix for the

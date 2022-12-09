@@ -188,17 +188,17 @@ The ``bldcontrol/management/commands/checksettings.py`` file controls
 workflow configuration. Here is the process to
 initially populate this database.
 
-1. The default project settings are set from
+#. The default project settings are set from
    ``orm/fixtures/settings.xml``.
 
-2. The default project distro and layers are added from
+#. The default project distro and layers are added from
    ``orm/fixtures/poky.xml`` if poky is installed. If poky is not
    installed, they are added from ``orm/fixtures/oe-core.xml``.
 
-3. If the ``orm/fixtures/custom.xml`` file exists, then its values are
+#. If the ``orm/fixtures/custom.xml`` file exists, then its values are
    added.
 
-4. The layer index is then scanned and added to the database.
+#. The layer index is then scanned and added to the database.
 
 Once these steps complete, Toaster is set up and ready to use.
 

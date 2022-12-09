@@ -78,13 +78,13 @@ Alternatively, you can run Weston through the command-line interpretor
 (CLI), which is better suited for development work. To run Weston under
 the CLI, you need to do the following after your image is built:
 
-1. Run these commands to export ``XDG_RUNTIME_DIR``::
+#. Run these commands to export ``XDG_RUNTIME_DIR``::
 
       mkdir -p /tmp/$USER-weston
       chmod 0700 /tmp/$USER-weston
       export XDG_RUNTIME_DIR=/tmp/$USER-weston
 
-2. Launch Weston in the shell::
+#. Launch Weston in the shell::
 
       weston
 

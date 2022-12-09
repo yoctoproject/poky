@@ -43,11 +43,11 @@ The following figure and list overviews the build process:
 .. image:: figures/bitbake-build-flow.png
    :width: 100%
 
-1. *Set up Your Host Development System to Support Development Using the
+#. *Set up Your Host Development System to Support Development Using the
    Yocto Project*: See the ":doc:`start`" section for options on how to get a
    build host ready to use the Yocto Project.
 
-2. *Initialize the Build Environment:* Initialize the build environment
+#. *Initialize the Build Environment:* Initialize the build environment
    by sourcing the build environment script (i.e.
    :ref:`structure-core-script`)::
 
@@ -66,7 +66,7 @@ The following figure and list overviews the build process:
       event, it's typically cleaner to locate the :term:`Build Directory`
       somewhere outside of your source directory.
 
-3. *Make Sure Your* ``local.conf`` *File is Correct*: Ensure the
+#. *Make Sure Your* ``local.conf`` *File is Correct*: Ensure the
    ``conf/local.conf`` configuration file, which is found in the
    :term:`Build Directory`, is set up how you want it. This file defines many
    aspects of the build environment including the target machine architecture
@@ -74,7 +74,7 @@ The following figure and list overviews the build process:
    the build (:term:`PACKAGE_CLASSES`), and a centralized tarball download
    directory through the :term:`DL_DIR` variable.
 
-4. *Build the Image:* Build the image using the ``bitbake`` command::
+#. *Build the Image:* Build the image using the ``bitbake`` command::
 
       $ bitbake target
 
@@ -273,12 +273,12 @@ loading modules needed to locate and mount the final root filesystem.
 
 Follow these steps to create an :term:`Initramfs` image:
 
-1. *Create the :term:`Initramfs` Image Recipe:* You can reference the
+#. *Create the :term:`Initramfs` Image Recipe:* You can reference the
    ``core-image-minimal-initramfs.bb`` recipe found in the
    ``meta/recipes-core`` directory of the :term:`Source Directory`
    as an example from which to work.
 
-2. *Decide if You Need to Bundle the :term:`Initramfs` Image Into the Kernel
+#. *Decide if You Need to Bundle the :term:`Initramfs` Image Into the Kernel
    Image:* If you want the :term:`Initramfs` image that is built to be bundled
    in with the kernel image, set the :term:`INITRAMFS_IMAGE_BUNDLE`
    variable to ``"1"`` in your ``local.conf`` configuration file and set the
@@ -290,7 +290,7 @@ Follow these steps to create an :term:`Initramfs` image:
    :term:`CONFIG_INITRAMFS_SOURCE` variable, allowing the :term:`Initramfs`
    image to be built into the kernel normally.
 
-3. *Optionally Add Items to the Initramfs Image Through the Initramfs
+#. *Optionally Add Items to the Initramfs Image Through the Initramfs
    Image Recipe:* If you add items to the :term:`Initramfs` image by way of its
    recipe, you should use :term:`PACKAGE_INSTALL` rather than
    :term:`IMAGE_INSTALL`. :term:`PACKAGE_INSTALL` gives more direct control of
@@ -298,7 +298,7 @@ Follow these steps to create an :term:`Initramfs` image:
    necessarily want that are set by the :ref:`image <ref-classes-image>`
    or :ref:`core-image <ref-classes-core-image>` classes.
 
-4. *Build the Kernel Image and the Initramfs Image:* Build your kernel
+#. *Build the Kernel Image and the Initramfs Image:* Build your kernel
    image using BitBake. Because the :term:`Initramfs` image recipe is a
    dependency of the kernel image, the :term:`Initramfs` image is built as well
    and bundled with the kernel image if you used the
@@ -316,7 +316,7 @@ to override it.
 
 To achieve this, you need to perform some additional steps:
 
-1. *Create a multiconfig for your Initramfs image:* You can perform the steps
+#. *Create a multiconfig for your Initramfs image:* You can perform the steps
    on ":ref:`dev-manual/building:building images for multiple targets using multiple configurations`" to create a separate multiconfig.
    For the sake of simplicity let's assume such multiconfig is called: ``initramfscfg.conf`` and
    contains the variables::
@@ -324,7 +324,7 @@ To achieve this, you need to perform some additional steps:
       TMPDIR="${TOPDIR}/tmp-initramfscfg"
       TCLIBC="musl"
 
-2. *Set additional Initramfs variables on your main configuration:*
+#. *Set additional Initramfs variables on your main configuration:*
    Additionally, on your main configuration (``local.conf``) you need to set the
    variables::
 
@@ -599,13 +599,13 @@ are a couple of areas to experiment with:
 
 -  ``glibc``: In general, follow this process:
 
-   1. Remove ``glibc`` features from
+   #. Remove ``glibc`` features from
       :term:`DISTRO_FEATURES`
       that you think you do not need.
 
-   2. Build your distribution.
+   #. Build your distribution.
 
-   3. If the build fails due to missing symbols in a package, determine
+   #. If the build fails due to missing symbols in a package, determine
       if you can reconfigure the package to not need those features. For
       example, change the configuration to not support wide character
       support as is done for ``ncurses``. Or, if support for those
@@ -837,13 +837,13 @@ build.
 
 Follow these steps to populate your Downloads directory:
 
-1. *Create a Clean Downloads Directory:* Start with an empty downloads
+#. *Create a Clean Downloads Directory:* Start with an empty downloads
    directory (:term:`DL_DIR`). You
    start with an empty downloads directory by either removing the files
    in the existing directory or by setting :term:`DL_DIR` to point to either
    an empty location or one that does not yet exist.
 
-2. *Generate Tarballs of the Source Git Repositories:* Edit your
+#. *Generate Tarballs of the Source Git Repositories:* Edit your
    ``local.conf`` configuration file as follows::
 
       DL_DIR = "/home/your-download-dir/"
@@ -856,7 +856,7 @@ Follow these steps to populate your Downloads directory:
    :term:`BB_GENERATE_MIRROR_TARBALLS`
    variable for more information.
 
-3. *Populate Your Downloads Directory Without Building:* Use BitBake to
+#. *Populate Your Downloads Directory Without Building:* Use BitBake to
    fetch your sources but inhibit the build::
 
       $ bitbake target --runonly=fetch
@@ -865,7 +865,7 @@ Follow these steps to populate your Downloads directory:
    a "snapshot" of the source files in the form of tarballs, which can
    be used for the build.
 
-4. *Optionally Remove Any Git or other SCM Subdirectories From the
+#. *Optionally Remove Any Git or other SCM Subdirectories From the
    Downloads Directory:* If you want, you can clean up your downloads
    directory by removing any Git or other Source Control Management
    (SCM) subdirectories such as ``${DL_DIR}/git2/*``. The tarballs
@@ -879,7 +879,7 @@ any machine and at any time.
 Follow these steps to build your target using the files in the downloads
 directory:
 
-1. *Using Local Files Only:* Inside your ``local.conf`` file, add the
+#. *Using Local Files Only:* Inside your ``local.conf`` file, add the
    :term:`SOURCE_MIRROR_URL` variable, inherit the
    :ref:`own-mirrors <ref-classes-own-mirrors>` class, and use the
    :term:`BB_NO_NETWORK` variable to your ``local.conf``::
@@ -894,11 +894,11 @@ directory:
    BitBake's fetching process in step 3 stays local, which means files
    from your "own-mirror" are used.
 
-2. *Start With a Clean Build:* You can start with a clean build by
+#. *Start With a Clean Build:* You can start with a clean build by
    removing the ``${``\ :term:`TMPDIR`\ ``}`` directory or using a new
    :term:`Build Directory`.
 
-3. *Build Your Target:* Use BitBake to build your target::
+#. *Build Your Target:* Use BitBake to build your target::
 
       $ bitbake target
 
@@ -925,16 +925,16 @@ directory:
       If you do have recipes that use :term:`AUTOREV`, you can take steps to
       still use the recipes in an offline build. Do the following:
 
-      1. Use a configuration generated by enabling :ref:`build
+      #. Use a configuration generated by enabling :ref:`build
          history <dev-manual/build-quality:maintaining build output quality>`.
 
-      2. Use the ``buildhistory-collect-srcrevs`` command to collect the
+      #. Use the ``buildhistory-collect-srcrevs`` command to collect the
          stored :term:`SRCREV` values from the build's history. For more
          information on collecting these values, see the
          ":ref:`dev-manual/build-quality:build history package information`"
          section.
 
-      3. Once you have the correct source revisions, you can modify
+      #. Once you have the correct source revisions, you can modify
          those recipes to set :term:`SRCREV` to specific versions of the
          software.
 

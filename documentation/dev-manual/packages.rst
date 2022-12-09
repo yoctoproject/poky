@@ -554,10 +554,10 @@ to use. In your configuration, you use the
 :term:`PACKAGE_CLASSES`
 variable to specify the format:
 
-1. Open the ``local.conf`` file inside your :term:`Build Directory` (e.g.
+#. Open the ``local.conf`` file inside your :term:`Build Directory` (e.g.
    ``poky/build/conf/local.conf``).
 
-2. Select the desired package format as follows::
+#. Select the desired package format as follows::
 
       PACKAGE_CLASSES ?= "package_packageformat"
 

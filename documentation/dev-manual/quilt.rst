@@ -20,32 +20,32 @@ form of a patch all using Quilt.
 
 Follow these general steps:
 
-1. *Find the Source Code:* Temporary source code used by the
+#. *Find the Source Code:* Temporary source code used by the
    OpenEmbedded build system is kept in the :term:`Build Directory`. See the
    ":ref:`dev-manual/temporary-source-code:finding temporary source code`" section to
    learn how to locate the directory that has the temporary source code for a
    particular package.
 
-2. *Change Your Working Directory:* You need to be in the directory that
+#. *Change Your Working Directory:* You need to be in the directory that
    has the temporary source code. That directory is defined by the
    :term:`S` variable.
 
-3. *Create a New Patch:* Before modifying source code, you need to
+#. *Create a New Patch:* Before modifying source code, you need to
    create a new patch. To create a new patch file, use ``quilt new`` as
    below::
 
       $ quilt new my_changes.patch
 
-4. *Notify Quilt and Add Files:* After creating the patch, you need to
+#. *Notify Quilt and Add Files:* After creating the patch, you need to
    notify Quilt about the files you plan to edit. You notify Quilt by
    adding the files to the patch you just created::
 
       $ quilt add file1.c file2.c file3.c
 
-5. *Edit the Files:* Make your changes in the source code to the files
+#. *Edit the Files:* Make your changes in the source code to the files
    you added to the patch.
 
-6. *Test Your Changes:* Once you have modified the source code, the
+#. *Test Your Changes:* Once you have modified the source code, the
    easiest way to test your changes is by calling the :ref:`ref-tasks-compile`
    task as shown in the following example::
 
@@ -65,7 +65,7 @@ Follow these general steps:
       the ":ref:`dev-manual/disk-space:conserving disk space during builds`"
       section.
 
-7. *Generate the Patch:* Once your changes work as expected, you need to
+#. *Generate the Patch:* Once your changes work as expected, you need to
    use Quilt to generate the final patch that contains all your
    modifications::
 
@@ -78,7 +78,7 @@ Follow these general steps:
    You can find the resulting patch file in the ``patches/``
    subdirectory of the source (:term:`S`) directory.
 
-8. *Copy the Patch File:* For simplicity, copy the patch file into a
+#. *Copy the Patch File:* For simplicity, copy the patch file into a
    directory named ``files``, which you can create in the same directory
    that holds the recipe (``.bb``) file or the append (``.bbappend``)
    file. Placing the patch here guarantees that the OpenEmbedded build

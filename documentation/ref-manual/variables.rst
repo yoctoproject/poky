@@ -5868,25 +5868,25 @@ system and gives an overview of their function and contents.
       omit any argument you like but must retain the separating commas. The
       order is important and specifies the following:
 
-      1. Extra arguments that should be added to the configure script
+      #. Extra arguments that should be added to the configure script
          argument list (:term:`EXTRA_OECONF` or
          :term:`PACKAGECONFIG_CONFARGS`) if
          the feature is enabled.
 
-      2. Extra arguments that should be added to :term:`EXTRA_OECONF` or
+      #. Extra arguments that should be added to :term:`EXTRA_OECONF` or
          :term:`PACKAGECONFIG_CONFARGS` if the feature is disabled.
 
-      3. Additional build dependencies (:term:`DEPENDS`)
+      #. Additional build dependencies (:term:`DEPENDS`)
          that should be added if the feature is enabled.
 
-      4. Additional runtime dependencies (:term:`RDEPENDS`)
+      #. Additional runtime dependencies (:term:`RDEPENDS`)
          that should be added if the feature is enabled.
 
-      5. Additional runtime recommendations
+      #. Additional runtime recommendations
          (:term:`RRECOMMENDS`) that should be added if
          the feature is enabled.
 
-      6. Any conflicting (that is, mutually exclusive) :term:`PACKAGECONFIG`
+      #. Any conflicting (that is, mutually exclusive) :term:`PACKAGECONFIG`
          settings for this feature.
 
       Consider the following :term:`PACKAGECONFIG` block taken from the

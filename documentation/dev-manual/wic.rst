@@ -641,7 +641,7 @@ modify the kernel.
 The following example examines the contents of the Wic image, deletes
 the existing kernel, and then inserts a new kernel:
 
-1. *List the Partitions:* Use the ``wic ls`` command to list all the
+#. *List the Partitions:* Use the ``wic ls`` command to list all the
    partitions in the Wic image::
 
       $ wic ls tmp/deploy/images/qemux86/core-image-minimal-qemux86.wic
@@ -652,7 +652,7 @@ the existing kernel, and then inserts a new kernel:
    The previous output shows two partitions in the
    ``core-image-minimal-qemux86.wic`` image.
 
-2. *Examine a Particular Partition:* Use the ``wic ls`` command again
+#. *Examine a Particular Partition:* Use the ``wic ls`` command again
    but in a different form to examine a particular partition.
 
    .. note::
@@ -700,12 +700,12 @@ the existing kernel, and then inserts a new kernel:
                Add mtools_skip_check=1 to your .mtoolsrc file to skip this test
 
 
-3. *Remove the Old Kernel:* Use the ``wic rm`` command to remove the
+#. *Remove the Old Kernel:* Use the ``wic rm`` command to remove the
    ``vmlinuz`` file (kernel)::
 
       $ wic rm tmp/deploy/images/qemux86/core-image-minimal-qemux86.wic:1/vmlinuz
 
-4. *Add In the New Kernel:* Use the ``wic cp`` command to add the
+#. *Add In the New Kernel:* Use the ``wic cp`` command to add the
    updated kernel to the Wic image. Depending on how you built your
    kernel, it could be in different places. If you used ``devtool`` and
    an SDK to build your kernel, it resides in the ``tmp/work`` directory

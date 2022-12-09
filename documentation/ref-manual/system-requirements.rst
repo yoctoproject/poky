@@ -235,7 +235,7 @@ The ``install-buildtools`` script is the easiest of the three methods by
 which you can get these tools. It downloads a pre-built buildtools
 installer and automatically installs the tools for you:
 
-1. Execute the ``install-buildtools`` script. Here is an example::
+#. Execute the ``install-buildtools`` script. Here is an example::
 
       $ cd poky
       $ scripts/install-buildtools \
@@ -268,7 +268,7 @@ installer and automatically installs the tools for you:
       $ cd poky
       $ scripts/install-buildtools --make-only
 
-2. Source the tools environment setup script by using a command like the
+#. Source the tools environment setup script by using a command like the
    following::
 
       $ source /path/to/poky/buildtools/environment-setup-x86_64-pokysdk-linux
@@ -291,9 +291,9 @@ If you would prefer not to use the ``install-buildtools`` script, you can instea
 download and run a pre-built buildtools installer yourself with the following
 steps:
 
-1. Locate and download the ``*.sh`` at :yocto_dl:`/releases/yocto/yocto-&DISTRO;/buildtools/`
+#. Locate and download the ``*.sh`` at :yocto_dl:`/releases/yocto/yocto-&DISTRO;/buildtools/`
 
-2. Execute the installation script. Here is an example for the
+#. Execute the installation script. Here is an example for the
    traditional installer::
 
       $ sh ~/Downloads/x86_64-buildtools-nativesdk-standalone-&DISTRO;.sh
@@ -310,7 +310,7 @@ steps:
    installation directory. For example, you could choose the following:
    ``/home/your-username/buildtools``
 
-3. Source the tools environment setup script by using a command like the
+#. Source the tools environment setup script by using a command like the
    following::
 
       $ source /home/your_username/buildtools/environment-setup-i586-poky-linux
@@ -339,11 +339,11 @@ Python (or gcc) requirements.
 Here are the steps to take to build and run your own buildtools
 installer:
 
-1. On the machine that is able to run BitBake, be sure you have set up
+#. On the machine that is able to run BitBake, be sure you have set up
    your build environment with the setup script
    (:ref:`structure-core-script`).
 
-2. Run the BitBake command to build the tarball::
+#. Run the BitBake command to build the tarball::
 
       $ bitbake buildtools-tarball
 
@@ -365,10 +365,10 @@ installer:
    :term:`Build Directory`. The installer file has the string
    "buildtools" (or "buildtools-extended") in the name.
 
-3. Transfer the ``.sh`` file from the build host to the machine that
+#. Transfer the ``.sh`` file from the build host to the machine that
    does not meet the Git, tar, or Python (or gcc) requirements.
 
-4. On the machine that does not meet the requirements, run the ``.sh``
+#. On the machine that does not meet the requirements, run the ``.sh``
    file to install the tools. Here is an example for the traditional
    installer::
 
@@ -386,7 +386,7 @@ installer:
    installation directory. For example, you could choose the following:
    ``/home/your_username/buildtools``
 
-5. Source the tools environment setup script by using a command like the
+#. Source the tools environment setup script by using a command like the
    following::
 
       $ source /home/your_username/buildtools/environment-setup-x86_64-poky-linux

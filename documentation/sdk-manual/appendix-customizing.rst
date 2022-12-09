@@ -173,12 +173,12 @@ perform additional steps. These steps make it possible for anyone using
 the installed SDKs to update the installed SDKs by using the
 ``devtool sdk-update`` command:
 
-1. Create a directory that can be shared over HTTP or HTTPS. You can do
+#. Create a directory that can be shared over HTTP or HTTPS. You can do
    this by setting up a web server such as an :wikipedia:`Apache HTTP Server
    <Apache_HTTP_Server>` or :wikipedia:`Nginx <Nginx>` server in the cloud
    to host the directory. This directory must contain the published SDK.
 
-2. Set the
+#. Set the
    :term:`SDK_UPDATE_URL`
    variable to point to the corresponding HTTP or HTTPS URL. Setting
    this variable causes any SDK built to default to that URL and thus,
@@ -187,10 +187,10 @@ the installed SDKs to update the installed SDKs by using the
    ":ref:`sdk-manual/extensible:applying updates to an installed extensible sdk`"
    section.
 
-3. Build the extensible SDK normally (i.e., use the
+#. Build the extensible SDK normally (i.e., use the
    ``bitbake -c populate_sdk_ext`` imagename command).
 
-4. Publish the SDK using the following command::
+#. Publish the SDK using the following command::
 
       $ oe-publish-sdk some_path/sdk-installer.sh path_to_shared_http_directory
 
@@ -245,7 +245,7 @@ If you want the users of an extensible SDK you build to be able to add
 items to the SDK without requiring the users to build the items from
 source, you need to do a number of things:
 
-1. Ensure the additional items you want the user to be able to install
+#. Ensure the additional items you want the user to be able to install
    are already built:
 
    -  Build the items explicitly. You could use one or more "meta"
@@ -257,12 +257,12 @@ source, you need to do a number of things:
       :term:`EXCLUDE_FROM_WORLD`
       variable for additional information.
 
-2. Expose the ``sstate-cache`` directory produced by the build.
+#. Expose the ``sstate-cache`` directory produced by the build.
    Typically, you expose this directory by making it available through
    an :wikipedia:`Apache HTTP Server <Apache_HTTP_Server>` or
    :wikipedia:`Nginx <Nginx>` server.
 
-3. Set the appropriate configuration so that the produced SDK knows how
+#. Set the appropriate configuration so that the produced SDK knows how
    to find the configuration. The variable you need to set is
    :term:`SSTATE_MIRRORS`::
 

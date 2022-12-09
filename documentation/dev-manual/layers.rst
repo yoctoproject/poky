@@ -28,14 +28,14 @@ Creating Your Own Layer
 
 Follow these general steps to create your layer without using tools:
 
-1. *Check Existing Layers:* Before creating a new layer, you should be
+#. *Check Existing Layers:* Before creating a new layer, you should be
    sure someone has not already created a layer containing the Metadata
    you need. You can see the :oe_layerindex:`OpenEmbedded Metadata Index <>`
    for a list of layers from the OpenEmbedded community that can be used in
    the Yocto Project. You could find a layer that is identical or close
    to what you need.
 
-2. *Create a Directory:* Create the directory for your layer. When you
+#. *Create a Directory:* Create the directory for your layer. When you
    create the layer, be sure to create the directory in an area not
    associated with the Yocto Project :term:`Source Directory`
    (e.g. the cloned ``poky`` repository).
@@ -58,7 +58,7 @@ Follow these general steps to create your layer without using tools:
    "meta-" string are appended to several variables used in the
    configuration.
 
-3. *Create a Layer Configuration File:* Inside your new layer folder,
+#. *Create a Layer Configuration File:* Inside your new layer folder,
    you need to create a ``conf/layer.conf`` file. It is easiest to take
    an existing layer configuration file and copy that to your layer's
    ``conf`` directory and then modify the file as needed.
@@ -128,7 +128,7 @@ Follow these general steps to create your layer without using tools:
       variable is a good way to indicate if your particular layer is
       current.
 
-4. *Add Content:* Depending on the type of layer, add the content. If
+#. *Add Content:* Depending on the type of layer, add the content. If
    the layer adds support for a machine, add the machine configuration
    in a ``conf/machine/`` file within the layer. If the layer adds
    distro policy, add the distro configuration in a ``conf/distro/``
@@ -141,7 +141,7 @@ Follow these general steps to create your layer without using tools:
       Yocto Project, see the ":ref:`bsp-guide/bsp:example filesystem layout`"
       section in the Yocto Project Board Support Package (BSP) Developer's Guide.
 
-5. *Optionally Test for Compatibility:* If you want permission to use
+#. *Optionally Test for Compatibility:* If you want permission to use
    the Yocto Project Compatibility logo with your layer or application
    that uses your layer, perform the steps to apply for compatibility.
    See the
@@ -292,13 +292,13 @@ The Yocto Project Compatibility Program consists of a layer application
 process that requests permission to use the Yocto Project Compatibility
 Logo for your layer and application. The process consists of two parts:
 
-1. Successfully passing a script (``yocto-check-layer``) that when run
+#. Successfully passing a script (``yocto-check-layer``) that when run
    against your layer, tests it against constraints based on experiences
    of how layers have worked in the real world and where pitfalls have
    been found. Getting a "PASS" result from the script is required for
    successful compatibility registration.
 
-2. Completion of an application acceptance form, which you can find at
+#. Completion of an application acceptance form, which you can find at
    :yocto_home:`/webform/yocto-project-compatible-registration`.
 
 To be granted permission to use the logo, you need to satisfy the
@@ -870,10 +870,10 @@ checked out first), or into a completely independent location.
 The replication of the layers is performed by running the ``setup-layers`` script provided
 above:
 
-1. Clone the bootstrap layer or some other repository to obtain
+#. Clone the bootstrap layer or some other repository to obtain
    the json config and the setup script that can use it.
 
-2. Run the script directly with no options::
+#. Run the script directly with no options::
 
       alex@Zen2:/srv/work/alex/my-build$ meta-alex/setup-layers
       Note: not checking out source meta-alex, use --force-bootstraplayer-checkout to override.

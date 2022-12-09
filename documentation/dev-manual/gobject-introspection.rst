@@ -39,11 +39,11 @@ Enabling the Generation of Introspection Data
 Enabling the generation of introspection data (GIR files) in your
 library package involves the following:
 
-1. Inherit the
+#. Inherit the
    :ref:`gobject-introspection <ref-classes-gobject-introspection>`
    class.
 
-2. Make sure introspection is not disabled anywhere in the recipe or
+#. Make sure introspection is not disabled anywhere in the recipe or
    from anything the recipe includes. Also, make sure that
    "gobject-introspection-data" is not in
    :term:`DISTRO_FEATURES_BACKFILL_CONSIDERED`
@@ -51,7 +51,7 @@ library package involves the following:
    :term:`MACHINE_FEATURES_BACKFILL_CONSIDERED`.
    In either of these conditions, nothing will happen.
 
-3. Try to build the recipe. If you encounter build errors that look like
+#. Try to build the recipe. If you encounter build errors that look like
    something is unable to find ``.so`` libraries, check where these
    libraries are located in the source tree and add the following to the
    recipe::
@@ -63,7 +63,7 @@ library package involves the following:
       See recipes in the ``oe-core`` repository that use that
       :term:`GIR_EXTRA_LIBS_PATH` variable as an example.
 
-4. Look for any other errors, which probably mean that introspection
+#. Look for any other errors, which probably mean that introspection
    support in a package is not entirely standard, and thus breaks down
    in a cross-compilation environment. For such cases, custom-made fixes
    are needed. A good place to ask and receive help in these cases is
@@ -116,21 +116,21 @@ Testing that Introspection Works in an Image
 Use the following procedure to test if generating introspection data is
 working in an image:
 
-1. Make sure that "gobject-introspection-data" is not in
+#. Make sure that "gobject-introspection-data" is not in
    :term:`DISTRO_FEATURES_BACKFILL_CONSIDERED`
    and that "qemu-usermode" is not in
    :term:`MACHINE_FEATURES_BACKFILL_CONSIDERED`.
 
-2. Build ``core-image-sato``.
+#. Build ``core-image-sato``.
 
-3. Launch a Terminal and then start Python in the terminal.
+#. Launch a Terminal and then start Python in the terminal.
 
-4. Enter the following in the terminal::
+#. Enter the following in the terminal::
 
       >>> from gi.repository import GLib
       >>> GLib.get_host_name()
 
-5. For something a little more advanced, enter the following see:
+#. For something a little more advanced, enter the following see:
    https://python-gtk-3-tutorial.readthedocs.io/en/latest/introduction.html
 
 Known Issues

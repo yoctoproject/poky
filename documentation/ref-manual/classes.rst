@@ -979,11 +979,11 @@ by default (as specified by :term:`IMAGE_BUILDINFO_FILE`).
 This can be useful for manually determining the origin of any given
 image. It writes out two sections:
 
-1. `Build Configuration`: a list of variables and their values (specified
+#. `Build Configuration`: a list of variables and their values (specified
    by :term:`IMAGE_BUILDINFO_VARS`, which defaults to :term:`DISTRO` and
    :term:`DISTRO_VERSION`)
 
-2. `Layer Revisions`: the revisions of all of the layers used in the
+#. `Layer Revisions`: the revisions of all of the layers used in the
    build.
 
 Additionally, when building an SDK it will write the same contents

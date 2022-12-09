@@ -51,12 +51,12 @@ commit messages in the layer's tree for the changes made to recipes.
 
 The following steps describe how to set up the AUH utility:
 
-1. *Be Sure the Development Host is Set Up:* You need to be sure that
+#. *Be Sure the Development Host is Set Up:* You need to be sure that
    your development host is set up to use the Yocto Project. For
    information on how to set up your host, see the
    ":ref:`dev-manual/start:Preparing the Build Host`" section.
 
-2. *Make Sure Git is Configured:* The AUH utility requires Git to be
+#. *Make Sure Git is Configured:* The AUH utility requires Git to be
    configured because AUH uses Git to save upgrades. Thus, you must have
    Git user and email configured. The following command shows your
    configurations::
@@ -69,7 +69,7 @@ The following steps describe how to set up the AUH utility:
       $ git config --global user.name some_name
       $ git config --global user.email username@domain.com
 
-3. *Clone the AUH Repository:* To use AUH, you must clone the repository
+#. *Clone the AUH Repository:* To use AUH, you must clone the repository
    onto your development host. The following command uses Git to create
    a local copy of the repository on your system::
 
@@ -84,7 +84,7 @@ The following steps describe how to set up the AUH utility:
    AUH is not part of the :term:`OpenEmbedded-Core (OE-Core)` or
    :term:`Poky` repositories.
 
-4. *Create a Dedicated Build Directory:* Run the :ref:`structure-core-script`
+#. *Create a Dedicated Build Directory:* Run the :ref:`structure-core-script`
    script to create a fresh :term:`Build Directory` that you use exclusively
    for running the AUH utility::
 
@@ -95,7 +95,7 @@ The following steps describe how to set up the AUH utility:
    recommended as existing settings could cause AUH to fail or behave
    undesirably.
 
-5. *Make Configurations in Your Local Configuration File:* Several
+#. *Make Configurations in Your Local Configuration File:* Several
    settings are needed in the ``local.conf`` file in the build
    directory you just created for AUH. Make these following
    configurations:
@@ -128,13 +128,13 @@ The following steps describe how to set up the AUH utility:
                  DISTRO_FEATURES:append = " ptest"
 
 
-6. *Optionally Start a vncserver:* If you are running in a server
+#. *Optionally Start a vncserver:* If you are running in a server
    without an X11 session, you need to start a vncserver::
 
       $ vncserver :1
       $ export DISPLAY=:1
 
-7. *Create and Edit an AUH Configuration File:* You need to have the
+#. *Create and Edit an AUH Configuration File:* You need to have the
    ``upgrade-helper/upgrade-helper.conf`` configuration file in your
    :term:`Build Directory`. You can find a sample configuration file in the
    :yocto_git:`AUH source repository </auto-upgrade-helper/tree/>`.
@@ -346,17 +346,17 @@ you can manually edit the recipe files to upgrade the versions.
 
 To manually upgrade recipe versions, follow these general steps:
 
-1. *Change the Version:* Rename the recipe such that the version (i.e.
+#. *Change the Version:* Rename the recipe such that the version (i.e.
    the :term:`PV` part of the recipe name)
    changes appropriately. If the version is not part of the recipe name,
    change the value as it is set for :term:`PV` within the recipe itself.
 
-2. *Update* :term:`SRCREV` *if Needed*: If the source code your recipe builds
+#. *Update* :term:`SRCREV` *if Needed*: If the source code your recipe builds
    is fetched from Git or some other version control system, update
    :term:`SRCREV` to point to the
    commit hash that matches the new version.
 
-3. *Build the Software:* Try to build the recipe using BitBake. Typical
+#. *Build the Software:* Try to build the recipe using BitBake. Typical
    build failures include the following:
 
    -  License statements were updated for the new version. For this
@@ -377,22 +377,22 @@ To manually upgrade recipe versions, follow these general steps:
       issues. If a patch is necessary and failing, you need to rebase it
       into the new version.
 
-4. *Optionally Attempt to Build for Several Architectures:* Once you
+#. *Optionally Attempt to Build for Several Architectures:* Once you
    successfully build the new software for a given architecture, you
    could test the build for other architectures by changing the
    :term:`MACHINE` variable and
    rebuilding the software. This optional step is especially important
    if the recipe is to be released publicly.
 
-5. *Check the Upstream Change Log or Release Notes:* Checking both these
+#. *Check the Upstream Change Log or Release Notes:* Checking both these
    reveals if there are new features that could break
    backwards-compatibility. If so, you need to take steps to mitigate or
    eliminate that situation.
 
-6. *Optionally Create a Bootable Image and Test:* If you want, you can
+#. *Optionally Create a Bootable Image and Test:* If you want, you can
    test the new software by booting it onto actual hardware.
 
-7. *Create a Commit with the Change in the Layer Repository:* After all
+#. *Create a Commit with the Change in the Layer Repository:* After all
    builds work and any testing is successful, you can create commits for
    any changes in the layer holding your upgraded recipe.
 

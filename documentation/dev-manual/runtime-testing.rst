@@ -84,25 +84,25 @@ In order to run tests, you need to do the following:
 
 Once you start running the tests, the following happens:
 
-1. A copy of the root filesystem is written to ``${WORKDIR}/testimage``.
+#. A copy of the root filesystem is written to ``${WORKDIR}/testimage``.
 
-2. The image is booted under QEMU using the standard ``runqemu`` script.
+#. The image is booted under QEMU using the standard ``runqemu`` script.
 
-3. A default timeout of 500 seconds occurs to allow for the boot process
+#. A default timeout of 500 seconds occurs to allow for the boot process
    to reach the login prompt. You can change the timeout period by
    setting
    :term:`TEST_QEMUBOOT_TIMEOUT`
    in the ``local.conf`` file.
 
-4. Once the boot process is reached and the login prompt appears, the
+#. Once the boot process is reached and the login prompt appears, the
    tests run. The full boot log is written to
    ``${WORKDIR}/testimage/qemu_boot_log``.
 
-5. Each test module loads in the order found in :term:`TEST_SUITES`. You can
+#. Each test module loads in the order found in :term:`TEST_SUITES`. You can
    find the full output of the commands run over SSH in
    ``${WORKDIR}/testimgage/ssh_target_log``.
 
-6. If no failures occur, the task running the tests ends successfully.
+#. If no failures occur, the task running the tests ends successfully.
    You can find the output from the ``unittest`` in the task log at
    ``${WORKDIR}/temp/log.do_testimage``.
 
@@ -117,13 +117,13 @@ For automated deployment, a "controller image" is installed onto the
 hardware once as part of setup. Then, each time tests are to be run, the
 following occurs:
 
-1. The controller image is booted into and used to write the image to be
+#. The controller image is booted into and used to write the image to be
    tested to a second partition.
 
-2. The device is then rebooted using an external script that you need to
+#. The device is then rebooted using an external script that you need to
    provide.
 
-3. The device boots into the image to be tested.
+#. The device boots into the image to be tested.
 
 When running tests (independent of whether the image has been deployed
 automatically or not), the device is expected to be connected to a
@@ -188,11 +188,11 @@ not need any information in this section. You can skip down to the
 If you did set :term:`TEST_TARGET` to "SystemdbootTarget", you also need to
 perform a one-time setup of your controller image by doing the following:
 
-1. *Set EFI_PROVIDER:* Be sure that :term:`EFI_PROVIDER` is as follows::
+#. *Set EFI_PROVIDER:* Be sure that :term:`EFI_PROVIDER` is as follows::
 
       EFI_PROVIDER = "systemd-boot"
 
-2. *Build the controller image:* Build the ``core-image-testmaster`` image.
+#. *Build the controller image:* Build the ``core-image-testmaster`` image.
    The ``core-image-testmaster`` recipe is provided as an example for a
    "controller" image and you can customize the image recipe as you would
    any other recipe.
@@ -219,13 +219,13 @@ perform a one-time setup of your controller image by doing the following:
       -  Another partition labeled "testrootfs" where test images get
          deployed.
 
-3. *Install image:* Install the image that you just built on the target
+#. *Install image:* Install the image that you just built on the target
    system.
 
 The final thing you need to do when setting :term:`TEST_TARGET` to
 "SystemdbootTarget" is to set up the test image:
 
-1. *Set up your local.conf file:* Make sure you have the following
+#. *Set up your local.conf file:* Make sure you have the following
    statements in your ``local.conf`` file::
 
       IMAGE_FSTYPES += "tar.gz"
@@ -233,7 +233,7 @@ The final thing you need to do when setting :term:`TEST_TARGET` to
       TEST_TARGET = "SystemdbootTarget"
       TEST_TARGET_IP = "192.168.2.3"
 
-2. *Build your test image:* Use BitBake to build the image::
+#. *Build your test image:* Use BitBake to build the image::
 
       $ bitbake core-image-sato
 

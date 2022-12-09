@@ -28,18 +28,18 @@ Following, is an example that shows how to flash a Wic image. Realize
 that while this example uses a Wic image, you can use Bmaptool to flash
 any type of image. Use these steps to flash an image using Bmaptool:
 
-1. *Update your local.conf File:* You need to have the following set
+#. *Update your local.conf File:* You need to have the following set
    in your ``local.conf`` file before building your image::
 
       IMAGE_FSTYPES += "wic wic.bmap"
 
-2. *Get Your Image:* Either have your image ready (pre-built with the
+#. *Get Your Image:* Either have your image ready (pre-built with the
    :term:`IMAGE_FSTYPES`
    setting previously mentioned) or take the step to build the image::
 
       $ bitbake image
 
-3. *Flash the Device:* Flash the device with the image by using Bmaptool
+#. *Flash the Device:* Flash the device with the image by using Bmaptool
    depending on your particular setup. The following commands assume the
    image resides in the :term:`Build Directory`'s ``deploy/images/`` area:
 

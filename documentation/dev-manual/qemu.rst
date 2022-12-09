@@ -44,13 +44,13 @@ To use QEMU, you need to have QEMU installed and initialized as well as
 have the proper artifacts (i.e. image files and root filesystems)
 available. Follow these general steps to run QEMU:
 
-1. *Install QEMU:* QEMU is made available with the Yocto Project a
+#. *Install QEMU:* QEMU is made available with the Yocto Project a
    number of ways. One method is to install a Software Development Kit
    (SDK). See ":ref:`sdk-manual/intro:the qemu emulator`" section in the
    Yocto Project Application Development and the Extensible Software
    Development Kit (eSDK) manual for information on how to install QEMU.
 
-2. *Setting Up the Environment:* How you set up the QEMU environment
+#. *Setting Up the Environment:* How you set up the QEMU environment
    depends on how you installed QEMU:
 
    -  If you cloned the ``poky`` repository or you downloaded and
@@ -66,7 +66,7 @@ available. Follow these general steps to run QEMU:
 
          . poky_sdk/environment-setup-core2-64-poky-linux
 
-3. *Ensure the Artifacts are in Place:* You need to be sure you have a
+#. *Ensure the Artifacts are in Place:* You need to be sure you have a
    pre-built kernel that will boot in QEMU. You also need the target
    root filesystem for your target machine's architecture:
 
@@ -84,7 +84,7 @@ available. Follow these general steps to run QEMU:
    Extensible Software Development Kit (eSDK) manual for information on
    how to extract a root filesystem.
 
-4. *Run QEMU:* The basic ``runqemu`` command syntax is as follows::
+#. *Run QEMU:* The basic ``runqemu`` command syntax is as follows::
 
       $ runqemu [option ] [...]
 
@@ -184,7 +184,7 @@ the system does not need root privileges to run. It uses a user space
 NFS server to avoid that. Follow these steps to set up for running QEMU
 using an NFS server.
 
-1. *Extract a Root Filesystem:* Once you are able to run QEMU in your
+#. *Extract a Root Filesystem:* Once you are able to run QEMU in your
    environment, you can use the ``runqemu-extract-sdk`` script, which is
    located in the ``scripts`` directory along with the ``runqemu``
    script.
@@ -198,7 +198,7 @@ using an NFS server.
 
       runqemu-extract-sdk ./tmp/deploy/images/qemux86-64/core-image-sato-qemux86-64.tar.bz2 test-nfs
 
-2. *Start QEMU:* Once you have extracted the file system, you can run
+#. *Start QEMU:* Once you have extracted the file system, you can run
    ``runqemu`` normally with the additional location of the file system.
    You can then also make changes to the files within ``./test-nfs`` and
    see those changes appear in the image in real time. Here is an
