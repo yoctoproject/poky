@@ -211,22 +211,19 @@ The following changes have been made:
 ``SERIAL_CONSOLE`` Deprecated
 -----------------------------
 
-The :term:`SERIAL_CONSOLE` variable has been
-functionally replaced by the
-:term:`SERIAL_CONSOLES` variable for some time.
-With the Yocto Project 2.6 release, :term:`SERIAL_CONSOLE` has been
-officially deprecated.
+The ``SERIAL_CONSOLE`` variable has been functionally replaced by the
+:term:`SERIAL_CONSOLES` variable for some time. With the Yocto Project 2.6
+release, ``SERIAL_CONSOLE`` has been officially deprecated.
 
-:term:`SERIAL_CONSOLE` will continue to work as before for the 2.6 release.
+``SERIAL_CONSOLE`` will continue to work as before for the 2.6 release.
 However, for the sake of future compatibility, it is recommended that
-you replace all instances of :term:`SERIAL_CONSOLE` with
-:term:`SERIAL_CONSOLES`.
+you replace all instances of ``SERIAL_CONSOLE`` with :term:`SERIAL_CONSOLES`.
 
 .. note::
 
    The only difference in usage is that :term:`SERIAL_CONSOLES`
    expects entries to be separated using semicolons as compared to
-   :term:`SERIAL_CONSOLE`, which expects spaces.
+   ``SERIAL_CONSOLE``, which expects spaces.
 
 .. _migration-2.6-poky-sets-unknown-configure-option-to-qa-error:
 

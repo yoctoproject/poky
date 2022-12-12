@@ -7305,19 +7305,6 @@ system and gives an overview of their function and contents.
       :term:`FULL_OPTIMIZATION` unless :term:`DEBUG_BUILD` = "1", in which
       case the value of :term:`DEBUG_OPTIMIZATION` is used.
 
-   :term:`SERIAL_CONSOLE`
-      Defines a serial console (TTY) to enable using
-      `getty <https://en.wikipedia.org/wiki/Getty_(Unix)>`__. Provide a
-      value that specifies the baud rate followed by the TTY device name
-      separated by a space. You cannot specify more than one TTY device::
-
-         SERIAL_CONSOLE = "115200 ttyS0"
-
-      .. note::
-
-         The :term:`SERIAL_CONSOLE` variable is deprecated. Please use the
-         :term:`SERIAL_CONSOLES` variable.
-
    :term:`SERIAL_CONSOLES`
       Defines a serial console (TTY) to enable using
       `getty <https://en.wikipedia.org/wiki/Getty_(Unix)>`__. Provide a
