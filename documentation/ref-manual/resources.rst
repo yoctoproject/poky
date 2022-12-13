@@ -82,8 +82,10 @@ instructions:
 -  :yocto_lists:`/g/yocto-announce` --- mailing list to
    receive official Yocto Project release and milestone announcements.
 
-For more Yocto Project-related mailing lists, see the
-:yocto_home:`Yocto Project Website <>`.
+-  :yocto_lists:`/g/docs` --- discussion mailing list about the Yocto Project
+   documentation.
+
+See also :yocto_home:`the description of all mailing lists </community/mailing-lists/>`.
 
 .. _resources-irc:
 
