@@ -191,6 +191,8 @@ supported AlmaLinux-8 Linux distribution:
       $ sudo dnf install make python3-pip which inkscape texlive-fncychap
       &PIP3_HOST_PACKAGES_DOC;
 
+.. _system-requirements-buildtools:
+
 Required Git, tar, Python, make and gcc Versions
 ================================================
 
@@ -207,8 +209,8 @@ the following version requirements for Git, tar, and Python:
 
 If your host development system does not meet all these requirements,
 you can resolve this by installing a ``buildtools`` tarball that
-contains these tools. You can get the tarball one of two ways: download
-a pre-built tarball or use BitBake to build the tarball.
+contains these tools. You can either download a pre-built tarball or
+use BitBake to build one.
 
 In addition, your host development system must meet the following
 version requirement for gcc:
@@ -263,7 +265,7 @@ installer and automatically installs the tools for you:
 
    Alternatively if your host development system has a broken ``make``
    version such that you only need a known good version of ``make``,
-   you can use the ``--make-only`` option:
+   you can use the ``--make-only`` option::
 
       $ cd poky
       $ scripts/install-buildtools --make-only
@@ -272,9 +274,6 @@ installer and automatically installs the tools for you:
    following::
 
       $ source /path/to/poky/buildtools/environment-setup-x86_64-pokysdk-linux
-
-   Of course, you need to supply your installation directory and be sure to
-   use the right file (i.e. i586 or x86_64).
 
    After you have sourced the setup script, the tools are added to
    ``PATH`` and any other environment variables required to run the
@@ -291,7 +290,9 @@ If you would prefer not to use the ``install-buildtools`` script, you can instea
 download and run a pre-built buildtools installer yourself with the following
 steps:
 
-#. Locate and download the ``*.sh`` at :yocto_dl:`/releases/yocto/yocto-&DISTRO;/buildtools/`
+#. Go to :yocto_dl:`/releases/yocto/yocto-&DISTRO;/buildtools/`, locate and
+   download the ``.sh`` file corresponding to your host architecture
+   and to ``buildtools``, ``buildtools-extended`` or ``buildtools-make``.
 
 #. Execute the installation script. Here is an example for the
    traditional installer::
@@ -310,14 +311,10 @@ steps:
    installation directory. For example, you could choose the following:
    ``/home/your-username/buildtools``
 
-#. Source the tools environment setup script by using a command like the
-   following::
+#. As instructed by the installer script, you will have to source the tools
+   environment setup script::
 
-      $ source /home/your_username/buildtools/environment-setup-i586-poky-linux
-
-   Of
-   course, you need to supply your installation directory and be sure to
-   use the right file (i.e. i585 or x86-64).
+      $ source /home/your_username/buildtools/environment-setup-x86_64-pokysdk-linux
 
    After you have sourced the setup script, the tools are added to
    ``PATH`` and any other environment variables required to run the
@@ -347,7 +344,7 @@ installer:
 
       $ bitbake buildtools-tarball
 
-   or run the BitBake command to build the extended tarball::
+   or to build the extended tarball::
 
       $ bitbake buildtools-extended-tarball
 
@@ -363,22 +360,21 @@ installer:
    Once the build completes, you can find the ``.sh`` file that installs
    the tools in the ``tmp/deploy/sdk`` subdirectory of the
    :term:`Build Directory`. The installer file has the string
-   "buildtools" (or "buildtools-extended") in the name.
+   "buildtools" or "buildtools-extended" in the name.
 
 #. Transfer the ``.sh`` file from the build host to the machine that
    does not meet the Git, tar, or Python (or gcc) requirements.
 
-#. On the machine that does not meet the requirements, run the ``.sh``
-   file to install the tools. Here is an example for the traditional
-   installer::
+#. On this machine, run the ``.sh`` file to install the tools. Here is an
+   example for the traditional installer::
 
       $ sh ~/Downloads/x86_64-buildtools-nativesdk-standalone-&DISTRO;.sh
 
-   Here is an example for the extended installer::
+   For the extended installer::
 
       $ sh ~/Downloads/x86_64-buildtools-extended-nativesdk-standalone-&DISTRO;.sh
 
-   or for the make-only installer::
+   And for the make-only installer::
 
       $ sh ~/Downloads/x86_64-buildtools-make-nativesdk-standalone-&DISTRO;.sh
 
@@ -390,9 +386,6 @@ installer:
    following::
 
       $ source /home/your_username/buildtools/environment-setup-x86_64-poky-linux
-
-   Of course, you need to supply your installation directory and be sure to
-   use the right file (i.e. i586 or x86_64).
 
    After you have sourced the setup script, the tools are added to
    ``PATH`` and any other environment variables required to run the
