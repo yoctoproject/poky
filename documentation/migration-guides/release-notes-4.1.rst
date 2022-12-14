@@ -11,7 +11,7 @@ New Features / Enhancements in 4.1
 
 - ``make`` 4.0 is now the minimum make version required on the build host.
   For host distros that do not provide it, this is included as part of the
-  ``buildtools-tarball``, and additionally a new ``buildtools-make-tarball``
+  :term:`buildtools` tarball, and additionally a new :term:`buildtools-make` tarball
   has been introduced to provide this in particular for host distros with
   a broken make 4.x version. For more details see
   :ref:`ref-manual/system-requirements:required git, tar, python, make and gcc versions`.

@@ -13,7 +13,7 @@ Minimum system requirements
 
 ``gcc`` version 6.0 is now required at minimum on the build host. For older
 host distributions where this is not available, you can use the
-``buildtools-extended-tarball`` (easily installable using
+:term:`buildtools-extended` tarball (easily installable using
 ``scripts/install-buildtools``).
 
 

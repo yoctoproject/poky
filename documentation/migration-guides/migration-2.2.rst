@@ -105,7 +105,7 @@ online package-manager support through SMART still require Python 2.
 ``buildtools-tarball`` Includes Python 3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``buildtools-tarball`` now includes Python 3.
+The :term:`buildtools` tarball now includes Python 3.
 
 .. _migration-2.2-uclibc-replaced-by-musl:
 

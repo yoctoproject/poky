@@ -208,7 +208,7 @@ the following version requirements for Git, tar, and Python:
 -  GNU make &MIN_MAKE_VERSION; or greater
 
 If your host development system does not meet all these requirements,
-you can resolve this by installing a ``buildtools`` tarball that
+you can resolve this by installing a :term:`buildtools` tarball that
 contains these tools. You can either download a pre-built tarball or
 use BitBake to build one.
 
@@ -218,23 +218,23 @@ version requirement for gcc:
 -  gcc &MIN_GCC_VERSION; or greater
 
 If your host development system does not meet this requirement, you can
-resolve this by installing a ``buildtools-extended`` tarball that
+resolve this by installing a :term:`buildtools-extended` tarball that
 contains additional tools, the equivalent of the Debian/Ubuntu ``build-essential``
 package.
 
 For systems with a broken make version (e.g. make 4.2.1 without patches) but
-where the rest of the host tools are usable, you can use the ``buildtools-make``
+where the rest of the host tools are usable, you can use the :term:`buildtools-make`
 tarball instead.
 
 In the sections that follow, three different methods will be described for
-installing the ``buildtools``, ``buildtools-extended`` or ``buildtools-make``
+installing the :term:`buildtools`, :term:`buildtools-extended` or :term:`buildtools-make`
 toolset.
 
 Installing a Pre-Built ``buildtools`` Tarball with ``install-buildtools`` script
 --------------------------------------------------------------------------------
 
 The ``install-buildtools`` script is the easiest of the three methods by
-which you can get these tools. It downloads a pre-built buildtools
+which you can get these tools. It downloads a pre-built :term:`buildtools`
 installer and automatically installs the tools for you:
 
 #. Execute the ``install-buildtools`` script. Here is an example::
@@ -246,7 +246,7 @@ installer and automatically installs the tools for you:
         --release yocto-&DISTRO; \
         --installer-version &DISTRO;
 
-   During execution, the buildtools tarball will be downloaded, the
+   During execution, the :term:`buildtools` tarball will be downloaded, the
    checksum of the download will be verified, the installer will be run
    for you, and some basic checks will be run to make sure the
    installation is functional.
@@ -257,7 +257,7 @@ installer and automatically installs the tools for you:
       /path/to/poky/buildtools
 
    If your host development system needs the additional tools provided
-   in the ``buildtools-extended`` tarball, you can instead execute the
+   in the :term:`buildtools-extended` tarball, you can instead execute the
    ``install-buildtools`` script with the default parameters::
 
       $ cd poky
@@ -279,7 +279,7 @@ installer and automatically installs the tools for you:
    ``PATH`` and any other environment variables required to run the
    tools are initialized. The results are working versions versions of
    Git, tar, Python and ``chrpath``. And in the case of the
-   ``buildtools-extended`` tarball, additional working versions of tools
+   :term:`buildtools-extended` tarball, additional working versions of tools
    including ``gcc``, ``make`` and the other tools included in
    ``packagegroup-core-buildessential``.
 
@@ -287,12 +287,12 @@ Downloading a Pre-Built ``buildtools`` Tarball
 ----------------------------------------------
 
 If you would prefer not to use the ``install-buildtools`` script, you can instead
-download and run a pre-built buildtools installer yourself with the following
+download and run a pre-built :term:`buildtools` installer yourself with the following
 steps:
 
 #. Go to :yocto_dl:`/releases/yocto/yocto-&DISTRO;/buildtools/`, locate and
    download the ``.sh`` file corresponding to your host architecture
-   and to ``buildtools``, ``buildtools-extended`` or ``buildtools-make``.
+   and to :term:`buildtools`, :term:`buildtools-extended` or :term:`buildtools-make`.
 
 #. Execute the installation script. Here is an example for the
    traditional installer::
@@ -320,20 +320,20 @@ steps:
    ``PATH`` and any other environment variables required to run the
    tools are initialized. The results are working versions versions of
    Git, tar, Python and ``chrpath``. And in the case of the
-   ``buildtools-extended`` tarball, additional working versions of tools
+   :term:`buildtools-extended` tarball, additional working versions of tools
    including ``gcc``, ``make`` and the other tools included in
    ``packagegroup-core-buildessential``.
 
 Building Your Own ``buildtools`` Tarball
 ----------------------------------------
 
-Building and running your own buildtools installer applies only when you
+Building and running your own :term:`buildtools` installer applies only when you
 have a build host that can already run BitBake. In this case, you use
 that machine to build the ``.sh`` file and then take steps to transfer
 and run it on a machine that does not meet the minimal Git, tar, and
 Python (or gcc) requirements.
 
-Here are the steps to take to build and run your own buildtools
+Here are the steps to take to build and run your own :term:`buildtools`
 installer:
 
 #. On the machine that is able to run BitBake, be sure you have set up
@@ -391,6 +391,6 @@ installer:
    ``PATH`` and any other environment variables required to run the
    tools are initialized. The results are working versions versions of
    Git, tar, Python and ``chrpath``. And in the case of the
-   ``buildtools-extended`` tarball, additional working versions of tools
+   :term:`buildtools-extended` tarball, additional working versions of tools
    including ``gcc``, ``make`` and the other tools included in
    ``packagegroup-core-buildessential``.

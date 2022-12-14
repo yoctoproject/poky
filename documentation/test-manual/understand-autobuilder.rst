@@ -204,7 +204,7 @@ The ``scripts/run-config`` execution is where most of the work within
 the Autobuilder happens. It runs through a number of steps; the first
 are general setup steps that are run once and include:
 
-#. Set up any ``buildtools-tarball`` if configured.
+#. Set up any :term:`buildtools` tarball if configured.
 
 #. Call "buildhistory-init" if :ref:`buildhistory <ref-classes-buildhistory>` is configured.
 

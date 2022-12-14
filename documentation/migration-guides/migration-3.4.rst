@@ -95,7 +95,7 @@ The ``lz4c``, ``pzstd`` and ``zstd`` commands are now required to be
 installed on the build host to support LZ4 and Zstandard compression
 functionality. These are typically provided by ``lz4`` and ``zstd``
 packages in most Linux distributions. Alternatively they are available
-as part of ``buildtools-tarball`` if your distribution does not provide
+as part of :term:`buildtools` tarball if your distribution does not provide
 them. For more information see
 :ref:`ref-manual/system-requirements:required packages for the build host`.
 

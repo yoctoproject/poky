@@ -16,10 +16,10 @@ make 4.0 is now the minimum required make version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 glibc now requires ``make`` 4.0 to build, thus it is now the version required to
-be installed on the build host. A new ``buildtools-make-tarball`` has been
+be installed on the build host. A new :term:`buildtools-make` tarball has been
 introduced to provide just make 4.0 for host distros without a current/working
 make 4.x version; if you also need other tools you can use the updated
-``buildtools-tarball``. For more information see
+:term:`buildtools` tarball. For more information see
 :ref:`ref-manual/system-requirements:required packages for the build host`.
 
 
