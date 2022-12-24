@@ -93,17 +93,17 @@ AUTOTOOLS_AUXDIR ?= "${AUTOTOOLS_SCRIPT_PATH}"
 
 oe_runconf () {
 	# Use relative path to avoid buildpaths in files
-	cfgscript_name="`basename ${CONFIGURE_SCRIPT}`"
-	cfgscript=`python3 -c "import os; print(os.path.relpath(os.path.dirname('${CONFIGURE_SCRIPT}'), '.'))"`/$cfgscript_name
-	if [ -x "$cfgscript" ] ; then
-		bbnote "Running $cfgscript ${CONFIGUREOPTS} ${EXTRA_OECONF} $@"
-		if ! CONFIG_SHELL=${CONFIG_SHELL-/bin/bash} ${CACHED_CONFIGUREVARS} $cfgscript ${CONFIGUREOPTS} ${EXTRA_OECONF} "$@"; then
+	cfgscript_name="$(basename ${CONFIGURE_SCRIPT})"
+	cfgscript=$(python3 -c "import os; print(os.path.relpath(os.path.dirname('${CONFIGURE_SCRIPT}'), '.'))")/${cfgscript_name}
+	if [ -x "${cfgscript}" ] ; then
+		bbnote "Running ${cfgscript} ${CONFIGUREOPTS} ${EXTRA_OECONF} $@"
+		if ! CONFIG_SHELL=${CONFIG_SHELL-/bin/bash} ${CACHED_CONFIGUREVARS} ${cfgscript} ${CONFIGUREOPTS} ${EXTRA_OECONF} "$@"; then
 			bbnote "The following config.log files may provide further information."
-			bbnote `find ${B} -ignore_readdir_race -type f -name config.log`
+			bbnote $(find ${B} -ignore_readdir_race -type f -name config.log)
 			bbfatal_log "configure failed"
 		fi
 	else
-		bbfatal "no configure script found at $cfgscript"
+		bbfatal "no configure script found at ${cfgscript}"
 	fi
 }
 
@@ -111,7 +111,7 @@ CONFIGURESTAMPFILE = "${WORKDIR}/configure.sstate"
 
 autotools_preconfigure() {
 	if [ -n "${CONFIGURESTAMPFILE}" -a -e "${CONFIGURESTAMPFILE}" ]; then
-		if [ "`cat ${CONFIGURESTAMPFILE}`" != "${BB_TASKHASH}" ]; then
+		if [ "$(cat ${CONFIGURESTAMPFILE})" != "${BB_TASKHASH}" ]; then
 			if [ "${S}" != "${B}" ]; then
 				echo "Previously configured separate build directory detected, cleaning ${B}"
 				rm -rf ${B}
@@ -131,7 +131,7 @@ autotools_preconfigure() {
 
 autotools_postconfigure(){
 	if [ -n "${CONFIGURESTAMPFILE}" ]; then
-		mkdir -p `dirname ${CONFIGURESTAMPFILE}`
+		mkdir -p $(dirname ${CONFIGURESTAMPFILE})
 		echo ${BB_TASKHASH} > ${CONFIGURESTAMPFILE}
 	fi
 }
@@ -171,29 +171,29 @@ autotools_do_configure() {
 
 	PRUNE_M4=""
 
-	for ac in `find ${S} -ignore_readdir_race -name configure.in -o -name configure.ac`; do
-		rm -f `dirname $ac`/configure
+	for ac in $(find ${S} -ignore_readdir_race -name configure.in -o -name configure.ac); do
+		rm -f $(dirname ${ac})/configure
 	done
 	if [ -e ${AUTOTOOLS_SCRIPT_PATH}/configure.in -o -e ${AUTOTOOLS_SCRIPT_PATH}/configure.ac ]; then
-		olddir=`pwd`
+		olddir=$(pwd)
 		cd ${AUTOTOOLS_SCRIPT_PATH}
 		mkdir -p ${ACLOCALDIR}
 		ACLOCAL="aclocal --system-acdir=${ACLOCALDIR}/"
 		if [ x"${acpaths}" = xdefault ]; then
 			acpaths=
-			for i in `find ${AUTOTOOLS_SCRIPT_PATH} -ignore_readdir_race -maxdepth 2 -name \*.m4|grep -v 'aclocal.m4'| \
-				grep -v 'acinclude.m4' | sed -e 's,\(.*/\).*$,\1,'|sort -u`; do
+			for i in $(find ${AUTOTOOLS_SCRIPT_PATH} -ignore_readdir_race -maxdepth 2 -name \*.m4|grep -v 'aclocal.m4'| \
+				grep -v 'acinclude.m4' | sed -e 's,\(.*/\).*$,\1,'|sort -u); do
 				acpaths="$acpaths -I $i"
 			done
 		else
 			acpaths="${acpaths}"
 		fi
 		acpaths="$acpaths ${ACLOCALEXTRAPATH}"
-		AUTOV=`automake --version | sed -e '1{s/.* //;s/\.[0-9]\+$//};q'`
+		AUTOV=$(automake --version | sed -e '1{s/.* //;s/\.[0-9]\+$//};q')
 		automake --version
-		echo "AUTOV is $AUTOV"
-		if [ -d ${STAGING_DATADIR_NATIVE}/aclocal-$AUTOV ]; then
-			ACLOCAL="$ACLOCAL --automake-acdir=${STAGING_DATADIR_NATIVE}/aclocal-$AUTOV"
+		echo "AUTOV is ${AUTOV}"
+		if [ -d ${STAGING_DATADIR_NATIVE}/aclocal-${AUTOV} ]; then
+			ACLOCAL="${ACLOCAL} --automake-acdir=${STAGING_DATADIR_NATIVE}/aclocal-${AUTOV}"
 		fi
 		# autoreconf is too shy to overwrite aclocal.m4 if it doesn't look
 		# like it was auto-generated.  Work around this by blowing it away
@@ -206,14 +206,14 @@ autotools_do_configure() {
 		else
 			CONFIGURE_AC=configure.ac
 		fi
-		if grep -q "^[[:space:]]*AM_GLIB_GNU_GETTEXT" $CONFIGURE_AC; then
-			if grep -q "sed.*POTFILES" $CONFIGURE_AC; then
+		if grep -q "^[[:space:]]*AM_GLIB_GNU_GETTEXT" ${CONFIGURE_AC}; then
+			if grep -q "sed.*POTFILES" ${CONFIGURE_AC}; then
 				: do nothing -- we still have an old unmodified configure.ac
 	    		else
 				bbnote Executing glib-gettextize --force --copy
 				echo "no" | glib-gettextize --force --copy
 			fi
-		elif [ "${BPN}" != "gettext" ] && grep -q "^[[:space:]]*AM_GNU_GETTEXT" $CONFIGURE_AC; then
+		elif [ "${BPN}" != "gettext" ] && grep -q "^[[:space:]]*AM_GNU_GETTEXT" ${CONFIGURE_AC}; then
 			# We'd call gettextize here if it wasn't so broken...
 			cp ${STAGING_DATADIR_NATIVE}/gettext/config.rpath ${AUTOTOOLS_AUXDIR}/
 			if [ -d ${S}/po/ ]; then
@@ -222,17 +222,17 @@ autotools_do_configure() {
 					cp ${STAGING_DATADIR_NATIVE}/gettext/po/remove-potcdate.sin ${S}/po/
 				fi
 			fi
-			PRUNE_M4="$PRUNE_M4 gettext.m4 iconv.m4 lib-ld.m4 lib-link.m4 lib-prefix.m4 nls.m4 po.m4 progtest.m4"
+			PRUNE_M4="${PRUNE_M4} gettext.m4 iconv.m4 lib-ld.m4 lib-link.m4 lib-prefix.m4 nls.m4 po.m4 progtest.m4"
 		fi
 		mkdir -p m4
 
-		for i in $PRUNE_M4; do
+		for i in ${PRUNE_M4}; do
 			find ${S} -ignore_readdir_race -name $i -delete
 		done
 
-		bbnote Executing ACLOCAL=\"$ACLOCAL\" autoreconf -Wcross --verbose --install --force ${EXTRA_AUTORECONF} $acpaths
-		ACLOCAL="$ACLOCAL" autoreconf -Wcross -Wno-obsolete --verbose --install --force ${EXTRA_AUTORECONF} $acpaths || die "autoreconf execution failed."
-		cd $olddir
+		bbnote Executing ACLOCAL=\"${ACLOCAL}\" autoreconf -Wcross --verbose --install --force ${EXTRA_AUTORECONF} $acpaths
+		ACLOCAL="${ACLOCAL}" autoreconf -Wcross -Wno-obsolete --verbose --install --force ${EXTRA_AUTORECONF} $acpaths || die "autoreconf execution failed."
+		cd ${olddir}
 	fi
 	if [ -e ${CONFIGURE_SCRIPT} ]; then
 		oe_runconf

@@ -144,7 +144,7 @@ do_compile() {
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
 	export KCONFIG_NOTIMESTAMP=1
 
-	if [ "${BUSYBOX_SPLIT_SUID}" = "1" -a x`grep "CONFIG_FEATURE_INDIVIDUAL=y" .config` = x ]; then
+	if [ "${BUSYBOX_SPLIT_SUID}" = "1" -a x$(grep "CONFIG_FEATURE_INDIVIDUAL=y" .config) = x ]; then
 		# split the .config into two parts, and make two busybox binaries
 		if [ -e .config.orig ]; then
 			# Need to guard again an interrupted do_compile - restore any backup
@@ -159,14 +159,14 @@ do_compile() {
 			echo "CONFIG_SH_IS_NONE" >> busybox.cfg.suid
 		fi
 
-		for i in `cat busybox.cfg.suid busybox.cfg.nosuid`; do
+		for i in $(cat busybox.cfg.suid busybox.cfg.nosuid); do
 			echo "# $i is not set" >> .config.disable.apps
 		done
 		merge_config.sh -m .config.orig .config.disable.apps
 		cp .config .config.nonapps
 		for s in suid nosuid; do
 			cat busybox.cfg.$s | while read item; do
-				grep -w "$item" .config.orig
+				grep -w "${item}" .config.orig
 			done > .config.app.$s
 
 			# workaround for suid bug 10346
@@ -251,11 +251,11 @@ do_install () {
 	else
 		install -d ${D}${base_bindir} ${D}${bindir} ${D}${libdir}
 		cat busybox.links | while read FILE; do
-			NAME=`basename "$FILE"`
-			install -m 0755 "0_lib/$NAME" "${D}$FILE.${BPN}"
+			NAME=$(basename "${FILE}")
+			install -m 0755 "0_lib/${NAME}" "${D}${FILE}.${BPN}"
 		done
 		# add suid bit where needed
-		for i in `grep -E "APPLET.*BB_SUID_((MAYBE|REQUIRE))" include/applets.h | grep -v _BB_SUID_DROP | cut -f 3 -d '(' | cut -f 1 -d ','`; do
+		for i in $(grep -E "APPLET.*BB_SUID_((MAYBE|REQUIRE))" include/applets.h | grep -v _BB_SUID_DROP | cut -f 3 -d '(' | cut -f 1 -d ','); do
 			find ${D} -name $i.${BPN} -exec chmod a+s {} \;
 		done
 		install -m 0755 0_lib/libbusybox.so.${PV} ${D}${libdir}/libbusybox.so.${PV}
@@ -403,15 +403,15 @@ if test "x$D" = "x"; then
         rm -f ${base_bindir}/busybox.nosuid
     fi
     for suffix in "" ".nosuid" ".suid"; do
-        if test -e ${sysconfdir}/busybox.links$suffix; then
+        if test -e ${sysconfdir}/busybox.links${suffix}; then
             while read link; do
-                if test ! -e "$link"; then
+                if test ! -e "${link}"; then
                     # we can use busybox here because even if we are using splitted busybox
                     # we've made a symlink from /bin/busybox to /bin/busybox.nosuid.
-                    busybox rm -f $link
-                    busybox ln -s "${base_bindir}/busybox$suffix" $link
+                    busybox rm -f ${link}
+                    busybox ln -s "${base_bindir}/busybox${suffix}" ${link}
                 fi
-            done < ${sysconfdir}/busybox.links$suffix
+            done < ${sysconfdir}/busybox.links${suffix}
         fi
     done
 fi
@@ -429,10 +429,10 @@ pkg_postinst:${PN}:prepend () {
         BUSYBOX=""
         if [ "x$D" = "x" ] ; then 
            for busybox_rmdir in /tmp/busyboxrm-*; do
-               if [ "$busybox_rmdir" != '/tmp/busyboxrm-*' ] ; then
-                  export PATH=$busybox_rmdir:$PATH
-                  if [ -e $busybox_rmdir/busybox* ] ; then
-                    BUSYBOX="$busybox_rmdir/busybox*"
+               if [ "${busybox_rmdir}" != '/tmp/busyboxrm-*' ] ; then
+                  export PATH=${busybox_rmdir}:${PATH}
+                  if [ -e ${busybox_rmdir}/busybox* ] ; then
+                    BUSYBOX="${busybox_rmdir}/busybox*"
                   fi
                fi
            done
@@ -442,9 +442,9 @@ pkg_postinst:${PN}:prepend () {
 pkg_postinst:${PN}:append () {
         # If busybox exists in the remove directory it is because it was the only shell left.
         if [ "x$D" = "x" ] ; then
-           if [ "x$BUSYBOX" != "x" ] ; then
-              update-alternatives --remove sh $BUSYBOX
-              rm -f $BUSYBOX
+           if [ "x${BUSYBOX}" != "x" ] ; then
+              update-alternatives --remove sh ${BUSYBOX}
+              rm -f ${BUSYBOX}
            fi
         fi
 } 
@@ -453,29 +453,29 @@ pkg_prerm:${PN} () {
 	# This is so you can make busybox commit suicide - removing busybox with no other packages
 	# providing its files, this will make update-alternatives work, but the update-rc.d part
 	# for syslog, httpd and/or udhcpd will fail if there is no other package providing sh
-	tmpdir=`mktemp -d /tmp/busyboxrm-XXXXXX`
-	ln -s ${base_bindir}/busybox $tmpdir/[
-	ln -s ${base_bindir}/busybox $tmpdir/test
-	ln -s ${base_bindir}/busybox $tmpdir/head
-	ln -s ${base_bindir}/busybox $tmpdir/sh
-	ln -s ${base_bindir}/busybox $tmpdir/basename
-	ln -s ${base_bindir}/busybox $tmpdir/echo
-	ln -s ${base_bindir}/busybox $tmpdir/mv
-	ln -s ${base_bindir}/busybox $tmpdir/ln
-	ln -s ${base_bindir}/busybox $tmpdir/dirname
-	ln -s ${base_bindir}/busybox $tmpdir/rm
-	ln -s ${base_bindir}/busybox $tmpdir/sed
-	ln -s ${base_bindir}/busybox $tmpdir/sort
-	ln -s ${base_bindir}/busybox $tmpdir/grep
-	ln -s ${base_bindir}/busybox $tmpdir/tail
-	export PATH=$PATH:$tmpdir
+	tmpdir=$(mktemp -d /tmp/busyboxrm-XXXXXX)
+	ln -s ${base_bindir}/busybox ${tmpdir}/[
+	ln -s ${base_bindir}/busybox ${tmpdir}/test
+	ln -s ${base_bindir}/busybox ${tmpdir}/head
+	ln -s ${base_bindir}/busybox ${tmpdir}/sh
+	ln -s ${base_bindir}/busybox ${tmpdir}/basename
+	ln -s ${base_bindir}/busybox ${tmpdir}/echo
+	ln -s ${base_bindir}/busybox ${tmpdir}/mv
+	ln -s ${base_bindir}/busybox ${tmpdir}/ln
+	ln -s ${base_bindir}/busybox ${tmpdir}/dirname
+	ln -s ${base_bindir}/busybox ${tmpdir}/rm
+	ln -s ${base_bindir}/busybox ${tmpdir}/sed
+	ln -s ${base_bindir}/busybox ${tmpdir}/sort
+	ln -s ${base_bindir}/busybox ${tmpdir}/grep
+	ln -s ${base_bindir}/busybox ${tmpdir}/tail
+	export PATH=${PATH}:${tmpdir}
 
         # If busybox is the shell, we need to save it since its the lowest priority shell
         # Register saved bitbake as the lowest priority shell possible as back up.
         if [ -n "$(readlink -f /bin/sh | grep busybox)" ] ; then
            BUSYBOX=$(readlink -f /bin/sh)
-           cp $BUSYBOX $tmpdir/$(basename $BUSYBOX)
-           update-alternatives --install /bin/sh sh $tmpdir/$(basename $BUSYBOX) 1 
+           cp ${BUSYBOX} ${tmpdir}/$(basename ${BUSYBOX})
+           update-alternatives --install /bin/sh sh ${tmpdir}/$(basename ${BUSYBOX}) 1 
         fi
 }
 
@@ -483,8 +483,8 @@ pkg_postrm:${PN} () {
         # Add path to remove dir in case we removed our only grep
         if [ "x$D" = "x" ] ; then
            for busybox_rmdir in /tmp/busyboxrm-*; do
-               if [ "$busybox_rmdir" != '/tmp/busyboxrm-*' ] ; then
-                  export PATH=$busybox_rmdir:$PATH
+               if [ "${busybox_rmdir}" != '/tmp/busyboxrm-*' ] ; then
+                  export PATH=${busybox_rmdir}:${PATH}
                fi
            done
         fi

@@ -322,10 +322,10 @@ CLEANBROKEN = "0"
 addtask configure after do_patch
 do_configure[dirs] = "${B}"
 base_do_configure() {
-	if [ -n "${CONFIGURESTAMPFILE}" -a -e "${CONFIGURESTAMPFILE}" ]; then
+	if [ -n "${CONFIGURESTAMPFILE}" ] && [ -e "${CONFIGURESTAMPFILE}" ]; then
 		if [ "`cat ${CONFIGURESTAMPFILE}`" != "${BB_TASKHASH}" ]; then
 			cd ${B}
-			if [ "${CLEANBROKEN}" != "1" -a \( -e Makefile -o -e makefile -o -e GNUmakefile \) ]; then
+			if [ "${CLEANBROKEN}" != "1" ] && [ \( -e Makefile -o -e makefile -o -e GNUmakefile \) ]; then
 				oe_runmake clean
 			fi
 			# -ignore_readdir_race does not work correctly with -delete;

@@ -312,24 +312,24 @@ def exec_func_python(func, d, runfile, cwd=None):
                 bb.warn("%s: Cannot restore cwd %s: %s" % (func, olddir, e))
 
 def shell_trap_code():
-    return '''#!/bin/sh\n
+    return '''#!/usr/bin/env bash\n
 __BITBAKE_LAST_LINE=0
 
 # Emit a useful diagnostic if something fails:
 bb_sh_exit_handler() {
     ret=$?
-    if [ "$ret" != 0 ]; then
-        echo "WARNING: exit code $ret from a shell command."
+    if [ "${ret}" != 0 ]; then
+        echo "WARNING: exit code ${ret} from a shell command."
     fi
-    exit $ret
+    exit ${ret}
 }
 
 bb_bash_exit_handler() {
     ret=$?
     { set +x; } > /dev/null
     trap "" DEBUG
-    if [ "$ret" != 0 ]; then
-        echo "WARNING: ${BASH_SOURCE[0]}:${__BITBAKE_LAST_LINE} exit $ret from '$1'"
+    if [ "${ret}" != 0 ]; then
+        echo "WARNING: ${BASH_SOURCE[0]}:${__BITBAKE_LAST_LINE} exit ${ret} from '$1'"
 
         echo "WARNING: Backtrace (BB generated script): "
         for i in $(seq 1 $((${#FUNCNAME[@]} - 1))); do
@@ -340,28 +340,28 @@ bb_bash_exit_handler() {
             fi
         done
     fi
-    exit $ret
+    exit ${ret}
 }
 
 bb_bash_debug_handler() {
     local line=${BASH_LINENO[0]}
     # For some reason the DEBUG trap trips with lineno=1 when scripts exit; ignore it
-    if [ "$line" -eq 1 ]; then
+    if [ "${line}" -eq 1 ]; then
         return
     fi
 
     # Track the line number of commands as they execute. This is so we can have access to the failing line number
     # in the EXIT trap. See http://gnu-bash.2382.n7.nabble.com/trap-echo-quot-trap-exit-on-LINENO-quot-EXIT-gt-wrong-linenumber-td3666.html
     if [ "${FUNCNAME[1]}" != "bb_bash_exit_handler" ]; then
-        __BITBAKE_LAST_LINE=$line
+        __BITBAKE_LAST_LINE=${line}
     fi
 }
 
-case $BASH_VERSION in
+case ${BASH_VERSION} in
 "") trap 'bb_sh_exit_handler' 0
     set -e
     ;;
-*)  trap 'bb_bash_exit_handler "$BASH_COMMAND"' 0
+*)  trap 'bb_bash_exit_handler "${BASH_COMMAND}"' 0
     trap '{ bb_bash_debug_handler; } 2>/dev/null' DEBUG
     set -e
     shopt -s extdebug
@@ -430,7 +430,7 @@ def exec_func_shell(func, d, runfile, cwd=None):
 # cleanup
 ret=$?
 trap '' 0
-exit $ret
+exit ${ret}
 ''')
 
     os.chmod(runfile, 0o775)
