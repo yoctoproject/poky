@@ -1,7 +1,7 @@
 .. SPDX-License-Identifier: CC-BY-SA-2.0-UK
 
 Release notes for 4.2 (mickledore)
----------------------------------
+----------------------------------
 
 New Features / Enhancements in 4.2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
