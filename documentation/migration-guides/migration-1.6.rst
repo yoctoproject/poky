@@ -222,8 +222,7 @@ Package Test (ptest)
 Package Tests (ptest) are built but not installed by default. For
 information on using Package Tests, see the
 ":ref:`dev-manual/packages:testing packages with ptest`" section in the
-Yocto Project Development Tasks Manual. For information on the
-:ref:`ref-classes-ptest` class, see the ":ref:`ref-classes-ptest`"
+Yocto Project Development Tasks Manual. See also the ":ref:`ref-classes-ptest`"
 section.
 
 .. _migration-1.6-build-changes:
