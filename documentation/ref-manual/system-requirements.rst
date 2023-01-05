@@ -34,8 +34,7 @@ and conceptual information in the :doc:`/overview-manual/index`.
 Supported Linux Distributions
 =============================
 
-Currently, the Yocto Project is supported on the following
-distributions:
+Currently, the Yocto Project is supported on the following distributions:
 
 -  Ubuntu 18.04 (LTS)
 
@@ -71,7 +70,13 @@ distributions:
       has no plans to support rolling-releases or development
       distributions due to their constantly changing nature. We welcome
       patches and bug reports, but keep in mind that our priority is on
-      the supported platforms listed below.
+      the supported platforms listed above.
+
+   -  If your Linux distribution is not in the above list, we recommend to
+      get the :term:`buildtools` or :term:`buildtools-extended` tarballs
+      containing the host tools required by your Yocto Project release,
+      typically by running ``scripts/install-buildtools`` as explained in
+      the ":ref:`system-requirements-buildtools`" section.
 
    -  You may use Windows Subsystem For Linux v2 to set up a build host
       using Windows 10 or later, or Windows Server 2019 or later, but validation
