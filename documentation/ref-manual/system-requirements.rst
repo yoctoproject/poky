@@ -118,7 +118,13 @@ tested on former revisions of "&DISTRO_NAME;", but no longer are:
       has no plans to support rolling-releases or development
       distributions due to their constantly changing nature. We welcome
       patches and bug reports, but keep in mind that our priority is on
-      the supported platforms listed below.
+      the supported platforms listed above.
+
+   -  If your Linux distribution is not in the above list, we recommend to
+      get the :term:`buildtools` or :term:`buildtools-extended` tarballs
+      containing the host tools required by your Yocto Project release,
+      typically by running ``scripts/install-buildtools`` as explained in
+      the ":ref:`system-requirements-buildtools`" section.
 
    -  You may use Windows Subsystem For Linux v2 to set up a build host
       using Windows 10, but validation is not performed against build
