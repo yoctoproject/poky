@@ -70,17 +70,16 @@ the following::
 Kernel Build Changes
 --------------------
 
-The kernel build process was changed to place the source in a common
-shared work area and to place build artifacts separately in the source
-code tree. In theory, migration paths have been provided for most common
-usages in kernel recipes but this might not work in all cases. In
-particular, users need to ensure that ``${S}`` (source files) and
-``${B}`` (build artifacts) are used correctly in functions such as
-:ref:`ref-tasks-configure` and
-:ref:`ref-tasks-install`. For kernel recipes that do not
-inherit from :ref:`kernel-yocto <ref-classes-kernel-yocto>` or include ``linux-yocto.inc``, you might
-wish to refer to the ``linux.inc`` file in the ``meta-oe`` layer for the
-kinds of changes you need to make. For reference, here is the
+The kernel build process was changed to place the source in a common shared work
+area and to place build artifacts separately in the source code tree. In theory,
+migration paths have been provided for most common usages in kernel recipes but
+this might not work in all cases. In particular, users need to ensure that
+``${S}`` (source files) and ``${B}`` (build artifacts) are used correctly in
+functions such as :ref:`ref-tasks-configure` and :ref:`ref-tasks-install`. For
+kernel recipes that do not inherit from :ref:`ref-classes-kernel-yocto` or
+include ``linux-yocto.inc``, you might wish to refer to the ``linux.inc`` file
+in the ``meta-oe`` layer for the kinds of changes you need to make. For reference,
+here is the
 :oe_git:`commit </meta-openembedded/commit/meta-oe/recipes-kernel/linux/linux.inc?id=fc7132ede27ac67669448d3d2845ce7d46c6a1ee>`
 where the ``linux.inc`` file in ``meta-oe`` was updated.
 
@@ -123,10 +122,9 @@ need to take corrective steps.
 Rebuild Improvements
 --------------------
 
-Changes have been made to the :ref:`base <ref-classes-base>`,
-:ref:`autotools <ref-classes-autotools>`, and
-:ref:`cmake <ref-classes-cmake>` classes to clean out generated files
-when the :ref:`ref-tasks-configure` task needs to be
+Changes have been made to the :ref:`ref-classes-base`,
+:ref:`ref-classes-autotools`, and :ref:`ref-classes-cmake` classes to clean out
+generated files when the :ref:`ref-tasks-configure` task needs to be
 re-executed.
 
 One of the improvements is to attempt to run "make clean" during the

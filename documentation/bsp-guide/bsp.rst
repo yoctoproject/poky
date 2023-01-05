@@ -1365,7 +1365,7 @@ Project Reference Manual.
 
 -  :term:`IMAGE_INSTALL`:
    Specifies packages to install into an image through the
-   :ref:`image <ref-classes-image>` class. Recipes
+   :ref:`ref-classes-image` class. Recipes
    use the :term:`IMAGE_INSTALL` variable.
 
 -  ``do_image_wic[depends]``: A task that is constructed during the

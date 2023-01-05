@@ -325,13 +325,12 @@ and not just the source used in the released image. It will include
 toolchain source, and other artifacts, which you would not generally
 release. However, the more serious issue for most companies is
 accidental release of proprietary software. The Yocto Project provides
-an :ref:`archiver <ref-classes-archiver>` class to
-help avoid some of these concerns.
+an :ref:`ref-classes-archiver` class to help avoid some of these concerns.
 
-Before you employ :term:`DL_DIR` or the :ref:`archiver <ref-classes-archiver>` class, you need to
-decide how you choose to provide source. The source :ref:`archiver <ref-classes-archiver>` class
-can generate tarballs and SRPMs and can create them with various levels
-of compliance in mind.
+Before you employ :term:`DL_DIR` or the :ref:`ref-classes-archiver` class, you
+need to decide how you choose to provide source. The source
+:ref:`ref-classes-archiver` class can generate tarballs and SRPMs and can
+create them with various levels of compliance in mind.
 
 One way of doing this (but certainly not the only way) is to release
 just the source as a tarball. You can do this by adding the following to
@@ -417,8 +416,8 @@ generation are included on your image.
    adds a separate package and an upgrade path for adding licenses to an
    image.
 
-As the source :ref:`archiver <ref-classes-archiver>` class has already archived the original
-unmodified source that contains the license files, you would have
+As the source :ref:`ref-classes-archiver` class has already archived the
+original unmodified source that contains the license files, you would have
 already met the requirements for inclusion of the license information
 with source as defined by the GPL and other open source licenses.
 
@@ -488,8 +487,8 @@ mechanisms as well as explicitly included in the image recipe with
 :term:`IMAGE_INSTALL`, and depends on a static linked library recipe B
 (``DEPENDS += "B"``), package B will neither appear in the generated license
 manifest nor in the generated source tarballs.  This occurs as the
-:ref:`license <ref-classes-license>` and :ref:`archiver <ref-classes-archiver>`
-classes assume that only packages included via :term:`RDEPENDS` or :term:`RRECOMMENDS`
+:ref:`ref-classes-license` and :ref:`ref-classes-archiver` classes assume that
+only packages included via :term:`RDEPENDS` or :term:`RRECOMMENDS`
 end up in the image.
 
 As a result, potential obligations regarding license compliance for package B

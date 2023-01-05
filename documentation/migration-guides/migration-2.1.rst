@@ -66,7 +66,7 @@ Makefile Environment Changes
 :term:`EXTRA_OEMAKE` now defaults to "" instead of
 "-e MAKEFLAGS=". Setting :term:`EXTRA_OEMAKE` to "-e MAKEFLAGS=" by default
 was a historical accident that has required many classes (e.g.
-:ref:`autotools <ref-classes-autotools>`, ``module``) and recipes to override this default in order
+:ref:`ref-classes-autotools`, ``module``) and recipes to override this default in order
 to work with sensible build systems. When upgrading to the release, you
 must edit any recipe that relies upon this old default by either setting
 :term:`EXTRA_OEMAKE` back to "-e MAKEFLAGS=" or by explicitly setting any
@@ -100,7 +100,7 @@ breaking FHS.
 ``ac_cv_sizeof_off_t`` is No Longer Cached in Site Files
 --------------------------------------------------------
 
-For recipes inheriting the :ref:`autotools <ref-classes-autotools>`
+For recipes inheriting the :ref:`ref-classes-autotools`
 class, ``ac_cv_sizeof_off_t`` is no longer cached in the site files for
 ``autoconf``. The reason for this change is because the
 ``ac_cv_sizeof_off_t`` value is not necessarily static per architecture
@@ -108,12 +108,12 @@ as was previously assumed. Rather, the value changes based on whether
 large file support is enabled. For most software that uses ``autoconf``,
 this change should not be a problem. However, if you have a recipe that
 bypasses the standard :ref:`ref-tasks-configure` task
-from the :ref:`autotools <ref-classes-autotools>` class and the software the recipe is building
+from the :ref:`ref-classes-autotools` class and the software the recipe is building
 uses a very old version of ``autoconf``, the recipe might be incapable
 of determining the correct size of ``off_t`` during :ref:`ref-tasks-configure`.
 
 The best course of action is to patch the software as necessary to allow
-the default implementation from the :ref:`autotools <ref-classes-autotools>` class to work such
+the default implementation from the :ref:`ref-classes-autotools` class to work such
 that ``autoreconf`` succeeds and produces a working configure script,
 and to remove the overridden :ref:`ref-tasks-configure` task such that the default
 implementation does get used.
@@ -138,9 +138,8 @@ should make edits so that those tasks are after the
 after :ref:`ref-tasks-rootfs` so that your added tasks run at the correct
 time.
 
-A minor part of this restructuring is that the post-processing
-definitions and functions have been moved from the
-:ref:`image <ref-classes-image>` class to the
+A minor part of this restructuring is that the post-processing definitions and
+functions have been moved from the :ref:`ref-classes-image` class to the
 :ref:`rootfs-postcommands <ref-classes-rootfs*>` class. Functionally,
 however, they remain unchanged.
 
@@ -191,18 +190,17 @@ Class Changes
 The following classes have changed:
 
 -  ``autotools_stage``: Removed because the
-   :ref:`autotools <ref-classes-autotools>` class now provides its
+   :ref:`ref-classes-autotools` class now provides its
    functionality. Recipes that inherited from ``autotools_stage`` should
-   now inherit from :ref:`autotools <ref-classes-autotools>` instead.
+   now inherit from :ref:`ref-classes-autotools` instead.
 
 -  ``boot-directdisk``: Merged into the ``image-vm`` class. The
    ``boot-directdisk`` class was rarely directly used. Consequently,
    this change should not cause any issues.
 
--  ``bootimg``: Merged into the
-   :ref:`image-live <ref-classes-image-live>` class. The ``bootimg``
-   class was rarely directly used. Consequently, this change should not
-   cause any issues.
+-  ``bootimg``: Merged into the :ref:`ref-classes-image-live` class. The
+   ``bootimg`` class was rarely directly used. Consequently, this change should
+   not cause any issues.
 
 -  ``packageinfo``: Removed due to its limited use by the Hob UI, which
    has itself been removed.
@@ -257,14 +255,14 @@ The following changes have been made for the Poky distribution:
    not need to change anything unless you are relying on this naming
    elsewhere.
 
--  The :ref:`uninative <ref-classes-uninative>` class is now enabled
+-  The :ref:`ref-classes-uninative` class is now enabled
    by default in Poky. This class attempts to isolate the build system
    from the host distribution's C library and makes re-use of native
    shared state artifacts across different host distributions practical.
    With this class enabled, a tarball containing a pre-built C library
    is downloaded at the start of the build.
 
-   The :ref:`uninative <ref-classes-uninative>` class is enabled through the
+   The :ref:`ref-classes-uninative` class is enabled through the
    ``meta/conf/distro/include/yocto-uninative.inc`` file, which for
    those not using the Poky distribution, can include to easily enable
    the same functionality.
@@ -403,9 +401,9 @@ These additional changes exist:
    as these directories are automatically found and added.
 
 -  Inaccurate disk and CPU percentage data has been dropped from
-   :ref:`buildstats <ref-classes-buildstats>` output. This data has been replaced with
+   :ref:`ref-classes-buildstats` output. This data has been replaced with
    ``getrusage()`` data and corrected IO statistics. You will probably
-   need to update any custom code that reads the :ref:`buildstats <ref-classes-buildstats>` data.
+   need to update any custom code that reads the :ref:`ref-classes-buildstats` data.
 
 -  The ``meta/conf/distro/include/package_regex.inc`` is now deprecated.
    The contents of this file have been moved to individual recipes.

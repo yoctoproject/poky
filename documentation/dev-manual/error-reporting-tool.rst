@@ -27,9 +27,9 @@ Enabling and Using the Tool
 ===========================
 
 By default, the error reporting tool is disabled. You can enable it by
-inheriting the :ref:`report-error <ref-classes-report-error>`
-class by adding the following statement to the end of your
-``local.conf`` file in your :term:`Build Directory`::
+inheriting the :ref:`ref-classes-report-error` class by adding the
+following statement to the end of your ``local.conf`` file in your
+:term:`Build Directory`::
 
    INHERIT += "report-error"
 

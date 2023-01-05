@@ -95,9 +95,8 @@ The following changes have been made to the package QA checks:
    this file within :ref:`ref-tasks-install` if "make
    install" is installing it.
 
--  If you are using the :ref:`buildhistory <ref-classes-buildhistory>` class,
-   the check for the package
-   version going backwards is now controlled using a standard QA check.
+-  If you are using the :ref:`ref-classes-buildhistory` class, the check for the
+   package version going backwards is now controlled using a standard QA check.
    Thus, if you have customized your :term:`ERROR_QA` or :term:`WARN_QA` values
    and still wish to have this check performed, you should add
    "version-going-backwards" to your value for one or the other
@@ -131,7 +130,7 @@ The following directory changes exist:
    it easier to delete :term:`TMPDIR` and preserve the build history.
    Additionally, data for produced SDKs is now split by :term:`IMAGE_NAME`.
 
--  When :ref:`buildhistory <ref-classes-buildhistory>` is enabled, its output
+-  When :ref:`ref-classes-buildhistory` is enabled, its output
    is now written under the :term:`Build Directory` rather than :term:`TMPDIR`.
    Doing so makes it easier to delete :term:`TMPDIR` and preserve the build
    history. Additionally, data for produced SDKs is now split by :term:`IMAGE_NAME`.
@@ -223,7 +222,7 @@ Task Recipes
 The previously deprecated ``task.bbclass`` has now been dropped. For
 recipes that previously inherited from this class, you should rename
 them from ``task-*`` to ``packagegroup-*`` and inherit
-:ref:`packagegroup <ref-classes-packagegroup>` instead.
+:ref:`ref-classes-packagegroup` instead.
 
 For more information, see the ":ref:`ref-classes-packagegroup`" section.
 

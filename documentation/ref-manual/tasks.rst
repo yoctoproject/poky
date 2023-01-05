@@ -78,9 +78,9 @@ task runs with the current working directory set to
 ``${``\ :term:`B`\ ``}``.
 
 Recipes implementing this task should inherit the
-:ref:`deploy <ref-classes-deploy>` class and should write the output
+:ref:`ref-classes-deploy` class and should write the output
 to ``${``\ :term:`DEPLOYDIR`\ ``}``, which is not to be
-confused with ``${DEPLOY_DIR}``. The :ref:`deploy <ref-classes-deploy>` class sets up
+confused with ``${DEPLOY_DIR}``. The :ref:`ref-classes-deploy` class sets up
 :ref:`ref-tasks-deploy` as a shared state (sstate) task that can be accelerated
 through sstate use. The sstate mechanism takes care of copying the
 output from ``${DEPLOYDIR}`` to ``${DEPLOY_DIR_IMAGE}``.
@@ -102,7 +102,7 @@ Adding :ref:`ref-tasks-deploy` after other tasks works the same way.
 .. note::
 
    You do not need to add ``before do_build`` to the ``addtask`` command
-   (though it is harmless), because the :ref:`base <ref-classes-base>` class contains the following::
+   (though it is harmless), because the :ref:`ref-classes-base` class contains the following::
 
            do_build[recrdeptask] += "do_deploy"
 
@@ -225,7 +225,7 @@ section in the Yocto Project Overview and Concepts Manual.
 -----------------
 
 Runs QA checks on packaged files. For more information on these checks,
-see the :ref:`insane <ref-classes-insane>` class.
+see the :ref:`ref-classes-insane` class.
 
 .. _ref-tasks-package_write_deb:
 
@@ -406,7 +406,7 @@ Installs the files into the individual recipe specific sysroots (i.e.
 ``recipe-sysroot`` and ``recipe-sysroot-native`` under
 ``${``\ :term:`WORKDIR`\ ``}`` based upon the
 dependencies specified by :term:`DEPENDS`). See the
-":ref:`staging <ref-classes-staging>`" class for more information.
+":ref:`ref-classes-staging`" class for more information.
 
 .. _ref-tasks-rm_work:
 

@@ -174,8 +174,7 @@ The following miscellaneous changes occurred:
 -  ``base/pixbufcache``: Obsolete ``sstatecompletions`` code has been
    removed.
 
--  :ref:`native <ref-classes-native>` class:
-   :term:`RDEPENDS` handling has been enabled.
+-  :ref:`ref-classes-native` class: :term:`RDEPENDS` handling has been enabled.
 
 -  ``inetutils``: This recipe has rsh disabled.
 

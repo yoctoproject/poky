@@ -26,7 +26,7 @@ assessments, as all the components used in the Software Supply Chain are listed.
 
 The OpenEmbedded build system doesn't generate such information by default.
 To make this happen, you must inherit the
-:ref:`create-spdx <ref-classes-create-spdx>` class from a configuration file::
+:ref:`ref-classes-create-spdx` class from a configuration file::
 
    INHERIT += "create-spdx"
 
@@ -39,7 +39,7 @@ containing an index of JSON :term:`SPDX` files for individual recipes, together
 with an ``IMAGE-MACHINE.spdx.tar.zst`` compressed archive containing all such
 files.
 
-The :ref:`create-spdx <ref-classes-create-spdx>` class offers options to include
+The :ref:`ref-classes-create-spdx` class offers options to include
 more information in the output :term:`SPDX` data, such as making the generated
 files more human readable (:term:`SPDX_PRETTY`), adding compressed archives of
 the files in the generated target packages (:term:`SPDX_ARCHIVE_PACKAGED`),

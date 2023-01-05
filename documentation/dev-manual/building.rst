@@ -295,8 +295,8 @@ Follow these steps to create an :term:`Initramfs` image:
    recipe, you should use :term:`PACKAGE_INSTALL` rather than
    :term:`IMAGE_INSTALL`. :term:`PACKAGE_INSTALL` gives more direct control of
    what is added to the image as compared to the defaults you might not
-   necessarily want that are set by the :ref:`image <ref-classes-image>`
-   or :ref:`core-image <ref-classes-core-image>` classes.
+   necessarily want that are set by the :ref:`ref-classes-image`
+   or :ref:`ref-classes-core-image` classes.
 
 #. *Build the Kernel Image and the Initramfs Image:* Build your kernel
    image using BitBake. Because the :term:`Initramfs` image recipe is a
@@ -683,7 +683,7 @@ your tunings to best consider build times and package feed maintenance.
    A recipe that just generates scripts can enable "all" architecture
    because there are no binaries to build. To specifically enable "all"
    architecture, be sure your recipe inherits the
-   :ref:`allarch <ref-classes-allarch>` class.
+   :ref:`ref-classes-allarch` class.
    This class is useful for "all" architectures because it configures
    many variables so packages can be used across multiple architectures.
 
@@ -796,7 +796,7 @@ where the development occurs. You want the recipe's
 the external directory and use it as is, not copy it.
 
 To build from software that comes from an external source, all you need to do
-is inherit the :ref:`externalsrc <ref-classes-externalsrc>` class and then set
+is inherit the :ref:`ref-classes-externalsrc` class and then set
 the :term:`EXTERNALSRC` variable to point to your external source code. Here
 are the statements to put in your ``local.conf`` file::
 
@@ -812,8 +812,7 @@ This next example shows how to accomplish the same thing by setting
 .. note::
 
    In order for these settings to take effect, you must globally or
-   locally inherit the :ref:`externalsrc <ref-classes-externalsrc>`
-   class.
+   locally inherit the :ref:`ref-classes-externalsrc` class.
 
 By default, :ref:`ref-classes-externalsrc` builds the source code in a
 directory separate from the external source directory as specified by
@@ -881,14 +880,14 @@ directory:
 
 #. *Using Local Files Only:* Inside your ``local.conf`` file, add the
    :term:`SOURCE_MIRROR_URL` variable, inherit the
-   :ref:`own-mirrors <ref-classes-own-mirrors>` class, and use the
+   :ref:`ref-classes-own-mirrors` class, and use the
    :term:`BB_NO_NETWORK` variable to your ``local.conf``::
 
       SOURCE_MIRROR_URL ?= "file:///home/your-download-dir/"
       INHERIT += "own-mirrors"
       BB_NO_NETWORK = "1"
 
-   The :term:`SOURCE_MIRROR_URL` and :ref:`own-mirrors <ref-classes-own-mirrors>`
+   The :term:`SOURCE_MIRROR_URL` and :ref:`ref-classes-own-mirrors`
    class set up the system to use the downloads directory as your "own
    mirror". Using the :term:`BB_NO_NETWORK` variable makes sure that
    BitBake's fetching process in step 3 stays local, which means files

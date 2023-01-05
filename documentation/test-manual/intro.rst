@@ -100,12 +100,11 @@ the following types of tests:
    different configurations, such as different init systems. The
    Autobuilder tests literally hundreds of configurations and targets.
 
-   -  *Sanity Checks During the Build Process:* Tests initiated through
-      the :ref:`insane <ref-classes-insane>`
-      class. These checks ensure the output of the builds are correct.
-      For example, does the ELF architecture in the generated binaries
-      match the target system? ARM binaries would not work in a MIPS
-      system!
+   -  *Sanity Checks During the Build Process:* Tests initiated through the
+      :ref:`ref-classes-insane` class. These checks ensure the output of the
+      builds are correct. For example, does the ELF architecture in the
+      generated binaries match the target system? ARM binaries would not work
+      in a MIPS system!
 
 -  *Build Performance Testing:* Tests whether or not commonly used steps
    during builds work efficiently and avoid regressions. Tests to time
@@ -121,7 +120,8 @@ the following types of tests:
 
       $ bitbake image -c testsdkext
 
-   The tests utilize the :ref:`testsdkext <ref-classes-testsdk>` class and the ``do_testsdkext`` task.
+   The tests utilize the :ref:`ref-classes-testsdk` class and the
+   ``do_testsdkext`` task.
 
 -  *Feature Testing:* Various scenario-based tests are run through the
    :ref:`OpenEmbedded Self test (oe-selftest) <ref-manual/release-process:Testing and Quality Assurance>`. We test oe-selftest on each of the main distributions
@@ -131,7 +131,7 @@ the following types of tests:
 
       $ bitbake image -c testimage
 
-   The tests utilize the :ref:`testimage <ref-classes-testimage>`
+   The tests utilize the :ref:`ref-classes-testimage`
    class and the :ref:`ref-tasks-testimage` task.
 
 -  *Layer Testing:* The Autobuilder has the possibility to test whether
@@ -151,7 +151,7 @@ the following types of tests:
 
       $ bitbake image -c testsdk
 
-   The tests utilize the :ref:`testsdk <ref-classes-testsdk>` class and
+   The tests utilize the :ref:`ref-classes-testsdk` class and
    the ``do_testsdk`` task.
 
 -  *Unit Testing:* Unit tests on various components of the system run

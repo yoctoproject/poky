@@ -27,8 +27,9 @@ patches to fix them, see ":ref:`dev-manual/changes:submitting a change to the yo
 Vulnerability check at build time
 =================================
 
-To enable a check for CVE security vulnerabilities using :ref:`cve-check <ref-classes-cve-check>` in the specific image
-or target you are building, add the following setting to your configuration::
+To enable a check for CVE security vulnerabilities using
+:ref:`ref-classes-cve-check` in the specific image or target you are building,
+add the following setting to your configuration::
 
    INHERIT += "cve-check"
 
@@ -100,7 +101,7 @@ It is also possible to check the CVE status of individual packages as follows::
 Fixing CVE product name and version mappings
 ============================================
 
-By default, :ref:`cve-check <ref-classes-cve-check>` uses the recipe name :term:`BPN` as CVE
+By default, :ref:`ref-classes-cve-check` uses the recipe name :term:`BPN` as CVE
 product name when querying the CVE database. If this mapping contains false positives, e.g.
 some reported CVEs are not for the software component in question, or false negatives like
 some CVEs are not found to impact the recipe when they should, then the problems can be
@@ -167,8 +168,7 @@ the :term:`CVE_CHECK_SKIP_RECIPE` variable.
 Implementation details
 ======================
 
-Here's what the :ref:`cve-check <ref-classes-cve-check>` class does to
-find unpatched CVE IDs.
+Here's what the :ref:`ref-classes-cve-check` class does to find unpatched CVE IDs.
 
 First the code goes through each patch file provided by a recipe. If a valid CVE ID
 is found in the name of the file, the corresponding CVE is considered as patched.

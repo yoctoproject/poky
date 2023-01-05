@@ -49,7 +49,7 @@ The following recipes have been removed.
 -  ``core-image-lsb-sdk``: Part of removed LSB support.
 
 -  ``cve-check-tool``: Functionally replaced by the ``cve-update-db``
-   recipe and :ref:`cve-check <ref-classes-cve-check>` class.
+   recipe and :ref:`ref-classes-cve-check` class.
 
 -  ``eglinfo``: No longer maintained. ``eglinfo`` from ``mesa-demos`` is
    an adequate and maintained alternative.
@@ -144,7 +144,7 @@ CVE Checking
 ------------
 
 ``cve-check-tool`` has been functionally replaced by a new
-``cve-update-db`` recipe and functionality built into the :ref:`cve-check <ref-classes-cve-check>`
+``cve-update-db`` recipe and functionality built into the :ref:`ref-classes-cve-check`
 class. The result uses NVD JSON data feeds rather than the deprecated
 XML feeds that ``cve-check-tool`` was using, supports CVSSv3 scoring,
 and makes other improvements.
@@ -287,7 +287,7 @@ The following miscellaneous changes have occurred.
    :term:`NATIVELSBSTRING` to use all lowercase
    characters even if it does not contain a version number. This change
    is necessary only if you are not using
-   :ref:`uninative <ref-classes-uninative>` and :term:`SANITY_TESTED_DISTROS`.
+   :ref:`ref-classes-uninative` and :term:`SANITY_TESTED_DISTROS`.
 
 -  In the ``base-files`` recipe, writing the hostname into
    ``/etc/hosts`` and ``/etc/hostname`` is now done within the main

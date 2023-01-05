@@ -14,13 +14,11 @@ has already been built when the software is building, the software will
 link to the built library and that library will be pulled into your
 image along with the new software even if you did not want the library.
 
-The :ref:`buildhistory <ref-classes-buildhistory>`
-class helps you maintain the quality of your build output. You
-can use the class to highlight unexpected and possibly unwanted changes
-in the build output. When you enable build history, it records
-information about the contents of each package and image and then
-commits that information to a local Git repository where you can examine
-the information.
+The :ref:`ref-classes-buildhistory` class helps you maintain the quality of
+your build output. You can use the class to highlight unexpected and possibly
+unwanted changes in the build output. When you enable build history, it records
+information about the contents of each package and image and then commits that
+information to a local Git repository where you can examine the information.
 
 The remainder of this section describes the following:
 

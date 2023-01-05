@@ -153,7 +153,7 @@ In addition to variable values, the output of the ``bitbake -e`` and
    classes included globally, recursively listing the files they include
    or inherit in turn. Much of the behavior of the OpenEmbedded build
    system (including the behavior of the :ref:`ref-manual/tasks:normal recipe build tasks`) is
-   implemented in the :ref:`base <ref-classes-base>` class and the
+   implemented in the :ref:`ref-classes-base` class and the
    classes it inherits, rather than being built into BitBake itself.
 
 -  After the variable values, all functions appear in the output. For
@@ -196,8 +196,7 @@ Following are a few of the available ``oe-pkgdata-util`` subcommands.
       which contains the files stored in that package.
 
       If you want to inspect the ``${WORKDIR}/packages-split``
-      directory, make sure that
-      :ref:`rm_work <ref-classes-rm-work>` is not
+      directory, make sure that :ref:`ref-classes-rm-work` is not
       enabled when you build the recipe.
 
 -  ``oe-pkgdata-util find-path path ...``: Lists the names of
@@ -598,8 +597,7 @@ log to ``${T}/log.do_``\ `task`, and can also log to standard output
 
 The same logging functions are also available in shell functions, under
 the names ``bbplain``, ``bbnote``, ``bbdebug``, ``bbwarn``, ``bberror``,
-and ``bbfatal``. The
-:ref:`logging <ref-classes-logging>` class
+and ``bbfatal``. The :ref:`ref-classes-logging` class
 implements these functions. See that class in the ``meta/classes``
 folder of the :term:`Source Directory` for information.
 

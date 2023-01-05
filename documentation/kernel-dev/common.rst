@@ -1685,12 +1685,10 @@ looks much like the one provided with the ``hello-mod`` template::
    ...
 
 The important point to note here is the :term:`KERNEL_SRC` variable. The
-:ref:`module <ref-classes-module>` class sets this variable and the
-:term:`KERNEL_PATH` variable to
-``${STAGING_KERNEL_DIR}`` with the necessary Linux kernel build
-information to build modules. If your module ``Makefile`` uses a
-different variable, you might want to override the
-:ref:`ref-tasks-compile` step, or
+:ref:`ref-classes-module` class sets this variable and the :term:`KERNEL_PATH`
+variable to ``${STAGING_KERNEL_DIR}`` with the necessary Linux kernel build
+information to build modules. If your module ``Makefile`` uses a different
+variable, you might want to override the :ref:`ref-tasks-compile` step, or
 create a patch to the ``Makefile`` to work with the more typical
 :term:`KERNEL_SRC` or :term:`KERNEL_PATH` variables.
 

@@ -30,7 +30,7 @@ New Features / Enhancements in 4.1
   - Support for building rust for the target
   - Significant SDK toolchain build optimisation
   - Support for building native components in the SDK
-  - Support ``crate://`` fetcher with :ref:`externalsrc <ref-classes-externalsrc>`
+  - Support ``crate://`` fetcher with :ref:`ref-classes-externalsrc`
 
 - New core recipes:
 
@@ -52,7 +52,7 @@ New Features / Enhancements in 4.1
   - Added support for Ignored CVEs
   - Enable recursive CVE checking also for ``do_populate_sdk``
   - New :term:`CVE_CHECK_SHOW_WARNINGS` variable to disable unpatched CVE warning messages
-  - The :ref:`pypi <ref-classes-pypi>` class now defaults :term:`CVE_PRODUCT` from :term:`PYPI_PACKAGE`
+  - The :ref:`ref-classes-pypi` class now defaults :term:`CVE_PRODUCT` from :term:`PYPI_PACKAGE`
   - Added current kernel CVEs to ignore list since we stay as close to the kernel stable releases as we can
   - Optimisations to avoid dependencies on fetching
 
@@ -60,9 +60,9 @@ New Features / Enhancements in 4.1
 - Dependency of -dev package on main package is now an :term:`RRECOMMENDS` and can be easily set via new :term:`DEV_PKG_DEPENDENCY` variable
 
 - Support for CPU, I/O and memory pressure regulation in BitBake
-- Pressure data gathering in :ref:`buildstats <ref-classes-buildstats>` and rendering in ``pybootchartgui``
+- Pressure data gathering in :ref:`ref-classes-buildstats` and rendering in ``pybootchartgui``
 
-- New Picobuild system for lightweight Python PEP-517 build support in the :ref:`python_pep517 <ref-classes-python_pep517>` class
+- New Picobuild system for lightweight Python PEP-517 build support in the :ref:`ref-classes-python_pep517` class
 
 - Many classes are now split into global and recipe contexts for better
   validation. For more information, see
@@ -99,10 +99,10 @@ New Features / Enhancements in 4.1
 -  SDK-related enhancements:
 
    - :ref:`Support for using the regular build system as an SDK <sdk-manual/extensible:Setting up the Extensible SDK environment directly in a Yocto build>`
-   - :ref:`image-buildinfo <ref-classes-image-buildinfo>` class now also writes build information to SDKs
+   - :ref:`ref-classes-image-buildinfo` class now also writes build information to SDKs
    - New :term:`SDK_TOOLCHAIN_LANGS` variable to control support of rust / go in SDK
-   - rust-llvm: enabled :ref:`nativesdk <ref-classes-nativesdk>` variant
-   - python3-pluggy: enabled for :ref:`native <ref-classes-native>` / :ref:`nativesdk <ref-classes-nativesdk>`
+   - rust-llvm: enabled :ref:`ref-classes-nativesdk` variant
+   - python3-pluggy: enabled for :ref:`ref-classes-native` / :ref:`ref-classes-nativesdk`
 
 -  QEMU/runqemu enhancements:
 
@@ -115,11 +115,11 @@ New Features / Enhancements in 4.1
    - New variable :term:`UBOOT_MKIMAGE_KERNEL_TYPE`
    - New variable :term:`FIT_PAD_ALG` to control FIT image padding algorithm
    - New :term:`KERNEL_DEPLOY_DEPEND` variable to allow disabling image dependency on deploying the kernel
-   - :ref:`image_types <ref-classes-image_types>`: isolate the write of UBI
+   - :ref:`ref-classes-image_types`: isolate the write of UBI
      configuration to a ``write_ubi_config`` function that can be easily overridden
 
 - openssh: add support for config snippet includes to ssh and sshd
-- :ref:`create-spdx <ref-classes-create-spdx>`: Add :term:`SPDX_PRETTY` option
+- :ref:`ref-classes-create-spdx`: Add :term:`SPDX_PRETTY` option
 - wpa-supplicant: build static library if not disabled via :term:`DISABLE_STATIC`
 - wpa-supplicant: package dynamic modules
 - openssl: extract legacy provider module to a separate package
@@ -132,11 +132,11 @@ New Features / Enhancements in 4.1
 - systemd: systemd-systemctl: Support instance conf files during enable
 - weston.init: enable ``xwayland`` in weston.ini if ``x11`` is in :term:`DISTRO_FEATURES`
 - New ``npm_registry`` Python module to enable caching with nodejs 16+
-- :ref:`npm <ref-classes-npm>`: replaced ``npm pack`` call with ``tar czf`` for nodejs 16+ compatibility and improved ``do_configure`` performance
-- Enabled :ref:`bin_package <ref-classes-bin-package>` class to work properly in the native case
+- :ref:`ref-classes-npm`: replaced ``npm pack`` call with ``tar czf`` for nodejs 16+ compatibility and improved ``do_configure`` performance
+- Enabled :ref:`ref-classes-bin-package` class to work properly in the native case
 - Enabled :ref:`buildpaths <qa-check-buildpaths>` QA check as a warning by default
-- New :term:`OVERLAYFS_ETC_EXPOSE_LOWER` to provide read-only access to the original ``/etc`` content with :ref:`overlayfs-etc <ref-classes-overlayfs-etc>`
-- New :term:`OVERLAYFS_QA_SKIP` variable to allow skipping check on :ref:`overlayfs <ref-classes-overlayfs>` mounts
+- New :term:`OVERLAYFS_ETC_EXPOSE_LOWER` to provide read-only access to the original ``/etc`` content with :ref:`ref-classes-overlayfs-etc`
+- New :term:`OVERLAYFS_QA_SKIP` variable to allow skipping check on :ref:`ref-classes-overlayfs` mounts
 - New :term:`PACKAGECONFIG` options for individual recipes:
 
    - apr: xsi-strerror
@@ -176,7 +176,7 @@ New Features / Enhancements in 4.1
 - The Python ``zoneinfo`` module is now split out to its own ``python3-zoneinfo`` package.
 - busybox: added devmem 128-bit support
 - vim: split xxd out into its own package
-- New :ref:`github-releases <ref-classes-github-releases>` class to consolidate version checks for github-based packages
+- New :ref:`ref-classes-github-releases` class to consolidate version checks for github-based packages
 - ``devtool reset`` now preserves ``workspace/sources`` source trees in ``workspace/attic/sources/`` instead of leaving them in-place
 - scripts/patchreview: Add commit to stored json data
 - scripts/patchreview: Make json output human parsable
@@ -204,7 +204,7 @@ Known Issues in 4.1
   :yocto_bugs:`bug 14626 </show_bug.cgi?id=14626>`, which also details the fix.
 
 - The change to :ref:`migration-4.1-classes-split` inadvertently moved the
-  :ref:`externalsrc <ref-classes-externalsrc>` class to ``meta/classes-recipe``,
+  :ref:`ref-classes-externalsrc` class to ``meta/classes-recipe``,
   when it is not recipe-specific and can also be used in a global context.  The
   class will be moved back to ``meta/classes`` in the next point release.  Filed
   as :yocto_bugs:`bug 14940 </show_bug.cgi?id=14940>`.

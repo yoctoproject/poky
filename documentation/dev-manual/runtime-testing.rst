@@ -332,8 +332,8 @@ You can start the tests automatically or manually:
       bitbake core-image-sato
 
 -  *Manually running tests:* To manually run the tests, first globally
-   inherit the :ref:`testimage <ref-classes-testimage>` class
-   by editing your ``local.conf`` file::
+   inherit the :ref:`ref-classes-testimage` class by editing your
+   ``local.conf`` file::
 
       INHERIT += "testimage"
 

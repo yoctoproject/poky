@@ -1079,9 +1079,8 @@ does not include complete instructions for building the software.
 Instead, common functionality is encapsulated in classes inherited with
 the ``inherit`` directive. This technique leaves the recipe to describe
 just the things that are specific to the software being built. There is
-a :ref:`base <ref-classes-base>` class that
-is implicitly inherited by all recipes and provides the functionality
-that most recipes typically need.
+a :ref:`ref-classes-base` class that is implicitly inherited by all recipes
+and provides the functionality that most recipes typically need.
 
 The remainder of this section presents information useful when working
 with recipes.

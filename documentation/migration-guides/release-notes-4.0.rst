@@ -13,7 +13,7 @@ New Features / Enhancements in 4.0
 - Reproducibility: this release fixes the reproducibility issues with
   ``rust-llvm`` and ``golang``. Recipes in OpenEmbedded-Core are now fully
   reproducible. Functionality previously in the optional "reproducible"
-  class has been merged into the :ref:`base <ref-classes-base>` class.
+  class has been merged into the :ref:`ref-classes-base` class.
 
 - Network access is now disabled by default for tasks other than where it is expected to ensure build integrity (where host kernel supports it)
 
@@ -31,8 +31,7 @@ New Features / Enhancements in 4.0
 - The Python package build process is now based on `wheels <https://pythonwheels.com/>`__
   in line with the upstream direction.
 
-- New :ref:`overlayfs <ref-classes-overlayfs>` and
-  :ref:`overlayfs-etc <ref-classes-overlayfs-etc>` classes and
+- New :ref:`ref-classes-overlayfs` and :ref:`ref-classes-overlayfs-etc` classes and
   ``overlayroot`` support in the :term:`Initramfs` framework to make it easier to
   overlay read-only filesystems (for example) with
   :wikipedia:`OverlayFS <OverlayFS>`.
@@ -218,7 +217,7 @@ New Features / Enhancements in 4.0
    - Ensure addition of patch-fuzz retriggers do_qa_patch
    - Added a sanity check for allarch packagegroups
 
-- :ref:`create-spdx <ref-classes-create-spdx>` class improvements:
+- :ref:`ref-classes-create-spdx` class improvements:
 
    - Get SPDX-License-Identifier from source files
    - Generate manifest also for SDKs
@@ -238,9 +237,9 @@ New Features / Enhancements in 4.0
    
 - SDK-related enhancements:
 
-   - Extended recipes to :ref:`nativesdk <ref-classes-nativesdk>`: ``cargo``,
+   - Extended recipes to :ref:`ref-classes-nativesdk`: ``cargo``,
      ``librsvg``, ``libstd-rs``, ``libva``, ``python3-docutil``, ``python3-packaging``
-   - Enabled :ref:`nativesdk <ref-classes-nativesdk>` recipes to find a correct version
+   - Enabled :ref:`ref-classes-nativesdk` recipes to find a correct version
      of the rust cross compiler
    - Support creating per-toolchain cmake file in SDK
 

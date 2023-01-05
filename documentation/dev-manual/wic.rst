@@ -59,8 +59,7 @@ this information is required to use Wic, you might find it interesting.
 
 -  Wic is a completely independent standalone utility that initially
    provides easier-to-use and more flexible replacements for an existing
-   functionality in OE-Core's
-   :ref:`image-live <ref-classes-image-live>`
+   functionality in OE-Core's :ref:`ref-classes-image-live`
    class. The difference between Wic and those examples is that with Wic
    the functionality of those scripts is implemented by a
    general-purpose partitioning language, which is based on Redhat

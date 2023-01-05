@@ -14,8 +14,7 @@ the :term:`Build Directory`::
 
 Adding this statement deletes the work directory used for
 building a recipe once the recipe is built. For more information on
-"rm_work", see the
-:ref:`rm_work <ref-classes-rm-work>` class in the
+"rm_work", see the :ref:`ref-classes-rm-work` class in the
 Yocto Project Reference Manual.
 
 Purging Duplicate Shared State Cache Files

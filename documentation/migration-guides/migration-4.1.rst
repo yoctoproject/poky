@@ -92,7 +92,7 @@ now cause an error::
 
    INHERIT += "testimage"
 
-Since :ref:`testimage <ref-classes-testimage>` is a class intended solely to
+Since :ref:`ref-classes-testimage` is a class intended solely to
 affect image recipes, this would be correctly specified as::
 
    IMAGE_CLASSES += "testimage"
@@ -154,16 +154,16 @@ Miscellaneous changes
   you can set :term:`WATCHDOG_TIMEOUT` to the desired timeout in seconds. Note
   that the same :term:`WATCHDOG_TIMEOUT` variable also specifies the timeout used
   for the ``watchdog`` tool (if that is being built).
-- The :ref:`image-buildinfo <ref-classes-image-buildinfo>` class now writes to
+- The :ref:`ref-classes-image-buildinfo` class now writes to
   ``${sysconfdir}/buildinfo`` instead of ``${sysconfdir}/build`` by default (i.e.
   the default value of :term:`IMAGE_BUILDINFO_FILE` has been changed). If you have
   code that reads this from images at build or runtime you will need to update it
   or specify your own value for :term:`IMAGE_BUILDINFO_FILE`.
-- In the :ref:`archiver <ref-classes-archiver>` class, the default
+- In the :ref:`ref-classes-archiver` class, the default
   ``ARCHIVER_OUTDIR`` value no longer includes the :term:`MACHINE` value in order
   to avoid the archive task running multiple times in a multiconfig setup. If you
   have custom code that does something with the files archived by the
-  :ref:`archiver <ref-classes-archiver>` class then you may need to adjust it to
+  :ref:`ref-classes-archiver` class then you may need to adjust it to
   the new structure.
 - If you are not using `systemd` then udev is now configured to use labels
   (``LABEL`` or ``PARTLABEL``) to set the mount point for the device. For example::
@@ -194,7 +194,7 @@ Miscellaneous changes
   :term:`PACKAGECONFIG`. If you are customising this file you will need to
   update your customisations.
 - With the introduction of picobuild in
-  :ref:`python_pep517 <ref-classes-python_pep517>`, The ``PEP517_BUILD_API``
+  :ref:`ref-classes-python_pep517`, The ``PEP517_BUILD_API``
   variable is no longer supported. If you have any references to this variable
   you should remove them.
 

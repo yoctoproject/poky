@@ -61,8 +61,7 @@ Following are additional factors that can affect build speed:
    file system on the principle that if there was a significant failure,
    the :term:`Build Directory` contents could easily be rebuilt.
 
--  Inheriting the
-   :ref:`rm_work <ref-classes-rm-work>` class:
+-  Inheriting the :ref:`ref-classes-rm-work` class:
    Inheriting this class has shown to speed up builds due to
    significantly lower amounts of data stored in the data cache as well
    as on disk. Inheriting this class also makes cleanup of

@@ -9,7 +9,7 @@ New Features / Enhancements in 3.4
 -  Linux kernel 5.14, glibc 2.34 and ~280 other recipe upgrades
 -  Switched override character to ':' (replacing '_') for more robust parsing and improved performance --- see the above migration guide for help
 -  Rust integrated into core, providing rust support for cross-compilation and SDK
--  New :ref:`create-spdx <ref-classes-create-spdx>` class for creating SPDX SBoM documents
+-  New :ref:`ref-classes-create-spdx` class for creating SPDX SBoM documents
 -  New recipes: cargo, core-image-ptest-all, core-image-ptest-fast, core-image-weston-sdk, erofs-utils, gcompat, gi-docgen, libmicrohttpd, libseccomp, libstd-rs, perlcross, python3-markdown, python3-pyyaml, python3-smartypants, python3-typogrify, rust, rust-cross, rust-cross-canadian, rust-hello-world, rust-llvm, rust-tools-cross-canadian, rustfmt, xwayland
 -  Several optimisations to reduce unnecessary task dependencies for faster builds
 -  seccomp integrated into core, with additional enabling for gnutls, systemd, qemu
@@ -71,7 +71,7 @@ New Features / Enhancements in 3.4
 
    -  Enable :ref:`ref-tasks-populate_sdk` with multilibs
    -  New ``SDKPATHINSTALL`` variable decouples default install path from
-      built in path to avoid rebuilding :ref:`nativesdk <ref-classes-nativesdk>`
+      built in path to avoid rebuilding :ref:`ref-classes-nativesdk`
       components on e.g. :term:`DISTRO_VERSION` changes
    -  eSDK: Error if trying to generate an eSDK from a multiconfig
    -  eSDK: introduce :term:`TOOLCHAIN_HOST_TASK_ESDK` to be used in place of :term:`TOOLCHAIN_HOST_TASK` to add components to the host part of the eSDK

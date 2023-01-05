@@ -358,7 +358,7 @@ Here are the image features available for all images:
    a given image.
 
 Some image features are available only when you inherit the
-:ref:`core-image <ref-classes-core-image>` class. The current list of
+:ref:`ref-classes-core-image` class. The current list of
 these valid features is as follows:
 
 -  *hwcodecs:* Installs hardware acceleration codecs.

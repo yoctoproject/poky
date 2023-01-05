@@ -128,11 +128,9 @@ system to make your images more secure:
    service type users). When you set up passwords for multiple images or
    users, you should not duplicate passwords.
 
-   To set up passwords, use the
-   :ref:`extrausers <ref-classes-extrausers>`
-   class, which is the preferred method. For an example on how to set up
-   both root and user passwords, see the
-   ":ref:`ref-classes-extrausers`" section.
+   To set up passwords, use the :ref:`ref-classes-extrausers` class, which
+   is the preferred method. For an example on how to set up both root and
+   user passwords, see the ":ref:`ref-classes-extrausers`" section.
 
    .. note::
 

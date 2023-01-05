@@ -91,11 +91,11 @@ consistency.
 nativesdk
 ~~~~~~~~~
 
-The suffix ``nativesdk`` is now implemented as a prefix, which simplifies a
-lot of the packaging code for :ref:`nativesdk <ref-classes-nativesdk>` recipes.
-All custom :ref:`nativesdk <ref-classes-nativesdk>` recipes, which are
-relocatable packages that are native to :term:`SDK_ARCH`, and any references
-need to be updated to use ``nativesdk-*`` instead of ``*-nativesdk``.
+The suffix ``nativesdk`` is now implemented as a prefix, which simplifies a lot
+of the packaging code for :ref:`ref-classes-nativesdk` recipes.  All custom
+:ref:`ref-classes-nativesdk` recipes, which are relocatable packages that are
+native to :term:`SDK_ARCH`, and any references need to be updated to use
+``nativesdk-*`` instead of ``*-nativesdk``.
 
 .. _migration-1.3-task-recipes:
 
@@ -109,7 +109,7 @@ automatic upgrade path for most packages. However, you should update
 references in your own recipes and configurations as they could be
 removed in future releases. You should also rename any custom ``task-*``
 recipes to ``packagegroup-*``, and change them to inherit
-:ref:`packagegroup <ref-classes-packagegroup>` instead of ``task``, as well
+:ref:`ref-classes-packagegroup` instead of ``task``, as well
 as taking the opportunity to remove anything now handled by
 :ref:`ref-classes-packagegroup`, such as providing ``-dev`` and ``-dbg``
 packages, setting :term:`LIC_FILES_CHKSUM`, and so forth. See the

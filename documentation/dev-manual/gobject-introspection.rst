@@ -39,9 +39,7 @@ Enabling the Generation of Introspection Data
 Enabling the generation of introspection data (GIR files) in your
 library package involves the following:
 
-#. Inherit the
-   :ref:`gobject-introspection <ref-classes-gobject-introspection>`
-   class.
+#. Inherit the :ref:`ref-classes-gobject-introspection` class.
 
 #. Make sure introspection is not disabled anywhere in the recipe or
    from anything the recipe includes. Also, make sure that

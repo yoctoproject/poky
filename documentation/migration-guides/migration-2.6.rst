@@ -128,10 +128,9 @@ missing from :term:`DEPENDS`).
 
 .. note::
 
-   This change affects classes beyond just the two mentioned (i.e.
-   ``distutils`` and ``distutils3``). Any recipe that inherits ``distutils*``
-   classes are affected. For example, the ``setuptools`` and
-   :ref:`setuptools3 <ref-classes-setuptools3>`
+   This change affects classes beyond just the two mentioned (i.e. ``distutils``
+   and ``distutils3``). Any recipe that inherits ``distutils*`` classes are
+   affected. For example, the ``setuptools`` and :ref:`ref-classes-setuptools3`
    recipes are affected since they inherit the ``distutils*`` classes.
 
 Fetching these types of dependencies that are not provided in the
@@ -315,12 +314,11 @@ This section provides information about automatic testing changes:
    exists and has been replaced by the
    :term:`TESTIMAGE_AUTO` variable.
 
--  Inheriting the :ref:`testimage <ref-classes-testimage>` and
-   :ref:`testsdk <ref-classes-testsdk>` classes: best practices now dictate
-   that you use the :term:`IMAGE_CLASSES` variable rather than the
-   :term:`INHERIT` variable when you inherit the
-   :ref:`testimage <ref-classes-testimage>` and
-   :ref:`testsdk <ref-classes-testsdk>` classes used for automatic testing.
+-  Inheriting the :ref:`ref-classes-testimage` and :ref:`ref-classes-testsdk`
+   classes: best practices now dictate that you use the :term:`IMAGE_CLASSES`
+   variable rather than the :term:`INHERIT` variable when you inherit the
+   :ref:`ref-classes-testimage` and :ref:`ref-classes-testsdk` classes used
+   for automatic testing.
 
 .. _migration-2.6-openssl-changes:
 

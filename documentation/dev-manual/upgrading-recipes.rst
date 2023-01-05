@@ -113,8 +113,7 @@ The following steps describe how to set up the AUH utility:
       ``upgrade-helper/work/recipe/buildhistory-diff.txt`` file found in
       your :term:`Build Directory`.
 
-   -  If you want to enable testing through the
-      :ref:`testimage <ref-classes-testimage>`
+   -  If you want to enable testing through the :ref:`ref-classes-testimage`
       class, which is optional, you need to have the following set in
       your ``conf/local.conf`` file::
 

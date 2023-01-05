@@ -76,7 +76,7 @@ from running during root filesystem creation:
    native tools, which run on the host system, to accomplish the same
    tasks, or by alternatively running the processes under QEMU, which
    has the ``qemu_run_binary`` function. For more information, see the
-   :ref:`qemu <ref-classes-qemu>` class.
+   :ref:`ref-classes-qemu` class.
 
 Areas With Write Access
 =======================

@@ -12,7 +12,7 @@ form of a patch all using Quilt.
 .. note::
 
    With regard to preserving changes to source files, if you clean a
-   recipe or have :ref:`rm_work <ref-classes-rm-work>` enabled, the
+   recipe or have :ref:`ref-classes-rm-work` enabled, the
    :ref:`devtool workflow <sdk-manual/extensible:using \`\`devtool\`\` in your sdk workflow>`
    as described in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual is a safer
@@ -61,7 +61,7 @@ Follow these general steps:
       once you run the :ref:`ref-tasks-clean` or :ref:`ref-tasks-cleanall`
       tasks using BitBake (i.e. ``bitbake -c clean package`` and
       ``bitbake -c cleanall package``). Modifications will also disappear if
-      you use the :ref:`rm_work <ref-classes-rm-work>` feature as described in
+      you use the :ref:`ref-classes-rm-work` feature as described in
       the ":ref:`dev-manual/disk-space:conserving disk space during builds`"
       section.
 

@@ -206,7 +206,7 @@ are general setup steps that are run once and include:
 
 #. Set up any :term:`buildtools` tarball if configured.
 
-#. Call "buildhistory-init" if :ref:`buildhistory <ref-classes-buildhistory>` is configured.
+#. Call "buildhistory-init" if :ref:`ref-classes-buildhistory` is configured.
 
 For each step that is configured in ``config.json``, it will perform the
 following:
