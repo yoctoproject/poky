@@ -380,8 +380,8 @@ The toplevel :term:`SPDX` output file is generated in JSON format as a
 as well as in ``tmp/deploy/spdx``.
 
 The exact behaviour of this class, and the amount of output can be controlled
-by the :term:`SPDX_ARCHIVE_PACKAGED`, :term:`SPDX_ARCHIVE_SOURCES` and
-:term:`SPDX_INCLUDE_SOURCES` variables.
+by the :term:`SPDX_PRETTY`, :term:`SPDX_ARCHIVE_PACKAGED`,
+:term:`SPDX_ARCHIVE_SOURCES` and :term:`SPDX_INCLUDE_SOURCES` variables.
 
 See the description of these variables and the
 ":ref:`dev-manual/common-tasks:creating a software bill of materials`"

@@ -11713,12 +11713,13 @@ containing an index of JSON :term:`SPDX` files for individual recipes, together
 with an ``IMAGE-MACHINE.spdx.tar.zst`` compressed archive containing all such
 files.
 
-The :ref:`create-spdx <ref-classes-create-spdx>` class offers options to include
-more information in the output :term:`SPDX` data, such as adding compressed
-archives of the files in the generated target packages
-(:term:`SPDX_ARCHIVE_PACKAGED`), adding a description of the source files
-handled by the target recipes (:term:`SPDX_INCLUDE_SOURCES`) and adding archives
-of these source files themselves (:term:`SPDX_ARCHIVE_SOURCES`).
+The :ref:`ref-classes-create-spdx` class offers options to include
+more information in the output :term:`SPDX` data, such as making the generated
+files more human readable (:term:`SPDX_PRETTY`), adding compressed archives of
+the files in the generated target packages (:term:`SPDX_ARCHIVE_PACKAGED`),
+adding a description of the source files used to generate host tools and target
+packages (:term:`SPDX_INCLUDE_SOURCES`) and adding archives of these source
+files themselves (:term:`SPDX_ARCHIVE_SOURCES`).
 
 Though the toplevel :term:`SPDX` output is available in
 ``tmp/deploy/images/MACHINE/`` inside the :term:`Build Directory`, ancillary
