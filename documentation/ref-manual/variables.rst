@@ -5168,7 +5168,7 @@ system and gives an overview of their function and contents.
       Specifies a prefix has been added to :term:`PN` to create a
       special version of a recipe or package (i.e. a Multilib version). The
       variable is used in places where the prefix needs to be added to or
-      removed from a the name (e.g. the :term:`BPN` variable).
+      removed from a name (e.g. the :term:`BPN` variable).
       :term:`MLPREFIX` gets set when a prefix has been added to :term:`PN`.
 
       .. note::
