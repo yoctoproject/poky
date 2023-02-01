@@ -2892,13 +2892,14 @@ system and gives an overview of their function and contents.
 
    :term:`FIT_KERNEL_COMP_ALG`
       Compression algorithm to use for the kernel image inside the FIT Image.
-      At present, the only supported values are "gzip" (default) or "none"
+      At present, the only supported values are "gzip" (default), "lzo" or "none".
       If you set this variable to anything other than "none" you may also need
       to set :term:`FIT_KERNEL_COMP_ALG_EXTENSION`.
 
    :term:`FIT_KERNEL_COMP_ALG_EXTENSION`
       File extension corresponding to :term:`FIT_KERNEL_COMP_ALG`. The default
-      value is ".gz".
+      value is ".gz". If you set :term:`FIT_KERNEL_COMP_ALG` to "lzo",
+      you may want to set this variable to ".lzo".
 
    :term:`FIT_KEY_GENRSA_ARGS`
       Arguments to openssl genrsa for generating RSA private key for signing
