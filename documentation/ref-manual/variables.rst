@@ -8481,7 +8481,7 @@ system and gives an overview of their function and contents.
          responsibility to ensure that the toolchain is compatible with the
          default toolchain. Using older or newer versions of these
          components might cause build problems. See
-         :yocto_docs:`Release Information </migration-guides/>` for your
+         :doc:`Release Information </migration-guides/index>` for your
          version of the Yocto Project, to find the specific components with
          which the toolchain must be compatible.
 
