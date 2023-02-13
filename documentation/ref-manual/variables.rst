@@ -4275,7 +4275,7 @@ system and gives an overview of their function and contents.
       To use the variable, set it in the append file for your kernel recipe
       using the following form::
 
-         KBUILD_DEFCONFIG_KMACHINE ?= defconfig_file
+         KBUILD_DEFCONFIG:<machine> ?= "defconfig_file"
 
       Here is an example from a "raspberrypi2" :term:`KMACHINE` build that uses
       a ``defconfig`` file named "bcm2709_defconfig"::

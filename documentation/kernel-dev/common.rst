@@ -649,7 +649,7 @@ append files, you can direct the OpenEmbedded build system to use a
 To specify an "in-tree" ``defconfig`` file, use the following statement
 form::
 
-   KBUILD_DEFCONFIG_KMACHINE ?= "defconfig_file"
+   KBUILD_DEFCONFIG:<machine> ?= "defconfig_file"
 
 Here is an example
 that assigns the :term:`KBUILD_DEFCONFIG` variable based on "raspberrypi2"
