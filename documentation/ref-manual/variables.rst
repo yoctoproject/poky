@@ -4277,7 +4277,7 @@ system and gives an overview of their function and contents.
 
          KBUILD_DEFCONFIG:<machine> ?= "defconfig_file"
 
-      Here is an example from a "raspberrypi2" :term:`KMACHINE` build that uses
+      Here is an example from a "raspberrypi2" :term:`MACHINE` build that uses
       a ``defconfig`` file named "bcm2709_defconfig"::
 
          KBUILD_DEFCONFIG:raspberrypi2 = "bcm2709_defconfig"
