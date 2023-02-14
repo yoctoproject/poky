@@ -93,7 +93,7 @@ standardization. This class defines a set of tasks (e.g. ``configure``,
 should usually be enough to define a few standard variables and then
 simply ``inherit autotools``. These classes can also work with software
 that emulates Autotools. For more information, see the
-":ref:`dev-manual/new-recipe:autotooled package`" section
+":ref:`dev-manual/new-recipe:building an autotooled package`" section
 in the Yocto Project Development Tasks Manual.
 
 By default, the :ref:`autotools* <ref-classes-autotools>` classes use out-of-tree builds (i.e.
