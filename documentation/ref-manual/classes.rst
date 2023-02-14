@@ -2231,6 +2231,31 @@ The :ref:`ref-classes-python_poetry_core` class enables building Python modules 
 
 Internally this uses the :ref:`ref-classes-python_pep517` class.
 
+.. _ref-classes-python_pyo3:
+
+``python_pyo3``
+===============
+
+The :ref:`ref-classes-python_pyo3` class helps make sure that Python extensions
+written in Rust and built with `PyO3 <https://pyo3.rs/>`__, properly set up the
+environment for cross compilation.
+
+This class is internal to the :ref:`ref-classes-python-setuptools3_rust` class
+and is not meant to be used directly in recipes.
+
+.. _ref-classes-python-setuptools3_rust:
+
+``python-setuptools3_rust``
+===========================
+
+The :ref:`ref-classes-python-setuptools3_rust` class enables building Python
+extensions implemented in Rust with `PyO3 <https://pyo3.rs/>`__, which allows
+to compile and distribute Python extensions written in Rust as easily
+as if they were written in C.
+
+This class inherits the :ref:`ref-classes-setuptools3` and
+:ref:`ref-classes-python_pyo3` classes.
+
 .. _ref-classes-pixbufcache:
 
 ``pixbufcache``
