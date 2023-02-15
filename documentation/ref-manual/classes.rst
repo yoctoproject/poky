@@ -346,17 +346,20 @@ in order to make them relocatable.
 ``cmake``
 =========
 
-The ref:`ref-classes-cmake` class allows for recipes that need to build software using
-the `CMake <https://cmake.org/overview/>`__ build system. You can use
-the :term:`EXTRA_OECMAKE` variable to specify
-additional configuration options to be passed using the ``cmake``
-command line.
+The :ref:`ref-classes-cmake` class allows recipes to build software using the
+`CMake <https://cmake.org/overview/>`__ build system. You can use the
+:term:`EXTRA_OECMAKE` variable to specify additional configuration options to
+pass to the ``cmake`` command line.
 
-On the occasion that you would be installing custom CMake toolchain
-files supplied by the application being built, you should install them
-to the preferred CMake Module directory: ``${D}${datadir}/cmake/``
-Modules during
-:ref:`ref-tasks-install`.
+By default, the :ref:`ref-classes-cmake` class uses
+`Ninja <https://ninja-build.org/>`__ instead of GNU make for building, which
+offers better build performance. If a recipe is broken with Ninja, then the
+recipe can set the :term:`OECMAKE_GENERATOR` variable to ``Unix Makefiles`` to
+use GNU make instead.
+
+If you need to install custom CMake toolchain files supplied by the application
+being built, you should install them (during :ref:`ref-tasks-install`) to the
+preferred CMake Module directory: ``${D}${datadir}/cmake/modules/``.
 
 .. _ref-classes-cml1:
 
