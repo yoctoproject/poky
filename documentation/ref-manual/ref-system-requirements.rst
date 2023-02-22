@@ -45,6 +45,8 @@ distributions:
 
 -  Ubuntu 20.04
 
+-  Ubuntu 22.04
+
 -  Fedora 28
 
 -  Fedora 29
@@ -60,6 +62,8 @@ distributions:
 -  Fedora 34
 
 -  Fedora 35
+
+-  Fedora 36
 
 -  CentOS 7.x
 
