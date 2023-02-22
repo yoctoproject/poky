@@ -83,6 +83,8 @@ distributions:
 
 -  AlmaLinux 8.5
 
+-  AlmaLinux 8.7
+
 .. note::
 
    -  While the Yocto Project Team attempts to ensure all Yocto Project
