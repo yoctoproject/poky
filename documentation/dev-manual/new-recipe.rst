@@ -1173,6 +1173,8 @@ recipe examples given various scenarios:
 
 -  Building an Autotooled package
 
+-  Building a Meson package
+
 -  Splitting an application into multiple packages
 
 -  Adding binaries to an image
@@ -1287,6 +1289,35 @@ The variable :term:`LIC_FILES_CHKSUM` is used to track source license changes
 as described in the ":ref:`dev-manual/licenses:tracking license changes`"
 section in the Yocto Project Overview and Concepts Manual. You can quickly
 create Autotool-based recipes in a manner similar to the previous example.
+
+Building a Meson Package
+------------------------
+
+Applications built with the `Meson build system <https://mesonbuild.com/>`__
+just need a recipe that has sources described in :term:`SRC_URI` and inherits
+the :ref:`ref-classes-meson` class.
+
+The :oe_git:`ipcalc recipe </meta-openembedded/tree/meta-networking/recipes-support/ipcalc>`
+is a simple example of an application without dependencies::
+
+   SUMMARY = "Tool to assist in network address calculations for IPv4 and IPv6."
+   HOMEPAGE = "https://gitlab.com/ipcalc/ipcalc"
+
+   SECTION = "net"
+
+   LICENSE = "GPL-2.0-only"
+   LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
+
+   SRC_URI = "git://gitlab.com/ipcalc/ipcalc.git;protocol=https;branch=master"
+   SRCREV = "4c4261a47f355946ee74013d4f5d0494487cc2d6"
+
+   S = "${WORKDIR}/git"
+
+   inherit meson
+
+Applications with dependencies are likely to inherit the
+:ref:`ref-classes-pkgconfig` class, as ``pkg-config`` is the default method
+used by Meson to find dependencies and compile applications against them.
 
 Splitting an Application into Multiple Packages
 -----------------------------------------------
