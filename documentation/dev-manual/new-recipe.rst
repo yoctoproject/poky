@@ -361,7 +361,7 @@ and searches specific directories in a certain order:
 ``files``. The directories are assumed to be subdirectories of the
 directory in which the recipe or append file resides. For another
 example that specifies these types of files, see the
-":ref:`dev-manual/new-recipe:building a single .c file package (hello world!)`" section.
+"`building a single .c file package`_" section.
 
 The previous example also specifies a patch file. Patch files are files
 whose names usually end in ``.patch`` or ``.diff`` but can end with
@@ -1167,20 +1167,20 @@ Examples
 To help summarize how to write a recipe, this section provides some
 recipe examples given various scenarios:
 
--  Building packages from a single local file
+-  `Building a single .c file package`_
 
--  Building a Makefile-based package
+-  `Building a Makefile-based package`_
 
--  Building an Autotooled package
+-  `Building an Autotooled package`_
 
--  Building a Meson package
+-  `Building a Meson package`_
 
--  Splitting an application into multiple packages
+-  `Splitting an application into multiple packages`_
 
--  Adding binaries to an image
+-  `Packaging externally produced binaries`_
 
-Building a Single .c File Package (Hello World!)
-------------------------------------------------
+Building a Single .c File Package
+---------------------------------
 
 Building an application from a single file that is stored locally (e.g. under
 ``files``) requires a recipe that has the file listed in the :term:`SRC_URI`
