@@ -2111,19 +2111,27 @@ system and gives an overview of their function and contents.
       provide with this variable, see the ":ref:`ref-features-distro`" section.
 
    :term:`DISTRO_FEATURES_BACKFILL`
-      Features to be added to :term:`DISTRO_FEATURES` if not also present in
-      :term:`DISTRO_FEATURES_BACKFILL_CONSIDERED`.
+      A space-separated list of features to be added to :term:`DISTRO_FEATURES`
+      if not also present in :term:`DISTRO_FEATURES_BACKFILL_CONSIDERED`.
 
       This variable is set in the ``meta/conf/bitbake.conf`` file. It is
       not intended to be user-configurable. It is best to just reference
-      the variable to see which distro features are being backfilled for
-      all distro configurations. See the ":ref:`ref-features-backfill`" section
-      for more information.
+      the variable to see which distro features are being
+      :ref:`backfilled <ref-features-backfill>` for all distro configurations.
 
    :term:`DISTRO_FEATURES_BACKFILL_CONSIDERED`
-      Features from :term:`DISTRO_FEATURES_BACKFILL` that should not be
-      backfilled (i.e. added to :term:`DISTRO_FEATURES`) during the build. See
-      the ":ref:`ref-features-backfill`" section for more information.
+      A space-separated list of features from :term:`DISTRO_FEATURES_BACKFILL`
+      that should not be :ref:`backfilled <ref-features-backfill>` (i.e. added
+      to :term:`DISTRO_FEATURES`) during the build.
+
+      This corresponds to an opt-out mechanism. When new default distro
+      features are introduced, distribution maintainers can review (`consider`)
+      them and decide to exclude them from the
+      :ref:`backfilled <ref-features-backfill>` features. Therefore, the
+      combination of :term:`DISTRO_FEATURES_BACKFILL` and
+      :term:`DISTRO_FEATURES_BACKFILL_CONSIDERED` makes it possible to
+      add new default features without breaking existing distributions.
+
 
    :term:`DISTRO_FEATURES_DEFAULT`
       A convenience variable that gives you the default list of distro
@@ -5129,19 +5137,27 @@ system and gives an overview of their function and contents.
       shipped, see the ":ref:`ref-features-machine`" section.
 
    :term:`MACHINE_FEATURES_BACKFILL`
-      Features to be added to :term:`MACHINE_FEATURES` if not also present in
+      A list of space-separated features to be added to
+      :term:`MACHINE_FEATURES` if not also present in
       :term:`MACHINE_FEATURES_BACKFILL_CONSIDERED`.
 
-      This variable is set in the ``meta/conf/bitbake.conf`` file. It is
-      not intended to be user-configurable. It is best to just reference
-      the variable to see which machine features are being backfilled for
-      all machine configurations. See the ":ref:`ref-features-backfill`"
-      section for more information.
+      This variable is set in the ``meta/conf/bitbake.conf`` file. It is not
+      intended to be user-configurable. It is best to just reference the
+      variable to see which machine features are being
+      :ref:`backfilled <ref-features-backfill>` for all machine configurations.
 
    :term:`MACHINE_FEATURES_BACKFILL_CONSIDERED`
-      Features from :term:`MACHINE_FEATURES_BACKFILL` that should not be
-      backfilled (i.e. added to :term:`MACHINE_FEATURES`) during the build. See
-      the ":ref:`ref-features-backfill`" section for more information.
+      A list of space-separated features from :term:`MACHINE_FEATURES_BACKFILL`
+      that should not be :ref:`backfilled <ref-features-backfill>` (i.e. added
+      to :term:`MACHINE_FEATURES`) during the build.
+
+      This corresponds to an opt-out mechanism. When new default machine
+      features are introduced, machine definition maintainers can review
+      (`consider`) them and decide to exclude them from the
+      :ref:`backfilled <ref-features-backfill>` features. Therefore, the
+      combination of :term:`MACHINE_FEATURES_BACKFILL` and
+      :term:`MACHINE_FEATURES_BACKFILL_CONSIDERED` makes it possible to
+      add new default features without breaking existing machine definitions.
 
    :term:`MACHINEOVERRIDES`
       A colon-separated list of overrides that apply to the current
