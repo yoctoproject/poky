@@ -168,16 +168,16 @@ supported openSUSE Linux distribution:
       &PIP3_HOST_PACKAGES_DOC;
 
 
-AlmaLinux-8 Packages
---------------------
+AlmaLinux Packages
+------------------
 
 Here are the required packages by function given a
-supported AlmaLinux-8 Linux distribution:
+supported AlmaLinux Linux distribution:
 
 -  *Essentials:* Packages needed to build an image for a headless
    system::
 
-      $ sudo dnf install &CENTOS8_HOST_PACKAGES_ESSENTIAL;
+      $ sudo dnf install &ALMALINUX8_HOST_PACKAGES_ESSENTIAL;
 
    .. note::
 
@@ -186,7 +186,7 @@ supported AlmaLinux-8 Linux distribution:
          easy installation of packages not included in enterprise Linux
          by default. You need to install these packages separately.
 
-      -  The ``PowerTools`` repo provides additional packages such as
+      -  The ``PowerTools/CRB`` repo provides additional packages such as
          ``rpcgen`` and ``texinfo``.
 
       -  The ``makecache`` command consumes additional Metadata from
