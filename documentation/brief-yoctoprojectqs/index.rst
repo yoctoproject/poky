@@ -262,7 +262,7 @@ an entire Linux distribution, including the toolchain, from source.
    For information on using the ``bitbake`` command, see the
    :ref:`overview-manual/concepts:bitbake` section in the Yocto Project Overview and
    Concepts Manual, or see
-   :ref:`bitbake:bitbake-user-manual/bitbake-user-manual-intro:the bitbake command`
+   :ref:`bitbake-user-manual/bitbake-user-manual-intro:the bitbake command`
    in the BitBake User Manual.
 
 #. **Simulate Your Image Using QEMU:** Once this particular image is

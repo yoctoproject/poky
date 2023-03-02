@@ -243,12 +243,12 @@ system and gives an overview of their function and contents.
       To add a tune to the list, be sure to append it with spaces using the
       "+=" BitBake operator. Do not simply replace the list by using the
       "=" operator. See the
-      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:basic syntax`" section in the BitBake
+      ":ref:`bitbake-user-manual/bitbake-user-manual-metadata:basic syntax`" section in the BitBake
       User Manual for more information.
 
    :term:`AZ_SAS`
       Azure Storage Shared Access Signature, when using the
-      :ref:`Azure Storage fetcher (az://) <bitbake:bitbake-user-manual/bitbake-user-manual-fetching:fetchers>`
+      :ref:`Azure Storage fetcher (az://) <bitbake-user-manual/bitbake-user-manual-fetching:fetchers>`
       This variable can be defined to be used by the fetcher to authenticate
       and gain access to non-public artifacts::
 
@@ -1833,15 +1833,14 @@ system and gives an overview of their function and contents.
 
           DEPENDS = "bar"
 
-      The practical effect of the previous
-      assignment is that all files installed by bar will be available in
-      the appropriate staging sysroot, given by the
-      :term:`STAGING_DIR* <STAGING_DIR>` variables, by the time the
-      :ref:`ref-tasks-configure` task for ``foo`` runs.
-      This mechanism is implemented by having :ref:`ref-tasks-configure` depend on
-      the :ref:`ref-tasks-populate_sysroot` task of
-      each recipe listed in :term:`DEPENDS`, through a
-      ``[``\ :ref:`deptask <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]``
+      The practical effect of the previous assignment is that all files
+      installed by bar will be available in the appropriate staging sysroot,
+      given by the :term:`STAGING_DIR* <STAGING_DIR>` variables, by the time
+      the :ref:`ref-tasks-configure` task for ``foo`` runs. This mechanism is
+      implemented by having :ref:`ref-tasks-configure` depend on the
+      :ref:`ref-tasks-populate_sysroot` task of each recipe listed in
+      :term:`DEPENDS`, through a
+      ``[``\ :ref:`deptask <bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]``
       declaration in the :ref:`ref-classes-base` class.
 
       .. note::
@@ -1888,12 +1887,12 @@ system and gives an overview of their function and contents.
             to the recipe that installs ``libbar``, other recipes might
             fail to link against ``libfoo``.
 
-      For information on runtime dependencies, see the
-      :term:`RDEPENDS` variable. You can also see the
-      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks`" and
-      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies`" sections in the
-      BitBake User Manual for additional information on tasks and
-      dependencies.
+      For information on runtime dependencies, see the :term:`RDEPENDS`
+      variable. You can also see the
+      ":ref:`bitbake-user-manual/bitbake-user-manual-metadata:tasks`" and
+      ":ref:`bitbake-user-manual/bitbake-user-manual-execution:dependencies`"
+      sections in the BitBake User Manual for additional information on tasks
+      and dependencies.
 
    :term:`DEPLOY_DIR`
       Points to the general area that the OpenEmbedded build system uses to
@@ -2817,15 +2816,13 @@ system and gives an overview of their function and contents.
       recipe to correctly extend the path.
 
    :term:`FILESOVERRIDES`
-      A subset of :term:`OVERRIDES` used by the
-      OpenEmbedded build system for creating
-      :term:`FILESPATH`. The :term:`FILESOVERRIDES` variable
-      uses overrides to automatically extend the
-      :term:`FILESPATH` variable. For an example of how
-      that works, see the :term:`FILESPATH` variable
+      A subset of :term:`OVERRIDES` used by the OpenEmbedded build system for
+      creating :term:`FILESPATH`. The :term:`FILESOVERRIDES` variable uses
+      overrides to automatically extend the :term:`FILESPATH` variable. For an
+      example of how that works, see the :term:`FILESPATH` variable
       description. Additionally, you find more information on how overrides
       are handled in the
-      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:conditional syntax (overrides)`"
+      ":ref:`bitbake-user-manual/bitbake-user-manual-metadata:conditional syntax (overrides)`"
       section of the BitBake User Manual.
 
       By default, the :term:`FILESOVERRIDES` variable is defined as::
@@ -3547,19 +3544,19 @@ system and gives an overview of their function and contents.
             section in the Yocto Project Development Tasks Manual.
 
          -  Using :term:`IMAGE_INSTALL` with the
-            :ref:`+= <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:appending (+=) and prepending (=+) with spaces>`
+            :ref:`+= <bitbake-user-manual/bitbake-user-manual-metadata:appending (+=) and prepending (=+) with spaces>`
             BitBake operator within the ``/conf/local.conf`` file or from
-            within an image recipe is not recommended. Use of this operator
-            in these ways can cause ordering issues. Since
-            :ref:`ref-classes-core-image` sets :term:`IMAGE_INSTALL` to a default
-            value using the
-            :ref:`?= <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:setting a default value (?=)>`
+            within an image recipe is not recommended. Use of this operator in
+            these ways can cause ordering issues. Since
+            :ref:`ref-classes-core-image` sets :term:`IMAGE_INSTALL` to a
+            default value using the
+            :ref:`?= <bitbake-user-manual/bitbake-user-manual-metadata:setting a default value (?=)>`
             operator, using a ``+=`` operation against :term:`IMAGE_INSTALL`
             results in unexpected behavior when used within
-            ``conf/local.conf``. Furthermore, the same operation from
-            within an image recipe may or may not succeed depending on the
-            specific situation. In both these cases, the behavior is
-            contrary to how most users expect the ``+=`` operator to work.
+            ``conf/local.conf``. Furthermore, the same operation from within an
+            image recipe may or may not succeed depending on the specific
+            situation. In both these cases, the behavior is contrary to how
+            most users expect the ``+=`` operator to work.
 
    :term:`IMAGE_LINGUAS`
       Specifies the list of locales to install into the image during the
@@ -3921,7 +3918,7 @@ system and gives an overview of their function and contents.
       ``classes-global/`` or ``classes/`` subdirectories.
 
       For more information on :term:`INHERIT`, see the
-      :ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:\`\`inherit\`\` configuration directive`"
+      :ref:`bitbake-user-manual/bitbake-user-manual-metadata:\`\`inherit\`\` configuration directive`"
       section in the BitBake User Manual.
 
    :term:`INHERIT_DISTRO`
@@ -5619,7 +5616,7 @@ system and gives an overview of their function and contents.
          FOO:an-override = "overridden"
 
       See the
-      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:conditional syntax (overrides)`"
+      ":ref:`bitbake-user-manual/bitbake-user-manual-metadata:conditional syntax (overrides)`"
       section in the BitBake User Manual for more information on the
       overrides mechanism.
 
@@ -6824,12 +6821,11 @@ system and gives an overview of their function and contents.
 
          RDEPENDS:${PN} = "foo (>= 1.2)"
 
-      For information on build-time dependencies, see the
-      :term:`DEPENDS` variable. You can also see the
-      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks`" and
-      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies`" sections in the
-      BitBake User Manual for additional information on tasks and
-      dependencies.
+      For information on build-time dependencies, see the :term:`DEPENDS`
+      variable. You can also see the
+      ":ref:`bitbake-user-manual/bitbake-user-manual-metadata:tasks`" and
+      ":ref:`bitbake-user-manual/bitbake-user-manual-execution:dependencies`" sections in the
+      BitBake User Manual for additional information on tasks and dependencies.
 
    :term:`RECIPE_NO_UPDATE_REASON`
       If a recipe should not be replaced by a more recent upstream version,
