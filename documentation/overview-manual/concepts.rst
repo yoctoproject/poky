@@ -680,7 +680,7 @@ closer look at each of those areas.
 .. note::
 
    Documentation for the BitBake tool is available separately. See the
-   BitBake User Manual
+   :doc:`BitBake User Manual <bitbake:index>`
    for reference material on BitBake.
 
 Source Fetching
