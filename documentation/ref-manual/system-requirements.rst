@@ -31,6 +31,17 @@ and conceptual information in the :doc:`/overview-manual/index`.
 
 .. _detailed-supported-distros:
 
+Minimum Free Disk Space
+=======================
+
+To build an image such as ``core-image-sato`` for the ``qemux86-64`` machine,
+you need a system with at least &MIN_DISK_SPACE; Gbytes of free disk space.
+However, much more disk space will be necessary to build more complex images,
+to run multiple builds and to cache build artifacts, improving build efficiency.
+
+If you have a shortage of disk space, see the ":doc:`/dev-manual/disk-space`"
+section of the Development Tasks Manual.
+
 Supported Linux Distributions
 =============================
 

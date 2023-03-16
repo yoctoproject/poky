@@ -40,7 +40,9 @@ Compatible Linux Distribution
 Make sure your :term:`Build Host` meets the
 following requirements:
 
--  50 Gbytes of free disk space
+-  At least &MIN_DISK_SPACE; Gbytes of free disk space, though
+   much more will help to run multiple builds and increase
+   performance by reusing build artifacts.
 
 -  Runs a supported Linux distribution (i.e. recent releases of Fedora,
    openSUSE, CentOS, Debian, or Ubuntu). For a list of Linux
