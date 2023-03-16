@@ -4741,31 +4741,7 @@ system and gives an overview of their function and contents.
       ``LAYERRECOMMENDS_mylayer``).
 
    :term:`LAYERSERIES_COMPAT`
-      Lists the versions of the :term:`OpenEmbedded-Core (OE-Core)` for which
-      a layer is compatible. Using the :term:`LAYERSERIES_COMPAT` variable
-      allows the layer maintainer to indicate which combinations of the
-      layer and OE-Core can be expected to work. The variable gives the
-      system a way to detect when a layer has not been tested with new
-      releases of OE-Core (e.g. the layer is not maintained).
-
-      To specify the OE-Core versions for which a layer is compatible, use
-      this variable in your layer's ``conf/layer.conf`` configuration file.
-      For the list, use the Yocto Project
-      :yocto_wiki:`Release Name </Releases>` (e.g.
-      &DISTRO_NAME_NO_CAP;). To specify multiple OE-Core versions for the
-      layer, use a space-separated list::
-
-         LAYERSERIES_COMPAT_layer_root_name = "&DISTRO_NAME_NO_CAP; &DISTRO_NAME_NO_CAP_MINUS_ONE;"
-
-      .. note::
-
-         Setting :term:`LAYERSERIES_COMPAT` is required by the Yocto Project
-         Compatible version 2 standard.
-         The OpenEmbedded build system produces a warning if the variable
-         is not set for any given layer.
-
-      See the ":ref:`dev-manual/layers:creating your own layer`"
-      section in the Yocto Project Development Tasks Manual.
+      See :term:`bitbake:LAYERSERIES_COMPAT` in the BitBake manual.
 
    :term:`LAYERVERSION`
       Optionally specifies the version of a layer as a single number. You
