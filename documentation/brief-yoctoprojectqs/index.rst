@@ -44,6 +44,10 @@ following requirements:
    much more will help to run multiple builds and increase
    performance by reusing build artifacts.
 
+-  At least &MIN_RAM; Gbytes of RAM, though a modern modern build host with as
+   much RAM and as many CPU cores as possible is strongly recommended to
+   maximize build performance.
+
 -  Runs a supported Linux distribution (i.e. recent releases of Fedora,
    openSUSE, CentOS, Debian, or Ubuntu). For a list of Linux
    distributions that support the Yocto Project, see the
