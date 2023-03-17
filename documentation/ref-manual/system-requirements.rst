@@ -40,6 +40,16 @@ to run multiple builds and to cache build artifacts, improving build efficiency.
 If you have a shortage of disk space, see the ":doc:`/dev-manual/disk-space`"
 section of the Development Tasks Manual.
 
+.. _system-requirements-minimum-ram:
+
+Minimum System RAM
+==================
+
+You will manage to build an image such as ``core-image-sato`` for the
+``qemux86-64`` machine with as little as &MIN_RAM; Gbytes of RAM on an old
+system with 4 CPU cores, but your builds will be much faster on a system with
+as much RAM and as many CPU cores as possible.
+
 .. _detailed-supported-distros:
 
 Supported Linux Distributions
