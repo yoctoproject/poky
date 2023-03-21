@@ -161,25 +161,17 @@ consists of the following pieces:
    ``oe-selftest`` can run all tests by default or can run selected
    tests or test suites.
 
-   .. note::
-
-      Running ``oe-selftest`` requires host packages beyond the "Essential"
-      grouping. See the :ref:`ref-manual/system-requirements:required packages for the build host`
-      section for more information.
-
 Originally, much of this testing was done manually. However, significant
 effort has been made to automate the tests so that more people can use
 them and the Yocto Project development team can run them faster and more
 efficiently.
 
-The Yocto Project's main Autobuilder (&YOCTO_AB_URL;)
-publicly tests each Yocto Project release's code in the
-:term:`OpenEmbedded-Core (OE-Core)`, Poky, and BitBake repositories. The testing
-occurs for both the current state of the "master" branch and also for
+The Yocto Project's main Autobuilder (&YOCTO_AB_URL;) publicly tests each Yocto
+Project release's code in the :oe_git:`openembedded-core </openembedded-core>`,
+:yocto_git:`poky </poky>` and :oe_git:`bitbake </bitbake>` repositories. The
+testing occurs for both the current state of the "master" branch and also for
 submitted patches. Testing for submitted patches usually occurs in the
-"ross/mut" branch in the ``poky-contrib`` repository (i.e. the
-master-under-test branch) or in the "master-next" branch in the ``poky``
-repository.
+in the "master-next" branch in the :yocto_git:`poky </poky>` repository.
 
 .. note::
 
