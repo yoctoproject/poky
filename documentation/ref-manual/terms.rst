@@ -227,6 +227,12 @@ universal, the list includes them just in case:
       Layers`" section in the Yocto Project Board Support Packages (BSP)
       Developer's Guide.
 
+   :term:`LTS`
+      This term means "Long Term Support", and in the context of the Yocto
+      Project, it corresponds to selected stable releases for which bug and
+      security fixes are provided for at least two years. See
+      ":doc:`/ref-manual/release-process`" for details.
+
    :term:`Metadata`
       A key element of the Yocto Project is the Metadata that
       is used to construct a Linux distribution and is contained in the
