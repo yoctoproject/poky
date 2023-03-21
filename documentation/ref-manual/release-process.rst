@@ -18,9 +18,9 @@ Following are examples of some major YP releases with their codenames
 also shown. See the ":ref:`ref-manual/release-process:major release codenames`"
 section for information on codenames used with major releases.
 
-  - 2.2 (Morty) 
-  - 2.1 (Krogoth)
-  - 2.0 (Jethro) 
+  - 4.1 ("Langdale")
+  - 4.0 ("Kirkstone")
+  - 3.4 ("Honister")
 
 While the cadence is never perfect, this timescale facilitates
 regular releases that have strong QA cycles while not overwhelming users
@@ -32,9 +32,9 @@ basis and are usually driven by the accumulation of enough significant
 fixes or enhancements to the associated major release. Following are
 some example past point releases:
 
-  - 2.1.1
-  - 2.1.2
-  - 2.2.1 
+  - 4.1.3
+  - 4.0.8
+  - 3.4.4
 
 The point release
 indicates a point in the major release branch where a full QA cycle and
@@ -87,15 +87,34 @@ stable release.
    exception to this policy occurs when there is a strong reason such as
    the fix happens to also be the preferred upstream approach.
 
-Stable release branches have strong maintenance for about a year after
-their initial release. Should significant issues be found for any
-release regardless of its age, fixes could be backported to older
-releases. For issues that are not backported given an older release,
-Community LTS trees and branches allow community members to share
-patches for older releases. However, these types of patches do not go
-through the same release process as do point releases. You can find more
-information about stable branch maintenance at
-:yocto_wiki:`/Stable_branch_maintenance`.
+Long Term Support Releases
+==========================
+
+While stable releases are supported for a duration of seven months,
+some specific ones are now supported for a longer period by the Yocto
+Project, and are called Long Term Support (LTS) releases.
+
+This started with version 3.1 ("Dunfell"), released in April 2020, that
+the project committed to supporting until the next LTS release was out.
+This next LTS release, version 4.0 ("Kirkstone"), was released in May 2022
+and offered with two years of support too.
+
+However, as an experiment, support for "Dunfell" was extended to four years, until
+April 2024, therefore offering more stability to projects and leaving more time
+to upgrade to the latest LTS release. The project hasn't made any commitment to
+extending "Kirkstone" support too, as this will also depend on available funding
+for such an effort.
+
+When significant issues are found, LTS releases allow to publish
+fixes not only for the current stable release, but also to the
+LTS releases that are still supported. Older stable releases which
+have reached their End of Life (EOL) won't receive such updates.
+
+See :yocto_wiki:`/Stable_Release_and_LTS` for details about the management
+of stable and LTS releases.
+
+.. image:: svg/releases.*
+   :width: 100%
 
 .. note::
 
@@ -112,7 +131,6 @@ information about stable branch maintenance at
    Project provides hosting for those repositories, it does not provides
    testing on them. Other "mixin" layers may be released elsewhere by the wider
    community.
-
 
 Testing and Quality Assurance
 =============================
