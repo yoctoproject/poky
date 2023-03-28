@@ -137,7 +137,7 @@ The :ref:`ref-classes-base` class is special in that every ``.bb`` file implicit
 inherits the class. This class contains definitions for standard basic
 tasks such as fetching, unpacking, configuring (empty by default),
 compiling (runs any ``Makefile`` present), installing (empty by default)
-and packaging (empty by default). These classes are often overridden or
+and packaging (empty by default). These tasks are often overridden or
 extended by other classes such as the :ref:`ref-classes-autotools` class or the
 :ref:`ref-classes-package` class.
 
