@@ -9387,6 +9387,18 @@ system and gives an overview of their function and contents.
       file is not persistent. You can override this setting by setting the
       variable to "no" to make the log directory persistent.
 
+   :term:`VOLATILE_TMP_DIR`
+      Specifies the persistence of the target's ``/tmp`` directory.
+
+      By default, :term:`VOLATILE_TMP_DIR` is set to "yes", in which case
+      ``/tmp`` links to a directory which resides in RAM in a ``tmpfs``
+      filesystem.
+
+      If instead, you want the ``/tmp`` directory to be persistent, set the
+      variable to "no" to make it a regular directory in the root filesystem.
+
+      This supports both sysvinit and systemd based systems.
+
    :term:`WARN_QA`
       Specifies the quality assurance checks whose failures are reported as
       warnings by the OpenEmbedded build system. You set this variable in
