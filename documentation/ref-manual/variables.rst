@@ -7334,9 +7334,9 @@ system and gives an overview of their function and contents.
 
    :term:`SERIAL_CONSOLES`
       Defines a serial console (TTY) to enable using
-      `getty <https://en.wikipedia.org/wiki/Getty_(Unix)>`__. Provide a
-      value that specifies the baud rate followed by the TTY device name
-      separated by a semicolon. Use spaces to separate multiple devices::
+      :wikipedia:`getty <Getty_(Unix)>`. Provide a value that specifies the
+      baud rate followed by the TTY device name separated by a semicolon.
+      Use spaces to separate multiple devices::
 
          SERIAL_CONSOLES = "115200;ttyS0 115200;ttyS1"
 
@@ -8265,12 +8265,10 @@ system and gives an overview of their function and contents.
       will be silently ignored.
 
    :term:`SYSVINIT_ENABLED_GETTYS`
-      When using
-      :ref:`SysVinit <dev-manual/new-recipe:enabling system services>`,
+      When using :ref:`SysVinit <dev-manual/new-recipe:enabling system services>`,
       specifies a space-separated list of the virtual terminals that should
-      run a `getty <https://en.wikipedia.org/wiki/Getty_%28Unix%29>`__
-      (allowing login), assuming :term:`USE_VT` is not set to
-      "0".
+      run a :wikipedia:`getty <Getty_(Unix)>` (allowing login), assuming
+      :term:`USE_VT` is not set to "0".
 
       The default value for :term:`SYSVINIT_ENABLED_GETTYS` is "1" (i.e. only
       run a getty on the first virtual terminal).
@@ -9177,9 +9175,8 @@ system and gives an overview of their function and contents.
    :term:`USE_VT`
       When using
       :ref:`SysVinit <dev-manual/new-recipe:enabling system services>`,
-      determines whether or not to run a
-      `getty <https://en.wikipedia.org/wiki/Getty_%28Unix%29>`__ on any
-      virtual terminals in order to enable logging in through those
+      determines whether or not to run a :wikipedia:`getty <Getty_(Unix)>`
+      on any virtual terminals in order to enable logging in through those
       terminals.
 
       The default value used for :term:`USE_VT` is "1" when no default value is
