@@ -4363,6 +4363,20 @@ system and gives an overview of their function and contents.
       You can register custom kernel image types with the
       :ref:`ref-classes-kernel` class using this variable.
 
+   :term:`KERNEL_DANGLING_FEATURES_WARN_ONLY`
+      When kernel configuration fragments are missing for some
+      :term:`KERNEL_FEATURES` specified by layers or BSPs,
+      building and configuring the kernel stops with an error.
+    
+      You can turn these errors into warnings by setting the
+      following in ``conf/local.conf``::
+
+         KERNEL_DANGLING_FEATURES_WARN_ONLY = "1"
+    
+      You will still be warned that runtime issues may occur,
+      but at least the kernel configuration and build process will
+      be allowed to continue.
+
    :term:`KERNEL_DEBUG_TIMESTAMPS`
       If set to "1", enables timestamping functionality during building
       the kernel. The default is "0" to disable this for reproducibility
