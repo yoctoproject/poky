@@ -193,7 +193,7 @@ development:
       :width: 50%
 
    For steps on how to view and access these files, see the
-   ":ref:`dev-manual/start:accessing index of releases`"
+   ":ref:`dev-manual/start:accessing source archives`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *"DOWNLOADS" page for the* :yocto_home:`Yocto Project Website <>` *:*
