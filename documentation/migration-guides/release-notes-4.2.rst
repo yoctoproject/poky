@@ -8,6 +8,52 @@ New Features / Enhancements in 4.2
 
 -  Linux kernel 6.1, glibc 2.37 and ~350 other recipe upgrades
 
+-  Python 3.8 is the minimum Python version required on the build host.
+   For host distributions that do not provide it, this is included as part of the
+   :term:`buildtools` tarball.
+
+-  BitBake in this release now supports a new ``addpylib`` directive to enable
+   Python libraries within layers.
+
+   This directive should be added to your layer configuration
+   as in the below example from ``meta/conf/layer.conf``::
+
+      addpylib ${LAYERDIR}/lib oe
+
+-  BitBake has seen multiple internal changes that may impact
+   memory and disk usage as well as parsing time, in particular:
+
+   -  BitBake's Cooker server is now multithreaded.
+
+   -  BitBake's cache has been extended to include more hash
+      debugging data, but has also been optimized to :yocto_git:`compress
+      cache data <https://git.yoctoproject.org/poky/commit/?h=mickledore&id=7d010055e2af3294e17db862f42664ca689a9356>`.
+
+   -  BitBake's Cooker server :yocto_git:`can now be pinged
+      </poky/commit/?h=mickledore&id=26f255da09>`
+      from the UI.
+
+-  Architecture-specific enhancements:
+
+   -  This release adds initial support for the
+      :wikipedia:`LoongArch <Loongson#LoongArch>`
+      (``loongarch64``) architecture, though there is no testing for it yet.
+
+-  Kernel-related enhancements:
+
+-  QEMU/runqemu enhancements:
+
+-  Image-related enhancements:
+
+-  New variables:
+
+   -  :term:`VOLATILE_TMP_DIR` allows to specify
+      whether ``/tmp`` should be on persistent storage
+      or in RAM.
+
+   -  :term:`SPDX_CUSTOM_ANNOTATION_VARS` allows to add
+      specific comments to the :term:`SPDX` description of a recipe.
+
 -  Rust improvements:
 
    -  This release adds Cargo support on the target, and includes
