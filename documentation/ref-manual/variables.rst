@@ -7053,6 +7053,14 @@ system and gives an overview of their function and contents.
       The target architecture for the SDK. Typically, you do not directly
       set this variable. Instead, use :term:`SDKMACHINE`.
 
+   :term:`SDK_ARCHIVE_TYPE`
+      Specifies the type of archive to create for the SDK. Valid values:
+
+      - ``tar.xz`` (default)
+      - ``zip``
+
+      Only one archive type can be specified.
+
    :term:`SDK_BUILDINFO_FILE`
       When using the :ref:`ref-classes-image-buildinfo` class,
       specifies the file in the SDK to write the build information into. The
