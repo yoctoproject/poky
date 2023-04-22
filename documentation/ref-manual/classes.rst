@@ -1192,6 +1192,11 @@ Here are the tests you can list with the :term:`WARN_QA` and
    ``initscripts`` recipe is actually built and thus the
    ``initscripts-functions`` package is made available.
 
+-  ``configure-gettext:`` Checks that if a recipe is building something
+   that uses automake and the automake files contain an ``AM_GNU_GETTEXT``
+   directive, that the recipe also inherits the :ref:`ref-classes-gettext`
+   class to ensure that gettext is available during the build.
+
 -  ``compile-host-path:`` Checks the
    :ref:`ref-tasks-compile` log for indications that
    paths to locations on the build host were used. Using such paths
@@ -1308,10 +1313,31 @@ Here are the tests you can list with the :term:`WARN_QA` and
    ``/usr/libexec``. This check is not performed if the ``libexecdir``
    variable has been set explicitly to ``/usr/libexec``.
 
+-  ``mime:`` Check that if a package contains mime type files (``.xml``
+   files in ``${datadir}/mime/packages``) that the recipe also inherits
+   the :ref:`ref-classes-mime` class in order to ensure that these get
+   properly installed.
+
+-  ``mime-xdg:`` Checks that if a package contains a .desktop file with a
+   'MimeType' key present, that the recipe inherits the
+   :ref:`ref-classes-mime-xdg` class that is required in order for that
+   to be activated.
+
+-  ``missing-update-alternatives:`` Check that if a recipe sets the
+   :term:`ALTERNATIVE` variable that the recipe also inherits
+   :ref:`ref-classes-update-alternatives` such that the alternative will
+   be correctly set up.
+
 -  ``packages-list:`` Checks for the same package being listed
    multiple times through the :term:`PACKAGES` variable
    value. Installing the package in this manner can cause errors during
    packaging.
+
+-  ``patch-fuzz:`` Checks for fuzz in patch files that may allow
+   them to apply incorrectly if the underlying code changes.
+
+-  ``perllocalpod:`` Checks for ``perllocal.pod`` being erroneously
+   installed and packaged by a recipe.
 
 -  ``perm-config:`` Reports lines in ``fs-perms.txt`` that have an
    invalid format.
@@ -1366,11 +1392,19 @@ Here are the tests you can list with the :term:`WARN_QA` and
    options are being passed to the linker commands and your binaries
    have potential security issues.
 
+-  ``shebang-size:`` Check that the shebang line (``#!`` in the first line)
+   in a packaged script is not longer than 128 characters, which can cause
+   an error at runtime depending on the operating system.
+
 -  ``split-strip:`` Reports that splitting or stripping debug symbols
    from binaries has failed.
 
 -  ``staticdev:`` Checks for static library files (``*.a``) in
    non-``staticdev`` packages.
+
+-  ``src-uri-bad:`` Checks that the :term:`SRC_URI` value set by a recipe
+   does not contain a reference to ``${PN}`` (instead of the correct
+   ``${BPN}``) nor refers to unstable Github archive tarballs.
 
 -  ``symlink-to-sysroot:`` Checks for symlinks in packages that point
    into :term:`TMPDIR` on the host. Such symlinks will
@@ -1382,6 +1416,12 @@ Here are the tests you can list with the :term:`WARN_QA` and
    ":doc:`/ref-manual/qa-checks`" for more information regarding runtime performance
    issues.
 
+-  ``unhandled-features-check:`` check that if one of the variables that
+   the :ref:`ref-classes-features_check` class supports (e.g.
+   :term:`REQUIRED_DISTRO_FEATURES`) is set by a recupe, then the recipe
+   also inherits :ref:`ref-classes-features_check` in order for the
+   requirement to actually work.
+
 -  ``unlisted-pkg-lics:`` Checks that all declared licenses applying
    for a package are also declared on the recipe level (i.e. any license
    in ``LICENSE:*`` should appear in :term:`LICENSE`).
@@ -1391,19 +1431,23 @@ Here are the tests you can list with the :term:`WARN_QA` and
    the linker (e.g. ``/lib`` and ``/usr/lib``). While these paths will
    not cause any breakage, they do waste space and are unnecessary.
 
+-  ``usrmerge:`` If ``usrmerge`` is in :term:`DISTRO_FEATURES`, this
+   check will ensure that no package installs files to root (``/bin``,
+   ``/sbin``, ``/lib``, ``/lib64``) directories.
+
 -  ``var-undefined:`` Reports when variables fundamental to packaging
    (i.e. :term:`WORKDIR`,
    :term:`DEPLOY_DIR`, :term:`D`,
    :term:`PN`, and :term:`PKGD`) are undefined
    during :ref:`ref-tasks-package`.
 
--  ``version-going-backwards:`` If Build History is enabled, reports
-   when a package being written out has a lower version than the
-   previously written package under the same name. If you are placing
-   output packages into a feed and upgrading packages on a target system
-   using that feed, the version of a package going backwards can result
-   in the target system not correctly upgrading to the "new" version of
-   the package.
+-  ``version-going-backwards:`` If the :ref:`ref-classes-buildhistory`
+   class is enabled, reports when a package being written out has a lower
+   version than the previously written package under the same name. If
+   you are placing output packages into a feed and upgrading packages on
+   a target system using that feed, the version of a package going
+   backwards can result in the target system not correctly upgrading to
+   the "new" version of the package.
 
    .. note::
 
