@@ -3859,43 +3859,6 @@ system and gives an overview of their function and contents.
       files to be deployed into :term:`IMGDEPLOYDIR`, and the class will take
       care of copying them into :term:`DEPLOY_DIR_IMAGE` afterwards.
 
-   :term:`INC_PR`
-      Helps define the recipe revision for recipes that share a common
-      ``include`` file. You can think of this variable as part of the
-      recipe revision as set from within an include file.
-
-      Suppose, for example, you have a set of recipes that are used across
-      several projects. And, within each of those recipes the revision (its
-      :term:`PR` value) is set accordingly. In this case, when
-      the revision of those recipes changes, the burden is on you to find
-      all those recipes and be sure that they get changed to reflect the
-      updated version of the recipe. In this scenario, it can get
-      complicated when recipes that are used in many places and provide
-      common functionality are upgraded to a new revision.
-
-      A more efficient way of dealing with this situation is to set the
-      :term:`INC_PR` variable inside the ``include`` files that the recipes
-      share and then expand the :term:`INC_PR` variable within the recipes to
-      help define the recipe revision.
-
-      The following provides an example that shows how to use the
-      :term:`INC_PR` variable given a common ``include`` file that defines the
-      variable. Once the variable is defined in the ``include`` file, you
-      can use the variable to set the :term:`PR` values in each recipe. You
-      will notice that when you set a recipe's :term:`PR` you can provide more
-      granular revisioning by appending values to the :term:`INC_PR` variable::
-
-         recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
-         recipes-graphics/xorg-font/encodings_1.0.4.bb:PR = "${INC_PR}.1"
-         recipes-graphics/xorg-font/font-util_1.3.0.bb:PR = "${INC_PR}.0"
-         recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
-
-      The
-      first line of the example establishes the baseline revision to be
-      used for all recipes that use the ``include`` file. The remaining
-      lines in the example are from individual recipes and show how the
-      :term:`PR` value is set.
-
    :term:`INCOMPATIBLE_LICENSE`
       Specifies a space-separated list of license names (as they would
       appear in :term:`LICENSE`) that should be excluded
