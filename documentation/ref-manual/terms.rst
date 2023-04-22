@@ -212,6 +212,48 @@ universal, the list includes them just in case:
       of the supported image types that the Yocto Project provides, see the
       ":ref:`ref-manual/images:Images`" chapter.
 
+   :term:`Initramfs`
+      An Initial RAM Filesystem (:term:`Initramfs`) is an optionally compressed
+      :wikipedia:`cpio <Cpio>` archive which is extracted
+      by the Linux kernel into RAM in a special :wikipedia:`tmpfs <Tmpfs>`
+      instance, used as the initial root filesystem.
+
+      This is a replacement for the legacy init RAM disk ("initrd")
+      technique, booting on an emulated block device in RAM, but being less
+      efficient because of the overhead of going through a filesystem and
+      having to duplicate accessed file contents in the file cache in RAM,
+      as for any block device.
+
+      .. note:
+
+         As far as bootloaders are concerned, :term:`Initramfs` and "initrd"
+         images are still copied to RAM in the same way. That's why most
+	 most bootloaders refer to :term:`Initramfs` images as "initrd"
+	 or "init RAM disk".
+
+      This kind of mechanism is typically used for two reasons:
+
+      -  For booting the same kernel binary on multiple systems requiring
+         different device drivers. The :term:`Initramfs` image is then customized
+	 for each type of system, to include the specific  kernel modules
+         necessary to access the final root filesystem. This technique
+	 is used on all GNU / Linux distributions for desktops and servers.
+
+      -  For booting faster. As the root filesystem is extracted into RAM,
+         accessing the first user-space applications is very fast, compared
+         to having to initialize a block device, to access multiple blocks
+         from it, and to go through a filesystem having its own overhead.
+         For example, this allows to display a splashscreen very early,
+	 and to later take care of mounting the final root filesystem and
+         loading less time-critical kernel drivers.
+
+      This cpio archive can either be loaded to RAM by the bootloader,
+      or be included in the kernel binary.
+
+      For information on creating and using an :term:`Initramfs`, see the
+      ":ref:`dev-manual/building:building an initial ram filesystem (Initramfs) image`"
+      section in the Yocto Project Development Tasks Manual.
+
    :term:`Layer`
       A collection of related recipes. Layers allow you to consolidate related
       metadata to customize your build. Layers also isolate information used
