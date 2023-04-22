@@ -3583,11 +3583,34 @@ system and gives an overview of their function and contents.
    :term:`IMAGE_LINK_NAME`
       The name of the output image symlink (which does not include
       the version part as :term:`IMAGE_NAME` does). The default value
-      is derived using the :term:`IMAGE_BASENAME` and :term:`MACHINE`
-      variables::
+      is derived using the :term:`IMAGE_BASENAME` and
+      :term:`IMAGE_MACHINE_SUFFIX` variables::
 
-         IMAGE_LINK_NAME ?= "${IMAGE_BASENAME}-${MACHINE}"
+         IMAGE_LINK_NAME ?= "${IMAGE_BASENAME}${IMAGE_MACHINE_SUFFIX}"
 
+      .. note::
+
+         It is possible to set this to "" to disable symlink creation,
+         however, you also need to set :term:`IMAGE_NAME` to still have
+         a reasonable value e.g.::
+
+            IMAGE_LINK_NAME = ""
+            IMAGE_NAME = "${IMAGE_BASENAME}${IMAGE_MACHINE_SUFFIX}${IMAGE_VERSION_SUFFIX}"
+
+   :term:`IMAGE_MACHINE_SUFFIX`
+      Specifies the by default machine-specific suffix for image file names
+      (before the extension). The default value is set as follows::
+
+         IMAGE_MACHINE_SUFFIX ??= "-${MACHINE}"
+
+      The default :term:`DEPLOY_DIR_IMAGE` already has a :term:`MACHINE`
+      subdirectory, so you may find it unnecessary to also include this suffix
+      in the name of every image file. If you prefer to remove the suffix you
+      can set this variable to an empty string::
+
+         IMAGE_MACHINE_SUFFIX = ""
+
+      (Not to be confused with :term:`IMAGE_NAME_SUFFIX`.)
 
    :term:`IMAGE_MANIFEST`
       The manifest file for the image. This file lists all the installed
@@ -3608,12 +3631,11 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Overview and Concepts Manual.
 
    :term:`IMAGE_NAME`
-      The name of the output image files minus the extension. This variable
-      is derived using the :term:`IMAGE_BASENAME`,
-      :term:`MACHINE`, and :term:`IMAGE_VERSION_SUFFIX`
-      variables::
+      The name of the output image files minus the extension. By default
+      this variable is set using the :term:`IMAGE_LINK_NAME`, and
+      :term:`IMAGE_VERSION_SUFFIX` variables::
 
-         IMAGE_NAME ?= "${IMAGE_BASENAME}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+         IMAGE_NAME ?= "${IMAGE_LINK_NAME}${IMAGE_VERSION_SUFFIX}"
 
    :term:`IMAGE_NAME_SUFFIX`
       Suffix used for the image output filename --- defaults to ``".rootfs"``
@@ -4140,6 +4162,19 @@ system and gives an overview of their function and contents.
       :term:`Initramfs`, see the ":ref:`dev-manual/building:building an initial ram filesystem (Initramfs) image`" section
       in the Yocto Project Development Tasks Manual.
 
+   :term:`INITRAMFS_IMAGE_NAME`
+
+      This value needs to stay in sync with :term:`IMAGE_LINK_NAME`, but with
+      :term:`INITRAMFS_IMAGE` instead of :term:`IMAGE_BASENAME`. The default value
+      is set as follows:
+
+         INITRAMFS_IMAGE_NAME ?= "${@['${INITRAMFS_IMAGE}${IMAGE_MACHINE_SUFFIX}', ''][d.getVar('INITRAMFS_IMAGE') == '']}"
+
+      That is, if :term:`INITRAMFS_IMAGE` is set, the value of
+      :term:`INITRAMFS_IMAGE_NAME` will be set based upon
+      :term:`INITRAMFS_IMAGE` and :term:`IMAGE_MACHINE_SUFFIX`.
+
+
    :term:`INITRAMFS_LINK_NAME`
       The link name of the initial RAM filesystem image. This variable is
       set in the ``meta/classes-recipe/kernel-artifact-names.bbclass`` file as
@@ -4174,10 +4209,7 @@ system and gives an overview of their function and contents.
 
          INITRAMFS_NAME ?= "initramfs-${KERNEL_ARTIFACT_NAME}"
 
-      The value of the :term:`KERNEL_ARTIFACT_NAME`
-      variable, which is set in the same file, has the following value::
-
-         KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+      See :term:`KERNEL_ARTIFACT_NAME` for additional information.
 
    :term:`INITRD`
       Indicates list of filesystem images to concatenate and use as an
@@ -4381,9 +4413,9 @@ system and gives an overview of their function and contents.
       ``meta/classes-recipe/kernel-artifact-names.bbclass`` file, has the
       following default value::
 
-         KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+         KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}${IMAGE_MACHINE_SUFFIX}${IMAGE_VERSION_SUFFIX}"
 
-      See the :term:`PKGE`, :term:`PKGV`, :term:`PKGR`, :term:`MACHINE`
+      See the :term:`PKGE`, :term:`PKGV`, :term:`PKGR`, :term:`IMAGE_MACHINE_SUFFIX`
       and :term:`IMAGE_VERSION_SUFFIX` variables for additional information.
 
    :term:`KERNEL_CLASSES`
@@ -4441,10 +4473,7 @@ system and gives an overview of their function and contents.
 
          KERNEL_DTB_NAME ?= "${KERNEL_ARTIFACT_NAME}"
 
-      The value of the :term:`KERNEL_ARTIFACT_NAME`
-      variable, which is set in the same file, has the following value::
-
-         KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+      See :term:`KERNEL_ARTIFACT_NAME` for additional information.
 
    :term:`KERNEL_DTC_FLAGS`
       Specifies the ``dtc`` flags that are passed to the Linux kernel build
@@ -4507,10 +4536,7 @@ system and gives an overview of their function and contents.
 
          KERNEL_FIT_NAME ?= "${KERNEL_ARTIFACT_NAME}"
 
-      The value of the :term:`KERNEL_ARTIFACT_NAME`
-      variable, which is set in the same file, has the following value::
-
-         KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+      See :term:`KERNEL_ARTIFACT_NAME` for additional information.
 
    :term:`KERNEL_IMAGE_LINK_NAME`
       The link name for the kernel image. This variable is set in the
@@ -4546,11 +4572,7 @@ system and gives an overview of their function and contents.
 
          KERNEL_IMAGE_NAME ?= "${KERNEL_ARTIFACT_NAME}"
 
-      The value of the
-      :term:`KERNEL_ARTIFACT_NAME` variable,
-      which is set in the same file, has the following value::
-
-         KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+      See :term:`KERNEL_ARTIFACT_NAME` for additional information.
 
    :term:`KERNEL_IMAGETYPE`
       The type of kernel to build for a device, usually set by the machine
@@ -5299,10 +5321,7 @@ system and gives an overview of their function and contents.
 
          MODULE_TARBALL_NAME ?= "${KERNEL_ARTIFACT_NAME}"
 
-      The value of the :term:`KERNEL_ARTIFACT_NAME` variable,
-      which is set in the same file, has the following value::
-
-         KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+      See :term:`KERNEL_ARTIFACT_NAME` for additional information.
 
    :term:`MOUNT_BASE`
       On non-systemd systems (where ``udev-extraconf`` is being used),
