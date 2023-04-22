@@ -1989,25 +1989,6 @@ system and gives an overview of their function and contents.
       ":ref:`overview-manual/concepts:package feeds`" section
       in the Yocto Project Overview and Concepts Manual.
 
-   :term:`DEPLOY_DIR_TAR`
-      Points to the area that the OpenEmbedded build system uses to place
-      tarballs that are ready to be used outside of the build system. This
-      variable applies only when :term:`PACKAGE_CLASSES` contains
-      ":ref:`ref-classes-package_tar`".
-
-      The BitBake configuration file initially defines this variable as a
-      sub-folder of :term:`DEPLOY_DIR`::
-
-         DEPLOY_DIR_TAR = "${DEPLOY_DIR}/tar"
-
-      The :ref:`ref-classes-package_tar` class uses the
-      :term:`DEPLOY_DIR_TAR` variable to make sure the
-      :ref:`ref-tasks-package_write_tar` task
-      writes TAR packages into the appropriate folder. For more information
-      on how packaging works, see the
-      ":ref:`overview-manual/concepts:package feeds`" section
-      in the Yocto Project Overview and Concepts Manual.
-
    :term:`DEPLOYDIR`
       When inheriting the :ref:`ref-classes-deploy` class, the
       :term:`DEPLOYDIR` points to a temporary work area for deployed files that
@@ -3679,12 +3660,7 @@ system and gives an overview of their function and contents.
       Defines the package type (i.e. DEB, RPM, IPK, or TAR) used by the
       OpenEmbedded build system. The variable is defined appropriately by
       the :ref:`ref-classes-package_deb`, :ref:`ref-classes-package_rpm`,
-      :ref:`ref-classes-package_ipk`, or :ref:`ref-classes-package_tar` class.
-
-      .. note::
-
-         The ``package_tar`` class is broken and is not supported. It is
-         recommended that you do not use it.
+      or :ref:`ref-classes-package_ipk` class.
 
       The :ref:`ref-classes-populate-sdk-*` and :ref:`ref-classes-image`
       classes use the :term:`IMAGE_PKGTYPE` for packaging up images and SDKs.
@@ -5663,14 +5639,7 @@ system and gives an overview of their function and contents.
       You can provide one or more of the following arguments for the
       variable::
 
-         PACKAGE_CLASSES ?= "package_rpm package_deb package_ipk package_tar"
-
-      .. note::
-
-         While it is a legal option, the :ref:`ref-classes-package_tar`
-         class has limited functionality due to no support for package
-         dependencies by that backend. Therefore, it is recommended that
-         you do not use it.
+         PACKAGE_CLASSES ?= "package_rpm package_deb package_ipk"
 
       The build system uses only the first argument in the list as the
       package manager when creating your image or SDK. However, packages
