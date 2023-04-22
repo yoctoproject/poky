@@ -2898,6 +2898,10 @@ system and gives an overview of their function and contents.
       For guidance on how to create your own file permissions settings
       table file, examine the existing ``fs-perms.txt``.
 
+   :term:`FIT_CONF_DEFAULT_DTB`
+      Specifies the default device tree binary (dtb) file for a fitImage when
+      multiple are provided.
+
    :term:`FIT_DESC`
       Specifies the description string encoded into a fitImage. The default
       value is set by the :ref:`ref-classes-kernel-fitimage`
