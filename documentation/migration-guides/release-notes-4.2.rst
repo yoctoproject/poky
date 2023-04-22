@@ -11,12 +11,8 @@ New Features / Enhancements in 4.2
    :term:`buildtools` tarball.
 
 -  BitBake in this release now supports a new ``addpylib`` directive to enable
-   Python libraries within layers.
-
-   This directive should be added to your layer configuration
-   as in the below example from ``meta/conf/layer.conf``::
-
-      addpylib ${LAYERDIR}/lib oe
+   Python libraries within layers. For more information,
+   see :ref:`bitbake-user-manual/bitbake-user-manual-metadata:extending python library code`.
 
 -  BitBake has seen multiple internal changes that may impact
    memory and disk usage as well as parsing time, in particular:

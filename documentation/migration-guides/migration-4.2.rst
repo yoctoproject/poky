@@ -85,6 +85,28 @@ On the other hand, some earlier distributions are no longer supported:
 
 See :ref:`all supported distributions <system-requirements-supported-distros>`.
 
+
+.. _migration-4.2-addpylib:
+
+Python library code extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+BitBake in this release now supports a new ``addpylib`` directive to enable
+Python libraries within layers.
+
+This directive should be added to your layer configuration
+as in the below example from ``meta/conf/layer.conf``::
+
+   addpylib ${LAYERDIR}/lib oe
+
+Layers currently adding a lib directory to extend Python library code should now
+use this directive as :term:`BBPATH` is not going to be added automatically by
+OE-Core in future. Note that the directives are immediate operations, so it does
+make modules available for use sooner than the current BBPATH-based approach.
+
+For more information, see :ref:`bitbake-user-manual/bitbake-user-manual-metadata:extending python library code`.
+
+
 .. _migration-4.2-misc-changes:
 
 Miscellaneous changes
