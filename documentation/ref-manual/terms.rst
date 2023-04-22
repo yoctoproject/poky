@@ -123,6 +123,10 @@ universal, the list includes them just in case:
       tools, such as a required version of the GCC compiler to run the
       OpenEmbedded build system.
 
+      See the ":ref:`system-requirements-buildtools`" paragraph in the
+      Reference Manual for details about downloading or building an archive
+      of such tools.
+
    :term:`buildtools-make`
       A variant of :term:`buildtools`, just providing the required
       version of ``make`` to run the OpenEmbedded build system.
