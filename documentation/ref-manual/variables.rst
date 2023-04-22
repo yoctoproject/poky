@@ -354,6 +354,9 @@ system and gives an overview of their function and contents.
    :term:`BB_BASEHASH_IGNORE_VARS`
       See :term:`bitbake:BB_BASEHASH_IGNORE_VARS` in the BitBake manual.
 
+   :term:`BB_CACHEDIR`
+      See :term:`bitbake:BB_CACHEDIR` in the BitBake manual.
+
    :term:`BB_CHECK_SSL_CERTS`
       See :term:`bitbake:BB_CHECK_SSL_CERTS` in the BitBake manual.
 
