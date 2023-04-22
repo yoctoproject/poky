@@ -7040,6 +7040,11 @@ system and gives an overview of their function and contents.
 
          RSUGGESTS:${PN} = "useful_package another_package"
 
+   :term:`RUST_CHANNEL`
+      Specifies which version of Rust to build - "stable", "beta" or "nightly".
+      The default value is "stable". Set this at your own risk, as values other
+      than "stable" are not guaranteed to work at a given time.
+
    :term:`S`
       The location in the :term:`Build Directory` where
       unpacked recipe source code resides. By default, this directory is
