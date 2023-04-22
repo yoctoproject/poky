@@ -2025,13 +2025,7 @@ The :ref:`ref-classes-package` class supports generating packages from a build's
 output. The core generic functionality is in ``package.bbclass``. The
 code specific to particular package types resides in these
 package-specific classes: :ref:`ref-classes-package_deb`,
-:ref:`ref-classes-package_rpm`, :ref:`ref-classes-package_ipk`, and
-:ref:`ref-classes-package_tar`.
-
-.. note::
-
-   The :ref:`ref-classes-package_tar` class is broken and
-   not supported. It is recommended that you do not use this class.
+:ref:`ref-classes-package_rpm`, :ref:`ref-classes-package_ipk`.
 
 You can control the list of resulting package formats by using the
 :term:`PACKAGE_CLASSES` variable defined in your ``conf/local.conf``
@@ -2120,25 +2114,6 @@ are written out in a ``.rpm`` file format to the
 This class inherits the :ref:`ref-classes-package` class and
 is enabled through the :term:`PACKAGE_CLASSES`
 variable in the ``local.conf`` file.
-
-.. _ref-classes-package_tar:
-
-``package_tar``
-===============
-
-The :ref:`ref-classes-package_tar` class provides support for creating tarballs. The
-class ensures the packages are written out in a tarball format to the
-``${``\ :term:`DEPLOY_DIR_TAR`\ ``}`` directory.
-
-This class inherits the :ref:`ref-classes-package` class and
-is enabled through the :term:`PACKAGE_CLASSES`
-variable in the ``local.conf`` file.
-
-.. note::
-
-   You cannot specify the :ref:`ref-classes-package_tar` class first using the
-   :term:`PACKAGE_CLASSES` variable. You must use ``.deb``, ``.ipk``, or ``.rpm``
-   file formats for your image or SDK.
 
 .. _ref-classes-packagedata:
 
