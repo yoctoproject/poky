@@ -3956,6 +3956,21 @@ system and gives an overview of their function and contents.
          even if the toolchain's binaries are strippable, there are other files
          needed for the build that are not strippable.
 
+   :term:`INIT_MANAGER`
+      Specifies the system init manager to use. Available options are:
+
+      -  ``sysvinit`` - System V init (default for poky)
+      -  ``systemd`` - systemd
+      -  ``mdev-busybox`` - mdev provided by busybox
+      -  ``none`` - no init manager
+
+      More concretely, this is used to include
+      ``conf/distro/include/init-manager-${INIT_MANAGER}.inc`` into the global
+      configuration. You can have a look at the ``conf/distro/include/init-manager-*.inc``
+      files for more information, and also the
+      ":ref:`dev-manual/init-manager:selecting an initialization manager`"
+      section in the Yocto Project Development Tasks Manual.
+
    :term:`INITRAMFS_DEPLOY_DIR_IMAGE`
       Indicates the deploy directory used by :ref:`ref-tasks-bundle_initramfs`
       where the :term:`INITRAMFS_IMAGE` will be fetched from. This variable is
