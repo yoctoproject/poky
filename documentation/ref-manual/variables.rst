@@ -7318,6 +7318,11 @@ system and gives an overview of their function and contents.
       :term:`DISTRO_VERSION` and
       :term:`METADATA_REVISION` variables.
 
+   :term:`SDK_ZIP_OPTIONS`
+      Specifies extra options to pass to the ``zip`` command when zipping the SDK
+      (i.e. when :term:`SDK_ARCHIVE_TYPE` is set to "zip"). The default value is
+      "-y".
+
    :term:`SDKEXTPATH`
       The default installation directory for the Extensible SDK. By
       default, this directory is based on the :term:`DISTRO`
