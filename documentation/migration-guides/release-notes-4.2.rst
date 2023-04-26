@@ -326,7 +326,7 @@ Security Fixes in 4.2
 - ffmpeg: :cve:`2022-3964`, :cve:`2022-3965`
 - git: :cve:`2022-39260`, :cve:`2022-41903`, :cve:`2022-23521`, :cve:`2022-41953` (ignored)
 - glibc: :cve:`2023-25139` (ignored)
-- go: :cve:`2023-2453`
+- go: :cve:`2023-24532`, :cve:`2023-24537`
 - grub2: :cve:`2022-2601`, :cve:`2022-3775`, :cve:`2022-28736`
 - inetutils: :cve:`2019-0053`
 - less: :cve:`2022-46663`
@@ -343,14 +343,15 @@ Security Fixes in 4.2
 - qemu: :cve:`2022-3165`
 - rust: :cve:`2022-46176`
 - rxvt-unicode: :cve:`2022-4170`
-- shadow: :cve:`2016-15024` (ignored)
+- screen: :cve:`2023-24626`
+- shadow: :cve:`2023-29383`, :cve:`2016-15024` (ignored)
 - sudo: :cve:`2022-43995`
 - systemd: :cve:`2022-4415` (ignored)
 - tar: :cve:`2022-48303`
 - tiff: :cve:`2022-3599`, :cve:`2022-3597`, :cve:`2022-3626`, :cve:`2022-3627`, :cve:`2022-3570`, :cve:`2022-3598`, :cve:`2022-3970`, :cve:`2022-48281`
 - vim: :cve:`2022-3352`, :cve:`2022-4141`, :cve:`2023-0049`, :cve:`2023-0051`, :cve:`2023-0054`, :cve:`2023-0288`, :cve:`2023-1127`, :cve:`2023-1170`, :cve:`2023-1175`, :cve:`2023-1127`, :cve:`2023-1170`, :cve:`2023-1175`, :cve:`2023-1264`, :cve:`2023-1355`, :cve:`2023-0433`, :cve:`2022-47024`, :cve:`2022-3705`
 - xdg-utils: :cve:`2022-4055`
-- xserver-xorg: :cve:`2022-3550`, :cve:`2022-3551`, :cve:`2023-0494`, :cve:`2022-3553` (ignored)
+- xserver-xorg: :cve:`2022-3550`, :cve:`2022-3551`, :cve:`2023-1393`, :cve:`2023-0494`, :cve:`2022-3553` (ignored)
 
 
 Recipe Upgrades in 4.2
@@ -517,9 +518,9 @@ Recipe Upgrades in 4.2
 - lighttpd: upgrade 1.4.66 -> 1.4.69
 - linux-firmware: upgrade 20220913 -> 20230210
 - linux-libc-headers: bump to 6.1
-- linux-yocto/5.15: update genericx86* machines to v5.15.78
-- linux-yocto/5.15: update to v5.15.103
-- linux-yocto/6.1: update to v6.1.20
+- linux-yocto/5.15: update genericx86* machines to v5.15.103
+- linux-yocto/5.15: update to v5.15.108
+- linux-yocto/6.1: update to v6.1.25
 - linux-yocto-dev: bump to v6.3
 - linux-yocto-rt/5.15: update to -rt59
 - linux-yocto-rt/6.1: update to -rt7
