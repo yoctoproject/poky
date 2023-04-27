@@ -3959,16 +3959,33 @@ system and gives an overview of their function and contents.
    :term:`INIT_MANAGER`
       Specifies the system init manager to use. Available options are:
 
-      -  ``sysvinit`` - System V init (default for poky)
-      -  ``systemd`` - systemd
-      -  ``mdev-busybox`` - mdev provided by busybox
-      -  ``none`` - no init manager
+      -  ``sysvinit``
+      -  ``systemd``
+      -  ``mdev-busybox``
+      -  ``none``
+
+      With ``sysvinit``, the init manager is set to
+      :wikipedia:`SysVinit <Init#SysV-style>`, the traditional UNIX init
+      system. This is the default choice in the Poky distribution, together with
+      the Udev device manager (see the ":ref:`device-manager`" section).
+
+      With ``systemd``, the init manager becomes :wikipedia:`systemd <Systemd>`,
+      which comes with the :wikipedia:`udev <Udev>` device manager.
+
+      With ``mdev-busybox``, the init manager becomes the much simpler BusyBox
+      init, together with the BusyBox mdev device manager. This is the simplest
+      and lightest solution, and probably the best choice for low-end systems
+      with a rather slow CPU and a limited amount of RAM.
+
+      With ``none``, the init manager is also set to ``sysvinit``. This is the
+      default setting in OpenEmbedded-Core. This option also selects the
+      :wikipedia:`udev <Udev>` device manager.
 
       More concretely, this is used to include
       ``conf/distro/include/init-manager-${INIT_MANAGER}.inc`` into the global
-      configuration. You can have a look at the ``conf/distro/include/init-manager-*.inc``
-      files for more information, and also the
-      ":ref:`dev-manual/init-manager:selecting an initialization manager`"
+      configuration. You can have a look at the
+      :yocto_git:`meta/conf/distro/include/init-manager-*.inc </poky/tree/meta/conf/distro/include>`
+      files for more information, and also the ":ref:`init-manager`"
       section in the Yocto Project Development Tasks Manual.
 
    :term:`INITRAMFS_DEPLOY_DIR_IMAGE`
