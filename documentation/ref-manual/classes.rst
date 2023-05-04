@@ -1590,7 +1590,8 @@ Only a single kernel can be added to the FIT image created by
 :ref:`ref-classes-kernel-fitimage` and the kernel image in FIT is mandatory. The
 address where the kernel image is to be loaded by U-Boot is
 specified by :term:`UBOOT_LOADADDRESS` and the entrypoint by
-:term:`UBOOT_ENTRYPOINT`.
+:term:`UBOOT_ENTRYPOINT`. Setting :term:`FIT_ADDRESS_CELLS` to "2"
+is necessary if such addresses are 64 bit ones.
 
 Multiple device trees can be added to the FIT image created by
 :ref:`ref-classes-kernel-fitimage` and the device tree is optional.

@@ -26,6 +26,11 @@ New Features / Enhancements in 4.3
 
 -  wic Image Creator enhancements:
 
+-  FIT image related improvements:
+
+   -  New :term:`FIT_ADDRESS_CELLS` variable allowing
+      to specify 64 bit addresses.
+
 -  SDK-related improvements:
 
 -  Testing:
