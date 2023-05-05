@@ -271,6 +271,24 @@ New Features / Enhancements in 4.2
    -  ``xinetd``: move ``xconv.pl`` script to separate package
    -  ``perf``: enable debug/source packaging
 
+-  Prominent documentation updates:
+
+   -  Substantially expanded the ":doc:`/dev-manual/vulnerabilities`" section.
+   -  Added a new ":doc:`/dev-manual/sbom`" section about SPDX SBoM generation.
+   -  Expanded ":ref:`init-manager`" documentation.
+   -  New section about :ref:`ref-long-term-support-releases`.
+   -  System Requirements: details about :ref:`system-requirements-minimum-ram`.
+   -  Details about :ref:`ref-building-meson-package` and the
+      :ref:`ref-classes-meson` class.
+   -  Documentation about how to write recipes for Rust programs. See the
+      :ref:`ref-classes-cargo` class.
+   -  Documentation about how to write recipes for Go programs. See the
+      :ref:`ref-classes-go` class.
+   -  Variable index: added references to variables only documented in the
+      BitBake manual. All variables should be easy to access through the Yocto
+      Manual variable index.
+   -  Expanded the description of the :term:`BB_NUMBER_THREADS` variable.
+      
 -  Miscellaneous changes:
 
    -  Supporting 64 bit dates on 32 bit platforms: several packages have been
