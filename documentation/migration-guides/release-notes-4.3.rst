@@ -44,6 +44,8 @@ New Features / Enhancements in 4.3
 
 -  Packaging changes:
 
+-  Prominent documentation updates:
+
 -  Miscellaneous changes:
 
    -  Git based recipes in OE-Core which used the git protocol have been
