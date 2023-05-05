@@ -1532,11 +1532,11 @@ code to build all kernel trees. All needed headers are staged into the
 :term:`STAGING_KERNEL_DIR` directory to allow out-of-tree module builds
 using the :ref:`ref-classes-module` class.
 
-This means that each built kernel module is packaged separately and
-inter-module dependencies are created by parsing the ``modinfo`` output.
-If all modules are required, then installing the ``kernel-modules``
-package installs all packages with modules and various other kernel
-packages such as ``kernel-vmlinux``.
+Each built kernel module is packaged separately and inter-module
+dependencies are created by parsing the ``modinfo`` output.  If all modules
+are required, then installing the ``kernel-modules`` package installs all
+packages with modules and various other kernel packages such as
+``kernel-vmlinux``.
 
 The :ref:`ref-classes-kernel` class contains logic that allows you to embed an initial
 RAM filesystem (:term:`Initramfs`) image when you build the kernel image. For
