@@ -1532,6 +1532,13 @@ code to build all kernel trees. All needed headers are staged into the
 :term:`STAGING_KERNEL_DIR` directory to allow out-of-tree module builds
 using the :ref:`ref-classes-module` class.
 
+If a file named ``defconfig`` is listed in :term:`SRC_URI`, then by default
+:ref:`ref-tasks-configure` copies it as ``.config`` in the build directory,
+so it is automatically used as the kernel configuration for the build. This
+copy is not performed in case ``.config`` already exists there: this allows
+recipes to produce a configuration by other means in
+``do_configure:prepend``.
+
 Each built kernel module is packaged separately and inter-module
 dependencies are created by parsing the ``modinfo`` output.  If all modules
 are required, then installing the ``kernel-modules`` package installs all
