@@ -16,6 +16,10 @@ New Features / Enhancements in 4.3
 
 -  New core recipes:
 
+-  New classes:
+
+   - A ``ptest-cargo`` class was added to allow Cargo based recipes to easily add ptests
+
 -  QEMU/runqemu enhancements:
 
 -  Image-related enhancements:
@@ -36,6 +40,13 @@ New Features / Enhancements in 4.3
 -  Packaging changes:
 
 -  Miscellaneous changes:
+
+   -  Git based recipes in OE-Core which used the git protocol have been
+      changed to use https where possibile. https is now believed to be
+      faster and more reliable.
+
+   -  The ``os-release`` recipe added a ``CPE_NAME`` to the fields provided, with the
+      default being populated from :term:`DISTRO`.
 
 Known Issues in 4.3
 ~~~~~~~~~~~~~~~~~~~
