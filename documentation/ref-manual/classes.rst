@@ -607,10 +607,15 @@ subdirectory. This avoids clashes with the :ref:`ref-classes-kernel-devicetree`
 output. Additionally, the device trees are populated into the sysroot for
 access via the sysroot from within other recipes.
 
+By default, all device tree sources located in :term:`DT_FILES_PATH` directory
+are compiled. To select only particular sources, set :term:`DT_FILES` to
+a space-separated list of files (relative to :term:`DT_FILES_PATH`). For
+convenience, both ``.dts`` and ``.dtb`` extensions can be used.
+
 An extra padding is appended to non-overlay device trees binaries. This
 can typically be used as extra space for adding extra properties at boot time.
-The padding size can be modified by setting ``DT_PADDING_SIZE`` to the desired
-size, in bytes.
+The padding size can be modified by setting :term:`DT_PADDING_SIZE`
+to the desired size, in bytes.
 
 See :oe_git:`devicetree.bbclass sources
 </openembedded-core/tree/meta/classes-recipe/devicetree.bbclass>` 

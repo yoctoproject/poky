@@ -2247,6 +2247,28 @@ system and gives an overview of their function and contents.
       For information on policies and on how to use this variable, see the
       comments in the ``meta/classes-recipe/compress_doc.bbclass`` file.
 
+   :term:`DT_FILES`
+      Space-separated list of device tree source files to compile using
+      a recipe that inherits the :ref:`ref-classes-devicetree` class. These
+      are relative to the :term:`DT_FILES_PATH`.
+
+      For convenience, both ``.dts`` and ``.dtb`` extensions can be used.
+
+      Use an empty string (default) to build all device tree sources within
+      the :term:`DT_FILES_PATH` directory.
+
+   :term:`DT_FILES_PATH`
+      When compiling out-of-tree device tree sources using a recipe that
+      inherits the :ref:`ref-classes-devicetree` class, this variable specifies
+      the path to the directory containing dts files to build.
+
+      Defaults to the :term:`S` directory.
+
+   :term:`DT_PADDING_SIZE`
+      When inheriting the :ref:`ref-classes-devicetree` class, this variable
+      specifies the size of padding appended to the device tree blob, used as
+      extra space typically for additional properties during boot.
+
    :term:`EFI_PROVIDER`
       When building bootable images (i.e. where ``hddimg``, ``iso``, or
       ``wic.vmdk`` is in :term:`IMAGE_FSTYPES`), the
