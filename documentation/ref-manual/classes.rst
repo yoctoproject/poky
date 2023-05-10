@@ -1582,13 +1582,13 @@ The :ref:`ref-classes-kernel-devicetree` class, which is inherited by the
 ===================
 
 The :ref:`ref-classes-kernel-fitimage` class provides support to pack a kernel image,
-device trees, a U-boot script, a :term:`Initramfs` bundle and a RAM disk
+device trees, a U-boot script, an :term:`Initramfs` bundle and a RAM disk
 into a single FIT image. In theory, a FIT image can support any number
 of kernels, U-boot scripts, :term:`Initramfs` bundles, RAM disks and device-trees.
 However, :ref:`ref-classes-kernel-fitimage` currently only supports
 limited usecases: just one kernel image, an optional U-boot script,
 an optional :term:`Initramfs` bundle, an optional RAM disk, and any number of
-device tree.
+device trees.
 
 To create a FIT image, it is required that :term:`KERNEL_CLASSES`
 is set to include ":ref:`ref-classes-kernel-fitimage`" and :term:`KERNEL_IMAGETYPE`
