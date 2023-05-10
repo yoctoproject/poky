@@ -2927,7 +2927,7 @@ system and gives an overview of their function and contents.
       The default value is set to "1" by the :ref:`ref-classes-kernel-fitimage`
       class, which corresponds to 32 bit addresses. 
 
-      For platforms who need to set 64 bit addresses in
+      For platforms that need to set 64 bit addresses, for example in
       :term:`UBOOT_LOADADDRESS` and :term:`UBOOT_ENTRYPOINT`, you need to
       set this value to "2", as two 32 bit values (cells) will be needed 
       to represent such addresses.
@@ -7759,6 +7759,32 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Board Support Package Developer's Guide
       for additional information.
 
+   :term:`SPL_MKIMAGE_DTCOPTS`
+      Options for the device tree compiler passed to ``mkimage -D`` feature
+      while creating a FIT image with the :ref:`ref-classes-uboot-sign`
+      class. If :term:`SPL_MKIMAGE_DTCOPTS` is not set then the
+      :ref:`ref-classes-uboot-sign` class will not pass the ``-D`` option
+      to ``mkimage``.
+
+      The default value is set to "" by the :ref:`ref-classes-uboot-config`
+      class.
+
+   :term:`SPL_SIGN_ENABLE`
+      Enable signing of the U-Boot FIT image. The default value is "0".
+      This variable is used by the :ref:`ref-classes-uboot-sign` class.
+
+   :term:`SPL_SIGN_KEYDIR`
+      Location of the directory containing the RSA key and certificate used for
+      signing the U-Boot FIT image, used by the :ref:`ref-classes-uboot-sign`
+      class.
+
+   :term:`SPL_SIGN_KEYNAME`
+      The name of keys used by the :ref:`ref-classes-kernel-fitimage` class
+      for signing U-Boot FIT image stored in the :term:`SPL_SIGN_KEYDIR`
+      directory. If we have for example a ``dev.key`` key and a ``dev.crt``
+      certificate stored in the :term:`SPL_SIGN_KEYDIR` directory, you will 
+      have to set :term:`SPL_SIGN_KEYNAME` to ``dev``.
+
    :term:`SRCREV_FORMAT`
       See :term:`bitbake:SRCREV_FORMAT` in the BitBake manual.
 
@@ -9097,16 +9123,101 @@ system and gives an overview of their function and contents.
       creation, the :term:`UBOOT_ENTRYPOINT` variable is passed as a
       command-line parameter to the ``uboot-mkimage`` utility.
 
-      To pass a 64 bit address for FIT image creation, you will need to set
-      the :term:`FIT_ADDRESS_CELLS` variable too.
+      To pass a 64 bit address for FIT image creation, you will need to set:
+      -  The :term:`FIT_ADDRESS_CELLS` variable for FIT image creation.
+      -  The :term:`UBOOT_FIT_ADDRESS_CELLS` variable for U-Boot FIT image creation.
 
+      This variable is used by the :ref:`ref-classes-kernel-fitimage`,
+      :ref:`ref-classes-kernel-uimage`, :ref:`ref-classes-kernel`,
+      :ref:`ref-classes-uboot-config` and :ref:`ref-classes-uboot-sign`
+      classes.
+
+   :term:`UBOOT_FIT_ADDRESS_CELLS`
+      Specifies the value of the ``#address-cells`` value for the
+      description of the U-Boot FIT image.  
+
+      The default value is set to "1" by the :ref:`ref-classes-uboot-sign`
+      class, which corresponds to 32 bit addresses. 
+
+      For platforms that need to set 64 bit addresses in
+      :term:`UBOOT_LOADADDRESS` and :term:`UBOOT_ENTRYPOINT`, you need to
+      set this value to "2", as two 32 bit values (cells) will be needed
+      to represent such addresses.
+
+      Here is an example setting "0x400000000" as a load address::
+    
+         UBOOT_FIT_ADDRESS_CELLS = "2"
+         UBOOT_LOADADDRESS= "0x04 0x00000000"
+
+      See `more details about #address-cells <https://elinux.org/Device_Tree_Usage#How_Addressing_Works>`__.
+
+   :term:`UBOOT_FIT_DESC`
+      Specifies the description string encoded into a U-Boot fitImage. The default
+      value is set by the :ref:`ref-classes-uboot-sign` class as follows::
+
+         UBOOT_FIT_DESC ?= "U-Boot fitImage for ${DISTRO_NAME}/${PV}/${MACHINE}"
+
+   :term:`UBOOT_FIT_GENERATE_KEYS`
+      Decides whether to generate the keys for signing the U-Boot fitImage if
+      they don't already exist. The keys are created in :term:`SPL_SIGN_KEYDIR`.
+      The default value is "0".
+
+      Enable this as follows::
+
+         UBOOT_FIT_GENERATE_KEYS = "1"
+
+      This variable is used in the :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FIT_HASH_ALG`
+      Specifies the hash algorithm used in creating the U-Boot FIT Image.
+      It is set by default to ``sha256`` by the :ref:`ref-classes-uboot-sign`
+      class.
+
+   :term:`UBOOT_FIT_KEY_GENRSA_ARGS`
+      Arguments to ``openssl genrsa`` for generating a RSA private key for
+      signing the U-Boot FIT image. The default value of this variable
+      is set to "-F4" by the :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FIT_KEY_REQ_ARGS`
+      Arguments to ``openssl req`` for generating a certificate for signing
+      the U-Boot FIT image. The default value is "-batch -new" by the
+      :ref:`ref-classes-uboot-sign` class, "batch" for
+      non interactive mode and "new" for generating new keys.
+
+   :term:`UBOOT_FIT_KEY_SIGN_PKCS`
+      Format for the public key certificate used for signing the U-Boot FIT
+      image. The default value is set to "x509" by the
+      :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FIT_SIGN_ALG`
+      Specifies the signature algorithm used in creating the U-Boot FIT Image.
+      This variable is set by default to "rsa2048" by the
+      :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FIT_SIGN_NUMBITS`
+      Size of the private key used in signing the U-Boot FIT image, in number
+      of bits. The default value for this variable is set to "2048"
+      by the :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FITIMAGE_ENABLE`
+      This variable allows to generate a FIT image for U-Boot, which is one
+      of the ways to implement a verified boot process.
+
+      Its default value is "0", so set it to "1" to enable this functionality::
+
+         UBOOT_FITIMAGE_ENABLE = "1"
+
+      See the :ref:`ref-classes-uboot-sign` class for details.
+      
    :term:`UBOOT_LOADADDRESS`
       Specifies the load address for the U-Boot image. During U-Boot image
       creation, the :term:`UBOOT_LOADADDRESS` variable is passed as a
       command-line parameter to the ``uboot-mkimage`` utility.
 
-      To pass a 64 bit address for FIT image creation, you will need to set
-      the :term:`FIT_ADDRESS_CELLS` variable too.
+      To pass a 64 bit address, you will also need to set:
+
+      -  The :term:`FIT_ADDRESS_CELLS` variable for FIT image creation.
+      -  The :term:`UBOOT_FIT_ADDRESS_CELLS` variable for U-Boot FIT image creation.
 
       This variable is used by the :ref:`ref-classes-kernel-fitimage`,
       :ref:`ref-classes-kernel-uimage`, :ref:`ref-classes-kernel`,

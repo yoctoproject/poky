@@ -3178,6 +3178,44 @@ You can also specify the machine using this method::
 See the :term:`UBOOT_CONFIG` and :term:`UBOOT_MACHINE` variables for additional
 information.
 
+.. _ref-classes-uboot-sign:
+
+``uboot-sign``
+==============
+
+The :ref:`ref-classes-uboot-sign` class provides support for U-Boot verified boot.
+It is intended to be inherited from U-Boot recipes.
+
+Here are variables used by this class:
+
+-  :term:`SPL_MKIMAGE_DTCOPTS`: DTC options for U-Boot ``mkimage`` when
+   building the FIT image.
+-  :term:`SPL_SIGN_ENABLE`: enable signing the FIT image.
+-  :term:`SPL_SIGN_KEYDIR`: directory containing the signing keys.
+-  :term:`SPL_SIGN_KEYNAME`: base filename of the signing keys.
+-  :term:`UBOOT_FIT_ADDRESS_CELLS`: ``#address-cells`` value for the FIT image.
+-  :term:`UBOOT_FIT_DESC`: description string encoded into the FIT image.
+-  :term:`UBOOT_FIT_GENERATE_KEYS`: generate the keys if they don't exist yet.
+-  :term:`UBOOT_FIT_HASH_ALG`: hash algorithm for the FIT image.
+-  :term:`UBOOT_FIT_KEY_GENRSA_ARGS`: ``openssl genrsa`` arguments.
+-  :term:`UBOOT_FIT_KEY_REQ_ARGS`: ``openssl req`` arguments.
+-  :term:`UBOOT_FIT_SIGN_ALG`: signature algorithm for the FIT image.
+-  :term:`UBOOT_FIT_SIGN_NUMBITS`: size of the private key for FIT image
+   signing.                                                  
+-  :term:`UBOOT_FIT_KEY_SIGN_PKCS`: algorithm for the public key certificate
+   for FIT image signing.
+-  :term:`UBOOT_FITIMAGE_ENABLE`: enable the generation of a U-Boot FIT image.
+-  :term:`UBOOT_MKIMAGE_DTCOPTS`: DTC options for U-Boot ``mkimage`` when
+   rebuilding the FIT image containing the kernel.
+
+See U-Boot's documentation for details about `verified boot
+<https://source.denx.de/u-boot/u-boot/-/blob/master/doc/uImage.FIT/verified-boot.txt>`__
+and the `signature process
+<https://source.denx.de/u-boot/u-boot/-/blob/master/doc/uImage.FIT/signature.txt>`__.
+
+See also the description of :ref:`ref-classes-kernel-fitimage` class, which this class
+imitates.
+
 .. _ref-classes-uninative:
 
 ``uninative``
