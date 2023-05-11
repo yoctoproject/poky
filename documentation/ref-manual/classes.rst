@@ -1576,6 +1576,14 @@ Linux kernel compilation (including modules).
 The :ref:`ref-classes-kernel-devicetree` class, which is inherited by the
 :ref:`ref-classes-kernel` class, supports device tree generation.
 
+Its behavior is mainly controlled by the following variables:
+
+-  :term:`KERNEL_DEVICETREE_BUNDLE`: whether to bundle the kernel and device tree
+-  :term:`KERNEL_DTBDEST`: directory where to install DTB files
+-  :term:`KERNEL_DTBVENDORED`: whether to keep vendor subdirectories
+-  :term:`KERNEL_DTC_FLAGS`: flags for ``dtc``, the Device Tree Compiler
+-  :term:`KERNEL_PACKAGE_NAME`: base name of the kernel packages
+
 .. _ref-classes-kernel-fitimage:
 
 ``kernel-fitimage``
