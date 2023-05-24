@@ -123,6 +123,13 @@ name and version (after variable expansion)::
 
    LICENSE_FLAGS = "license_${PN}_${PV}"
 
+It is possible to give more details about a specific license
+using flags on the :term:`LICENSE_FLAGS_DETAILS` variable::
+
+   LICENSE_FLAGS_DETAILS[my-eula-license] = "For further details, see https://example.com/eula."
+
+If set, this will be displayed to the user if the license hasn't been accepted.
+
 In order for a component restricted by a
 :term:`LICENSE_FLAGS` definition to be enabled and included in an image, it
 needs to have a matching entry in the global
