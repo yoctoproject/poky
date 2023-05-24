@@ -348,7 +348,7 @@ The following corrections have been made to the :term:`LICENSE` values set by re
 Security Fixes in 4.2
 ~~~~~~~~~~~~~~~~~~~~~
 
-- binutils: :cve:`2022-4285`, `CVE-2023-25586 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-25586>`__
+- binutils: :cve:`2022-4285`, :cve_mitre:`2023-25586`
 - curl: :cve:`2022-32221`, :cve:`2022-35260`, :cve:`2022-42915`, :cve:`2022-42916`
 - epiphany: :cve:`2023-26081`
 - expat: :cve:`2022-43680`
@@ -356,7 +356,7 @@ Security Fixes in 4.2
 - git: :cve:`2022-39260`, :cve:`2022-41903`, :cve:`2022-23521`, :cve:`2022-41953` (ignored)
 - glibc: :cve:`2023-25139` (ignored)
 - go: :cve:`2023-24532`, :cve:`2023-24537`
-- grub2: :cve:`2022-2601`, :cve:`2022-3775`, `CVE-2022-28736 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-28736>`__
+- grub2: :cve:`2022-2601`, :cve:`2022-3775`, :cve_mitre:`2022-28736`
 - inetutils: :cve:`2019-0053`
 - less: :cve:`2022-46663`
 - libarchive: :cve:`2022-36227`
@@ -368,7 +368,7 @@ Security Fixes in 4.2
 - openssl: :cve:`2022-3358`, :cve:`2022-3786`, :cve:`2022-3602`, :cve:`2022-3996`, :cve:`2023-0286`, :cve:`2022-4304`, :cve:`2022-4203`, :cve:`2023-0215`, :cve:`2022-4450`, :cve:`2023-0216`, :cve:`2023-0217`, :cve:`2023-0401`, :cve:`2023-0464`
 - ppp: :cve:`2022-4603`
 - python3-cryptography{-vectors}: :cve:`2022-3602`, :cve:`2022-3786`, :cve:`2023-23931`
-- python3: `CVE-2022-37460 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-37460>`__
+- python3: :cve_mitre:`2022-37460`
 - qemu: :cve:`2022-3165`
 - rust: :cve:`2022-46176`
 - rxvt-unicode: :cve:`2022-4170`
