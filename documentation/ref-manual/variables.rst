@@ -7820,6 +7820,12 @@ system and gives an overview of their function and contents.
       certificate stored in the :term:`SPL_SIGN_KEYDIR` directory, you will 
       have to set :term:`SPL_SIGN_KEYNAME` to ``dev``.
 
+   :term:`SPLASH`
+      This variable, used by the :ref:`ref-classes-image` class, allows
+      to choose splashscreen applications. Set it to the names of packages
+      for such applications to use. This variable is set by default to
+      ``psplash``.
+
    :term:`SRCREV_FORMAT`
       See :term:`bitbake:SRCREV_FORMAT` in the BitBake manual.
 
