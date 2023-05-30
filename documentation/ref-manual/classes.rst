@@ -1473,7 +1473,7 @@ Here are the tests you can list with the :term:`WARN_QA` and
 
 -  ``unhandled-features-check:`` check that if one of the variables that
    the :ref:`ref-classes-features_check` class supports (e.g.
-   :term:`REQUIRED_DISTRO_FEATURES`) is set by a recupe, then the recipe
+   :term:`REQUIRED_DISTRO_FEATURES`) is set by a recipe, then the recipe
    also inherits :ref:`ref-classes-features_check` in order for the
    requirement to actually work.
 
