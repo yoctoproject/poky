@@ -59,6 +59,15 @@ New Features / Enhancements in 4.3
 
 -  Prominent documentation updates:
 
+   -  Long due documentation for the :ref:`ref-classes-devicetree` class.
+
+   -  New :ref:`summary about available init systems
+      <dev-manual/init-manager:summary>`.
+
+   -  New documentation for the :ref:`ref-classes-uboot-sign` class and
+      its variables and for the :ref:`ref-classes-kernel-devicetree` class
+      variables.
+
 -  Miscellaneous changes:
 
    -  Git based recipes in OE-Core which used the git protocol have been
