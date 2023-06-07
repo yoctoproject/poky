@@ -7942,7 +7942,7 @@ system and gives an overview of their function and contents.
       that if you want to build a fixed revision and you want to avoid
       performing a query on the remote repository every time BitBake parses
       your recipe, you should specify a :term:`SRCREV` that is a full revision
-      identifier and not just a tag.
+      identifier (e.g. the full SHA hash in git) and not just a tag.
 
       .. note::
 
