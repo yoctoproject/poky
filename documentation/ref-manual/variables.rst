@@ -2200,6 +2200,11 @@ system and gives an overview of their function and contents.
       is included in the default value of
       :term:`OVERRIDES`.
 
+      Here is an example from :yocto_git:`meta-poky/conf/distro/poky-tiny.conf
+      </poky/tree/meta-poky/conf/distro/poky-tiny.conf>`::
+
+         DISTROOVERRIDES = "poky:poky-tiny"
+
    :term:`DL_DIR`
       The central download directory used by the build process to store
       downloads. By default, :term:`DL_DIR` gets files suitable for mirroring
@@ -2756,12 +2761,11 @@ system and gives an overview of their function and contents.
          FILES_SOLIBSDEV ?= "${base_libdir}/lib*${SOLIBSDEV} ${libdir}/lib*${SOLIBSDEV}"
 
    :term:`FILESEXTRAPATHS`
-      Extends the search path the OpenEmbedded build system uses when
-      looking for files and patches as it processes recipes and append
-      files. The default directories BitBake uses when it processes recipes
-      are initially defined by the :term:`FILESPATH`
-      variable. You can extend :term:`FILESPATH` variable by using
-      :term:`FILESEXTRAPATHS`.
+      A colon-separated list to extend the search path the OpenEmbedded build
+      system uses when looking for files and patches as it processes recipes
+      and append files. The default directories BitBake uses when it processes
+      recipes are initially defined by the :term:`FILESPATH` variable. You can
+      extend :term:`FILESPATH` variable by using :term:`FILESEXTRAPATHS`.
 
       Best practices dictate that you accomplish this by using
       :term:`FILESEXTRAPATHS` from within a ``.bbappend`` file and that you
@@ -2822,12 +2826,12 @@ system and gives an overview of their function and contents.
       recipe to correctly extend the path.
 
    :term:`FILESOVERRIDES`
-      A subset of :term:`OVERRIDES` used by the OpenEmbedded build system for
-      creating :term:`FILESPATH`. The :term:`FILESOVERRIDES` variable uses
-      overrides to automatically extend the :term:`FILESPATH` variable. For an
-      example of how that works, see the :term:`FILESPATH` variable
-      description. Additionally, you find more information on how overrides
-      are handled in the
+      A colon-separated list to specify a subset of :term:`OVERRIDES` used by
+      the OpenEmbedded build system for creating :term:`FILESPATH`. The
+      :term:`FILESOVERRIDES` variable uses overrides to automatically extend
+      the :term:`FILESPATH` variable. For an example of how that works, see the
+      :term:`FILESPATH` variable description. Additionally, you find more
+      information on how overrides are handled in the
       ":ref:`bitbake-user-manual/bitbake-user-manual-metadata:conditional syntax (overrides)`"
       section of the BitBake User Manual.
 
@@ -2842,8 +2846,8 @@ system and gives an overview of their function and contents.
          build system.
 
    :term:`FILESPATH`
-      The default set of directories the OpenEmbedded build system uses
-      when searching for patches and files.
+      A colon-separated list specifying the default set of directories the
+      OpenEmbedded build system uses when searching for patches and files.
 
       During the build process, BitBake searches each directory in
       :term:`FILESPATH` in the specified order when looking for files and
@@ -7577,9 +7581,10 @@ system and gives an overview of their function and contents.
          SKIP_RECIPE[myrecipe] = "Not supported by our organization."
 
    :term:`SOC_FAMILY`
-      Groups together machines based upon the same family of SOC (System On
-      Chip). You typically set this variable in a common ``.inc`` file that
-      you include in the configuration files of all the machines.
+      A colon-separated list grouping together machines based upon the same
+      family of SoC (System On Chip). You typically set this variable in a
+      common ``.inc`` file that you include in the configuration files of all
+      the machines.
 
       .. note::
 
