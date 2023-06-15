@@ -5541,6 +5541,15 @@ system and gives an overview of their function and contents.
       For additional information on how this variable is used, see the
       initialization script.
 
+   :term:`OEQA_REPRODUCIBLE_TEST_TARGET`
+      Set build target for build reproducibility testing. By default
+      all available recipes are compiled with "bitbake world", see also :term:`EXCLUDE_FROM_WORLD`
+      and :doc:`/test-manual/reproducible-builds`.
+
+   :term:`OEQA_REPRODUCIBLE_TEST_SSTATE_TARGETS`
+      Set build targets which can be rebuilt using :ref:`shared state <overview-manual/concepts:shared state cache>`
+      when running build reproducibility tests. See :doc:`/test-manual/reproducible-builds`.
+
    :term:`OLDEST_KERNEL`
       Declares the oldest version of the Linux kernel that the produced
       binaries must support. This variable is passed into the build of the
