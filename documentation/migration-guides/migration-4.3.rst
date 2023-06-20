@@ -55,6 +55,13 @@ Go language changes
 -  Support for the Glide package manager has been removed, as ``go mod``
    has become the standard.
 
+Systemd changes
+~~~~~~~~~~~~~~~
+
+Upstream systemd is now more strict on filesystem layout and the ``usrmerge``
+feature is therefore required alongside systemd. The Poky test configurations
+have been updated accordingly for systemd.
+
 .. _migration-4.3-recipe-changes:
 
 Recipe changes
