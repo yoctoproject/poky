@@ -235,7 +235,7 @@ universal, the list includes them just in case:
 
       -  For booting the same kernel binary on multiple systems requiring
          different device drivers. The :term:`Initramfs` image is then customized
-	 for each type of system, to include the specific  kernel modules
+	 for each type of system, to include the specific kernel modules
          necessary to access the final root filesystem. This technique
 	 is used on all GNU / Linux distributions for desktops and servers.
 

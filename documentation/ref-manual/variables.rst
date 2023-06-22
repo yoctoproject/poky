@@ -1320,7 +1320,7 @@ system and gives an overview of their function and contents.
       This variable is specific to the :yocto_git:`GStreamer recipes
       </poky/tree/meta/recipes-multimedia/gstreamer/gstreamer1.0-meta-base.bb>`.
       It allows to build the GStreamer `"ugly"
-      <https://github.com/GStreamer/gst-plugins-ugly>`__  and
+      <https://github.com/GStreamer/gst-plugins-ugly>`__ and
       `"bad" <https://github.com/GStreamer/gst-plugins-bad>`__ audio plugins.
 
       See the :ref:`dev-manual/licenses:other variables related to commercial licenses`
@@ -1330,7 +1330,7 @@ system and gives an overview of their function and contents.
       This variable is specific to the :yocto_git:`GStreamer recipes
       </poky/tree/meta/recipes-multimedia/gstreamer/gstreamer1.0-meta-base.bb>`.
       It allows to build the GStreamer `"ugly"
-      <https://github.com/GStreamer/gst-plugins-ugly>`__  and
+      <https://github.com/GStreamer/gst-plugins-ugly>`__ and
       `"bad" <https://github.com/GStreamer/gst-plugins-bad>`__ video plugins.
 
       See the :ref:`dev-manual/licenses:other variables related to commercial licenses`
