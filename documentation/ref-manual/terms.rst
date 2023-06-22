@@ -224,7 +224,7 @@ universal, the list includes them just in case:
       having to duplicate accessed file contents in the file cache in RAM,
       as for any block device.
 
-      .. note:
+      .. note::
 
          As far as bootloaders are concerned, :term:`Initramfs` and "initrd"
          images are still copied to RAM in the same way. That's why most
