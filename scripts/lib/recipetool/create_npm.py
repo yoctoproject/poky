@@ -55,6 +55,8 @@ class NpmRecipeHandler(RecipeHandler):
         license = None
         if 'license' in data:
             license = data['license']
+            if isinstance(license, list):
+                license = license[0]
             if isinstance(license, dict):
                 license = license.get('type', None)
             if license:
