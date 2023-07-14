@@ -1599,8 +1599,8 @@ an optional :term:`Initramfs` bundle, an optional RAM disk, and any number of
 device trees.
 
 To create a FIT image, it is required that :term:`KERNEL_CLASSES`
-is set to include ":ref:`ref-classes-kernel-fitimage`" and :term:`KERNEL_IMAGETYPE`
-is set to "fitImage".
+is set to include ":ref:`ref-classes-kernel-fitimage`" and one of :term:`KERNEL_IMAGETYPE`,
+:term:`KERNEL_ALT_IMAGETYPE` or :term:`KERNEL_IMAGETYPES` to include "fitImage".
 
 The options for the device tree compiler passed to ``mkimage -D``
 when creating the FIT image are specified using the
