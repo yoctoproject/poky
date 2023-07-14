@@ -1625,7 +1625,7 @@ The address where the RAM disk image is to be loaded by U-Boot
 is specified by :term:`UBOOT_RD_LOADADDRESS` and the entrypoint by
 :term:`UBOOT_RD_ENTRYPOINT`. The ramdisk is added to the FIT image when
 :term:`INITRAMFS_IMAGE` is specified and requires that :term:`INITRAMFS_IMAGE_BUNDLE`
-is set to 0.
+is not set to 1.
 
 Only a single :term:`Initramfs` bundle can be added to the FIT image created by
 :ref:`ref-classes-kernel-fitimage` and the :term:`Initramfs` bundle in FIT is optional.
