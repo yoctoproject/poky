@@ -517,10 +517,10 @@ The ``Patched`` state of a CVE issue is detected from patch files with the forma
 ``CVE-ID.patch``, e.g. ``CVE-2019-20633.patch``, in the :term:`SRC_URI` and using
 CVE metadata of format ``CVE: CVE-ID`` in the commit message of the patch file.
 
-If the recipe lists the ``CVE-ID`` in :term:`CVE_CHECK_IGNORE` variable, then the CVE state is reported
-as ``Ignored``. Multiple CVEs can be listed separated by spaces. Example::
+If the recipe adds ``CVE-ID`` as flag of the :term:`CVE_STATUS` variable with status
+mapped to ``Ignored``, then the CVE state is reported as ``Ignored``::
 
-   CVE_CHECK_IGNORE += "CVE-2020-29509 CVE-2020-29511"
+   CVE_STATUS[CVE-2020-15523] = "not-applicable-platform: Issue only applies on Windows"
 
 If CVE check reports that a recipe contains false positives or false negatives, these may be
 fixed in recipes by adjusting the CVE product name using :term:`CVE_PRODUCT` and :term:`CVE_VERSION` variables.

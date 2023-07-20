@@ -1653,11 +1653,7 @@ system and gives an overview of their function and contents.
          and kernel module recipes).
 
    :term:`CVE_CHECK_IGNORE`
-      The list of CVE IDs which are ignored. Here is
-      an example from the :oe_layerindex:`Python3 recipe</layerindex/recipe/23823>`::
-
-         # This is windows only issue.
-         CVE_CHECK_IGNORE += "CVE-2020-15523"
+      This variable is deprecated and should be replaced by :term:`CVE_STATUS`.
 
    :term:`CVE_CHECK_SHOW_WARNINGS`
       Specifies whether or not the :ref:`ref-classes-cve-check`
@@ -1697,6 +1693,34 @@ system and gives an overview of their function and contents.
       vendor name as a prefix. The syntax for this is::
 
          CVE_PRODUCT = "vendor:package"
+
+   :term:`CVE_STATUS`
+      The CVE ID which is patched or should be ignored. Here is
+      an example from the :oe_layerindex:`Python3 recipe</layerindex/recipe/23823>`::
+
+         CVE_STATUS[CVE-2020-15523] = "not-applicable-platform: Issue only applies on Windows"
+
+      It has the format "reason: description" and the description is optional.
+      The Reason is mapped to the final CVE state by mapping via
+      :term:`CVE_CHECK_STATUSMAP`
+
+   :term:`CVE_STATUS_GROUPS`
+      If there are many CVEs with the same status and reason, they can by simplified by using this
+      variable instead of many similar lines with :term:`CVE_STATUS`::
+
+         CVE_STATUS_GROUPS = "CVE_STATUS_WIN CVE_STATUS_PATCHED"
+
+         CVE_STATUS_WIN = "CVE-1234-0001 CVE-1234-0002"
+         CVE_STATUS_WIN[status] = "not-applicable-platform: Issue only applies on Windows"
+         CVE_STATUS_PATCHED = "CVE-1234-0003 CVE-1234-0004"
+         CVE_STATUS_PATCHED[status] = "fixed-version: Fixed externally"
+
+   :term:`CVE_CHECK_STATUSMAP`
+      Mapping variable for all possible reasons of :term:`CVE_STATUS`:
+      ``Patched``, ``Unpatched`` and ``Ignored``.
+      See :ref:`ref-classes-cve-check` or ``meta/conf/cve-check-map.conf`` for more details::
+
+         CVE_CHECK_STATUSMAP[cpe-incorrect] = "Ignored"
 
    :term:`CVE_VERSION`
       In a recipe, defines the version used to match the recipe version
