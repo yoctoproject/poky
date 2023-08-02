@@ -293,8 +293,6 @@ An exception is the "rust" recipe, to build the Rust compiler and runtime
 library, which is built by Cargo but cannot use the :ref:`ref-classes-cargo`
 class. This is why this class was introduced.
 
-.. _ref-classes-ccache:
-
 .. _ref-classes-cargo-update-recipe-crates:
 
 ``cargo-update-recipe-crates``
@@ -318,6 +316,8 @@ recipe::
 
 That's also something you can achieve by using the
 `cargo-bitbake <https://crates.io/crates/cargo-bitbake>`__ tool.
+
+.. _ref-classes-ccache:
 
 ``ccache``
 ==========
