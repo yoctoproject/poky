@@ -34,6 +34,7 @@ Welcome to the Yocto Project Documentation
    Application Development and the Extensible SDK (eSDK) <sdk-manual/index>
    Toaster Manual <toaster-manual/index>
    Test Environment Manual <test-manual/index>
+   Contributor Guide <contributor-guide/index>
    bitbake
 
 .. toctree::

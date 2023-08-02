@@ -1,78 +1,15 @@
 .. SPDX-License-Identifier: CC-BY-SA-2.0-UK
 
-Making Changes to the Yocto Project
-***********************************
-
-Because the Yocto Project is an open-source, community-based project,
-you can effect changes to the project. This section presents procedures
-that show you how to submit a defect against the project and how to
-submit a change.
-
-Submitting a Defect Against the Yocto Project
-=============================================
-
-Use the Yocto Project implementation of
-`Bugzilla <https://www.bugzilla.org/about/>`__ to submit a defect (bug)
-against the Yocto Project. For additional information on this
-implementation of Bugzilla see the ":ref:`Yocto Project
-Bugzilla <resources-bugtracker>`" section in the
-Yocto Project Reference Manual. For more detail on any of the following
-steps, see the Yocto Project
-:yocto_wiki:`Bugzilla wiki page </Bugzilla_Configuration_and_Bug_Tracking>`.
-
-Use the following general steps to submit a bug:
-
-#.  Open the Yocto Project implementation of :yocto_bugs:`Bugzilla <>`.
-
-#.  Click "File a Bug" to enter a new bug.
-
-#.  Choose the appropriate "Classification", "Product", and "Component"
-    for which the bug was found. Bugs for the Yocto Project fall into
-    one of several classifications, which in turn break down into
-    several products and components. For example, for a bug against the
-    ``meta-intel`` layer, you would choose "Build System, Metadata &
-    Runtime", "BSPs", and "bsps-meta-intel", respectively.
-
-#.  Choose the "Version" of the Yocto Project for which you found the
-    bug (e.g. &DISTRO;).
-
-#.  Determine and select the "Severity" of the bug. The severity
-    indicates how the bug impacted your work.
-
-#.  Choose the "Hardware" that the bug impacts.
-
-#.  Choose the "Architecture" that the bug impacts.
-
-#.  Choose a "Documentation change" item for the bug. Fixing a bug might
-    or might not affect the Yocto Project documentation. If you are
-    unsure of the impact to the documentation, select "Don't Know".
-
-#.  Provide a brief "Summary" of the bug. Try to limit your summary to
-    just a line or two and be sure to capture the essence of the bug.
-
-#.  Provide a detailed "Description" of the bug. You should provide as
-    much detail as you can about the context, behavior, output, and so
-    forth that surrounds the bug. You can even attach supporting files
-    for output from logs by using the "Add an attachment" button.
-
-#.  Click the "Submit Bug" button submit the bug. A new Bugzilla number
-    is assigned to the bug and the defect is logged in the bug tracking
-    system.
-
-Once you file a bug, the bug is processed by the Yocto Project Bug
-Triage Team and further details concerning the bug are assigned (e.g.
-priority and owner). You are the "Submitter" of the bug and any further
-categorization, progress, or comments on the bug result in Bugzilla
-sending you an automated email concerning the particular change or
-progress to the bug.
-
-Submitting a Change to the Yocto Project
-========================================
+Contributing a Change to a Component
+************************************
 
 Contributions to the Yocto Project and OpenEmbedded are very welcome.
 Because the system is extremely configurable and flexible, we recognize
 that developers will want to extend, configure or optimize it for their
 specific uses.
+
+Finding a Suitable Mailing List
+===============================
 
 The Yocto Project uses a mailing list and a patch-based workflow that is
 similar to the Linux kernel but contains important differences. In
@@ -160,7 +97,7 @@ layers you are contributing to.
 The following sections provide procedures for submitting a change.
 
 Preparing Changes for Submission
---------------------------------
+================================
 
 #. *Make Your Changes Locally:* Make your changes in your local Git
    repository. You should make small, controlled, isolated changes.
@@ -243,19 +180,19 @@ Preparing Changes for Submission
          detailed description of change
 
 Using Email to Submit a Patch
------------------------------
+=============================
 
 Depending on the components changed, you need to submit the email to a
 specific mailing list. For some guidance on which mailing list to use,
-see the
-:ref:`list <dev-manual/changes:submitting a change to the yocto project>`
-at the beginning of this section. For a description of all the available
+see the ":ref:`contributor-guide/submit-change:finding a suitable mailing list`"
+section above. For a description of all the available
 mailing lists, see the ":ref:`Mailing Lists <resources-mailinglist>`" section in the
 Yocto Project Reference Manual.
 
 Here is the general procedure on how to submit a patch through email
 without using the scripts once the steps in
-:ref:`dev-manual/changes:preparing changes for submission` have been followed:
+":ref:`contributor-guide/submit-change:preparing changes for submission`"
+have been followed:
 
 #. *Format the Commit:* Format the commit into an email message. To
    format commits, use the ``git format-patch`` command. When you
@@ -333,7 +270,7 @@ reduce the burden of patch review on maintainers.
    has been idle for a while with no feedback.
 
 Using Scripts to Push a Change Upstream and Request a Pull
-----------------------------------------------------------
+==========================================================
 
 For larger patch series it is preferable to send a pull request which not
 only includes the patch but also a pointer to a branch that can be pulled
@@ -343,8 +280,9 @@ and ``send-pull-request`` scripts from openembedded-core to create and send a
 patch series with a link to the branch for review.
 
 Follow this procedure to push a change to an upstream "contrib" Git
-repository once the steps in :ref:`dev-manual/changes:preparing changes for submission` have
-been followed:
+repository once the steps in
+":ref:`contributor-guide/submit-change:preparing changes for submission`"
+have been followed:
 
 .. note::
 
@@ -442,7 +380,7 @@ been followed:
               $ poky/scripts/send-pull-request -h
 
 Responding to Patch Review
---------------------------
+==========================
 
 You may get feedback on your submitted patches from other community members
 or from the automated patchtest service. If issues are identified in your
@@ -464,7 +402,7 @@ please don't just edit the patch file written out by ``git format-patch`` and
 resend it.
 
 Submitting Changes to Stable Release Branches
----------------------------------------------
+=============================================
 
 The process for proposing changes to a Yocto Project stable branch differs
 from the steps described above. Changes to a stable branch must address
@@ -515,11 +453,11 @@ follows:
       a newer version of the software which includes an upstream fix for the
       issue or when the issue has been fixed on the master branch in a way
       that introduces backwards incompatible changes. In this case follow the
-      steps in :ref:`dev-manual/changes:preparing changes for submission` and
-      :ref:`dev-manual/changes:using email to submit a patch` but modify the subject header of your patch
+      steps in ":ref:`contributor-guide/submit-change:preparing changes for submission`" and
+      ":ref:`contributor-guide/submit-change:using email to submit a patch`"
+      but modify the subject header of your patch
       email to include the name of the stable branch which you are
       targetting. This can be done using the ``--subject-prefix`` argument to
       ``git format-patch``, for example to submit a patch to the dunfell
       branch use
       ``git format-patch --subject-prefix='&DISTRO_NAME_NO_CAP_MINUS_ONE;][PATCH' ...``.
-
