@@ -52,7 +52,7 @@ varies by component:
 
 For changes to other layers hosted in the Yocto Project source
 repositories (i.e. ``yoctoproject.org``) and tools use the
-:yocto_lists:`Yocto Project </g/yocto/>` general mailing list.
+:yocto_lists:`yocto </g/yocto/>` general mailing list.
 
 .. note::
 
@@ -63,7 +63,8 @@ For additional recipes that do not fit into the core Metadata, you
 should determine which layer the recipe should go into and submit the
 change in the manner recommended by the documentation (e.g. the
 ``README`` file) supplied with the layer. If in doubt, please ask on the
-Yocto general mailing list or on the openembedded-devel mailing list.
+:yocto_lists:`yocto </g/yocto/>` general mailing list or on the
+:oe_lists:`openembedded-devel </g/openembedded-devel>` mailing list.
 
 You can also push a change upstream and request a maintainer to pull the
 change into the component's upstream repository. You do this by pushing
