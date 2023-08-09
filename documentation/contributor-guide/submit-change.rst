@@ -8,14 +8,54 @@ Because the system is extremely configurable and flexible, we recognize
 that developers will want to extend, configure or optimize it for their
 specific uses.
 
+.. _ref-why-mailing-lists:
+
+Contributing through mailing lists --- Why not using web-based workflows?
+=========================================================================
+
+Both Yocto Project and OpenEmbedded have many key components that are
+maintained by patches being submitted on mailing lists. We appreciate this
+approach does look a little old fashioned when other workflows are available
+through web technology such as GitHub, GitLab and others. Since we are often
+asked this question, we’ve decided to document the reasons for using mailing
+lists.
+
+One significant factor is that we value peer review. When a change is proposed
+to many of the core pieces of the project, it helps to have many eyes of review
+go over them. Whilst there is ultimately one maintainer who needs to make the
+final call on accepting or rejecting a patch, the review is made by many eyes
+and the exact people reviewing it are likely unknown to the maintainer. It is
+often the surprise reviewer that catches the most interesting issues!
+
+This is in contrast to the "GitHub" style workflow where either just a
+maintainer makes that review, or review is specifically requested from
+nominated people. We believe there is significant value added to the codebase
+by this peer review and that moving away from mailing lists would be to the
+detriment of our code.
+
+We also need to acknowledge that many of our developers are used to this
+mailing list workflow and have worked with it for years, with tools and
+processes built around it. Changing away from this would result in a loss
+of key people from the project, which would again be to its detriment.
+
+The projects are acutely aware that potential new contributors find the
+mailing list approach off-putting and would prefer a web-based GUI.
+Since we don’t believe that can work for us, the project is aiming to ensure
+`patchwork <https://patchwork.yoctoproject.org/>`__ is available to help track
+patch status and also looking at how tooling can provide more feedback to users
+about patch status. We are looking at tools such as ``patchtest`` to
+test user contributions before they hit the mailing lists and also at better
+documenting how to use such workflows since we recognise that whilst this was
+common knowledge a decade ago, it might not be as familiar now.
+
 Finding a Suitable Mailing List
 ===============================
 
-The Yocto Project uses a mailing list and a patch-based workflow that is
-similar to the Linux kernel but contains important differences. In
-general, there is a mailing list through which you can submit patches. You
-should send patches to the appropriate mailing list so that they can be
-reviewed and merged by the appropriate maintainer. The specific mailing
+The Yocto Project and OpenEmbedded use a mailing list and a patch-based
+workflow that is similar to the Linux kernel but contains important
+differences. In general, there is a mailing list through which you can submit
+patches. You should send patches to the appropriate mailing list so that they
+can be reviewed and merged by the appropriate maintainer. The specific mailing
 list you need to use depends on the location of the code you are
 changing. Each component (e.g. layer) should have a ``README`` file that
 indicates where to send the changes and which process to follow.
