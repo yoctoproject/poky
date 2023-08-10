@@ -19,7 +19,7 @@ this.
    :numbered:
 
    identify-component
-   submit-defect
+   report-defect
    recipe-style-guide
    submit-change
 

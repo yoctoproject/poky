@@ -1235,7 +1235,7 @@ Here are some other tips that you might find useful:
    :yocto_bugs:`Bugzilla <>`. For information on
    how to submit a bug against the Yocto Project, see the Yocto Project
    Bugzilla :yocto_wiki:`wiki page </Bugzilla_Configuration_and_Bug_Tracking>`
-   and the ":doc:`../contributor-guide/submit-defect`" section.
+   and the ":doc:`../contributor-guide/report-defect`" section.
 
    .. note::
 

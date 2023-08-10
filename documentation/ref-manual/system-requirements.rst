@@ -134,7 +134,7 @@ tested on former revisions of "&DISTRO_NAME;", but no longer are:
       interested in hearing about your experience. For information on
       how to submit a bug, see the Yocto Project
       :yocto_wiki:`Bugzilla wiki page </Bugzilla_Configuration_and_Bug_Tracking>`
-      and the ":doc:`../contributor-guide/submit-defect`"
+      and the ":doc:`../contributor-guide/report-defect`"
       section in the Yocto Project and OpenEmbedded Contributor Guide.
 
 Required Packages for the Build Host

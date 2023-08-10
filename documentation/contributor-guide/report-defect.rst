@@ -1,6 +1,6 @@
 .. SPDX-License-Identifier: CC-BY-SA-2.0-UK
 
-Submitting a Defect Against the Yocto Project and OpenEmbedded
+Reporting a Defect Against the Yocto Project and OpenEmbedded
 **************************************************************
 
 You can use the Yocto Project instance of
