@@ -226,9 +226,7 @@ Using Email to Submit a Patch
 Depending on the components changed, you need to submit the email to a
 specific mailing list. For some guidance on which mailing list to use,
 see the ":ref:`contributor-guide/submit-change:finding a suitable mailing list`"
-section above. For a description of all the available
-mailing lists, see the ":ref:`Mailing Lists <resources-mailinglist>`" section in the
-Yocto Project Reference Manual.
+section above.
 
 Here is the general procedure on how to submit a patch through email
 without using the scripts once the steps in
@@ -369,10 +367,9 @@ have been followed:
       you can see who is responsible for the bulk of the changes against
       the file.
 
-   -  *Examine the List of Mailing Lists:* For a list of the Yocto
-      Project and related mailing lists, see the ":ref:`Mailing
-      lists <resources-mailinglist>`" section in
-      the Yocto Project Reference Manual.
+   -  *Find the Mailing List to Use:* See the
+      ":ref:`contributor-guide/submit-change:finding a suitable mailing list`"
+      section above.
 
 #. *Make a Pull Request:* Notify the maintainer or the mailing list that
    you have pushed a change by making a pull request.
