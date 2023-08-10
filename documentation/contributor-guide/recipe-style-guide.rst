@@ -144,7 +144,6 @@ general order when possible:
 
 -  :term:`SUMMARY`
 -  :term:`DESCRIPTION`
--  :term:`AUTHOR`
 -  :term:`HOMEPAGE`
 -  :term:`BUGTRACKER`
 -  :term:`SECTION`
