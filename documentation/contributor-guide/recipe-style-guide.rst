@@ -255,8 +255,3 @@ Tips and Guidelines for Writing Recipes
 -  Use :term:`BBCLASSEXTEND` instead of creating separate recipes such as ``-native``
    and ``-nativesdk`` ones, whenever possible. This avoids having to maintain multiple
    recipe files at the same time.
-
--  Avoid manually mangling ``pkg-config`` ``.pc`` files.
-   Recipes using ``pkg-config`` should use variables to ensure they are correctly
-   relocatable and not need manual path correction in the recipe.
-
