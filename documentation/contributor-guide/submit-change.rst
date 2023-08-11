@@ -43,7 +43,7 @@ mailing list approach off-putting and would prefer a web-based GUI.
 Since we don’t believe that can work for us, the project is aiming to ensure
 `patchwork <https://patchwork.yoctoproject.org/>`__ is available to help track
 patch status and also looking at how tooling can provide more feedback to users
-about patch status. We are looking at tools such as ``patchtest`` to
+about patch status. We are looking at improving tools such as ``patchtest`` to
 test user contributions before they hit the mailing lists and also at better
 documenting how to use such workflows since we recognise that whilst this was
 common knowledge a decade ago, it might not be as familiar now.
@@ -299,7 +299,7 @@ The Yocto Project uses a `Patchwork instance <https://patchwork.yoctoproject.org
 to track the status of patches submitted to the various mailing lists and to
 support automated patch testing. Each submitted patch is checked for common
 mistakes and deviations from the expected patch format and submitters are
-notified by patchtest if such mistakes are found. This process helps to
+notified by ``patchtest`` if such mistakes are found. This process helps to
 reduce the burden of patch review on maintainers.
 
 .. note::
