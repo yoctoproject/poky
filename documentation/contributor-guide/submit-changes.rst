@@ -1,6 +1,6 @@
 .. SPDX-License-Identifier: CC-BY-SA-2.0-UK
 
-Contributing a Change to a Component
+Contributing Changes to a Component
 ************************************
 
 Contributions to the Yocto Project and OpenEmbedded are very welcome.
@@ -60,13 +60,13 @@ list you need to use depends on the location of the code you are
 changing. Each component (e.g. layer) should have a ``README`` file that
 indicates where to send the changes and which process to follow.
 
-You can send the patch to the mailing list using whichever approach you
-feel comfortable with to generate the patch. Once sent, the patch is
+You can send the patches to the mailing list using whichever approach you
+feel comfortable with to generate the patches. Once sent, the patches are
 usually reviewed by the community at large. If somebody has concerns
-with the patch, they will usually voice their concern over the mailing
-list. If a patch does not receive any negative reviews, the maintainer
-of the affected layer typically takes the patch, tests it, and then
-based on successful testing, merges the patch.
+any of the the patches, they will usually voice their concern over the mailing
+list. If patches do not receive any negative reviews, the maintainer
+of the affected layer typically takes them, tests them, and then
+based on successful testing, merges them.
 
 The "poky" repository, which is the Yocto Project's reference build
 environment, is a hybrid repository that contains several individual
@@ -74,13 +74,13 @@ pieces (e.g. BitBake, Metadata, documentation, and so forth) built using
 the combo-layer tool. The upstream location used for submitting changes
 varies by component:
 
--  *Core Metadata:* Send your patch to the
+-  *Core Metadata:* Send your patches to the
    :oe_lists:`openembedded-core </g/openembedded-core>`
    mailing list. For example, a change to anything under the ``meta`` or
    ``scripts`` directories should be sent to this mailing list.
 
 -  *BitBake:* For changes to BitBake (i.e. anything under the
-   ``bitbake`` directory), send your patch to the
+   ``bitbake`` directory), send your patches to the
    :oe_lists:`bitbake-devel </g/bitbake-devel>`
    mailing list.
 
@@ -101,13 +101,13 @@ repositories (i.e. ``yoctoproject.org``) and tools use the
 
 For additional recipes that do not fit into the core Metadata, you
 should determine which layer the recipe should go into and submit the
-change in the manner recommended by the documentation (e.g. the
+changes in the manner recommended by the documentation (e.g. the
 ``README`` file) supplied with the layer. If in doubt, please ask on the
 :yocto_lists:`yocto </g/yocto/>` general mailing list or on the
 :oe_lists:`openembedded-devel </g/openembedded-devel>` mailing list.
 
-You can also push a change upstream and request a maintainer to pull the
-change into the component's upstream repository. You do this by pushing
+You can also push changes upstream and request a maintainer to pull the
+changes into the component's upstream repository. You do this by pushing
 to a contribution repository that is upstream. See the
 ":ref:`overview-manual/development-environment:git workflows and the yocto project`"
 section in the Yocto Project Overview and Concepts Manual for additional
@@ -135,29 +135,43 @@ Other layers may have similar testing branches but there is no formal
 requirement or standard for these so please check the documentation for the
 layers you are contributing to.
 
-The following sections provide procedures for submitting a change.
+The following sections provide procedures for submitting changes.
 
 Preparing Changes for Submission
 ================================
 
-#. *Make Your Changes Locally:* Make your changes in your local Git
-   repository. You should make small, controlled, isolated changes.
-   Keeping changes small and isolated aids review, makes
-   merging/rebasing easier and keeps the change history clean should
-   anyone need to refer to it in future.
+The first thing to do is to create a new branch in your local Git repository
+for your changes, starting from the reference branch in the upstream
+repository (often called ``master``)::
 
-#. *Stage Your Changes:* Stage your changes by using the ``git add``
-   command on each file you changed.
+   $ git checkout <ref-branch>
+   $ git checkout -b my-changes
 
-#. *Commit Your Changes:* Commit the change by using the ``git commit``
+If you have completely unrelated sets of changes to submit, you should even
+create one branch for each set.
+
+Then, in each branch, you should group your changes into small, controlled and
+isolated ones. Keeping changes small and isolated aids review, makes
+merging/rebasing easier and keeps the change history clean should anyone need
+to refer to it in future.
+
+To this purpose, you should create *one Git commit per change*,
+corresponding to each of the patches you will eventually submit.
+So, for each identified change:
+
+#. *Stage Your Change:* Stage your change by using the ``git add``
+   command on each file you modified.
+
+#. *Commit Your Change:* Commit the change by using the ``git commit``
    command. Make sure your commit information follows standards by
    following these accepted conventions:
 
    -  Be sure to include a "Signed-off-by:" line in the same style as
       required by the Linux kernel. This can be done by using the
       ``git commit -s`` command. Adding this line signifies that you,
-      the submitter, have agreed to the Developer's Certificate of
-      Origin 1.1 as follows:
+      the submitter, have agreed to the `Developer's Certificate of Origin 1.1
+      <https://www.kernel.org/doc/html/latest/process/submitting-patches.html#sign-your-work-the-developer-s-certificate-of-origin>`__
+      as follows:
 
       .. code-block:: none
 
@@ -196,6 +210,14 @@ Preparing Changes for Submission
       with the recipe name (if changing a recipe), or else with the
       short form path to the file being changed.
 
+      .. note::
+
+         To find a suitable prefix for the commit summary, a good idea
+         is to look for prefixes used in previous commits touching the
+         same files or directories::
+
+            git log --oneline <paths>
+
    -  For the body of the commit message, provide detailed information
       that describes what you changed, why you made the change, and the
       approach you used. It might also be helpful if you mention how you
@@ -220,50 +242,30 @@ Preparing Changes for Submission
 
          detailed description of change
 
-Using Email to Submit a Patch
+Using Email to Submit Patches
 =============================
 
 Depending on the components changed, you need to submit the email to a
 specific mailing list. For some guidance on which mailing list to use,
-see the ":ref:`contributor-guide/submit-change:finding a suitable mailing list`"
+see the ":ref:`contributor-guide/submit-changes:finding a suitable mailing list`"
 section above.
 
-Here is the general procedure on how to submit a patch through email
-without using the scripts once the steps in
-":ref:`contributor-guide/submit-change:preparing changes for submission`"
-have been followed:
+Here is the general procedure on how to create and submit patches through email:
 
-#. *Format the Commit:* Format the commit into an email message. To
-   format commits, use the ``git format-patch`` command. When you
-   provide the command, you must include a revision list or a number of
-   patches as part of the command. For example, either of these two
-   commands takes your most recent single commit and formats it as an
-   email message in the current directory::
+#. *Generate Patches for your Branch:* The ``git format-patch`` command for
+   generate patch files for each of the commits in your branch. You need
+   to pass the reference branch your branch starts from::
 
-      $ git format-patch -1
+      $ git format-patch <ref-branch>
 
-   or ::
+   After the command is run, the current directory contains numbered
+   ``.patch`` files for the commits in your branch.
 
-      $ git format-patch HEAD~
-
-   After the command is run, the current directory contains a numbered
-   ``.patch`` file for the commit.
-
-   If you provide several commits as part of the command, the
-   ``git format-patch`` command produces a series of numbered files in
-   the current directory – one for each commit. If you have more than
-   one patch, you should also use the ``--cover`` option with the
-   command, which generates a cover letter as the first "patch" in the
-   series. You can then edit the cover letter to provide a description
-   for the series of patches. For information on the
-   ``git format-patch`` command, see ``GIT_FORMAT_PATCH(1)`` displayed
-   using the ``man git-format-patch`` command.
-
-   .. note::
-
-      If you are or will be a frequent contributor to the Yocto Project
-      or to OpenEmbedded, you might consider requesting a contrib area
-      and the necessary associated rights.
+   If you have more than one patch, you should also use the ``--cover``
+   option with the command, which generates a cover letter as the first
+   "patch" in the series. You can then edit the cover letter to provide
+   a description for the series of patches. Run ``man git-format-patch``
+   for details about this command.
 
 #. *Send the patches via email:* Send the patches to the recipients and
    relevant mailing lists by using the ``git send-email`` command.
@@ -291,9 +293,11 @@ have been followed:
    whitespace in the body of the message, which can occur when you use
    your own mail client. The command also has several options that let
    you specify recipients and perform further editing of the email
-   message. For information on how to use the ``git send-email``
-   command, see ``GIT-SEND-EMAIL(1)`` displayed using the
-   ``man git-send-email`` command.
+   message. Here's a typical usage of this command::
+
+     git send-email --to <mailing-list-address> *.patch
+
+   Run ``man git-send-email`` for more details about this command.
 
 The Yocto Project uses a `Patchwork instance <https://patchwork.yoctoproject.org/>`__
 to track the status of patches submitted to the various mailing lists and to
@@ -320,7 +324,7 @@ patch series with a link to the branch for review.
 
 Follow this procedure to push a change to an upstream "contrib" Git
 repository once the steps in
-":ref:`contributor-guide/submit-change:preparing changes for submission`"
+":ref:`contributor-guide/submit-changes:preparing changes for submission`"
 have been followed:
 
 .. note::
@@ -368,7 +372,7 @@ have been followed:
       the file.
 
    -  *Find the Mailing List to Use:* See the
-      ":ref:`contributor-guide/submit-change:finding a suitable mailing list`"
+      ":ref:`contributor-guide/submit-changes:finding a suitable mailing list`"
       section above.
 
 #. *Make a Pull Request:* Notify the maintainer or the mailing list that
@@ -491,8 +495,8 @@ follows:
       a newer version of the software which includes an upstream fix for the
       issue or when the issue has been fixed on the master branch in a way
       that introduces backwards incompatible changes. In this case follow the
-      steps in ":ref:`contributor-guide/submit-change:preparing changes for submission`" and
-      ":ref:`contributor-guide/submit-change:using email to submit a patch`"
+      steps in ":ref:`contributor-guide/submit-changes:preparing changes for submission`" and
+      ":ref:`contributor-guide/submit-changes:using email to submit patches`"
       but modify the subject header of your patch
       email to include the name of the stable branch which you are
       targetting. This can be done using the ``--subject-prefix`` argument to

@@ -879,7 +879,7 @@ The build should work without issue.
 As with all solved problems, if they originated upstream, you need to
 submit the fix for the recipe in OE-Core and upstream so that the
 problem is taken care of at its source. See the
-":doc:`../contributor-guide/submit-change`" section for more information.
+":doc:`../contributor-guide/submit-changes`" section for more information.
 
 Debugging With the GNU Project Debugger (GDB) Remotely
 ======================================================

@@ -21,6 +21,6 @@ this.
    identify-component
    report-defect
    recipe-style-guide
-   submit-change
+   submit-changes
 
 .. include:: /boilerplate.rst

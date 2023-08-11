@@ -927,7 +927,7 @@ Yocto Project:
    -  The name and contact information for the BSP layer maintainer.
       This is the person to whom patches and questions should be sent.
       For information on how to find the right person, see the
-      :doc:`../contributor-guide/submit-change` section in the Yocto Project and
+      :doc:`../contributor-guide/submit-changes` section in the Yocto Project and
       OpenEmbedded Contributor Guide.
 
    -  Instructions on how to build the BSP using the BSP layer.

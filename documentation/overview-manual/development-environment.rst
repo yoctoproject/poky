@@ -264,7 +264,7 @@ push them into the "contrib" area and subsequently request that the
 maintainer include them into an upstream branch. This process is called
 "submitting a patch" or "submitting a change." For information on
 submitting patches and changes, see the
-":doc:`../contributor-guide/submit-change`" section in the Yocto Project
+":doc:`../contributor-guide/submit-changes`" section in the Yocto Project
 and OpenEmbedded Contributor Guide.
 
 In summary, there is a single point of entry for changes into the
@@ -330,7 +330,7 @@ Book <https://book.git-scm.com>`__.
    release to facilitate this workflow. You can find these scripts in
    the ``scripts`` folder of the :term:`Source Directory`. For information
    on how to use these scripts, see the
-   ":ref:`contributor-guide/submit-change:using scripts to push a change upstream and request a pull`"
+   ":ref:`contributor-guide/submit-changes:using scripts to push a change upstream and request a pull`"
    section in the Yocto Project and OpenEmbedded Contributor Guide.
 
 -  *Patch Workflow:* This workflow allows you to notify the maintainer
@@ -339,7 +339,7 @@ Book <https://book.git-scm.com>`__.
    this type of change, you format the patch and then send the email
    using the Git commands ``git format-patch`` and ``git send-email``.
    For information on how to use these scripts, see the
-   ":doc:`../contributor-guide/submit-change`" section in the Yocto Project
+   ":doc:`../contributor-guide/submit-changes`" section in the Yocto Project
    and OpenEmbedded Contributor Guide.
 
 Git
