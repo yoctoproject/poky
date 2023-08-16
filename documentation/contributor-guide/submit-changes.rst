@@ -226,9 +226,8 @@ So, for each identified change:
 
       .. note::
 
-         You do not need to provide a more detailed explanation of a
-         change if the change is minor to the point of the single line
-         summary providing all the information.
+         If the single line summary is enough to describe a simple
+         change, the body of the commit message can be left empty.
 
    -  If the change addresses a specific bug or issue that is associated
       with a bug-tracking ID, include a reference to that ID in your
