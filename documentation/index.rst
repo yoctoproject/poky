@@ -26,6 +26,7 @@ Welcome to the Yocto Project Documentation
    :caption: Manuals
 
    Overview and Concepts Manual <overview-manual/index>
+   Contributor Guide <contributor-guide/index>
    Reference Manual <ref-manual/index>
    Board Support Package (BSP) Developer's guide <bsp-guide/index>
    Development Tasks Manual <dev-manual/index>
@@ -34,7 +35,6 @@ Welcome to the Yocto Project Documentation
    Application Development and the Extensible SDK (eSDK) <sdk-manual/index>
    Toaster Manual <toaster-manual/index>
    Test Environment Manual <test-manual/index>
-   Contributor Guide <contributor-guide/index>
    bitbake
 
 .. toctree::
