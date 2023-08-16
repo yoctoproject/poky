@@ -140,7 +140,34 @@ The following sections provide procedures for submitting changes.
 Preparing Changes for Submission
 ================================
 
-The first thing to do is to create a new branch in your local Git repository
+Set up Git
+----------
+
+The first thing to do is to install Git packages. Here is an example
+on Debian and Ubuntu::
+
+   sudo aptitude install git-core git-email
+
+Then, you need to set a name and e-mail address that Git will
+use to identify your commits::
+
+   git config --global user.name "Ada Lovelace"
+   git config --global user.email "ada.lovelace@gmail.com"
+
+Clone the Git repository for the component to modify
+----------------------------------------------------
+
+After identifying the component to modify as described in the
+":doc:`../contributor-guide/identify-component`" section, clone the
+corresponding Git repository. Here is an example for OpenEmbedded-Core::
+
+  git clone https://git.openembedded.org/openembedded-core
+  cd openembedded-core
+
+Create a new branch
+-------------------
+
+Then, create a new branch in your local Git repository
 for your changes, starting from the reference branch in the upstream
 repository (often called ``master``)::
 
@@ -150,26 +177,37 @@ repository (often called ``master``)::
 If you have completely unrelated sets of changes to submit, you should even
 create one branch for each set.
 
-Then, in each branch, you should group your changes into small, controlled and
+Implement and commit changes
+----------------------------
+
+In each branch, you should group your changes into small, controlled and
 isolated ones. Keeping changes small and isolated aids review, makes
 merging/rebasing easier and keeps the change history clean should anyone need
 to refer to it in future.
 
 To this purpose, you should create *one Git commit per change*,
 corresponding to each of the patches you will eventually submit.
-So, for each identified change:
+See `further guidance <https://www.kernel.org/doc/html/latest/process/submitting-patches.html#separate-your-changes>`__
+in the Linux kernel documentation if needed.
 
-#. *Stage Your Change:* Stage your change by using the ``git add``
-   command on each file you modified.
+#. *Stage Your Changes:* Stage your changes by using the ``git add``
+   command on each file you modified. If you want to stage all the
+   files you modified, you can even use the ``git add -A`` command.
 
-#. *Commit Your Change:* Commit the change by using the ``git commit``
-   command. Make sure your commit information follows standards by
-   following these accepted conventions:
+#. *Commit Your Changes:* This is when you can create separate commits. For
+   each commit to create, use the ``git commit -s`` command with the files
+   or directories you want to include in the commit::
 
-   -  Be sure to include a "Signed-off-by:" line in the same style as
-      required by the Linux kernel. This can be done by using the
-      ``git commit -s`` command. Adding this line signifies that you,
-      the submitter, have agreed to the `Developer's Certificate of Origin 1.1
+      $ git commit -s file1 file2 dir1 dir2 ...
+
+   To include **a**\ ll staged files::
+
+      $ git commit -sa
+
+   -  The ``-s`` option of ``git commit`` adds a "Signed-off-by:" line
+      to your commit message. There is the same requirement for contributing
+      to the Linux kernel. Adding such a line signifies that you, the
+      submitter, have agreed to the `Developer's Certificate of Origin 1.1
       <https://www.kernel.org/doc/html/latest/process/submitting-patches.html#sign-your-work-the-developer-s-certificate-of-origin>`__
       as follows:
 
@@ -241,7 +279,65 @@ So, for each identified change:
 
          detailed description of change
 
-Using Email to Submit Patches
+Creating Patches
+================
+
+Here is the general procedure on how to create patches to be sent through email:
+
+#. *Describe the Changes in your Branch:* If you have more than one commit
+   in your branch, it's recommended to provide a cover letter describing
+   the series of patches you are about to send.
+
+   For this purpose, a good solution is to store the cover letter contents
+   in the branch itself::
+
+      git branch --edit-description
+
+   This will open a text editor to fill in the description for your
+   changes. This description can be updated when necessary and will
+   be used by Git to create the cover letter together with the patches.
+
+   It is recommended to start this description with a title line which
+   will serve a the subject line for the cover letter.
+
+#. *Generate Patches for your Branch:* The ``git format-patch`` command will
+   generate patch files for each of the commits in your branch. You need
+   to pass the reference branch your branch starts from.
+
+   If you branch didn't need a description in the previous step::
+
+      $ git format-patch <ref-branch>
+
+   If you filled a description for your branch, you will want to generate
+   a cover letter too::
+
+      $ git format-patch --cover-letter --cover-from-description=auto <ref-branch>
+
+   After the command is run, the current directory contains numbered
+   ``.patch`` files for the commits in your branch. If you have a cover
+   letter, it will be in the ``0000-cover-letter.patch``.
+
+   .. note::
+
+      The ``--cover-from-description=auto`` option makes ``git format-patch``
+      use the first paragraph of the branch description as the cover
+      letter title. Another possibility, which is easier to remember, is to pass
+      only the ``--cover-letter`` option, but you will have to edit the
+      subject line manually every time you generate the patches.
+
+      See the `git format-patch manual page <https://git-scm.com/docs/git-format-patch>`__
+      for details.
+
+#. *Review each of the Patch Files:* This final review of the patches
+   before sending them often allows to view your changes from a different
+   perspective and discover defects such as typos, spacing issues or lines
+   or even files that you didn't intend to modify. This review should
+   include the cover letter patch too.
+
+   If necessary, rework your commits as described in
+   ":ref:`contributor-guide/submit-changes:take patch review into account`".
+
+Sending the Patches via Email
 =============================
 
 Depending on the components changed, you need to submit the email to a
@@ -249,31 +345,8 @@ specific mailing list. For some guidance on which mailing list to use,
 see the ":ref:`contributor-guide/submit-changes:finding a suitable mailing list`"
 section above.
 
-Here is the general procedure on how to create and submit patches through email:
-
-#. *Generate Patches for your Branch:* The ``git format-patch`` command for
-   generate patch files for each of the commits in your branch. You need
-   to pass the reference branch your branch starts from::
-
-      $ git format-patch <ref-branch>
-
-   After the command is run, the current directory contains numbered
-   ``.patch`` files for the commits in your branch.
-
-   If you have more than one patch, you should also use the ``--cover``
-   option with the command, which generates a cover letter as the first
-   "patch" in the series. You can then edit the cover letter to provide
-   a description for the series of patches. Run ``man git-format-patch``
-   for details about this command.
-
 #. *Send the patches via email:* Send the patches to the recipients and
    relevant mailing lists by using the ``git send-email`` command.
-
-   .. note::
-
-      In order to use ``git send-email``, you must have the proper Git packages
-      installed on your host.
-      For Ubuntu, Debian, and Fedora the package is ``git-email``.
 
    The ``git send-email`` command sends email by using a local or remote
    Mail Transport Agent (MTA) such as ``msmtp``, ``sendmail``, or
@@ -420,8 +493,8 @@ have been followed:
               $ poky/scripts/create-pull-request -h
               $ poky/scripts/send-pull-request -h
 
-Responding to Patch Review
-==========================
+Take Patch Review into Account
+==============================
 
 You may get feedback on your submitted patches from other community members
 or from the automated patchtest service. If issues are identified in your
@@ -494,9 +567,8 @@ follows:
       a newer version of the software which includes an upstream fix for the
       issue or when the issue has been fixed on the master branch in a way
       that introduces backwards incompatible changes. In this case follow the
-      steps in ":ref:`contributor-guide/submit-changes:preparing changes for submission`" and
-      ":ref:`contributor-guide/submit-changes:using email to submit patches`"
-      but modify the subject header of your patch
+      steps in ":ref:`contributor-guide/submit-changes:preparing changes for submission`"
+      and in the following sections but modify the subject header of your patch
       email to include the name of the stable branch which you are
       targetting. This can be done using the ``--subject-prefix`` argument to
       ``git format-patch``, for example to submit a patch to the dunfell
