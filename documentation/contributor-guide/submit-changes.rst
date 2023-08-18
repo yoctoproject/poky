@@ -502,9 +502,18 @@ have been followed:
    in the
    `Git Community Book <https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows>`__.
 
-#. *Push Your Commits to a "Contrib" Upstream:* If you have arranged for
-   permissions to push to an upstream contrib repository, push the
-   change to that repository::
+#. *Request Push Access to an "Upstream" Contrib Repository:* Send an email to
+   ``helpdesk@yoctoproject.org``:
+
+    -  Attach your SSH public key which usually named ``id_rsa.pub.``.
+       If you don't have one generate it by running ``ssh-keygen -t rsa -b 4096 -C "your_email@example.com"``.
+
+    -  List the repositories you're planning to contribute to.
+
+    -  Include your preferred branch prefix for ``-contrib`` repositories.
+
+#. *Push Your Commits to the "Contrib" Upstream:* Push your
+   changes to that repository::
 
       $ git push upstream_remote_repo local_branch_name
 
