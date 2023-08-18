@@ -328,13 +328,15 @@ Finding a Suitable Mailing List
 You should send patches to the appropriate mailing list so that they can be
 reviewed by the right contributors and merged by the appropriate maintainer.
 The specific mailing list you need to use depends on the location of the code
-you are changing. Each component (e.g. layer) should have a ``README`` file
-that indicates where to send the changes and which process to follow.
+you are changing.
 
 If people have concerns with any of the patches, they will usually voice
 their concern over the mailing list. If patches do not receive any negative
 reviews, the maintainer of the affected layer typically takes them, tests them,
 and then based on successful testing, merges them.
+
+In general, each component (e.g. layer) should have a ``README`` file
+that indicates where to send the changes and which process to follow.
 
 The "poky" repository, which is the Yocto Project's reference build
 environment, is a hybrid repository that contains several individual
@@ -358,21 +360,22 @@ varies by component:
 -  *Documentation*: For changes to the Yocto Project documentation, use the
    :yocto_lists:`docs </g/docs>` mailing list.
 
-For changes to other layers hosted in the Yocto Project source
-repositories (i.e. ``yoctoproject.org``) and tools use the
+For changes to other layers and tools hosted in the Yocto Project source
+repositories (i.e. :yocto_git:`git.yoctoproject.org <>`), use the
 :yocto_lists:`yocto </g/yocto/>` general mailing list.
 
-.. note::
+For changes to other layers hosted in the OpenEmbedded source
+repositories (i.e. :oe_git:`git.openembedded.org <>`), use
+the :oe_lists:`openembedded-devel </g/openembedded-devel>`
+mailing list, unless specified otherwise in the layer's ``README`` file.
 
-   Sometimes a layer's documentation specifies to use a particular
-   mailing list. If so, use that list.
+If you intend to submit a new recipe that neither fits into the core Metadata,
+nor into :oe_git:`meta-openembedded </meta-openembedded/>`, you should
+look for a suitable layer in https://layers.openembedded.org. If similar
+recipes can be expected, you may consider :ref:`dev-manual/layers:creating your own layer`.
 
-For additional recipes that do not fit into the core Metadata, you
-should determine which layer the recipe should go into and submit the
-changes in the manner recommended by the documentation (e.g. by the
-``README`` file) supplied with the layer. If in doubt, please ask on the
-:yocto_lists:`yocto </g/yocto/>` general mailing list or on the
-:oe_lists:`openembedded-devel </g/openembedded-devel>` mailing list.
+If in doubt, please ask on the :yocto_lists:`yocto </g/yocto/>` general mailing list
+or on the :oe_lists:`openembedded-devel </g/openembedded-devel>` mailing list.
 
 Subscribing to the Mailing List
 -------------------------------
