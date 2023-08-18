@@ -340,6 +340,25 @@ Here is the general procedure on how to create patches to be sent through email:
 Sending the Patches via Email
 =============================
 
+Using Git to Send Patches
+-------------------------
+
+To submit patches through email, it is very important that you send them
+without any whitespace or HTML formatting that either you or your mailer
+introduces. The maintainer that receives your patches needs to be able
+to save and apply them directly from your emails, using the ``git am``
+command.
+
+Using the ``git send-email`` command is the only error-proof way of
+sending your patches using email since there is no risk of compromising
+whitespace in the body of the message, which can occur when you use
+your own mail client. It will also properly include your patches
+as inline attachments, which is not easy to do with standard e-mail
+clients without breaking lines.
+
+Setting up Git to Send Email
+----------------------------
+
 Depending on the components changed, you need to submit the email to a
 specific mailing list. For some guidance on which mailing list to use,
 see the ":ref:`contributor-guide/submit-changes:finding a suitable mailing list`"
@@ -350,15 +369,7 @@ section above.
 
    The ``git send-email`` command sends email by using a local or remote
    Mail Transport Agent (MTA) such as ``msmtp``, ``sendmail``, or
-   through a direct ``smtp`` configuration in your Git ``~/.gitconfig``
-   file. If you are submitting patches through email only, it is very
-   important that you submit them without any whitespace or HTML
-   formatting that either you or your mailer introduces. The maintainer
-   that receives your patches needs to be able to save and apply them
-   directly from your emails. A good way to verify that what you are
-   sending will be applicable by the maintainer is to do a dry run and
-   send them to yourself and then save and apply them as the maintainer
-   would.
+   through a direct ``smtp`` configuration in your Git ``~/.gitconfig`` file.
 
    The ``git send-email`` command is the preferred method for sending
    your patches using email since there is no risk of compromising
