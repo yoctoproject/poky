@@ -101,6 +101,11 @@ corresponding to each of the patches you will eventually submit.
 See `further guidance <https://www.kernel.org/doc/html/latest/process/submitting-patches.html#separate-your-changes>`__
 in the Linux kernel documentation if needed.
 
+For example, when you intend to add multiple new recipes, each recipe
+should be added in a separate commit. For upgrades to existing recipes,
+the previous version should usually be deleted as part of the same commit
+to add the upgraded version.
+
 #. *Stage Your Changes:* Stage your changes by using the ``git add``
    command on each file you modified. If you want to stage all the
    files you modified, you can even use the ``git add -A`` command.
