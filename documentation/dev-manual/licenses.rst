@@ -317,7 +317,8 @@ audit all artifacts to ensure completeness.
 .. note::
 
    The Yocto Project generates a license manifest during image creation
-   that is located in ``${DEPLOY_DIR}/licenses/``\ `image_name`\ ``-``\ `datestamp`
+   that is located in
+   ``${DEPLOY_DIR}/licenses/<image-name>-<machine>.rootfs-<datestamp>/``
    to assist with any audits.
 
 Providing the Source Code
@@ -435,7 +436,7 @@ with source as defined by the GPL and other open source licenses.
 Providing Compilation Scripts and Source Code Modifications
 -----------------------------------------------------------
 
-At this point, we have addressed all we need to prior to generating the
+At this point, we have addressed all we need prior to generating the
 image. The next two requirements are addressed during the final
 packaging of the release.
 
