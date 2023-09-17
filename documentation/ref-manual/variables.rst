@@ -1156,6 +1156,26 @@ system and gives an overview of their function and contents.
       optional at the distribution level, in case the hardware supports
       Bluetooth but you do not ever intend to use it.
 
+   :term:`COMMERCIAL_AUDIO_PLUGINS`
+      This variable is specific to the :yocto_git:`GStreamer recipes
+      </poky/tree/meta/recipes-multimedia/gstreamer/gstreamer1.0-meta-base.bb>`.
+      It allows to build the GStreamer `"ugly"
+      <https://github.com/GStreamer/gst-plugins-ugly>`__ and
+      `"bad" <https://github.com/GStreamer/gst-plugins-bad>`__ audio plugins.
+
+      See the :ref:`dev-manual/licenses:other variables related to commercial licenses`
+      section for usage details.
+
+   :term:`COMMERCIAL_VIDEO_PLUGINS`
+      This variable is specific to the :yocto_git:`GStreamer recipes
+      </poky/tree/meta/recipes-multimedia/gstreamer/gstreamer1.0-meta-base.bb>`.
+      It allows to build the GStreamer `"ugly"
+      <https://github.com/GStreamer/gst-plugins-ugly>`__ and
+      `"bad" <https://github.com/GStreamer/gst-plugins-bad>`__ video plugins.
+
+      See the :ref:`dev-manual/licenses:other variables related to commercial licenses`
+      section for usage details.
+
    :term:`COMMON_LICENSE_DIR`
       Points to ``meta/files/common-licenses`` in the
       :term:`Source Directory`, which is where generic license
@@ -2222,6 +2242,12 @@ system and gives an overview of their function and contents.
       external tools. See the
       :ref:`kernel-yocto <ref-classes-kernel-yocto>` class in
       ``meta/classes`` to see how the variable is used.
+
+   :term:`EXTERNAL_TOOLCHAIN`
+      When you intend to use an
+      :ref:`external toolchain <dev-manual/external-toolchain:optionally using an external toolchain>`,
+      this variable allows to specify the directory where this toolchain was
+      installed.
 
    :term:`EXTERNALSRC`
       When inheriting the :ref:`externalsrc <ref-classes-externalsrc>`
@@ -7251,6 +7277,38 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Board Support Package Developer's Guide
       for additional information.
 
+   :term:`SPLASH_IMAGES`
+      This variable, used by the ``psplash`` recipe, allows to customize
+      the default splashscreen image.
+
+      Specified images in PNG format are converted to ``.h`` files by the recipe,
+      and are included in the ``psplash`` binary, so you won't find them in
+      the root filesystem.
+
+      To make such a change, it is recommended to customize the
+      ``psplash`` recipe in a custom layer. Here is an example structure for
+      an ``ACME`` board::
+
+          meta-acme/recipes-core/psplash
+          ├── files
+          │   └── logo-acme.png
+          └── psplash_%.bbappend
+
+      And here are the contents of the ``psplash_%.bbappend`` file in
+      this example::
+
+          SPLASH_IMAGES = "file://logo-acme.png;outsuffix=default"
+          FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+
+      You could even add specific configuration options for ``psplash``,
+      for example::
+
+          EXTRA_OECONF += "--disable-startup-msg --enable-img-fullscreen"
+
+      For information on append files, see the
+      ":ref:`dev-manual/layers:appending other layers metadata with your layer`"
+      section.
+
    :term:`SRC_URI`
 
       See the BitBake manual for the initial description for this variable:
@@ -8929,6 +8987,19 @@ system and gives an overview of their function and contents.
       In the
       previous example, some-native-tool would be replaced with an actual
       native tool on which the build would depend.
+
+   :term:`WKS_FILES`
+      Specifies a list of candidate Wic kickstart files to be used by the
+      OpenEmbedded build system to create a partitioned image. Only the
+      first one that is found, from left to right, will be used.
+
+      This is only useful when there are multiple ``.wks`` files that can be
+      used to produce an image. A typical case is when multiple layers are
+      used for different hardware platforms, each supplying a different
+      ``.wks`` file. In this case, you specify all possible ones through
+      :term:`WKS_FILES`.
+
+      If only one ``.wks`` file is used, set :term:`WKS_FILE` instead.
 
    :term:`WORKDIR`
       The pathname of the work directory in which the OpenEmbedded build
