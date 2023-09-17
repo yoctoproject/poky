@@ -87,7 +87,7 @@ understand the following documentation:
    as described in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual.
 
--  The ":ref:`dev-manual/common-tasks:understanding and creating layers`"
+-  The ":ref:`dev-manual/layers:understanding and creating layers`"
    section in the Yocto Project Development Tasks Manual.
 
 -  The ":ref:`kernel-dev/intro:kernel modification workflow`" section.

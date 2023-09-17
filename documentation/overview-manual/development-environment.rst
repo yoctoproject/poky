@@ -94,7 +94,7 @@ are several ways of working in the Yocto Project environment:
    through your Linux distribution and the Yocto Project.
 
    For a general flow of the build procedures, see the
-   ":ref:`dev-manual/common-tasks:building a simple image`"
+   ":ref:`dev-manual/building:building a simple image`"
    section in the Yocto Project Development Tasks Manual.
 
 -  *Board Support Package (BSP) Development:* Development of BSPs
@@ -654,5 +654,5 @@ Project uses in the ``meta/files/common-licenses`` directory in your
 For information that can help you maintain compliance with various open
 source licensing during the lifecycle of a product created using the
 Yocto Project, see the
-":ref:`dev-manual/common-tasks:maintaining open source license compliance during your product's lifecycle`"
+":ref:`dev-manual/licenses:maintaining open source license compliance during your product's lifecycle`"
 section in the Yocto Project Development Tasks Manual.

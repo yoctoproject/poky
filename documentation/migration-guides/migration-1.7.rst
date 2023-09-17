@@ -217,7 +217,7 @@ The following miscellaneous change occurred:
    should manually remove old "build-id" files from your existing build
    history repositories to avoid confusion. For information on the build
    history feature, see the
-   ":ref:`dev-manual/common-tasks:maintaining build output quality`"
+   ":ref:`dev-manual/build-quality:maintaining build output quality`"
    section in the Yocto Project Development Tasks Manual.
 
 

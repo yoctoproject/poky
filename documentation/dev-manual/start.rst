@@ -223,7 +223,7 @@ particular working environment and set of practices.
     -  Maintain your Metadata in layers that make sense for your
        situation. See the ":ref:`overview-manual/yp-intro:the yocto project layer model`"
        section in the Yocto Project Overview and Concepts Manual and the
-       ":ref:`dev-manual/common-tasks:understanding and creating layers`"
+       ":ref:`dev-manual/layers:understanding and creating layers`"
        section for more information on layers.
 
     -  Separate the project's Metadata and code by using separate Git

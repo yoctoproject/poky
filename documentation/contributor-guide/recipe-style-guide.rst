@@ -231,13 +231,13 @@ Recipes need to define both the :term:`LICENSE` and
    differences result in an error with the message containing the
    current checksum. For more explanation and examples of how to set the
    :term:`LIC_FILES_CHKSUM` variable, see the
-   ":ref:`dev-manual/common-tasks:tracking license changes`" section.
+   ":ref:`dev-manual/licenses:tracking license changes`" section.
 
    To determine the correct checksum string, you can list the
    appropriate files in the :term:`LIC_FILES_CHKSUM` variable with incorrect
    md5 strings, attempt to build the software, and then note the
    resulting error messages that will report the correct md5 strings.
-   See the ":ref:`dev-manual/common-tasks:fetching code`" section for
+   See the ":ref:`dev-manual/new-recipe:fetching code`" section for
    additional information.
 
    Here is an example that assumes the software has a ``COPYING`` file::

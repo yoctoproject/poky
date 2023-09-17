@@ -175,7 +175,7 @@ within the :term:`Source Directory`. If you design a
 custom distribution, you can include your own version of this
 configuration file to mention the targets defined by your distribution.
 See the
-":ref:`dev-manual/common-tasks:creating a custom template configuration directory`"
+":ref:`dev-manual/custom-template-configuration-directory:creating a custom template configuration directory`"
 section in the Yocto Project Development Tasks Manual for more
 information.
 
@@ -191,7 +191,7 @@ Directory named ``mybuilds/`` that is outside of the :term:`Source Directory`::
 The OpenEmbedded build system uses the template configuration files, which
 are found by default in the ``meta-poky/conf/`` directory in the Source
 Directory. See the
-":ref:`dev-manual/common-tasks:creating a custom template configuration directory`"
+":ref:`dev-manual/custom-template-configuration-directory:creating a custom template configuration directory`"
 section in the Yocto Project Development Tasks Manual for more
 information.
 
@@ -234,7 +234,7 @@ The OpenEmbedded build system creates this directory when you enable
 build history via the :ref:`buildhistory <ref-classes-buildhistory>` class file. The directory
 organizes build information into image, packages, and SDK
 subdirectories. For information on the build history feature, see the
-":ref:`dev-manual/common-tasks:maintaining build output quality`"
+":ref:`dev-manual/build-quality:maintaining build output quality`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _structure-build-conf-local.conf:
@@ -289,7 +289,7 @@ file, it uses ``sed`` to substitute final
 ----------------------------
 
 This configuration file defines
-:ref:`layers <dev-manual/common-tasks:understanding and creating layers>`,
+:ref:`layers <dev-manual/layers:understanding and creating layers>`,
 which are directory trees, traversed (or walked) by BitBake. The
 ``bblayers.conf`` file uses the :term:`BBLAYERS`
 variable to list the layers BitBake tries to find.
@@ -434,7 +434,7 @@ directory contains sub-directories for ``bash``, ``busybox``, and
 ``glibc`` (among others) that in turn contain appropriate ``COPYING``
 license files with other licensing information. For information on
 licensing, see the
-":ref:`dev-manual/common-tasks:maintaining open source license compliance during your product's lifecycle`"
+":ref:`dev-manual/licenses:maintaining open source license compliance during your product's lifecycle`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _structure-build-tmp-deploy-images:
@@ -571,7 +571,7 @@ built within the Yocto Project. For this package, a work directory of
 ``tmp/work/qemux86-poky-linux/linux-yocto/3.0+git1+<.....>``, referred
 to as the :term:`WORKDIR`, is created. Within this directory, the source is
 unpacked to ``linux-qemux86-standard-build`` and then patched by Quilt.
-(See the ":ref:`dev-manual/common-tasks:using quilt in your workflow`" section in
+(See the ":ref:`dev-manual/quilt:using quilt in your workflow`" section in
 the Yocto Project Development Tasks Manual for more information.) Within
 the ``linux-qemux86-standard-build`` directory, standard Quilt
 directories ``linux-3.0/patches`` and ``linux-3.0/.pc`` are created, and

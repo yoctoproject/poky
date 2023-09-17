@@ -377,7 +377,7 @@ mailing list, unless specified otherwise in the layer's ``README`` file.
 If you intend to submit a new recipe that neither fits into the core Metadata,
 nor into :oe_git:`meta-openembedded </meta-openembedded/>`, you should
 look for a suitable layer in https://layers.openembedded.org. If similar
-recipes can be expected, you may consider :ref:`dev-manual/common-tasks:creating your own layer`.
+recipes can be expected, you may consider :ref:`dev-manual/layers:creating your own layer`.
 
 If in doubt, please ask on the :yocto_lists:`yocto </g/yocto/>` general mailing list
 or on the :oe_lists:`openembedded-devel </g/openembedded-devel>` mailing list.
@@ -625,7 +625,7 @@ follows:
 #. *Identify the bug or CVE to be fixed:* This information should be
    collected so that it can be included in your submission.
 
-   See :ref:`dev-manual/common-tasks:checking for vulnerabilities`
+   See :ref:`dev-manual/vulnerabilities:checking for vulnerabilities`
    for details about CVE tracking.
 
 #. *Check if the fix is already present in the master branch:* This will

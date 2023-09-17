@@ -343,7 +343,7 @@ This release supports generation of GLib Introspective Repository (GIR)
 files through GObject introspection, which is the standard mechanism for
 accessing GObject-based software from runtime environments. You can
 enable, disable, and test the generation of this data. See the
-":ref:`dev-manual/common-tasks:enabling gobject introspection support`"
+":ref:`dev-manual/gobject-introspection:enabling gobject introspection support`"
 section in the Yocto Project Development Tasks Manual for more
 information.
 
