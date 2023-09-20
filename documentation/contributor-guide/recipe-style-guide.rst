@@ -7,17 +7,18 @@ Recipe Naming Conventions
 =========================
 
 In general, most recipes should follow the naming convention
-``recipes-category/package/packagename_version.bb``. Recipes for related
-projects may share the same package directory. ``packagename``, ``category``,
-and ``package`` may contain hyphens, but hyphens are not allowed in ``version``.
+``recipes-category/recipename/recipename_version.bb``. Recipes for related
+projects may share the same recipe directory. ``recipename`` and ``category``
+may contain hyphens, but hyphens are not allowed in ``version``.
 
 If the recipe is tracking a Git revision that does not correspond to a released
-version of the software, ``version`` may be ``git`` (e.g. ``packagename_git.bb``)
+version of the software, ``version`` may be ``git`` (e.g. ``recipename_git.bb``)
+and the recipe would set :term:`PV`.
 
 Version Policy
 ==============
 
-Our versions follow the form ``<package epoch>:<package version>-<package revision>``
+Our versions follow the form ``<epoch>:<version>-<revision>``
 or in BitBake variable terms ${:term:`PE`}:${:term:`PV`}-${:term:`PR`}. We
 generally follow the `Debian <https://www.debian.org/doc/debian-policy/ch-controlfields.html#version>`__
 version policy which defines these terms.
@@ -26,7 +27,7 @@ In most cases the version :term:`PV` will be set automatically from the recipe
 file name. It is recommended to use released versions of software as these are
 revisions that upstream are expecting people to use.
 
-Package versions should always compare and sort correctly so that upgrades work
+Recipe versions should always compare and sort correctly so that upgrades work
 as expected. With conventional versions such as ``1.4`` upgrading ``to 1.5``
 this happens naturally, but some versions don't sort. For example,
 ``1.5 Release Candidate 2`` could be written as ``1.5rc2`` but this sorts after
@@ -62,7 +63,7 @@ Version Number Changes
 
 The :term:`PR` variable is used to indicate different revisions of a recipe
 that reference the same upstream source version. It can be used to force a
-new version of a package to be installed onto a device from a package feed.
+new version of a recipe to be installed onto a device from a package feed.
 These once had to be set manually but in most cases these can now be set and
 incremented automatically by a PR Server connected with a package feed.
 
