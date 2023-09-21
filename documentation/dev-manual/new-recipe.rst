@@ -1395,9 +1395,9 @@ doing the following:
 Following Recipe Style Guidelines
 =================================
 
-When writing recipes, it is good to conform to existing style
-guidelines. The :oe_wiki:`OpenEmbedded Styleguide </Styleguide>` wiki page
-provides rough guidelines for preferred recipe style.
+When writing recipes, it is good to conform to existing style guidelines.
+See the ":doc:`../contributor-guide/recipe-style-guide`" in the Yocto Project
+and OpenEmbedded Contributor Guide for reference.
 
 It is common for existing recipes to deviate a bit from this style.
 However, aiming for at least a consistent style is a good idea. Some
