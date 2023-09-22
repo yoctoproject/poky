@@ -292,13 +292,10 @@ following status strings:
    Submitted to upstream, waiting for approval. Optionally include where
    it was submitted, such as the author, mailing list, etc.
 
-``Accepted``
-   Accepted in upstream, expect it to be removed at next update, include
-   expected version info.
-
-``Backport``
-   Backported from new upstream version, because we are at a fixed version,
-   include upstream version info.
+``Backport [version]``
+   Accepted upstream and included in the next release, or backported from newer
+   upstream version, because we are at a fixed version.
+   Include upstream version info (e.g. commit ID or next expected version).
 
 ``Denied``
    Not accepted by upstream, include reason in patch.
@@ -350,7 +347,7 @@ Here's an example of a patch that has been submitted upstream::
 
    Signed-off-by: Joe Developer <joe.developer@example.com>
 
-A future update can change the value to ``Accepted`` or ``Denied`` as
+A future update can change the value to ``Backport`` or ``Denied`` as
 appropriate.
 
 Another example of a patch that is specific to OpenEmbedded::
