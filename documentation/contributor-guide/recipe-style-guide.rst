@@ -314,22 +314,20 @@ following status strings:
 
 ``Inappropriate [reason]``
    The patch is not appropriate for upstream, include a brief reason on the
-   same line enclosed with ``[]``. The reason can be:
+   same line enclosed with ``[]``. In the past, there were several different
+   reasons not to submit patches upstream, but we have to consider that every
+   non-upstreamed patch means a maintainance burden for recipe maintainers.
+   Currently, the only reasons to mark patches as inappropriate for upstream
+   submission are:
 
-   -  ``not author`` (you are not the author and do not intend to upstream this,
-      the source must be listed in the comments)
-   -  ``native``
-   -  ``licensing``
-   -  ``configuration``
-   -  ``enable feature``
-   -  ``disable feature``
-   -  ``bugfix`` (add bug URL here)
-   -  ``embedded specific``
-   -  ``other`` (give details in comments)
-
-The various ``Inappropriate [reason]`` status items are meant to indicate that
-the person responsible for adding this patch to the system does not intend to
-upstream the patch for a specific reason.
+   -  ``oe specific``: the issue is specific to how OpenEmbedded performs builds
+      or sets things up at runtime, and can be resolved only with a patch that
+      is not however relevant or appropriate for general upstream submission.
+   -  ``upstream ticket <link>``: the issue is not specific to Open-Embedded
+      and should be fixed upstream, but the patch in its current form is not
+      suitable for merging upstream, and the author lacks sufficient expertise
+      to develop a proper patch. Instead the issue is handled via a bug report
+      (include link).
 
 Of course, if another person later takes care of submitting this patch upstream,
 the status should be changed to ``Submitted [where]``, and an additional
