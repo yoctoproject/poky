@@ -336,7 +336,10 @@ the status should be changed to ``Submitted [where]``, and an additional
 ``Signed-off-by:`` line should be added to the patch by the person claiming
 responsibility for upstreaming.
 
-For example, if the patch has been submitted upstream::
+Examples
+--------
+
+Here's an example of a patch that has been submitted upstream::
 
    rpm: Adjusted the foo setting in bar
 
@@ -351,3 +354,19 @@ For example, if the patch has been submitted upstream::
 
 A future update can change the value to ``Accepted`` or ``Denied`` as
 appropriate.
+
+Another example of a patch that is specific to OpenEmbedded::
+
+   Do not treat warnings as errors
+
+   There are additional warnings found with musl which are
+   treated as errors and fails the build, we have more combinations
+   than upstream supports to handle.
+
+   Upstream-Status: Inappropriate [oe specific]
+
+Here's a patch that has been backported from an upstream commit::
+
+   include missing sys/file.h for LOCK_EX
+
+   Upstream-Status: Backport [https://github.com/systemd/systemd/commit/ac8db36cbc26694ee94beecc8dca208ec4b5fd45]
