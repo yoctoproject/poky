@@ -286,7 +286,14 @@ Then, you should also add an ``Upstream-Status:`` tag containing one of the
 following status strings:
 
 ``Pending``
-   No determination has been made yet or not yet submitted to upstream.
+   No determination has been made yet, or patch has not yet been submitted to
+   upstream.
+
+   Keep in mind that every patch submitted upstream reduces the maintainance
+   burden in OpenEmbedded and Yocto Project in the long run, so this patch
+   status should only be used in exceptional cases if there are genuine
+   obstacles to submitting a patch upstream; the reason for that should be
+   included in the patch.
 
 ``Submitted [where]``
    Submitted to upstream, waiting for approval. Optionally include where
