@@ -1480,6 +1480,9 @@ Here are the tests you can list with the :term:`WARN_QA` and
    also inherits :ref:`ref-classes-features_check` in order for the
    requirement to actually work.
 
+-  ``unimplemented-ptest:`` Checks that ptests are implemented for upstream
+   tests.
+
 -  ``unlisted-pkg-lics:`` Checks that all declared licenses applying
    for a package are also declared on the recipe level (i.e. any license
    in ``LICENSE:*`` should appear in :term:`LICENSE`).
