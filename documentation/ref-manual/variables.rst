@@ -4342,7 +4342,7 @@ system and gives an overview of their function and contents.
       hardware. Continuing with the previous kernel example, the kernel's
       append file is located in the
       BSP layer for a given machine. For example, the append file for the
-      Beaglebone, EdgeRouter, and generic versions of both 32 and 64-bit IA
+      Beaglebone and generic versions of both 32 and 64-bit IA
       machines (``meta-yocto-bsp``) is named
       ``meta-yocto-bsp/recipes-kernel/linux/linux-yocto_6.1.bbappend``.
       Here are the related statements from that append file::
@@ -5081,7 +5081,6 @@ system and gives an overview of their function and contents.
          MACHINE ?= "genericx86"
          MACHINE ?= "genericx86-64"
          MACHINE ?= "beaglebone"
-         MACHINE ?= "edgerouter"
 
       The last five are Yocto Project reference hardware
       boards, which are provided in the ``meta-yocto-bsp`` layer.

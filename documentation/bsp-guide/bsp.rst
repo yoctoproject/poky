@@ -64,8 +64,8 @@ Here is an example that clones the Raspberry Pi BSP layer::
 
 In addition to BSP layers, the ``meta-yocto-bsp`` layer is part of the
 shipped ``poky`` repository. The ``meta-yocto-bsp`` layer maintains
-several "reference" BSPs including the ARM-based Beaglebone, MIPS-based
-EdgeRouter, and generic versions of both 32-bit and 64-bit IA machines.
+several "reference" BSPs including the ARM-based Beaglebone and generic
+versions of both 32-bit and 64-bit IA machines.
 
 For information on typical BSP development workflow, see the
 :ref:`bsp-guide/bsp:developing a board support package (bsp)`
@@ -764,15 +764,13 @@ workflow.
 
    .. note::
 
-      -  There are four hardware reference BSPs in the Yocto
+      -  There are three hardware reference BSPs in the Yocto
          Project release, located in the ``poky/meta-yocto-bsp``
          BSP layer:
 
          -  Texas Instruments Beaglebone (``beaglebone-yocto``)
 
-         -  Ubiquiti Networks EdgeRouter Lite (``edgerouter``)
-
-         -  Two general IA platforms (``genericx86`` and ``genericx86-64``)
+         -  Two generic IA platforms (``genericx86`` and ``genericx86-64``)
 
       -  There are three core Intel BSPs in the Yocto Project
          release, in the ``meta-intel`` layer:
