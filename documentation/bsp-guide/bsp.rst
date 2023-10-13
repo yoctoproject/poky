@@ -772,20 +772,6 @@ workflow.
 
          -  Two generic IA platforms (``genericx86`` and ``genericx86-64``)
 
-      -  There are three core Intel BSPs in the Yocto Project
-         release, in the ``meta-intel`` layer:
-
-         -  ``intel-core2-32``, which is a BSP optimized for the Core2
-            family of CPUs as well as all CPUs prior to the Silvermont
-            core.
-
-         -  ``intel-corei7-64``, which is a BSP optimized for Nehalem
-            and later Core and Xeon CPUs as well as Silvermont and later
-            Atom CPUs, such as the Baytrail SoCs.
-
-         -  ``intel-quark``, which is a BSP optimized for the Intel
-            Galileo gen1 & gen2 development boards.
-
    When you set up a layer for a new BSP, you should follow a standard
    layout. This layout is described in the ":ref:`bsp-guide/bsp:example filesystem layout`"
    section. In the standard layout, notice
