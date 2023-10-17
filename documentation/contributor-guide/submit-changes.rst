@@ -282,12 +282,18 @@ Here is the general procedure on how to create patches to be sent through email:
 Validating Patches with Patchtest
 =================================
 
-``patchtest`` is available in ``openembedded-core`` as a tool for making sure
-that your patches are well-formatted and contain important info for
+``patchtest`` is available in ``openembedded-core`` as a tool for making
+sure that your patches are well-formatted and contain important info for
 maintenance purposes, such as ``Signed-off-by`` and ``Upstream-Status``
-tags. Once you have generated the patch files and run ``source
-oe-init-build-env`` to initialize your workspace, you can run ``patchtest``
-like so::
+tags. Currently, it only supports testing patches for
+``openembedded-core`` branches. To setup, perform the following::
+
+    pip install -r meta/lib/patchtest/requirements.txt
+    source oe-init-build-env
+    bitbake-layers add-layer ../meta-selftest
+
+Once these steps are complete and you have generated your patch files,
+you can run ``patchtest`` like so::
 
     patchtest --patch <patch_name>
 
