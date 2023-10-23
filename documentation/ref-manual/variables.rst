@@ -3943,7 +3943,7 @@ system and gives an overview of their function and contents.
 
       Values for this variable are set in the kernel's recipe file and the
       kernel's append file. For example, if you are using the
-      ``linux-yocto_4.12`` kernel, the kernel recipe file is the
+      ``linux-yocto_5.15`` kernel, the kernel recipe file is the
       ``meta/recipes-kernel/linux/linux-yocto_4.12.bb`` file. :term:`KBRANCH`
       is set as follows in that kernel recipe file::
 
@@ -3956,13 +3956,13 @@ system and gives an overview of their function and contents.
       BSP layer for a given machine. For example, the append file for the
       Beaglebone, EdgeRouter, and generic versions of both 32 and 64-bit IA
       machines (``meta-yocto-bsp``) is named
-      ``meta-yocto-bsp/recipes-kernel/linux/linux-yocto_4.12.bbappend``.
+      ``meta-yocto-bsp/recipes-kernel/linux/linux-yocto_4.15.bbappend``.
       Here are the related statements from that append file::
 
-         KBRANCH:genericx86 = "standard/base"
-         KBRANCH:genericx86-64 = "standard/base"
-         KBRANCH:edgerouter = "standard/edgerouter"
-         KBRANCH:beaglebone = "standard/beaglebone"
+         KBRANCH:genericx86  = "v5.15/standard/base"
+         KBRANCH:genericx86-64  = "v5.15/standard/base"
+         KBRANCH:edgerouter = "v5.15/standard/edgerouter"
+         KBRANCH:beaglebone-yocto = "v5.15/standard/beaglebone"
 
       The :term:`KBRANCH` statements
       identify the kernel branch to use when building for each supported

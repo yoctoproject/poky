@@ -1449,39 +1449,39 @@ The kernel recipe used to build the kernel image for the BeagleBone
 device was established in the machine configuration::
 
    PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
-   PREFERRED_VERSION_linux-yocto ?= "5.0%"
+   PREFERRED_VERSION_linux-yocto ?= "5.15%"
 
 The ``meta-yocto-bsp/recipes-kernel/linux`` directory in the layer contains
 metadata used to build the kernel. In this case, a kernel append file
-(i.e. ``linux-yocto_5.0.bbappend``) is used to override an established
-kernel recipe (i.e. ``linux-yocto_5.0.bb``), which is located in
-:yocto_git:`/poky/tree/meta/recipes-kernel/linux`.
+(i.e. ``linux-yocto_5.15.bbappend``) is used to override an established
+kernel recipe (i.e. ``linux-yocto_5.15.bb``), which is located in
+:yocto_git:`/poky/tree/meta-yocto-bsp/recipes-kernel/linux`.
 
 Following is the contents of the append file::
 
-   KBRANCH:genericx86 = "v5.0/standard/base"
-   KBRANCH:genericx86-64 = "v5.0/standard/base"
-   KBRANCH:edgerouter = "v5.0/standard/edgerouter"
-   KBRANCH:beaglebone-yocto = "v5.0/standard/beaglebone"
+   KBRANCH:genericx86  = "v5.15/standard/base"
+   KBRANCH:genericx86-64  = "v5.15/standard/base"
+   KBRANCH:edgerouter = "v5.15/standard/edgerouter"
+   KBRANCH:beaglebone-yocto = "v5.15/standard/beaglebone"
 
    KMACHINE:genericx86 ?= "common-pc"
    KMACHINE:genericx86-64 ?= "common-pc-64"
    KMACHINE:beaglebone-yocto ?= "beaglebone"
 
-   SRCREV_machine:genericx86 ?= "3df4aae6074e94e794e27fe7f17451d9353cdf3d"
-   SRCREV_machine:genericx86-64 ?= "3df4aae6074e94e794e27fe7f17451d9353cdf3d"
-   SRCREV_machine:edgerouter ?= "3df4aae6074e94e794e27fe7f17451d9353cdf3d"
-   SRCREV_machine:beaglebone-yocto ?= "3df4aae6074e94e794e27fe7f17451d9353cdf3d"
+   SRCREV_machine:genericx86 ?= "0b628306d1f9ea28c0e86369ce9bb87a47893c9c"
+   SRCREV_machine:genericx86-64 ?= "0b628306d1f9ea28c0e86369ce9bb87a47893c9c"
+   SRCREV_machine:edgerouter ?= "90f1ee6589264545f548d731c2480b08a007230f"
+   SRCREV_machine:beaglebone-yocto ?= "9aabbaa89fcb21af7028e814c1f5b61171314d5a"
 
    COMPATIBLE_MACHINE:genericx86 = "genericx86"
    COMPATIBLE_MACHINE:genericx86-64 = "genericx86-64"
    COMPATIBLE_MACHINE:edgerouter = "edgerouter"
    COMPATIBLE_MACHINE:beaglebone-yocto = "beaglebone-yocto"
 
-   LINUX_VERSION:genericx86 = "5.0.3"
-   LINUX_VERSION:genericx86-64 = "5.0.3"
-   LINUX_VERSION:edgerouter = "5.0.3"
-   LINUX_VERSION:beaglebone-yocto = "5.0.3"
+   LINUX_VERSION:genericx86 = "5.15.72"
+   LINUX_VERSION:genericx86-64 = "5.15.72"
+   LINUX_VERSION:edgerouter = "5.15.54"
+   LINUX_VERSION:beaglebone-yocto = "5.15.54"
 
 This particular append file works for all the machines that are
 part of the ``meta-yocto-bsp`` layer. The relevant statements are

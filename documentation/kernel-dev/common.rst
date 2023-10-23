@@ -455,13 +455,13 @@ Creating the Append File
 
 You create this file in your custom layer. You also name it accordingly
 based on the linux-yocto recipe you are using. For example, if you are
-modifying the ``meta/recipes-kernel/linux/linux-yocto_4.12.bb`` recipe,
+modifying the ``meta/recipes-kernel/linux/linux-yocto_5.15.bb`` recipe,
 the append file will typically be located as follows within your custom
 layer:
 
 .. code-block:: none
 
-   your-layer/recipes-kernel/linux/linux-yocto_4.12.bbappend
+   your-layer/recipes-kernel/linux/linux-yocto_5.15.bbappend
 
 The append file should initially extend the
 :term:`FILESPATH` search path by
@@ -489,36 +489,36 @@ As an example, consider the following append file used by the BSPs in
 
 .. code-block:: none
 
-   meta-yocto-bsp/recipes-kernel/linux/linux-yocto_4.12.bbappend
+   meta-yocto-bsp/recipes-kernel/linux/linux-yocto_5.15.bbappend
 
 Here are the contents of this file. Be aware that the actual commit ID
 strings in this example listing might be different than the actual
 strings in the file from the ``meta-yocto-bsp`` layer upstream.
 ::
 
-   KBRANCH:genericx86  = "standard/base"
-   KBRANCH:genericx86-64  = "standard/base"
+   KBRANCH:genericx86  = "v5.15/standard/base"
+   KBRANCH:genericx86-64  = "v5.15/standard/base"
+   KBRANCH:edgerouter = "v5.15/standard/edgerouter"
+   KBRANCH:beaglebone-yocto = "v5.15/standard/beaglebone"
 
    KMACHINE:genericx86 ?= "common-pc"
    KMACHINE:genericx86-64 ?= "common-pc-64"
-   KBRANCH:edgerouter = "standard/edgerouter"
-   KBRANCH:beaglebone = "standard/beaglebone"
+   KMACHINE:beaglebone-yocto ?= "beaglebone"
 
-   SRCREV_machine:genericx86    ?= "d09f2ce584d60ecb7890550c22a80c48b83c2e19"
-   SRCREV_machine:genericx86-64 ?= "d09f2ce584d60ecb7890550c22a80c48b83c2e19"
-   SRCREV_machine:edgerouter ?= "b5c8cfda2dfe296410d51e131289fb09c69e1e7d"
-   SRCREV_machine:beaglebone ?= "b5c8cfda2dfe296410d51e131289fb09c69e1e7d"
-
+   SRCREV_machine:genericx86 ?= "0b628306d1f9ea28c0e86369ce9bb87a47893c9c"
+   SRCREV_machine:genericx86-64 ?= "0b628306d1f9ea28c0e86369ce9bb87a47893c9c"
+   SRCREV_machine:edgerouter ?= "90f1ee6589264545f548d731c2480b08a007230f"
+   SRCREV_machine:beaglebone-yocto ?= "9aabbaa89fcb21af7028e814c1f5b61171314d5a"
 
    COMPATIBLE_MACHINE:genericx86 = "genericx86"
    COMPATIBLE_MACHINE:genericx86-64 = "genericx86-64"
    COMPATIBLE_MACHINE:edgerouter = "edgerouter"
-   COMPATIBLE_MACHINE:beaglebone = "beaglebone"
+   COMPATIBLE_MACHINE:beaglebone-yocto = "beaglebone-yocto"
 
-   LINUX_VERSION:genericx86 = "4.12.7"
-   LINUX_VERSION:genericx86-64 = "4.12.7"
-   LINUX_VERSION:edgerouter = "4.12.10"
-   LINUX_VERSION:beaglebone = "4.12.10"
+   LINUX_VERSION:genericx86 = "5.15.72"
+   LINUX_VERSION:genericx86-64 = "5.15.72"
+   LINUX_VERSION:edgerouter = "5.15.54"
+   LINUX_VERSION:beaglebone-yocto = "5.15.54"
 
 This append file
 contains statements used to support several BSPs that ship with the
