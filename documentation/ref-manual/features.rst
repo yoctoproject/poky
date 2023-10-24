@@ -225,6 +225,10 @@ metadata, as extra layers can define their own:
    reduced shell overhead, and other features. This ``init`` manager is
    used by many distributions.
 
+-  *systemd-resolved:* Include support and use ``systemd-resolved`` as the
+   main DNS name resolver in ``glibc`` Name Service Switch. This is a DNS
+   resolver daemon from ``systemd``.
+
 -  *usbgadget:* Include USB Gadget Device support (for USB
    networking/serial/storage).
 
