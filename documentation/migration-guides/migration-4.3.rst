@@ -108,11 +108,27 @@ The following classes have been removed in this release:
 
 .. _migration-4.3-misc-changes:
 
+QEMU changes
+~~~~~~~~~~~~
+
+-  The ``runqemu`` script no longer systematically adds two serial ports
+   (``--serial null`` and ``-serial mon:stdio``) to the QEMU emulated machine
+   if the user already adds such ports through the ``QB_OPT_APPEND`` setting.
+
+   If the user adds one port, only ``--serial null`` is added, and
+   ``-serial mon:stdio`` is no longer passed. If the user adds more than one
+   port, ``--serial null`` is no longer added either. This can break some
+   existing QEMU based configurations expecting such serial ports to be added
+   when ``runqemu`` is executed.
+
+   This change was made to avoid exceeding two serial ports, which interferes
+   with automated testing.
+
 QA check changes
 ~~~~~~~~~~~~~~~~
 
-- The fetcher in ``lib/bb/tests/fetch.py`` now uses the ``https`` protocol
-  instead of ``git``, whenever possible.
+-  The fetcher in ``lib/bb/tests/fetch.py`` now uses the ``https`` protocol
+   instead of ``git``, whenever possible.
 
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
