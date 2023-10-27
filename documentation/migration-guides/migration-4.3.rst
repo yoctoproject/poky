@@ -26,6 +26,8 @@ no longer the default supported configuration. This setting does not affect whic
 kernel versions SDKs will run against and does not affect which versions of the kernel
 can be used to run builds.
 
+.. _migration-4.3-layername-override:
+
 Layername override implications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -36,6 +38,15 @@ side effect that the QA checks will apply to things being bbappended to recipes
 from other layers. Those other layers would need to have patch upstream status
 entries for patches being bbappended for example.
 
+.. _migration-4.3-compiling-changes:
+
+Compiling changes
+~~~~~~~~~~~~~~~~~
+
+-  Code on 32 bit platforms is now compiled with largefile support and 64
+   bit ``time_t``, to avoid the Y2038 time overflow issue. This could break
+   existing programs in untested layers.
+
 .. _migration-4.3-supported-distributions:
 
 Supported distributions
@@ -43,7 +54,17 @@ Supported distributions
 
 This release supports running BitBake on new GNU/Linux distributions:
 
+-  Ubuntu 22.10
+-  Fedora 38
+-  CentOS Stream 8
+-  AlmaLinux 8.8
+-  AlmaLinux 9.2
+
 On the other hand, some earlier distributions are no longer supported:
+
+-  Fedora 36
+-  AlmaLinux 8.7
+-  AlmaLinux 9.1
 
 See :ref:`all supported distributions <system-requirements-supported-distros>`.
 
@@ -54,6 +75,8 @@ Go language changes
 
 -  Support for the Glide package manager has been removed, as ``go mod``
    has become the standard.
+
+.. _migration-4.3-systemd-changes:
 
 Systemd changes
 ~~~~~~~~~~~~~~~
@@ -78,6 +101,15 @@ Class changes
 -  The ``perl-version`` class no longer provides the ``PERLVERSION`` and ``PERLARCH`` variables
    as there were no users in any core layer. The functions for this functionality
    are still available.
+
+.. _migration-4.3-deprecated-variables:
+
+Deprecated variables
+~~~~~~~~~~~~~~~~~~~~
+
+The following variables have been deprecated:
+
+-  :term:`CVE_CHECK_IGNORE`: use :term:`CVE_STATUS` instead.
 
 .. _migration-4.3-removed-variables:
 
@@ -105,8 +137,7 @@ Removed classes
 
 The following classes have been removed in this release:
 
-
-.. _migration-4.3-misc-changes:
+.. _migration-4.3-qemu-changes:
 
 QEMU changes
 ~~~~~~~~~~~~
@@ -124,11 +155,15 @@ QEMU changes
    This change was made to avoid exceeding two serial ports, which interferes
    with automated testing.
 
+.. _migration-4.3-qa-changes:
+
 QA check changes
 ~~~~~~~~~~~~~~~~
 
 -  The fetcher in ``lib/bb/tests/fetch.py`` now uses the ``https`` protocol
    instead of ``git``, whenever possible.
+
+.. _migration-4.3-misc-changes:
 
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
