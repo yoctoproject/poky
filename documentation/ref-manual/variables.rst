@@ -1724,7 +1724,8 @@ system and gives an overview of their function and contents.
 
       It has the format "reason: description" and the description is optional.
       The Reason is mapped to the final CVE state by mapping via
-      :term:`CVE_CHECK_STATUSMAP`
+      :term:`CVE_CHECK_STATUSMAP`. See :ref:`dev-manual/vulnerabilities:fixing vulnerabilities in recipes`
+      for details.
 
    :term:`CVE_STATUS_GROUPS`
       If there are many CVEs with the same status and reason, they can by simplified by using this
