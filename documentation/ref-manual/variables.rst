@@ -4753,6 +4753,10 @@ system and gives an overview of their function and contents.
       to the :term:`KERNEL_SRC` variable. Both variables are common variables
       used by external Makefiles to point to the kernel source directory.
 
+   :term:`KERNEL_STRIP`
+      Allows to specific which ``strip`` command to use to strip the kernel
+      binary, typically either GNU binutils ``strip`` or ``llvm-strip``.
+
    :term:`KERNEL_VERSION`
       Specifies the version of the kernel as extracted from ``version.h``
       or ``utsrelease.h`` within the kernel sources. Effects of setting
