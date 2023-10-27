@@ -28,6 +28,8 @@ New Features / Enhancements in 4.3
 
    -  :term:`OEQA_REPRODUCIBLE_TEST_PACKAGE`: to restrict package managers used in reproducibility testing.
 
+   -  :term:`KERNEL_STRIP`: to specify the command to strip the kernel binary.
+
 - Layername functionality available through overrides
 
   Code can now know which layer a recipe is coming from through the newly added :term:`FILE_LAYERNAME`
@@ -67,8 +69,6 @@ New Features / Enhancements in 4.3
 
    -  The ``poky-altcfg`` distribution enables the ``usrmerge``
       :ref:`distro feature <ref-manual/features:Distro Features>`.
-
-
 
 -  wic Image Creator enhancements:
 
