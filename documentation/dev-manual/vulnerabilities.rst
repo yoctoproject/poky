@@ -164,6 +164,9 @@ the :term:`CVE_STATUS` variable flag with appropriate reason which is mapped to 
 As mentioned previously, if data in the CVE database is wrong, it is recommend to fix those
 issues in the CVE database directly.
 
+Note that if there are many CVEs with the same status and reason, those can be
+shared by using the :term:`CVE_STATUS_GROUPS` variable.
+
 Recipes can be completely skipped by CVE check by including the recipe name in
 the :term:`CVE_CHECK_SKIP_RECIPE` variable.
 
