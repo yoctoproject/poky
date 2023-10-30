@@ -44,8 +44,8 @@ Compiling changes
 ~~~~~~~~~~~~~~~~~
 
 -  Code on 32 bit platforms is now compiled with largefile support and 64
-   bit ``time_t``, to avoid the Y2038 time overflow issue. This could break
-   existing programs in untested layers.
+   bit ``time_t``, to avoid the Y2038 time overflow issue. This breaks the ABI
+   and could break existing programs in untested layers.
 
 .. _migration-4.3-supported-distributions:
 
@@ -118,6 +118,7 @@ Removed variables
 
 The following variables have been removed:
 
+-  ``AUTHOR``
 -  ``PERLARCH``
 -  ``PERLVERSION``
 
@@ -167,6 +168,13 @@ QA check changes
 
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
+
+-  `jsDelivr <https://www.jsdelivr.com/`>__ now offers a new Content Delivery
+   Network (CDN) to Yocto Project users, which is completely free of charge
+   for Open Source projects. In particular, it can be used to efficiently
+   access prebuilt binary artifacts (see :term:`SSTATE_MIRRORS`) from many
+   different locations in the world. This is available to all supported Poky
+   releases.
 
 -  The ``-crosssdk`` suffix and any :term:`MLPREFIX` were removed from
    ``virtual/XXX`` provider/dependencies where a ``PREFIX`` was used as well,
