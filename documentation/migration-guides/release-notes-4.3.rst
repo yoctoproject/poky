@@ -10,7 +10,11 @@ New Features / Enhancements in 4.3
 
 -  New variables:
 
-   -  :term:`FILE_LAYERNAME`: bitbake now sets this to the name of the layer containing the recipe
+   -  :term:`CVE_CHECK_STATUSMAP`, :term:`CVE_STATUS`, :term:`CVE_STATUS_GROUPS`,
+      replaceing the deprecated :term:`CVE_CHECK_IGNORE`.
+
+   -  :term:`FILE_LAYERNAME`: bitbake now sets this to the name of the layer
+      containing the recipe
 
    -  :term:`FIT_ADDRESS_CELLS` and :term:`UBOOT_FIT_ADDRESS_CELLS`.
       See details below.
@@ -19,26 +23,29 @@ New Features / Enhancements in 4.3
 
    -  :term:`KERNEL_DTBVENDORED`: whether to keep vendor subdirectories.
 
-   -  :term:`LICENSE_FLAGS_DETAILS`: add extra details about a recipe license
-      in case it is not allowed by :term:`LICENSE_FLAGS_ACCEPTED`.
-
-   -  :term:`FILE_LAYERNAME`: bitbake now sets this to the name of the layer containing the recipe.
-
-   -  :term:`KERNEL_LOCALVERSION`: to add a string to the kernel version information.
-
-   -  :term:`OEQA_REPRODUCIBLE_TEST_PACKAGE`: to restrict package managers used in reproducibility testing.
+   -  :term:`KERNEL_LOCALVERSION`: to add a string to the kernel version
+      information.
 
    -  :term:`KERNEL_STRIP`: to specify the command to strip the kernel binary.
 
-- Layername functionality available through overrides
+   -  :term:`LICENSE_FLAGS_DETAILS`: add extra details about a recipe license
+      in case it is not allowed by :term:`LICENSE_FLAGS_ACCEPTED`.
 
-  Code can now know which layer a recipe is coming from through the newly added :term:`FILE_LAYERNAME`
-  variable. This has been added as an override of the form ``layer-<layername>``. In particular,
-  this means QA checks can now be layer specific, for example::
+   -  :term:`MESON_TARGET`: to compile a specific Meson target instead of the
+      default ones.
 
-    ERROR_QA:layer-core:append = " patch-status"
+   -  :term:`OEQA_REPRODUCIBLE_TEST_PACKAGE`: to restrict package managers used
+      in reproducibility testing.
 
-  which will enable the ``patch-status`` QA check for the core layer.
+-  Layername functionality available through overrides
+
+   Code can now know which layer a recipe is coming from through the newly added :term:`FILE_LAYERNAME`
+   variable. This has been added as an override of the form ``layer-<layername>``. In particular,
+   this means QA checks can now be layer specific, for example::
+
+      ERROR_QA:layer-core:append = " patch-status"
+
+   This will enable the ``patch-status`` QA check for the core layer.
 
 -  Architecture-specific enhancements:
 
@@ -47,17 +54,48 @@ New Features / Enhancements in 4.3
    -  Loongarch support in the :ref:`ref-classes-linuxloader` class and
       ``core-image-minimal-initramfs`` image.
 
+   -  The ``arch-armv8`` and ``arch-armv9`` architectures are now given
+      `Scalable Vector Extension (SVE)
+      <https://developer.arm.com/documentation/100891/0612/sve-overview/introducing-sve>`__
+      based tune options. Commits:
+      :yocto_git:`1 </poky/commit/?id=e4be03be5be62e367a40437a389121ef97d6cff3>`,
+      :yocto_git:`2 </poky/commit/?id=8cd5d264af4c346730531cb98ae945ab862dbd69>`.
+
 -  Kernel-related enhancements:
 
 -  New core recipes:
 
+   -  ``musl-legacy-error``: glibc ``error()`` API implementation still needed
+      by a few packages.
+
+   -  `python3-beartype <https://beartype.readthedocs.io>`, unbearably fast
+      runtime type checking in pure Python.
+
+   -  `python3-spdx-tools <https://github.com/spdx/tools-python>`__,
+      tools for SPDX validation and conversion.
+
+   -  `python3-uritools <https://github.com/tkem/uritools/>`__, replacement for
+      the ``urllib.parse`` module.
+
+   -  `ttyrun <https://github.com/ibm-s390-linux/s390-tools>`__, starts
+      ``getty`` programs only when a terminal exists, preventing respawns
+      through the ``init`` program.
+
 -  New classes:
 
-   - A ``ptest-cargo`` class was added to allow Cargo based recipes to easily add ptests
+   -  A ``ptest-cargo`` class was added to allow Cargo based recipes to easily add ptests
 
--  QEMU/runqemu enhancements:
+   -  A :ref:`ref-classes-cargo_c` class was added to allow recipes to make Rust code
+      available to C and C++ programs.
 
-   -  QEMU has been upgraded to version 8.0
+-  QEMU / ``runqemu`` enhancements:
+
+   -  QEMU has been upgraded to version 8.1
+
+   -  Many updates to the ``runqemu`` command.
+
+   -  The ``qemu-system-native`` recipe is now built with PNG support, which could be
+      useful to grab screeshots for error reporting purposes.
 
 -  Rust improvements:
 
@@ -81,7 +119,16 @@ New Features / Enhancements in 4.3
 
 -  Testing:
 
+   -  The :ref:`ref-classes-insane` class now adds an :ref:`unimplemented-ptest
+      <qa-check-unimplemented-ptest>` infrastructure to detect package sources
+      with unit tests but no implemented ptests in the recipe.
+
 -  Utility script changes:
+
+   -  New ``scripts/patchtest`` utility to check patches to the
+      OpenEmbedded-Core project. See
+      :ref:`contributor-guide/submit-changes:validating patches with patchtest`
+      for details.
 
 -  BitBake improvements:
 
@@ -94,9 +141,18 @@ New Features / Enhancements in 4.3
 
    -  :term:`SPDX` manifests are now generated by default.
 
+-  Security improvements:
+
+   -  Most repositories now include a :yocto_git:`SECURITY.md
+      </poky/tree/SECURITY.md>` file with hints for security researchers
+      and other parties who might report potential security vulnerabilities.
+
 -  Prominent documentation updates:
 
    -  New :doc:`../contributor-guide/index` document.
+
+   -  New :doc:`../dev-manual/security-subjects` chapter in the Development
+      Tasks Manual.
 
    -  Long due documentation for the :ref:`ref-classes-devicetree` class.
 
@@ -108,7 +164,6 @@ New Features / Enhancements in 4.3
       variables.
 
 -  Miscellaneous changes:
-
 
    -  Git based recipes in OE-Core which used the git protocol have been
       changed to use https where possibile. https is now believed to be
