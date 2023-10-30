@@ -1779,9 +1779,10 @@ class.
 =========
 
 The :ref:`ref-classes-meson` class allows to create recipes that build software
-using the `Meson <https://mesonbuild.com/>`__ build system. You can use
-the :term:`MESON_BUILDTYPE` and :term:`EXTRA_OEMESON` variables to specify
-additional configuration options to be passed using the ``meson`` command line.
+using the `Meson <https://mesonbuild.com/>`__ build system. You can use the
+:term:`MESON_BUILDTYPE`, :term:`MESON_TARGET` and :term:`EXTRA_OEMESON`
+variables to specify additional configuration options to be passed using the
+``meson`` command line.
 
 .. _ref-classes-metadata_scm:
 
