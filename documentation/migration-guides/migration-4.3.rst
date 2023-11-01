@@ -56,6 +56,7 @@ This release supports running BitBake on new GNU/Linux distributions:
 
 -  Ubuntu 22.10
 -  Fedora 38
+-  Debian 12
 -  CentOS Stream 8
 -  AlmaLinux 8.8
 -  AlmaLinux 9.2
