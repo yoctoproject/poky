@@ -6,7 +6,7 @@ Release notes for 4.3 (nandbield)
 New Features / Enhancements in 4.3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  Linux kernel 6.5 and 6.1, gcc 13, glibc 2.38 and other recipe upgrades
+-  Linux kernel 6.5 and 6.1, gcc 13, glibc 2.38, LLVM 17, and other recipe upgrades
 
 -  New variables:
 
