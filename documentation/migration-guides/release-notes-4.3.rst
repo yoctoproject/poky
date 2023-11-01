@@ -180,6 +180,21 @@ New Features / Enhancements in 4.3
 
 -  Packaging changes:
 
+   -  :term:`FILES` now accepts ``**``, which matches zero or more subdirectories.
+
+   -  The X server packagroup now defaults to using the ``modesetting`` X
+      driver, which obsoletes the ``fbdev`` driver.
+
+   -  If a recipe uses :term:`LICENSE_FLAGS` and the licenses are not accepted,
+      it can set a custom message with :term:`LICENSE_FLAGS_DETAILS` to be
+      displayed to the users.
+
+   -  Recipes that fetch specific revisions no longer need to explictly add
+      :term:`SRCPV` to :term:`PV` as BitBake will now automatically add the
+      revision infomation to :term:`PKGV` if needed.
+
+   -  The default :term:`PR` values in many recipes have been removed.
+
 -  Security improvements:
 
    -  Most repositories now include a :yocto_git:`SECURITY.md
