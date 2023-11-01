@@ -129,6 +129,7 @@ The following variables have been removed:
 -  ``AUTHOR``
 -  ``PERLARCH``
 -  ``PERLVERSION``
+-  ``QEMU_USE_SLIRP``
 
 .. _migration-4.3-removed-recipes:
 
