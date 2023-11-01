@@ -8,6 +8,10 @@ New Features / Enhancements in 4.3
 
 -  Linux kernel 6.5 and 6.1, gcc 13, glibc 2.38, LLVM 17, and other recipe upgrades
 
+-  The autobuilder's shared-state artefacts are now available over the `jsDeliver
+   <https://jsdelivr.com>`__ Content Delivery Network (CDN).
+   See :term:`SSTATE_MIRRORS`.
+
 -  New variables:
 
    -  :term:`CVE_CHECK_STATUSMAP`, :term:`CVE_STATUS`, :term:`CVE_STATUS_GROUPS`,
