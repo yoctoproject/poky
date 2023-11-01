@@ -130,6 +130,9 @@ The following variables have been removed:
 -  ``PERLARCH``
 -  ``PERLVERSION``
 -  ``QEMU_USE_SLIRP``
+-  ``SERIAL_CONSOLES_CHECK``, which is no longer necessary because all
+   consoles listed in :term:`SERIAL_CONSOLES` are checked for their existence
+   before a ``getty`` is started.
 
 .. _migration-4.3-removed-recipes:
 
