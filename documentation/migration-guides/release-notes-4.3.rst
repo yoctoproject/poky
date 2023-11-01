@@ -161,6 +161,10 @@ New Features / Enhancements in 4.3
       :ref:`contributor-guide/submit-changes:validating patches with patchtest`
       for details.
 
+   -  ``scripts/bblock`` was added, allowing the user to lock/unlock specific
+      recipes from being built. This makes it possibly to work on the
+      ``python3`` recipe without causing ``python3-native`` to rebuild.
+
 -  BitBake improvements:
 
    -  The BitBake Cooker log now contains notes when the caches are
