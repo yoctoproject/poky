@@ -167,8 +167,16 @@ New Features / Enhancements in 4.3
 
 -  BitBake improvements:
 
+   -  A fetcher for the Google Cloud Platform (``gs://``) was added.
+
    -  The BitBake Cooker log now contains notes when the caches are
-      invalidated which is useful for memory resident bitbake debugging.
+      invalidated which is useful for memory resident BitBake debugging.
+
+   -  BitBake no longer watches files with :wikipedia:`inotify <inotify>` for
+      changes, as under load this can lead to races causing build instability.
+
+   -  Toaster's dependencies were upgraded to current releases, specifically
+      to Django 4.2.
 
 -  Packaging changes:
 
