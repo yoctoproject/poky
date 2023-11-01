@@ -69,6 +69,13 @@ On the other hand, some earlier distributions are no longer supported:
 
 See :ref:`all supported distributions <system-requirements-supported-distros>`.
 
+.. _migration-4.3-removed-machines:
+
+Removed machines
+~~~~~~~~~~~~~~~~
+
+The ``edgerouter`` BSP in ``meta-yocto-bsp`` has been removed.
+
 .. _migration-4.3-go-changes:
 
 Go language changes
