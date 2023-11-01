@@ -219,15 +219,16 @@ New Features / Enhancements in 4.3
 
 -  Miscellaneous changes:
 
-   -  Git based recipes in OE-Core which used the git protocol have been
-      changed to use https where possibile. https is now believed to be
-      faster and more reliable.
+   -  Git based recipes in OE-Core which used the ``git``  protocol have been
+      changed to use `https`` where possible, as it is typically faster and
+      more reliable.
 
    -  The ``os-release`` recipe added a ``CPE_NAME`` to the fields provided, with the
       default being populated from :term:`DISTRO`.
 
-   -  The ``psplash`` recipe now accepts a PNG format image through :term:`SPLASH_IMAGES`,
-      instead of a harder to generate and modify ``.h`` file.
+   -  The ``psplash`` recipe now accepts a PNG format image through
+      :term:`SPLASH_IMAGES`, instead of a harder to generate and modify
+      ``.h`` file.
 
 Known Issues in 4.3
 ~~~~~~~~~~~~~~~~~~~
