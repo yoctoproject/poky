@@ -67,6 +67,15 @@ New Features / Enhancements in 4.3
 
 -  Kernel-related enhancements:
 
+   - The default kernel is the current stable (6.5), and there is also support
+     for the latest long-term release (6.1).
+
+   - The list of fixed kernel CVEs is updated regularly using data from
+     `linuxkernelcves.com <https://linuxkernelcves.com>`__.
+
+   - A ``showconfig`` task was added to the :ref:`ref-classes-cml1` class, to
+     easily examine the final generated ``.config`` file.
+
 -  New core recipes:
 
    -  ``musl-legacy-error``: glibc ``error()`` API implementation still needed
