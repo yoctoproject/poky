@@ -165,14 +165,6 @@ QEMU changes
    This change was made to avoid exceeding two serial ports, which interferes
    with automated testing.
 
-.. _migration-4.3-qa-changes:
-
-QA check changes
-~~~~~~~~~~~~~~~~
-
--  The fetcher in ``lib/bb/tests/fetch.py`` now uses the ``https`` protocol
-   instead of ``git``, whenever possible.
-
 .. _migration-4.3-misc-changes:
 
 Miscellaneous changes
