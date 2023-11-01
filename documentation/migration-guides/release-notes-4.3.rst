@@ -92,7 +92,8 @@ New Features / Enhancements in 4.3
 
    -  `ttyrun <https://github.com/ibm-s390-linux/s390-tools>`__, starts
       ``getty`` programs only when a terminal exists, preventing respawns
-      through the ``init`` program.
+      through the ``init`` program. This allowed to remove the
+      ``SERIAL_CONSOLES_CHECK`` variable.
 
 -  New classes:
 
