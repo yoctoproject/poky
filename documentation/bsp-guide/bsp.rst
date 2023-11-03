@@ -1234,21 +1234,18 @@ There are one or more machine configuration files in the
 
 For example, the machine configuration file for the `BeagleBone and
 BeagleBone Black development boards <https://beagleboard.org/bone>`__ is
-located in the layer ``poky/meta-yocto-bsp/conf/machine`` and is named
-``beaglebone-yocto.conf``::
+located in :yocto_git:`poky/meta-yocto-bsp/conf/machine/beaglebone-yocto.conf
+</poky/tree/meta-yocto-bsp/conf/machine/beaglebone-yocto.conf>`::
 
    #@TYPE: Machine
    #@NAME: Beaglebone-yocto machine
    #@DESCRIPTION: Reference machine configuration for http://beagleboard.org/bone and http://beagleboard.org/black boards
 
    PREFERRED_PROVIDER_virtual/xserver ?= "xserver-xorg"
-   XSERVER ?= "xserver-xorg \
-               xf86-video-modesetting \
-              "
 
    MACHINE_EXTRA_RRECOMMENDS = "kernel-modules kernel-devicetree"
 
-   EXTRA_IMAGEDEPENDS += "u-boot"
+   EXTRA_IMAGEDEPENDS += "virtual/bootloader"
 
    DEFAULTTUNE ?= "cortexa8hf-neon"
    include conf/machine/include/arm/armv7a/tune-cortexa8.inc
@@ -1256,18 +1253,19 @@ located in the layer ``poky/meta-yocto-bsp/conf/machine`` and is named
    IMAGE_FSTYPES += "tar.bz2 jffs2 wic wic.bmap"
    EXTRA_IMAGECMD:jffs2 = "-lnp "
    WKS_FILE ?= "beaglebone-yocto.wks"
-   IMAGE_INSTALL:append = " kernel-devicetree kernel-image-zimage"
-   do_image_wic[depends] += "mtools-native:do_populate_sysroot dosfstools-native:do_populate_sysroot"
+   MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "kernel-image kernel-devicetree"
+   do_image_wic[depends] += "mtools-native:do_populate_sysroot dosfstools-native:do_populate_sysroot virtual/bootloader:do_deploy"
 
-   SERIAL_CONSOLES ?= "115200;ttyS0 115200;ttyO0"
-   SERIAL_CONSOLES_CHECK = "${SERIAL_CONSOLES}"
+   SERIAL_CONSOLES ?= "115200;ttyS0 115200;ttyO0 115200;ttyAMA0"
 
    PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
-   PREFERRED_VERSION_linux-yocto ?= "5.0%"
+   PREFERRED_VERSION_linux-yocto ?= "6.1%"
 
    KERNEL_IMAGETYPE = "zImage"
    KERNEL_DEVICETREE = "am335x-bone.dtb am335x-boneblack.dtb am335x-bonegreen.dtb"
    KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"
+
+   PREFERRED_PROVIDER_virtual/bootloader ?= "u-boot"
 
    SPL_BINARY = "MLO"
    UBOOT_SUFFIX = "img"
@@ -1277,7 +1275,24 @@ located in the layer ``poky/meta-yocto-bsp/conf/machine`` and is named
 
    MACHINE_FEATURES = "usbgadget usbhost vfat alsa"
 
-   IMAGE_BOOT_FILES ?= "u-boot.${UBOOT_SUFFIX} MLO zImage am335x-bone.dtb am335x-boneblack.dtb am335x-bonegreen.dtb"
+   IMAGE_BOOT_FILES ?= "u-boot.${UBOOT_SUFFIX} ${SPL_BINARY} ${KERNEL_IMAGETYPE} ${KERNEL_DEVICETREE}"
+
+   # support runqemu
+   EXTRA_IMAGEDEPENDS += "qemu-native qemu-helper-native"
+   IMAGE_CLASSES += "qemuboot"
+   QB_DEFAULT_FSTYPE = "wic"
+   QB_FSINFO = "wic:no-kernel-in-fs"
+   QB_KERNEL_ROOT = "/dev/vda2"
+   QB_SYSTEM_NAME = "qemu-system-arm"
+   QB_MACHINE = "-machine virt"
+   QB_CPU = "-cpu cortex-a15"
+   QB_KERNEL_CMDLINE_APPEND = "console=ttyAMA0 systemd.mask=systemd-networkd"
+   QB_OPT_APPEND = "-device virtio-rng-device"
+   QB_TAP_OPT = "-netdev tap,id=net0,ifname=@TAP@,script=no,downscript=no"
+   QB_NETWORK_DEVICE = "-device virtio-net-device,netdev=net0,mac=@MAC@"
+   QB_ROOTFS_OPT = "-drive id=disk0,file=@ROOTFS@,if=none,format=raw -device virtio-blk-device,drive=disk0"
+   QB_SERIAL_OPT = ""
+   QB_TCPSERIAL_OPT = "-device virtio-serial-device -chardev socket,id=virtcon,port=@PORT@,host=127.0.0.1 -device virtconsole,chardev=virtcon"
 
 The variables used to configure the machine define machine-specific properties; for
 example, machine-dependent packages, machine tunings, the type of kernel
@@ -1297,11 +1312,6 @@ Project Reference Manual.
    "virtual/xserver" is "xserver-xorg", available in
    ``poky/meta/recipes-graphics/xorg-xserver``.
 
--  :term:`XSERVER`: The packages that
-   should be installed to provide an X server and drivers for the
-   machine. In this example, the "xserver-xorg" and
-   "xf86-video-modesetting" are installed.
-
 -  :term:`MACHINE_EXTRA_RRECOMMENDS`:
    A list of machine-dependent packages not essential for booting the
    image. Thus, the build does not fail if the packages do not exist.
@@ -1319,12 +1329,15 @@ Project Reference Manual.
    needed in the root filesystem. In this case, the U-Boot recipe must
    be built for the image.
 
+   At the end of the file, we also use this setings to implement
+   ``runqemu`` support on the host machine.
+
 -  :term:`DEFAULTTUNE`: Machines
    use tunings to optimize machine, CPU, and application performance.
    These features, which are collectively known as "tuning features",
-   are set in the :term:`OpenEmbedded-Core (OE-Core)` layer (e.g.
-   ``poky/meta/conf/machine/include``). In this example, the default
-   tuning file is ``cortexa8hf-neon``.
+   are set in the :term:`OpenEmbedded-Core (OE-Core)` layer. In this
+   example, the default tuning file is :oe_git:`tune-cortexa8
+   </openembedded-core/tree/meta/conf/machine/include/arm/armv7a/tune-cortexa8.inc>`.
 
    .. note::
 
@@ -1344,13 +1357,7 @@ Project Reference Manual.
 
 -  :term:`WKS_FILE`: The location of
    the :ref:`Wic kickstart <ref-manual/kickstart:openembedded kickstart (\`\`.wks\`\`) reference>` file used
-   by the OpenEmbedded build system to create a partitioned image
-   (image.wic).
-
--  :term:`IMAGE_INSTALL`:
-   Specifies packages to install into an image through the
-   :ref:`ref-classes-image` class. Recipes
-   use the :term:`IMAGE_INSTALL` variable.
+   by the OpenEmbedded build system to create a partitioned image.
 
 -  ``do_image_wic[depends]``: A task that is constructed during the
    build. In this example, the task depends on specific tools in order
@@ -1368,7 +1375,7 @@ Project Reference Manual.
 
 -  :term:`PREFERRED_VERSION_linux-yocto <PREFERRED_VERSION>`:
    Defines the version of the recipe used to build the kernel, which is
-   "5.0" in this case.
+   "6.1" in this case.
 
 -  :term:`KERNEL_IMAGETYPE`:
    The type of kernel to build for the device. In this case, the
