@@ -383,7 +383,9 @@ preferred CMake Module directory: ``${D}${datadir}/cmake/modules/``.
 ========
 
 The :ref:`ref-classes-cml1` class provides basic support for the Linux kernel style
-build configuration system.
+build configuration system. "cml" stands for "Configuration Menu Language", which
+originates from the Linux kernel but is also used in other projects such as U-Boot
+and BusyBox. It could have been called "kconfig" too.
 
 .. _ref-classes-compress_doc:
 
