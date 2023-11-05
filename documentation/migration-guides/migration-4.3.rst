@@ -135,7 +135,15 @@ Removed recipes
 
 The following recipes have been removed in this release:
 
--  ``glide``, as explained in :ref:`migration-4.3-go-changes`.
+-  ``apmd``: obsolete (``apm`` in :term:`MACHINE_FEATURES` also removed).
+-  ``cve-update-db-native``: functionally replaced by ``cve-update-nvd2-native``
+-  ``gcr3``: no longer needed by core recipes, moved to meta-gnome (gcr, i.e. version 4.x, is still provided).
+-  ``glide``: as explained in :ref:`migration-4.3-go-changes`.
+-  ``libdmx``: obsolete
+-  ``linux-yocto`` version 5.15 (versions 6.1 and 6.5 provided instead).
+-  ``python3-async``: obsolete - no longer needed by ``python3-gitdb`` or any other core recipe
+-  ``rust-hello-world``: there are sufficient other Rust recipes and test cases such that this is no longer needed.
+
 
 .. _migration-4.3-removed-classes:
 
@@ -143,6 +151,68 @@ Removed classes
 ~~~~~~~~~~~~~~~
 
 The following classes have been removed in this release:
+
+-  ``glide``: as explained in :ref:`migration-4.3-go-changes`.
+
+
+Output file naming changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In 4.3 there are some minor differences in image and SDK output file names.
+If you rely on the existing naming (e.g. in external scripts) you may need to
+either modify configuration or adapt to the new naming. Further details:
+
+-  :term:`IMAGE_NAME` and :term:`IMAGE_LINK_NAME` now include the
+   :term:`IMAGE_NAME_SUFFIX` value directly. In practical terms, this means
+   that ``.rootfs`` will now appear in image output file names. If you do not
+   wish to have the ``.rootfs`` suffix used, you can just set
+   :term:`IMAGE_NAME_SUFFIX` to "" and this will now be consistently respected
+   in both the image file and image file symlink names. As part of this change,
+   support for the ``imgsuffix`` task varflag has been dropped (mostly
+   an internal implementation detail, but if you were implementing a custom
+   image construction with a task in a similar manner to ``do_bootimg``
+   you may have been using this).
+
+-  :term:`SDK_NAME` now includes the values of :term:`IMAGE_BASENAME` and
+   :term:`MACHINE` so that they are unique when building SDKs for different
+   images and machines.
+
+
+
+.. _migration-4.3-pr-pe:
+
+Versioning changes
+~~~~~~~~~~~~~~~~~~
+
+-  :term:`PR` values have been removed from all core recipes - distro maintainers
+   who make use of :term:`PR` values would need to curate these already so the
+   sparsely set base values would not be that useful anymore. If you have been
+   relying on these (i.e. you are maintaining a binary package feed where package
+   versions should only ever increase), double-check the output (perhaps with the
+   help of the :ref:`ref-classes-buildhistory` class) to ensure that package
+   versions are consistent.
+
+-  The :term:`PR` value can no longer be set from the recipe file name - this
+   was rarely used, but in any case is no longer supported.
+
+-  :term:`PE` and :term:`PR` are no longer included in the work directory path
+   (:term:`WORKDIR`). This may break some tool assumptions about directory paths,
+   but those should really be querying paths from the build system (or not poking
+   into :term:`WORKDIR` externally).
+
+-  Source revision information has been moved from :term:`PV` to :term:`PKGV`.
+   The user visible effect of this change is that :term:`PV` will no longer have
+   revision information in it and this will now be appended to the :term:`PV`
+   value through :term:`PKGV` when the packages are written out (as long as "+"
+   is present in the :term:`PKGV` value). Since :term:`PV` is used in
+   :term:`STAMP` and :term:`WORKDIR`, you may notice small directory naming and
+   stamp naming changes.
+
+-  The :term:`SRCPV` variable is no longer needed in :term:`PV`, but since
+   the default :term:`SRCPV` value is now "", using it is effectively now just a
+   null operation - you can remove it (leaving behind the "+") , but it is not
+   yet required to do so.
+
 
 .. _migration-4.3-qemu-changes:
 
@@ -161,6 +231,11 @@ QEMU changes
 
    This change was made to avoid exceeding two serial ports, which interferes
    with automated testing.
+
+-  ``runqemu`` now uses the ``ip tuntap`` command instead of ``tunctl``, and
+   thus ``tunctl`` is no longer built by the ``qemu-helper-native`` recipe; if
+   for some reason you were calling ``tunctl`` directly from your own scripts
+   you should switch to calling ``ip tuntap`` instead.
 
 .. _migration-4.3-misc-changes:
 
