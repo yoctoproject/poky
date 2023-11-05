@@ -65,6 +65,8 @@ New Features / Enhancements in 4.3
       :yocto_git:`1 </poky/commit/?id=e4be03be5be62e367a40437a389121ef97d6cff3>`,
       :yocto_git:`2 </poky/commit/?id=8cd5d264af4c346730531cb98ae945ab862dbd69>`.
 
+   -  Many changes to support 64-bit ``time_t`` on 32-bit architectures
+
 -  Kernel-related enhancements:
 
    - The default kernel is the current stable (6.5), and there is also support
@@ -78,22 +80,74 @@ New Features / Enhancements in 4.3
 
 -  New core recipes:
 
+   -  `appstream <https://github.com/ximion/appstream>`__: a collaborative effort
+      for making machine-readable software metadata easily available
+      (from meta-oe)
+
+   -  `cargo-c-native <https://crates.io/crates/cargo-c>`__: cargo applet to build
+      and install C-ABI compatible dynamic and static libraries
+
+   -  `libadwaita <https://gitlab.gnome.org/GNOME/libadwaita>`__: Building blocks
+      for modern GNOME applications (from meta-gnome)
+
+   -  `libtraceevent <https://git.kernel.org/pub/scm/libs/libtrace/libtracefs.git/>`__:
+      API to access the kernel tracefs directory (from meta-openembedded)
+
+   -  `libxmlb <https://github.com/hughsie/libxmlb>`__: A library to help create
+       and query binary XML blobs (from meta-oe)
+
    -  ``musl-legacy-error``: glibc ``error()`` API implementation still needed
       by a few packages.
 
-   -  `python3-beartype <https://beartype.readthedocs.io>`, unbearably fast
+   -  `python3-beartype <https://beartype.readthedocs.io>`__, unbearably fast
       runtime type checking in pure Python.
+
+   -  `python3-booleanpy <https://github.com/bastikr/boolean.py>`__: Define boolean
+      algebras, create and parse boolean expressions and create custom boolean DSL
+      (from meta-python)
+
+   -  `python3-calver <https://github.com/di/calver>`__: Setuptools extension for
+      CalVer package versions
+
+   -  `python3-click <http://click.pocoo.org/>`__: A simple wrapper around optparse
+      for powerful command line utilities (from meta-python)
+
+   -  ``python3-dtc``: Python Library for the Device Tree Compiler (from
+      meta-virtualization)
+
+   -  `python3-isodate <https://github.com/gweis/isodate/>`__: ISO 8601 date/time
+      parser (from meta-python)
+
+   -  `python3-license-expression <https://github.com/nexB/license-expression>`__:
+      Utility library to parse, compare, simplify and normalize license expressions
+      (from meta-python)
+
+   -  `python3-rdflib <https://github.com/RDFLib/rdflib>`__: a pure Python package
+      for working with RDF (from meta-python)
 
    -  `python3-spdx-tools <https://github.com/spdx/tools-python>`__,
       tools for SPDX validation and conversion.
 
+   -  `python3-trove-classifiers <https://github.com/pypa/trove-classifiers>`__:
+      Canonical source for classifiers on PyPI (pypi.org)
+
    -  `python3-uritools <https://github.com/tkem/uritools/>`__, replacement for
       the ``urllib.parse`` module.
+
+   -  `python3-xmltodict <https://github.com/martinblech/xmltodict>`__: Makes
+      working with XML feel like you are working with JSON (from meta-python)
 
    -  `ttyrun <https://github.com/ibm-s390-linux/s390-tools>`__, starts
       ``getty`` programs only when a terminal exists, preventing respawns
       through the ``init`` program. This enabled removing the
       ``SERIAL_CONSOLES_CHECK`` variable.
+
+   -  ``vulkan-validation-layers``: Khronos official validation layers to assist in
+      verifying that applications correctly use the
+      `Vulkan API <https://www.khronos.org/vulkan>`__.
+
+   -  `xcb-util-cursor <http://xcb.freedesktop.org/XcbUtil/>`__: XCB port of
+      libXcursor (from meta-oe)
 
 -  QEMU / ``runqemu`` enhancements:
 
@@ -118,12 +172,34 @@ New Features / Enhancements in 4.3
 
 -  wic Image Creator enhancements:
 
+   -  ``bootimg-efi``: if ``fixed-size`` is set then use that for mkdosfs
+
+   -  ``bootimg-efi``: stop hardcoding VMA offsets, as required by systemd-boot v254
+      (and dracut/ukify)
+
+   -  ``bootimg-pcbios``: use kernel name from :term:`KERNEL_IMAGETYPE` instead of
+      hardcoding ``vmlinuz``
+
+   -  Added new ``gpt-hybrid`` option to ``ptable_format`` (formatting a disk with a hybrid
+      MBR and GPT partition scheme)
+
+   -  Use ``part_name`` in default imager when defined
+
+   -  Added ``--hidden`` argument to default imager to avoid MS Windows prompting to
+      format partition after flashing to a USB stick/SD card
+
 -  FIT image related improvements:
 
    -  New :term:`FIT_ADDRESS_CELLS` and :term:`UBOOT_FIT_ADDRESS_CELLS` variables allowing
       to specify 64 bit addresses, typically for loading U-Boot.
 
+   -  Added ``compatible`` line to config section (with value from dtb) to allow bootloaders
+      to select the best matching configuration.
+
+
 -  SDK-related improvements:
+
+   -  Extended the following recipes to ``nativesdk``: ``libwebp``, ``python3-ply``
 
 -  Testing:
 
@@ -184,7 +260,9 @@ New Features / Enhancements in 4.3
 
    -  Recipes that fetch specific revisions no longer need to explicitly add
       :term:`SRCPV` to :term:`PV` as BitBake will now automatically add the
-      revision information to :term:`PKGV` if needed.
+      revision information to :term:`PKGV` if needed (as long as "+" is still
+      present in the :term:`PKGV` value, which is set from :term:`PV` by
+      default).
 
    -  The default :term:`PR` values in many recipes have been removed.
 
@@ -212,6 +290,10 @@ New Features / Enhancements in 4.3
 
 -  Miscellaneous changes:
 
+   -  Selecting systemd via :term:`INIT_MANAGER` now adds ``usrmerge`` to
+      :term:`DISTRO_FEATURES` as current versions of systemd now require
+      merged ``/usr``.
+
    -  Generation of :term:`SPDX` manifests is now enabled by default.
 
    -  Git based recipes in OE-Core which used the ``git``  protocol have been
@@ -224,6 +306,18 @@ New Features / Enhancements in 4.3
    -  The ``psplash`` recipe now accepts a PNG format image through
       :term:`SPLASH_IMAGES`, instead of a harder to generate and modify
       ``.h`` file.
+
+   -  The ; character is no longer needed to separate functions specified in
+      :term:`IMAGE_POSTPROCESS_COMMAND`, :term:`IMAGE_PREPROCESS_COMMAND`,
+      :term:`POPULATE_SDK_POST_HOST_COMMAND`, :term:`ROOTFS_POSTINSTALL_COMMAND`
+      etc. (If any are present they will be replaced with spaces, so existing
+      metadata does not yet need to be changed.)
+
+   -  In the ``Upstream-Status`` field in a patch header, "Accepted" is no longer
+      a valid value since it is logically the same as "Backport". Change any
+      values you have (particularly in patches applied through bbappends for core
+      recipes, since they will be validated as indicated above).
+
 
 Known Issues in 4.3
 ~~~~~~~~~~~~~~~~~~~
