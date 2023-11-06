@@ -52,8 +52,6 @@ Project metadata:
 
 -  *alsa:* Hardware has ALSA audio drivers
 
--  *apm:* Hardware uses APM (or APM emulation)
-
 -  *bluetooth:* Hardware has integrated BT
 
 -  *efi:* Support for booting through EFI
