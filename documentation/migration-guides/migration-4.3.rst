@@ -34,9 +34,9 @@ Layername override implications
 Code can now know which layer a recipe is coming from through the newly added
 :term:`FILE_LAYERNAME` variable and the ``layer-<layername> override``. This is being used
 for enabling QA checks on a per layer basis. For existing code this has the
-side effect that the QA checks will apply to things being bbappended to recipes
-from other layers. Those other layers would need to have patch upstream status
-entries for patches being bbappended for example.
+side effect that the QA checks will apply to recipes being bbappended
+from other layers - for example, patches added through such bbappends will now
+need to have the "Upstream-Status" specified in the patch header.
 
 .. _migration-4.3-compiling-changes:
 
@@ -71,10 +71,13 @@ See :ref:`all supported distributions <system-requirements-supported-distros>`.
 
 .. _migration-4.3-removed-machines:
 
-Removed machines
-~~~~~~~~~~~~~~~~
+edgerouter machine removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``edgerouter`` BSP in ``meta-yocto-bsp`` has been removed.
+The ``edgerouter`` reference BSP for the MIPS architecture in ``meta-yocto-bsp``
+has been removed as the hardware has been unavailable for some time. There is no
+suitable reference MIPS hardware to replace it with, but the MIPS architecture
+will continue to get coverage via QEMU build/boot testing.
 
 .. _migration-4.3-go-changes:
 
@@ -86,7 +89,7 @@ Go language changes
 
 .. _migration-4.3-systemd-changes:
 
-Systemd changes
+systemd changes
 ~~~~~~~~~~~~~~~
 
 Upstream systemd is now more strict on filesystem layout and the ``usrmerge``
@@ -120,8 +123,8 @@ The following variables have been removed:
 -  ``AUTHOR``
 -  ``PERLARCH``
 -  ``PERLVERSION``
--  ``QEMU_USE_SLIRP``
--  ``SERIAL_CONSOLES_CHECK``, which is no longer necessary because all
+-  ``QEMU_USE_SLIRP`` - add ``slirp`` to ``TEST_RUNQEMUPARAMS`` instead.
+-  ``SERIAL_CONSOLES_CHECK`` - no longer necessary because all
    consoles listed in :term:`SERIAL_CONSOLES` are checked for their existence
    before a ``getty`` is started.
 
@@ -168,5 +171,7 @@ Miscellaneous changes
    ``virtual/XXX`` provider/dependencies where a ``PREFIX`` was used as well,
    as we don't need both and it made automated dependency rewriting
    unnecessarily complex. In general this only affects internal toolchain
-   dependencies so isn't end user visible.
+   dependencies so isn't end user visible, but if for some reason you have
+   custom classes or recipes that rely upon the old providers then you will
+   need to update those.
 
