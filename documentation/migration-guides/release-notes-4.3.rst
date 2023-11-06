@@ -95,13 +95,6 @@ New Features / Enhancements in 4.3
       through the ``init`` program. This enabled removing the
       ``SERIAL_CONSOLES_CHECK`` variable.
 
--  New classes:
-
-   -  A ``ptest-cargo`` class was added to allow Cargo based recipes to easily add ptests
-
-   -  A :ref:`ref-classes-cargo_c` class was added to allow recipes to make Rust code
-      available to C and C++ programs.
-
 -  QEMU / ``runqemu`` enhancements:
 
    -  QEMU has been upgraded to version 8.1
@@ -114,6 +107,12 @@ New Features / Enhancements in 4.3
 -  Rust improvements:
 
    -  Rust has been upgraded to version 1.70
+
+   -  New ``ptest-cargo`` class was added to allow Cargo based recipes to easily add ptests
+
+   -  New :ref:`ref-classes-cargo_c` class was added to allow recipes to make Rust code
+      available to C and C++ programs. See
+      ``meta-selftest/recipes-devtools/rust/rust-c-lib-example_git.bb`` for an example.
 
 -  Image-related enhancements:
 
