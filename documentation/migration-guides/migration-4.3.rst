@@ -101,15 +101,6 @@ Recipe changes
 -  Runtime testing of ptest now fails if no test results are returned by
    any given ptest.
 
-.. _migration-4.3-class-changes:
-
-Class changes
-~~~~~~~~~~~~~
-
--  The ``perl-version`` class no longer provides the ``PERLVERSION`` and ``PERLARCH`` variables
-   as there were no users in any core layer. The functions for this functionality
-   are still available.
-
 .. _migration-4.3-deprecated-variables:
 
 Deprecated variables
@@ -172,13 +163,6 @@ QEMU changes
 
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
-
--  `jsDelivr <https://www.jsdelivr.com/`>__ now offers a new Content Delivery
-   Network (CDN) to Yocto Project users, which is completely free of charge
-   for Open Source projects. In particular, it can be used to efficiently
-   access prebuilt binary artifacts (see :term:`SSTATE_MIRRORS`) from many
-   different locations in the world. This is available to all supported Poky
-   releases.
 
 -  The ``-crosssdk`` suffix and any :term:`MLPREFIX` were removed from
    ``virtual/XXX`` provider/dependencies where a ``PREFIX`` was used as well,
