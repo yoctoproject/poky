@@ -3802,9 +3802,9 @@ system and gives an overview of their function and contents.
    :term:`IMAGE_POSTPROCESS_COMMAND`
       Specifies a list of functions to call once the OpenEmbedded build
       system creates the final image output files. You can specify
-      functions separated by semicolons::
+      functions separated by spaces::
 
-         IMAGE_POSTPROCESS_COMMAND += "function; ... "
+         IMAGE_POSTPROCESS_COMMAND += "function"
 
       If you need to pass the root filesystem path to a command within the
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
@@ -3815,9 +3815,9 @@ system and gives an overview of their function and contents.
    :term:`IMAGE_PREPROCESS_COMMAND`
       Specifies a list of functions to call before the OpenEmbedded build
       system creates the final image output files. You can specify
-      functions separated by semicolons::
+      functions separated by spaces::
 
-         IMAGE_PREPROCESS_COMMAND += "function; ... "
+         IMAGE_PREPROCESS_COMMAND += "function"
 
       If you need to pass the root filesystem path to a command within the
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
@@ -6488,9 +6488,9 @@ system and gives an overview of their function and contents.
    :term:`POPULATE_SDK_POST_HOST_COMMAND`
       Specifies a list of functions to call once the OpenEmbedded build
       system has created the host part of the SDK. You can specify
-      functions separated by semicolons::
+      functions separated by spaces::
 
-          POPULATE_SDK_POST_HOST_COMMAND += "function; ... "
+          POPULATE_SDK_POST_HOST_COMMAND += "function"
 
       If you need to pass the SDK path to a command within a function, you
       can use ``${SDK_DIR}``, which points to the parent directory used by
@@ -6500,9 +6500,9 @@ system and gives an overview of their function and contents.
    :term:`POPULATE_SDK_POST_TARGET_COMMAND`
       Specifies a list of functions to call once the OpenEmbedded build
       system has created the target part of the SDK. You can specify
-      functions separated by semicolons::
+      functions separated by spaces::
 
-         POPULATE_SDK_POST_TARGET_COMMAND += "function; ... "
+         POPULATE_SDK_POST_TARGET_COMMAND += "function"
 
       If you need to pass the SDK path to a command within a function, you
       can use ``${SDK_DIR}``, which points to the parent directory used by
@@ -7104,9 +7104,9 @@ system and gives an overview of their function and contents.
    :term:`ROOTFS_POSTINSTALL_COMMAND`
       Specifies a list of functions to call after the OpenEmbedded build
       system has installed packages. You can specify functions separated by
-      semicolons::
+      spaces::
 
-         ROOTFS_POSTINSTALL_COMMAND += "function; ... "
+         ROOTFS_POSTINSTALL_COMMAND += "function"
 
       If you need to pass the root filesystem path to a command within a
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
@@ -7117,9 +7117,9 @@ system and gives an overview of their function and contents.
    :term:`ROOTFS_POSTPROCESS_COMMAND`
       Specifies a list of functions to call once the OpenEmbedded build
       system has created the root filesystem. You can specify functions
-      separated by semicolons::
+      separated by spaces::
 
-         ROOTFS_POSTPROCESS_COMMAND += "function; ... "
+         ROOTFS_POSTPROCESS_COMMAND += "function"
 
       If you need to pass the root filesystem path to a command within a
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
@@ -7132,9 +7132,9 @@ system and gives an overview of their function and contents.
       system has removed unnecessary packages. When runtime package
       management is disabled in the image, several packages are removed
       including ``base-passwd``, ``shadow``, and ``update-alternatives``.
-      You can specify functions separated by semicolons::
+      You can specify functions separated by spaces::
 
-         ROOTFS_POSTUNINSTALL_COMMAND += "function; ... "
+         ROOTFS_POSTUNINSTALL_COMMAND += "function"
 
       If you need to pass the root filesystem path to a command within a
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
@@ -7145,9 +7145,9 @@ system and gives an overview of their function and contents.
    :term:`ROOTFS_PREPROCESS_COMMAND`
       Specifies a list of functions to call before the OpenEmbedded build
       system has created the root filesystem. You can specify functions
-      separated by semicolons::
+      separated by spaces::
 
-         ROOTFS_PREPROCESS_COMMAND += "function; ... "
+         ROOTFS_PREPROCESS_COMMAND += "function"
 
       If you need to pass the root filesystem path to a command within a
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
@@ -7462,7 +7462,9 @@ system and gives an overview of their function and contents.
    :term:`SDK_POSTPROCESS_COMMAND`
       Specifies a list of functions to call once the OpenEmbedded build
       system creates the SDK. You can specify functions separated by
-      semicolons: SDK_POSTPROCESS_COMMAND += "function; ... "
+      spaces:
+
+         SDK_POSTPROCESS_COMMAND += "function"
 
       If you need to pass an SDK path to a command within a function, you
       can use ``${SDK_DIR}``, which points to the parent directory used by
