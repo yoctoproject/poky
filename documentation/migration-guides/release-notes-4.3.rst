@@ -1,21 +1,21 @@
 .. SPDX-License-Identifier: CC-BY-SA-2.0-UK
 
-Release notes for 4.3 (nandbield)
-----------------------------------
+Release notes for 4.3 (nanbield)
+--------------------------------
 
 New Features / Enhancements in 4.3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  Linux kernel 6.5 and 6.1, gcc 13, glibc 2.38, LLVM 17, and other recipe upgrades
 
--  The autobuilder's shared-state artefacts are now available over the `jsDeliver
+-  The autobuilder's shared-state artefacts are now available over the `jsDelivr
    <https://jsdelivr.com>`__ Content Delivery Network (CDN).
    See :term:`SSTATE_MIRRORS`.
 
 -  New variables:
 
    -  :term:`CVE_CHECK_STATUSMAP`, :term:`CVE_STATUS`, :term:`CVE_STATUS_GROUPS`,
-      replaceing the deprecated :term:`CVE_CHECK_IGNORE`.
+      replacing the deprecated :term:`CVE_CHECK_IGNORE`.
 
    -  :term:`FILE_LAYERNAME`: bitbake now sets this to the name of the layer
       containing the recipe
@@ -109,7 +109,7 @@ New Features / Enhancements in 4.3
    -  Many updates to the ``runqemu`` command.
 
    -  The ``qemu-system-native`` recipe is now built with PNG support, which could be
-      useful to grab screeshots for error reporting purposes.
+      useful to grab screenshots for error reporting purposes.
 
 -  Rust improvements:
 
@@ -182,16 +182,16 @@ New Features / Enhancements in 4.3
 
    -  :term:`FILES` now accepts ``**``, which matches zero or more subdirectories.
 
-   -  The X server packagroup now defaults to using the ``modesetting`` X
+   -  The X server packagegroup now defaults to using the ``modesetting`` X
       driver, which obsoletes the ``fbdev`` driver.
 
    -  If a recipe uses :term:`LICENSE_FLAGS` and the licenses are not accepted,
       it can set a custom message with :term:`LICENSE_FLAGS_DETAILS` to be
       displayed to the users.
 
-   -  Recipes that fetch specific revisions no longer need to explictly add
+   -  Recipes that fetch specific revisions no longer need to explicitly add
       :term:`SRCPV` to :term:`PV` as BitBake will now automatically add the
-      revision infomation to :term:`PKGV` if needed.
+      revision information to :term:`PKGV` if needed.
 
    -  The default :term:`PR` values in many recipes have been removed.
 
