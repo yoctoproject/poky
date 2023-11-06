@@ -117,13 +117,6 @@ New Features / Enhancements in 4.3
 
 -  Image-related enhancements:
 
--  Distribution-related enhancements:
-
-   -  The ``poky`` distribution enables the generation of :term:`SPDX` manifests.
-
-   -  The ``poky-altcfg`` distribution enables the ``usrmerge``
-      :ref:`distro feature <ref-manual/features:Distro Features>`.
-
 -  wic Image Creator enhancements:
 
 -  FIT image related improvements:
@@ -219,6 +212,8 @@ New Features / Enhancements in 4.3
       variables.
 
 -  Miscellaneous changes:
+
+   -  Generation of :term:`SPDX` manifests is now enabled by default.
 
    -  Git based recipes in OE-Core which used the ``git``  protocol have been
       changed to use `https`` where possible, as it is typically faster and
