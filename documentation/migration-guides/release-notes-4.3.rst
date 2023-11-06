@@ -168,8 +168,6 @@ New Features / Enhancements in 4.3
       available to C and C++ programs. See
       ``meta-selftest/recipes-devtools/rust/rust-c-lib-example_git.bb`` for an example.
 
--  Image-related enhancements:
-
 -  wic Image Creator enhancements:
 
    -  ``bootimg-efi``: if ``fixed-size`` is set then use that for mkdosfs
@@ -322,6 +320,7 @@ New Features / Enhancements in 4.3
 Known Issues in 4.3
 ~~~~~~~~~~~~~~~~~~~
 
+-  N/A
 
 
 Recipe License changes in 4.3
