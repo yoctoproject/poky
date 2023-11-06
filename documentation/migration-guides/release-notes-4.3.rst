@@ -92,7 +92,7 @@ New Features / Enhancements in 4.3
 
    -  `ttyrun <https://github.com/ibm-s390-linux/s390-tools>`__, starts
       ``getty`` programs only when a terminal exists, preventing respawns
-      through the ``init`` program. This allowed to remove the
+      through the ``init`` program. This enabled removing the
       ``SERIAL_CONSOLES_CHECK`` variable.
 
 -  New classes:
@@ -180,7 +180,8 @@ New Features / Enhancements in 4.3
 
 -  Packaging changes:
 
-   -  :term:`FILES` now accepts ``**``, which matches zero or more subdirectories.
+   -  :term:`FILES` now accepts a ``**`` wildcard, which matches zero or more
+      subdirectories.
 
    -  The X server packagegroup now defaults to using the ``modesetting`` X
       driver, which obsoletes the ``fbdev`` driver.
@@ -208,7 +209,7 @@ New Features / Enhancements in 4.3
    -  New :doc:`../dev-manual/security-subjects` chapter in the Development
       Tasks Manual.
 
-   -  Long due documentation for the :ref:`ref-classes-devicetree` class.
+   -  Long overdue documentation for the :ref:`ref-classes-devicetree` class.
 
    -  New :ref:`summary about available init systems
       <dev-manual/init-manager:summary>`.
