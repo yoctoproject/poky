@@ -903,3 +903,63 @@ Thanks to the following people who contributed to this release:
 -  Yuta Hayama
 -  Zang Ruochen
 -  Zhixiong Chi
+
+
+Repositories / Downloads for Yocto-4.3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+poky
+
+-  Repository Location: :yocto_git:`/poky`
+-  Branch: :yocto_git:`nanbield </poky/log/?h=nanbield>`
+-  Tag:  :yocto_git:`yocto-4.3 </poky/log/?h=yocto-4.3>`
+-  Git Revision: :yocto_git:`15b576c4101231d248fda7ae0824e1780e1a8901 </poky/commit/?id=15b576c4101231d248fda7ae0824e1780e1a8901>`
+-  Release Artefact: poky-15b576c4101231d248fda7ae0824e1780e1a8901
+-  sha: 6b0ef7914d15db057f3efdf091b169a7361c74aac0abcfa717ef55d1a0adf74c
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-4.3/poky-15b576c4101231d248fda7ae0824e1780e1a8901.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-4.3/poky-15b576c4101231d248fda7ae0824e1780e1a8901.tar.bz2
+
+openembedded-core
+
+-  Repository Location: :oe_git:`/openembedded-core`
+-  Branch: :oe_git:`nanbield </openembedded-core/log/?h=nanbield>`
+-  Tag:  :oe_git:`yocto-4.3 </openembedded-core/log/?h=yocto-4.3>`
+-  Git Revision: :oe_git:`4c261f8cbdf0c7196a74daad041d04eb093015f3 </openembedded-core/commit/?id=4c261f8cbdf0c7196a74daad041d04eb093015f3>`
+-  Release Artefact: oecore-4c261f8cbdf0c7196a74daad041d04eb093015f3
+-  sha: c9e6ac75d7848ce8844cb29c98659dd8f83b3de13b916124dff76abe034e6a5c
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-4.3/oecore-4c261f8cbdf0c7196a74daad041d04eb093015f3.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-4.3/oecore-4c261f8cbdf0c7196a74daad041d04eb093015f3.tar.bz2
+
+meta-mingw
+
+-  Repository Location: :yocto_git:`/meta-mingw`
+-  Branch: :yocto_git:`nanbield </meta-mingw/log/?h=nanbield>`
+-  Tag:  :yocto_git:`yocto-4.3 </meta-mingw/log/?h=yocto-4.3>`
+-  Git Revision: :yocto_git:`65ef95a74f6ae815f63f636ed53e140a26a014ce </meta-mingw/commit/?id=65ef95a74f6ae815f63f636ed53e140a26a014ce>`
+-  Release Artefact: meta-mingw-65ef95a74f6ae815f63f636ed53e140a26a014ce
+-  sha: fb2bf806941a00a1be6349c074379b63a76490bcf0f3b740d96d1aeeefa12286
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-4.3/meta-mingw-65ef95a74f6ae815f63f636ed53e140a26a014ce.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-4.3/meta-mingw-65ef95a74f6ae815f63f636ed53e140a26a014ce.tar.bz2
+
+bitbake
+
+-  Repository Location: :oe_git:`/bitbake`
+-  Branch: :oe_git:`2.6 </bitbake/log/?h=2.6>`
+-  Tag:  :oe_git:`yocto-4.3 </bitbake/log/?h=yocto-4.3>`
+-  Git Revision: :oe_git:`5419a8473d6d4cd1d01537de68ad8d72cf5be0b2 </bitbake/commit/?id=5419a8473d6d4cd1d01537de68ad8d72cf5be0b2>`
+-  Release Artefact: bitbake-5419a8473d6d4cd1d01537de68ad8d72cf5be0b2
+-  sha: e5dab4b3345d91307860803e2ad73b2fcffa9d17dd3fde0e013ca0ebea0d05ca
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-4.3/bitbake-5419a8473d6d4cd1d01537de68ad8d72cf5be0b2.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-4.3/bitbake-5419a8473d6d4cd1d01537de68ad8d72cf5be0b2.tar.bz2
+
+yocto-docs
+
+-  Repository Location: :yocto_git:`/yocto-docs`
+-  Branch: :yocto_git:`nanbield </yocto-docs/log/?h=nanbield>`
+-  Tag: :yocto_git:`yocto-4.3 </yocto-docs/log/?h=yocto-4.3>`
+-  Git Revision: :yocto_git:`ceb1812e63b9fac062f886c2a1dde23137c0e1ed </yocto-docs/commit/?id=ceb1812e63b9fac062f886c2a1dde23137c0e1ed>`
+
