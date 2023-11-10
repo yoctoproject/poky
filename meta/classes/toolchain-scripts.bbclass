@@ -57,6 +57,7 @@ toolchain_create_sdk_env_script () {
 	echo 'export OECORE_BASELIB="${baselib}"' >> $script
 	echo 'export OECORE_TARGET_ARCH="${TARGET_ARCH}"' >>$script
 	echo 'export OECORE_TARGET_OS="${TARGET_OS}"' >>$script
+	echo 'export OECORE_MULTIMACH_TARGET_SYS='"${multimach_target_sys}" >>$script
 
 	echo 'unset command_not_found_handle' >> $script
 

@@ -25,7 +25,7 @@ except KeyError:
     sys.exit(1)
 
 template_file = os.path.join(sysroot, 'usr/share/cmake/SDKToolchainConfig.cmake.template')
-cross_file = os.path.join(sysroot, 'usr/share/cmake/%s-toolchain.cmake' % (os.path.basename(os.environ["OECORE_TARGET_SYSROOT"])))
+cross_file = os.path.join(sysroot, 'usr/share/cmake/%s-toolchain.cmake' % (os.path.basename(os.environ["OECORE_MULTIMACH_TARGET_SYS"])))
 with open(template_file) as in_file:
     template = in_file.read()
     output = Template(template).substitute(Environ())
