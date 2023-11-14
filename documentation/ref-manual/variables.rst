@@ -2101,6 +2101,18 @@ system and gives an overview of their function and contents.
       For information on policies and on how to use this variable, see the
       comments in the ``meta/classes/compress_doc.bbclass`` file.
 
+   :term:`DT_FILES_PATH`
+      When compiling out-of-tree device tree sources using a recipe that
+      inherits the :ref:`ref-classes-devicetree` class, this variable specifies
+      the path to the directory containing dts files to build.
+
+      Defaults to the :term:`S` directory.
+
+   :term:`DT_PADDING_SIZE`
+      When inheriting the :ref:`ref-classes-devicetree` class, this variable
+      specifies the size of padding appended to the device tree blob, used as
+      extra space typically for additional properties during boot.
+
    :term:`EFI_PROVIDER`
       When building bootable images (i.e. where ``hddimg``, ``iso``, or
       ``wic.vmdk`` is in :term:`IMAGE_FSTYPES`), the
@@ -2860,6 +2872,73 @@ system and gives an overview of their function and contents.
 
          GLIBC_GENERATE_LOCALES = "en_GB.UTF-8 en_US.UTF-8"
 
+   :term:`GO_IMPORT`
+      When inheriting the :ref:`ref-classes-go` class, this mandatory variable
+      sets the import path for the Go package that will be created for the code
+      to build. If you have a ``go.mod`` file in the source directory, this
+      typically matches the path in the ``module`` line in this file.
+
+      Other Go programs importing this package will use this path.
+
+      Here is an example setting from the
+      :yocto_git:`go-helloworld_0.1.bb </poky/tree/meta/recipes-extended/go-examples/go-helloworld_0.1.bb>`
+      recipe::
+
+          GO_IMPORT = "golang.org/x/example"
+
+   :term:`GO_INSTALL`
+      When inheriting the :ref:`ref-classes-go` class, this optional variable
+      specifies which packages in the sources should be compiled and
+      installed in the Go build space by the
+      `go install <https://go.dev/ref/mod#go-install>`__ command.
+
+      Here is an example setting from the
+      :oe_git:`crucible </meta-openembedded/tree/meta-oe/recipes-support/crucible/>`
+      recipe::
+
+         GO_INSTALL = "\
+             ${GO_IMPORT}/cmd/crucible \
+             ${GO_IMPORT}/cmd/habtool \
+         "
+
+      By default, :term:`GO_INSTALL` is defined as::
+
+         GO_INSTALL ?= "${GO_IMPORT}/..."
+
+      The ``...`` wildcard means that it will catch all
+      packages found in the sources.
+
+      See the :term:`GO_INSTALL_FILTEROUT` variable for
+      filtering out unwanted packages from the ones
+      found from the :term:`GO_INSTALL` value.
+
+   :term:`GO_INSTALL_FILTEROUT`
+      When using the Go "vendor" mechanism to bring in dependencies for a Go
+      package, the default :term:`GO_INSTALL` setting, which uses the ``...``
+      wildcard, will include the vendored packages in the build, which produces
+      incorrect results.
+
+      There are also some Go packages that are structured poorly, so that the
+      ``...`` wildcard results in building example or test code that should not
+      be included in the build, or could fail to build.
+
+      This optional variable allows for filtering out a subset of the sources.
+      It defaults to excluding everything under the ``vendor`` subdirectory
+      under package's main directory. This is the normal location for vendored
+      packages, but it can be overridden by a recipe to filter out other
+      subdirectories if needed.
+
+   :term:`GO_WORKDIR`
+      When using Go Modules, the current working directory must be the directory
+      containing the ``go.mod`` file, or one of its subdirectories. When the
+      ``go`` tool is used, it will automatically look for the ``go.mod`` file
+      in the Go working directory or in any parent directory, but not in
+      subdirectories.
+
+      When using the :ref:`ref-classes-go-mod` class to use Go modules,
+      the optional :term:`GO_WORKDIR` variable, defaulting to the value
+      of :term:`GO_IMPORT`, allows to specify a different Go working directory.
+
    :term:`GROUPADD_PARAM`
       When inheriting the :ref:`useradd <ref-classes-useradd>` class,
       this variable specifies for a package what parameters should be
@@ -3128,17 +3207,23 @@ system and gives an overview of their function and contents.
       material for Wic is located in the
       ":doc:`/ref-manual/kickstart`" chapter.
 
+   :term:`IMAGE_BUILDINFO_FILE`
+      When using the :ref:`ref-classes-image-buildinfo` class,
+      specifies the file in the image to write the build information into. The
+      default value is "``${sysconfdir}/buildinfo``".
+
+   :term:`IMAGE_BUILDINFO_VARS`
+      When using the :ref:`ref-classes-image-buildinfo` class,
+      specifies the list of variables to include in the `Build Configuration`
+      section of the output file (as a space-separated list). Defaults to
+      ":term:`DISTRO` :term:`DISTRO_VERSION`".
+
    :term:`IMAGE_CLASSES`
-      A list of classes that all images should inherit. You typically use
-      this variable to specify the list of classes that register the
-      different types of images the OpenEmbedded build system creates.
+      A list of classes that all images should inherit. This is typically used
+      to enable functionality across all image recipes.
 
-      The default value for :term:`IMAGE_CLASSES` is ``image_types``. You can
-      set this variable in your ``local.conf`` or in a distribution
-      configuration file.
-
-      For more information, see ``meta/classes/image_types.bbclass`` in the
-      :term:`Source Directory`.
+      Classes specified in :term:`IMAGE_CLASSES` must be located in the
+      ``classes-recipe/`` or ``classes/`` subdirectories.
 
    :term:`IMAGE_CMD`
       Specifies the command to create the image file for a specific image
@@ -4115,9 +4200,18 @@ system and gives an overview of their function and contents.
          There is legacy support for specifying the full path to the device
          tree. However, providing just the ``.dtb`` file is preferred.
 
-      In order to use this variable, the
-      :ref:`kernel-devicetree <ref-classes-kernel-devicetree>` class must
-      be inherited.
+      In order to use this variable, the :ref:`ref-classes-kernel-devicetree`
+      class must be inherited.
+
+   :term:`KERNEL_DEVICETREE_BUNDLE`
+      When set to "1", this variable allows to bundle the Linux kernel
+      and the Device Tree Binary together in a single file.
+
+      This feature is currently only supported on the "arm" (32 bit)
+      architecture.
+
+      This variable is set to "0" by default by the
+      :ref:`ref-classes-kernel-devicetree` class.
 
    :term:`KERNEL_DTB_LINK_NAME`
       The link name of the kernel device tree binary (DTB). This variable
@@ -4142,10 +4236,25 @@ system and gives an overview of their function and contents.
 
          KERNEL_DTB_NAME ?= "${KERNEL_ARTIFACT_NAME}"
 
-      The value of the :term:`KERNEL_ARTIFACT_NAME`
-      variable, which is set in the same file, has the following value::
+      See :term:`KERNEL_ARTIFACT_NAME` for additional information.
 
-         KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+
+   :term:`KERNEL_DTBDEST`
+      This variable, used by the :ref:`ref-classes-kernel-devicetree`
+      class, allows to change the installation directory of the DTB
+      (Device Tree Binary) files.
+
+      It is set by default to "${KERNEL_IMAGEDEST}" by the
+      :ref:`ref-classes-kernel` class.
+
+   :term:`KERNEL_DTBVENDORED`
+      This variable, used by the :ref:`ref-classes-kernel-devicetree`,
+      allows to ignore vendor subdirectories when installing DTB
+      (Device Tree Binary) files, when it is set to "false".
+
+      To keep vendor subdirectories, set this variable to "true".
+
+      It is set by default to "false" by the :ref:`ref-classes-kernel` class.
 
    :term:`KERNEL_DTC_FLAGS`
       Specifies the ``dtc`` flags that are passed to the Linux kernel build
@@ -4260,9 +4369,12 @@ system and gives an overview of their function and contents.
       when building the kernel and is passed to ``make`` as the target to
       build.
 
-      If you want to build an alternate kernel image type in addition to that
-      specified by :term:`KERNEL_IMAGETYPE`, use the :term:`KERNEL_ALT_IMAGETYPE`
-      variable.
+      To build additional kernel image types, use :term:`KERNEL_IMAGETYPES`.
+
+   :term:`KERNEL_IMAGETYPES`
+      Lists additional types of kernel images to build for a device in addition
+      to image type specified in :term:`KERNEL_IMAGETYPE`. Usually set by the
+      machine configuration files.
 
    :term:`KERNEL_MODULE_AUTOLOAD`
       Lists kernel modules that need to be auto-loaded during boot.
@@ -4299,6 +4411,14 @@ system and gives an overview of their function and contents.
       configuration for each of the modules. For information on how to
       provide those module configurations, see the
       :term:`module_conf_* <module_conf>` variable.
+
+   :term:`KERNEL_PACKAGE_NAME`
+      Specifies the base name of the kernel packages, such as "kernel"
+      in the kernel packages such as "kernel-modules", "kernel-image" and
+      "kernel-dbg".
+
+      The default value for this variable is set to "kernel" by the
+      :ref:`ref-classes-kernel` class.
 
    :term:`KERNEL_PATH`
       The location of the kernel sources. This variable is set to the value
@@ -5141,6 +5261,16 @@ system and gives an overview of their function and contents.
       See the ``meta/classes/binconfig.bbclass`` in the
       :term:`Source Directory` for details on how this class
       applies these additional sed command arguments.
+
+   :term:`OECMAKE_GENERATOR`
+      A variable for the :ref:`ref-classes-cmake` class, allowing to choose
+      which back-end will be generated by CMake to build an application.
+
+      By default, this variable is set to ``Ninja``, which is faster than GNU
+      make, but if building is broken with Ninja, a recipe can use this
+      variable to use GNU make instead::
+
+         OECMAKE_GENERATOR = "Unix Makefiles"
 
    :term:`OE_IMPORTS`
       An internal variable used to tell the OpenEmbedded build system what
@@ -7420,6 +7550,38 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Board Support Package Developer's Guide
       for additional information.
 
+   :term:`SPL_MKIMAGE_DTCOPTS`
+      Options for the device tree compiler passed to ``mkimage -D`` feature
+      while creating a FIT image with the :ref:`ref-classes-uboot-sign`
+      class. If :term:`SPL_MKIMAGE_DTCOPTS` is not set then the
+      :ref:`ref-classes-uboot-sign` class will not pass the ``-D`` option
+      to ``mkimage``.
+
+      The default value is set to "" by the :ref:`ref-classes-uboot-config`
+      class.
+
+   :term:`SPL_SIGN_ENABLE`
+      Enable signing of the U-Boot FIT image. The default value is "0".
+      This variable is used by the :ref:`ref-classes-uboot-sign` class.
+
+   :term:`SPL_SIGN_KEYDIR`
+      Location of the directory containing the RSA key and certificate used for
+      signing the U-Boot FIT image, used by the :ref:`ref-classes-uboot-sign`
+      class.
+
+   :term:`SPL_SIGN_KEYNAME`
+      The name of keys used by the :ref:`ref-classes-kernel-fitimage` class
+      for signing U-Boot FIT image stored in the :term:`SPL_SIGN_KEYDIR`
+      directory. If we have for example a ``dev.key`` key and a ``dev.crt``
+      certificate stored in the :term:`SPL_SIGN_KEYDIR` directory, you will 
+      have to set :term:`SPL_SIGN_KEYNAME` to ``dev``.
+
+   :term:`SPLASH`
+      This variable, used by the :ref:`ref-classes-image` class, allows
+      to choose splashscreen applications. Set it to the names of packages
+      for such applications to use. This variable is set by default to
+      ``psplash``.
+
    :term:`SPLASH_IMAGES`
       This variable, used by the ``psplash`` recipe, allows to customize
       the default splashscreen image.
@@ -8515,7 +8677,7 @@ system and gives an overview of their function and contents.
       on enabling, running, and writing these tests, see the
       ":ref:`dev-manual/runtime-testing:performing automated runtime testing`"
       section in the Yocto Project Development Tasks Manual and the
-      ":ref:`ref-classes-testimage*`" section.
+      ":ref:`ref-classes-testimage`" section.
 
    :term:`THISDIR`
       The directory in which the file BitBake is currently parsing is
@@ -8798,6 +8960,64 @@ system and gives an overview of their function and contents.
       Specifies the entry point for the U-Boot image. During U-Boot image
       creation, the :term:`UBOOT_ENTRYPOINT` variable is passed as a
       command-line parameter to the ``uboot-mkimage`` utility.
+
+   :term:`UBOOT_FIT_DESC`
+      Specifies the description string encoded into a U-Boot fitImage. The default
+      value is set by the :ref:`ref-classes-uboot-sign` class as follows::
+
+         UBOOT_FIT_DESC ?= "U-Boot fitImage for ${DISTRO_NAME}/${PV}/${MACHINE}"
+
+   :term:`UBOOT_FIT_GENERATE_KEYS`
+      Decides whether to generate the keys for signing the U-Boot fitImage if
+      they don't already exist. The keys are created in :term:`SPL_SIGN_KEYDIR`.
+      The default value is "0".
+
+      Enable this as follows::
+
+         UBOOT_FIT_GENERATE_KEYS = "1"
+
+      This variable is used in the :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FIT_HASH_ALG`
+      Specifies the hash algorithm used in creating the U-Boot FIT Image.
+      It is set by default to ``sha256`` by the :ref:`ref-classes-uboot-sign`
+      class.
+
+   :term:`UBOOT_FIT_KEY_GENRSA_ARGS`
+      Arguments to ``openssl genrsa`` for generating a RSA private key for
+      signing the U-Boot FIT image. The default value of this variable
+      is set to "-F4" by the :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FIT_KEY_REQ_ARGS`
+      Arguments to ``openssl req`` for generating a certificate for signing
+      the U-Boot FIT image. The default value is "-batch -new" by the
+      :ref:`ref-classes-uboot-sign` class, "batch" for
+      non interactive mode and "new" for generating new keys.
+
+   :term:`UBOOT_FIT_KEY_SIGN_PKCS`
+      Format for the public key certificate used for signing the U-Boot FIT
+      image. The default value is set to "x509" by the
+      :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FIT_SIGN_ALG`
+      Specifies the signature algorithm used in creating the U-Boot FIT Image.
+      This variable is set by default to "rsa2048" by the
+      :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FIT_SIGN_NUMBITS`
+      Size of the private key used in signing the U-Boot FIT image, in number
+      of bits. The default value for this variable is set to "2048"
+      by the :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FITIMAGE_ENABLE`
+      This variable allows to generate a FIT image for U-Boot, which is one
+      of the ways to implement a verified boot process.
+
+      Its default value is "0", so set it to "1" to enable this functionality::
+
+         UBOOT_FITIMAGE_ENABLE = "1"
+
+      See the :ref:`ref-classes-uboot-sign` class for details.
 
    :term:`UBOOT_LOADADDRESS`
       Specifies the load address for the U-Boot image. During U-Boot image
