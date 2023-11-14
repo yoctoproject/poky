@@ -31,3 +31,9 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY )
 set(CMAKE_FIND_LIBRARY_CUSTOM_LIB_SUFFIX "")
 
 set(CMAKE_PROGRAM_PATH "${HOST_SYSROOT}/usr/bin" CACHE STRING "" FORCE)
+
+# Include the toolchain configuration subscripts
+file( GLOB toolchain_config_files "OEToolchainConfig.cmake.d/*.cmake" )
+foreach(config ${toolchain_config_files})
+    include(${config})
+endforeach()
