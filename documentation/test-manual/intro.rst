@@ -14,7 +14,7 @@ release works as intended. All the project's testing infrastructure and
 processes are publicly visible and available so that the community can
 see what testing is being performed, how it's being done and the current
 status of the tests and the project at any given time. It is intended
-that Other organizations can leverage off the process and testing
+that other organizations can leverage off the process and testing
 environment used by the Yocto Project to create their own automated,
 production test environment, building upon the foundations from the
 project core.
@@ -93,8 +93,8 @@ the following types of tests:
 -  *Build Testing:* Tests whether specific configurations build by
    varying :term:`MACHINE`,
    :term:`DISTRO`, other configuration
-   options, and the specific target images being built (or world). Used
-   to trigger builds of all the different test configurations on the
+   options, and the specific target images being built (or ``world``). This is
+   used to trigger builds of all the different test configurations on the
    Autobuilder. Builds usually cover many different targets for
    different architectures, machines, and distributions, as well as
    different configurations, such as different init systems. The
@@ -120,7 +120,7 @@ the following types of tests:
 
       $ bitbake image -c testsdkext
 
-   The tests utilize the :ref:`ref-classes-testsdk` class and the
+   The tests use the :ref:`ref-classes-testsdk` class and the
    ``do_testsdkext`` task.
 
 -  *Feature Testing:* Various scenario-based tests are run through the
@@ -131,7 +131,7 @@ the following types of tests:
 
       $ bitbake image -c testimage
 
-   The tests utilize the :ref:`ref-classes-testimage`
+   The tests use the :ref:`ref-classes-testimage`
    class and the :ref:`ref-tasks-testimage` task.
 
 -  *Layer Testing:* The Autobuilder has the possibility to test whether
@@ -151,7 +151,7 @@ the following types of tests:
 
       $ bitbake image -c testsdk
 
-   The tests utilize the :ref:`ref-classes-testsdk` class and
+   The tests use the :ref:`ref-classes-testsdk` class and
    the ``do_testsdk`` task.
 
 -  *Unit Testing:* Unit tests on various components of the system run
@@ -190,7 +190,7 @@ Tests map into the codebase as follows:
       $ bitbake-selftest -v
 
    To skip tests that access the Internet, use the ``BB_SKIP_NETTESTS``
-   variable when running "bitbake-selftest" as follows::
+   variable when running ``bitbake-selftest`` as follows::
 
       $ BB_SKIP_NETTESTS=yes bitbake-selftest
 
@@ -215,7 +215,7 @@ Tests map into the codebase as follows:
    -  These tests use OE to test the workflows, which include testing
       specific features, behaviors of tasks, and API unit tests.
 
-   -  The tests can take advantage of parallelism through the "-j"
+   -  The tests can take advantage of parallelism through the ``-j``
       option, which can specify a number of threads to spread the tests
       across. Note that all tests from a given class of tests will run
       in the same thread. To parallelize large numbers of tests you can
@@ -231,18 +231,18 @@ Tests map into the codebase as follows:
          $ oe-selftest -a
 
    -  To run a specific test, use the following command form where
-      testname is the name of the specific test::
+      ``testname`` is the name of the specific test::
 
          $ oe-selftest -r <testname>
 
-      For example, the following command would run the tinfoil
-      getVar API test::
+      For example, the following command would run the ``tinfoil``
+      ``getVar`` API test::
 
          $ oe-selftest -r tinfoil.TinfoilTests.test_getvar
 
       It is also possible to run a set
       of tests. For example the following command will run all of the
-      tinfoil tests::
+      ``tinfoil`` tests::
 
          $ oe-selftest -r tinfoil
 
@@ -391,14 +391,14 @@ so tests within a given test class should always run in the same build,
 while tests in different classes or modules may be split into different
 builds. There is no data store available for these tests since the tests
 launch the ``bitbake`` command and exist outside of its context. As a
-result, common bitbake library functions (bb.\*) are also unavailable.
+result, common BitBake library functions (``bb.\*``) are also unavailable.
 
 ``testimage``
 -------------
 
 These tests are run once an image is up and running, either on target
 hardware or under QEMU. As a result, they are assumed to be running in a
-target image environment, as opposed to a host build environment. A
+target image environment, as opposed to in a host build environment. A
 simple example from ``meta/lib/oeqa/runtime/cases/python.py`` contains
 the following::
 
@@ -413,19 +413,19 @@ the following::
 
 In this example, the ``OERuntimeTestCase`` class wraps
 ``unittest.TestCase``. Within the test, ``self.target`` represents the
-target system, where commands can be run on it using the ``run()``
+target system, where commands can be run using the ``run()``
 method.
 
-To ensure certain test or package dependencies are met, you can use the
+To ensure certain tests or package dependencies are met, you can use the
 ``OETestDepends`` and ``OEHasPackage`` decorators. For example, the test
-in this example would only make sense if python3-core is installed in
+in this example would only make sense if ``python3-core`` is installed in
 the image.
 
 ``testsdk_ext``
 ---------------
 
 These tests are run against built extensible SDKs (eSDKs). The tests can
-assume that the eSDK environment has already been setup. An example from
+assume that the eSDK environment has already been set up. An example from
 ``meta/lib/oeqa/sdk/cases/devtool.py`` contains the following::
 
    class DevtoolTest(OESDKExtTestCase):
@@ -472,9 +472,9 @@ following::
             output = self._run(cmd)
             self.assertEqual(output, "Hello, world\n")
 
-In this example, if nativesdk-python3-core has been installed into the SDK, the code runs
-the python3 interpreter with a basic command to check it is working
-correctly. The test would only run if Python3 is installed in the SDK.
+In this example, if ``nativesdk-python3-core`` has been installed into the SDK,
+the code runs the ``python3`` interpreter with a basic command to check it is
+working correctly. The test would only run if Python3 is installed in the SDK.
 
 ``oe-build-perf-test``
 ----------------------
@@ -520,7 +520,7 @@ an isolated directory.
 
 This can delete files from :term:`SSTATE_DIR` which would potentially break
 other builds running in parallel. If this is required, :term:`SSTATE_DIR` must
-be set to an isolated directory. Alternatively, you can use the "-f"
+be set to an isolated directory. Alternatively, you can use the ``-f``
 option with the ``bitbake`` command to "taint" tasks by changing the
 sstate checksums to ensure sstate cache items will not be reused.
 
