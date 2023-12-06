@@ -195,15 +195,15 @@ Tests map into the codebase as follows:
    Use this option when you wish to skip tests that access the network,
    which are mostly necessary to test the fetcher modules. To specify
    individual test modules to run, append the test module name to the
-   "bitbake-selftest" command. For example, to specify the tests for the
-   bb.data.module, run::
+   ``bitbake-selftest`` command. For example, to specify the tests for
+   ``bb.tests.data.DataExpansions``, run::
 
-      $ bitbake-selftest bb.test.data.module
+      $ bitbake-selftest bb.tests.data.DataExpansions
 
    You can also specify individual tests by defining the full name and module
    plus the class path of the test, for example::
 
-      $ bitbake-selftest bb.tests.data.TestOverrides.test_one_override
+      $ bitbake-selftest bb.tests.data.DataExpansions.test_one_var
 
    The tests are based on `Python
    unittest <https://docs.python.org/3/library/unittest.html>`__.
