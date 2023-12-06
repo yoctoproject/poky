@@ -9,8 +9,8 @@ Execution Flow within the Autobuilder
 
 The "a-full" and "a-quick" targets are the usual entry points into the
 Autobuilder and it makes sense to follow the process through the system
-starting there. This is best visualized from the Autobuilder Console
-view (:yocto_ab:`/typhoon/#/console`).
+starting there. This is best visualized from the :yocto_ab:`Autobuilder
+Console view </typhoon/#/console>`.
 
 Each item along the top of that view represents some "target build" and
 these targets are all run in parallel. The 'full' build will trigger the
@@ -18,9 +18,9 @@ majority of them, the "quick" build will trigger some subset of them.
 The Autobuilder effectively runs whichever configuration is defined for
 each of those targets on a separate buildbot worker. To understand the
 configuration, you need to look at the entry on ``config.json`` file
-within the ``yocto-autobuilder-helper`` repository. The targets are
-defined in the ‘overrides' section, a quick example could be qemux86-64
-which looks like::
+within the :yocto_git:`yocto-autobuilder-helper </yocto-autobuilder-helper>`
+repository. The targets are defined in the ``overrides`` section, a quick
+example could be ``qemux86-64`` which looks like::
 
    "qemux86-64" : {
          "MACHINE" : "qemux86-64",
@@ -88,9 +88,9 @@ roughly consist of:
 
 #. *Obtain yocto-autobuilder-helper*
 
-   This step clones the ``yocto-autobuilder-helper`` git repository.
-   This is necessary to prevent the requirement to maintain all the
-   release or project-specific code within Buildbot. The branch chosen
+   This step clones the :yocto_git:`yocto-autobuilder-helper </yocto-autobuilder-helper>`
+   git repository. This is necessary to avoid the requirement to maintain all
+   the release or project-specific code within Buildbot. The branch chosen
    matches the release being built so we can support older releases and
    still make changes in newer ones.
 
@@ -251,13 +251,14 @@ Deploying Yocto Autobuilder
 ===========================
 
 The most up to date information about how to setup and deploy your own
-Autobuilder can be found in README.md in the ``yocto-autobuilder2``
-repository.
+Autobuilder can be found in :yocto_git:`README.md </yocto-autobuilder2/tree/README.md>`
+in the :yocto_git:`yocto-autobuilder2 </yocto-autobuilder2>` repository.
 
-We hope that people can use the ``yocto-autobuilder2`` code directly but
-it is inevitable that users will end up needing to heavily customise the
-``yocto-autobuilder-helper`` repository, particularly the
-``config.json`` file as they will want to define their own test matrix.
+We hope that people can use the :yocto_git:`yocto-autobuilder2 </yocto-autobuilder2>`
+code directly but it is inevitable that users will end up needing to heavily
+customize the :yocto_git:`yocto-autobuilder-helper </yocto-autobuilder-helper>`
+repository, particularly the ``config.json`` file as they will want to define
+their own test matrix.
 
 The Autobuilder supports two customization options:
 
