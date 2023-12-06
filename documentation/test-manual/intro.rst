@@ -205,8 +205,8 @@ Tests map into the codebase as follows:
 
       $ bitbake-selftest bb.tests.data.DataExpansions.test_one_var
 
-   The tests are based on `Python
-   unittest <https://docs.python.org/3/library/unittest.html>`__.
+   The tests are based on
+   `Python unittest <https://docs.python.org/3/library/unittest.html>`__.
 
 -  *oe-selftest:*
 
@@ -219,7 +219,8 @@ Tests map into the codebase as follows:
       in the same thread. To parallelize large numbers of tests you can
       split the class into multiple units.
 
-   -  The tests are based on Python unittest.
+   -  The tests are based on
+      `Python unittest <https://docs.python.org/3/library/unittest.html>`__.
 
    -  The code for the tests resides in
       ``meta/lib/oeqa/selftest/cases/``.
@@ -338,21 +339,24 @@ A simple test example from ``lib/bb/tests/data.py`` is::
             val = self.d.expand("${foo}")
             self.assertEqual(str(val), "value_of_foo")
 
-In this example, a ``DataExpansions`` class of tests is created,
-derived from standard Python unittest. The class has a common ``setUp``
-function which is shared by all the tests in the class. A simple test is
-then added to test that when a variable is expanded, the correct value
-is found.
+In this example, a ``DataExpansions`` class of tests is created, derived from
+standard `Python unittest <https://docs.python.org/3/library/unittest.html>`__.
+The class has a common ``setUp`` function which is shared by all the tests in
+the class. A simple test is then added to test that when a variable is
+expanded, the correct value is found.
 
-BitBake selftests are straightforward Python unittest. Refer to the
-Python unittest documentation for additional information on writing
-these tests at: https://docs.python.org/3/library/unittest.html.
+BitBake selftests are straightforward
+`Python unittest <https://docs.python.org/3/library/unittest.html>`__.
+Refer to the `Python unittest documentation
+<https://docs.python.org/3/library/unittest.html>`__ for additional information
+on writing such tests.
 
 ``oe-selftest``
 ---------------
 
 These tests are more complex due to the setup required behind the scenes
-for full builds. Rather than directly using Python's unittest, the code
+for full builds. Rather than directly using `Python unittest
+<https://docs.python.org/3/library/unittest.html>`__, the code
 wraps most of the standard objects. The tests can be simple, such as
 testing a command from within the OE build environment using the
 following example::
