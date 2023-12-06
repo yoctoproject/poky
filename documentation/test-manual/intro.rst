@@ -276,7 +276,7 @@ Tests map into the codebase as follows:
    -  These tests build an extended SDK (eSDK), install that eSDK, and
       run tests against the eSDK.
 
-   -  The code for these tests resides in ``meta/lib/oeqa/esdk``.
+   -  The code for these tests resides in ``meta/lib/oeqa/sdkext/cases/``.
 
    -  To run the tests, use the following command form::
 
@@ -309,7 +309,7 @@ Tests map into the codebase as follows:
       :yocto_dl:`txt </releases/yocto/yocto-4.3/testresults/buildperf-debian11/perf-debian11_nanbield_20231019191258_15b576c410.txt>`
       examples.
 
-   -  The tests are contained in ``lib/oeqa/buildperf/test_basic.py``.
+   -  The tests are contained in ``meta/lib/oeqa/buildperf/test_basic.py``.
 
 Test Examples
 =============
@@ -317,16 +317,14 @@ Test Examples
 This section provides example tests for each of the tests listed in the
 :ref:`test-manual/intro:How Tests Map to Areas of Code` section.
 
-For oeqa tests, testcases for each area reside in the main test
-directory at ``meta/lib/oeqa/selftest/cases`` directory.
+-  ``oe-selftest`` testcases reside in the ``meta/lib/oeqa/selftest/cases`` directory.
 
-For oe-selftest. bitbake testcases reside in the ``lib/bb/tests/``
-directory.
+-  ``bitbake-selftest`` testcases reside in the ``bitbake/lib/bb/tests/`` directory.
 
 ``bitbake-selftest``
 --------------------
 
-A simple test example from ``lib/bb/tests/data.py`` is::
+A simple test example from ``bitbake/lib/bb/tests/data.py`` is::
 
    class DataExpansions(unittest.TestCase):
       def setUp(self):
