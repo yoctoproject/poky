@@ -42,16 +42,16 @@ our sstate up to date. On the weekend, there is a master-next build
 instead to ensure the test results are updated for the less frequently
 run targets.
 
-Performance builds (buildperf-\* targets in the console) are triggered
+Performance builds (``buildperf-\*`` targets in the console) are triggered
 separately every six hours and automatically push their results to the
 buildstats repository at:
 :yocto_git:`/yocto-buildstats/`.
 
-The 'quick' targets have been selected to be the ones which catch the
-most failures or give the most valuable data. We run 'fast' ptests in
+The "quick" targets have been selected to be the ones which catch the
+most failures or give the most valuable data. We run "fast" ptests in
 this case for example but not the ones which take a long time. The quick
-target doesn't include \*-lsb builds for all architectures, some world
-builds and doesn't trigger performance tests or ltp testing. The full
+target doesn't include ``\*-lsb`` builds for all architectures, some ``world``
+builds and doesn't trigger performance tests or ``ltp`` testing. The full
 build includes all these things and is slower but more comprehensive.
 
 Release Builds
@@ -67,7 +67,7 @@ that in :ref:`test-manual/test-process:day to day development`, in that the
 a-full target of the Autobuilder is used but in addition the form is
 configured to generate and publish artifacts and the milestone number,
 version, release candidate number and other information is entered. The
-box to "generate an email to QA"is also checked.
+box to "generate an email to QA" is also checked.
 
 When the build completes, an email is sent out using the send-qa-email
 script in the ``yocto-autobuilder-helper`` repository to the list of
