@@ -19,10 +19,8 @@ environment used by the Yocto Project to create their own automated,
 production test environment, building upon the foundations from the
 project core.
 
-Currently, the Yocto Project Test Environment Manual has no projected
-release date. This manual is a work-in-progress and is being initially
-loaded with information from the README files and notes from key
-engineers:
+This manual is a work-in-progress and is being initially loaded with
+information from the README files and notes from key engineers:
 
 -  *yocto-autobuilder2:* This
    :yocto_git:`README.md </yocto-autobuilder2/tree/README.md>`
@@ -39,7 +37,7 @@ engineers:
    As a result, it can be used by any Continuous Improvement (CI) system
    to run builds, support getting the correct code revisions, configure
    builds and layers, run builds, and collect results. The code is
-   independent of any CI system, which means the code can work `Buildbot <https://docs.buildbot.net/0.9.15.post1/>`__,
+   independent of any CI system, which means the code can work `Buildbot <https://docs.buildbot.net/current/>`__,
    Jenkins, or others. This repository has a branch per release of the
    project defining the tests to run on a per release basis.
 
@@ -54,8 +52,8 @@ the Autobuilder tests if things work. The Autobuilder builds all test
 targets and runs all the tests.
 
 The Yocto Project uses now uses standard upstream
-`Buildbot <https://docs.buildbot.net/0.9.15.post1/>`__ (version 9) to
-drive its integration and testing. Buildbot Nine has a plug-in interface
+Buildbot (`version 3.8 <https://docs.buildbot.net/3.8.0/>`__) to
+drive its integration and testing. Buildbot has a plug-in interface
 that the Yocto Project customizes using code from the
 ``yocto-autobuilder2`` repository, adding its own console UI plugin. The
 resulting UI plug-in allows you to visualize builds in a way suited to
@@ -304,11 +302,11 @@ Tests map into the codebase as follows:
       Git repository.
 
       Use the ``oe-build-perf-report`` command to generate text reports
-      and HTML reports with graphs of the performance data. For
-      examples, see
-      :yocto_dl:`/releases/yocto/yocto-2.7/testresults/buildperf-centos7/perf-centos7.yoctoproject.org_warrior_20190414204758_0e39202.html`
+      and HTML reports with graphs of the performance data. See
+      :yocto_dl:`html </releases/yocto/yocto-4.3/testresults/buildperf-debian11/perf-debian11_nanbield_20231019191258_15b576c410.html>`
       and
-      :yocto_dl:`/releases/yocto/yocto-2.7/testresults/buildperf-centos7/perf-centos7.yoctoproject.org_warrior_20190414204758_0e39202.txt`.
+      :yocto_dl:`txt </releases/yocto/yocto-4.3/testresults/buildperf-debian11/perf-debian11_nanbield_20231019191258_15b576c410.txt>`
+      examples.
 
    -  The tests are contained in ``lib/oeqa/buildperf/test_basic.py``.
 
