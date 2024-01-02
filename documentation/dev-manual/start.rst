@@ -334,7 +334,10 @@ to use the Extensible SDK, see the ":doc:`/sdk-manual/extensible`" Chapter in th
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual. If you want to work on the kernel, see the :doc:`/kernel-dev/index`. If you are going to use
 Toaster, see the ":doc:`/toaster-manual/setup-and-use`"
-section in the Toaster User Manual.
+section in the Toaster User Manual. If you are a VSCode user, you can configure
+the `Yocto Project BitBake
+<https://marketplace.visualstudio.com/items?itemName=yocto-project.yocto-bitbake>`__
+extension accordingly.
 
 Setting Up to Use CROss PlatformS (CROPS)
 -----------------------------------------
@@ -426,7 +429,10 @@ section. If you are going to use the Extensible SDK container, see the
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual. If you are going to use the Toaster container, see
 the ":doc:`/toaster-manual/setup-and-use`"
-section in the Toaster User Manual.
+section in the Toaster User Manual. If you are a VSCode user, you can configure
+the `Yocto Project BitBake
+<https://marketplace.visualstudio.com/items?itemName=yocto-project.yocto-bitbake>`__
+extension accordingly.
 
 Setting Up to Use Windows Subsystem For Linux (WSL 2)
 -----------------------------------------------------
@@ -554,7 +560,10 @@ Extensible SDK container, see the ":doc:`/sdk-manual/extensible`" Chapter in the
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual. If you are going to use the Toaster container, see
 the ":doc:`/toaster-manual/setup-and-use`"
-section in the Toaster User Manual.
+section in the Toaster User Manual. If you are a VSCode user, you can configure
+the `Yocto Project BitBake
+<https://marketplace.visualstudio.com/items?itemName=yocto-project.yocto-bitbake>`__
+extension accordingly.
 
 Locating Yocto Project Source Files
 ===================================
