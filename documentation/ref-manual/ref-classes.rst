@@ -1315,16 +1315,6 @@ The following list shows the tests you can list with the ``WARN_QA`` and
    automatically get these versions. Consequently, you should only need
    to explicitly add dependencies to binary driver recipes.
 
-.. _ref-classes-insserv:
-
-``insserv.bbclass``
-===================
-
-The ``insserv`` class uses the ``insserv`` utility to update the order
-of symbolic links in ``/etc/rc?.d/`` within an image based on
-dependencies specified by LSB headers in the ``init.d`` scripts
-themselves.
-
 .. _ref-classes-kernel:
 
 ``kernel.bbclass``
