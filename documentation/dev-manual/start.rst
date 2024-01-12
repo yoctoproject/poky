@@ -666,8 +666,7 @@ described in the ":ref:`dev-manual/start:accessing index of releases`" section.
 #. *Select a Yocto Project Release:* On the top of the "RELEASE" page currently
    supported releases are displayed, further down past supported Yocto Project
    releases are visible. The "Download" links in the rows of the table there
-   will lead to the download tarballs for the release
-   (e.g. &DISTRO_NAME_NO_CAP;, &DISTRO_NAME_NO_CAP_MINUS_ONE;, and so forth).
+   will lead to the download tarballs for the release.
 
    .. note::
 
