@@ -3,18 +3,14 @@
 <head>
 {# Scripts, for visualization#}
 <!--START-OF-SCRIPTS-->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-google.charts.load('current', {'packages':['corechart']});
-var chartsDrawing = 0;
-</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 
 {# Render measurement result charts #}
 {% for test in test_data %}
   {% if test.status == 'SUCCESS' %}
     {% for measurement in test.measurements %}
       {% set chart_elem_id = test.name + '_' + measurement.name + '_chart' %}
-      {% include 'measurement_chart.html' %}
+      {% include 'measurement_chart_d3.html' %}
     {% endfor %}
   {% endif %}
 {% endfor %}
