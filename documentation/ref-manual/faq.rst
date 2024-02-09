@@ -312,7 +312,7 @@ HTTPS requests and direct them to the ``http://`` sources mirror. You
 can use ``file://`` URLs to point to local directories or network shares
 as well.
 
-Here are other options::
+Another option is to set::
 
    BB_NO_NETWORK = "1"
 
@@ -328,7 +328,7 @@ This statement
 limits the build system to pulling source from the :term:`PREMIRRORS` only.
 Again, this technique is useful for reproducing builds.
 
-Here is another technique::
+Here is yet another technique::
 
    BB_GENERATE_MIRROR_TARBALLS = "1"
 

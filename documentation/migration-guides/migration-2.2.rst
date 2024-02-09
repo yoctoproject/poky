@@ -70,9 +70,9 @@ Metadata Must Now Use Python 3 Syntax
 
 The metadata is now required to use Python 3 syntax. For help preparing
 metadata, see any of the many Python 3 porting guides available.
-Alternatively, you can reference the conversion commits for Bitbake and
-you can use :term:`OpenEmbedded-Core (OE-Core)` as a guide for changes. Following are
-particular areas of interest:
+Alternatively, you can reference the conversion commits for BitBake and
+you can use :term:`OpenEmbedded-Core (OE-Core)` as a guide for changes.
+Particular areas of interest are:
 
   - subprocess command-line pipes needing locale decoding
 
@@ -181,14 +181,8 @@ root filesystem, provides an image, and uses the ``nographic`` option::
 
    $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.ext4 tmp/deploy/images/qemux86-64/bzImage nographic
 
-Following is a list of variables that can be set in configuration files
-such as ``bsp.conf`` to enable the BSP to be booted by ``runqemu``:
-
-.. note::
-
-   "QB" means "QEMU Boot".
-
-::
+Here is a list of variables that can be set in configuration files
+such as ``bsp.conf`` to enable the BSP to be booted by ``runqemu``::
 
    QB_SYSTEM_NAME: QEMU name (e.g. "qemu-system-i386")
    QB_OPT_APPEND: Options to append to QEMU (e.g. "-show-cursor")

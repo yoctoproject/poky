@@ -37,7 +37,7 @@ to each data source as a layer. For information on layers, see the
 ":ref:`dev-manual/layers:understanding and creating layers`"
 section of the Yocto Project Development Tasks Manual.
 
-Following are some brief details on these core components. For
+Here are some brief details on these core components. For
 additional information on how these components interact during a build,
 see the
 ":ref:`overview-manual/concepts:openembedded build system concepts`"
@@ -1351,10 +1351,9 @@ can initialize the environment before using the tools.
       the :doc:`/sdk-manual/index` manual.
 
 All the output files for an SDK are written to the ``deploy/sdk`` folder
-inside the :term:`Build Directory` as
-shown in the previous figure. Depending on the type of SDK, there are
-several variables to configure these files. Here are the variables
-associated with an extensible SDK:
+inside the :term:`Build Directory` as shown in the previous figure. Depending
+on the type of SDK, there are several variables to configure these files.
+The variables associated with an extensible SDK are:
 
 -  :term:`DEPLOY_DIR`: Points to
    the ``deploy`` directory.
@@ -2279,7 +2278,7 @@ which is integrating ``sayhello`` in our root file system:
 #.  Add ``sayhello`` to :term:`IMAGE_INSTALL` to integrate it into
     the root file system
 
-The following are the contents of ``libhello/Makefile``::
+The contents of ``libhello/Makefile`` are::
 
    LIB=libhello.so
 
@@ -2307,7 +2306,7 @@ The following are the contents of ``libhello/Makefile``::
    and ``CFLAGS`` as BitBake will set them as environment variables according
    to your build configuration.
 
-The following are the contents of ``libhello/hellolib.h``::
+The contents of ``libhello/hellolib.h`` are::
 
    #ifndef HELLOLIB_H
    #define HELLOLIB_H
@@ -2316,7 +2315,7 @@ The following are the contents of ``libhello/hellolib.h``::
 
    #endif
 
-The following are the contents of ``libhello/hellolib.c``::
+The contents of ``libhello/hellolib.c`` are::
 
    #include <stdio.h>
 
@@ -2324,7 +2323,7 @@ The following are the contents of ``libhello/hellolib.c``::
       puts("Hello from a Yocto demo \n");
    }
 
-The following are the contents of ``sayhello/Makefile``::
+The contents of ``sayhello/Makefile`` are::
 
    EXEC=sayhello
    LDFLAGS += -lhello
@@ -2337,7 +2336,7 @@ The following are the contents of ``sayhello/Makefile``::
    clean:
       rm -rf $(EXEC) *.o
 
-The following are the contents of ``sayhello/sayhello.c``::
+The contents of ``sayhello/sayhello.c`` are::
 
    #include <hellolib.h>
 
@@ -2346,7 +2345,7 @@ The following are the contents of ``sayhello/sayhello.c``::
       return 0;
    }
 
-The following are the contents of ``libhello_0.1.bb``::
+The contents of ``libhello_0.1.bb`` are::
 
    SUMMARY = "Hello demo library"
    DESCRIPTION = "Hello shared library used in Yocto demo"
@@ -2369,7 +2368,7 @@ The following are the contents of ``libhello_0.1.bb``::
       oe_soinstall ${PN}.so.${PV} ${D}${libdir}
    }
 
-The following are the contents of ``sayhello_0.1.bb``::
+The contents of ``sayhello_0.1.bb`` are::
 
    SUMMARY = "SayHello demo"
    DESCRIPTION = "SayHello project used in Yocto demo"

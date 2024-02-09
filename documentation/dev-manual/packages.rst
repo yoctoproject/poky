@@ -365,7 +365,7 @@ For more examples that show how to use ``do_split_packages``, see the
 directory of the ``poky`` :ref:`source repository <overview-manual/development-environment:yocto project source repositories>`. You can
 also find examples in ``meta/classes-recipe/kernel.bbclass``.
 
-Following is a reference that shows ``do_split_packages`` mandatory and
+Here is a reference that shows ``do_split_packages`` mandatory and
 optional arguments::
 
    Mandatory arguments
@@ -1123,7 +1123,7 @@ The ``devtool edit-recipe`` command lets you take a look at the recipe::
    ...
    LICENSE:${PN}-vary = "MIT"
 
-Here are three key points in the previous example:
+Three key points in the previous example are:
 
 -  :term:`SRC_URI` uses the NPM
    scheme so that the NPM fetcher is used.

@@ -853,8 +853,7 @@ Before looking at BSP requirements, you should consider the following:
    dictating that a specific kernel or kernel version be used in a given
    BSP.
 
-Following are the requirements for a released BSP that conform to the
-Yocto Project:
+The requirements for a released BSP that conform to the Yocto Project are:
 
 -  *Layer Name:* The BSP must have a layer name that follows the Yocto
    Project standards. For information on BSP layer names, see the
@@ -958,7 +957,7 @@ Yocto Project:
 Released BSP Recommendations
 ----------------------------
 
-Following are recommendations for released BSPs that conform to the
+Here are recommendations for released BSPs that conform to the
 Yocto Project:
 
 -  *Bootable Images:* Released BSPs can contain one or more bootable
@@ -1020,7 +1019,7 @@ the following:
    that additional hierarchy and the files would obviously not be able
    to reside in a machine-specific directory.
 
-Following is a specific example to help you better understand the
+Here is a specific example to help you better understand the
 process. This example customizes a recipe by adding a
 BSP-specific configuration file named ``interfaces`` to the
 ``init-ifupdown_1.0.bb`` recipe for machine "xyz" where the BSP layer
@@ -1443,7 +1442,7 @@ metadata used to build the kernel. In this case, a kernel append file
 kernel recipe (i.e. ``linux-yocto_5.15.bb``), which is located in
 :yocto_git:`/poky/tree/meta-yocto-bsp/recipes-kernel/linux`.
 
-Following is the contents of the append file::
+The contents of the append file are::
 
    KBRANCH:genericx86  = "v5.15/standard/base"
    KBRANCH:genericx86-64  = "v5.15/standard/base"

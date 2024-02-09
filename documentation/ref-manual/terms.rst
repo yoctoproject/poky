@@ -4,7 +4,7 @@
 Yocto Project Terms
 *******************
 
-Following is a list of terms and definitions users new to the Yocto Project
+Here is a list of terms and definitions users new to the Yocto Project
 development environment might find helpful. While some of these terms are
 universal, the list includes them just in case:
 
@@ -66,8 +66,8 @@ universal, the list includes them just in case:
       (i.e. :ref:`ref-manual/structure:\`\`oe-init-build-env\`\``). The
       :term:`TOPDIR` variable points to the Build Directory.
 
-      You have a lot of flexibility when creating the Build Directory.
-      Following are some examples that show how to create the directory.  The
+      You have a lot of flexibility when creating the :term:`Build Directory`.
+      Here are some examples that show how to create the directory.  The
       examples assume your :term:`Source Directory` is named ``poky``:
 
          -  Create the Build Directory inside your Source Directory and let

@@ -742,7 +742,7 @@ workflow:
 .. image:: figures/YP-flow-diagram.png
     :align: center
 
-Following is a brief summary of the "workflow":
+Here is a brief summary of the "workflow":
 
 1. Developers specify architecture, policies, patches and configuration
    details.
