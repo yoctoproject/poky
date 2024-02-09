@@ -175,7 +175,7 @@ consists of the following pieces:
    piece of software. The test allows the packages to be run within a
    target image.
 
--  ``oe-selftest``: Tests combination BitBake invocations. These tests
+-  ``oe-selftest``: Tests combinations of BitBake invocations. These tests
    operate outside the OpenEmbedded build system itself. The
    ``oe-selftest`` can run all tests by default or can run selected
    tests or test suites.
