@@ -612,6 +612,13 @@ subsequent sections are necessary to configure the target. You should
 set these variables before building the image in order to produce a
 correctly configured image.
 
+.. note::
+
+   Your image will need enough free storage space to run package upgrades,
+   especially if many of them need to be downloaded at the same time.
+   You should make sure images are created with enough free space
+   by setting the :term:`IMAGE_ROOTFS_EXTRA_SPACE` variable.
+
 When your build is complete, your packages reside in the
 ``${TMPDIR}/deploy/packageformat`` directory. For example, if
 ``${``\ :term:`TMPDIR`\ ``}`` is
