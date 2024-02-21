@@ -6813,20 +6813,6 @@ system and gives an overview of their function and contents.
       names used when installing the Python headers and libraries in
       sysroot (e.g. ``.../python3.3m/...``).
 
-   :term:`PYTHON_PN`
-      When used by recipes that inherit the :ref:`ref-classes-setuptools3`
-      class, specifies the major Python version being built. For Python 3.x,
-      :term:`PYTHON_PN` would be "python3". You do not have to set this
-      variable as the OpenEmbedded build system automatically sets it for you.
-
-      The variable allows recipes to use common infrastructure such as the
-      following::
-
-         DEPENDS += "${PYTHON_PN}-native"
-
-      In the previous example,
-      the version of the dependency is :term:`PYTHON_PN`.
-
    :term:`QA_EMPTY_DIRS`
       Specifies a list of directories that are expected to be empty when
       packaging; if ``empty-dirs`` appears in :term:`ERROR_QA` or
