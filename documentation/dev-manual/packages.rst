@@ -205,9 +205,14 @@ history, see the
    The OpenEmbedded build system does not maintain :term:`PR` information as
    part of the shared state (sstate) packages. If you maintain an sstate
    feed, it's expected that either all your building systems that
-   contribute to the sstate feed use a shared PR Service, or you do not
-   run a PR Service on any of your building systems. Having some systems
-   use a PR Service while others do not leads to obvious problems.
+   contribute to the sstate feed use a shared PR service, or you do not
+   run a PR Service on any of your building systems.
+
+   That's because if you had multiple machines sharing a PR service but
+   not their sstate feed, you could end up with "diverging" hashes for
+   the same output artefacts. When presented to the share PR service,
+   each would be considered as new and would increase the revision
+   number, causing many unnecessary package upgrades.
 
    For more information on shared state, see the
    ":ref:`overview-manual/concepts:shared state cache`"
