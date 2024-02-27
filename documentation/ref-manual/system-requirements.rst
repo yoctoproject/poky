@@ -175,12 +175,6 @@ Here are the packages needed to build Project documentation manuals::
    $ sudo apt install git make inkscape texlive-latex-extra
    $ sudo apt install sphinx python3-saneyaml python3-sphinx-rtd-theme
 
-   .. note::
-
-      It is currently not possible to build out documentation from Debian 8
-      (Jessie) because of outdated ``pip3`` and ``python3``. ``python3-sphinx``
-      is too outdated.
-
 Fedora Packages
 ---------------
 
