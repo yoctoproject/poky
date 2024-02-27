@@ -50,7 +50,7 @@ You will manage to build an image such as ``core-image-sato`` for the
 system with 4 CPU cores, but your builds will be much faster on a system with
 as much RAM and as many CPU cores as possible.
 
-.. _detailed-supported-distros:
+.. _system-requirements-supported-distros:
 
 Supported Linux Distributions
 =============================
