@@ -3234,6 +3234,14 @@ system and gives an overview of their function and contents.
 
          GROUPADD_PARAM:${PN} = "-r netdev"
 
+      More than one group can be added by separating each set of different
+      groups' parameters with a semicolon.
+
+      Here is an example adding multiple groups from the ``useradd-example.bb``
+      file in the ``meta-skeleton`` layer::
+
+         GROUPADD_PARAM:${PN} = "-g 880 group1; -g 890 group2"
+
       For information on the standard Linux shell command
       ``groupadd``, see https://linux.die.net/man/8/groupadd.
 
