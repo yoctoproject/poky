@@ -516,6 +516,18 @@ scratch is guaranteed.
 
 .. note::
 
+   Using :ref:`ref-tasks-cleansstate` with a shared :term:`SSTATE_DIR` is
+   not recommended because it could trigger an error during the build of a
+   separate BitBake instance. This is because the builds check sstate "up
+   front" but download the files later, so it if is deleted in the
+   meantime, it will cause an error but not a total failure as it will
+   rebuild it.
+
+   The reliable and preferred way to force a new build is to use ``bitbake
+   -f`` instead.
+
+.. note::
+
    The :ref:`ref-tasks-cleansstate` task cannot remove sstate from a remote sstate
    mirror. If you need to build a target from scratch using remote mirrors, use
    the "-f" option as follows::
