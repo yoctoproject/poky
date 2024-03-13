@@ -421,7 +421,7 @@ and BusyBox. It could have been called "kconfig" too.
 ``compress_doc``
 ================
 
-Enables compression for man pages and info pages. This class is intended
+Enables compression for manual and info pages. This class is intended
 to be inherited globally. The default compression mechanism is gz (gzip)
 but you can select an alternative mechanism by setting the
 :term:`DOC_COMPRESS` variable.
