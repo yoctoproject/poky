@@ -38,7 +38,7 @@ other tools when it seems useful to do so.
 
 The coverage below details some of the most common ways you'll likely
 want to apply the tool; full documentation can be found either within
-the tool itself or in the man pages at
+the tool itself or in the manual pages at
 `perf(1) <https://linux.die.net/man/1/perf>`__.
 
 Perf Setup
@@ -1147,37 +1147,37 @@ callgraphs from starting a few programs during those 30 seconds:
 Perf Documentation
 ------------------
 
-Online versions of the man pages for the commands discussed in this
+Online versions of the manual pages for the commands discussed in this
 section can be found here:
 
--  The `'perf stat' manpage <https://linux.die.net/man/1/perf-stat>`__.
+-  The `'perf stat' manual page <https://linux.die.net/man/1/perf-stat>`__.
 
 -  The `'perf record'
-   manpage <https://linux.die.net/man/1/perf-record>`__.
+   manual page <https://linux.die.net/man/1/perf-record>`__.
 
 -  The `'perf report'
-   manpage <https://linux.die.net/man/1/perf-report>`__.
+   manual page <https://linux.die.net/man/1/perf-report>`__.
 
--  The `'perf probe' manpage <https://linux.die.net/man/1/perf-probe>`__.
+-  The `'perf probe' manual page <https://linux.die.net/man/1/perf-probe>`__.
 
 -  The `'perf script'
-   manpage <https://linux.die.net/man/1/perf-script>`__.
+   manual page <https://linux.die.net/man/1/perf-script>`__.
 
 -  Documentation on using the `'perf script' Python
    binding <https://linux.die.net/man/1/perf-script-python>`__.
 
--  The top-level `perf(1) manpage <https://linux.die.net/man/1/perf>`__.
+-  The top-level `perf(1) manual page <https://linux.die.net/man/1/perf>`__.
 
-Normally, you should be able to invoke the man pages via perf itself
+Normally, you should be able to invoke the manual pages via perf itself
 e.g. ``perf help`` or ``perf help record``.
 
-To have the perf manpages installed on your target, modify your
+To have the perf manual pages installed on your target, modify your
 configuration as follows::
 
    IMAGE_INSTALL:append = " perf perf-doc"
    DISTRO_FEATURES:append = " api-documentation"
 
-The man pages in text form, along with some other files, such as a set
+The manual pages in text form, along with some other files, such as a set
 of examples, can also be found in the ``perf`` directory of the kernel tree::
 
    tools/perf/Documentation
@@ -2391,7 +2391,7 @@ first part of the filenames::
 The report shows each event that was
 found in the blktrace data, along with a summary of the overall block
 I/O traffic during the run. You can look at the
-`blkparse <https://linux.die.net/man/1/blkparse>`__ manpage to learn the
+`blkparse <https://linux.die.net/man/1/blkparse>`__ manual page to learn the
 meaning of each field displayed in the trace listing.
 
 Live Mode
@@ -2588,7 +2588,7 @@ And this turns off tracing for the specified device::
 blktrace Documentation
 ----------------------
 
-Online versions of the man pages for the commands discussed in this
+Online versions of the manual pages for the commands discussed in this
 section can be found here:
 
 -  https://linux.die.net/man/8/blktrace
@@ -2597,7 +2597,7 @@ section can be found here:
 
 -  https://linux.die.net/man/8/btrace
 
-The above manpages, along with manuals for the other blktrace utilities
+The above manual pages, along with manuals for the other blktrace utilities
 (btt, blkiomon, etc) can be found in the ``/doc`` directory of the blktrace
 tools git repo::
 
