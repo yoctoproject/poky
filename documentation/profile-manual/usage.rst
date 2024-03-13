@@ -131,9 +131,9 @@ the summed counts at the end of the run::
 
         59.836627620 seconds time elapsed
 
-Many times such a simple-minded test doesn't yield much of
-interest, but sometimes it does (see Real-world Yocto bug (slow
-loop-mounted write speed)).
+Such a simple-minded test doesn't always yield much of interest, but sometimes
+it does (see the :yocto_bugs:`Slow write speed on live images with denzil
+</show_bug.cgi?id=3049>` bug report).
 
 Also, note that ``perf stat`` isn't restricted to a fixed set of counters
 --- basically any event listed in the output of ``perf list`` can be tallied
