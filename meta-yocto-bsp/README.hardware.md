@@ -140,6 +140,11 @@ The genericarm64 MACHINE is currently tested on the following platforms:
 The images built are EFI bootable disk images and can be written directly to a
 SD card for booting, for example.
 
+There is also limited support for booting a genericarm64 image inside QEMU. When
+building the image also build the `u-boot` recipe to build the required
+firmware (note that this firmware will _not_ boot on real hardware), then use
+`runqemu` as usual.
+
 
 Texas Instruments Beaglebone (beaglebone-yocto)
 -----------------------------------------------
