@@ -146,7 +146,7 @@ command to return the available Wic images as follows::
      qemuloongarch                 		Create qcow2 image for LoongArch QEMU machines
      directdisk-multi-rootfs       		Create multi rootfs image using rootfs plugin
      directdisk                    		Create a 'pcbios' direct disk image
-     efi-bootdisk                  		
+     efi-bootdisk
      mkhybridiso                   		Create a hybrid ISO image
      directdisk-gpt                		Create a 'pcbios' direct disk image
      systemd-bootdisk              		Create an EFI disk image with systemd-boot
@@ -289,7 +289,7 @@ Use the following command to list the available kickstart files::
      qemuloongarch                 		Create qcow2 image for LoongArch QEMU machines
      directdisk-multi-rootfs       		Create multi rootfs image using rootfs plugin
      directdisk                    		Create a 'pcbios' direct disk image
-     efi-bootdisk                  		
+     efi-bootdisk
      mkhybridiso                   		Create a hybrid ISO image
      directdisk-gpt                		Create a 'pcbios' direct disk image
      systemd-bootdisk              		Create an EFI disk image with systemd-boot
