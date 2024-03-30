@@ -1872,7 +1872,7 @@ Practically speaking, that means you need to do the following:
 
 -  Or build a non-SDK image but include the profiling tools
    (edit ``local.conf`` and add ``tools-profile`` to the end of
-   :term:``EXTRA_IMAGE_FEATURES`` variable)::
+   :term:`EXTRA_IMAGE_FEATURES` variable)::
 
       $ bitbake core-image-sato
 

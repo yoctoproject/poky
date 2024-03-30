@@ -732,7 +732,7 @@ The following list describes the available commands:
 
 -  ``save-build-conf``: Saves the currently active build configuration
    (``conf/local.conf``, ``conf/bblayers.conf``) as a template into a layer.
-   This template can later be used for setting up builds via :term:``TEMPLATECONF``.
+   This template can later be used for setting up builds via :term:`TEMPLATECONF`.
    For information about saving and using configuration templates, see
    ":ref:`dev-manual/custom-template-configuration-directory:creating a custom template configuration directory`".
 
