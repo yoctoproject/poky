@@ -146,7 +146,7 @@ command to return the available Wic images as follows::
      mkefidisk                     		Create an EFI disk image
      directdisk-multi-rootfs       		Create multi rootfs image using rootfs plugin
      directdisk                    		Create a 'pcbios' direct disk image
-     efi-bootdisk                  		
+     efi-bootdisk
      mkhybridiso                   		Create a hybrid ISO image
      directdisk-gpt                		Create a 'pcbios' direct disk image
      systemd-bootdisk              		Create an EFI disk image with systemd-boot
@@ -290,7 +290,7 @@ Use the following command to list the available kickstart files::
      mkefidisk                     		Create an EFI disk image
      directdisk-multi-rootfs       		Create multi rootfs image using rootfs plugin
      directdisk                    		Create a 'pcbios' direct disk image
-     efi-bootdisk                  		
+     efi-bootdisk
      mkhybridiso                   		Create a hybrid ISO image
      directdisk-gpt                		Create a 'pcbios' direct disk image
      systemd-bootdisk              		Create an EFI disk image with systemd-boot

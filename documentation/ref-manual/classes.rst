@@ -588,7 +588,7 @@ The padding size can be modified by setting :term:`DT_PADDING_SIZE`
 to the desired size, in bytes.
 
 See :oe_git:`devicetree.bbclass sources
-</openembedded-core/tree/meta/classes-recipe/devicetree.bbclass>` 
+</openembedded-core/tree/meta/classes-recipe/devicetree.bbclass>`
 for further variables controlling this class.
 
 Here is an excerpt of an example ``recipes-kernel/linux/devicetree-acme.bb``

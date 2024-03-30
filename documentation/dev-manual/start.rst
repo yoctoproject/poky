@@ -612,10 +612,14 @@ Use the following procedure to locate the latest upstream copy of the
 Accessing Index of Releases
 ---------------------------
 
-Yocto Project maintains an Index of Releases area that contains related
-files that contribute to the Yocto Project. Rather than Git
-repositories, these files are tarballs that represent snapshots in time
-of a given component.
+The Yocto Project also provides source archives of its releases, which
+are available on :yocto_dl:`/releases/yocto/`. Then, choose the subdirectory
+containing the release you wish to use, for example
+:yocto_dl:`yocto-&DISTRO; </releases/yocto/yocto-&DISTRO;/>`.
+
+You will find there source archives of individual components (if you wish
+to use them individually), and of the corresponding Poky release bundling
+a selection of these components.
 
 .. note::
 
