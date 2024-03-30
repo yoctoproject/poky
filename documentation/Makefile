@@ -53,6 +53,9 @@ stylecheck:
 	vale sync
 	vale $(VALEOPTS) $(VALEDOCS)
 
+sphinx-lint:
+	sphinx-lint $(SOURCEDIR)
+
 epub: $(PNGs)
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
