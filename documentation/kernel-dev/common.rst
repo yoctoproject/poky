@@ -1668,10 +1668,10 @@ looks much like the one provided with the ``hello-mod`` template::
    SRC := $(shell pwd)
 
    all:
-   	$(MAKE) -C $(KERNEL_SRC) M=$(SRC)
+        $(MAKE) -C $(KERNEL_SRC) M=$(SRC)
 
    modules_install:
-   	$(MAKE) -C $(KERNEL_SRC) M=$(SRC) modules_install
+        $(MAKE) -C $(KERNEL_SRC) M=$(SRC) modules_install
    ...
 
 The important point to note here is the :term:`KERNEL_SRC` variable. The
