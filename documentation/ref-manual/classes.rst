@@ -939,6 +939,20 @@ The :ref:`ref-classes-go-mod` class allows to use Go modules, and inherits the
 
 See the associated :term:`GO_WORKDIR` variable.
 
+.. _ref-classes-go-vendor:
+
+``go-vendor``
+=============
+
+The :ref:`ref-classes-go-vendor` class implements support for offline builds,
+also known as Go vendoring. In such a scenario, the module dependencias are
+downloaded during the :ref:`ref-tasks-fetch` task rather than when modules are
+imported, thus being coherent with Yocto's concept of fetching every source
+beforehand.
+
+The dependencies are unpacked into the modules' ``vendor`` directory, where a
+manifest file is generated.
+
 .. _ref-classes-gobject-introspection:
 
 ``gobject-introspection``
