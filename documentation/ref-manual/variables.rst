@@ -1688,6 +1688,11 @@ system and gives an overview of their function and contents.
       The list of package names (:term:`PN`) for which
       CVEs (Common Vulnerabilities and Exposures) are ignored.
 
+   :term:`CVE_DB_INCR_UPDATE_AGE_THRES`
+      Specifies the maximum age of the CVE database in seconds for an
+      incremental update (instead of a full-download). Use "0" to force a
+      full-download.
+
    :term:`CVE_DB_UPDATE_INTERVAL`
       Specifies the CVE database update interval in seconds, as used by
       ``cve-update-db-native``. The default value is "86400" i.e. once a day
