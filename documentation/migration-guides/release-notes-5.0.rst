@@ -10,6 +10,10 @@ New Features / Enhancements in 5.0
 
 -  New variables:
 
+   -  :term:`CVE_DB_INCR_UPDATE_AGE_THRES`: Configure the maximum age of the
+      internal CVE database for incremental update (instead of a full
+      redownload).
+
 -  Architecture-specific enhancements:
 
 -  Kernel-related enhancements:
@@ -44,6 +48,9 @@ New Features / Enhancements in 5.0
 
 -  Testing:
 
+   -  Add an optional ``unimplemented-ptest`` QA warning to detect upstream
+      packages with tests, that do not use ptest.
+
 -  Utility script changes:
 
    -  New ``recipetool/create_go.py`` script added to support Go recipe creation
@@ -53,6 +60,11 @@ New Features / Enhancements in 5.0
 -  Packaging changes:
 
 -  Security improvements:
+
+   -  Improve incremental CVE database download from NVD. Rejected CVEs are
+      removed, configuration is kept up-to-date. The age threshold for
+      incremental update can be configured with :term:`CVE_DB_INCR_UPDATE_AGE_THRES`
+      variable.
 
 -  Prominent documentation updates:
 
@@ -64,9 +76,14 @@ New Features / Enhancements in 5.0
    -  ``systemd-boot`` can, from now on, be compiled as ``native``, thus
       providing ``ukify`` tool to build UKI images.
 
+   -  systemd: split bash completion for ``udevadm`` in a new
+      ``udev-bash-completion`` package.
+
    -  The :ref:`ref-classes-go-vendor` class was added to support offline builds
       (i.e., vendoring). It can also handle modules from the same repository,
       taking into account their versions.
+
+   -  Disable strace support of bluetooth by default.
 
 Known Issues in 5.0
 ~~~~~~~~~~~~~~~~~~~
