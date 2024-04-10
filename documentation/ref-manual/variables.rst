@@ -561,6 +561,10 @@ system and gives an overview of their function and contents.
    :term:`BB_INVALIDCONF`
       See :term:`bitbake:BB_INVALIDCONF` in the BitBake manual.
 
+   :term:`BB_LOADFACTOR_MAX`
+      The system load threshold above which BitBake will stop runnig extra
+      tasks.
+
    :term:`BB_LOGCONFIG`
       See :term:`bitbake:BB_LOGCONFIG` in the BitBake manual.
 
@@ -2334,6 +2338,12 @@ system and gives an overview of their function and contents.
 
       See the :ref:`ref-classes-systemd-boot` and :ref:`ref-classes-image-live`
       classes for more information.
+
+   :term:`EFI_UKI_DIR`
+      The primary place for the UKI image inside the EFI System Partition.
+
+   :term:`EFI_UKI_PATH`
+      The path for the UKI image inside the root filesystem.
 
    :term:`ENABLE_BINARY_LOCALE_GENERATION`
       Variable that controls which locales for ``glibc`` are generated
@@ -5671,6 +5681,9 @@ system and gives an overview of their function and contents.
       default by setting the variable in a custom distribution
       configuration file.
 
+   :term:`OPKG_MAKE_INDEX_EXTRA_PARAMS`
+      Specifies extra parameters for the ``opkg-make-index`` command.
+
    :term:`OVERLAYFS_ETC_DEVICE`
       When the :ref:`ref-classes-overlayfs-etc` class is
       inherited, specifies the device to be mounted for the read/write
@@ -7151,6 +7164,9 @@ system and gives an overview of their function and contents.
       directory that becomes the root filesystem image. See the
       :term:`IMAGE_ROOTFS` variable for more
       information.
+
+   :term:`RPMBUILD_EXTRA_PARAMS`
+      Specifies extra user-defined parameters for the ``rpmbuild`` command.
 
    :term:`RPROVIDES`
       A list of package name aliases that a package also provides. These
