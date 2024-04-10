@@ -192,6 +192,17 @@ New Features / Enhancements in 5.0
 
 -  Prominent documentation updates:
 
+   -  Documentation for using the new ``devtool ide-sdk`` command and features.
+      See :ref:`using_devtool` for details.
+
+   -  New ``make stylecheck`` command to run `Vale <https://vale.sh>`__,
+      to perform text style checks and comply with text writing standards in
+      the industry.
+
+   -  New ``make sphinx-lint`` command to run `sphinx-lint
+      <https://github.com/sphinx-contrib/sphinx-lint>`__. After customization,
+      this will allow us to enforce Sphinx syntax style choices.
+
 -  Miscellaneous changes:
 
    -  Systemd's following :term:`PACKAGECONFIG` options were added:
