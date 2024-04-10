@@ -106,6 +106,9 @@ New Features / Enhancements in 5.0
    -  ``runqemu``: match ".rootfs." in addition to "-image-" for the root
       filesystem.
 
+   -  :ref:`ref-classes-cmake-qemu`: a new class allowing to execute cross-compiled
+      binaries using QEMU user-mode emulation.
+
 -  Rust improvements:
 
    -  Rust has been upgraded to version 1.75
