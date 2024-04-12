@@ -179,6 +179,21 @@ New Features / Enhancements in 5.0
    -  ``bitbake.conf``: add ``runtimedir`` to represent the path to the runtime
       state directory (i.e., ``/run``).
 
+   -  Allow to disable colored text output through the
+      `NO_OUTPUT <https://no-color.org/>`__ environment variable.
+
+   -  ``git-make-shallow`` script: add support for Git's ``safe.bareRepository=explicit``
+      configuration setting.
+
+-  Devtool improvements:
+
+   -  Introduce a new ``ide-sdk`` plugin to generate a configuration to use
+      the eSDK through an IDE.
+
+   -  Add ``--no-pypi`` option for Python projects that are not hosted on PyPI.
+
+   -  Add support for Git submodules.
+
 -  Packaging changes:
 
    -  ``package_rpm``: the RPM package compressor's mode can now be overriden.
@@ -235,8 +250,16 @@ Recipe License changes in 5.0
 
 The following corrections have been made to the :term:`LICENSE` values set by recipes:
 
--  ``systemd``: make the scope of ``LGPL`` more accurate (``LGPL-2.1`` -> ``LGPL-2.1-or-later``)
--  ``libsystemd``: set its own :term:`LICENSE` value (``LGPL-2.1-or-later``) to add more granularity
+-  ``elfutils``: split license for libraries & backend and utilities.
+-  ``ghostscript``: correct :term:`LICENSE` to ``AGPL-3.0-or-later``.
+-  ``libsystemd``: set its own :term:`LICENSE` value (``LGPL-2.1-or-later``) to add more granularity.
+-  ``libtest-warnings-perl``: update :term:`LICENSE` ``Artistic-1.0`` to ``Artistic-1.0-Perl``.
+-  ``linux-firmware``: set package :term:`LICENSE` appropriately for ``carl9170``, ``rockchip`` and ``powerpr``.
+-  ``newlib``: add license ``Apache-2.0-with-LLVM-exception``.
+-  ``python3-poetry-core``: add license ``BSD-3-Clause`` for ``fastjsonschema``.
+-  ``systemd``: make the scope of ``LGPL`` more accurate (``LGPL-2.1`` -> ``LGPL-2.1-or-later``).
+-  ``util-linux``: add ``GPL-1.0-or-later`` license for fdisk and ``MIT`` license for ``flock``.
+-  ``zstd``: set to dual-licensed ``BSD-3-Clause`` or ``GPL-2.0-only``.
 
 Security Fixes in 5.0
 ~~~~~~~~~~~~~~~~~~~~~
