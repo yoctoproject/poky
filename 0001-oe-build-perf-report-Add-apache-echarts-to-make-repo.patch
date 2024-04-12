@@ -1,0 +1,163 @@
+From 1bebc64d0ac5b4a844bcda9673e0f4a89627e8b5 Mon Sep 17 00:00:00 2001
+From: Ninette Adhikari <13760198+ninetteadhikari@users.noreply.github.com>
+Date: Tue, 19 Mar 2024 16:18:21 +0100
+Subject: [PATCH 1/3] oe-build-perf-report: Add apache echarts to make report
+ interactive
+
+- Add Apache echarts (https://echarts.apache.org/en/index.html) library to create build performance charts.
+- Restructure data to time and value array format so that it can be used by echarts.
+- This commit also converts test duration to minutes to map against the values axis.
+- Zoom is added to the line charts.
+
+Signed-off-by: Ninette Adhikari <ninette@thehoodiefirm.com>
+---
+ .../build_perf/html/measurement_chart.html    | 116 +++++++++++-------
+ scripts/lib/build_perf/html/report.html       |   6 +-
+ 2 files changed, 72 insertions(+), 50 deletions(-)
+
+diff --git a/scripts/lib/build_perf/html/measurement_chart.html b/scripts/lib/build_perf/html/measurement_chart.html
+index 65f1a227ad..ffec3d09db 100644
+--- a/scripts/lib/build_perf/html/measurement_chart.html
++++ b/scripts/lib/build_perf/html/measurement_chart.html
+@@ -1,50 +1,76 @@
+-<script type="text/javascript">
+-  chartsDrawing += 1;
+-  google.charts.setOnLoadCallback(drawChart_{{ chart_elem_id }});
+-  function drawChart_{{ chart_elem_id }}() {
+-    var data = new google.visualization.DataTable();
++<script type="module">
++  // Get raw data
++  const rawData = [
++    {% for sample in measurement.samples %}
++      [{{ sample.commit_num }}, {{ sample.mean.gv_value() }}, {{ sample.start_time }}],
++    {% endfor %}
++  ];
+ 
+-    // Chart options
+-    var options = {
+-      theme : 'material',
+-      legend: 'none',
+-      hAxis: { format: '', title: 'Commit number',
+-               minValue: {{ chart_opts.haxis.min }},
+-               maxValue: {{ chart_opts.haxis.max }} },
+-      {% if measurement.type == 'time' %}
+-      vAxis: { format: 'h:mm:ss' },
+-      {% else %}
+-      vAxis: { format: '' },
+-      {% endif %}
+-      pointSize: 5,
+-      chartArea: { left: 80, right: 15 },
+-    };
++  const convertToMinute = (time) => {
++    return time[0]*60 + time[1] + time[2]/60 + time[3]/3600;
++  }
+ 
+-    // Define data columns
+-    data.addColumn('number', 'Commit');
+-    data.addColumn('{{ measurement.value_type.gv_data_type }}',
+-                   '{{ measurement.value_type.quantity }}');
+-    // Add data rows
+-    data.addRows([
+-      {% for sample in measurement.samples %}
+-        [{{ sample.commit_num }}, {{ sample.mean.gv_value() }}],
+-      {% endfor %}
+-    ]);
++  // Convert raw data to the format: [time, value]
++  const data = rawData.map(([commit, value, time]) => {
++    return [
++      new Date(time * 1000).getTime(), // The Date object takes values in milliseconds rather than seconds. So to use a Unix timestamp we have to multiply it by 1000.
++      Array.isArray(value) ? convertToMinute(value) : value // Assuming the array values are duration in the format [hours, minutes, seconds, milliseconds]
++    ]
++  });
+ 
+-    // Finally, draw the chart
+-    chart_div = document.getElementById('{{ chart_elem_id }}');
+-    var chart = new google.visualization.LineChart(chart_div);
+-    google.visualization.events.addListener(chart, 'ready', function () {
+-      //chart_div = document.getElementById('{{ chart_elem_id }}');
+-      //chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+-      png_div = document.getElementById('{{ chart_elem_id }}_png');
+-      png_div.outerHTML = '<a id="{{ chart_elem_id }}_png" href="' + chart.getImageURI() + '">PNG</a>';
+-      console.log("CHART READY: {{ chart_elem_id }}");
+-      chartsDrawing -= 1;
+-      if (chartsDrawing == 0)
+-        console.log("ALL CHARTS READY");
+-    });
+-    chart.draw(data, options);
+-}
++  // Set chart options
++  const option = {
++    tooltip: {
++      trigger: 'axis',
++      position: function (pt) {
++        return [pt[0], '10%'];
++      },
++      valueFormatter: (value) => value.toFixed(2)
++    },
++    xAxis: {
++      type: 'time',
++    },
++    yAxis: {
++      name: '{{ measurement.value_type.quantity }}' == 'time' ? 'Duration (minutes)' : 'Disk size (MB)',
++      type: 'value',
++      min: function(value) {
++        return Math.round(value.min - 0.5);
++      },
++      max: function(value) {
++        return Math.round(value.max + 0.5);
++      }
++    },
++    dataZoom: [
++      {
++        type: 'inside',
++        start: 0,
++        end: 100
++      },
++      {
++        start: 0,
++        end: 100
++      }
++    ],
++    series: [
++      {
++        name: '{{ measurement.value_type.quantity }}',
++        type: 'line',
++        smooth: true,
++        symbol: 'none',
++        data: data
++      }
++    ]
++  };
++
++  // Draw chart
++  const chart_div = document.getElementById('{{ chart_elem_id }}');
++  const measurement_chart= echarts.init(chart_div, null, {
++    height: 320
++  });
++  // Change chart size with browser resize
++  window.addEventListener('resize', function() {
++    measurement_chart.resize();
++  });
++  measurement_chart.setOption(option);
+ </script>
+ 
+diff --git a/scripts/lib/build_perf/html/report.html b/scripts/lib/build_perf/html/report.html
+index d1ba6f2578..653fd985bc 100644
+--- a/scripts/lib/build_perf/html/report.html
++++ b/scripts/lib/build_perf/html/report.html
+@@ -3,11 +3,7 @@
+ <head>
+ {# Scripts, for visualization#}
+ <!--START-OF-SCRIPTS-->
+-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+-<script type="text/javascript">
+-google.charts.load('current', {'packages':['corechart']});
+-var chartsDrawing = 0;
+-</script>
++<script src=" https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js "></script>
+ 
+ {# Render measurement result charts #}
+ {% for test in test_data %}
+-- 
+2.44.0
+

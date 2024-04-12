@@ -1,0 +1,240 @@
+From 0ff5f57f1f5669db2a0bebb09a7500e95a7ace7f Mon Sep 17 00:00:00 2001
+From: Ninette Adhikari <13760198+ninetteadhikari@users.noreply.github.com>
+Date: Tue, 19 Mar 2024 16:29:10 +0100
+Subject: [PATCH 3/3] oe-build-perf-report: Improve report styling and add
+ descriptions
+
+Styling updates are added including page margin, labels for x and y axis, tooltip, and section descriptions.
+
+Signed-off-by: Ninette Adhikari <ninette@thehoodiefirm.com>
+---
+ .../build_perf/html/measurement_chart.html    | 28 +++---
+ scripts/lib/build_perf/html/report.html       | 90 +++++++++++++------
+ 2 files changed, 78 insertions(+), 40 deletions(-)
+
+diff --git a/scripts/lib/build_perf/html/measurement_chart.html b/scripts/lib/build_perf/html/measurement_chart.html
+index ffec3d09db..9acb3785e2 100644
+--- a/scripts/lib/build_perf/html/measurement_chart.html
++++ b/scripts/lib/build_perf/html/measurement_chart.html
+@@ -13,8 +13,10 @@
+   // Convert raw data to the format: [time, value]
+   const data = rawData.map(([commit, value, time]) => {
+     return [
+-      new Date(time * 1000).getTime(), // The Date object takes values in milliseconds rather than seconds. So to use a Unix timestamp we have to multiply it by 1000.
+-      Array.isArray(value) ? convertToMinute(value) : value // Assuming the array values are duration in the format [hours, minutes, seconds, milliseconds]
++      // The Date object takes values in milliseconds rather than seconds. So to use a Unix timestamp we have to multiply it by 1000.
++      new Date(time * 1000).getTime(),
++      // Assuming the array values are duration in the format [hours, minutes, seconds, milliseconds]
++      Array.isArray(value) ? convertToMinute(value) : value
+     ]
+   });
+ 
+@@ -22,16 +24,18 @@
+   const option = {
+     tooltip: {
+       trigger: 'axis',
+-      position: function (pt) {
+-        return [pt[0], '10%'];
+-      },
+-      valueFormatter: (value) => value.toFixed(2)
++      valueFormatter: (value) => {
++        const hours = Math.floor(value/60)
++        const minutes = Math.floor(value % 60)
++        const seconds = Math.floor((value * 60) % 60)
++        return hours + ':' + minutes + ':' + seconds
++      }
+     },
+     xAxis: {
+       type: 'time',
+     },
+     yAxis: {
+-      name: '{{ measurement.value_type.quantity }}' == 'time' ? 'Duration (minutes)' : 'Disk size (MB)',
++      name: '{{ measurement.value_type.quantity }}' == 'time' ? 'Duration in minutes' : 'Disk size in MB',
+       type: 'value',
+       min: function(value) {
+         return Math.round(value.min - 0.5);
+@@ -42,14 +46,10 @@
+     },
+     dataZoom: [
+       {
+-        type: 'inside',
+-        start: 0,
+-        end: 100
++        type: 'slider',
++        xAxisIndex: 0,
++        filterMode: 'none'
+       },
+-      {
+-        start: 0,
+-        end: 100
+-      }
+     ],
+     series: [
+       {
+diff --git a/scripts/lib/build_perf/html/report.html b/scripts/lib/build_perf/html/report.html
+index 653fd985bc..4cd240760a 100644
+--- a/scripts/lib/build_perf/html/report.html
++++ b/scripts/lib/build_perf/html/report.html
+@@ -24,23 +24,15 @@
+   text-align: left;
+   border-collapse: collapse;
+ }
+-.meta-table tr:nth-child(even){background-color: #f2f2f2}
+-meta-table th, .meta-table td {
+-  padding: 4px;
+-}
+ .summary {
+-  margin: 0;
+   font-size: 14px;
+   text-align: left;
+   border-collapse: collapse;
+ }
+-summary th, .meta-table td {
+-  padding: 4px;
+-}
+ .measurement {
+   padding: 8px 0px 8px 8px;
+   border: 2px solid #f0f0f0;
+-  margin-bottom: 10px;
++  margin: 1.5rem 0;
+ }
+ .details {
+   margin: 0;
+@@ -60,18 +52,58 @@ summary th, .meta-table td {
+   background-color: #f0f0f0;
+   margin-left: 10px;
+ }
+-hr {
+-  color: #f0f0f0;
++.card-container {
++  border-bottom-width: 1px;
++  padding: 1.25rem 3rem;
++  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
++  border-radius: 0.25rem;
++}
++body {
++  font-family: 'Helvetica', sans-serif;
++  margin: 3rem 8rem;
++}
++h1 {
++  text-align: center;
+ }
+ h2 {
+-  font-size: 20px;
++  font-size: 1.5rem;
+   margin-bottom: 0px;
+   color: #707070;
++  padding-top: 1.5rem;
+ }
+ h3 {
+-  font-size: 16px;
++  font-size: 1.3rem;
+   margin: 0px;
+   color: #707070;
++  padding: 1.5rem 0;
++}
++h4 {
++  font-size: 14px;
++  font-weight: lighter;
++  line-height: 1.2rem;
++  margin: auto;
++  padding-top: 1rem;
++}
++table {
++  margin-top: 1.5rem;
++  line-height: 2rem;
++}
++tr {
++  border-bottom: 1px solid #e5e7eb;
++}
++tr:first-child {
++  border-bottom: 1px solid #9ca3af;
++}
++tr:last-child {
++  border-bottom: none;
++}
++a {
++  text-decoration: none;
++  font-weight: bold;
++  color: #0000EE;
++}
++a:hover {
++  color: #8080ff;
+ }
+ </style>
+ 
+@@ -79,13 +111,14 @@ h3 {
+ </head>
+ 
+ {% macro poky_link(commit) -%}
+-    <a href="http://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?id={{ commit }}">{{ commit[0:11] }}</a>
++  <a href="http://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?id={{ commit }}">{{ commit[0:11] }}</a>
+ {%- endmacro %}
+ 
+-<body><div style="width: 700px">
++<body><div>
++  <h1 style="text-align: center;">Performance Test Report</h1>
+   {# Test metadata #}
+   <h2>General</h2>
+-  <hr>
++  <h4>The table provides an overview of the comparison between two selected commits from the same branch.</h4>
+   <table class="meta-table" style="width: 100%">
+     <tr>
+       <th></th>
+@@ -108,19 +141,21 @@ h3 {
+ 
+   {# Test result summary #}
+   <h2>Test result summary</h2>
+-  <hr>
++  <h4>The test summary presents a thorough breakdown of each test conducted on the branch, including details such as build time and disk space consumption. Additionally, it gives insights into the average time taken for test execution, along with absolute and relative values for a better understanding.</h4>
+   <table class="summary" style="width: 100%">
++    <tr>
++      <th>Test name</th>
++      <th>Measurement description</th>
++      <th>Mean value</th>
++      <th>Absolute difference</th>
++      <th>Relative difference</th>
++    </tr>
+     {% for test in test_data %}
+-      {% if loop.index is even %}
+-        {% set row_style = 'style="background-color: #f2f2f2"' %}
+-      {% else %}
+-        {% set row_style = 'style="background-color: #ffffff"' %}
+-      {% endif %}
+       {% if test.status == 'SUCCESS' %}
+         {% for measurement in test.measurements %}
+           <tr {{ row_style }}>
+             {% if loop.index == 1 %}
+-              <td>{{ test.name }}: {{ test.description }}</td>
++              <td><a href=#{{test.name}}>{{ test.name }}: {{ test.description }}</a></td>
+             {% else %}
+               {# add empty cell in place of the test name#}
+               <td></td>
+@@ -149,10 +184,12 @@ h3 {
+   </table>
+ 
+   {# Detailed test results #}
++  <h2>Test details</h2>
++  <h4>The following section provides details of each test, accompanied by charts representing build time and disk usage over time or by commit number.</h4>
+   {% for test in test_data %}
+-  <h2>{{ test.name }}: {{ test.description }}</h2>
+-  <hr>
++  <h3 style="color: #000;" id={{test.name}}>{{ test.name }}: {{ test.description }}</h3>
+     {% if test.status == 'SUCCESS' %}
++    <div class="card-container">
+       {% for measurement in test.measurements %}
+         <div class="measurement">
+           <h3>{{ measurement.description }}</h3>
+@@ -271,7 +308,8 @@ h3 {
+             {% endif %}
+           {% endif %}
+         </div>
+-      {% endfor %}
++        {% endfor %}
++      </div>
+     {# Unsuccessful test #}
+     {% else %}
+       <span style="font-size: 150%; font-weight: bold; color: red;">{{ test.status }}
+-- 
+2.44.0
+
