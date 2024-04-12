@@ -4048,7 +4048,7 @@ system and gives an overview of their function and contents.
       The default value of the variable is set as follows in the
       ``meta/conf/distro/defaultsetup.conf`` file::
 
-         INHERIT_DISTRO ?= "debian devshell sstate license"
+         INHERIT_DISTRO ?= "debian devshell sstate license remove-libtool create-spdx"
 
    :term:`INHIBIT_DEFAULT_DEPS`
       Prevents the default dependencies, namely the C compiler and standard
