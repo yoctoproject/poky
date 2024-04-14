@@ -2380,6 +2380,24 @@ Python modules built with ``flit_core.buildapi`` are pure Python (no
 
 Internally this uses the :ref:`ref-classes-python_pep517` class.
 
+.. _ref-classes-python_maturin:
+
+``python_maturin``
+==================
+
+The :ref:`ref-classes-python_maturin` class provides support for python-maturin, a replacement
+for setuptools_rust and another "backend" for building Python Wheels.
+
+.. _ref-classes-python_mesonpy:
+
+``python_mesonpy``
+==================
+
+The :ref:`ref-classes-python_mesonpy` class enables building Python modules which use the
+meson-python build system.
+
+Internally this uses the :ref:`ref-classes-python_pep517` class.
+
 .. _ref-classes-python_pep517:
 
 ``python_pep517``
