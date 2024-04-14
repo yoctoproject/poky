@@ -8813,6 +8813,10 @@ system and gives an overview of their function and contents.
       value so that executables built using the SDK also have the flags
       applied.
 
+   :term:`TARGET_DBGSRC_DIR`
+      Specifies the target path to debug source files. The default is
+      ``/usr/src/debug/${PN}/${PV}``.
+
    :term:`TARGET_FPU`
       Specifies the method for handling FPU code. For FPU-less targets,
       which include most ARM CPUs, the variable must be set to "soft". If
