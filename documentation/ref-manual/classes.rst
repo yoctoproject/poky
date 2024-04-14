@@ -1582,6 +1582,12 @@ The tests you can list with the :term:`WARN_QA` and
       This is only relevant when you are using runtime package management
       on your target system.
 
+-  ``virtual-slash:`` Checks to see if ``virtual/`` is being used in
+   :term:`RDEPENDS` or :term:`RPROVIDES`, which is not good practice ---
+   ``virtual/`` is a convention intended for use in the build context
+   (i.e. :term:`PROVIDES` and :term:`DEPENDS`) rather than the runtime
+   context.
+
 -  ``xorg-driver-abi:`` Checks that all packages containing Xorg
    drivers have ABI dependencies. The ``xserver-xorg`` recipe provides
    driver ABI names. All drivers should depend on the ABI versions that
