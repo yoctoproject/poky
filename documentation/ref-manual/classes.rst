@@ -564,6 +564,13 @@ The ``Patched`` state of a CVE issue is detected from patch files with the forma
 ``CVE-ID.patch``, e.g. ``CVE-2019-20633.patch``, in the :term:`SRC_URI` and using
 CVE metadata of format ``CVE: CVE-ID`` in the commit message of the patch file.
 
+.. note::
+
+   Commit message metadata (``CVE: CVE-ID`` in a patch header) will not be scanned
+   in any patches that are remote, i.e. that are anything other than local files
+   referenced via ``file://`` in SRC_URI. However, a ``CVE-ID`` in a remote patch
+   file name itself will be registered.
+
 If the recipe adds ``CVE-ID`` as flag of the :term:`CVE_STATUS` variable with status
 mapped to ``Ignored``, then the CVE state is reported as ``Ignored``::
 
