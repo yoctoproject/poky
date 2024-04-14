@@ -23,6 +23,8 @@ New Features / Enhancements in 5.0
    -  :term:`EFI_UKI_PATH`, :term:`EFI_UKI_DIR`: define the location of UKI
       image in the EFI System partition.
 
+   -  :term:`TARGET_DBGSRC_DIR`: specifies the target path to debug source files
+
 -  Architecture-specific enhancements:
 
    -  ``genericarm64``: a new :term:`MACHINE` to represent a 64-bit General Arm
@@ -32,6 +34,8 @@ New Features / Enhancements in 5.0
 
    -  ``arch-armv9``: remove CRC and SVE tunes, since FEAT_CRC32 is now mandatory
       and SVE/SVE2 are enabled by default in GCC's ``-march=armv9-a``.
+
+   -  ``arm/armv*``: add all of the additional Arm tunes in GCC 13.2.0
 
 -  Kernel-related enhancements:
 
@@ -145,6 +149,10 @@ New Features / Enhancements in 5.0
    -  ``nativesdk``: prevent :term:`MACHINE_FEATURES` and :term:`DISTRO_FEATURES`
       from being backfilled.
 
+   -  Support for ``riscv64`` as an SDK host architecture
+
+   -  Extend recipes to ``nativesdk``: ``acpica``, ``libpcap``, ``python3-setuptools-rust``
+
 -  Testing:
 
    -  Add an optional ``unimplemented-ptest`` QA warning to detect upstream
@@ -155,14 +163,29 @@ New Features / Enhancements in 5.0
 
    -  ``oeqa``, ``oe-selftest``: add test cases for Maturin (SDK and runtime).
 
--  Utility script changes:
+   -  Enable ptests for ``python3-attrs``, ``python3-pyyaml``, ``xz``
 
-   -  New ``recipetool/create_go.py`` script added to support Go recipe creation
+-  Utility script changes:
 
    -  ``oe-init-build-env`` can generate a initial configuration (``.vscode``)
       for VSCode and its "Yocto Project BitBake" extension.
 
+   -  The ``sstate-cache-management`` script has been rewritten in python for better performance and maintainability
+
+   -  ``bitbake-layers``: added an option to update the reference of repositories in layer setup
+
 -  BitBake improvements:
+
+   -  New ``inherit_defer`` statement which works as
+      :ref:`inherit <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:\`\`inherit\`\` directive>`
+      does, except that it is only evaluated at the end of parsing
+      --- recommended where a conditional expression is used, e.g.::
+
+         inherit_defer ${@bb.utils.contains('PACKAGECONFIG', 'python', 'python3targetconfig', '', d)}
+
+      This allows conditional expressions to be evaluated 'late' meaning changes
+      to the variable after the line is parsed will take effect - with inherit this
+      is not the case.
 
    -  Add support for :term:`BB_LOADFACTOR_MAX`, so Bitbake can stop running
       extra tasks if the system load is too high, especially in distributions
@@ -185,7 +208,7 @@ New Features / Enhancements in 5.0
    -  ``git-make-shallow`` script: add support for Git's ``safe.bareRepository=explicit``
       configuration setting.
 
--  Devtool improvements:
+-  devtool improvements:
 
    -  Introduce a new ``ide-sdk`` plugin to generate a configuration to use
       the eSDK through an IDE.
@@ -194,9 +217,36 @@ New Features / Enhancements in 5.0
 
    -  Add support for Git submodules.
 
+   -  ``ide``: ``vscode``: generate files from recipe sysroots and debug the
+      root filesystem in read-only mode to avoid confusion.
+
+   -  ``modify``: add support for multiple sources in :term:`SRC_URI`.
+
+   -  Support plugins within plugins.
+
+-  recipetool improvements:
+
+   - ``appendsrcfile(s)``: add a mode to update the recipe itself.
+
+   - ``appendsrcfile(s)``: add ``--dry-run`` mode.
+
+   - ``create``: add handler to create Go recipes.
+
+   - ``create``: improve identification of licenses.
+
+   - ``create``: add support for modern Python PEP-517 build systems including
+     hatchling, maturin, meson-python.
+
+   - ``create``: add PyPi support.
+
+   - ``create``: prefix created Python recipes with ``python3-``.
+
 -  Packaging changes:
 
    -  ``package_rpm``: the RPM package compressor's mode can now be overriden.
+
+   -  ipk packaging (using ``opkg``) now uses ``zstd`` compression instead of
+      ``xz`` for better compression and performance.
 
 -  Security improvements:
 
@@ -226,6 +276,11 @@ New Features / Enhancements in 5.0
    -  Systemd's following :term:`PACKAGECONFIG` options were added:
       ``cryptsetup-plugins``, ``no-ntp-fallback``, and ``p11kit``.
 
+   -  New PACKAGECONFIG options added to ``libarchive``, ``libinput``,
+      ``libunwind``, ``mesa``, ``mesa-gl``, ``openssh``, ``perf``,
+      ``python3-pyyaml``, ``qemu``, ``rpm``, ``shadow``, ``strace``,
+      ``syslinux``, ``systemd``, ``vte``, ``webkitgtk``, ``xserver-xorg``.
+
    -  ``systemd-boot`` can, from now on, be compiled as ``native``, thus
       providing ``ukify`` tool to build UKI images.
 
@@ -238,12 +293,23 @@ New Features / Enhancements in 5.0
 
    -  Disable strace support of bluetooth by default.
 
-   -  ``openssh`` now has a Systemd service: ``sshd.service``.
+   -  ``openssh`` now has a systemd service: ``sshd.service``.
+
+   -  The :ref:`ref-classes-python_mesonpy` class was added (moved in from
+      ``meta-python``) to support Python package builds using the meson-python
+      PEP-517 build backend.
+
+   -  Support for unpacking ``.7z`` archives in :term:`SRC_URI` using ``p7zip``.
+
+   -  Add minimal VS Code configuration to avoid VS Code's indexer from choking
+      on build directories.
+
 
 Known Issues in 5.0
 ~~~~~~~~~~~~~~~~~~~
 
--  N/A
+-  ``gpgme`` has had Python binding support disabled since upstream does not yet support Python 3.12.
+
 
 Recipe License changes in 5.0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
