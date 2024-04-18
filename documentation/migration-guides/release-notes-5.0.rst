@@ -25,6 +25,10 @@ New Features / Enhancements in 5.0
 
    -  :term:`TARGET_DBGSRC_DIR`: specifies the target path to debug source files
 
+   -  :term:`USERADD_DEPENDS`: provides a way to declare dependencies on the users
+      and/or groups created by other recipes, resolving a long-standing build
+      ordering issue
+
 -  Architecture-specific enhancements:
 
    -  ``genericarm64``: a new :term:`MACHINE` to represent a 64-bit General Arm
@@ -155,6 +159,12 @@ New Features / Enhancements in 5.0
 
 -  Testing:
 
+   -  Move `patchtest` to the core (as ``scripts/patchtest``, test cases under
+      ``meta/lib/patchtest/tests``) and make a number of improvements to enable
+      it to validate patches submitted on the mailing list again. Additionally,
+      make it work with the original upstream version of
+      `Patchwork <http://jk.ozlabs.org/projects/patchwork/>`__.
+
    -  Add an optional ``unimplemented-ptest`` QA warning to detect upstream
       packages with tests, that do not use ptest.
 
@@ -162,6 +172,9 @@ New Features / Enhancements in 5.0
       upon ptest failure.
 
    -  ``oeqa``, ``oe-selftest``: add test cases for Maturin (SDK and runtime).
+
+   -  Proof-of-concept of screenshot-based runtime UI test
+      (``meta/lib/oeqa/runtime/cases/login.py``)
 
    -  Enable ptests for ``python3-attrs``, ``python3-pyyaml``, ``xz``
 
@@ -191,8 +204,6 @@ New Features / Enhancements in 5.0
       extra tasks if the system load is too high, especially in distributions
       where ``/proc/pressure`` is disabled.
 
-   -  Add garbage collection to remove unused unihashes from the database.
-
    -  ``taskexp_ncurses``: add ncurses version of ``taskexp``, the dependency
       explorer originally implemented with GTK.
 
@@ -207,6 +218,17 @@ New Features / Enhancements in 5.0
 
    -  ``git-make-shallow`` script: add support for Git's ``safe.bareRepository=explicit``
       configuration setting.
+
+   -  Hash equivalence gained a number of scalability improvements including:
+
+      -  Support for a wide range of database backends through `SQLAlchemy`
+
+      -  Support for hash equivalence server and client to communicate over websockets
+
+      -  Support for per-user permissions in the hashserver, and on the client side
+         specifying credentials via the environment or ``.netrc``
+
+      -  Add garbage collection to remove unused unihashes from the database.
 
 -  devtool improvements:
 
@@ -254,6 +276,12 @@ New Features / Enhancements in 5.0
       removed, configuration is kept up-to-date. The age threshold for
       incremental update can be configured with :term:`CVE_DB_INCR_UPDATE_AGE_THRES`
       variable.
+
+-  Toaster Web UI improvements:
+
+   - Numerous bugfixes, and additional input validation
+
+   - Add `pytest` support and add/update test cases
 
 -  Prominent documentation updates:
 
