@@ -22,7 +22,92 @@ what Wikipedia or the project defining this word uses.
 
 ## Text standards
 
-This section has not been filled yet
+### Bulleted lists
+
+Though Sphinx supports both the ``*`` and ``-`` characters
+for introducing bulleted lists, we have chosen to use
+only ``-`` for this purpose.
+
+Though not strictly required by Sphinx, we have also chosen
+to use two space characters after ``-`` to introduce each
+list item:
+
+    -  Paragraph 1
+
+    -  Paragraph 2
+
+As shown in the above example, there should also be an empty
+line between each list item.
+
+An exception to this rule is when the list items are just made
+of a few words, instead of entire paragraphs:
+
+    -  Item 1
+    -  Item 2
+
+This is again a matter of style, not syntax.
+
+### Line wrapping
+
+Source code for the documentation shouldn't have lines
+wider than 80 characters. This makes patch lines more
+readable and code easier to quote in e-mail clients.
+
+If you have to include long commands or lines in configuration
+files, provided the syntax makes this possible, split them
+into multiple lines, using the ``\`` character.
+
+Here is an example:
+
+    $ scripts/install-buildtools \
+      --without-extended-buildtools \
+      --base-url https://downloads.yoctoproject.org/releases/yocto \
+      --release yocto-4.0.1 \
+      --installer-version 4.0.1
+
+Exceptions are granted for file contents whose lines
+cannot be split without infringing syntactic rules
+or reducing readability, as well as for command output
+which should be kept unmodified.
+
+### File, tool and command names
+
+File, tool, command and package names should be double tick-quoted.
+For example, ``` ``conf/local.conf`` ``` is preferred over
+`"conf/local.conf"`.
+
+### Project names
+
+Project names should be introduced with single quotes, to have them rendered
+with an italic font and make them easier to distinguish from command names
+(double tick-quoted) and from regular English words.
+
+An exception is when project names appear in hyperlinks, as nested markup
+is not supported by Sphinx yet.
+
+Project names should also be capitalized (or not) in the same way they are on
+Wikipedia, or on their own project pages if they are not described on
+Wikipedia. If a project name isn't capitalized, it should remain so even
+at the beginning of a sentence.
+
+For example:
+
+* ``` `BitBake` ```
+* ``` `ftrace` ```
+
+### Variables
+
+Every variable should be mentioned with:
+
+    :term:`VARIABLE`
+
+This assumes that `VARIABLE` is described either
+in the Yocto Project documentation variable index (`ref-manual/variables.rst`)
+or in the BitBake User Manual
+(`doc/bitbake-user-manual/bitbake-user-manual-ref-variables.rst`)
+
+If it is not described yet, the variable should be added to the
+glossary before or in the same patch it is used, so that `:term:` can be used.
 
 ## ReStructured Text Syntax standards
 
@@ -41,8 +126,14 @@ To include a screenshot in PNG format:
     .. image:: figures/user-configuration.png
        :align: center
 
-Depending on the size of the image, you may also shrink it
-to prevent it from filling the whole page width:
+A diagram with many details usually needs to use
+the whole page width to be readable on all media.
+In this case, the `:align:` directive is unnecessary:
+
+       :scale: 100%
+
+Conversely, you may also shrink some images to
+to prevent them from filling the whole page width:
 
        :scale: 50%
 
