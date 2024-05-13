@@ -28,7 +28,7 @@ Fixes in Yocto-4.0.18
 ~~~~~~~~~~~~~~~~~~~~~
 
 -  build-appliance-image: Update to kirkstone head revision
--  common-licenses: Backport missing license
+-  common-licenses: backport LGPL-3.0-with-zeromq-exception license
 -  contributor-guide: add notes for tests
 -  contributor-guide: be more specific about meta-* trees
 -  cups: fix typo in :cve:`2023-32360` backport patch
