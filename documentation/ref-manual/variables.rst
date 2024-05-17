@@ -5585,6 +5585,21 @@ system and gives an overview of their function and contents.
 
          NON_MULTILIB_RECIPES = "grub grub-efi make-mod-scripts ovmf u-boot"
 
+   :term:`NVDCVE_API_KEY`
+      The NVD API key used to retrieve data from the CVE database when
+      using :ref:`ref-classes-cve-check`.
+
+      By default, no API key is used, which results in larger delays between API
+      requests and limits the number of queries to the public rate limits posted
+      at the `NVD developer's page <https://nvd.nist.gov/developers/start-here>`__.
+      
+      NVD API keys can be requested through the
+      `Request an API Key <https://nvd.nist.gov/developers/request-an-api-key>`__
+      page. You can set this variable to the NVD API key in your ``local.conf`` file.
+      Example::
+
+          NVDCVE_API_KEY = "fe753&7a2-1427-347d-23ff-b2e2b7ca5f3"
+
    :term:`OBJCOPY`
       The minimal command and arguments to run ``objcopy``.
 
