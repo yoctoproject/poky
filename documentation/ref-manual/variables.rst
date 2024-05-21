@@ -6844,6 +6844,19 @@ system and gives an overview of their function and contents.
       explicitly if that will not match the package name (e.g. where the
       package name has a prefix, underscores, uppercase letters etc.)
 
+   :term:`PYPI_PACKAGE_EXT`
+      When inheriting the :ref:`ref-classes-pypi` class, specifies the
+      file extension to use when fetching a package from `PyPI
+      <https://pypi.org/>`__. Default is ``tar.gz``.
+
+   :term:`PYPI_SRC_URI`
+      When inheriting the :ref:`ref-classes-pypi` class, specifies the
+      full `pythonhosted <https://files.pythonhosted.org/>`__ URI for
+      fetching the package to be built. The default value is constructed
+      based upon :term:`PYPI_PACKAGE`, :term:`PYPI_PACKAGE_EXT`, and
+      :term:`PV`. Most recipes will not need to set this variable unless
+      they are building an unstable (i.e. development) version.
+
    :term:`PYTHON_ABI`
       When used by recipes that inherit the :ref:`ref-classes-setuptools3`
       class, denotes the Application Binary Interface (ABI) currently in use
