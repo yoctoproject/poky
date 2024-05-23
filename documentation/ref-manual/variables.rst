@@ -9698,6 +9698,11 @@ system and gives an overview of their function and contents.
       :ref:`ref-classes-insane` class and is only enabled if the
       recipe inherits the :ref:`ref-classes-autotools` class.
 
+   :term:`UNPACKDIR`
+      This variable, used by the :ref:`ref-classes-base` class,
+      specifies where fetches sources should be unpacked by the
+      :ref:`ref-tasks-unpack` task.
+
    :term:`UPDATERCPN`
       For recipes inheriting the
       :ref:`ref-classes-update-rc.d` class, :term:`UPDATERCPN`
