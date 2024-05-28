@@ -59,9 +59,14 @@ Previously, :term:`S` was always created but after the recent changes it is no
 longer the case. This means the check in ``do_unpack_qa`` triggers where
 :term:`S` is not created by a recipe while it didn't happen before. This can
 require to add an :term:`S` definition to a recipe that only uses
-``file://`` :term:`SRC_URI` entries. Building C files from :term:`UNPACKDIR`
-without setting :term:`S` to point at it does not work as the debug prefix
-mapping doesn't handle that.
+``file://`` :term:`SRC_URI` entries. To be consistent, the following pattern is
+recommended::
+
+    S = "${WORKDIR}/sources"
+    UNPACKDIR = "${S}"
+
+Building C files from :term:`UNPACKDIR` without setting :term:`S` to point at
+it does not work as the debug prefix mapping doesn't handle that.
 
 ``devtool``  and ``recipetool`` have been updated to handle this and their
 support for ``S = WORKDIR`` and ``oe-local-files`` has been removed.
