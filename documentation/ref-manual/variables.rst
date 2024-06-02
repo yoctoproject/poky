@@ -7086,6 +7086,13 @@ system and gives an overview of their function and contents.
       The default value is ``"${WORKDIR}/recipe-sysroot-native"``.
       Do not modify it.
 
+   :term:`RECIPE_UPDATE_EXTRA_TASKS`
+      For some recipes, after the new source has been unpacked, additional tasks
+      may need to be run during an upgrade. A good example of this is recipes
+      which inherit :ref:`ref-classes-cargo-update-recipe-crates`, where the
+      `do_update_crates` task needs to be run whenever Cargo.toml/Cargo.lock have
+      changed in the source.
+
    :term:`REPODIR`
       See :term:`bitbake:REPODIR` in the BitBake manual.
 
