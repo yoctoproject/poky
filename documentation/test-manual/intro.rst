@@ -458,7 +458,7 @@ the ``devtool build`` command within the eSDK.
 
 These tests are run against built SDKs. The tests can assume that an SDK
 has already been extracted and its environment file has been sourced. A
-simple example from ``meta/lib/oeqa/sdk/cases/python2.py`` contains the
+simple example from ``meta/lib/oeqa/sdk/cases/python.py`` contains the
 following::
 
    class Python3Test(OESDKTestCase):
