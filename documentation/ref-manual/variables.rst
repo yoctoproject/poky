@@ -1877,6 +1877,13 @@ system and gives an overview of their function and contents.
          by :term:`BBFILE_PRIORITY` if that variable is different between two
          layers that contain different versions of the same recipe.
 
+   :term:`DEFAULT_TIMEZONE`
+      Specifies the time zone set in the image.
+
+      This variable causes the ``tzdata`` package to configure
+      ``${sysconfdir}/localtime`` accordingly. Valid values are all files
+      found in ``/usr/share/zoneinfo`` like ``CET`` or ``Asia/Baku``.
+
    :term:`DEFAULTTUNE`
       The default CPU and Application Binary Interface (ABI) tunings (i.e.
       the "tune") used by the OpenEmbedded build system. The
