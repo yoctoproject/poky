@@ -8,3 +8,4 @@ Release 5.0 (scarthgap)
    migration-5.0
    release-notes-5.0
    release-notes-5.0.1
+   release-notes-5.0.2
