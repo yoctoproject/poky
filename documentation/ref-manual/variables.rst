@@ -3971,6 +3971,7 @@ system and gives an overview of their function and contents.
       - wic.bz2
       - wic.gz
       - wic.lzma
+      - wic.zst
 
       For more information about these types of images, see
       ``meta/classes-recipe/image_types*.bbclass`` in the :term:`Source Directory`.
