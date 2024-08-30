@@ -146,7 +146,7 @@ metadata, as extra layers can define their own:
 
 -  *directfb:* Include DirectFB support.
 
--  *ext2:* Include tools for supporting for devices with internal
+-  *ext2:* Include tools for supporting devices with internal
    HDD/Microdrive for storing files (instead of Flash only devices).
 
 -  *gobject-introspection-data:* Include data to support
