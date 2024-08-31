@@ -197,6 +197,10 @@ metadata, as extra layers can define their own:
 
 -  *pcmcia:* Include PCMCIA/CompactFlash support.
 
+-  *pni-names:* Enable generation of persistent network interface names, i.e.
+   the system tries hard to have the same but unique names for the network
+   interfaces even after a reinstall.
+
 -  *polkit:* Include :wikipedia:`Polkit <Polkit>` support.
 
 -  *ppp:* Include PPP dialup support.
