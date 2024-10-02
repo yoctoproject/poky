@@ -28,6 +28,8 @@ New Features / Enhancements in 5.1
 
    -  oeqa/selftest: Only rewrite envvars paths that absolutely point to builddir
 
+   -  Enable ptests for ``python3-libarchive-c``
+
 -  Utility script changes:
 
 -  BitBake improvements:
