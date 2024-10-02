@@ -36,6 +36,8 @@ New Features / Enhancements in 5.1
 
 -  devtool improvements:
 
+   - Fix ``_test_devtool_add_git_url`` test
+
 -  recipetool improvements:
 
 -  Packaging changes:
