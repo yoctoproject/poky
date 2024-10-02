@@ -26,6 +26,8 @@ New Features / Enhancements in 5.1
 
 -  Testing:
 
+   -  oeqa/selftest: Only rewrite envvars paths that absolutely point to builddir
+
 -  Utility script changes:
 
 -  BitBake improvements:

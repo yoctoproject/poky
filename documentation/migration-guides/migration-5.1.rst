@@ -141,3 +141,17 @@ QEMU changes
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
 
+-  `oe-selftest` now only rewrites environment variable paths that absolutely
+   point to builddir (i.e ``X=$BUILDDIR/conf/`` is still rewritten to point to
+   the `oe-selftest` ``conf/`` directory but not ``Y=$BUILDDIR/../bitbake/`` which
+   still point to the ``bitbake/`` directory)
+
+   For example (taken from :yocto_ab:`autobuilder <>` environment):
+   :term:`BB_LOGCONFIG` is set as:
+   ``BB_LOGCONFIG="${BUILDDIR}/../bitbake/contrib/autobuilderlog.json"``.
+   Note the relative path starting from the build directory to outside of it.
+   This path is not changed by `oe-selftest` anymore.
+
+   Environment variables containing relative paths from tested build directory
+   to outside of the original build directory may need to be updated as they
+   won't be changed by `oe-selftest`.
