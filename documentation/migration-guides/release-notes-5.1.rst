@@ -50,6 +50,8 @@ New Features / Enhancements in 5.1
 
 -  Miscellaneous changes:
 
+   -  Fix reproducibility for ``spirv-tools``
+
 Known Issues in 5.1
 ~~~~~~~~~~~~~~~~~~~
 
