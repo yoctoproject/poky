@@ -2940,15 +2940,6 @@ in the :ref:`ref-classes-setuptools3` class and inherit this class instead.
 
 The :ref:`ref-classes-sign_rpm` class supports generating signed RPM packages.
 
-.. _ref-classes-siteconfig:
-
-``siteconfig``
-==============
-
-The :ref:`ref-classes-siteconfig` class provides functionality for handling site
-configuration. The class is used by the :ref:`ref-classes-autotools` class to
-accelerate the :ref:`ref-tasks-configure` task.
-
 .. _ref-classes-siteinfo:
 
 ``siteinfo``
