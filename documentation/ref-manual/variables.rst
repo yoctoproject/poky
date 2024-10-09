@@ -9267,6 +9267,11 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Development Tasks Manual and the
       ":ref:`ref-classes-testimage`" section.
 
+   :term:`TESTIMAGE_FAILED_QA_ARTIFACTS`
+      When using the :ref:`ref-classes-testimage` class, the variable
+      :term:`TESTIMAGE_FAILED_QA_ARTIFACTS`  lists space-separated paths on the
+      target to retrieve onto the host.
+
    :term:`THISDIR`
       The directory in which the file BitBake is currently parsing is
       located. Do not manually set this variable.
