@@ -7137,6 +7137,41 @@ system and gives an overview of their function and contents.
       If both :term:`REQUIRED_VERSION` and :term:`PREFERRED_VERSION` are set
       for the same recipe, the :term:`REQUIRED_VERSION` value applies.
 
+   :term:`RETAIN_DIRS_ALWAYS`
+      When inheriting the :ref:`ref-classes-retain` class, this variable holds
+      space-separated recipe-specific directories to always save in a tarball
+      whether the recipe build has failed or not.
+
+   :term:`RETAIN_DIRS_FAILURE`
+      When inheriting the :ref:`ref-classes-retain` class, this variable holds
+      space-separated recipe-specific directories to save in a tarball on
+      failure of the recipe's build.
+
+   :term:`RETAIN_DIRS_GLOBAL_ALWAYS`
+      When inheriting the :ref:`ref-classes-retain` class, this variable holds
+      space-separated directories that are not specific to a recipe to save in a
+      tarball whether the build has failed or not.
+
+   :term:`RETAIN_DIRS_GLOBAL_FAILURE`
+      When inheriting the :ref:`ref-classes-retain` class, this variable holds
+      space-separated directories that are not specific to a recipe to save in a
+      tarball on build failure.
+
+   :term:`RETAIN_ENABLED`
+      Disables the creation of a tarball of the work directory done by the
+      :ref:`ref-classes-retain` class. Can be set to specific recipes to disable
+      the class when the class was inherited globally with :term:`INHERIT`.
+
+   :term:`RETAIN_OUTDIR`
+      When inheriting the :ref:`ref-classes-retain` class, this variable
+      specifies the directory where to save the tarball of the work directory.
+      The default directory is ``${TMPDIR}/retain``.
+
+   :term:`RETAIN_TARBALL_SUFFIX`
+      When inheriting the :ref:`ref-classes-retain` class, this variable
+      specifies the suffix of the tarball of the work directory. The default
+      suffix is ``${DATETIME}.tar.gz``.
+
    :term:`RM_WORK_EXCLUDE`
       With :ref:`ref-classes-rm-work` enabled, this variable
       specifies a list of recipes whose work directories should not be removed.

@@ -2728,6 +2728,23 @@ commit, and log. From the information, report files using a JSON format
 are created and stored in
 ``${``\ :term:`LOG_DIR`\ ``}/error-report``.
 
+.. _ref-classes-retain:
+
+``retain``
+==========
+
+The :ref:`ref-classes-retain` class can be used to create a tarball of the work
+directory for a recipe when one of its tasks fails, or any other nominated
+directories. It is useful in cases where the environment in which builds are run
+is ephemeral or otherwise inaccessible for examination during debugging.
+
+To enable, add the following to your configuration::
+
+   INHERIT += "retain"
+
+The class can be disabled for specific recipes using the :term:`RETAIN_ENABLED`
+variable.
+
 .. _ref-classes-rm-work:
 
 ``rm_work``
