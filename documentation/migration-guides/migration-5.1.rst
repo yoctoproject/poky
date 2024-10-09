@@ -86,7 +86,14 @@ Supported distributions
 Compared to the previous releases, running BitBake is supported on new
 GNU/Linux distributions:
 
+-  Ubuntu 24.10
+-  Fedora 40
+-  OpenSUSE Leap 15.5
+-  OpenSUSE Leap 15.6
+
 On the other hand, some earlier distributions are no longer supported:
+
+-  Ubuntu 23.04
 
 See :ref:`all supported distributions <system-requirements-supported-distros>`.
 
@@ -95,20 +102,35 @@ See :ref:`all supported distributions <system-requirements-supported-distros>`.
 Go language changes
 ~~~~~~~~~~~~~~~~~~~
 
+-  After dropping the custom :ref:`ref-tasks-unpack` from the
+   :ref:`ref-classes-go` class, go recipes should now add
+   ``destsuffix=${GO_SRCURI_DESTSUFFIX}`` to their :term:`SRC_URI` to extract
+   them in the appropriate path. An example would be::
+
+      SRC_URI = "git://go.googlesource.com/example;branch=master;protocol=https;destsuffix=${GO_SRCURI_DESTSUFFIX}"
+
+-  Go modules are no longer compiled with ``--linkmode=external``.
+
 .. _migration-5.1-systemd-changes:
 
 systemd changes
 ~~~~~~~~~~~~~~~
+
+-  New :term:`PACKAGECONFIG` value ``bpf-framework`` used to pre-compile eBPFs
+   that are required for the systemd.resource-control features
+   ``RestrictFileSystems`` and ``RestrictNetworkInterfaces``.
 
 .. _migration-5.1-recipe-changes:
 
 Recipe changes
 ~~~~~~~~~~~~~~
 
-.. _migration-5.1-deprecated-variables:
+-  ``gobject-introspection``: the ``giscanner`` utility is now shipped as a
+   separate package in ``gobject-introspection-tools``.
 
-Deprecated variables
-~~~~~~~~~~~~~~~~~~~~
+-  ``perf`` no longer uses ``libnewt`` for compiling its TUI.
+
+-  ``openssl``: do not build the test suite unless ptests are enabled.
 
 .. _migration-5.1-removed-variables:
 
@@ -117,6 +139,9 @@ Removed variables
 
 The following variables have been removed:
 
+-  ``TCLIBCAPPEND`` is now removed as sharing :term:`TMPDIR` for multiple libc
+   providers has been supported for years.
+
 .. _migration-5.1-removed-recipes:
 
 Removed recipes
@@ -124,19 +149,35 @@ Removed recipes
 
 The following recipes have been removed in this release:
 
+-  ``liba52``: superseded by ``ffmpeg``
+-  ``libomxil``: recipe removed as its only consumer, the gstreamer omx plugin,
+    was removed and has not been developed for several years
+-  ``libnewt``: moved to meta-oe
+-  ``mpeg2dec``: inactive for 10 years and superseded by ``ffmpeg``
+-  ``pytest-runner``: moved to meta-python
+-  ``python3-importlib-metadata``: moved to meta-python
+-  ``python3-pathlib2``: moved to meta-python
+-  ``python3-py``: moved to meta-python
+-  ``python3-rfc3986-validator``: moved to meta-python
+-  ``python3-toml``: moved to meta-python
+-  ``python3-tomli``: moved to meta-python
+-  ``usbinit``: recipe was poorly named as it is a gadget Ethernet driver.
+   Gadget Ethernet is of questionable use now and usbinit isn't referenced/used
+   anywhere within OE-Core.
+
+
 .. _migration-5.1-removed-classes:
 
 Removed classes
 ~~~~~~~~~~~~~~~
 
-No classes have been removed in this release.
+The following classes have been removed in this release:
+
+-  ``siteconfig``:  removed as it was only used by ``ncurses`` and ``zlib`` and
+   adding minimal added-value for a considerable amount of added runtime.
+
 
 .. _migration-5.1-qemu-changes:
-
-QEMU changes
-~~~~~~~~~~~~
-
-.. _migration-5.1-misc-changes:
 
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
@@ -155,3 +196,9 @@ Miscellaneous changes
    Environment variables containing relative paths from tested build directory
    to outside of the original build directory may need to be updated as they
    won't be changed by `oe-selftest`.
+
+-  Several sanity checks from the :ref:`ref-classes-insane` class, such as
+   ``buildpaths``, have been promoted to errors instead of warnings.
+
+-  The ``license-incompatible`` :term:`ERROR_QA` sanity check was renamed to
+   ``license-exception``.
