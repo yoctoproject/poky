@@ -5761,6 +5761,13 @@ system and gives an overview of their function and contents.
    :term:`OPKG_MAKE_INDEX_EXTRA_PARAMS`
       Specifies extra parameters for the ``opkg-make-index`` command.
 
+   :term:`OPKGBUILDCMD`
+      The variable :term:`OPKGBUILDCMD` specifies the command used to build opkg
+      packages when using the :ref:`ref-classes-package_ipk` class. It is
+      defined in :ref:`ref-classes-package_ipk` as::
+
+          OPKGBUILDCMD ??= 'opkg-build -Z zstd -a "${ZSTD_DEFAULTS}"'
+
    :term:`OVERLAYFS_ETC_DEVICE`
       When the :ref:`ref-classes-overlayfs-etc` class is
       inherited, specifies the device to be mounted for the read/write
