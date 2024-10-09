@@ -2307,6 +2307,18 @@ system and gives an overview of their function and contents.
       :ref:`kernel-yocto <ref-classes-kernel-yocto>` class in
       ``meta/classes`` to see how the variable is used.
 
+   :term:`EXTERNAL_KERNEL_DEVICETREE`
+      When inheriting :ref:`ref-classes-kernel-fitimage` and a
+      :term:`PREFERRED_PROVIDER` for ``virtual/dtb`` set to ``devicetree``, the
+      variable :term:`EXTERNAL_KERNEL_DEVICETREE` can be used to specify a
+      directory containing one or more compiled device tree or device tree
+      overlays to use.
+
+      Using this variable is only useful when you are using a kernel recipe
+      inheriting the :ref:`ref-classes-kernel` class, and which doesn't
+      already set a local version. Therefore, setting this variable has no
+      impact on ``linux-yocto`` kernels.
+
    :term:`EXTERNAL_TOOLCHAIN`
       When you intend to use an
       :ref:`external toolchain <dev-manual/external-toolchain:optionally using an external toolchain>`,
