@@ -3489,6 +3489,31 @@ This class is enabled by default because it is inherited by the
 The :ref:`ref-classes-vala` class supports recipes that need to build software written
 using the Vala programming language.
 
+.. _ref-classes-vex:
+
+``vex``
+========
+
+The :ref:`ref-classes-vex` class is used to generate metadata needed by external
+tools to check for vulnerabilities, for example CVEs. It can be used as a
+replacement for :ref:`ref-classes-cve-check`.
+
+In order to use this class, inherit the class in the ``local.conf`` file and it
+will add the ``generate_vex`` task for every recipe::
+
+   INHERIT += "vex"
+
+If an image is built it will generate a report in :term:`DEPLOY_DIR_IMAGE` for
+all the packages used, it will also generate a file for all recipes used in the
+build.
+
+Variables use the ``CVE_CHECK`` prefix to keep compatibility with the
+:ref:`ref-classes-cve-check` class.
+
+Example usage::
+
+   bitbake -c generate_vex openssl
+
 .. _ref-classes-waf:
 
 ``waf``
