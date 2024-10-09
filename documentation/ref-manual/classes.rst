@@ -1478,6 +1478,9 @@ The tests you can list with the :term:`WARN_QA` and
 
 -  ``perms:`` Currently, this check is unused but reserved.
 
+-  ``pep517-backend:`` checks that a recipe inheriting
+   :ref:`ref-classes-setuptools3` has a PEP517-compliant backend.
+
 -  ``pkgconfig:`` Checks ``.pc`` files for any
    :term:`TMPDIR`/:term:`WORKDIR` paths.
    Any ``.pc`` file containing these paths is incorrect since
