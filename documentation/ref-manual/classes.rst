@@ -2049,6 +2049,14 @@ and the target. All common parts of the recipe are automatically shared.
 Disables packaging tasks for those recipes and classes where packaging
 is not needed.
 
+.. _ref-classes-nospdx:
+
+``nospdx``
+==========
+
+The :ref:`ref-classes-nospdx` allows a recipe to opt out of SPDX
+generation provided by :ref:`ref-classes-create-spdx`.
+
 .. _ref-classes-npm:
 
 ``npm``
