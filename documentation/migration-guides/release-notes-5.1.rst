@@ -254,7 +254,7 @@ New Features / Enhancements in 5.1
       ``meta/conf/cve-check-map.conf`` by including it before distro include
       files in ``meta/conf/bitbake.conf``.
 
-SPDX-related changes:
+-  SPDX-related changes:
 
    -  Update the SPDX license set too version 3.24.0, and produce SPDX output in
       version 3.0 by default, instead of 2.2.
