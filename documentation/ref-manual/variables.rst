@@ -135,7 +135,7 @@ system and gives an overview of their function and contents.
       appear in :term:`DISTRO_FEATURES` within the current configuration, then
       the recipe will be skipped, and if the build system attempts to build
       the recipe then an error will be triggered.
-      
+
 
    :term:`APPEND`
       An override list of append strings for each target specified with
@@ -1521,12 +1521,20 @@ system and gives an overview of their function and contents.
          variable only in certain contexts (e.g. when building for kernel
          and kernel module recipes).
 
+   :term:`CVE_CHECK_CREATE_MANIFEST`
+      Specifies whether to create a CVE manifest to place in the deploy
+      directory. The default is "1".
+
    :term:`CVE_CHECK_IGNORE`
       The list of CVE IDs which are ignored. Here is
       an example from the :oe_layerindex:`Python3 recipe</layerindex/recipe/23823>`::
 
          # This is windows only issue.
          CVE_CHECK_IGNORE += "CVE-2020-15523"
+
+   :term:`CVE_CHECK_MANIFEST_JSON`
+      Specifies the path to the CVE manifest in JSON format. See
+      :term:`CVE_CHECK_CREATE_MANIFEST`.
 
    :term:`CVE_CHECK_REPORT_PATCHED`
       Specifies whether or not the :ref:`ref-classes-cve-check`
@@ -2489,8 +2497,8 @@ system and gives an overview of their function and contents.
       .. note::
 
          From a security perspective, hardcoding a default password is not
-         generally a good idea or even legal in some jurisdictions. It is 
-         recommended that you do not do this if you are building a production 
+         generally a good idea or even legal in some jurisdictions. It is
+         recommended that you do not do this if you are building a production
          image.
 
       Additionally there is a special ``passwd-expire`` command that will
@@ -9554,4 +9562,3 @@ system and gives an overview of their function and contents.
 
       On systems where many tasks run in parallel, setting a limit to this
       can be helpful in controlling system resource usage.
-
