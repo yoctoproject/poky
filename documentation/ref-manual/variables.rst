@@ -3797,6 +3797,25 @@ system and gives an overview of their function and contents.
       clear the value of this variable (set the value to ""). For example,
       this is typically cleared in :term:`Initramfs` image recipes.
 
+   :term:`IMAGE_OUTPUT_MANIFEST`
+      When inheriting the :ref:`ref-classes-image` class directly or through the
+      :ref:`ref-classes-core-image` class, the :term:`IMAGE_OUTPUT_MANIFEST`
+      points to a manifest ``json`` file that lists what images were created by
+      various image creation tasks (as defined by the :term:`IMAGE_FSTYPES`
+      variable). It is set in the :ref:`ref-classes-image` class as follows::
+
+          IMAGE_OUTPUT_MANIFEST = "${IMAGE_OUTPUT_MANIFEST_DIR}/manifest.json"
+
+   :term:`IMAGE_OUTPUT_MANIFEST_DIR`
+      When inheriting the :ref:`ref-classes-image` class directly or through the
+      :ref:`ref-classes-core-image` class, the :term:`IMAGE_OUTPUT_MANIFEST_DIR` points to
+      a directory that stores a manifest ``json`` file that lists what
+      images were created by various image creation tasks (as defined by the
+      :term:`IMAGE_FSTYPES` variable). It is set in the :ref:`ref-classes-image`
+      class as follows::
+
+          IMAGE_OUTPUT_MANIFEST_DIR = "${WORKDIR}/deploy-image-output-manifest"
+
    :term:`IMAGE_OVERHEAD_FACTOR`
       Defines a multiplier that the build system applies to the initial
       image size for cases when the multiplier times the returned disk
@@ -4007,6 +4026,16 @@ system and gives an overview of their function and contents.
       Recipes inheriting the :ref:`ref-classes-image` class should copy
       files to be deployed into :term:`IMGDEPLOYDIR`, and the class will take
       care of copying them into :term:`DEPLOY_DIR_IMAGE` afterwards.
+
+   :term:`IMGMANIFESTDIR`
+      When inheriting the :ref:`ref-classes-image` class directly or through the
+      :ref:`ref-classes-core-image` class, the :term:`IMGMANIFESTDIR` setting
+      points to a temporary area that stores manifest ``json`` files, that list
+      what images were created by various images creation tasks (as defined by
+      the :term:`IMAGE_FSTYPES` variable). It is set in the
+      :ref:`ref-classes-image` class as follows::
+
+          IMGMANIFESTDIR = "${WORKDIR}/image-task-manifest"
 
    :term:`INCOMPATIBLE_LICENSE`
       Specifies a space-separated list of license names (as they would
