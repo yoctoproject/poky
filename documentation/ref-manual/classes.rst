@@ -1464,6 +1464,9 @@ The tests you can list with the :term:`WARN_QA` and
 -  ``patch-status:`` Checks that the ``Upstream-Status`` is specified and valid
    in the headers of patches for recipes.
 
+-  ``pep517-backend:`` checks that a recipe inheriting
+   :ref:`ref-classes-setuptools3` has a PEP517-compliant backend.
+
 -  ``perllocalpod:`` Checks for ``perllocal.pod`` being erroneously
    installed and packaged by a recipe.
 
@@ -1477,9 +1480,6 @@ The tests you can list with the :term:`WARN_QA` and
    'link' where the specified target already exists.
 
 -  ``perms:`` Currently, this check is unused but reserved.
-
--  ``pep517-backend:`` checks that a recipe inheriting
-   :ref:`ref-classes-setuptools3` has a PEP517-compliant backend.
 
 -  ``pkgconfig:`` Checks ``.pc`` files for any
    :term:`TMPDIR`/:term:`WORKDIR` paths.
