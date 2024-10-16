@@ -402,6 +402,13 @@ New Features / Enhancements in 5.1
       scripts, fixing some issues seen when :term:`PACKAGECONFIG` would
       conditionally modify it.
 
+Known Issues in 5.1
+~~~~~~~~~~~~~~~~~~~
+
+-  ``oeqa/runtime``: the ``beaglebone-yocto`` target fails the ``parselogs``
+   runtime test due to unexpected kernel error messages in the log (see
+   :yocto_bugs:`bug 15624 </show_bug.cgi?id=15624>` on Bugzilla).
+
 Recipe License changes in 5.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
