@@ -13,7 +13,7 @@ system and gives an overview of their function and contents.
 :term:`K <KARCH>` :term:`L <LABELS>` :term:`M <MACHINE>`
 :term:`N <NATIVELSBSTRING>` :term:`O <OBJCOPY>` :term:`P`
 :term:`R <RANLIB>` :term:`S` :term:`T`
-:term:`U <UBOOT_CONFIG>` :term:`V <VOLATILE_LOG_DIR>`
+:term:`U <UBOOT_CONFIG>` :term:`V <VIRTUAL-RUNTIME>`
 :term:`W <WARN_QA>` :term:`X <XSERVER>`
 
 .. glossary::
@@ -3007,26 +3007,30 @@ system and gives an overview of their function and contents.
       :ref:`ref-tasks-patch` task as well.
 
    :term:`FILESYSTEM_PERMS_TABLES`
-      Allows you to define your own file permissions settings table as part
+      Allows you to define your own file permissions settings tables as part
       of your configuration for the packaging process. For example, suppose
       you need a consistent set of custom permissions for a set of groups
       and users across an entire work project. It is best to do this in the
       packages themselves but this is not always possible.
 
-      By default, the OpenEmbedded build system uses the ``fs-perms.txt``,
-      which is located in the ``meta/files`` folder in the :term:`Source Directory`.
-      If you create your own file
-      permissions setting table, you should place it in your layer or the
-      distro's layer.
+      By default, the OpenEmbedded build system uses the ``fs-perms.txt`` and
+      ``fs-perms-volatile-log.txt`` which are located in the ``meta/files``
+      folder in the :term:`Source Directory`. If you create your own permission
+      setting table files, you should place those in your layer.
 
-      You define the :term:`FILESYSTEM_PERMS_TABLES` variable in the
-      ``conf/local.conf`` file, which is found in the :term:`Build Directory`,
-      to point to your custom ``fs-perms.txt``. You can specify more than a
-      single file permissions setting table. The paths you specify to these
-      files must be defined within the :term:`BBPATH` variable.
+      You can override the value of :term:`FILESYSTEM_PERMS_TABLES` variable
+      in your distribution configuration file to point to your custom
+      permission table files. You can specify one or more file permissions
+      setting tables. The paths that you specify to these files must be defined
+      within the :term:`BBPATH` variable.
 
-      For guidance on how to create your own file permissions settings
-      table file, examine the existing ``fs-perms.txt``.
+      In order to disable the volatile log, which is enabled by default, one
+      can remove the ``files/fs-perms-volatile-log.txt`` value from
+      ``FILESYSTEM_PERMS_TABLES``.
+
+      For guidance on how to define your own file permissions settings
+      tables, examine the existing ``fs-perms.txt`` and
+      ``fs-perms-volatile-log.txt`` files.
 
    :term:`FIT_ADDRESS_CELLS`
       Specifies the value of the ``#address-cells`` value for the
@@ -10074,14 +10078,6 @@ system and gives an overview of their function and contents.
       image definition::
 
          PACKAGE_INSTALL = "${INITRAMFS_SCRIPTS} ${VIRTUAL-RUNTIME_base-utils} base-passwd"
-
-   :term:`VOLATILE_LOG_DIR`
-      Specifies the persistence of the target's ``/var/log`` directory,
-      which is used to house postinstall target log files.
-
-      By default, :term:`VOLATILE_LOG_DIR` is set to "yes", which means the
-      file is not persistent. You can override this setting by setting the
-      variable to "no" to make the log directory persistent.
 
    :term:`VOLATILE_TMP_DIR`
       Specifies the persistence of the target's ``/tmp`` directory.

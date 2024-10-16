@@ -327,8 +327,9 @@ The image features available for all images are:
 
    .. note::
 
-      To make the ``/var/log`` directory on the target persistent, use the
-      :term:`VOLATILE_LOG_DIR` variable by setting it to "no".
+      To make the ``/var/log`` directory on the target persistent, remove the
+      ``files/fs-perms-volatile-log.txt`` value from
+      :term:`FILESYSTEM_PERMS_TABLES`.
 
 -  *ptest-pkgs:* Installs ptest packages for all ptest-enabled recipes.
 
