@@ -38,7 +38,7 @@ New Features / Enhancements in 4.2
 
 -  New variables:
 
-   -  :term:`VOLATILE_TMP_DIR` allows to specify
+   -  ``VOLATILE_TMP_DIR`` allows to specify
       whether ``/tmp`` should be on persistent storage
       or in RAM.
 

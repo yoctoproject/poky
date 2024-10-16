@@ -3013,10 +3013,11 @@ system and gives an overview of their function and contents.
       and users across an entire work project. It is best to do this in the
       packages themselves but this is not always possible.
 
-      By default, the OpenEmbedded build system uses the ``fs-perms.txt`` and
-      ``fs-perms-volatile-log.txt`` which are located in the ``meta/files``
-      folder in the :term:`Source Directory`. If you create your own permission
-      setting table files, you should place those in your layer.
+      By default, the OpenEmbedded build system uses the ``fs-perms.txt``,
+      ``fs-perms-volatile-log.txt`` and ``fs-perms-volatile-tmp.txt`` which are
+      located in the ``meta/files`` folder in the :term:`Source Directory`. If
+      you create your own permission setting table files, you should place
+      those in your layer.
 
       You can override the value of :term:`FILESYSTEM_PERMS_TABLES` variable
       in your distribution configuration file to point to your custom
@@ -3026,11 +3027,12 @@ system and gives an overview of their function and contents.
 
       In order to disable the volatile log, which is enabled by default, one
       can remove the ``files/fs-perms-volatile-log.txt`` value from
-      ``FILESYSTEM_PERMS_TABLES``.
+      ``FILESYSTEM_PERMS_TABLES``. Similarly, in order to disable the volatile
+      tmp, one can remove the ``files/fs-perms-volatile-tmp.txt`` value.
 
       For guidance on how to define your own file permissions settings
-      tables, examine the existing ``fs-perms.txt`` and
-      ``fs-perms-volatile-log.txt`` files.
+      tables, examine the existing ``fs-perms.txt``,
+      ``fs-perms-volatile-log.txt`` and ``fs-perms-volatile-tmp.txt`` files.
 
    :term:`FIT_ADDRESS_CELLS`
       Specifies the value of the ``#address-cells`` value for the
@@ -10078,18 +10080,6 @@ system and gives an overview of their function and contents.
       image definition::
 
          PACKAGE_INSTALL = "${INITRAMFS_SCRIPTS} ${VIRTUAL-RUNTIME_base-utils} base-passwd"
-
-   :term:`VOLATILE_TMP_DIR`
-      Specifies the persistence of the target's ``/tmp`` directory.
-
-      By default, :term:`VOLATILE_TMP_DIR` is set to "yes", in which case
-      ``/tmp`` links to a directory which resides in RAM in a ``tmpfs``
-      filesystem.
-
-      If instead, you want the ``/tmp`` directory to be persistent, set the
-      variable to "no" to make it a regular directory in the root filesystem.
-
-      This supports both sysvinit and systemd based systems.
 
    :term:`WARN_QA`
       Specifies the quality assurance checks whose failures are reported as
