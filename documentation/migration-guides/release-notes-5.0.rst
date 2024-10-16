@@ -217,7 +217,7 @@ New Features / Enhancements in 5.0
       state directory (i.e., ``/run``).
 
    -  Allow to disable colored text output through the
-      `NO_OUTPUT <https://no-color.org/>`__ environment variable.
+      `NO_COLOR <https://no-color.org/>`__ environment variable.
 
    -  ``git-make-shallow`` script: add support for Git's ``safe.bareRepository=explicit``
       configuration setting.
