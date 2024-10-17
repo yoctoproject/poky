@@ -463,6 +463,20 @@ Here is an example that resets the workspace directory that contains the
    NOTE: Leaving source tree /home/scottrif/poky/build/workspace/sources/mtr as-is; if you no longer need it then please delete it manually
    $
 
+.. _devtool-finish-working-on-a-recipe:
+
+Finish Working on a Recipe
+==========================
+
+Use the ``devtool finish`` command to push any committed changes to the
+specified recipe in the specified layer and remove it from your workspace.
+
+This is roughly equivalent to the ``devtool update-recipe`` command followed by
+the ``devtool reset`` command. The changes must have been committed to the git
+repository created by ``devtool``. Here is an example::
+
+  $ devtool finish recipe /path/to/custom/layer
+
 .. _devtool-building-your-recipe:
 
 Building Your Recipe
@@ -614,3 +628,43 @@ a match.
 
 When you use the ``devtool search`` command, you must supply a keyword.
 The command uses the keyword when searching for a match.
+
+Alternatively, the ``devtool find-recipe`` command can be used to search for
+recipe files instead of recipe names. Likewise, you must supply a keyword.
+
+.. _devtool-get-the-configure-script-help:
+
+Get Information on Recipe Configuration Scripts
+===============================================
+
+Use the ``devtool configure-help`` command to get help on the configuration
+script options for a given recipe. You must supply the recipe name to the
+command. For example, it shows the output of ``./configure --help`` for
+:ref:`autotools <ref-classes-autotools>`-based recipes.
+
+The ``configure-help`` command will also display the configuration options
+currently in use, including the ones passed through the :term:`EXTRA_OECONF`
+variable.
+
+.. _devtool-generate-an-ide-configuration-for-a-recipe:
+
+Generate an IDE Configuration for a Recipe
+==========================================
+
+The ``devtool ide-sdk`` automatically creates an IDE configuration and SDK to
+work on a given recipe. Depending on the ``--mode`` parameter, different types
+of SDKs are generated:
+
+-  ``modified`` mode: this creates an SDK and generates an IDE configuration in
+   the workspace directory.
+
+-  ``shared`` mode: this creates a cross-compiling toolchain and the
+   corresponding shared sysroot directories of the supplied recipe(s).
+
+The ``--target`` option can be used to specify a ``username@hostname`` string
+and create a remote debugging configuration for the recipe. Similarly to
+``devtool deploy-target``, it requires an SSH server running on the target.
+
+For further details on the ``devtool ide-sdk`` command, see the
+":doc:`/sdk-manual/extensible`" chapter in the Yocto Project Application
+Development and the Extensible Software Development Kit (eSDK) manual.
