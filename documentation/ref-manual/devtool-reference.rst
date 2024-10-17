@@ -24,7 +24,7 @@ The ``devtool`` command line is organized similarly to Git in that it
 has a number of sub-commands for each function. You can run
 ``devtool --help`` to see all the commands::
 
-   $ devtool -h
+   $ devtool --help
    NOTE: Starting bitbake server...
    usage: devtool [--basepath BASEPATH] [--bbpath BBPATH] [-d] [-q] [--color COLOR] [-h] <subcommand> ...
 
@@ -50,6 +50,7 @@ has a number of sub-commands for each function. You can run
        search                Search available recipes
      Working on a recipe in the workspace:
        build                 Build a recipe
+       ide-sdk               Setup the SDK and configure the IDE
        rename                Rename a recipe file in the workspace
        edit-recipe           Edit a recipe file
        find-recipe           Find a recipe file
@@ -63,17 +64,11 @@ has a number of sub-commands for each function. You can run
        build-image           Build image including workspace recipe packages
      Advanced:
        create-workspace      Set up workspace in an alternative location
+       import                Import exported tar archive into workspace
+       export                Export workspace into a tar archive
        extract               Extract the source for an existing recipe
        sync                  Synchronize the source tree for an existing recipe
        menuconfig            Alter build-time configuration for a recipe
-       import                Import exported tar archive into workspace
-       export                Export workspace into a tar archive
-     other:
-       selftest-reverse      Reverse value (for selftest)
-       pluginfile            Print the filename of this plugin
-       bbdir                 Print the BBPATH directory of this plugin
-       count                 How many times have this plugin been registered.
-       multiloaded           How many times have this plugin been initialized
    Use devtool <subcommand> --help to get help on a specific command
 
 As directed in the general help output, you can
@@ -82,8 +77,8 @@ using ``--help``::
 
    $ devtool add --help
    NOTE: Starting bitbake server...
-   usage: devtool add [-h] [--same-dir | --no-same-dir] [--fetch URI] [--npm-dev] [--version VERSION] [--no-git] [--srcrev SRCREV | --autorev] [--srcbranch SRCBRANCH] [--binary] [--also-native] [--src-subdir SUBDIR] [--mirrors]
-                      [--provides PROVIDES]
+   usage: devtool add [-h] [--same-dir | --no-same-dir] [--fetch URI] [--npm-dev] [--no-pypi] [--version VERSION] [--no-git] [--srcrev SRCREV | --autorev]
+                      [--srcbranch SRCBRANCH] [--binary] [--also-native] [--src-subdir SUBDIR] [--mirrors] [--provides PROVIDES]
                       [recipename] [srctree] [fetchuri]
 
    Adds a new recipe to the workspace to build a specified source tree. Can optionally fetch a remote URI and unpack it to create the source tree.
@@ -99,6 +94,7 @@ using ``--help``::
      --no-same-dir         Force build in a separate build directory
      --fetch URI, -f URI   Fetch the specified URI and extract it to create the source tree (deprecated - pass as positional argument instead)
      --npm-dev             For npm, also fetch devDependencies
+     --no-pypi             Do not inherit pypi class
      --version VERSION, -V VERSION
                            Version to use within recipe (PV)
      --no-git, -g          If fetching source, do not set up source tree as a git repository
