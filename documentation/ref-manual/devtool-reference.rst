@@ -50,7 +50,6 @@ has a number of sub-commands for each function. You can run
        search                Search available recipes
      Working on a recipe in the workspace:
        build                 Build a recipe
-       ide-sdk               Setup the SDK and configure the IDE
        rename                Rename a recipe file in the workspace
        edit-recipe           Edit a recipe file
        find-recipe           Find a recipe file
@@ -461,6 +460,20 @@ Here is an example that resets the workspace directory that contains the
    NOTE: Leaving source tree /home/scottrif/poky/build/workspace/sources/mtr as-is; if you no longer need it then please delete it manually
    $
 
+.. _devtool-finish-working-on-a-recipe:
+
+Finish Working on a Recipe
+==========================
+
+Use the ``devtool finish`` command to push any committed changes to the
+specified recipe in the specified layer and remove it from your workspace.
+
+This is roughly equivalent to the ``devtool update-recipe`` command followed by
+the ``devtool reset`` command. The changes must have been committed to the git
+repository created by ``devtool``. Here is an example::
+
+  $ devtool finish recipe /path/to/custom/layer
+
 .. _devtool-building-your-recipe:
 
 Building Your Recipe
@@ -613,3 +626,20 @@ a match.
 
 When you use the ``devtool search`` command, you must supply a keyword.
 The command uses the keyword when searching for a match.
+
+Alternatively, the ``devtool find-recipe`` command can be used to search for
+recipe files instead of recipe names. Likewise, you must supply a keyword.
+
+.. _devtool-get-the-configure-script-help:
+
+Get Information on Recipe Configuration Scripts
+===============================================
+
+Use the ``devtool configure-help`` command to get help on the configuration
+script options for a given recipe. You must supply the recipe name to the
+command. For example, it shows the output of ``./configure --help`` for
+:ref:`autotools <ref-classes-autotools>`-based recipes.
+
+The ``configure-help`` command will also display the configuration options
+currently in use, including the ones passed through the :term:`EXTRA_OECONF`
+variable.
