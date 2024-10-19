@@ -247,12 +247,14 @@ class SeleniumTestCaseBase(unittest.TestCase):
                                         )
                                        )
         )
+        time.sleep(1)
         return self.find(selector)
 
     def wait_until_element_clickable(self, element, timeout=Wait._TIMEOUT):
         """ Wait until element is clickable """
         WebDriverWait(self.driver, timeout=timeout).until(lambda driver: self.driver.execute_script("return jQuery.active == 0"))
         WebDriverWait(self.driver, timeout=timeout).until(EC.element_to_be_clickable(element))
+        time.sleep(1)
 
     def wait_until_focused(self, selector):
         """ Wait until element matching CSS selector has focus """

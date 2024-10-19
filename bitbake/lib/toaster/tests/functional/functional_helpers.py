@@ -184,10 +184,9 @@ class SeleniumFunctionalTestCase(SeleniumTestCaseBase):
                 checkbox.click()
 
         self.wait_until_clickable('#create-project-button')
-
         self.driver.find_element(By.ID, "create-project-button").click()
 
-        element = self.wait_until_visible('#project-created-notification', timeout=40)
+        element = self.wait_until_visible('#project-created-notification')
         self.assertTrue(
             self.element_exists('#project-created-notification'),
             f"Project:{project_name} creation notification not shown"

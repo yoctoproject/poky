@@ -465,6 +465,7 @@ class TestProjectPage(TestProjectPageBase):
             By.XPATH,
             '//td[@class="add-del-layers"]'
         )
+        self.wait_until_element_clickable(select_btn)
         select_btn.send_keys(Keys.RETURN)
         self.wait_until_visible('#project-machine-name')
         project_machine_name = self.find('#project-machine-name')
