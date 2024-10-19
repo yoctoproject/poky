@@ -235,6 +235,7 @@ class SeleniumTestCaseBase(unittest.TestCase):
 
     def wait_until_clickable(self, selector, timeout=Wait._TIMEOUT):
         """ Wait until element matching CSS selector is visible on the page """
+        WebDriverWait(self.driver, timeout=timeout).until(lambda driver: self.driver.execute_script("return jQuery.active == 0"))
         sel = selector
         if sel.startswith('#'):
             sel = selector[1:]
@@ -250,6 +251,7 @@ class SeleniumTestCaseBase(unittest.TestCase):
 
     def wait_until_element_clickable(self, element, timeout=Wait._TIMEOUT):
         """ Wait until element is clickable """
+        WebDriverWait(self.driver, timeout=timeout).until(lambda driver: self.driver.execute_script("return jQuery.active == 0"))
         WebDriverWait(self.driver, timeout=timeout).until(EC.element_to_be_clickable(element))
 
     def wait_until_focused(self, selector):
