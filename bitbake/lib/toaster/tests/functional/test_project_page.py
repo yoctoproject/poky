@@ -397,7 +397,7 @@ class TestProjectPage(TestProjectPageBase):
         image_to_build = rows[0]
         build_btn = image_to_build.find_element(
             By.XPATH,
-            '//td[@class="add-del-layers"]//a[1]'
+            '//td[@class="add-del-layers"]'
         )
         self.wait_until_element_clickable(build_btn)
         build_btn.click()
@@ -463,7 +463,7 @@ class TestProjectPage(TestProjectPageBase):
         machine_to_select = rows[0]
         select_btn = machine_to_select.find_element(
             By.XPATH,
-            '//td[@class="add-del-layers"]//a[1]'
+            '//td[@class="add-del-layers"]'
         )
         select_btn.send_keys(Keys.RETURN)
         self.wait_until_visible('#project-machine-name')
@@ -484,7 +484,7 @@ class TestProjectPage(TestProjectPageBase):
         self.wait_until_visible('#machinestable tbody tr')
         rows = self.find_all('#machinestable tbody tr')
         machine_to_add = rows[0]
-        add_btn = machine_to_add.find_element(By.XPATH, '//td[@class="add-del-layers"]//a[1]')
+        add_btn = machine_to_add.find_element(By.XPATH, '//td[@class="add-del-layers"]')
         self.wait_until_element_clickable(add_btn)
         add_btn.click()
         self.wait_until_visible('#change-notification')
@@ -546,7 +546,7 @@ class TestProjectPage(TestProjectPageBase):
         layer_to_add = rows[0]
         add_btn = layer_to_add.find_element(
             By.XPATH,
-            '//td[@class="add-del-layers"]//a[1]'
+            '//td[@class="add-del-layers"]'
         )
         self.wait_until_element_clickable(add_btn)
         add_btn.click()
@@ -577,7 +577,7 @@ class TestProjectPage(TestProjectPageBase):
         layer_to_remove = rows[0]
         remove_btn = layer_to_remove.find_element(
             By.XPATH,
-            '//td[@class="add-del-layers"]//a[1]'
+            '//td[@class="add-del-layers"]'
         )
         self.wait_until_element_clickable(remove_btn)
         remove_btn.click()
@@ -637,7 +637,7 @@ class TestProjectPage(TestProjectPageBase):
         distro_to_add = rows[0]
         add_btn = distro_to_add.find_element(
             By.XPATH,
-            '//td[@class="add-del-layers"]//a[1]'
+            '//td[@class="add-del-layers"]'
         )
         self.wait_until_element_clickable(add_btn)
         add_btn.click()
