@@ -92,9 +92,9 @@ class TestProjectPageBase(SeleniumFunctionalTestCase):
             list_check_box_id: list
     ):
         # Check edit column
-        edit_column = self.find(f'#{edit_btn_id}')
+        finder = lambda driver: self.find(f'#{edit_btn_id}')
+        edit_column = self.wait_until_element_clickable(finder)
         self.assertTrue(edit_column.is_displayed())
-        self.wait_until_clickable(edit_column)
         edit_column.click()
         # Check dropdown is visible
         self.wait_until_visible('ul.dropdown-menu.editcol')
@@ -281,8 +281,8 @@ class TestProjectPage(TestProjectPageBase):
 
         # click on "Edit" icon button
         self.wait_until_visible('#project-name-container')
-        edit_button = self.find('#project-change-form-toggle')
-        self.wait_until_clickable(edit_button)
+        finder = lambda driver: self.find('#project-change-form-toggle')
+        edit_button = self.wait_until_element_clickable(finder)
         edit_button.click()
         project_name_input = self.find('#project-name-change-input')
         self.assertTrue(project_name_input.is_displayed())
@@ -393,13 +393,8 @@ class TestProjectPage(TestProjectPageBase):
             table_selector='softwarerecipestable'
         )
         # check "build recipe" button works
-        rows = self.find_all('#softwarerecipestable tbody tr')
-        image_to_build = rows[0]
-        build_btn = image_to_build.find_element(
-            By.XPATH,
-            '//td[@class="add-del-layers"]'
-        )
-        self.wait_until_clickable(build_btn)
+        finder = lambda driver: self.find_all('#softwarerecipestable tbody tr')[0].find_element(By.XPATH, '//td[@class="add-del-layers"]')
+        build_btn = self.wait_until_element_clickable(finder)
         build_btn.click()
         build_state = wait_until_build(self, 'queued cloning starting parsing failed')
         lastest_builds = self.driver.find_elements(
@@ -407,12 +402,9 @@ class TestProjectPage(TestProjectPageBase):
             '//div[@id="latest-builds"]/div'
         )
         self.assertTrue(len(lastest_builds) > 0)
-        last_build = lastest_builds[0]
-        cancel_button = last_build.find_element(
-            By.XPATH,
-            '//span[@class="cancel-build-btn pull-right alert-link"]',
-        )
-        self.wait_until_clickable(cancel_button)
+        # Find the latest builds, the last build and then the cancel button
+        finder = lambda driver: self.driver.find_elements(By.XPATH, '//div[@id="latest-builds"]/div')[0].find_element(By.XPATH, '//span[@class="cancel-build-btn pull-right alert-link"]')
+        cancel_button = self.wait_until_element_clickable(finder)
         cancel_button.click()
         if 'starting' not in build_state:  # change build state when cancelled in starting state
             wait_until_build_cancelled(self)
@@ -483,10 +475,9 @@ class TestProjectPage(TestProjectPageBase):
         )
 
         self.wait_until_visible('#machinestable tbody tr')
-        rows = self.find_all('#machinestable tbody tr')
-        machine_to_add = rows[0]
-        add_btn = machine_to_add.find_element(By.XPATH, '//td[@class="add-del-layers"]')
-        self.wait_until_clickable(add_btn)
+        # Locate a machine to add button
+        finder = lambda driver: self.find_all('#machinestable tbody tr')[0].find_element(By.XPATH, '//td[@class="add-del-layers"]')
+        add_btn = self.wait_until_element_clickable(finder)
         add_btn.click()
         self.wait_until_visible('#change-notification')
         change_notification = self.find('#change-notification')
@@ -494,8 +485,8 @@ class TestProjectPage(TestProjectPageBase):
             f'You have added 1 layer to your project', str(change_notification.text)
         )
 
-        hide_button = self.find('#hide-alert')
-        self.wait_until_clickable(hide_button)
+        finder = lambda driver: self.find('#hide-alert')
+        hide_button = self.wait_until_element_clickable(finder)
         hide_button.click()
         self.wait_until_not_visible('#change-notification')
 
@@ -543,23 +534,15 @@ class TestProjectPage(TestProjectPageBase):
  
         # check "Add layer" button works
         self.wait_until_visible('#layerstable tbody tr')
-        rows = self.find_all('#layerstable tbody tr')
-        layer_to_add = rows[0]
-        add_btn = layer_to_add.find_element(
-            By.XPATH,
-            '//td[@class="add-del-layers"]'
-        )
-        self.wait_until_clickable(add_btn)
+        finder = lambda driver: self.find_all('#layerstable tbody tr')[0].find_element(By.XPATH, '//td[@class="add-del-layers"]')
+        add_btn = self.wait_until_element_clickable(finder)
         add_btn.click()
         # check modal is displayed
         self.wait_until_visible('#dependencies-modal')
         list_dependencies = self.find_all('#dependencies-list li')
         # click on add-layers button
-        add_layers_btn = self.driver.find_element(
-            By.XPATH,
-            '//form[@id="dependencies-modal-form"]//button[@class="btn btn-primary"]'
-        )
-        self.wait_until_clickable(add_layers_btn)
+        finder = lambda driver: self.driver.find_element(By.XPATH, '//form[@id="dependencies-modal-form"]//button[@class="btn btn-primary"]')
+        add_layers_btn = self.wait_until_element_clickable(finder)
         add_layers_btn.click()
         self.wait_until_visible('#change-notification')
         change_notification = self.find('#change-notification')
@@ -567,20 +550,15 @@ class TestProjectPage(TestProjectPageBase):
             f'You have added {len(list_dependencies)+1} layers to your project: {input_text} and its dependencies', str(change_notification.text)
         )
 
-        hide_button = self.find('#hide-alert')
-        self.wait_until_clickable(hide_button)
+        finder = lambda driver: self.find('#hide-alert')
+        hide_button = self.wait_until_element_clickable(finder)
         hide_button.click()
         self.wait_until_not_visible('#change-notification')
 
         # check "Remove layer" button works
         self.wait_until_visible('#layerstable tbody tr')
-        rows = self.find_all('#layerstable tbody tr')
-        layer_to_remove = rows[0]
-        remove_btn = layer_to_remove.find_element(
-            By.XPATH,
-            '//td[@class="add-del-layers"]'
-        )
-        self.wait_until_clickable(remove_btn)
+        finder = lambda driver: self.find_all('#layerstable tbody tr')[0].find_element(By.XPATH, '//td[@class="add-del-layers"]')
+        remove_btn = self.wait_until_element_clickable(finder)
         remove_btn.click()
         self.wait_until_visible('#change-notification')
         change_notification = self.find('#change-notification')
@@ -588,8 +566,8 @@ class TestProjectPage(TestProjectPageBase):
             f'You have removed 1 layer from your project: {input_text}', str(change_notification.text)
         )
 
-        hide_button = self.find('#hide-alert')
-        self.wait_until_clickable(hide_button)
+        finder = lambda driver: self.find('#hide-alert')
+        hide_button = self.wait_until_element_clickable(finder)
         hide_button.click()
         self.wait_until_not_visible('#change-notification')
 
@@ -634,13 +612,8 @@ class TestProjectPage(TestProjectPageBase):
         )
         # check "Add distro" button works
         self.wait_until_visible(".add-del-layers")
-        rows = self.find_all('#distrostable tbody tr')
-        distro_to_add = rows[0]
-        add_btn = distro_to_add.find_element(
-            By.XPATH,
-            '//td[@class="add-del-layers"]'
-        )
-        self.wait_until_clickable(add_btn)
+        finder = lambda driver: self.find_all('#distrostable tbody tr')[0].find_element(By.XPATH, '//td[@class="add-del-layers"]')
+        add_btn = self.wait_until_element_clickable(finder)
         add_btn.click()
         self.wait_until_visible('#change-notification')
         change_notification = self.find('#change-notification')
@@ -685,29 +658,29 @@ class TestProjectPage(TestProjectPageBase):
         self.assertTrue(self.find('.page-header h1').is_displayed())
 
         # check remove layer button works
-        remove_layer_btn = self.find('#add-remove-layer-btn')
-        self.wait_until_clickable(remove_layer_btn)
+        finder = lambda driver: self.find('#add-remove-layer-btn')
+        remove_layer_btn = self.wait_until_element_clickable(finder)
         remove_layer_btn.click()
         self.wait_until_visible('#change-notification')
         change_notification = self.find('#change-notification')
         self.assertIn(
             f'You have removed 1 layer from your project', str(change_notification.text)
         )
-        hide_button = self.find('#hide-alert')
-        self.wait_until_clickable(hide_button)
+        finder = lambda driver: self.find('#hide-alert')
+        hide_button = self.wait_until_element_clickable(finder)
         hide_button.click()
         # check add layer button works
         self.wait_until_not_visible('#change-notification')
-        add_layer_btn = self.find('#add-remove-layer-btn')
-        self.wait_until_clickable(add_layer_btn)
+        finder = lambda driver: self.find('#add-remove-layer-btn')
+        add_layer_btn = self.wait_until_element_clickable(finder)
         add_layer_btn.click()
         self.wait_until_visible('#change-notification')
         change_notification = self.find('#change-notification')
         self.assertIn(
             f'You have added 1 layer to your project', str(change_notification.text)
         )
-        hide_button = self.find('#hide-alert')
-        self.wait_until_clickable(hide_button)
+        finder = lambda driver: self.find('#hide-alert')
+        hide_button = self.wait_until_element_clickable(finder)
         hide_button.click()
         self.wait_until_not_visible('#change-notification')
         # check tabs(layers, recipes, machines) are displayed
