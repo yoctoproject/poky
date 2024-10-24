@@ -8,13 +8,13 @@ This chapter lists common variables used in the OpenEmbedded build
 system and gives an overview of their function and contents.
 
 :term:`A <ABIEXTENSION>` :term:`B` :term:`C <CACHE>`
-:term:`D` :term:`E <EFI_PROVIDER>` :term:`F <FEATURE_PACKAGES>`
-:term:`G <GCCPIE>` :term:`H <HOMEPAGE>` :term:`I <ICECC_DISABLED>`
+:term:`D` :term:`E <EFI_PROVIDER>` :term:`F <FAKEROOT>`
+:term:`G <GCCPIE>` :term:`H <HGDIR>` :term:`I <ICECC_CLASS_DISABLE>`
 :term:`K <KARCH>` :term:`L <LABELS>` :term:`M <MACHINE>`
 :term:`N <NATIVELSBSTRING>` :term:`O <OBJCOPY>` :term:`P`
-:term:`R <RANLIB>` :term:`S` :term:`T`
-:term:`U <UBOOT_CONFIG>` :term:`V <VIRTUAL-RUNTIME>`
-:term:`W <WARN_QA>` :term:`X <XSERVER>`
+:term:`Q <QA_EMPTY_DIRS>` :term:`R <RANLIB>` :term:`S` :term:`T`
+:term:`U <UBOOT_BINARY>` :term:`V <VIRTUAL-RUNTIME>`
+:term:`W <WARN_QA>` :term:`X <XSERVER>` :term:`Z <ZSTD_THREADS>`
 
 .. glossary::
    :sorted:
