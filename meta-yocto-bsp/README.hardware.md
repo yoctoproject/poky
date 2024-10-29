@@ -145,6 +145,8 @@ building the image also build the `u-boot` recipe to build the required
 firmware (note that this firmware will _not_ boot on real hardware), then use
 `runqemu` as usual.
 
+Maintainers:
+* Ross Burton <Ross.Burton@arm.com>
 
 Texas Instruments Beaglebone (beaglebone-yocto)
 -----------------------------------------------
