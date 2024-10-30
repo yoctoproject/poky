@@ -117,6 +117,8 @@ The currently supported :term:`LTS` releases are:
 See :yocto_wiki:`/Stable_Release_and_LTS` for details about the management
 of stable and :term:`LTS` releases.
 
+This documentation was built for the &DISTRO_NAME; release.
+
 .. image:: svg/releases.*
    :width: 100%
 
