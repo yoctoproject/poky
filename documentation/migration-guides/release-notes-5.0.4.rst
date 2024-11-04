@@ -6,21 +6,21 @@ Release notes for Yocto-5.0.4 (Scarthgap)
 Security Fixes in Yocto-5.0.4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  apr: Fix :cve:`2023-49582`
--  curl: Ignore :cve:`2024-32928`
--  curl: Fix :cve:`2024-7264`
--  expat: Fix :cve:`2024-45490`, :cve:`2024-45491` and :cve:`2024-45492`
--  ffmpeg: Fix :cve:`2023-50008` and :cve:`2024-32230`
--  libpcap: Fix :cve:`2023-7256` and :cve:`2024-8006`
--  libyaml: Ignore :cve:`2024-35325` and :cve:`2024-35326`
--  openssl: Fix :cve:`2024-5535` and :cve:`2024-6119`
--  python3-certifi: Fix :cve:`2024-39689`
--  python3-setuptools: Fix :cve:`2024-6345`
--  python3: Fix :cve:`2024-6232`, :cve:`2024-7592`, :cve:`2024-8088` and :cve:`2024-27034`
--  qemu: Fix :cve:`2024-4467` and :cve:`2024-7409`
--  ruby: Fix :cve:`2024-27282`
--  tiff: Fix :cve:`2024-7006`
--  vim: Fix :cve:`2024-41957`, :cve:`2024-41965`, :cve:`2024-43374`, :cve:`2024-43790` and :cve:`2024-43802`
+-  apr: Fix :cve_nist:`2023-49582`
+-  curl: Ignore :cve_nist:`2024-32928`
+-  curl: Fix :cve_nist:`2024-7264`
+-  expat: Fix :cve_nist:`2024-45490`, :cve_nist:`2024-45491` and :cve_nist:`2024-45492`
+-  ffmpeg: Fix :cve_nist:`2023-50008` and :cve_nist:`2024-32230`
+-  libpcap: Fix :cve_nist:`2023-7256` and :cve_nist:`2024-8006`
+-  libyaml: Ignore :cve_nist:`2024-35325` and :cve_nist:`2024-35326`
+-  openssl: Fix :cve_nist:`2024-5535` and :cve_nist:`2024-6119`
+-  python3-certifi: Fix :cve_nist:`2024-39689`
+-  python3-setuptools: Fix :cve_nist:`2024-6345`
+-  python3: Fix :cve_nist:`2024-6232`, :cve_nist:`2024-7592`, :cve_nist:`2024-8088` and :cve_nist:`2024-27034`
+-  qemu: Fix :cve_nist:`2024-4467` and :cve_nist:`2024-7409`
+-  ruby: Fix :cve_nist:`2024-27282`
+-  tiff: Fix :cve_nist:`2024-7006`
+-  vim: Fix :cve_nist:`2024-41957`, :cve_nist:`2024-41965`, :cve_nist:`2024-43374`, :cve_nist:`2024-43790` and :cve_nist:`2024-43802`
 
 
 Fixes in Yocto-5.0.4
@@ -93,7 +93,7 @@ Fixes in Yocto-5.0.4
 -  weston-init: fix weston not starting when xwayland is enabled
 -  wireless-regdb: upgrade to 2024.07.04
 -  wpa-supplicant: upgrade to 2.11
--  xserver-xorg: mark :cve:`2023-5574` as unpatched when xvfb enabled
+-  xserver-xorg: mark :cve_nist:`2023-5574` as unpatched when xvfb enabled
 -  yocto-uninative: Update to 4.6 for glibc 2.40
 -  zip: Fix :term:`LICENSE` (change to Info-ZIP)
 

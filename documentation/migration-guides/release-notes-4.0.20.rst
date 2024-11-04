@@ -6,14 +6,14 @@ Release notes for Yocto-4.0.20 (Kirkstone)
 Security Fixes in Yocto-4.0.20
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  acpica: Fix :cve:`2024-24856`
--  glib-2.0: Fix :cve:`2024-34397`
--  gstreamer1.0-plugins-base: Fix :cve:`2024-4453`
--  libxml2: Fix :cve:`2024-34459`
--  openssh: fix :cve:`2024-6387`
--  openssl: Fix :cve_mitre:`2024-4741` and :cve:`2024-5535`
--  ruby: fix :cve:`2024-27280`
--  wget: Fix for :cve:`2024-38428`
+-  acpica: Fix :cve_nist:`2024-24856`
+-  glib-2.0: Fix :cve_nist:`2024-34397`
+-  gstreamer1.0-plugins-base: Fix :cve_nist:`2024-4453`
+-  libxml2: Fix :cve_nist:`2024-34459`
+-  openssh: fix :cve_nist:`2024-6387`
+-  openssl: Fix :cve_mitre:`2024-4741` and :cve_nist:`2024-5535`
+-  ruby: fix :cve_nist:`2024-27280`
+-  wget: Fix for :cve_nist:`2024-38428`
 
 
 Fixes in Yocto-4.0.20
