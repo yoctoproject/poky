@@ -446,32 +446,32 @@ The following corrections have been made to the :term:`LICENSE` values set by re
 Security Fixes in 5.1
 ~~~~~~~~~~~~~~~~~~~~~
 
--  ``apr``: :cve:`2023-49582`
--  ``busybox``: :cve:`2021-42380`, :cve:`2023-42363`, :cve:`2023-42364`, :cve:`2023-42365`, :cve:`2023-42366`
--  ``cups``: :cve:`2024-35235`
--  ``curl``: :cve:`2024-6197`, :cve:`2024-6874`, :cve:`2024-7264`
--  ``expat``: :cve:`2024-45490`, :cve:`2024-45491`, :cve:`2024-45492`.
--  ``gcc``: :cve:`2023-4039`
--  ``gdk-pixbuf``: :cve:`2022-48622`
--  ``ghostscript``: :cve:`2024-33869`, :cve:`2023-52722`, :cve:`2024-33870`, :cve:`2024-33871`, :cve:`2024-29510`
--  ``git``: :cve:`2024-32002`, :cve:`2024-32004`, :cve:`2024-32020`, :cve:`2024-32021`, :cve:`2024-32465`
--  ``glibc``: :cve:`2024-2961`, :cve:`2024-33599`, :cve:`2024-33600`, :cve:`2024-33601`, :cve:`2024-33602`
--  ``go``: :cve:`2024-24790`
--  ``gtk+3``: :cve:`2024-6655`
--  ``linux-yocto/6.10``: :cve:`2020-16119`
--  ``linux-yocto/6.6``: :cve:`2020-16119`
--  ``llvm``: :cve:`2024-0151`
--  ``ncurses``: :cve:`2023-50495`, :cve:`2023-45918`
--  ``openssh``: :cve:`2024-6387`
--  ``openssl``: :cve:`2024-4603`, :cve:`2024-4741`
--  ``ovmf``: :cve:`2023-45236`, :cve:`2023-45237`, :cve:`2024-25742`
--  ``python3``: :cve:`2024-7592`, :cve:`2024-8088`, :cve:`2024-6232`
--  ``ruby``: :cve:`2024-27282`, :cve:`2024-27281`, :cve:`2024-27280`
--  ``tiff``: :cve:`2024-7006`
--  ``vim``: :cve:`2024-41957`, :cve:`2024-41965`, :cve:`2024-43374`, :cve:`2024-43790`, :cve:`2024-43802`
--  ``wget``: :cve:`2024-38428`
--  ``wpa-supplicant``: :cve:`2024-5290`, :cve:`2023-52160`
--  ``xserver-xorg``: :cve:`2024-31080`, :cve:`2024-31081`, :cve:`2024-31082`, :cve:`2024-31083`
+-  ``apr``: :cve_nist:`2023-49582`
+-  ``busybox``: :cve_nist:`2021-42380`, :cve_nist:`2023-42363`, :cve_nist:`2023-42364`, :cve_nist:`2023-42365`, :cve_nist:`2023-42366`
+-  ``cups``: :cve_nist:`2024-35235`
+-  ``curl``: :cve_nist:`2024-6197`, :cve_nist:`2024-6874`, :cve_nist:`2024-7264`
+-  ``expat``: :cve_nist:`2024-45490`, :cve_nist:`2024-45491`, :cve_nist:`2024-45492`.
+-  ``gcc``: :cve_nist:`2023-4039`
+-  ``gdk-pixbuf``: :cve_nist:`2022-48622`
+-  ``ghostscript``: :cve_nist:`2024-33869`, :cve_nist:`2023-52722`, :cve_nist:`2024-33870`, :cve_nist:`2024-33871`, :cve_nist:`2024-29510`
+-  ``git``: :cve_nist:`2024-32002`, :cve_nist:`2024-32004`, :cve_nist:`2024-32020`, :cve_nist:`2024-32021`, :cve_nist:`2024-32465`
+-  ``glibc``: :cve_nist:`2024-2961`, :cve_nist:`2024-33599`, :cve_nist:`2024-33600`, :cve_nist:`2024-33601`, :cve_nist:`2024-33602`
+-  ``go``: :cve_nist:`2024-24790`
+-  ``gtk+3``: :cve_nist:`2024-6655`
+-  ``linux-yocto/6.10``: :cve_nist:`2020-16119`
+-  ``linux-yocto/6.6``: :cve_nist:`2020-16119`
+-  ``llvm``: :cve_nist:`2024-0151`
+-  ``ncurses``: :cve_nist:`2023-50495`, :cve_nist:`2023-45918`
+-  ``openssh``: :cve_nist:`2024-6387`
+-  ``openssl``: :cve_nist:`2024-4603`, :cve_nist:`2024-4741`
+-  ``ovmf``: :cve_nist:`2023-45236`, :cve_nist:`2023-45237`, :cve_nist:`2024-25742`
+-  ``python3``: :cve_nist:`2024-7592`, :cve_nist:`2024-8088`, :cve_nist:`2024-6232`
+-  ``ruby``: :cve_nist:`2024-27282`, :cve_nist:`2024-27281`, :cve_nist:`2024-27280`
+-  ``tiff``: :cve_nist:`2024-7006`
+-  ``vim``: :cve_nist:`2024-41957`, :cve_nist:`2024-41965`, :cve_nist:`2024-43374`, :cve_nist:`2024-43790`, :cve_nist:`2024-43802`
+-  ``wget``: :cve_nist:`2024-38428`
+-  ``wpa-supplicant``: :cve_nist:`2024-5290`, :cve_nist:`2023-52160`
+-  ``xserver-xorg``: :cve_nist:`2024-31080`, :cve_nist:`2024-31081`, :cve_nist:`2024-31082`, :cve_nist:`2024-31083`
 
 Recipe Upgrades in 5.1
 ~~~~~~~~~~~~~~~~~~~~~~

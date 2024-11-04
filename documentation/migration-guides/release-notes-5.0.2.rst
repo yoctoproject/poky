@@ -6,17 +6,17 @@ Release notes for Yocto-5.0.2 (Scarthgap)
 Security Fixes in Yocto-5.0.2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  cups: Fix :cve:`2024-35235`
--  gcc: Fix :cve:`2024-0151`
--  gdk-pixbuf: Fix :cve:`2022-48622`
+-  cups: Fix :cve_nist:`2024-35235`
+-  gcc: Fix :cve_nist:`2024-0151`
+-  gdk-pixbuf: Fix :cve_nist:`2022-48622`
 -  ghostscript: fix :cve_mitre:`2024-29510`, :cve_mitre:`2024-33869`, :cve_mitre:`2024-33870` and :cve_mitre:`2024-33871`
--  git: Fix :cve:`2024-32002`, :cve:`2024-32004`, :cve:`2024-32020`, :cve:`2024-32021` and :cve:`2024-32465`
--  glib-2.0: Fix :cve:`2024-34397`
--  glibc: Fix :cve:`2024-2961`, :cve:`2024-33599`, :cve:`2024-33600`, :cve:`2024-33601` and :cve:`2024-33602`
--  ncurses: Fix :cve:`2023-45918` and :cve:`2023-50495`
--  openssl: Fix :cve:`2024-4603` and :cve_mitre:`2024-4741`
--  util-linux: Fix :cve:`2024-28085`
--  xserver-xorg: Fix :cve:`2024-31080`, :cve:`2024-31081`, :cve:`2024-31082` and :cve:`2024-31083`
+-  git: Fix :cve_nist:`2024-32002`, :cve_nist:`2024-32004`, :cve_nist:`2024-32020`, :cve_nist:`2024-32021` and :cve_nist:`2024-32465`
+-  glib-2.0: Fix :cve_nist:`2024-34397`
+-  glibc: Fix :cve_nist:`2024-2961`, :cve_nist:`2024-33599`, :cve_nist:`2024-33600`, :cve_nist:`2024-33601` and :cve_nist:`2024-33602`
+-  ncurses: Fix :cve_nist:`2023-45918` and :cve_nist:`2023-50495`
+-  openssl: Fix :cve_nist:`2024-4603` and :cve_mitre:`2024-4741`
+-  util-linux: Fix :cve_nist:`2024-28085`
+-  xserver-xorg: Fix :cve_nist:`2024-31080`, :cve_nist:`2024-31081`, :cve_nist:`2024-31082` and :cve_nist:`2024-31083`
 
 
 Fixes in Yocto-5.0.2
@@ -44,7 +44,7 @@ Fixes in Yocto-5.0.2
 -  bitbake: tests/fetch: Tweak test to match upstream repo url change
 -  bitbake: tests/fetch: Tweak to work on Fedora40
 -  build-appliance-image: Update to scarthgap head revision
--  busybox: update :cve:`2022-28391` patches upstream status
+-  busybox: update :cve_nist:`2022-28391` patches upstream status
 -  cdrtools-native: Fix build with GCC 14
 -  classes: image_types: apply EXTRA_IMAGECMD:squashfs* in oe_mksquashfs()
 -  classes: image_types: quote variable assignment needed by dash
