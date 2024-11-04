@@ -3,17 +3,18 @@
 
 # You can set these variables from the command line, and also
 # from the environment for the first two.
-SPHINXOPTS    ?= -W --keep-going -j auto
-SPHINXBUILD   ?= sphinx-build
+SPHINXOPTS     ?= -W --keep-going -j auto
+SPHINXBUILD    ?= sphinx-build
 # Release notes are excluded because they contain contributor names and commit messages which can't be modified
-VALEOPTS      ?= --no-wrap --glob '!migration-guides/release-notes-*.rst'
-VALEDOCS      ?= .
-SOURCEDIR     = .
-IMAGEDIRS     = */svg
-BUILDDIR      = _build
-DESTDIR       = final
-SVG2PNG       = inkscape
-SVG2PDF       = inkscape
+VALEOPTS       ?= --no-wrap --glob '!migration-guides/release-notes-*.rst'
+SOURCEDIR      = .
+VALEDOCS       ?= $(SOURCEDIR)
+SPHINXLINTDOCS ?= $(SOURCEDIR)
+IMAGEDIRS      = */svg
+BUILDDIR       = _build
+DESTDIR        = final
+SVG2PNG        = inkscape
+SVG2PDF        = inkscape
 
 ifeq ($(shell if which $(SPHINXBUILD) >/dev/null 2>&1; then echo 1; else echo 0; fi),0)
 $(error "The '$(SPHINXBUILD)' command was not found. Make sure you have Sphinx installed")
@@ -54,7 +55,7 @@ stylecheck:
 	vale $(VALEOPTS) $(VALEDOCS)
 
 sphinx-lint:
-	sphinx-lint $(SOURCEDIR)
+	sphinx-lint $(SPHINXLINTDOCS)
 
 epub: $(PNGs)
 	$(SOURCEDIR)/set_versions.py
