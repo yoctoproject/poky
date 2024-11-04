@@ -6,28 +6,28 @@ Release notes for Yocto-4.0.21 (Kirkstone)
 Security Fixes in Yocto-4.0.21
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  bind: Fix :cve:`2024-4076`, :cve:`2024-1737`, :cve:`2024-0760` and :cve:`2024-1975`
--  apr: Fix :cve:`2023-49582`
--  busybox: Fix :cve:`2023-42363`, :cve:`2023-42364`, :cve:`2023-42365`, :cve:`2023-42366` and :cve:`2021-42380`
--  curl: Ignore :cve:`2024-32928`
--  curl: Fix :cve:`2024-7264`
--  ghostscript: Fix :cve:`2024-29506`, :cve:`2024-29509` and :cve:`2024-29511`
--  go: Fix :cve:`2024-24789` and :cve:`2024-24791`
--  gtk+3: Fix :cve:`2024-6655`
--  libarchive: Ignore :cve:`2024-37407`
--  libyaml: Ignore :cve:`2024-35325`, :cve:`2024-35326` and :cve:`2024-35328`
--  linux-yocto/5.15: Fix :cve:`2022-48772`, :cve:`2024-35972`, :cve:`2024-35984`, :cve:`2024-35990`, :cve:`2024-35997`, :cve:`2024-36008`, :cve:`2024-36270`, :cve:`2024-36489`, :cve:`2024-36897`, :cve:`2024-36938`, :cve:`2024-36965`, :cve:`2024-36967`, :cve:`2024-36969`, :cve:`2024-36971`, :cve:`2024-36978`, :cve:`2024-38546`, :cve:`2024-38547`, :cve:`2024-38549`, :cve:`2024-38552`, :cve:`2024-38555`, :cve:`2024-38571`, :cve:`2024-38583`, :cve:`2024-38591`, :cve:`2024-38597`, :cve:`2024-38598`, :cve:`2024-38600`, :cve:`2024-38627`, :cve:`2024-38633`, :cve:`2024-38661`, :cve:`2024-38662`, :cve:`2024-38780`, :cve:`2024-39277`, :cve:`2024-39292`, :cve:`2024-39301`, :cve:`2024-39466`, :cve:`2024-39468`, :cve:`2024-39471`, :cve:`2024-39475`, :cve:`2024-39476`, :cve:`2024-39480`, :cve:`2024-39482`, :cve:`2024-39484`, :cve:`2024-39487`, :cve:`2024-39489`, :cve:`2024-39493`, :cve:`2024-39495`, :cve:`2024-39506`, :cve:`2024-40902`, :cve:`2024-40911`, :cve:`2024-40912`, :cve:`2024-40932`, :cve:`2024-40934`, :cve:`2024-40954`, :cve:`2024-40956`, :cve:`2024-40957`, :cve:`2024-40958`, :cve:`2024-40959`, :cve:`2024-40960`, :cve:`2024-40961`, :cve:`2024-40967`, :cve:`2024-40970`, :cve:`2024-40980`, :cve:`2024-40981`, :cve:`2024-40994`, :cve:`2024-40995`, :cve:`2024-41000`, :cve:`2024-41002`, :cve:`2024-41006`, :cve:`2024-41007`, :cve:`2024-41046`, :cve:`2024-41049`, :cve:`2024-41055`, :cve:`2024-41064`, :cve:`2024-41070`, :cve:`2024-41073`, :cve:`2024-41087`, :cve:`2024-41089`, :cve:`2024-41092`, :cve:`2024-41093`, :cve:`2024-41095`, :cve:`2024-41097`, :cve:`2024-42068`, :cve:`2024-42070`, :cve:`2024-42076`, :cve:`2024-42077`, :cve:`2024-42080`, :cve:`2024-42082`, :cve:`2024-42085`, :cve:`2024-42090`, :cve:`2024-42093`, :cve:`2024-42094`, :cve:`2024-42101`, :cve:`2024-42102`, :cve:`2024-42104`, :cve:`2024-42109`, :cve:`2024-42140`, :cve:`2024-42148`, :cve:`2024-42152`, :cve:`2024-42153`, :cve:`2024-42154`, :cve:`2024-42157`, :cve:`2024-42161`, :cve:`2024-42223`, :cve:`2024-42224`, :cve:`2024-42225`, :cve:`2024-42229`, :cve:`2024-42232`, :cve:`2024-42236`, :cve:`2024-42244` and :cve:`2024-42247`
--  llvm: Fix :cve:`2023-46049` and :cve:`2024-31852`
--  ofono: fix :cve:`2023-2794`
--  orc: Fix :cve:`2024-40897`
--  python3-certifi: Fix :cve:`2024-39689`
--  python3-jinja2: Fix :cve:`2024-34064`
--  python3: Fix :cve:`2024-8088`
--  qemu: Fix :cve:`2024-7409`
--  ruby: Fix for :cve:`2024-27282`
--  tiff: Fix :cve:`2024-7006`
--  vim: Fix :cve:`2024-22667`, :cve:`2024-41957`, :cve:`2024-41965` and :cve:`2024-43374`
--  wpa-supplicant: Fix :cve:`2023-52160`
+-  bind: Fix :cve_nist:`2024-4076`, :cve_nist:`2024-1737`, :cve_nist:`2024-0760` and :cve_nist:`2024-1975`
+-  apr: Fix :cve_nist:`2023-49582`
+-  busybox: Fix :cve_nist:`2023-42363`, :cve_nist:`2023-42364`, :cve_nist:`2023-42365`, :cve_nist:`2023-42366` and :cve_nist:`2021-42380`
+-  curl: Ignore :cve_nist:`2024-32928`
+-  curl: Fix :cve_nist:`2024-7264`
+-  ghostscript: Fix :cve_nist:`2024-29506`, :cve_nist:`2024-29509` and :cve_nist:`2024-29511`
+-  go: Fix :cve_nist:`2024-24789` and :cve_nist:`2024-24791`
+-  gtk+3: Fix :cve_nist:`2024-6655`
+-  libarchive: Ignore :cve_nist:`2024-37407`
+-  libyaml: Ignore :cve_nist:`2024-35325`, :cve_nist:`2024-35326` and :cve_nist:`2024-35328`
+-  linux-yocto/5.15: Fix :cve_nist:`2022-48772`, :cve_nist:`2024-35972`, :cve_nist:`2024-35984`, :cve_nist:`2024-35990`, :cve_nist:`2024-35997`, :cve_nist:`2024-36008`, :cve_nist:`2024-36270`, :cve_nist:`2024-36489`, :cve_nist:`2024-36897`, :cve_nist:`2024-36938`, :cve_nist:`2024-36965`, :cve_nist:`2024-36967`, :cve_nist:`2024-36969`, :cve_nist:`2024-36971`, :cve_nist:`2024-36978`, :cve_nist:`2024-38546`, :cve_nist:`2024-38547`, :cve_nist:`2024-38549`, :cve_nist:`2024-38552`, :cve_nist:`2024-38555`, :cve_nist:`2024-38571`, :cve_nist:`2024-38583`, :cve_nist:`2024-38591`, :cve_nist:`2024-38597`, :cve_nist:`2024-38598`, :cve_nist:`2024-38600`, :cve_nist:`2024-38627`, :cve_nist:`2024-38633`, :cve_nist:`2024-38661`, :cve_nist:`2024-38662`, :cve_nist:`2024-38780`, :cve_nist:`2024-39277`, :cve_nist:`2024-39292`, :cve_nist:`2024-39301`, :cve_nist:`2024-39466`, :cve_nist:`2024-39468`, :cve_nist:`2024-39471`, :cve_nist:`2024-39475`, :cve_nist:`2024-39476`, :cve_nist:`2024-39480`, :cve_nist:`2024-39482`, :cve_nist:`2024-39484`, :cve_nist:`2024-39487`, :cve_nist:`2024-39489`, :cve_nist:`2024-39493`, :cve_nist:`2024-39495`, :cve_nist:`2024-39506`, :cve_nist:`2024-40902`, :cve_nist:`2024-40911`, :cve_nist:`2024-40912`, :cve_nist:`2024-40932`, :cve_nist:`2024-40934`, :cve_nist:`2024-40954`, :cve_nist:`2024-40956`, :cve_nist:`2024-40957`, :cve_nist:`2024-40958`, :cve_nist:`2024-40959`, :cve_nist:`2024-40960`, :cve_nist:`2024-40961`, :cve_nist:`2024-40967`, :cve_nist:`2024-40970`, :cve_nist:`2024-40980`, :cve_nist:`2024-40981`, :cve_nist:`2024-40994`, :cve_nist:`2024-40995`, :cve_nist:`2024-41000`, :cve_nist:`2024-41002`, :cve_nist:`2024-41006`, :cve_nist:`2024-41007`, :cve_nist:`2024-41046`, :cve_nist:`2024-41049`, :cve_nist:`2024-41055`, :cve_nist:`2024-41064`, :cve_nist:`2024-41070`, :cve_nist:`2024-41073`, :cve_nist:`2024-41087`, :cve_nist:`2024-41089`, :cve_nist:`2024-41092`, :cve_nist:`2024-41093`, :cve_nist:`2024-41095`, :cve_nist:`2024-41097`, :cve_nist:`2024-42068`, :cve_nist:`2024-42070`, :cve_nist:`2024-42076`, :cve_nist:`2024-42077`, :cve_nist:`2024-42080`, :cve_nist:`2024-42082`, :cve_nist:`2024-42085`, :cve_nist:`2024-42090`, :cve_nist:`2024-42093`, :cve_nist:`2024-42094`, :cve_nist:`2024-42101`, :cve_nist:`2024-42102`, :cve_nist:`2024-42104`, :cve_nist:`2024-42109`, :cve_nist:`2024-42140`, :cve_nist:`2024-42148`, :cve_nist:`2024-42152`, :cve_nist:`2024-42153`, :cve_nist:`2024-42154`, :cve_nist:`2024-42157`, :cve_nist:`2024-42161`, :cve_nist:`2024-42223`, :cve_nist:`2024-42224`, :cve_nist:`2024-42225`, :cve_nist:`2024-42229`, :cve_nist:`2024-42232`, :cve_nist:`2024-42236`, :cve_nist:`2024-42244` and :cve_nist:`2024-42247`
+-  llvm: Fix :cve_nist:`2023-46049` and :cve_nist:`2024-31852`
+-  ofono: fix :cve_nist:`2023-2794`
+-  orc: Fix :cve_nist:`2024-40897`
+-  python3-certifi: Fix :cve_nist:`2024-39689`
+-  python3-jinja2: Fix :cve_nist:`2024-34064`
+-  python3: Fix :cve_nist:`2024-8088`
+-  qemu: Fix :cve_nist:`2024-7409`
+-  ruby: Fix for :cve_nist:`2024-27282`
+-  tiff: Fix :cve_nist:`2024-7006`
+-  vim: Fix :cve_nist:`2024-22667`, :cve_nist:`2024-41957`, :cve_nist:`2024-41965` and :cve_nist:`2024-43374`
+-  wpa-supplicant: Fix :cve_nist:`2023-52160`
 
 
 Fixes in Yocto-4.0.21
@@ -51,8 +51,8 @@ Fixes in Yocto-4.0.21
 -  python3-pycryptodome(x): use python_setuptools_build_meta build class
 -  python3: add PACKAGECONFIG[editline]
 -  ref-manual: fix typo and move :term:`SYSROOT_DIRS` example
--  sqlite3: CVE_ID correction for :cve:`2023-7104` as patched
--  sqlite3: Rename patch for :cve:`2022-35737`
+-  sqlite3: CVE_ID correction for :cve_nist:`2023-7104` as patched
+-  sqlite3: Rename patch for :cve_nist:`2022-35737`
 -  uboot-sign: Fix index error in concat_dtb_helper() with multiple configs
 -  vim: upgrade to 9.1.0682
 -  wireless-regdb: upgrade to 2024.07.04
