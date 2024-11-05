@@ -1018,3 +1018,59 @@ Thanks to the following people who contributed to this release:
 
 Repositories / Downloads for Yocto-5.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+poky
+
+-  Repository Location: :yocto_git:`/poky`
+-  Branch: :yocto_git:`styhead </poky/log/?h=styhead>`
+-  Tag:  :yocto_git:`yocto-5.1 </poky/log/?h=yocto-5.1>`
+-  Git Revision: :yocto_git:`8f01ae5c7cba251ed25c80f0141a950ebc8a5f73 </poky/commit/?id=8f01ae5c7cba251ed25c80f0141a950ebc8a5f73>`
+-  Release Artefact: poky-8f01ae5c7cba251ed25c80f0141a950ebc8a5f73
+-  sha: 91f5b2bc8a2be153ac2c358aa8ad71737b4f91e83d2c3ed1aac4f5f087991769
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-5.1/poky-8f01ae5c7cba251ed25c80f0141a950ebc8a5f73.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-5.1/poky-8f01ae5c7cba251ed25c80f0141a950ebc8a5f73.tar.bz2
+
+openembedded-core
+
+-  Repository Location: :oe_git:`/openembedded-core`
+-  Branch: :oe_git:`styhead </openembedded-core/log/?h=styhead>`
+-  Tag:  :oe_git:`yocto-5.1 </openembedded-core/log/?h=yocto-5.1>`
+-  Git Revision: :oe_git:`161c5b311f1aeb8f254dca96331b31d5b67fc92d </openembedded-core/commit/?id=161c5b311f1aeb8f254dca96331b31d5b67fc92d>`
+-  Release Artefact: oecore-161c5b311f1aeb8f254dca96331b31d5b67fc92d
+-  sha: 7b8ea61a3b811556f40b0912ee22b3ef37bccead1d65fb7e1c35a47aff4ca718
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-5.1/oecore-161c5b311f1aeb8f254dca96331b31d5b67fc92d.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-5.1/oecore-161c5b311f1aeb8f254dca96331b31d5b67fc92d.tar.bz2
+
+meta-mingw
+
+-  Repository Location: :yocto_git:`/meta-mingw`
+-  Branch: :yocto_git:`styhead </meta-mingw/log/?h=styhead>`
+-  Tag:  :yocto_git:`yocto-5.1 </meta-mingw/log/?h=yocto-5.1>`
+-  Git Revision: :yocto_git:`4ac6cbfdce1f85294bd54bcd8b074f7ef32c378f </meta-mingw/commit/?id=4ac6cbfdce1f85294bd54bcd8b074f7ef32c378f>`
+-  Release Artefact: meta-mingw-4ac6cbfdce1f85294bd54bcd8b074f7ef32c378f
+-  sha: 7759361e141654cc84aad486ad36a9ddaf7ee47feebe2cc6dca3175f1922b7c4
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-5.1/meta-mingw-4ac6cbfdce1f85294bd54bcd8b074f7ef32c378f.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-5.1/meta-mingw-4ac6cbfdce1f85294bd54bcd8b074f7ef32c378f.tar.bz2
+
+bitbake
+
+-  Repository Location: :oe_git:`/bitbake`
+-  Branch: :oe_git:`2.10 </bitbake/log/?h=2.10>`
+-  Tag:  :oe_git:`yocto-5.1 </bitbake/log/?h=yocto-5.1>`
+-  Git Revision: :oe_git:`d3c84198771b7f79aa84dc73061d8ca071fe18f3 </bitbake/commit/?id=d3c84198771b7f79aa84dc73061d8ca071fe18f3>`
+-  Release Artefact: bitbake-d3c84198771b7f79aa84dc73061d8ca071fe18f3
+-  sha: 4b64120f26878a661d1aaf0b0bb5009a21614e2db0649c728cc9d4c16b1050b6
+-  Download Locations:
+   http://downloads.yoctoproject.org/releases/yocto/yocto-5.1/bitbake-d3c84198771b7f79aa84dc73061d8ca071fe18f3.tar.bz2
+   http://mirrors.kernel.org/yocto/yocto/yocto-5.1/bitbake-d3c84198771b7f79aa84dc73061d8ca071fe18f3.tar.bz2
+
+yocto-docs
+
+-  Repository Location: :yocto_git:`/yocto-docs`
+-  Branch: :yocto_git:`styhead </yocto-docs/log/?h=styhead>`
+-  Tag: :yocto_git:`yocto-5.1 </yocto-docs/log/?h=yocto-5.1>`
+-  Git Revision: :yocto_git:`c32b55b3403dcfd76a4694ff407d4b513e14c8f4 </yocto-docs/commit/?id=c32b55b3403dcfd76a4694ff407d4b513e14c8f4>`
+
