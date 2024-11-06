@@ -26,10 +26,12 @@ help:
 
 .PHONY: all help Makefile clean stylecheck publish epub latexpdf
 
-publish: Makefile html singlehtml
+publish: Makefile epub latexpdf html singlehtml
 	rm -rf $(BUILDDIR)/$(DESTDIR)/
 	mkdir -p $(BUILDDIR)/$(DESTDIR)/
 	cp -r $(BUILDDIR)/html/* $(BUILDDIR)/$(DESTDIR)/
+	mkdir -p $(BUILDDIR)/$(DESTDIR)/_static
+	cp $(BUILDDIR)/epub/TheYoctoProject.epub $(BUILDDIR)/latex/theyoctoproject.pdf $(BUILDDIR)/$(DESTDIR)/_static/
 	cp $(BUILDDIR)/singlehtml/index.html $(BUILDDIR)/$(DESTDIR)/singleindex.html
 	sed -i -e 's@index.html#@singleindex.html#@g' $(BUILDDIR)/$(DESTDIR)/singleindex.html
 
