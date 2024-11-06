@@ -13,8 +13,8 @@ SPHINXLINTDOCS ?= $(SOURCEDIR)
 IMAGEDIRS      = */svg
 BUILDDIR       = _build
 DESTDIR        = final
-SVG2PNG        = inkscape
-SVG2PDF        = inkscape
+SVG2PNG        = rsvg-convert
+SVG2PDF        = rsvg-convert
 
 ifeq ($(shell if which $(SPHINXBUILD) >/dev/null 2>&1; then echo 1; else echo 0; fi),0)
 $(error "The '$(SPHINXBUILD)' command was not found. Make sure you have Sphinx installed")
@@ -41,11 +41,11 @@ PNGs := $(foreach dir, $(IMAGEDIRS), $(patsubst %.svg,%.png,$(wildcard $(SOURCED
 
 # Pattern rule for converting SVG to PDF
 %.pdf : %.svg
-	$(SVG2PDF) --export-filename=$@ $<
+	$(SVG2PDF) --format=Pdf --output=$@ $<
 
 # Pattern rule for converting SVG to PNG
 %.png : %.svg
-	$(SVG2PNG) --export-filename=$@ $<
+	$(SVG2PNG) --format=Png --output=$@ $<
 
 clean:
 	@rm -rf $(BUILDDIR) $(PNGs) $(PDFs) poky.yaml sphinx-static/switchers.js releases.rst
