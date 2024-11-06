@@ -7901,6 +7901,9 @@ system and gives an overview of their function and contents.
      Then you can look at files in ``build/tmp/stamps/<arch>/bc`` and look for
      files like: ``<PV>.do_compile.sigdata.09772aa4532512baf96d433484f27234d4b7c11dd9cda0d6f56fa1b7ce6f25f0``.
 
+     Alternatively, you can also use :doc:`bblock </dev-manual/bblock>` to
+     generate this line for you.
+
    :term:`SIGGEN_LOCKEDSIGS_TASKSIG_CHECK`
      Specifies the debug level of task signature check. 3 levels are supported:
 
