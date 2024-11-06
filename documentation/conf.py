@@ -158,9 +158,14 @@ html_last_updated_fmt = '%b %d, %Y'
 # Remove the trailing 'dot' in section numbers
 html_secnumber_suffix = " "
 
+# We need XeTeX to process special unicode character, sometimes the contributor
+# list from the release note contains those.
+# See https://docs.readthedocs.io/en/stable/guides/pdf-non-ascii-languages.html.
+latex_engine = 'xelatex'
+latex_use_xindy = False
 latex_elements = {
     'passoptionstopackages': '\\PassOptionsToPackage{bookmarksdepth=5}{hyperref}',
-    'preamble': '\\setcounter{tocdepth}{2}',
+    'preamble': '\\usepackage[UTF8]{ctex}\n\\setcounter{tocdepth}{2}',
 }
 
 # Make the EPUB builder prefer PNG to SVG because of issues rendering Inkscape SVG
