@@ -4,12 +4,12 @@ Release 5.1 (styhead)
 =====================
 
 Migration notes for 5.1 (styhead)
-------------------------------------
+---------------------------------
 
 This section provides migration information for moving to the Yocto
 Project 5.1 Release (codename "styhead") from the prior release.
 
-.. _migration-5.1-supported-kernel-versions:
+.. _migration-5.1-workdir-changes:
 
 :term:`WORKDIR` changes
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,6 +70,8 @@ it does not work as the debug prefix mapping doesn't handle that.
 
 ``devtool``  and ``recipetool`` have been updated to handle this and their
 support for ``S = WORKDIR`` and ``oe-local-files`` has been removed.
+
+.. _migration-5.1-supported-kernel-versions:
 
 Supported kernel versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,7 +191,7 @@ The following classes have been removed in this release:
    adding minimal added-value for a considerable amount of added runtime.
 
 
-.. _migration-5.1-qemu-changes:
+.. _migration-5.1-misc-changes:
 
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
