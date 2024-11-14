@@ -19,7 +19,7 @@ recipes that depend on it.
 To prevent this, use ``bblock`` to lock specific tasks or recipes to
 specific signatures, forcing BitBake to use the sstate cache for them.
 
-.. attention::
+.. warning::
 
    Use ``bblock`` only during the development phase.
 
