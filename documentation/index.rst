@@ -51,10 +51,3 @@ Welcome to the Yocto Project Documentation
    :hidden:
 
    genindex
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Documentation Downloads
-   :hidden:
-
-   downloads
