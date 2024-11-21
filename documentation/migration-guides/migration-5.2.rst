@@ -57,3 +57,6 @@ The following classes have been removed in this release:
 
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
+
+-  :term:`ZSTD_COMPRESSION_LEVEL` is now a plain integer number instead of a dash-prefixed
+   command-line option (e.g. it should be set to ``3`` rather than ``-3``).
