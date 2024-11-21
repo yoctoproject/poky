@@ -7130,11 +7130,6 @@ system and gives an overview of their function and contents.
       in the ":ref:`ref-manual/devtool-reference:checking on the upgrade status of a recipe`"
       section.
 
-   :term:`RECIPE_UPGRADE_EXTRA_TASKS`
-      When upgrading a recipe with ``devtool upgrade``, the variable
-      :term:`RECIPE_UPGRADE_EXTRA_TASKS` specifies a space-delimited list of
-      tasks to run after the new sources have been unpacked.
-
    :term:`RECIPE_SYSROOT`
       This variable points to the directory that holds all files populated from
       recipes specified in :term:`DEPENDS`. As the name indicates,
@@ -7165,7 +7160,11 @@ system and gives an overview of their function and contents.
       The default value is ``"${WORKDIR}/recipe-sysroot-native"``.
       Do not modify it.
 
-   :term:`RECIPE_UPDATE_EXTRA_TASKS`
+   :term:`RECIPE_UPGRADE_EXTRA_TASKS`
+      When upgrading a recipe with ``devtool upgrade``, the variable
+      :term:`RECIPE_UPGRADE_EXTRA_TASKS` specifies a space-delimited list of
+      tasks to run after the new sources have been unpacked.
+
       For some recipes, after the new source has been unpacked, additional tasks
       may need to be run during an upgrade. A good example of this is recipes
       which inherit :ref:`ref-classes-cargo-update-recipe-crates`, where the
