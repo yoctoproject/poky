@@ -10247,6 +10247,11 @@ system and gives an overview of their function and contents.
       memory and become problematic with parallelism elsewhere in the build.
       "50%" has been found to be a good value.
 
+   :term:`ZSTD_COMPRESSION_LEVEL`
+      Specifies the compression level to be used with ZStandard compression
+      (from ``1`` to ``19``, set to ``3`` by default, following upstream choice).
+      Higher levels produce smaller files, but take longer to complete.
+
    :term:`ZSTD_THREADS`
       Specifies the number of parallel threads that should be used when
       using ZStandard compression.
