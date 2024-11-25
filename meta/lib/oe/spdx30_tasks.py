@@ -97,6 +97,9 @@ def add_license_expression(d, objset, license_expression, license_data):
         if l == "|":
             return "OR"
 
+        if l == "+":
+            return "WITH"
+
         if l == "CLOSED":
             return "NONE"
 
@@ -115,6 +118,7 @@ def add_license_expression(d, objset, license_expression, license_data):
         .replace(")", " ) ")
         .replace("|", " | ")
         .replace("&", " & ")
+        .replace("+", " + ")
         .split()
     )
     spdx_license_expression = " ".join(convert(l) for l in lic_split)

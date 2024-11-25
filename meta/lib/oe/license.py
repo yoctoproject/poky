@@ -47,9 +47,9 @@ class InvalidLicense(LicenseError):
     def __str__(self):
         return "invalid characters in license '%s'" % self.license
 
-license_operator_chars = '&|() '
+license_operator_chars = '&|()+ '
 license_operator = re.compile(r'([' + license_operator_chars + '])')
-license_pattern = re.compile(r'[a-zA-Z0-9.+_\-]+$')
+license_pattern = re.compile(r'[a-zA-Z0-9._\-]+$')
 
 class LicenseVisitor(ast.NodeVisitor):
     """Get elements based on OpenEmbedded license strings"""
