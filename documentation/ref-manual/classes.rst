@@ -3345,6 +3345,56 @@ and the `signature process
 See also the description of :ref:`ref-classes-kernel-fitimage` class, which this class
 imitates.
 
+.. _ref-classes-uki:
+
+``uki``
+=======
+
+The :ref:`ref-classes-uki` class provides support for `Unified Kernel Image
+(UKI) <https://uapi-group.org/specifications/specs/unified_kernel_image/>`__
+format. UKIs combine kernel, :term:`Initramfs`, signatures, metadata etc to a
+single UEFI firmware compatible binary. The class is intended to be inherited
+by rootfs image recipes. The build configuration should also use an
+:term:`Initramfs`, ``systemd-boot`` as boot menu provider and have UEFI support
+on target hardware. Using ``systemd`` as init is recommended. Image builds
+should create an ESP partition for UEFI firmware and copy ``systemd-boot`` and
+UKI files there. Sample configuration for Wic images is provided in
+:oe_git:`scripts/lib/wic/canned-wks/efi-uki-bootdisk.wks.in
+<openembedded-core/tree/scripts/lib/wic/canned-wks/efi-uki-bootdisk.wks.in>`.
+UKIs are generated using ``systemd`` reference implementation `ukify
+<https://www.freedesktop.org/software/systemd/man/latest/ukify.html>`__.
+This class uses a number of variables but tries to find sensible defaults for
+them.
+
+The variables used by this class are:
+
+-  :term:`EFI_ARCH`: architecture name within EFI standard, set in
+   :oe_git:`meta/conf/image-uefi.conf
+   <openembedded-core/tree/meta/conf/image-uefi.conf>`
+-  :term:`IMAGE_EFI_BOOT_FILES`: files to install to EFI boot partition
+   created by the ``bootimg-efi`` Wic plugin
+-  :term:`INITRAMFS_IMAGE`: initramfs recipe name
+-  :term:`KERNEL_DEVICETREE`: optional devicetree files to embed into UKI
+-  :term:`UKIFY_CMD`: `ukify
+   <https://www.freedesktop.org/software/systemd/man/latest/ukify.html>`__
+   command to build the UKI image
+-  :term:`UKI_CMDLINE`: kernel command line to use with UKI
+-  :term:`UKI_CONFIG_FILE`: optional config file for `ukify
+   <https://www.freedesktop.org/software/systemd/man/latest/ukify.html>`__
+-  :term:`UKI_FILENAME`: output file name for the UKI image
+-  :term:`UKI_KERNEL_FILENAME`: kernel image file name
+-  :term:`UKI_SB_CERT`: optional UEFI secureboot certificate matching the
+   private key
+-  :term:`UKI_SB_KEY`: optional UEFI secureboot private key to sign UKI with
+
+For examples on how to use this class see oeqa selftest
+:oe_git:`meta/lib/oeqa/selftest/cases/uki.py
+<openembedded-core/tree/meta/lib/oeqa/selftest/cases/uki.py>`.
+Also an oeqa runtime test :oe_git:`meta/lib/oeqa/runtime/cases/uki.py
+<openembedded-core/tree/meta/lib/oeqa/runtime/cases/uki.py>` is provided which
+verifies that the target system booted the same UKI binary as was set at
+buildtime via :term:`UKI_FILENAME`.
+
 .. _ref-classes-uninative:
 
 ``uninative``
