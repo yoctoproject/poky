@@ -1,0 +1,27 @@
+From 3d7da18f665037150b9b3ae1c098852ab766bc18 Mon Sep 17 00:00:00 2001
+From: Jan Kircher <jan.kircher@leica-microsystems.com>
+Date: Tue, 29 Oct 2024 17:33:57 +0100
+Subject: [PATCH] Fix -Wmaybe-uninitialized warnings/errors
+
+Upstream-Status: Pending
+
+---
+ tools/lib/subcmd/parse-options.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/lib/subcmd/parse-options.c b/tools/lib/subcmd/parse-options.c
+index 4b60ec03b0bb..6a7785d0f15a 100644
+--- a/tools/lib/subcmd/parse-options.c
++++ b/tools/lib/subcmd/parse-options.c
+@@ -809,7 +809,7 @@ static int option__cmp(const void *va, const void *vb)
+ static struct option *options__order(const struct option *opts)
+ {
+ 	int nr_opts = 0, nr_group = 0, nr_parent = 0, len;
+-	const struct option *o, *p = opts;
++	const struct option *o = NULL, *p = opts;
+ 	struct option *opt, *ordered = NULL, *group;
+
+ 	/* flatten the options that have parents */
+--
+2.47.0
+
