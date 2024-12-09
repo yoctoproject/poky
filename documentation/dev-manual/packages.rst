@@ -84,10 +84,6 @@ the following:
 
 -  :term:`PR`: The recipe revision.
 
--  :term:`SRCPV`: The OpenEmbedded
-   build system uses this string to help define the value of :term:`PV` when
-   the source code revision needs to be included in it.
-
 -  :yocto_wiki:`PR Service </PR_Service>`: A
    network-based service that helps automate keeping package feeds
    compatible with existing package manager applications such as RPM,
@@ -256,15 +252,14 @@ the software::
 
    SRCREV = "${AUTOREV}"
 
-Furthermore, you need to reference :term:`SRCPV` in :term:`PV` in order to
+Furthermore, you need to include a ``+`` sign in :term:`PV` in order to
 automatically update the version whenever the revision of the source
 code changes. Here is an example::
 
-   PV = "1.0+git${SRCPV}"
+   PV = "1.0+git"
 
-The OpenEmbedded build system substitutes :term:`SRCPV` with the following:
-
-.. code-block:: none
+The OpenEmbedded build system will automatically add the source control
+information to the end of the variable :term:`PKGV`, in this format::
 
    AUTOINC+source_code_revision
 
