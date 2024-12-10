@@ -62,6 +62,8 @@ supported on the following distributions:
 
 -  Ubuntu 22.04 (LTS)
 
+-  Ubuntu 23.04
+
 -  Fedora 38
 
 -  Fedora 39
