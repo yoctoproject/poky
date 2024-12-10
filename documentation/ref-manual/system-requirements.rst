@@ -193,6 +193,11 @@ Here are the packages needed to build Project documentation manuals::
 
    $ sudo apt install &UBUNTU_DEBIAN_HOST_PACKAGES_DOC;
 
+In addition to the previous packages, here are the packages needed to build the
+documentation in PDF format::
+
+   $ sudo apt install &UBUNTU_DEBIAN_HOST_PACKAGES_DOC_PDF;
+
 Fedora Packages
 ---------------
 
@@ -205,6 +210,11 @@ Here are the packages needed to build Project documentation manuals::
 
    $ sudo dnf install &FEDORA_HOST_PACKAGES_DOC;
    $ sudo pip3 install &PIP3_HOST_PACKAGES_DOC;
+
+In addition to the previous packages, here are the packages needed to build the
+documentation in PDF format::
+
+   $ sudo dnf install &FEDORA_HOST_PACKAGES_DOC_PDF;
 
 openSUSE Packages
 -----------------
@@ -219,6 +229,11 @@ Here are the packages needed to build Project documentation manuals::
 
    $ sudo zypper install &OPENSUSE_HOST_PACKAGES_DOC;
    $ sudo pip3 install &PIP3_HOST_PACKAGES_DOC;
+
+In addition to the previous packages, here are the packages needed to build the
+documentation in PDF format::
+
+   $ sudo zypper install &OPENSUSE_HOST_PACKAGES_DOC_PDF;
 
 
 AlmaLinux Packages
@@ -250,6 +265,18 @@ Here are the packages needed to build Project documentation manuals::
 
    $ sudo dnf install &ALMALINUX_HOST_PACKAGES_DOC;
    $ sudo pip3 install &PIP3_HOST_PACKAGES_DOC;
+
+In addition to the previous packages, here are the packages needed to build the
+documentation in PDF format::
+
+   $ sudo dnf install &ALMALINUX_HOST_PACKAGES_DOC_PDF;
+
+.. warning::
+
+   Unlike Fedora or OpenSUSE, AlmaLinux does not provide the packages
+   ``texlive-collection-fontsextra``, ``texlive-collection-lang*`` and
+   ``texlive-collection-latexextra``, so you may run into issues. These may be
+   installed using `tlmgr <https://tug.org/texlive/tlmgr.html>`_.
 
 .. _system-requirements-buildtools:
 
