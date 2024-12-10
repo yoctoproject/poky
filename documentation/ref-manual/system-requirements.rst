@@ -64,6 +64,8 @@ supported on the following distributions:
 
 -  Fedora 38
 
+-  Fedora 39
+
 -  CentOS Stream 8
 
 -  Debian GNU/Linux 11 (Bullseye)
