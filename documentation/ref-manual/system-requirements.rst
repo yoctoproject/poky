@@ -150,7 +150,7 @@ Ubuntu and Debian
 Here are the packages needed to build an image on a headless system
 with a supported Ubuntu or Debian Linux distribution::
 
-   $ sudo apt install &UBUNTU_HOST_PACKAGES_ESSENTIAL;
+   $ sudo apt install &UBUNTU_DEBIAN_HOST_PACKAGES_ESSENTIAL;
 
 You also need to ensure you have the ``en_US.UTF-8`` locale enabled::
 
@@ -181,8 +181,7 @@ If this is not the case, you can reconfigure the ``locales`` package to add it
 
 Here are the packages needed to build Project documentation manuals::
 
-   $ sudo apt install git make inkscape texlive-latex-extra
-   $ sudo apt install sphinx python3-saneyaml python3-sphinx-rtd-theme
+   $ sudo apt install &UBUNTU_DEBIAN_HOST_PACKAGES_DOC;
 
 Fedora Packages
 ---------------
@@ -194,8 +193,8 @@ with a supported Fedora Linux distribution::
 
 Here are the packages needed to build Project documentation manuals::
 
-   $ sudo dnf install git make python3-pip which inkscape texlive-fncychap
-   &PIP3_HOST_PACKAGES_DOC;
+   $ sudo dnf install &FEDORA_HOST_PACKAGES_DOC;
+   $ sudo pip3 install &PIP3_HOST_PACKAGES_DOC;
 
 openSUSE Packages
 -----------------
@@ -204,11 +203,12 @@ Here are the packages needed to build an image on a headless system
 with a supported openSUSE distribution::
 
    $ sudo zypper install &OPENSUSE_HOST_PACKAGES_ESSENTIAL;
+   $ sudo pip3 install &OPENSUSE_PIP3_HOST_PACKAGES_ESSENTIAL;
 
 Here are the packages needed to build Project documentation manuals::
 
-   $ sudo zypper install git make python3-pip which inkscape texlive-fncychap
-   &PIP3_HOST_PACKAGES_DOC;
+   $ sudo zypper install &OPENSUSE_HOST_PACKAGES_DOC;
+   $ sudo pip3 install &PIP3_HOST_PACKAGES_DOC;
 
 
 AlmaLinux Packages
@@ -217,6 +217,10 @@ AlmaLinux Packages
 Here are the packages needed to build an image on a headless system
 with a supported AlmaLinux distribution::
 
+   $ sudo dnf install -y epel-release
+   $ sudo yum install dnf-plugins-core
+   $ sudo dnf config-manager --set-enabled crb
+   $ sudo dnf makecache
    $ sudo dnf install &ALMALINUX_HOST_PACKAGES_ESSENTIAL;
 
 .. note::
@@ -234,8 +238,8 @@ with a supported AlmaLinux distribution::
 
 Here are the packages needed to build Project documentation manuals::
 
-   $ sudo dnf install git make python3-pip which inkscape texlive-fncychap
-   &PIP3_HOST_PACKAGES_DOC;
+   $ sudo dnf install &ALMALINUX_HOST_PACKAGES_DOC;
+   $ sudo pip3 install &PIP3_HOST_PACKAGES_DOC;
 
 .. _system-requirements-buildtools:
 
