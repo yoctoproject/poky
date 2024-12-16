@@ -80,27 +80,19 @@ limited value if you have access to such updates.
 Finally, here are the distribution versions which were previously
 tested on former revisions of "&DISTRO_NAME;", but no longer are:
 
--  Ubuntu 16.04 (LTS)
+-  Ubuntu 18.04 (LTS)
 
--  Ubuntu 21.10
+-  Ubuntu 20.04 (LTS)
 
--  Fedora 34
-
--  Fedora 35
-
--  Fedora 36
+-  Ubuntu 22.04 (LTS)
 
 -  Fedora 37
 
--  CentOS 7.x
-
--  CentOS 8.x
-
--  Debian GNU/Linux 9.x (Stretch)
-
--  Debian GNU/Linux 10.x (Buster)
+-  Debian GNU/Linux 11.x (Bookworm)
 
 -  OpenSUSE Leap 15.3
+
+-  AlmaLinux 8
 
 .. note::
 
