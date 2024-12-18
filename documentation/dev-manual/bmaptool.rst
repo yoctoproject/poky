@@ -22,7 +22,7 @@ system image files much faster.
    -  If you are unable to install the ``bmap-tools`` package, you will
       need to build `bmaptool` before using it. Use the following command::
 
-         $ bitbake bmaptool-native
+         $ bitbake bmaptool-native -caddto_recipe_sysroot
 
 Following, is an example that shows how to flash a Wic image. Realize
 that while this example uses a Wic image, you can use `bmaptool` to flash
