@@ -43,14 +43,13 @@ any type of image. Use these steps to flash an image using `bmaptool`:
    depending on your particular setup. The following commands assume the
    image resides in the :term:`Build Directory`'s ``deploy/images/`` area:
 
-   -  If you have write access to the media, use this command form::
+   -  If you installed the package for `bmaptool`, you can directly run::
 
-         $ oe-run-native bmaptool-native bmaptool copy build-directory/tmp/deploy/images/machine/image.wic /dev/sdX
+         $ sudo bmaptool copy build-directory/tmp/deploy/images/machine/image.wic /dev/sdX
 
-   -  If you do not have write access to the media, set your permissions
-      first and then use the same command form::
+   -  Otherwise, if you built `bmaptool` with BitBake, run::
 
-         $ sudo chmod 666 /dev/sdX
+         $ sudo chmod a+w /dev/sdX       # get write access to the media, needed only once after booting
          $ oe-run-native bmaptool-native bmaptool copy build-directory/tmp/deploy/images/machine/image.wic /dev/sdX
 
 For help on the ``bmaptool`` command, use the following command::
