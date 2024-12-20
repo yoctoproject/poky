@@ -1877,14 +1877,6 @@ each layer before starting every build. The :ref:`ref-classes-metadata_scm`
 class is enabled by default because it is inherited by the
 :ref:`ref-classes-base` class.
 
-.. _ref-classes-migrate_localcount:
-
-``migrate_localcount``
-======================
-
-The :ref:`ref-classes-migrate_localcount` class verifies a recipe's localcount data and
-increments it appropriately.
-
 .. _ref-classes-mime:
 
 ``mime``
