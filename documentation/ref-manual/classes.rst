@@ -614,6 +614,15 @@ You will find some more details in the
 ":ref:`dev-manual/vulnerabilities:checking for vulnerabilities`"
 section in the Development Tasks Manual.
 
+.. _ref-classes-cython:
+
+``cython``
+==========
+
+The :ref:`ref-classes-cython` class can be used by Python recipes that require
+`Cython <https://cython.org/>`__ as part of their build dependencies
+(:term:`DEPENDS`).
+
 .. _ref-classes-debian:
 
 ``debian``
