@@ -3602,3 +3602,23 @@ the Waf build system. You can use the
 :term:`PACKAGECONFIG_CONFARGS` variables
 to specify additional configuration options to be passed on the Waf
 command line.
+
+.. _ref-classes-yocto-check-layer:
+
+``yocto-check-layer``
+=====================
+
+The :ref:`ref-classes-yocto-check-layer` class is used by the
+:oe_git:`yocto-check-layer </openembedded-core/tree/scripts/yocto-check-layer>`
+script to ensure that packages from Yocto Project Compatible layers don't skip
+required QA checks listed in :term:`CHECKLAYER_REQUIRED_TESTS` defined by the
+:ref:`ref-classes-insane` class.
+
+It adds an anonymous python function with extra processing to all recipes,
+and globally inheriting this class with :term:`INHERIT` is not advised. Instead
+the ``yocto-check-layer`` script should be used as it handles usage of this
+class.
+
+For more information on the Yocto Project
+Compatible layers, see the :ref:`dev-manual/layers:Making Sure Your Layer is
+Compatible With Yocto Project` section of the Yocto Project Development Manual.
