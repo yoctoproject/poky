@@ -4578,6 +4578,19 @@ system and gives an overview of their function and contents.
       You can register custom kernel image types with the
       :ref:`ref-classes-kernel` class using this variable.
 
+   :term:`KERNEL_CONSOLE`
+     The :term:`KERNEL_CONSOLE` variable holds the value of the ``console``
+     parameter of the kernel command line and can be used in places such as a
+     ``wks`` description file for :ref:`Wic images <dev-manual/wic:creating
+     partitioned images using wic>`.
+
+     The default value of this variable is extracted from the first console
+     device and setting in :term:`SERIAL_CONSOLES`. If nothing is found in
+     :term:`SERIAL_CONSOLES`, the default value is set to ``ttyS0,115200``).
+
+     For more information, see the `Kernel command-line documentation
+     <https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html>`__.
+
    :term:`KERNEL_DANGLING_FEATURES_WARN_ONLY`
       When kernel configuration fragments are missing for some
       :term:`KERNEL_FEATURES` specified by layers or BSPs,
