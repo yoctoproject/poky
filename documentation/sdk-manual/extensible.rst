@@ -655,7 +655,10 @@ The extensible SDK supports two different development modes.
       # SSH is mandatory, no password simplifies the usage
       EXTRA_IMAGE_FEATURES += "\
          ssh-server-openssh \
-         debug-tweaks \
+         allow-empty-password \
+         allow-root-login \
+         empty-root-password \
+         post-install-logging \
       "
 
       # Remote debugging needs gdbserver on the target device

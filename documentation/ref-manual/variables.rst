@@ -2604,10 +2604,14 @@ system and gives an overview of their function and contents.
         - "dbg-pkgs" --- adds -dbg packages for all installed packages including
           symbol information for debugging and profiling.
 
-        - "debug-tweaks" --- makes an image suitable for debugging. For example, allows root logins without passwords and
-          enables post-installation logging. See the 'allow-empty-password' and
-          'post-install-logging' features in the ":ref:`ref-features-image`"
-          section for more information.
+        - "empty-root-password" --- This feature can be used if you want to
+          allow root login with an empty password.
+        - "allow-empty-password" --- Allows Dropbear and OpenSSH to accept
+          logins from accounts having an empty password string.
+        - "allow-root-login" --- Allows Dropbear and OpenSSH to accept root logins.
+        - "post-install-logging" --- Enables logging postinstall script runs to
+          the ``/var/log/postinstall.log`` file on first boot of the image on
+          the target system.
         - "dev-pkgs" --- adds -dev packages for all installed packages. This is
           useful if you want to develop against the libraries in the image.
         - "read-only-rootfs" --- creates an image whose root filesystem is
