@@ -789,7 +789,6 @@ Errors and Warnings
     use a relative path rather than an absolute one, or to pick up the path from
     runtime configuration or environment variables.
 
-
 Configuring and Disabling QA Checks
 ===================================
 

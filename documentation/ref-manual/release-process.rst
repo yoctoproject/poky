@@ -175,7 +175,7 @@ consists of the following pieces:
    operation and functions. However, the test can also use the IP
    address of a machine to test.
 
--  :ref:`ptest <dev-manual/packages:testing packages with ptest>`:
+-  :ref:`ptest <test-manual/ptest:testing packages with ptest>`:
    Runs tests against packages produced during the build for a given
    piece of software. The test allows the packages to be run within a
    target image.
