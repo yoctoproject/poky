@@ -207,7 +207,7 @@ metadata, as extra layers can define their own:
 
 -  *ptest:* Enables building the package tests where supported by
    individual recipes. For more information on package tests, see the
-   ":ref:`dev-manual/packages:testing packages with ptest`" section
+   ":ref:`test-manual/ptest:testing packages with ptest`" section
    in the Yocto Project Development Tasks Manual.
 
 -  *pulseaudio:* Include support for
