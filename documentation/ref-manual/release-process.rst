@@ -148,8 +148,8 @@ Additionally, because the test strategies are visible to you as a
 developer, you can validate your projects. This section overviews the
 available test infrastructure used in the Yocto Project. For information
 on how to run available tests on your projects, see the
-":ref:`dev-manual/runtime-testing:performing automated runtime testing`"
-section in the Yocto Project Development Tasks Manual.
+":ref:`test-manual/runtime-testing:performing automated runtime testing`"
+section in the Yocto Project Test Environment Manual.
 
 The QA/testing infrastructure is woven into the project to the point
 where core developers take some of it for granted. The infrastructure

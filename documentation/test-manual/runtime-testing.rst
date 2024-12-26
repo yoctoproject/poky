@@ -1,5 +1,6 @@
 .. SPDX-License-Identifier: CC-BY-SA-2.0-UK
 
+************************************
 Performing Automated Runtime Testing
 ************************************
 
@@ -153,7 +154,7 @@ options are available:
 
    If you choose "SystemdbootTarget", there are additional requirements
    and considerations. See the
-   ":ref:`dev-manual/runtime-testing:selecting systemdboottarget`" section, which
+   ":ref:`test-manual/runtime-testing:selecting systemdboottarget`" section, which
    follows, for more information.
 
 -  *"BeagleBoneTarget":* Choose "BeagleBoneTarget" if you are deploying
@@ -179,7 +180,7 @@ Selecting SystemdbootTarget
 
 If you did not set :term:`TEST_TARGET` to "SystemdbootTarget", then you do
 not need any information in this section. You can skip down to the
-":ref:`dev-manual/runtime-testing:running tests`" section.
+":ref:`test-manual/runtime-testing:running tests`" section.
 
 If you did set :term:`TEST_TARGET` to "SystemdbootTarget", you also need to
 perform a one-time setup of your controller image by doing the following:

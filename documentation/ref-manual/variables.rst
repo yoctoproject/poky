@@ -9305,8 +9305,8 @@ system and gives an overview of their function and contents.
       file.
 
       For more information on testing images, see the
-      ":ref:`dev-manual/runtime-testing:performing automated runtime testing`"
-      section in the Yocto Project Development Tasks Manual.
+      ":ref:`test-manual/runtime-testing:performing automated runtime testing`"
+      section in the Yocto Project Test Environment Manual.
 
    :term:`TEST_SERIALCONTROL_CMD`
       For automated hardware testing, specifies the command to use to
@@ -9377,8 +9377,8 @@ system and gives an overview of their function and contents.
          TEST_SUITES = "test_A test_B"
 
       For more information on testing images, see the
-      ":ref:`dev-manual/runtime-testing:performing automated runtime testing`"
-      section in the Yocto Project Development Tasks Manual.
+      ":ref:`test-manual/runtime-testing:performing automated runtime testing`"
+      section in the Yocto Project Test Environment Manual.
 
    :term:`TEST_TARGET`
       Specifies the target controller to use when running tests against a
@@ -9396,8 +9396,8 @@ system and gives an overview of their function and contents.
       You can provide the following arguments with :term:`TEST_TARGET`:
 
       -  *"qemu":* Boots a QEMU image and runs the tests. See the
-         ":ref:`dev-manual/runtime-testing:enabling runtime tests on qemu`" section
-         in the Yocto Project Development Tasks Manual for more
+         ":ref:`test-manual/runtime-testing:enabling runtime tests on qemu`" section
+         in the Yocto Project Test Environment Manual for more
          information.
 
       -  *"simpleremote":* Runs the tests on target hardware that is
@@ -9412,8 +9412,8 @@ system and gives an overview of their function and contents.
             ``meta/lib/oeqa/controllers/simpleremote.py``.
 
       For information on running tests on hardware, see the
-      ":ref:`dev-manual/runtime-testing:enabling runtime tests on hardware`"
-      section in the Yocto Project Development Tasks Manual.
+      ":ref:`test-manual/runtime-testing:enabling runtime tests on hardware`"
+      section in the Yocto Project Test Environment Manual.
 
    :term:`TEST_TARGET_IP`
       The IP address of your hardware under test. The :term:`TEST_TARGET_IP`
@@ -9449,8 +9449,8 @@ system and gives an overview of their function and contents.
 
       For more information
       on enabling, running, and writing these tests, see the
-      ":ref:`dev-manual/runtime-testing:performing automated runtime testing`"
-      section in the Yocto Project Development Tasks Manual and the
+      ":ref:`test-manual/runtime-testing:performing automated runtime testing`"
+      section in the Yocto Project Test Environment Manual and the
       ":ref:`ref-classes-testimage`" section.
 
    :term:`TESTIMAGE_FAILED_QA_ARTIFACTS`

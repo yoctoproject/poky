@@ -3232,8 +3232,8 @@ after it is built, you can set :term:`TESTIMAGE_AUTO`::
    TESTIMAGE_AUTO = "1"
 
 For information on how to enable, run, and create new tests, see the
-":ref:`dev-manual/runtime-testing:performing automated runtime testing`"
-section in the Yocto Project Development Tasks Manual.
+":ref:`test-manual/runtime-testing:performing automated runtime testing`"
+section in the Yocto Project Test Environment Manual.
 
 .. _ref-classes-testsdk:
 

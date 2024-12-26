@@ -130,7 +130,9 @@ the following types of tests:
       $ bitbake image -c testimage
 
    The tests use the :ref:`ref-classes-testimage`
-   class and the :ref:`ref-tasks-testimage` task.
+   class and the :ref:`ref-tasks-testimage` task. See the
+   :ref:`test-manual/runtime-testing:Performing Automated Runtime Testing`
+   section of the Yocto Project Test Environment Manual for more information.
 
 -  *Layer Testing:* The Autobuilder has the possibility to test whether
    specific layers work with the test of the system. The layers tested
