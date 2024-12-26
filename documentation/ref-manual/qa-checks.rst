@@ -791,7 +791,7 @@ Errors and Warnings
 
     This check will detect if the source of the package contains some
     upstream-provided tests and, if so, that ptests are implemented for this
-    recipe.  See the ":ref:`dev-manual/packages:testing packages with ptest`"
+    recipe.  See the ":ref:`test-manual/ptest:testing packages with ptest`"
     section in the Yocto Project Development Tasks Manual. See also the
     ":ref:`ref-classes-ptest`" section.
 
