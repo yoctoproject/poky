@@ -243,6 +243,12 @@ New Features / Enhancements in |yocto-ver|
    -  Remove the "S = WORKDIR" workaround as now :term:`S` cannot be equal to
       :term:`WORKDIR`.
 
+   -  The already broken ``--debug-build-config`` option of
+      ``devtool ide-sdk`` has been replaced by a new ``--debug-build`` option
+      of ``devtool modify``. The new ``devtool ide-sdk`` workflow is:
+      ``devtool modify my-recipe --debug-build`` followed by
+      ``devtool ide-sdk my-recipe my-image``.
+
 -  Patchtest-related changes:
 
    -  Refactor pattern definitions in a ``patterns`` module.
