@@ -658,7 +658,6 @@ The extensible SDK supports two different development modes.
          allow-empty-password \
          allow-root-login \
          empty-root-password \
-         post-install-logging \
       "
 
       # Remote debugging needs gdbserver on the target device
