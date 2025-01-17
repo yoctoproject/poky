@@ -119,12 +119,8 @@ https://autobuilder.yocto.io/pub/repro-fail/ in the form ``oe-reproducible +
 The project's current reproducibility status can be seen at
 :yocto_home:`/reproducible-build-results/`
 
-You can also check the reproducibility status on supported host distributions:
-
--  CentOS: :yocto_ab:`/valkyrie/#/builders/reproducible-centos`
--  Debian: :yocto_ab:`/valkyrie/#/builders/reproducible-debian`
--  Fedora: :yocto_ab:`/valkyrie/#/builders/reproducible-fedora`
--  Ubuntu: :yocto_ab:`/valkyrie/#/builders/reproducible-ubuntu`
+You can also check the reproducibility status on the Autobuilder:
+:yocto_ab:`/valkyrie/#/builders/reproducible`.
 
 ===============================
 Can I test my layer or recipes?
