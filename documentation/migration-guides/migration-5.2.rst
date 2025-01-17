@@ -74,6 +74,26 @@ systemd changes
    As a consequence, the ``systemd`` recipe no longer contains the ``usrmerge``
    :term:`PACKAGECONFIG` option as it is now implied by default.
 
+-  ``systemd.bbclass``: If a ``systemd`` service file had referred to other service
+   files by starting them via
+   `Also <https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#Also=>`__,
+   the other service files were automatically added to the :term:`FILES` variable of
+   the same package. Example: 
+
+   a.service contains::
+
+      [Install]
+      Also=b.service
+
+   If ``a.service`` is packaged in package ``A``, ``b.service`` was
+   automatically packaged into package ``A`` as well. This happened even if
+   ``b.service`` was explicitly added to package ``B`` using :term:`FILES` and
+   :term:`SYSTEMD_SERVICE` variables.
+   This prevented such services from being packaged into different packages.
+   Therefore, this automatic behavior has been removed for service files (but
+   not for socket files).
+   Now all service files must be explicitly added to :term:`FILES`.
+
 Recipe changes
 ~~~~~~~~~~~~~~
 
