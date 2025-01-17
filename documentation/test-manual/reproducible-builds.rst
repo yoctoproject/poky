@@ -121,10 +121,10 @@ The project's current reproducibility status can be seen at
 
 You can also check the reproducibility status on supported host distributions:
 
--  CentOS: :yocto_ab:`/typhoon/#/builders/reproducible-centos`
--  Debian: :yocto_ab:`/typhoon/#/builders/reproducible-debian`
--  Fedora: :yocto_ab:`/typhoon/#/builders/reproducible-fedora`
--  Ubuntu: :yocto_ab:`/typhoon/#/builders/reproducible-ubuntu`
+-  CentOS: :yocto_ab:`/valkyrie/#/builders/reproducible-centos`
+-  Debian: :yocto_ab:`/valkyrie/#/builders/reproducible-debian`
+-  Fedora: :yocto_ab:`/valkyrie/#/builders/reproducible-fedora`
+-  Ubuntu: :yocto_ab:`/valkyrie/#/builders/reproducible-ubuntu`
 
 ===============================
 Can I test my layer or recipes?
