@@ -246,7 +246,7 @@ class ProgressBar(object):
                                     for w in self.widgets)
 
 
-    def update(self, value=None):
+    def update(self, value=None, fd_print=True):
         """Updates the ProgressBar to a new value."""
 
         if value is not None and value is not UnknownLength:
@@ -266,8 +266,9 @@ class ProgressBar(object):
         self.seconds_elapsed = now - self.start_time
         self.next_update = self.currval + self.update_interval
         output = self._format_line()
-        self.fd.write(output + '\r')
-        self.fd.flush()
+        if fd_print:
+            self.fd.write(output + '\r')
+            self.fd.flush()
         self.last_update_time = now
         return output
 

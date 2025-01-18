@@ -235,9 +235,10 @@ class TerminalFilter(object):
 
     def keepAlive(self, t):
         if not self.cuu:
-            print("Bitbake still alive (no events for %ds). Active tasks:" % t)
+            msgbuf = ["Bitbake still alive (no events for %ds). Active tasks:" % t]
             for t in self.helper.running_tasks:
-                print(t)
+                msgbuf.append(str(t))
+            print("\n".join(msgbuf))
             sys.stdout.flush()
 
     def updateFooter(self):
@@ -257,7 +258,10 @@ class TerminalFilter(object):
             self.clearFooter()
         if (not self.helper.tasknumber_total or self.helper.tasknumber_current == self.helper.tasknumber_total) and not len(activetasks):
             return
+
         tasks = []
+        msgbuf = []
+
         for t in runningpids:
             start_time = activetasks[t].get("starttime", None)
             if start_time:
@@ -284,17 +288,17 @@ class TerminalFilter(object):
             content = pluralise("Waiting for %s running task to finish",
                                 "Waiting for %s running tasks to finish", len(activetasks))
             if not self.quiet:
-                content += ':'
-            print(content)
+                content += ":"
+            msgbuf.append(content)
         else:
             scene_tasks = "%s of %s" % (self.helper.setscene_current, self.helper.setscene_total)
             cur_tasks = "%s of %s" % (self.helper.tasknumber_current, self.helper.tasknumber_total)
 
-            content = ''
+            content = ""
             if not self.quiet:
                 msg = "Setscene tasks: %s" % scene_tasks
-                content += msg + "\n"
-                print(msg)
+                content += (msg + "\n")
+                msgbuf.append(msg)
 
             if self.quiet:
                 msg = "Running tasks (%s, %s)" % (scene_tasks, cur_tasks)
@@ -309,8 +313,9 @@ class TerminalFilter(object):
                 self.main_progress.start(False)
             self.main_progress.setmessage(msg)
             progress = max(0, self.helper.tasknumber_current - 1)
-            content += self.main_progress.update(progress)
-            print('')
+            mpbar_content = self.main_progress.update(progress, fd_print=False)
+            content += mpbar_content
+            msgbuf.append(mpbar_content)
         lines = self.getlines(content)
         if not self.quiet:
             for tasknum, task in enumerate(tasks[:(self.rows - 1 - lines)]):
@@ -323,14 +328,14 @@ class TerminalFilter(object):
                     pbar.setmessage('%s: %s' % (tasknum, msg))
                     pbar.setextra(rate)
                     if progress > -1:
-                        content = pbar.update(progress)
+                        content = pbar.update(progress, fd_print=False)
                     else:
-                        content = pbar.update(1)
-                    print('')
+                        content = pbar.update(1, fd_print=False)
                 else:
                     content = "%s: %s" % (tasknum, task)
-                    print(content)
+                msgbuf.append(content)
                 lines = lines + self.getlines(content)
+        print("\n".join(msgbuf))
         self.footer_present = lines
         self.lastpids = runningpids[:]
         self.lastcount = self.helper.tasknumber_current
@@ -347,30 +352,29 @@ class TerminalFilter(object):
             self.termios.tcsetattr(fd, self.termios.TCSADRAIN, self.stdinbackup)
 
 def print_event_log(event, includelogs, loglines, termfilter):
-    # FIXME refactor this out further
     logfile = event.logfile
     if logfile and os.path.exists(logfile):
         termfilter.clearFooter()
         bb.error("Logfile of failure stored in: %s" % logfile)
         if includelogs and not event.errprinted:
-            print("Log data follows:")
             f = open(logfile, "r")
+            msgbuf = ["Log data follows:"]
             lines = []
             while True:
                 l = f.readline()
-                if l == '':
+                if l == "":
                     break
                 l = l.rstrip()
                 if loglines:
-                    lines.append(' | %s' % l)
+                    lines.append(" | %s" % l)
                     if len(lines) > int(loglines):
                         lines.pop(0)
                 else:
-                    print('| %s' % l)
+                    msgbuf.append("| %s" % l)
             f.close()
             if lines:
-                for line in lines:
-                    print(line)
+                msgbuf.extend(lines)
+            print("\n".join(msgbuf))
 
 def _log_settings_from_server(server, observe_only):
     # Get values of variables which control our output
@@ -664,7 +668,8 @@ def main(server, eventHandler, params, tf = TerminalFilter):
     printintervaldelta = 10 * 60 # 10 minutes
     printinterval = printintervaldelta
     pinginterval = 1 * 60 # 1 minute
-    lastevent = lastprint = time.time()
+    printfooterinterval = 1.0 / 40.0 # 40 Hz (FPS) -> 0.025 secs
+    lastevent = lastprint = lastfooterprint = time.time()
 
     termfilter = tf(main, helper, console_handlers, params.options.quiet)
     atexit.register(termfilter.finish)
@@ -689,8 +694,9 @@ def main(server, eventHandler, params, tf = TerminalFilter):
                         return_value = 3
                         main.shutdown = 3
                     lastevent = time.time()
-                if not parseprogress:
+                if (not parseprogress) and ((lastfooterprint + printfooterinterval) < time.time()):
                     termfilter.updateFooter()
+                    lastfooterprint = time.time()
                 event = eventHandler.waitEvent(0.25)
                 if event is None:
                     continue
