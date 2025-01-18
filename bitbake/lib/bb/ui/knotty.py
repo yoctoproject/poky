@@ -10,6 +10,7 @@
 
 from __future__ import division
 
+import io
 import os
 import sys
 import logging
@@ -260,7 +261,7 @@ class TerminalFilter(object):
             return
 
         tasks = []
-        msgbuf = []
+        msgbuf = io.StringIO()
 
         for t in runningpids:
             start_time = activetasks[t].get("starttime", None)
@@ -289,7 +290,7 @@ class TerminalFilter(object):
                                 "Waiting for %s running tasks to finish", len(activetasks))
             if not self.quiet:
                 content += ":"
-            msgbuf.append(content)
+            print(content, file=msgbuf)
         else:
             scene_tasks = "%s of %s" % (self.helper.setscene_current, self.helper.setscene_total)
             cur_tasks = "%s of %s" % (self.helper.tasknumber_current, self.helper.tasknumber_total)
@@ -298,7 +299,7 @@ class TerminalFilter(object):
             if not self.quiet:
                 msg = "Setscene tasks: %s" % scene_tasks
                 content += (msg + "\n")
-                msgbuf.append(msg)
+                print(msg, file=msgbuf)
 
             if self.quiet:
                 msg = "Running tasks (%s, %s)" % (scene_tasks, cur_tasks)
@@ -313,9 +314,11 @@ class TerminalFilter(object):
                 self.main_progress.start(False)
             self.main_progress.setmessage(msg)
             progress = max(0, self.helper.tasknumber_current - 1)
-            mpbar_content = self.main_progress.update(progress, fd_print=False)
-            content += mpbar_content
-            msgbuf.append(mpbar_content)
+            fd = self.main_progress.fd
+            self.main_progress.fd = msgbuf
+            content += self.main_progress.update(progress)
+            self.main_progress.fd = fd
+            print("", file=msgbuf)
         lines = self.getlines(content)
         if not self.quiet:
             for tasknum, task in enumerate(tasks[:(self.rows - 1 - lines)]):
@@ -327,15 +330,21 @@ class TerminalFilter(object):
                             pbar.start_time = start_time
                     pbar.setmessage('%s: %s' % (tasknum, msg))
                     pbar.setextra(rate)
+                    
+                    fd = pbar.fd
+                    pbar.fd = msgbuf
                     if progress > -1:
-                        content = pbar.update(progress, fd_print=False)
+                        content = pbar.update(progress)
                     else:
-                        content = pbar.update(1, fd_print=False)
+                        content = pbar.update(1)
+                    pbar.fd = fd
+                    print("", file=msgbuf)
                 else:
                     content = "%s: %s" % (tasknum, task)
-                msgbuf.append(content)
+                    print(content, file=msgbuf)
                 lines = lines + self.getlines(content)
-        print("\n".join(msgbuf))
+        print(msgbuf.getvalue())
+        msgbuf.close()
         self.footer_present = lines
         self.lastpids = runningpids[:]
         self.lastcount = self.helper.tasknumber_current
