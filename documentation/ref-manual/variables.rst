@@ -293,6 +293,35 @@ system and gives an overview of their function and contents.
       :term:`PACKAGE_EXCLUDE` variables for related
       information.
 
+   :term:`BAREBOX_BINARY`
+      When using the :ref:`ref-classes-barebox` class, this variable allows you
+      to specify a particular binary that should be deployed and installed.
+
+      The barebox build system can build multiple barebox binaries at once.
+      By default, all built binaries will be deployed and installed under their
+      original name.
+
+      Here is an example usage of this variable::
+
+         BAREBOX_BINARY = "barebox-boundarydevices-imx6dl-nitrogen6x-1g.img"
+
+   :term:`BAREBOX_CONFIG`
+      When using the :ref:`ref-classes-barebox` class, this variable allows you
+      to specify the name of the barebox defconfig to build.
+      The name must be a defconfig file known to the barebox build environment.
+      This variable is mainly useful for generic use cases where a dedicated
+      configuration is not required.
+      The :ref:`ref-classes-barebox` class itself already sets it for some QEMU
+      machines::
+
+         BAREBOX_CONFIG:qemuarm = "multi_v7_defconfig"
+         BAREBOX_CONFIG:qemuarm64 = "multi_v8_defconfig"
+         BAREBOX_CONFIG:qemux86-64 = "efi_defconfig"
+
+      Except for these, the default value of :term:`BAREBOX_CONFIG` is empty.
+      For more information on how to provide a barebox configuration, see the
+      :ref:`ref-classes-barebox` class.
+
    :term:`BASE_LIB`
       The library directory name for the CPU or Application Binary
       Interface (ABI) tune. The :term:`BASE_LIB` applies only in the Multilib

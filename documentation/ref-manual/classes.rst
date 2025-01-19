@@ -128,6 +128,43 @@ It's useful to have some idea of how the tasks defined by the
 -  :ref:`ref-tasks-install` --- runs ``make install`` and
    passes in ``${``\ :term:`D`\ ``}`` as ``DESTDIR``.
 
+.. _ref-classes-barebox:
+
+``barebox``
+===========
+
+The :ref:`ref-classes-barebox` class manages building the barebox bootloader.
+
+If a file named ``defconfig`` is included in the :term:`SRC_URI`, it will be
+copied to ``.config`` in the build directory and used as the barebox
+configuration.
+Instead of providing a ``defconfig`` file, you can set :term:`BAREBOX_CONFIG`
+to a defconfig provided by the barebox source tree.
+If neither ``defconfig`` nor :term:`BAREBOX_CONFIG` is specified, the class
+will raise an error.
+
+The :ref:`ref-classes-barebox` class supports config fragments and internally
+includes the :ref:`ref-classes-cml1` class to provide `Kconfig
+<https://docs.kernel.org/kbuild/kconfig-language.html>`__ support for
+barebox, enabling tasks such as :ref:`ref-tasks-menuconfig` and
+:ref:`ref-tasks-diffconfig`.
+
+The generated barebox binaries are deployed to
+:term:`DEPLOY_DIR_IMAGE` as well as installed to ``BAREBOX_INSTALL_PATH``
+(``/boot`` by default) making them part of the recipe’s base package.
+This setup supports both using the barebox binaries as independent artifacts
+and installing them into a rootfs.
+:term:`BAREBOX_BINARY` can be used to select a distinct binary to deploy and
+install.
+If ``barebox`` is set as the :term:`EFI_PROVIDER`, the class will leverage
+:oe_git:`conf/image-uefi.conf </openembedded-core/tree/meta/conf/image-uefi.conf>`
+to define the default installation paths and naming conventions.
+
+The compiled-in barebox environment can be extended by adding environment files
+to the ``BAREBOX_ENV_DIR``.
+The ``BAREBOX_FIRMWARE_DIR`` variable allows you to specify the firmware blob
+search directory, enabling loading of additional firmware like TF-A or OP-TEE.
+
 .. _ref-classes-base:
 
 ``base``
