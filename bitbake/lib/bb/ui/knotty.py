@@ -128,6 +128,10 @@ class InteractConsoleLogFilter(logging.Filter):
         return True
 
 class TerminalFilter(object):
+
+    # 20 Hz (FPS) -> 0.050 secs
+    _DEFAULT_PRINT_INTERVAL = 1.0 / 20.0
+
     rows = 25
     columns = 80
 
@@ -166,9 +170,10 @@ class TerminalFilter(object):
         self.interactive = sys.stdout.isatty()
         self.footer_present = False
         self.lastpids = []
-        self.lasttime = None
+        self.lasttime = time.time()
         self.quiet = quiet
-        self.footer_buf = io.StringIO()
+
+        self._footer_buf = io.StringIO()
 
         if not self.interactive:
             return
@@ -244,25 +249,30 @@ class TerminalFilter(object):
             sys.stdout.flush()
 
     def updateFooter(self):
-        # clear footer buffer
-        self.footer_buf.truncate(0)
-        self.footer_buf.seek(0)
         if not self.cuu:
             return
         activetasks = self.helper.running_tasks
         failedtasks = self.helper.failed_tasks
         runningpids = self.helper.running_pids
         currenttime = time.time()
-        if not self.lasttime or (currenttime - self.lasttime > 5):
+        deltatime = currenttime - self.lasttime
+        if (deltatime > 5.0):
             self.helper.needUpdate = True
             self.lasttime = currenttime
-        if self.footer_present and not self.helper.needUpdate:
+        # Do not let to update faster then _DEFAULT_PRINT_INTERVAL
+        # to avoid heavy print() flooding.
+        if self.footer_present and (not self.helper.needUpdate) and (deltatime < self._DEFAULT_PRINT_INTERVAL):
             return
         self.helper.needUpdate = False
         if self.footer_present:
             self.clearFooter()
         if (not self.helper.tasknumber_total or self.helper.tasknumber_current == self.helper.tasknumber_total) and not len(activetasks):
             return
+
+        # Clear footer buffer.
+        self._footer_buf.truncate(0)
+        self._footer_buf.seek(0)
+
         tasks = []
         for t in runningpids:
             start_time = activetasks[t].get("starttime", None)
@@ -281,7 +291,7 @@ class TerminalFilter(object):
                     else:
                         pbar = BBProgress("0: %s" % msg, 100, widgets=[' ', progressbar.Percentage(), ' ', progressbar.Bar(), ''], extrapos=5, resize_handler=self.sigwinch_handle)
                         pbar.bouncing = False
-                    pbar.fd = self.footer_buf
+                    pbar.fd = self._footer_buf
                     activetasks[t]["progressbar"] = pbar
                 tasks.append((pbar, msg, progress, rate, start_time))
             else:
@@ -292,7 +302,7 @@ class TerminalFilter(object):
                                 "Waiting for %s running tasks to finish", len(activetasks))
             if not self.quiet:
                 content += ":"
-            print(content, file=self.footer_buf)
+            print(content, file=self._footer_buf)
         else:
             scene_tasks = "%s of %s" % (self.helper.setscene_current, self.helper.setscene_total)
             cur_tasks = "%s of %s" % (self.helper.tasknumber_current, self.helper.tasknumber_total)
@@ -301,7 +311,7 @@ class TerminalFilter(object):
             if not self.quiet:
                 msg = "Setscene tasks: %s" % scene_tasks
                 content += (msg + "\n")
-                print(msg, file=self.footer_buf)
+                print(msg, file=self._footer_buf)
 
             if self.quiet:
                 msg = "Running tasks (%s, %s)" % (scene_tasks, cur_tasks)
@@ -313,12 +323,12 @@ class TerminalFilter(object):
             if not self.main_progress or self.main_progress.maxval != maxtask:
                 widgets = [' ', progressbar.Percentage(), ' ', progressbar.Bar()]
                 self.main_progress = BBProgress("Running tasks", maxtask, widgets=widgets, resize_handler=self.sigwinch_handle)
-                self.main_progress.fd = self.footer_buf
+                self.main_progress.fd = self._footer_buf
                 self.main_progress.start(False)
             self.main_progress.setmessage(msg)
             progress = max(0, self.helper.tasknumber_current - 1)
             content += self.main_progress.update(progress)
-            print("", file=self.footer_buf)
+            print("", file=self._footer_buf)
         lines = self.getlines(content)
         if not self.quiet:
             for tasknum, task in enumerate(tasks[:(self.rows - 1 - lines)]):
@@ -334,15 +344,17 @@ class TerminalFilter(object):
                         content = pbar.update(progress)
                     else:
                         content = pbar.update(1)
-                    print("", file=self.footer_buf)
+                    print("", file=self._footer_buf)
                 else:
                     content = "%s: %s" % (tasknum, task)
-                    print(content, file=self.footer_buf)
+                    print(content, file=self._footer_buf)
                 lines = lines + self.getlines(content)
-        print(self.footer_buf.getvalue(), end="")
         self.footer_present = lines
         self.lastpids = runningpids[:]
         self.lastcount = self.helper.tasknumber_current
+
+        # Print footer buffer.
+        print(self._footer_buf.getvalue(), end="")
 
     def getlines(self, content):
         lines = 0
@@ -351,7 +363,7 @@ class TerminalFilter(object):
         return lines
 
     def finish(self):
-        self.footer_buf.close()
+        self._footer_buf.close()
         if self.stdinbackup:
             fd = sys.stdin.fileno()
             self.termios.tcsetattr(fd, self.termios.TCSADRAIN, self.stdinbackup)
@@ -673,8 +685,7 @@ def main(server, eventHandler, params, tf = TerminalFilter):
     printintervaldelta = 10 * 60 # 10 minutes
     printinterval = printintervaldelta
     pinginterval = 1 * 60 # 1 minute
-    printfooterinterval = 1.0 / 20.0 # 20 Hz (FPS) -> 0.050 secs
-    lastevent = lastprint = lastfooterprint = time.time()
+    lastevent = lastprint = time.time()
 
     termfilter = tf(main, helper, console_handlers, params.options.quiet)
     atexit.register(termfilter.finish)
@@ -699,9 +710,8 @@ def main(server, eventHandler, params, tf = TerminalFilter):
                         return_value = 3
                         main.shutdown = 3
                     lastevent = time.time()
-                if (not parseprogress) and ((lastfooterprint + printfooterinterval) < time.time()):
+                if not parseprogress:
                     termfilter.updateFooter()
-                    lastfooterprint = time.time()
                 event = eventHandler.waitEvent(0.25)
                 if event is None:
                     continue
