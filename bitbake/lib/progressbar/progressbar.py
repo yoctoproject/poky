@@ -121,7 +121,7 @@ class ProgressBar(object):
             # STDOUT is the default writing descriptor with a value of 1.
             # STDERR is the default error descriptor with a value of 2.
             # Sure, fd is a resizable file descriptor, let's allow to
-            # use for _handle resize().
+            # use for self._handle_resize().
             self._fd_console = fd
             self._handle_resize(None, None)
             signal.signal(signal.SIGWINCH, self._handle_resize)
