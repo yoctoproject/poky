@@ -61,6 +61,20 @@ test. Here is what you have to do for each recipe:
 
       inherit ptest
 
+   .. note::
+
+      Classes for common frameworks already exist in :term:`OpenEmbedded-Core
+      (OE-Core)`, such as:
+
+      -  :oe_git:`go-ptest </openembedded-core/tree/meta/classes-recipe/go-ptest.bbclass>`
+      -  :ref:`ref-classes-ptest-cargo`
+      -  :ref:`ref-classes-ptest-gnome`
+      -  :oe_git:`ptest-perl </openembedded-core/tree/meta/classes-recipe/ptest-perl.bbclass>`
+      -  :oe_git:`ptest-python-pytest </openembedded-core/tree/meta/classes-recipe/ptest-python-pytest.bbclass>`
+
+      Inheriting these classes with the ``inherit`` keyword in your recipe will
+      make the next steps automatic.
+
 -  *Create run-ptest:* This script starts your test. Locate the
    script where you will refer to it using
    :term:`SRC_URI`. Here is an
