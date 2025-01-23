@@ -4631,7 +4631,7 @@ system and gives an overview of their function and contents.
 
      The default value of this variable is extracted from the first console
      device and setting in :term:`SERIAL_CONSOLES`. If nothing is found in
-     :term:`SERIAL_CONSOLES`, the default value is set to ``ttyS0,115200``).
+     :term:`SERIAL_CONSOLES`, the default value is set to ``ttyS0,115200``.
 
      For more information, see the `Kernel command-line documentation
      <https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html>`__.
