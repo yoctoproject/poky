@@ -158,9 +158,10 @@ Ubuntu and Debian
 -----------------
 
 Here are the packages needed to build an image on a headless system
-with a supported Ubuntu or Debian Linux distribution::
+with a supported Ubuntu or Debian Linux distribution:
 
-   $ sudo apt install &UBUNTU_DEBIAN_HOST_PACKAGES_ESSENTIAL;
+.. literalinclude:: ../tools/host_packages_scripts/ubuntu_essential.sh
+   :language: shell
 
 You also need to ensure you have the ``en_US.UTF-8`` locale enabled::
 
@@ -189,64 +190,71 @@ If this is not the case, you can reconfigure the ``locales`` package to add it
          $ sudo apt build-dep qemu
          $ sudo apt remove oss4-dev
 
-Here are the packages needed to build Project documentation manuals::
+Here are the packages needed to build Project documentation manuals:
 
-   $ sudo apt install &UBUNTU_DEBIAN_HOST_PACKAGES_DOC;
+.. literalinclude:: ../tools/host_packages_scripts/ubuntu_docs.sh
+   :language: shell
 
 In addition to the previous packages, here are the packages needed to build the
-documentation in PDF format::
+documentation in PDF format:
 
-   $ sudo apt install &UBUNTU_DEBIAN_HOST_PACKAGES_DOC_PDF;
+.. literalinclude:: ../tools/host_packages_scripts/ubuntu_docs_pdf.sh
+   :language: shell
 
 Fedora Packages
 ---------------
 
 Here are the packages needed to build an image on a headless system
-with a supported Fedora Linux distribution::
+with a supported Fedora Linux distribution:
 
-   $ sudo dnf install &FEDORA_HOST_PACKAGES_ESSENTIAL;
+.. literalinclude:: ../tools/host_packages_scripts/fedora_essential.sh
+   :language: shell
 
-Here are the packages needed to build Project documentation manuals::
+Here are the packages needed to build Project documentation manuals:
 
-   $ sudo dnf install &FEDORA_HOST_PACKAGES_DOC;
-   $ sudo pip3 install &PIP3_HOST_PACKAGES_DOC;
+.. literalinclude:: ../tools/host_packages_scripts/fedora_docs.sh
+   :language: shell
+
+.. literalinclude:: ../tools/host_packages_scripts/pip3_docs.sh
+   :language: shell
 
 In addition to the previous packages, here are the packages needed to build the
-documentation in PDF format::
+documentation in PDF format:
 
-   $ sudo dnf install &FEDORA_HOST_PACKAGES_DOC_PDF;
+.. literalinclude:: ../tools/host_packages_scripts/fedora_docs_pdf.sh
+   :language: shell
 
 openSUSE Packages
 -----------------
 
 Here are the packages needed to build an image on a headless system
-with a supported openSUSE distribution::
+with a supported openSUSE distribution:
 
-   $ sudo zypper install &OPENSUSE_HOST_PACKAGES_ESSENTIAL;
-   $ sudo pip3 install &OPENSUSE_PIP3_HOST_PACKAGES_ESSENTIAL;
+.. literalinclude:: ../tools/host_packages_scripts/opensuse_essential.sh
+   :language: shell
 
-Here are the packages needed to build Project documentation manuals::
+Here are the packages needed to build Project documentation manuals:
 
-   $ sudo zypper install &OPENSUSE_HOST_PACKAGES_DOC;
-   $ sudo pip3 install &PIP3_HOST_PACKAGES_DOC;
+.. literalinclude:: ../tools/host_packages_scripts/opensuse_docs.sh
+   :language: shell
+
+.. literalinclude:: ../tools/host_packages_scripts/pip3_docs.sh
+   :language: shell
 
 In addition to the previous packages, here are the packages needed to build the
-documentation in PDF format::
+documentation in PDF format:
 
-   $ sudo zypper install &OPENSUSE_HOST_PACKAGES_DOC_PDF;
-
+.. literalinclude:: ../tools/host_packages_scripts/opensuse_docs_pdf.sh
+   :language: shell
 
 AlmaLinux Packages
 ------------------
 
 Here are the packages needed to build an image on a headless system
-with a supported AlmaLinux distribution::
+with a supported AlmaLinux distribution:
 
-   $ sudo dnf install -y epel-release
-   $ sudo yum install dnf-plugins-core
-   $ sudo dnf config-manager --set-enabled crb
-   $ sudo dnf makecache
-   $ sudo dnf install &ALMALINUX_HOST_PACKAGES_ESSENTIAL;
+.. literalinclude:: ../tools/host_packages_scripts/almalinux_essential.sh
+   :language: shell
 
 .. note::
 
@@ -261,15 +269,13 @@ with a supported AlmaLinux distribution::
    -  The ``makecache`` command consumes additional Metadata from
       ``epel-release``.
 
-Here are the packages needed to build Project documentation manuals::
+Here are the packages needed to build Project documentation manuals:
 
-   $ sudo dnf install &ALMALINUX_HOST_PACKAGES_DOC;
-   $ sudo pip3 install &PIP3_HOST_PACKAGES_DOC;
+.. literalinclude:: ../tools/host_packages_scripts/almalinux_docs.sh
+   :language: shell
 
-In addition to the previous packages, here are the packages needed to build the
-documentation in PDF format::
-
-   $ sudo dnf install &ALMALINUX_HOST_PACKAGES_DOC_PDF;
+.. literalinclude:: ../tools/host_packages_scripts/pip3_docs.sh
+   :language: shell
 
 .. warning::
 
@@ -277,6 +283,12 @@ documentation in PDF format::
    ``texlive-collection-fontsextra``, ``texlive-collection-lang*`` and
    ``texlive-collection-latexextra``, so you may run into issues. These may be
    installed using `tlmgr <https://tug.org/texlive/tlmgr.html>`_.
+
+In addition to the previous packages, here are the packages needed to build the
+documentation in PDF format:
+
+.. literalinclude:: ../tools/host_packages_scripts/almalinux_docs_pdf.sh
+   :language: shell
 
 .. _system-requirements-buildtools:
 
