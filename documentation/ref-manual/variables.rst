@@ -8642,7 +8642,7 @@ system and gives an overview of their function and contents.
 
       For information on how staging for recipe-specific sysroots occurs,
       see the :ref:`ref-tasks-populate_sysroot`
-      task, the ":ref:`sdk-manual/extensible:sharing files between recipes`"
+      task, the ":ref:`dev-manual/devtool:sharing files between recipes`"
       section in the Yocto Project Development Tasks Manual, the
       ":ref:`overview-manual/concepts:configuration, compilation, and staging`"
       section in the Yocto Project Overview and Concepts Manual, and the
