@@ -1046,7 +1046,8 @@ mind:
 
 -  The environment in which Make runs is set up with various standard
    variables for compilation (e.g. :term:`CC`, :term:`CXX`, and so forth) in a
-   similar manner to the environment set up by the SDK's environment
+   similar manner to the environment set up by an :ref:`SDK
+   <overview-manual/concepts:Application Development SDK>`'s environment
    setup script. One easy way to see these variables is to run the
    ``devtool build`` command on the recipe and then look in
    ``oe-logs/run.do_compile``. Towards the top of this file, there is
@@ -1131,9 +1132,6 @@ these behaviors ensure the reproducibility and integrity of the build.
       between multiple commands. Thus, without the quotes,
       ``devtool add`` does not receive the other parts, which results in
       several "command not found" errors.
-
-   -  In order to support adding Node.js modules, a ``nodejs`` recipe
-      must be part of your SDK.
 
 As mentioned earlier, you can also add Node.js modules directly from a
 repository or local source tree. To add modules this way, use
@@ -1242,10 +1240,8 @@ Recipes often need to use files provided by other recipes on the
 :term:`Build Host`. For example,
 an application linking to a common library needs access to the library
 itself and its associated headers. The way this access is accomplished
-within the extensible SDK is through the sysroot. There is one sysroot per
-"machine" for which the SDK is being built. In practical terms, this
-means there is a sysroot for the target machine, and a sysroot for
-the build host.
+is through the :term:`Sysroot`. There is a sysroot for the target machine, and a
+sysroot for the build host.
 
 Recipes should never write files directly into the sysroot. Instead,
 files should be installed into standard locations during the
@@ -1259,8 +1255,7 @@ remain free from stale files.
 Packaging
 ---------
 
-Packaging is not always particularly relevant within the extensible SDK.
-However, if you examine how build output gets into the final image on
+If you examine how build output gets into the final image on
 the target device, it is important to understand packaging because the
 contents of the image are expressed in terms of packages and not
 recipes.
