@@ -3382,6 +3382,11 @@ system and gives an overview of their function and contents.
       :ref:`ref-classes-grub-efi` class for more information
       on how this variable is used.
 
+   :term:`GRUB_TITLE`
+      Specifies custom titles for GRUB labels defined in  :term:`LABELS`. See
+      the :ref:`ref-classes-grub-efi` class for more information on how this
+      variable is used.
+
    :term:`GTKIMMODULES_PACKAGES`
       When inheriting the :ref:`ref-classes-gtk-immodules-cache` class,
       this variable specifies the packages that contain the GTK+ input
