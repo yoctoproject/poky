@@ -3989,6 +3989,12 @@ system and gives an overview of their function and contents.
 
          IMAGE_ROOTFS_EXTRA_SPACE = "41943040"
 
+   :term:`IMAGE_ROOTFS_MAXSIZE`
+      Defines the maximum size in Kbytes for the generated image. If the
+      generated image size is above that, the build will fail. It's a good
+      idea to set this variable for images that need to fit on a limited
+      space (e.g. SD card, a fixed-size partition, ...).
+
    :term:`IMAGE_ROOTFS_SIZE`
       Defines the size in Kbytes for the generated image. The OpenEmbedded
       build system determines the final size for the generated image using
