@@ -17,6 +17,10 @@ New Features / Enhancements in |yocto-ver|
    -  ``linux-firmware``: Add the :term:`FIRMWARE_COMPRESSION` variable which
       allows compression the firmwares provided by the ``linux-firmware`` recipe.
       Possible values are ``xz`` and ``zst``.
+   -  reproducibility: Add the :term:`OEQA_REPRODUCIBLE_TEST_LEAF_TARGETS`
+      variable which enables a reproducibility test on recipes using
+      :ref:`Shared State <overview-manual/concepts:Shared State>` for the
+      dependencies. See :doc:`/test-manual/reproducible-builds`.
 
 -  Kernel-related changes:
 
