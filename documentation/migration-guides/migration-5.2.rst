@@ -97,12 +97,12 @@ systemd changes
 Multiconfig changes
 ~~~~~~~~~~~~~~~~~~~
 
-The value of ``BB_CURRENT_MC`` was changed from ``default`` to an empty string
+The value of :term:`BB_CURRENT_MC` was changed from ``default`` to an empty string
 for the default multiconfig configuration to avoid needing to map the values
 within BitBake. This was already not happening in some cases so this fixes
 some obscure bugs.
 
-Any logic based on ``BB_CURRENT_MC`` equalling to ``default`` by default should
+Any logic based on :term:`BB_CURRENT_MC` equalling to ``default`` by default should
 be changed to be equal to an empty string.
 
 Virtual toolchain provider changes
