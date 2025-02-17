@@ -17,7 +17,7 @@ Setting Up and Running a Multiple Configuration Build
 =====================================================
 
 To accomplish a multiple configuration build, you must define each
-target's configuration separately using a parallel configuration file in
+target's configuration separately using a parallel :term:`configuration file` in
 the :term:`Build Directory` or configuration directory within a layer, and you
 must follow a required file hierarchy. Additionally, you must enable the
 multiple configuration builds in your ``local.conf`` file.
@@ -25,31 +25,30 @@ multiple configuration builds in your ``local.conf`` file.
 Follow these steps to set up and execute multiple configuration builds:
 
 -  *Create Separate Configuration Files*: You need to create a single
-   configuration file for each build target (each multiconfig).
+   :term:`Configuration File` for each build target (each multiconfig).
    The configuration definitions are implementation dependent but often
-   each configuration file will define the machine and the
-   temporary directory BitBake uses for the build. Whether the same
-   temporary directory (:term:`TMPDIR`) can be shared will depend on what is
-   similar and what is different between the configurations. Multiple MACHINE
-   targets can share the same (:term:`TMPDIR`) as long as the rest of the
-   configuration is the same, multiple :term:`DISTRO` settings would need separate
-   (:term:`TMPDIR`) directories.
+   each configuration file will define the :term:`MACHINE` and the
+   temporary directory (:term:`TMPDIR`) BitBake uses for the build.
 
-   For example, consider a scenario with two different multiconfigs for the same
-   :term:`MACHINE`: "qemux86" built
-   for two distributions such as "poky" and "poky-lsb". In this case,
-   you would need to use the different :term:`TMPDIR`.
+   .. note::
 
-   Here is an example showing the minimal statements needed in a
-   configuration file for a "qemux86" target whose temporary build
-   directory is ``tmpmultix86``::
+      Whether the same temporary directory (:term:`TMPDIR`) can be shared will
+      depend on what is similar and what is different between the
+      configurations. Multiple :term:`MACHINE` targets can share the same
+      :term:`TMPDIR` as long as the rest of the configuration is the same,
+      multiple :term:`DISTRO` settings would need separate :term:`TMPDIR`
+      directories.
 
-      MACHINE = "qemux86"
-      TMPDIR = "${TOPDIR}/tmpmultix86"
+      For example, consider a scenario with two different multiconfigs for the same
+      :term:`MACHINE`: "qemux86" built for two distributions such as "poky" and
+      "poky-lsb". In this case, you would need to use two different :term:`TMPDIR`.
+
+      In the general case, using separate :term:`TMPDIR` for the different
+      multiconfigs is strongly recommended.
 
    The location for these multiconfig configuration files is specific.
    They must reside in the current :term:`Build Directory` in a sub-directory of
-   ``conf`` named ``multiconfig`` or within a layer's ``conf`` directory
+   ``conf`` named ``multiconfig`` or within a :term:`Layer`'s ``conf`` directory
    under a directory named ``multiconfig``. Here is an example that defines
    two configuration files for the "x86" and "arm" multiconfigs:
 
@@ -58,7 +57,19 @@ Follow these steps to set up and execute multiple configuration builds:
       :width: 50%
 
    The usual :term:`BBPATH` search path is used to locate multiconfig files in
-   a similar way to other conf files.
+   a similar way to other configuration files.
+
+   Here is an example showing the minimal statements needed in a
+   :term:`configuration file` named ``qemux86.conf`` for a ``qemux86`` target
+   whose temporary build directory is ``tmp-qemux86``::
+
+      MACHINE = "qemux86"
+      TMPDIR .= "-${BB_CURRENT_MC}"
+
+   BitBake will expand the :term:`BB_CURRENT_MC` variable to the value of the
+   current multiconfig in use. We append this value to :term:`TMPDIR` so that
+   any change on the definition of :term:`TMPDIR` will automatically affect the
+   value of :term:`TMPDIR` for each multiconfig.
 
 -  *Add the BitBake Multi-configuration Variable to the Local
    Configuration File*: Use the
@@ -88,11 +99,16 @@ Follow these steps to set up and execute multiple configuration builds:
 
       $ bitbake mc:x86:core-image-minimal mc:arm:core-image-sato mc::core-image-base
 
-   The previous BitBake command builds a ``core-image-minimal`` image
-   that is configured through the ``x86.conf`` configuration file, a
-   ``core-image-sato`` image that is configured through the ``arm.conf``
-   configuration file and a ``core-image-base`` that is configured
-   through your ``local.conf`` configuration file.
+   The previous BitBake command builds several components:
+
+   -  A ``core-image-minimal`` image that is configured through the ``x86.conf``
+      configuration file
+
+   -  A ``core-image-sato`` image that is configured through the ``arm.conf``
+      configuration file
+
+   -  A ``core-image-base`` that is configured through your ``local.conf``
+      configuration file
 
 .. note::
 
