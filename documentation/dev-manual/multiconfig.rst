@@ -1,7 +1,7 @@
 .. SPDX-License-Identifier: CC-BY-SA-2.0-UK
 
-Building Images for Multiple Targets Using Multiple Configurations
-******************************************************************
+Building Images for Multiple Targets With Multiconfig
+*****************************************************
 
 You can use a single ``bitbake`` command to build multiple images or
 packages for different targets where each image or package requires a
