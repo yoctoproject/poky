@@ -600,7 +600,7 @@ You can also look for vulnerabilities in specific packages by passing
 ``-c cve_check`` to BitBake.
 
 After building the software with Bitbake, CVE check output reports are available in ``tmp/deploy/cve``
-and image specific summaries in ``tmp/deploy/images/*.cve`` or ``tmp/deploy/images/*.json`` files.
+and image specific summaries in ``tmp/deploy/images/*.json`` files.
 
 When building, the CVE checker will emit build time warnings for any detected
 issues which are in the state ``Unpatched``, meaning that CVE issue seems to affect the software component
