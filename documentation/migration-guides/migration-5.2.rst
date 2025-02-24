@@ -182,3 +182,11 @@ Miscellaneous changes
 
 -  :term:`ZSTD_COMPRESSION_LEVEL` is now a plain integer number instead of a dash-prefixed
    command-line option (e.g. it should be set to ``3`` rather than ``-3``).
+
+-  Until now, the variable :term:`UBOOT_ENV` was processed both by the U-Boot
+   recipe and by the ``kernel-fitimage.bbclass``. However, adding a U-Boot
+   script to the kernel FIT image is a different and independent thing, which
+   also requires an independent variable.
+   Therefore, the :term:`UBOOT_ENV` is no longer handled by the
+   ``kernel-fitimage.bbclass``. There is a new variable :term:`FIT_UBOOT_ENV`
+   which should be used for adding a U-Boot script to a FIT image.
