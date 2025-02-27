@@ -842,6 +842,8 @@ Fetch submodules also exist for the following:
 
 -  Trees using Git Annex (``gitannex://``)
 
+-  Private GitHub Release Artifacts (``ghra://``)
+
 No documentation currently exists for these lesser used fetcher
 submodules. However, you might find the code helpful and readable.
 
