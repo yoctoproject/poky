@@ -1606,7 +1606,8 @@ class FetchCheckStatusTest(FetcherTest):
                       "https://downloads.yoctoproject.org/releases/opkg/opkg-0.3.0.tar.gz",
                       "ftp://sourceware.org/pub/libffi/libffi-1.20.tar.gz",
                       # GitHub releases are hosted on Amazon S3, which doesn't support HEAD
-                      "https://github.com/kergoth/tslib/releases/download/1.1/tslib-1.1.tar.xz"
+                      "https://github.com/kergoth/tslib/releases/download/1.1/tslib-1.1.tar.xz",
+                      "ghra://github.com/kergoth/tslib/1.1/tslib-1.1.tar.xz"
                       ]
 
     @skipIfNoNetwork()
