@@ -1293,7 +1293,7 @@ class FetchData(object):
             elif checksum_plain_name in self.parm:
                 checksum_expected = self.parm[checksum_plain_name]
                 checksum_name = checksum_plain_name
-            elif self.type not in ["http", "https", "ftp", "ftps", "sftp", "s3", "az", "crate", "gs", "gomod", "npm"]:
+            elif self.type not in ["http", "https", "ftp", "ftps", "sftp", "s3", "az", "crate", "gs", "gomod", "npm", "ghra"]:
                 checksum_expected = None
             else:
                 checksum_expected = d.getVarFlag("SRC_URI", checksum_name)
@@ -2069,6 +2069,7 @@ from . import az
 from . import crate
 from . import gcp
 from . import gomod
+from . import github_release_artifact
 
 methods.append(local.Local())
 methods.append(wget.Wget())
@@ -2093,3 +2094,4 @@ methods.append(crate.Crate())
 methods.append(gcp.GCP())
 methods.append(gomod.GoMod())
 methods.append(gomod.GoModGit())
+methods.append(github_release_artifact.GitHubReleaseArtifact())
