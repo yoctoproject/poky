@@ -1272,6 +1272,7 @@ class FetchData(object):
         self.basename = None
         self.basepath = None
         (self.type, self.host, self.path, self.user, self.pswd, self.parm) = decodeurl(d.expand(url))
+        self.headers = None
         self.date = self.getSRCDate(d)
         self.url = url
         if not self.user and "user" in self.parm:
