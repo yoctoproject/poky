@@ -1098,6 +1098,19 @@ overview of their function and contents.
       layer containing the recipe file. Code can use this to identify which
       layer a recipe is from.
 
+   :term:`GH_TOKEN`
+      GitHub Access Token. When using the
+      :ref:`GitHub Release Artifact fetcher <bitbake-user-manual/bitbake-user-manual-fetching:fetchers>`
+      This variable can be defined to be used by the fetcher to authenticate
+      and gain access to non-public release artifacts::
+
+         GH_TOKEN = "github_pat_..."
+
+      Alternatively, the token can be specified in :term:`SRC_URI` with the ``token``
+      parameter::
+
+         SRC_URI = "ghra://github.com...;token=github_pat_..."
+
    :term:`GITDIR`
       The directory in which a local copy of a Git repository is stored
       when it is cloned.
