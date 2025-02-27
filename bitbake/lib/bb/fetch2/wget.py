@@ -121,6 +121,10 @@ class Wget(FetchMethod):
                 # Authorization header.
                 fetchcmd += " --user=%s --password=%s" % (ud.user, ud.pswd)
 
+        if ud.headers:
+            for key, value in ud.headers.items():
+                fetchcmd += " --header='%s: %s'" % (key, value)
+
         uri = ud.url.split(";")[0]
         if os.path.exists(ud.localpath):
             # file exists, but we didnt complete it.. trying again..
@@ -393,6 +397,10 @@ class Wget(FetchMethod):
 
                 if ud.user and ud.pswd:
                     add_basic_auth(ud.user + ':' + ud.pswd, r)
+
+                if ud.headers:
+                    for key, value in ud.headers.items():
+                        r.add_header(key, value)
 
                 try:
                     import netrc
