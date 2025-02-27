@@ -1276,6 +1276,18 @@ class FetcherNetworkTest(FetcherTest):
             with self.assertRaises(bb.fetch2.FetchError):
                 fetcher.download()
 
+    @skipIfNoNetwork()
+    def test_github_release_artifact(self):
+        fetcher = bb.fetch.Fetch(["ghra://github.com/kergoth/tslib/1.1/tslib-1.1.tar.xz;sha256sum=fe35e5f710ea933b118f710e2ce4403ac076fe69926b570333867d4de082a51c"], self.d)
+        fetcher.download()
+        self.assertEqual(os.path.getsize(self.dldir + "/tslib-1.1.tar.xz"), 238184)
+        self.d.setVar("BB_NO_NETWORK", "1")
+        fetcher = bb.fetch.Fetch(["ghra://github.com/kergoth/tslib/1.1/tslib-1.1.tar.xz;sha256sum=fe35e5f710ea933b118f710e2ce4403ac076fe69926b570333867d4de082a51c"], self.d)
+        fetcher.download()
+        fetcher.unpack(self.unpackdir)
+        self.assertEqual(len(os.listdir(self.unpackdir + "/tslib-1.1/")), 29)
+
+
 class SVNTest(FetcherTest):
     def skipIfNoSvn():
         import shutil
