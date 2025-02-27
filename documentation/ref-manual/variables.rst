@@ -5798,14 +5798,6 @@ system and gives an overview of their function and contents.
 
          OECMAKE_GENERATOR = "Unix Makefiles"
 
-   :term:`OE_IMPORTS`
-      An internal variable used to tell the OpenEmbedded build system what
-      Python modules to import for every Python function run by the system.
-
-      .. note::
-
-         Do not set this variable. It is for internal use only.
-
    :term:`OE_INIT_ENV_SCRIPT`
       The name of the build environment setup script for the purposes of
       setting up the environment within the extensible SDK. The default
