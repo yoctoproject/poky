@@ -27,6 +27,7 @@ import pickle
 import codecs
 import hashserv
 import faulthandler
+import traceback
 
 logger      = logging.getLogger("BitBake")
 collectlog  = logging.getLogger("BitBake.Collection")
@@ -1631,6 +1632,7 @@ class BBCooker:
         self.state = State.PARSING
 
         if not self.parser.parse_next():
+            bb.server.process.serverlog("Parsing complete")
             collectlog.debug("parsing complete")
             if self.parser.error:
                 raise bb.BBHandledException()
@@ -2005,12 +2007,16 @@ class Parser(multiprocessing.Process):
         self.signal_threadlock = threading.Lock()
 
     def catch_sig(self, signum, frame):
+        bb.server.process.serverlog("Catch signal %s" % signum)
+        bb.server.process.serverlog(traceback.format_exc())
         if self.queue_signals:
             self.signal_received.append(signum)
         else:
             self.handle_sig(signum, frame)
 
     def handle_sig(self, signum, frame):
+        bb.server.process.serverlog("Handle signal %s" % signum)
+        bb.server.process.serverlog(traceback.format_exc())
         if signum == signal.SIGTERM:
             signal.signal(signal.SIGTERM, signal.SIG_DFL)
             os.kill(os.getpid(), signal.SIGTERM)
@@ -2052,10 +2058,13 @@ class Parser(multiprocessing.Process):
         multiprocessing.util.Finalize(None, bb.fetch.fetcher_parse_save, exitpriority=1)
         faulthandler.enable(all_threads=True)
 
+        bb.server.process.serverlog("Parsing enter %s" os.getpid())
+
         pending = []
         havejobs = True
         try:
             while havejobs or pending:
+                bb.server.process.serverlog("Parsing loop %s" os.getpid())
                 if self.quit.is_set():
                     break
 
@@ -2077,6 +2086,7 @@ class Parser(multiprocessing.Process):
                     except queue.Full:
                         pending.append(result)
         finally:
+            bb.server.process.serverlog("Parsing finally %s" os.getpid())
             self.results.close()
             self.results.join_thread()
 
@@ -2183,6 +2193,7 @@ class CookerParser(object):
             self.results = itertools.chain(self.results, self.parse_generator())
 
     def shutdown(self, clean=True, eventmsg="Parsing halted due to errors"):
+        bb.server.process.serverlog("Parsing shutdown")
         if not self.toparse:
             return
         if self.haveshutdown:
@@ -2217,6 +2228,8 @@ class CookerParser(object):
         self.syncthread.start()
 
         self.parser_quit.set()
+
+        bb.server.process.serverlog("Parsing shutdown2")
 
         for process in self.processes:
             process.join(0.5)
@@ -2265,8 +2278,10 @@ class CookerParser(object):
     def parse_generator(self):
         empty = False
         while self.processes or not empty:
+            bb.server.process.serverlog("Parsing result looping")
             for process in self.processes.copy():
                 if not process.is_alive():
+                    bb.server.process.serverlog("Parsing reaping")
                     process.join()
                     self.processes.remove(process)
 
