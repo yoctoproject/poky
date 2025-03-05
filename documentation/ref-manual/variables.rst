@@ -4597,6 +4597,60 @@ system and gives an overview of their function and contents.
       ":ref:`kernel-dev/common:using an "in-tree" \`\`defconfig\`\` file`"
       section in the Yocto Project Linux Kernel Development Manual.
 
+   :term:`KCONF_AUDIT_LEVEL`
+      When inheriting the :ref:`ref-classes-kernel-yocto` class and when the
+      :term:`KMETA_AUDIT` variable is set to a non-empty string, the
+      :term:`KCONF_AUDIT_LEVEL` variable specifies whether to report Kernel
+      configuration values that are different from the user-specified value. Its
+      value is a positive integer (default: 1):
+
+      -  0: no reporting is done.
+
+      -  1: report the problems as warnings and trigger an error if
+         :term:`KMETA_AUDIT_WERROR` is set.
+
+      -  2: if the :ref:`ref-tasks-kernel_configme` has failed to generate a
+         ``.config`` file, print the content of the ``merge_config_build.log``
+         file containing the errors, instead of just providing the path to
+         that file.
+
+      For more details see the :ref:`ref-classes-kernel-yocto` class and the
+      :yocto_git:`symbol_why.py </yocto-kernel-tools/tree/tools/symbol_why.py>`
+      script in :yocto_git:`yocto-kernel-tools </yocto-kernel-tools>`.
+
+   :term:`KCONF_BSP_AUDIT_LEVEL`
+      When inheriting the :ref:`ref-classes-kernel-yocto` class and when the
+      :term:`KMETA_AUDIT` variable is set to a non-empty string, the
+      :term:`KCONF_BSP_AUDIT_LEVEL` variable can be set to report:
+
+      #.  User-specified Kernel configurations that did not make it into the final
+          Kernel configuration.
+
+      #.  Configurations defined in multiple input files with differing values.
+
+      Its value is a positive integer (default: 0):
+
+      -  0: no reporting is done.
+
+      -  1: reporting of configuration options that did not make it in the
+         final configuration is done and is not limited to the current
+         architecture (``ARCH``) in use.
+
+      -  2: reporting of configuration options that did not make it in the
+         final configuration is done and is strictly limited to the current
+         architecture (``ARCH``) in use.
+
+      -  3: report the problems found when this variable equals 2, and also
+         report configurations options defined in multiple input files with
+         differing values.
+
+      For value 1, 2 and 3 an error is produced if :term:`KMETA_AUDIT_WERROR`
+      is set.
+
+      For more details see the :ref:`ref-classes-kernel-yocto` class and the
+      :yocto_git:`symbol_why.py </yocto-kernel-tools/tree/tools/symbol_why.py>`
+      script in :yocto_git:`yocto-kernel-tools </yocto-kernel-tools>`.
+
    :term:`KCONFIG_MODE`
       When used with the :ref:`ref-classes-kernel-yocto`
       class, specifies the kernel configuration values to use for options
@@ -5000,6 +5054,20 @@ system and gives an overview of their function and contents.
       that the kernel understands the machine name as "intel-core2-32".
       However, the OpenEmbedded build system understands the machine as
       "core2-32-intel-common".
+
+   :term:`KMETA_AUDIT`
+      When inheriting the :ref:`ref-classes-kernel-yocto` class, the
+      :term:`KMETA_AUDIT` variable enables or disables auditing of Linux Kernel
+      configuration. The default value for this variable is "yes", and auditing
+      is enabled. Set this variable to an empty string to disable auditing.
+
+   :term:`KMETA_AUDIT_WERROR`
+      When inheriting the :ref:`ref-classes-kernel-yocto` class and when the
+      :term:`KMETA_AUDIT` and the :term:`KMETA_AUDIT_WERROR` variables are set
+      to non-empty strings, produce an error if Linux kernel configuration
+      problems were detected, instead of warnings only. For more details on the
+      Linux Kernel configuration auditing feature, see :term:`KCONF_AUDIT_LEVEL`
+      and :term:`KCONF_BSP_AUDIT_LEVEL`.
 
    :term:`KTYPE`
       Defines the kernel type to be used in assembling the configuration.
