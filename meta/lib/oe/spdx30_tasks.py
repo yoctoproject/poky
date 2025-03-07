@@ -349,12 +349,11 @@ def add_download_files(d, objset):
     urls = d.getVar("SRC_URI").split()
     fetch = bb.fetch2.Fetch(urls, d)
 
-    for download_idx, src_uri in enumerate(urls):
-        fd = fetch.ud[src_uri]
-
+    for download_idx, fd in enumerate(fetch.expanded_urldata()):
         for name in fd.names:
-            file_name = os.path.basename(fetch.localpath(src_uri))
-            if oe.patch.patch_path(src_uri, fetch, "", expand=False):
+            fd.setup_localpath(d)
+            file_name = os.path.basename(fd.localpath)
+            if oe.patch.patch_path(fd.url, fetch, "", expand=False):
                 primary_purpose = oe.spdx30.software_SoftwarePurpose.patch
             else:
                 primary_purpose = oe.spdx30.software_SoftwarePurpose.source
