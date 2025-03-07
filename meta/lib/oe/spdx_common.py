@@ -12,7 +12,7 @@ import re
 import shutil
 
 from pathlib import Path
-from dataclasses import dataclass
+
 
 LIC_REGEX = re.compile(
     rb"^\W*SPDX-License-Identifier:\s*([ \w\d.()+-]+?)(?:\s+\W*)?$",
@@ -77,11 +77,7 @@ def process_sources(d):
     return True
 
 
-@dataclass(frozen=True)
-class Dep(object):
-    pn: str
-    hashfn: str
-    in_taskhash: bool
+Dep = collections.namedtuple("Dep", ["pn", "hashfn", "in_taskhash"])
 
 
 def collect_direct_deps(d, dep_task):
