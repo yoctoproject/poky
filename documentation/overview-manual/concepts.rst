@@ -861,7 +861,7 @@ Package Splitting
 After source code is configured, compiled, and staged, the build system
 analyzes the results and splits the output into packages:
 
-.. image:: figures/analysis-for-package-splitting.png
+.. image:: svg/analysis-for-package-splitting.*
    :width: 100%
 
 The :ref:`ref-tasks-package` and
