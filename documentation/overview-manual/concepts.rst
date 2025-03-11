@@ -764,7 +764,7 @@ Patching
 Once source code is fetched and unpacked, BitBake locates patch files
 and applies them to the source files:
 
-.. image:: figures/patching.png
+.. image:: svg/patching.*
    :width: 100%
 
 The :ref:`ref-tasks-patch` task uses a
