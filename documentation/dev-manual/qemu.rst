@@ -367,9 +367,6 @@ command line:
 
 -  `VM`: The virtual machine image, which must be a ``.wic.vmdk``
    file. Use this option when you want to boot a ``.wic.vmdk`` image.
-   The image filename you provide must contain one of the following
-   strings: "qemux86-64", "qemux86", "qemuarm", "qemumips64",
-   "qemumips", "qemuppc", or "qemush4".
 
 -  `ROOTFS`: A root filesystem that has one of the following filetype
    extensions: "ext2", "ext3", "ext4", "jffs2", "nfs", or "btrfs". If
