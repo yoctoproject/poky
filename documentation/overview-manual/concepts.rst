@@ -736,9 +736,6 @@ following list describe the :term:`Build Directory`'s hierarchy:
    -  :term:`PV`: The version of the
       recipe used to build the package.
 
-   -  :term:`PR`: The revision of the
-      recipe used to build the package.
-
 -  :term:`S`: Contains the unpacked source
    files for a given recipe.
 
