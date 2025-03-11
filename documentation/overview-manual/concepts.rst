@@ -805,7 +805,7 @@ After source code is patched, BitBake executes tasks that configure and
 compile the source code. Once compilation occurs, the files are copied
 to a holding area (staged) in preparation for packaging:
 
-.. image:: figures/configuration-compile-autoreconf.png
+.. image:: svg/configuration-compile-autoreconf.*
    :width: 100%
 
 This step in the build process consists of the following tasks:
