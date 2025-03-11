@@ -683,7 +683,7 @@ Source Fetching
 The first stages of building a recipe are to fetch and unpack the source
 code:
 
-.. image:: figures/source-fetching.png
+.. image:: svg/source-fetching.*
    :width: 100%
 
 The :ref:`ref-tasks-fetch` and :ref:`ref-tasks-unpack` tasks fetch
