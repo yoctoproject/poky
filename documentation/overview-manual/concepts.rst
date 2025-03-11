@@ -704,10 +704,10 @@ a defined structure. For additional general information on the
 the Yocto Project Reference Manual.
 
 Each recipe has an area in the :term:`Build Directory` where the unpacked
-source code resides. The :term:`S` variable points to this area for a recipe's
-unpacked source code. The name of that directory for any given recipe is
-defined from several different variables. The preceding figure and the
-following list describe the :term:`Build Directory`'s hierarchy:
+source code resides. The :term:`UNPACKDIR` variable points to this area for a
+recipe's unpacked source code, and has the default ``sources-unpack`` name. The
+preceding figure and the following list describe the :term:`Build Directory`'s
+hierarchy:
 
 -  :term:`TMPDIR`: The base directory
    where the OpenEmbedded build system performs all its work during the
@@ -736,8 +736,11 @@ following list describe the :term:`Build Directory`'s hierarchy:
    -  :term:`PV`: The version of the
       recipe used to build the package.
 
--  :term:`S`: Contains the unpacked source
-   files for a given recipe.
+-  :term:`UNPACKDIR`: Contains the unpacked source files for a given recipe.
+
+-  :term:`S`: Contains the final location of the source code.
+
+   The default value for :term:`BP` is ``${BPN}-${PV}`` where:
 
    -  :term:`BPN`: The name of the recipe
       used to build the package. The :term:`BPN` variable is a version of
