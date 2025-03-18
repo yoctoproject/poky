@@ -3401,6 +3401,19 @@ The variables used by this class are:
 -  :term:`UBOOT_FITIMAGE_ENABLE`: enable the generation of a U-Boot FIT image.
 -  :term:`UBOOT_MKIMAGE_DTCOPTS`: DTC options for U-Boot ``mkimage`` when
    rebuilding the FIT image containing the kernel.
+-  :term:`UBOOT_FIT_ARM_TRUSTED_FIRMWARE`: include the Trusted Firmware-A
+   (TF-A) binary in the U-Boot FIT image.
+-  :term:`UBOOT_FIT_ARM_TRUSTED_FIRMWARE_IMAGE`: specifies the path to the
+   Trusted Firmware-A (TF-A) binary.
+-  :term:`UBOOT_FIT_TEE`: include the Trusted Execution Environment (TEE)
+   binary in the U-Boot FIT image.
+-  :term:`UBOOT_FIT_TEE_IMAGE`: specifies the path to the Trusted Execution
+   Environment (TEE) binary.
+-  :term:`UBOOT_FIT_USER_SETTINGS`: adds a user-specific snippet to the U-Boot
+   Image Tree Source (ITS). Users can include their custom U-Boot Image Tree
+   Source (ITS) snippet in this variable.
+-  :term:`UBOOT_FIT_CONF_USER_LOADABLES`: adds one or more user-defined images
+   to the ``loadables`` property of the configuration node.
 
 See U-Boot's documentation for details about `verified boot
 <https://source.denx.de/u-boot/u-boot/-/blob/master/doc/uImage.FIT/verified-boot.txt>`__

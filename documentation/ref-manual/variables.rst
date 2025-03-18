@@ -9971,6 +9971,45 @@ system and gives an overview of their function and contents.
 
       See `more details about #address-cells <https://elinux.org/Device_Tree_Usage#How_Addressing_Works>`__.
 
+   :term:`UBOOT_FIT_ARM_TRUSTED_FIRMWARE`
+      `Trusted Firmware-A (TF-A) <https://www.trustedfirmware.org/projects/tf-a>`__
+      is a reference implementation of secure world software for Arm A-Profile
+      architectures (Armv8-A and Armv7-A), including an Exception Level 3 (EL3)
+      Secure Monitor. This variable enables the generation of a U-Boot FIT
+      image with a Trusted Firmware-A (TF-A) binary.
+
+      Its default value is "0", so set it to "1" to enable this functionality::
+
+         UBOOT_FIT_ARM_TRUSTED_FIRMWARE = "1"
+
+   :term:`UBOOT_FIT_ARM_TRUSTED_FIRMWARE_IMAGE`
+      Specifies the path to the Trusted Firmware-A (TF-A) binary. Its default
+      value is "bl31.bin"::
+
+         UBOOT_FIT_ARM_TRUSTED_FIRMWARE_IMAGE ?= "bl31.bin"
+
+      If a relative path is provided, the file is expected to be relative to
+      U-Boot's :term:`B` directory. An absolute path can be provided too,
+      e.g.::
+
+         UBOOT_FIT_ARM_TRUSTED_FIRMWARE_IMAGE ?= "${DEPLOY_DIR_IMAGE}/bl31.bin"
+
+      If the Trusted Firmware-A (TF-A) binary is built in a separate recipe,
+      you must add the necessary dependency in a U-Boot ``.bbappend`` file. The
+      recipe name for Trusted Firmware-A (TF-A) binary is
+      ``trusted-firmware-a``, which comes from the
+      :yocto_git:`meta-arm </meta-arm>` layer::
+
+         do_compile[depends] += "trusted-firmware-a:do_deploy"
+
+   :term:`UBOOT_FIT_CONF_USER_LOADABLES`
+      Adds one or more user-defined images to the ``loadables`` property of the
+      configuration node of the U-Boot Image Tree Source (ITS). This variable
+      is handled by the local shell in the recipe so appropriate escaping
+      should be done, e.g. escaping quotes.::
+
+         UBOOT_FIT_CONF_USER_LOADABLES = '\"fwa\", \"fwb\"'
+
    :term:`UBOOT_FIT_DESC`
       Specifies the description string encoded into a U-Boot fitImage. The default
       value is set by the :ref:`ref-classes-uboot-sign` class as follows::
@@ -10018,6 +10057,105 @@ system and gives an overview of their function and contents.
       Size of the private key used in signing the U-Boot FIT image, in number
       of bits. The default value for this variable is set to "2048"
       by the :ref:`ref-classes-uboot-sign` class.
+
+   :term:`UBOOT_FIT_TEE`
+      A Trusted Execution Environment (TEE) is a secure environment for
+      executing code, ensuring high levels of trust in asset management within
+      the surrounding system. This variable enables the generation of a U-Boot
+      FIT image with a Trusted Execution Environment (TEE) binary.
+
+      Its default value is "0", so set it to "1" to enable this functionality::
+
+         UBOOT_FIT_TEE = "1"
+
+   :term:`UBOOT_FIT_TEE_IMAGE`
+      Specifies the path to the Trusted Execution Environment (TEE) binary. Its
+      default value is "tee-raw.bin"::
+
+         UBOOT_FIT_TEE_IMAGE ?= "tee-raw.bin"
+
+      If a relative path is provided, the file is expected to be relative to 
+      U-Boot's :term:`B` directory. An absolute path can be provided too,
+      e.g.::
+
+         UBOOT_FIT_TEE_IMAGE ?= "${DEPLOY_DIR_IMAGE}/tee-raw.bin"
+
+      If the Trusted Execution Environment (TEE) binary is built in a separate
+      recipe, you must add the necessary dependency in a U-Boot ``.bbappend``
+      file. The recipe name for Trusted Execution Environment (TEE) binary is
+      ``optee-os``, which comes from the :yocto_git:`meta-arm </meta-arm>`
+      layer::
+
+         do_compile[depends] += "optee-os:do_deploy"
+
+   :term:`UBOOT_FIT_USER_SETTINGS`
+      Add a user-specific snippet to the U-Boot Image Tree Source (ITS). This
+      variable allows the user to add one or more user-defined ``/images`` node
+      to the U-Boot Image Tree Source (ITS). For more details, please refer to
+      https://fitspec.osfw.foundation/\ .
+
+      The original content of the U-Boot Image Tree Source (ITS) is as
+      follows::
+
+         images {
+             uboot {
+                 description = "U-Boot image";
+                 data = /incbin/("u-boot-nodtb.bin");
+                 type = "standalone";
+                 os = "u-boot";
+                 arch = "";
+                 compression = "none";
+                 load = <0x80000000>;
+                 entry = <0x80000000>;
+             };
+         };
+
+      Users can include their custom ITS snippet in this variable, e.g.::
+
+         UBOOT_FIT_FWA_ITS = '\
+             fwa {\n\
+                 description = \"FW A\";\n\
+                 data = /incbin/(\"fwa.bin\");\n\
+                 type = \"firmware\";\n\
+                 arch = \"\";\n\
+                 os = \"\";\n\
+                 load = <0xb2000000>;\n\
+                 entry = <0xb2000000>;\n\
+                 compression = \"none\";\n\
+             };\n\
+         '
+
+         UBOOT_FIT_USER_SETTINGS = "${UBOOT_FIT_FWA_ITS}"
+
+      This variable is handled by the local shell in the recipe so appropriate
+      escaping should be done, e.g. escaping quotes and adding newlines with
+      ``\n``.
+
+      The generated content of the U-Boot Image Tree Source (ITS) is as
+      follows::
+
+         images {
+             uboot {
+                 description = "U-Boot image";
+                 data = /incbin/("u-boot-nodtb.bin");
+                 type = "standalone";
+                 os = "u-boot";
+                 arch = "";
+                 compression = "none";
+                 load = <0x80000000>;
+                 entry = <0x80000000>;
+             };
+             fwa {
+                 description = "FW A";
+                 data = /incbin/("fwa.bin");
+                 type = "firmware";
+                 arch = "";
+                 os = "";
+                 load = <0xb2000000>;
+                 entry = <0xb2000000>;
+                 compression = "none";
+             };
+         };
 
    :term:`UBOOT_FITIMAGE_ENABLE`
       This variable allows to generate a FIT image for U-Boot, which is one
