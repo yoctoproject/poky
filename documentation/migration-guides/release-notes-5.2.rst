@@ -402,6 +402,23 @@ New Features / Enhancements in |yocto-ver|
 Known Issues in |yocto-ver|
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+-  The :ref:`ref-classes-cve-check` class is based on the `National
+   Vulnerability Database <https://nvd.nist.gov/>`__ (NVD). Since the beginning
+   of 2024, the maintainers of this database have stopped annotating CVEs with
+   the affected CPEs. This prevents the :ref:`ref-classes-cve-check` class to
+   properly report CVEs as CPEs are used to match Yocto recipes with CVEs
+   affecting them. As a result, the current CVE reports may look good but the
+   reality is that some vulnerabilities are just not reported.
+
+   During that time, users may look up the 'CVE database
+   <https://www.cve.org/>'__ for entries concerning software they use, or follow
+   release notes of such projects closely.
+
+   Please note, that the :ref:`ref-classes-cve-check` tool has always been a
+   helper tool, and users are advised to always review the final result. Results
+   of an automatic scan may not take into account configuration options,
+   compiler options and other factors.
+
 Recipe License changes in |yocto-ver|
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
