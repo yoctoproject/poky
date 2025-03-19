@@ -13,8 +13,9 @@ SRC_URI = "${SAVANNAH_NONGNU_MIRROR}/man-db/man-db-${PV}.tar.xz \
           "
 SRC_URI[sha256sum] = "82f0739f4f61aab5eb937d234de3b014e777b5538a28cbd31433c45ae09aefb9"
 
-DEPENDS = "libpipeline gdbm groff-native base-passwd"
+DEPENDS = "libpipeline gdbm groff-native base-passwd zlib"
 RDEPENDS:${PN} += "base-passwd"
+RDEPENDS:${PN}:append:libc-glibc = " util-linux-col"
 PACKAGE_WRITE_DEPS += "base-passwd"
 
 # | /usr/src/debug/man-db/2.8.0-r0/man-db-2.8.0/src/whatis.c:939: undefined reference to `_nl_msg_cat_cntr'
@@ -23,6 +24,10 @@ USE_NLS:libc-musl = "no"
 inherit gettext pkgconfig autotools systemd
 
 EXTRA_OECONF = "--with-pager=less --with-systemdsystemunitdir=${systemd_system_unitdir}"
+
+# util-linux col is deprecated and only builds for glibc
+EXTRA_OECONF:append:libc-musl = " --with-col=''"
+
 EXTRA_AUTORECONF += "-I ${S}/gl/m4"
 
 PACKAGECONFIG[bzip2] = "--with-bzip2=bzip2,ac_cv_prog_have_bzip2='',bzip2"
