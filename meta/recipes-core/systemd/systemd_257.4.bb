@@ -288,12 +288,6 @@ do_install() {
 	fi
 	install -d ${D}/${base_sbindir}
 
-	if ! ${@bb.utils.contains('PACKAGECONFIG', 'serial-getty-generator', 'true', 'false', d)}; then
-		# Remove the serial-getty generator and instead use explicit services
-		# created by the systemd-serialgetty recipe
-		find ${D} -name \*getty-generator\* -delete
-	fi
-
 	# Provide support for initramfs
 	[ ! -e ${D}/init ] && ln -s ${nonarch_libdir}/systemd/systemd ${D}/init
 	[ ! -e ${D}/${base_sbindir}/udevd ] && ln -s ${nonarch_libdir}/systemd/systemd-udevd ${D}/${base_sbindir}/udevd
