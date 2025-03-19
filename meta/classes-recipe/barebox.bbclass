@@ -54,7 +54,7 @@ EXTRA_OEMAKE = " \
     CROSS_PKG_CONFIG=pkg-config \
 "
 
-BAREBOX_CONFIG[doc] = "The barebox kconfig defconfig file. Not used if a file called defconfig is added to the SRC_URI."
+#BAREBOX_CONFIG[doc] = "The barebox kconfig defconfig file. Not used if a file called defconfig is added to the SRC_URI."
 BAREBOX_CONFIG ?= ""
 
 # set sensible default configs for some of oe-core's QEMU MACHINEs
@@ -72,24 +72,34 @@ python () {
 }
 
 barebox_do_configure() {
+    DEFCONFIG="${@' '.join(d.getVarFlags('BAREBOX_CONFIG').values())}"
+
+    for defconfig in ${DEFCONFIG}; do
+        mkdir -p ${B}/${defconfig}
+        export KBUILD_OUTPUT="${B}/${defconfig}"
+
         if [ -e ${UNPACKDIR}/defconfig ]; then
-                cp ${UNPACKDIR}/defconfig ${B}/.config
+                cp ${UNPACKDIR}/defconfig ${B}/${defconfig}/.config
         else
-                if [ -n "${BAREBOX_CONFIG}" ]; then
-                        oe_runmake ${BAREBOX_CONFIG}
+                if [ -n "${defconfig}" ]; then
+                        oe_runmake "${defconfig}" O=$KBUILD_OUTPUT
                 else
                         bbfatal "No defconfig given. Either add file 'file://defconfig' to SRC_URI or set BAREBOX_CONFIG"
                 fi
         fi
 
-        ${S}/scripts/kconfig/merge_config.sh -m .config ${@" ".join(find_cfgs(d))}
-        cml1_do_configure
+        ${S}/scripts/kconfig/merge_config.sh -m ${B}/${defconfig}/.config ${@" ".join(find_cfgs(d))}
+        cml1_do_configure O=$KBUILD_OUTPUT
+    done
 }
 
 BAREBOX_ENV_DIR[doc] = "Overlay the barebox built-in environment with the environment provided by the BSP if specified."
 BAREBOX_ENV_DIR ??= "${UNPACKDIR}/env/"
 
 barebox_do_compile () {
+    DEFCONFIG="${@' '.join(d.getVarFlags('BAREBOX_CONFIG').values())}"
+
+    for defconfig in ${DEFCONFIG}; do
         export userccflags="${TARGET_LDFLAGS}${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS}"
         unset LDFLAGS
         unset CFLAGS
@@ -98,13 +108,15 @@ barebox_do_compile () {
         unset MACHINE
         # Allow to use ${UNPACKDIR} in kconfig options to include additionally fetched files
         export UNPACKDIR=${UNPACKDIR}
+        export KBUILD_OUTPUT="${B}/${defconfig}"
 
         if [ -d ${BAREBOX_ENV_DIR} ]; then
                 BAREBOX_DEFAULT_ENV="$(grep ^CONFIG_DEFAULT_ENVIRONMENT_PATH .config | cut -d '=' -f 2 | tr -d '"')"
-                oe_runmake CONFIG_DEFAULT_ENVIRONMENT_PATH="\"${BAREBOX_DEFAULT_ENV} ${BAREBOX_ENV_DIR}\""
+                oe_runmake CONFIG_DEFAULT_ENVIRONMENT_PATH="\"${BAREBOX_DEFAULT_ENV} ${BAREBOX_ENV_DIR}\"" O=$KBUILD_OUTPUT
         else
-                oe_runmake
+                oe_runmake O=$KBUILD_OUTPUT
         fi
+    done
 }
 
 BAREBOX_BINARY[doc] = "Specify the barebox binary to install. If not specified all barebox artifacts are installed."
@@ -118,7 +130,10 @@ BAREBOX_IMAGE ?= "${@'${EFI_BOOT_IMAGE}' if d.getVar('EFI_PROVIDER') == 'barebox
 BAREBOX_INSTALL_PATH ?= "${@'${EFI_FILES_PATH}' if d.getVar('EFI_PROVIDER') == 'barebox' else '/boot'}"
 
 barebox_do_install () {
-        if [ -n "${BAREBOX_BINARY}" ]; then
+    DEFCONFIG="${@' '.join(d.getVarFlags('BAREBOX_CONFIG').values())}"
+    config_count=$(echo "${DEFCONFIG}" | wc -w)
+
+        if [ -n "${BAREBOX_BINARY}" ] && [ "${config_count}" -lt 1 ]; then
 
                 BAREBOX_BIN=${B}/${BAREBOX_BINARY}
                 if [ ! -f "${BAREBOX_BIN}" ]; then
@@ -131,16 +146,21 @@ barebox_do_install () {
                 install -D -m 644 ${BAREBOX_BIN} ${D}${BAREBOX_INSTALL_PATH}/${BAREBOX_IMAGE}
                 ln -sf ${BAREBOX_IMAGE} ${D}${BAREBOX_INSTALL_PATH}/${BAREBOX_BINARY}
         else
+            for defconfig in ${DEFCONFIG}; do
                 install -d ${D}${BAREBOX_INSTALL_PATH}/
-                for image in $(cat ${B}/barebox-flash-images); do
-                        install -m 644 ${B}/${image} ${D}${BAREBOX_INSTALL_PATH}/
+                for image in $(cat ${B}/$defconfig/barebox-flash-images); do
+                        install -m 644 ${B}/$defconfig/${image} ${D}${BAREBOX_INSTALL_PATH}/
                 done
+            done
         fi
 }
 FILES:${PN} = "${BAREBOX_INSTALL_PATH}"
 
 barebox_do_deploy () {
-        if [ -n "${BAREBOX_BINARY}" ]; then
+    DEFCONFIG="${@' '.join(d.getVarFlags('BAREBOX_CONFIG').values())}"
+    config_count=$(echo "${DEFCONFIG}" | wc -w)
+
+        if [ -n "${BAREBOX_BINARY}" ] && [ "${config_count}" -lt 1 ]; then
 
                 BAREBOX_BIN=${B}/${BAREBOX_BINARY}
                 if [ ! -f "${BAREBOX_BIN}" ]; then
@@ -150,9 +170,11 @@ barebox_do_deploy () {
                 install -D -m 644 ${BAREBOX_BIN} ${DEPLOYDIR}/${BAREBOX_IMAGE}
                 ln -sf ${BAREBOX_IMAGE} ${DEPLOYDIR}/${BAREBOX_BINARY}
         else
-                for image in $(cat ${B}/barebox-flash-images); do
-                        cp ${B}/${image} ${DEPLOYDIR}
+            for defconfig in ${DEFCONFIG}; do
+                for image in $(cat ${B}/$defconfig/barebox-flash-images); do
+                        cp ${B}/$defconfig/${image} ${DEPLOYDIR}
                 done
+            done
         fi
 }
 addtask deploy after do_compile
