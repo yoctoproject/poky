@@ -58,8 +58,6 @@ Supported Linux Distributions
 Currently, the &DISTRO; release ("&DISTRO_NAME;") of the Yocto Project is
 supported on the following distributions:
 
--  Ubuntu 20.04 (LTS)
-
 -  Ubuntu 22.04 (LTS)
 
 -  Ubuntu 24.04 (LTS)
@@ -93,11 +91,15 @@ organizations publishing them no longer make updates publicly available:
 
 -  Ubuntu 18.04 (LTS)
 
+-  Ubuntu 20.04 (LTS)
+
 -  Ubuntu 23.04
 
 Note that the Yocto Project doesn't have access to private updates
 that some of these versions may have. Therefore, our testing has
-limited value if you have access to such updates.
+limited value if you have access to such updates.  Also, :term:`buildtools`
+may have to be used on older releases in order to get current enough
+tools, such as python.
 
 Finally, here are the distribution versions which were previously
 tested on former revisions of "&DISTRO_NAME;", but no longer are:
