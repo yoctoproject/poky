@@ -50,6 +50,16 @@ setup_cargo_environment () {
 
 inherit rust-target-config
 
+do_unpack:append() {
+    import os
+    import shutil
+
+    # Remove gcc directory after unpacking
+    gcc_dir = os.path.join(d.getVar('S'), 'src', 'gcc')
+    if os.path.isdir(gcc_dir):
+        shutil.rmtree(gcc_dir)
+}
+
 do_rust_setup_snapshot () {
     for installer in "${UNPACKDIR}/rust-snapshot-components/"*"/install.sh"; do
         "${installer}" --prefix="${WORKDIR}/rust-snapshot" --disable-ldconfig
