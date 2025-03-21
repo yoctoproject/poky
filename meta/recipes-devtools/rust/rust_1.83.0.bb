@@ -223,6 +223,9 @@ rust_runx () {
 
     oe_cargo_fix_env
 
+    # When multilibs are enabled, rustc can't find dynamic libraries in "lib64" because the bootstrapping process looks in "lib". To fix this, export both paths:
+    export LD_LIBRARY_PATH=${S}/build/${RUST_BUILD_SYS}/stage1/lib:${S}/build/${RUST_BUILD_SYS}/stage1/lib64:$LD_LIBRARY_PATH
+
     python3 src/bootstrap/bootstrap.py ${@oe.utils.parallel_make_argument(d, '-j %d')} "$@" --verbose
 }
 rust_runx[vardepsexclude] += "PARALLEL_MAKE"
