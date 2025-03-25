@@ -7110,6 +7110,16 @@ system and gives an overview of their function and contents.
       at build time should be done by adding "ptest" to (or removing it
       from) :term:`DISTRO_FEATURES`.
 
+   :term:`PTEST_PYTEST_DIR`
+      Within the :ref:`ref-classes-ptest-python-pytest` class, the
+      :term:`PTEST_PYTEST_DIR` variable represents the path within the source
+      tree of a Python package holding the unit tests to be tested with the
+      `pytest <https://docs.pytest.org>`__ framework. The default value for this
+      variable is ``tests``.
+
+      For more information, see
+      the :ref:`ref-classes-ptest-python-pytest` class documentation.
+
    :term:`PV`
       The version of the recipe. The version is normally extracted from the
       recipe filename. For example, if the recipe is named
