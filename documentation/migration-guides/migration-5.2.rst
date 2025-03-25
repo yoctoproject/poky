@@ -178,6 +178,32 @@ This should now be replaced by::
 
    UBOOT_ENTRYPOINT ?= "0x20008000"
 
+
+Git fetcher: support for multiple revisions per URL removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The support for having multiple Git revisions per URL in :term:`SRC_URI` was
+removed from BitBake, which means the following syntax is not supported
+anymore::
+
+   SRC_URI = "git://some.host/somepath;branch=branchX,branchY;name=nameX,nameY"
+   SRCREV_nameX = "xxxxxxxxxxxxxxxxxxxx"
+   SRCREV_nameY = "yyyyyyyyyyyyyyyyyyyy"
+
+This was rarely used in the core repositories, and this removal simplifies the
+code logic in several places.
+
+Git fetcher: Branch parameter now required in :term:`SRC_URI`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``branch`` parameter is now required when specifying a Git repository in
+:term:`SRC_URI`, for example::
+
+   SRC_URI = "git://some.host/somepath;branch=branchX"
+
+A missing ``branch`` parameter used to produce a warning, and will now produce
+an error.
+
 Recipe changes
 ~~~~~~~~~~~~~~
 
