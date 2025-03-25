@@ -5853,6 +5853,18 @@ system and gives an overview of their function and contents.
 
          NON_MULTILIB_RECIPES = "grub grub-efi make-mod-scripts ovmf u-boot"
 
+   :term:`NVD_DB_VERSION`
+      The :term:`NVD_DB_VERSION` variable allows choosing the CVE feed when
+      using the :ref:`ref-classes-cve-check` class. It can be one of:
+
+      -  ``NVD2`` (default): the NVD feed with API version 2
+      -  ``FKIE``: the `FKIE-CAD <https://github.com/fkie-cad/nvd-json-data-feeds>`__
+         feed reconstruction
+      -  ``NVD1``: the NVD JSON feed (deprecated)
+
+      In case of a malformed feed name, the ``NVD2`` feed is selected and an
+      error is printed.
+
    :term:`NVDCVE_API_KEY`
       The NVD API key used to retrieve data from the CVE database when
       using :ref:`ref-classes-cve-check`.
