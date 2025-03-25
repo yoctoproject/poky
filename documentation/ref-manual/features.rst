@@ -167,9 +167,6 @@ metadata, as extra layers can define their own:
 -  *multiarch:* Enable building applications with multiple architecture
    support.
 
--  *ld-is-gold:* Use the :wikipedia:`gold <Gold_(linker)>`
-   linker instead of the standard GCC linker (bfd).
-
 -  *ldconfig:* Include support for ldconfig and ``ld.so.conf`` on the
    target.
 
