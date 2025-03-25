@@ -94,6 +94,11 @@ systemd changes
    not for socket files).
    Now all service files must be explicitly added to :term:`FILES`.
 
+-  Add ``create-log-dirs`` back to the configuration options. To enable
+   persistent logging a user can now set the "Storage" option of
+   ``journald.conf`` to "persistent". The ``/var/log/journal`` directory is now
+   used for logging instead of ``/run/log``.
+
 Multiconfig changes
 ~~~~~~~~~~~~~~~~~~~
 
@@ -151,8 +156,31 @@ c++/binutils)" </openembedded-core/commit/?id=4ccc3bc8266c>` in
    find m4 macros, then usually the solution is to set ``EXTRA_AUTORECONF += "-I
    path/to/m4"`` in the recipe.
 
+-  The :ref:`ref-classes-autotools` class now requires any recipe that inherits
+   the class to have a ``configure`` script. The configuration script location
+   is stored in the :term:`CONFIGURE_SCRIPT` variable. The
+   :ref:`ref-tasks-configure` task will fail if the script is missing.
+
+:term:`UBOOT_ENTRYPOINT` changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :term:`UBOOT_ENTRYPOINT` variable should now be defined with a leading
+``0x`` to its value. For example, consider the following assignment::
+
+   UBOOT_ENTRYPOINT ?= "20008000"
+
+This should now be replaced by::
+
+   UBOOT_ENTRYPOINT ?= "0x20008000"
+
 Recipe changes
 ~~~~~~~~~~~~~~
+
+-  The ``libnss-mdns`` recipe is now renamed to ``avahi-libnss-mdns`` to avoid a
+   conflict with meta-networking.
+
+-  :ref:`ref-classes-ptest` support for the ``valgrind`` recipe was removed, due
+   to regressions occurring after updating Glibc to 2.41.
 
 Removed variables
 ~~~~~~~~~~~~~~~~~
@@ -176,9 +204,18 @@ Removed recipes
 The following recipes have been removed in this release:
 
 -  ``liburi-perl``: moved to :oe_git:`meta-perl </meta-openembedded/tree/meta-perl>`.
+
 -  ``python3-isodate``: moved to :oe_git:`meta-python </meta-openembedded/tree/meta-python>`.
+
 -  ``python3-iniparse``: removed as there are no consumers of this recipe in
    :oe_git:`openembedded-core </openembedded-core>` or :oe_git:`meta-openembedded </meta-openembedded>`.
+
+-  ``blktool``: It was created in 2004 as an alternative to hdparm and never
+   updated since (while :wikipedia:`hdparm <Hdparm>` remains in active.
+
+-  ``cargo-c-native``: converted to a target recipe and renamed to ``cargo-c``.
+
+-  ``libnss-mdns``: renamed to ``avahi-libnss-mdns``
 
 Removed classes
 ~~~~~~~~~~~~~~~
@@ -187,6 +224,12 @@ The following classes have been removed in this release:
 
 -  ``migrate_localcount.bbclass``: obsolete class for which code was already
    removed in 2012.
+
+Removed features
+~~~~~~~~~~~~~~~~
+
+-  The ``ld-is-gold`` distro feature was removed from the
+   :term:`DISTRO_FEATURES`.
 
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
@@ -201,3 +244,6 @@ Miscellaneous changes
    Therefore, the :term:`UBOOT_ENV` is no longer handled by the
    ``kernel-fitimage.bbclass``. There is a new variable :term:`FIT_UBOOT_ENV`
    which should be used for adding a U-Boot script to a FIT image.
+
+-  The ``devtool ide-sdk`` utility has been removed from the :doc:`eSDK
+   </sdk-manual/extensible>` (but remains available in the BitBake environment).
