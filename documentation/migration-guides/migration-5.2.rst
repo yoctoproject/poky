@@ -140,6 +140,17 @@ replacing is not as straightforward. For more examples, see the commit
 c++/binutils)" </openembedded-core/commit/?id=4ccc3bc8266c>` in
 :term:`OpenEmbedded-Core (OE-Core)`.
 
+:ref:`ref-classes-autotools` changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  Changes to how ``aclocal`` is invoked means that ``ACLOCALDIR`` and
+   ``ACLOCALEXTRAPATH`` are no longer used.
+
+-  Directories containing m4 files are no longer found automatically and
+   passed to ``autoreconf``. If a recipe fails to configure because it cannot
+   find m4 macros, then usually the solution is to set ``EXTRA_AUTORECONF += "-I
+   path/to/m4"`` in the recipe.
+
 Recipe changes
 ~~~~~~~~~~~~~~
 
