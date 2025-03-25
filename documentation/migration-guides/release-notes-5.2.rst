@@ -44,11 +44,10 @@ New Features / Enhancements in |yocto-ver|
       uses.
 
    -  The :term:`GRUB_MKIMAGE_OPTS` can be used to control the flags to the
-      ``grub-mkimage`` command in the context of the Grub recipe (``grub-efi``).
+      ``grub-mkimage`` command in the context of the GRUB recipe (``grub-efi``).
 
    -  The :term:`SPDX_PACKAGE_VERSION` variable controls the package version as
-      seen in the SPDX 3.0 JSON output (``software_packageVersion``). The default
-      value for this variable is :term:`PV`.
+      seen in the SPDX 3.0 JSON output (``software_packageVersion``).
 
 -  Kernel-related changes:
 
@@ -344,8 +343,6 @@ New Features / Enhancements in |yocto-ver|
 
       -  ``wget``: increase timeout to 100s from 30s to match CDN worst
          response time.
-
-      -  ``wget``: Support setting :term:`PV` in :term:`SRC_URI`.
 
       -  Add support for fast initial shallow fetch. The fetcher will prefer an
          initial shallow clone, but will re-utilize an existing bare clone if

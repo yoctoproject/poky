@@ -193,6 +193,14 @@ anymore::
 This was rarely used in the core repositories, and this removal simplifies the
 code logic in several places.
 
+If one of your recipes is still using this mechanism, you can split the
+code source fetching into two separate entries::
+
+   SRC_URI = "git://some.host/somepath;branch=branchX;name=nameX \
+              git://some.host/somepath;branch=branchY;name=nameY"
+   SRCREV_nameX = "xxxxxxxxxxxxxxxxxxxx"
+   SRCREV_nameY = "yyyyyyyyyyyyyyyyyyyy"
+
 Git fetcher: Branch parameter now required in :term:`SRC_URI`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -242,7 +250,7 @@ The following recipes have been removed in this release:
    :oe_git:`openembedded-core </openembedded-core>` or :oe_git:`meta-openembedded </meta-openembedded>`.
 
 -  ``blktool``: It was created in 2004 as an alternative to hdparm and never
-   updated since (while :wikipedia:`hdparm <Hdparm>` remains in active.
+   updated since (while :wikipedia:`hdparm <Hdparm>` remains active).
 
 -  ``cargo-c-native``: converted to a target recipe and renamed to ``cargo-c``.
 
