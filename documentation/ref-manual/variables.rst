@@ -5601,6 +5601,10 @@ system and gives an overview of their function and contents.
       you to specify the inclusion of debugging symbols and the compiler
       optimizations (none, performance or size).
 
+   :term:`MESON_INSTALL_TAGS`
+      A variable for the :ref:`ref-classes-meson` class, allowing to specify
+      install tags (``--tags`` argument of the ``meson install`` command).
+
    :term:`MESON_TARGET`
       A variable for the :ref:`ref-classes-meson` class, allowing to choose
       a Meson target to build in :ref:`ref-tasks-compile`.  Otherwise, the
