@@ -224,6 +224,12 @@ system and gives an overview of their function and contents.
       must set this variable in your recipe. The
       :ref:`ref-classes-syslinux` class checks this variable.
 
+   :term:`AUTOTOOLS_SCRIPT_PATH`
+      When using the :ref:`ref-classes-autotools` class, the
+      :term:`AUTOTOOLS_SCRIPT_PATH` variable stores the location of the
+      different scripts used by the Autotools build system. The default
+      value for this variable is :term:`S`.
+
    :term:`AVAILTUNES`
       The list of defined CPU and Application Binary Interface (ABI)
       tunings (i.e. "tunes") available for use by the OpenEmbedded build
@@ -1527,6 +1533,17 @@ system and gives an overview of their function and contents.
 
    :term:`CONFIGURE_FLAGS`
       The minimal arguments for GNU configure.
+
+   :term:`CONFIGURE_SCRIPT`
+      When using the :ref:`ref-classes-autotools` class, the
+      :term:`CONFIGURE_SCRIPT` variable stores the location of the ``configure``
+      script for the Autotools build system. The default definition for this
+      variable is::
+
+         CONFIGURE_SCRIPT ?= "${AUTOTOOLS_SCRIPT_PATH}/configure"
+
+      Where :term:`AUTOTOOLS_SCRIPT_PATH` is the location of the of the
+      Autotools build system scripts, which defaults to :term:`S`.
 
    :term:`CONFLICT_DISTRO_FEATURES`
       When inheriting the :ref:`ref-classes-features_check`
