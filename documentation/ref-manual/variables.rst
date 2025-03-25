@@ -10613,6 +10613,11 @@ system and gives an overview of their function and contents.
       can control with this variable, see the
       ":ref:`ref-classes-insane`" section.
 
+   :term:`WATCHDOG_RUNTIME_SEC`
+      For the ``systemd`` recipe, this controls the value of the
+      ``RuntimeWatchdogSec`` option in ``/etc/systemd/system.conf``. The default
+      value is an empty string.
+
    :term:`WATCHDOG_TIMEOUT`
       Specifies the timeout in seconds used by the ``watchdog-config`` recipe
       and also by ``systemd`` during reboot. The default is 60 seconds.
