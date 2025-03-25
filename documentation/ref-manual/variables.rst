@@ -5739,6 +5739,11 @@ system and gives an overview of their function and contents.
       specifies the base directory for auto-mounting filesystems. The
       default value is "/run/media".
 
+   :term:`MOUNT_GROUP`
+      On non-systemd systems (where ``udev-extraconf`` is being used),
+      specifies the mount group for auto-mounting filesystems. The
+      default value is "disk".
+
    :term:`MULTIMACH_TARGET_SYS`
       Uniquely identifies the type of the target system for which packages
       are being built. This variable allows output for different types of
