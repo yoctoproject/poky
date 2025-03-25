@@ -711,6 +711,9 @@ system and gives an overview of their function and contents.
    :term:`BB_TASKHASH`
       See :term:`bitbake:BB_TASKHASH` in the BitBake manual.
 
+   :term:`BB_USE_HOME_NPMRC`
+      See :term:`bitbake:BB_USE_HOME_NPMRC` in the BitBake manual.
+
    :term:`BB_VERBOSE_LOGS`
       See :term:`bitbake:BB_VERBOSE_LOGS` in the BitBake manual.
 
