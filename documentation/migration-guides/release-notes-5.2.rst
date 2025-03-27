@@ -704,7 +704,63 @@ Known Issues in |yocto-ver|
 Recipe License changes in |yocto-ver|
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following corrections have been made to the :term:`LICENSE` values set by recipes:
+The following changes have been made to the :term:`LICENSE` values set by recipes:
+
+.. list-table::
+   :widths: 20 40 40
+   :header-rows: 1
+
+   * - Recipe
+     - Previous value
+     - New value
+   * - ``babeltrace2``
+     - ``MIT & GPL-2.0-only & LGPL-2.1-only & BSD-2-Clause``
+     - ``MIT & GPL-2.0-only & LGPL-2.1-only & BSD-2-Clause & BSD-4-Clause & GPL-3.0-or-later & CC-BY-SA-4.0 & PSF-2.0``
+   * - ``busybox``
+     - ``GPL-2.0-only & bzip2-1.0.4``
+     - ``GPL-2.0-only & bzip2-1.0.6``
+   * - ``dbus-glib``
+     - ``AFL-2.1 | GPL-2.0-or-later``
+     - ``(AFL-2.1 & LGPL-2.0-or-later & MIT) | (GPL-2.0-or-later & LGPL-2.0-or-later & MIT)``
+   * - ``diffstat``
+     - ``MIT``
+     - ``X11``
+   * - ``docbook-xsl-stylesheets``
+     - ``XSL``
+     - ``DocBook-XML``
+   * - ``font-util``
+     - ``Unicode-TOU & BSD-4-Clause & BSD-2-Clause``
+     - ``Unicode-TOU & MIT & X11 & BSD-2-Clause``
+   * - ``json-glib``
+     - ``LGPL-2.1-only``
+     - ``LGPL-2.1-or-later``
+   * - ``libbsd``
+     - ``BSD-3-Clause & BSD-4-Clause & ISC & PD``
+     - ``BSD-3-Clause & ISC & PD``
+   * - ``libxfont2``
+     - ``MIT & MIT & BSD-4-Clause & BSD-2-Clause``
+     - ``MIT & MIT & BSD-4-Clause-UC & BSD-2-Clause``
+   * - ``libxkbcommon``
+     - ``MIT & MIT``
+     - ``MIT & MIT-open-group & HPND & HPND-sell-variant & X11``
+   * - ``man-pages``
+     - ``GPL-2.0-or-later & GPL-2.0-only & GPL-1.0-or-later & BSD-2-Clause & BSD-3-Clause & BSD-4-Clause & MIT``
+     - ``GPL-2.0-or-later & GPL-2.0-only & GPL-1.0-or-later & BSD-2-Clause & BSD-3-Clause & BSD-4-Clause-UC & MIT``
+   * - ``ppp``
+     - ``BSD-3-Clause & BSD-3-Clause-Attribution & GPL-2.0-or-later & LGPL-2.0-or-later & PD & RSA-MD & MIT``
+     - ``BSD-2-Clause & GPL-2.0-or-later & LGPL-2.0-or-later & PD & RSA-MD & MIT``
+   * - ``tcf-agent``
+     - ``EPL-1.0 | EDL-1.0``
+     - ``EPL-1.0 | BSD-3-Clause``
+   * - ``unfs3``
+     - ``unfs3``
+     - ``BSD-3-Clause``
+   * - ``usbutils``
+     - ``GPL-2.0-or-later & (GPL-2.0-only | GPL-3.0-only)``
+     - ``GPL-2.0-or-later & (GPL-2.0-only | GPL-3.0-only) & CC0-1.0 & LGPL-2.1-or-later & MIT``
+   * - ``util-linux``
+     - ``GPL-1.0-or-later & GPL-2.0-only & GPL-2.0-or-later & LGPL-2.1-or-later & BSD-2-Clause & BSD-3-Clause & BSD-4-Clause & MIT``
+     - ``GPL-1.0-or-later & GPL-2.0-only & GPL-2.0-or-later & LGPL-2.1-or-later & BSD-2-Clause & BSD-3-Clause & BSD-4-Clause-UC & MIT``
 
 Security Fixes in |yocto-ver|
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
