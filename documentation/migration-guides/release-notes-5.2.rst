@@ -715,5 +715,198 @@ Recipe Upgrades in |yocto-ver|
 Contributors to |yocto-ver|
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Thanks to the following people who contributed to this release:
+
+-  Aditya Tayade
+-  Adrian Freihofer
+-  Alban Bedel
+-  Aleksandar Nikolic
+-  Alessio Cascone
+-  Alexander Hirsch
+-  Alexander Kanavin
+-  Alexander Sverdlin
+-  Alexander van Gessel
+-  Alexander Yurkov
+-  Alexandre Marques
+-  Alexis Cellier
+-  Alex Kiernan
+-  Andrej Valek
+-  Angelo Ribeiro
+-  Antonin Godard
+-  Archana Polampalli
+-  Artur Kowalski
+-  Awais Belal
+-  Balaji Pothunoori
+-  Bartosz Golaszewski
+-  Bastian Germann
+-  Bastian Krause
+-  Bastien JAUNY
+-  BELHADJ SALEM Talel
+-  Benjamin Bara
+-  Benjamin Grossschartner
+-  Benjamin Szőke
+-  Bin Lan
+-  Bruce Ashfield
+-  Changhyeok Bae
+-  Changqing Li
+-  Chen Qi
+-  Chris Laplante
+-  Christian Lindeberg
+-  Christian Taedcke
+-  Christos Gavros
+-  Claus Stovgaard
+-  Clayton Casciato
+-  Colin McAllister
+-  Daniel Ammann
+-  Daniel McGregor
+-  Dan McGregor
+-  Deepesh Varatharajan
+-  Deepthi Hemraj
+-  Denis OSTERLAND-HEIM
+-  Denys Dmytriyenko
+-  Derek Straka
+-  Divya Chellam
+-  Dmitry Baryshkov
+-  Enrico Jörns
+-  Enrico Scholz
+-  Eric Meyers
+-  Esben Haabendal
+-  Etienne Cordonnier
+-  Fabio Berton
+-  Fabio Estevam
+-  Gaël PORTAY
+-  Georgi, Tom
+-  Guðni Már Gilbert
+-  Guénaël Muller
+-  Harish Sadineni
+-  Haseeb Ashraf
+-  Hiago De Franco
+-  Hongxu Jia
+-  Igor Opaniuk
+-  Jagadeesh Krishnanjanappa
+-  Jamin Lin
+-  Jason Schonberg
+-  Jean-Pierre Geslin
+-  Jermain Horsman
+-  Jesse Riemens
+-  Jiaying Song
+-  Jinfeng Wang
+-  João Henrique Ferreira de Freitas
+-  Joerg Schmidt
+-  Jonas Gorski
+-  Jon Mason
+-  Jörg Sommer
+-  Jose Quaresma
+-  Joshua Watt
+-  Julien Stephan
+-  Justin Bronder
+-  Kai Kang
+-  Katariina Lounento
+-  Katawann
+-  Kevin Hao
+-  Khem Raj
+-  Koen Kooi
+-  Lee Chee Yang
+-  Lei Maohui
+-  Lei YU
+-  Leon Anavi
+-  Louis Rannou
+-  Maik Otto
+-  Makarios Christakis
+-  Marc Ferland
+-  Marco Felsch
+-  Marek Vasut
+-  Mark Hatle
+-  Markus Volk
+-  Marta Rybczynska
+-  Martin Jansa
+-  Mathieu Dubois-Briand
+-  Matthias Schiffer
+-  Maxin John
+-  Michael Estner
+-  Michael Halstead
+-  Michael Nazzareno Trimarchi
+-  Michael Opdenacker
+-  Michelle Lin
+-  Mikko Rapeli
+-  Ming Liu
+-  Moritz Haase
+-  Nick Owens
+-  Nicolas Dechesne
+-  Nikolai Merinov
+-  Niko Mauno
+-  Ninette Adhikari
+-  Ola x Nilsson
+-  Oleksandr Hnatiuk
+-  Oliver Kästner
+-  Omri Sarig
+-  Pascal Eberhard
+-  Patrik Nordvall
+-  Paul Barker
+-  Pavel Zhukov
+-  Pedro Ferreira
+-  Peter Bergin
+-  Peter Delevoryas
+-  Peter Kjellerstedt
+-  Peter Marko
+-  Peter Tatrai
+-  Philip Lorenz
+-  Priyal Doshi
+-  Purushottam Choudhary
+-  Quentin Schulz
+-  Ralph Siemsen
+-  Randy MacLeod
+-  Ranjitsinh Rathod
+-  Rasmus Villemoes
+-  Regis Dargent
+-  Ricardo Salveti
+-  Richard Purdie
+-  Robert Yang
+-  Rohini Sangam
+-  Roland Hieber
+-  Ross Burton
+-  Ryan Eatmon
+-  Savvas Etairidis
+-  Sean Nyekjaer
+-  Sebastian Zenker
+-  Sergei Zhmylev
+-  Shunsuke Tokumoto
+-  Sid-Ali
+-  Simon A. Eugster
+-  Simone Weiß
+-  Slawomir Stepien
+-  Sofiane HAMAM
+-  Stefan Gloor
+-  Stefan Herbrechtsmeier
+-  Stefan Koch
+-  Stefan Mueller-Klieser
+-  Steve Sakoman
+-  Sunil Dora
+-  Sven Kalmbach
+-  Talel BELHAJSALEM
+-  Thomas Perrot
+-  Thomas Roos
+-  Tim Orling
+-  Tom Hochstein
+-  Trevor Gamblin
+-  Ulrich Ölmann
+-  Valeria Petrov
+-  Victor J. Hansen
+-  Victor Kamensky
+-  Vijay Anusuri
+-  Vince Chang
+-  Vivek Puar
+-  Vyacheslav Yurkov
+-  Walter Schweizer
+-  Wang Mingyu
+-  Weisser, Pascal
+-  Xiangyu Chen
+-  Xiaotian Wu
+-  Yash Shinde
+-  Yi Zhao
+-  Yoann Congal
+-  Yogita Urade
+-  Zoltán Böszörményi
+
 Repositories / Downloads for Yocto-|yocto-ver|
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
