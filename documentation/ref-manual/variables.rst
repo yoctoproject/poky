@@ -3435,6 +3435,11 @@ system and gives an overview of their function and contents.
       See the :ref:`ref-classes-grub-efi` class for more
       information on how this variable is used.
 
+   :term:`GRUB_MKIMAGE_OPTS`
+      This variable controls additional options passed to the ``grub-mkimage``
+      command in the GNU GRand Unified Bootloader (GRUB) recipe during the
+      ``do_mkimage`` task.
+
    :term:`GRUB_OPTS`
       Additional options to add to the GNU GRand Unified Bootloader (GRUB)
       configuration. Use a semi-colon character (``;``) to separate
