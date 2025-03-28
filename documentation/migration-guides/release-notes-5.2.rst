@@ -765,6 +765,73 @@ The following changes have been made to the :term:`LICENSE` values set by recipe
 Security Fixes in |yocto-ver|
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+The following CVEs have been fixed:
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Recipe
+     - CVE IDs
+   * - ``barebox``
+     - :cve_nist:`2025-26721`, :cve_nist:`2025-26722`, :cve_nist:`2025-26723`, :cve_nist:`2025-26724`, :cve_nist:`2025-26725`
+   * - ``binutils``
+     - :cve_nist:`2024-53589`, :cve_nist:`2025-1153`
+   * - ``curl``
+     - :cve_nist:`2024-8096`, :cve_nist:`2024-9681`, :cve_nist:`2024-11053`, :cve_nist:`2025-0167`, :cve_nist:`2025-0665`, :cve_nist:`2025-0725`
+   * - ``expat``
+     - :cve_nist:`2024-50602`, :cve_nist:`2024-8176`
+   * - ``ghostscript``
+     - :cve_nist:`2024-46951`, :cve_nist:`2024-46952`, :cve_nist:`2024-46953`, :cve_nist:`2024-46954`, :cve_nist:`2024-46955`, :cve_nist:`2024-46956`
+   * - ``gnutls``
+     - :cve_nist:`2024-12243`
+   * - ``go``
+     - :cve_nist:`2024-34155`, :cve_nist:`2024-34156`, :cve_nist:`2024-34158`, :cve_nist:`2024-45336`, :cve_nist:`2024-45341`, :cve_nist:`2025-22866`, :cve_nist:`2025-22870`
+   * - ``grub``
+     - :cve_nist:`2024-45781`, :cve_nist:`2024-45782`, :cve_nist:`2024-56737`, :cve_nist:`2024-45780`, :cve_nist:`2024-45783`, :cve_nist:`2025-0624`, :cve_nist:`2024-45774`, :cve_nist:`2024-45775`, :cve_nist:`2025-0622`, :cve_nist:`2024-45776`, :cve_nist:`2024-45777`, :cve_nist:`2025-0690`, :cve_nist:`2025-1118`, :cve_nist:`2024-45778`, :cve_nist:`2024-45779`, :cve_nist:`2025-0677`, :cve_nist:`2025-0684`, :cve_nist:`2025-0685`, :cve_nist:`2025-0686`, :cve_nist:`2025-0689`, :cve_nist:`2025-0678`, :cve_nist:`2025-1125`
+   * - ``libarchive``
+     - :cve_nist:`2024-57970`, :cve_nist:`2025-25724`, :cve_nist:`2025-1632`
+   * - ``libcap``
+     - :cve_nist:`2025-1390`
+   * - ``libsndfile1``
+     - :cve_nist:`2024-50612`
+   * - ``libssh2``
+     - :cve_nist:`2023-48795`
+   * - ``libtasn1``
+     - :cve_nist:`2024-12133`
+   * - ``libxml2``
+     - :cve_nist:`2025-24928`, :cve_nist:`2024-56171`
+   * - ``ofono``
+     - :cve_nist:`2024-7539`, :cve_nist:`2024-7540`, :cve_nist:`2024-7541`, :cve_nist:`2024-7542`
+   * - ``omvf``
+     - :cve_nist:`2023-45236`, :cve_nist:`2023-45237`, :cve_nist:`2024-25742`
+   * - ``openssl``
+     - :cve_nist:`2024-9143`, :cve_nist:`2024-12797`, :cve_nist:`2024-13176`
+   * - ``orc``
+     - :cve_nist:`2024-40897`
+   * - ``python3``
+     - :cve_nist:`2025-0938`, :cve_nist:`2024-12254`
+   * - ``qemu``
+     - :cve_nist:`2024-6505`
+   * - ``rsync``
+     - :cve_nist:`2024-12084`, :cve_nist:`2024-12085`, :cve_nist:`2024-12086`, :cve_nist:`2024-12087`, :cve_nist:`2024-12088`, :cve_nist:`2024-12747`
+   * - ``ruby``
+     - :cve_nist:`2024-41123`, :cve_nist:`2024-41946`
+   * - ``rust``
+     - :cve_nist:`2024-43402`
+   * - ``tiff``
+     - :cve_nist:`2023-52356`, :cve_nist:`2023-6228`, :cve_nist:`2023-6277`
+   * - ``vim``
+     - :cve_nist:`2024-45306`, :cve_nist:`2024-47814`, :cve_nist:`2025-22134`, :cve_nist:`2025-24014`, :cve_nist:`2025-26603`, :cve_nist:`2025-1215`, :cve_nist:`2025-27423`, :cve_nist:`2025-29768`
+   * - ``webkitgtk``
+     - :cve_nist:`2025-24143`, :cve_nist:`2025-24150`, :cve_nist:`2025-24158`, :cve_nist:`2025-24162`
+   * - ``wpa-supplicant``
+     - :cve_nist:`2024-5290`
+   * - ``xserver-xorg``
+     - :cve_nist:`2024-9632`, :cve_nist:`2025-26594`, :cve_nist:`2025-26595`, :cve_nist:`2025-26596`, :cve_nist:`2025-26597`, :cve_nist:`2025-26598`, :cve_nist:`2025-26599`, :cve_nist:`2025-26600`, :cve_nist:`2025-26601`
+   * - ``xwayland``
+     - :cve_nist:`2024-9632`, :cve_nist:`2025-26594`, :cve_nist:`2025-26595`, :cve_nist:`2025-26596`, :cve_nist:`2025-26597`, :cve_nist:`2025-26598`, :cve_nist:`2025-26599`, :cve_nist:`2025-26600`, :cve_nist:`2025-26601`
+
 Recipe Upgrades in |yocto-ver|
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
