@@ -39,7 +39,7 @@ section of the Yocto Project Reference Manual.
 Supported kernel versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :term:`OLDEST_KERNEL` setting is XXX in this release, meaning that
+The :term:`OLDEST_KERNEL` setting is 5.15 in this release, meaning that
 out the box, older kernels are not supported. See :ref:`4.3 migration notes
 <migration-4.3-supported-kernel-versions>` for details.
 
@@ -49,12 +49,17 @@ Supported distributions
 Compared to the previous releases, running BitBake is supported on new
 GNU/Linux distributions:
 
+-  Fedora 41
+-  CentOS Stream 9
+
 On the other hand, some earlier distributions are no longer supported:
 
-See :ref:`all supported distributions <system-requirements-supported-distros>`.
+-  CentOS Stream 8
+-  Fedora 38
+-  OpenSUSE Leap 15.4
+-  Ubuntu 20.04
 
-Go language changes
-~~~~~~~~~~~~~~~~~~~
+See :ref:`all supported distributions <system-requirements-supported-distros>`.
 
 Rust language changes
 ~~~~~~~~~~~~~~~~~~~~~
