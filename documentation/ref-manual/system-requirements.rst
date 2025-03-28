@@ -62,19 +62,19 @@ supported on the following distributions:
 
 -  Ubuntu 24.04 (LTS)
 
--  Fedora 38
+-  Ubuntu 24.10
 
 -  Fedora 39
 
 -  Fedora 40
 
--  CentOS Stream 8
+-  Fedora 41
+
+-  CentOS Stream 9
 
 -  Debian GNU/Linux 11 (Bullseye)
 
 -  Debian GNU/Linux 12 (Bookworm)
-
--  OpenSUSE Leap 15.4
 
 -  OpenSUSE Leap 15.5
 
@@ -83,6 +83,8 @@ supported on the following distributions:
 -  AlmaLinux 8
 
 -  AlmaLinux 9
+
+-  Rocky 8
 
 -  Rocky 9
 
