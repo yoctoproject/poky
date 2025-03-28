@@ -302,6 +302,12 @@ New Features / Enhancements in |yocto-ver|
 
 -  BitBake changes:
 
+   -  Add a new concept of configuration fragment, which allows providing
+      configuration snippets contained in layers in a structured and controlled
+      way. For more information, see the
+      :ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:\`\`addfragments\`\`
+      Directive` section of the BitBake User Manual.
+
    -  Add a new ``include_all`` directive, which can be used to include multiple
       files present in the same location in different layers.
 
