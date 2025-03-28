@@ -8420,6 +8420,11 @@ system and gives an overview of their function and contents.
       and the prefix of ``documentNamespace``. It is set by default to
       ``http://spdx.org/spdxdoc``.
 
+   :term:`SPDX_PACKAGE_VERSION`
+      This variable controls the package version as seen in the SPDX 3.0 JSON
+      output (``software_packageVersion``). The default value for this variable
+      is :term:`PV`.
+
    :term:`SPDX_PRETTY`
       This option makes the SPDX output more human-readable, using
       identation and newlines, instead of the default output in a
