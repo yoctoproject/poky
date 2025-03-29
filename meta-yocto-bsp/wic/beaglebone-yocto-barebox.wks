@@ -1,0 +1,7 @@
+# short-description: Create SD card image for Beaglebone with barebox as bootloader
+# long-description: Creates a partitioned SD card image for Beaglebone.
+# Boot files are located in the first vfat partition.
+
+part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4 --fixed-size 32 --sourceparams="loader=barebox" --use-uuid
+part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 4 --use-uuid
+bootloader --append="console=ttyS0,115200"
