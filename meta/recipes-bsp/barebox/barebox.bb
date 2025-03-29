@@ -7,4 +7,6 @@ and a subset of the POSIX C library for writing more command-line utilities."
 
 require barebox-common.inc
 inherit barebox
+inherit bootspec
+
 
