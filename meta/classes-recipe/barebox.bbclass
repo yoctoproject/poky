@@ -14,7 +14,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 DEPENDS += "bison-native flex-native"
 
-S = "${WORKDIR}/barebox-${PV}"
+S = "${WORKDIR}/sources-unpack/git"
 B = "${WORKDIR}/build"
 
 require conf/image-uefi.conf
@@ -75,6 +75,9 @@ barebox_do_configure() {
     DEFCONFIG="${@' '.join(d.getVarFlags('BAREBOX_CONFIG').values())}"
 
     for defconfig in ${DEFCONFIG}; do
+        echo "................................................................."
+        echo "${B}"
+        echo "................................................................."
         mkdir -p ${B}/${defconfig}
         export KBUILD_OUTPUT="${B}/${defconfig}"
 
@@ -83,6 +86,8 @@ barebox_do_configure() {
         else
                 if [ -n "${defconfig}" ]; then
                         oe_runmake "${defconfig}" O=$KBUILD_OUTPUT
+                        echo "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+                        echo "$KBUILD_OUTPUT"
                 else
                         bbfatal "No defconfig given. Either add file 'file://defconfig' to SRC_URI or set BAREBOX_CONFIG"
                 fi
@@ -107,7 +112,7 @@ barebox_do_compile () {
         unset CXXFLAGS
         unset MACHINE
         # Allow to use ${UNPACKDIR} in kconfig options to include additionally fetched files
-        export UNPACKDIR=${UNPACKDIR}
+        export UNPACKDIR=${UNPACKDIR}/git
         export KBUILD_OUTPUT="${B}/${defconfig}"
 
         if [ -d ${BAREBOX_ENV_DIR} ]; then
