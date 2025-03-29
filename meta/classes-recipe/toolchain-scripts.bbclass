@@ -103,6 +103,12 @@ toolchain_create_tree_env_script () {
 	echo 'export OECORE_BASELIB="${baselib}"' >> $script
 	echo 'export OECORE_TARGET_ARCH="${TARGET_ARCH}"' >>$script
 	echo 'export OECORE_TARGET_OS="${TARGET_OS}"' >>$script
+	echo 'export OECORE_TARGET_BITS="${@siteinfo_with_prefix(d, 'bit-')}"' >>$script
+	echo 'export OECORE_TARGET_ENDIAN="${@siteinfo_with_prefix(d, 'endian-')}"' >>$script
+	echo 'export OECORE_MESON_HOST_SYSTEM="${@meson_operating_system('TARGET_OS', d)}"' >>$script
+	echo 'export OECORE_MESON_HOST_CPU_FAMILY="${@meson_cpu_family('TARGET_ARCH', d)}"' >>$script
+	echo 'export OECORE_MESON_HOST_CPU="${TARGET_ARCH}"' >>$script
+	echo 'export OECORE_MESON_HOST_ENDIAN="${@meson_endian('TARGET', d)}"' >>$script
 
 	toolchain_shared_env_script
 
