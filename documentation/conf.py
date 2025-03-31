@@ -111,6 +111,9 @@ extlinks = {
     'wikipedia': ('https://en.wikipedia.org/wiki/%s', None),
 }
 
+# To be able to use :manpage:`<something>` in the docs.
+manpages_url = 'https://manpages.debian.org/{path}'
+
 # Intersphinx config to use cross reference with BitBake user manual
 intersphinx_mapping = {
     'bitbake': ('https://docs.yoctoproject.org/bitbake/' + bitbake_version, None)
