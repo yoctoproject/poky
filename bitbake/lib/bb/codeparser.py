@@ -107,6 +107,10 @@ def update_module_dependencies(d):
         if excludes:
             modulecode_deps[mod] = [modulecode_deps[mod][0] - excludes, modulecode_deps[mod][1] - excludes, modulecode_deps[mod][2] - excludes, modulecode_deps[mod][3], modulecode_deps[mod][4], modulecode_deps[mod][5]]
 
+        deps = set((d.getVarFlag(mod, "vardeps") or "").split())
+        if deps:
+            modulecode_deps[mod] = [modulecode_deps[mod][0] | deps, modulecode_deps[mod][1] | deps, modulecode_deps[mod][2] | deps, modulecode_deps[mod][3], modulecode_deps[mod][4], modulecode_deps[mod][5]]
+
 # A custom getstate/setstate using tuples is actually worth 15% cachesize by
 # avoiding duplication of the attribute names!
 class SetCache(object):
