@@ -4539,8 +4539,7 @@ system and gives an overview of their function and contents.
 
       The value in :term:`INITSCRIPT_PARAMS` is passed through to the
       ``update-rc.d`` command. For more information on valid parameters,
-      please see the ``update-rc.d`` manual page at
-      https://manpages.debian.org/buster/init-system-helpers/update-rc.d.8.en.html
+      please see the manual page: :manpage:`update-rc.d <update-rc.d(8)>`.
 
    :term:`INSANE_SKIP`
       Specifies the QA checks to skip for a specific package within a
