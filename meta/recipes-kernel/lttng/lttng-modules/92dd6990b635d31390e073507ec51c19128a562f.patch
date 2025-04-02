@@ -1,0 +1,170 @@
+From 92dd6990b635d31390e073507ec51c19128a562f Mon Sep 17 00:00:00 2001
+From: Michael Jeanson <mjeanson@efficios.com>
+Date: Wed, 8 May 2024 14:20:30 -0400
+Subject: [PATCH] fix: Add missing 'pselect6_time32' and 'ppoll_time32' syscall
+ overrides
+
+The instrumentation currently has overrides to the generated syscall
+tracepoints of 'ppoll' and 'pselect6' to extract additional information
+from the parameters.
+
+On arm-32 and x86-32 these 2 syscalls were renamed to 'ppoll_time32' and
+'pselect6_time32' and new syscalls using 64-bit time_t were introduced
+with the old names. This results in missing overrides on these
+architectures for the 32-bit variants that were renamed.
+
+Add the '_time32' overrides to restore the previous behavior.
+
+Change-Id: I81e3a3ddc3f3cea58d86edcdf4a1fc9b600637c2
+Signed-off-by: Michael Jeanson <mjeanson@efficios.com>
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+
+Upstream-Status: Backport
+
+diff --git a/include/instrumentation/syscalls/headers/syscalls_pointers_override.h b/include/instrumentation/syscalls/headers/syscalls_pointers_override.h
+index cd084f9..cb17b5b 100644
+--- a/include/instrumentation/syscalls/headers/syscalls_pointers_override.h
++++ b/include/instrumentation/syscalls/headers/syscalls_pointers_override.h
+@@ -390,6 +390,11 @@
+ 	lttng_tp_mempool_free(tp_locvar->fds_ex);
+ 
+ #if defined(CONFIG_X86_32) || defined(CONFIG_X86_64) || defined(CONFIG_ARM)
++/*
++ * Instead of extracting the user-space pointers of the 3 fd_set,
++ * extract the bitmask of the FDs in the sets (in, out, ex) in the form
++ * of an array of uint8_t (1024 FDs is the limit in the kernel).
++ */
+ #define OVERRIDE_32_select
+ #define OVERRIDE_64_select
+ SC_LTTNG_TRACEPOINT_EVENT_CODE(select,
+@@ -427,6 +432,11 @@
+ #endif /* defined(CONFIG_X86_32) || defined(CONFIG_X86_64) || defined(CONFIG_ARM) */
+ 
+ #if defined(CONFIG_X86_32) || defined(CONFIG_X86_64) || defined(CONFIG_ARM64) || defined(CONFIG_ARM)
++/*
++ * Instead of extracting the user-space pointers of the 3 fd_set,
++ * extract the bitmask of the FDs in the sets (in, out, ex) in the form
++ * of an array of uint8_t (1024 FDs is the limit in the kernel).
++ */
+ #define OVERRIDE_32_pselect6
+ #define OVERRIDE_64_pselect6
+ SC_LTTNG_TRACEPOINT_EVENT_CODE(pselect6,
+@@ -464,6 +474,48 @@
+ )
+ #endif /* defined(CONFIG_X86_32) || defined(CONFIG_X86_64) || defined(CONFIG_ARM64) || defined(CONFIG_ARM) */
+ 
++#if defined(CONFIG_X86_32) || defined(CONFIG_ARM)
++/*
++ * Instead of extracting the user-space pointers of the 3 fd_set,
++ * extract the bitmask of the FDs in the sets (in, out, ex) in the form
++ * of an array of uint8_t (1024 FDs is the limit in the kernel).
++ */
++#define OVERRIDE_32_pselect6_time32
++SC_LTTNG_TRACEPOINT_EVENT_CODE(pselect6_time32,
++	TP_PROTO(sc_exit(long ret,) int n, fd_set __user * inp, fd_set __user * outp,
++		fd_set __user * exp, struct old_timespec32 __user * tvp, void __user * sig),
++	TP_ARGS(sc_exit(ret,) n, inp, outp, exp, tvp, sig),
++	TP_locvar(
++		LTTNG_SYSCALL_SELECT_locvar
++	),
++	TP_code_pre(
++		LTTNG_SYSCALL_SELECT_code_pre
++	),
++	TP_FIELDS(
++		sc_exit(ctf_integer(long, ret, ret))
++		sc_in(ctf_integer(int, n, n))
++		sc_inout(ctf_integer(uint8_t, overflow, tp_locvar->overflow))
++		sc_inout(ctf_integer(struct old_timespec32 *, tvp, tvp))
++		sc_in(ctf_integer_hex(void *, sig, sig))
++
++		sc_inout(
++#if (__BYTE_ORDER == __LITTLE_ENDIAN)
++			LTTNG_SYSCALL_SELECT_fds_field_LE(readfds, inp)
++			LTTNG_SYSCALL_SELECT_fds_field_LE(writefds, outp)
++			LTTNG_SYSCALL_SELECT_fds_field_LE(exceptfds, exp)
++#else
++			LTTNG_SYSCALL_SELECT_fds_field_BE(readfds, inp)
++			LTTNG_SYSCALL_SELECT_fds_field_BE(writefds, outp)
++			LTTNG_SYSCALL_SELECT_fds_field_BE(exceptfds, exp)
++#endif
++		)
++	),
++	TP_code_post(
++		LTTNG_SYSCALL_SELECT_code_post
++	)
++)
++#endif /* defined(CONFIG_X86_32) || defined(CONFIG_ARM) */
++
+ #ifdef LTTNG_CREATE_FIELD_METADATA
+ #ifndef ONCE_LTTNG_TRACE_POLL_H
+ #define ONCE_LTTNG_TRACE_POLL_H
+@@ -652,6 +704,13 @@
+ 	lttng_tp_mempool_free(tp_locvar->fds);
+ 
+ #if defined(CONFIG_X86_32) || defined(CONFIG_X86_64) || defined(CONFIG_ARM)
++/*
++ * Instead of printing the pointer address of the poll set, extract all the FDs
++ * and flags from the poll set. For now, only output the standardized
++ * set of events to limit the verbosity of the output, and also extract
++ * the raw value. In the future, moving to CTF2 will allow hiding unset
++ * fields and then allow extracting all the fields.
++ */
+ #define OVERRIDE_32_poll
+ #define OVERRIDE_64_poll
+ SC_LTTNG_TRACEPOINT_EVENT_CODE(poll,
+@@ -679,6 +738,13 @@
+ #endif /* defined(CONFIG_X86_32) || defined(CONFIG_X86_64) || defined(CONFIG_ARM) */
+ 
+ #if defined(CONFIG_X86_32) || defined(CONFIG_X86_64) || defined(CONFIG_ARM64) || defined(CONFIG_ARM)
++/*
++ * Instead of printing the pointer address of the poll set, extract all the FDs
++ * and flags from the poll set. For now, only output the standardized
++ * set of events to limit the verbosity of the output, and also extract
++ * the raw value. In the future, moving to CTF2 will allow hiding unset
++ * fields and then allow extracting all the fields.
++ */
+ #define OVERRIDE_32_ppoll
+ #define OVERRIDE_64_ppoll
+ SC_LTTNG_TRACEPOINT_EVENT_CODE(ppoll,
+@@ -707,6 +773,41 @@
+ )
+ #endif /* defined(CONFIG_X86_32) || defined(CONFIG_X86_64) || defined(CONFIG_ARM64) || defined(CONFIG_ARM) */
+ 
++#if defined(CONFIG_X86_32) || defined(CONFIG_ARM)
++/*
++ * Instead of printing the pointer address of the poll set, extract all the FDs
++ * and flags from the poll set. For now, only output the standardized
++ * set of events to limit the verbosity of the output, and also extract
++ * the raw value. In the future, moving to CTF2 will allow hiding unset
++ * fields and then allow extracting all the fields.
++ */
++#define OVERRIDE_32_ppoll_time32
++SC_LTTNG_TRACEPOINT_EVENT_CODE(ppoll_time32,
++	TP_PROTO(sc_exit(long ret,) struct pollfd __user * ufds,
++		unsigned int nfds, struct old_timespec32 * tsp, const sigset_t * sigmask, size_t sigsetsize),
++	TP_ARGS(sc_exit(ret,) ufds, nfds, tsp, sigmask, sigsetsize),
++	TP_locvar(
++		LTTNG_SYSCALL_POLL_locvar
++	),
++	TP_code_pre(
++		LTTNG_SYSCALL_POLL_code_pre
++	),
++	TP_FIELDS(
++		sc_exit(ctf_integer(long, ret, ret))
++		sc_in(ctf_integer(struct old_timespec32 *, tsp, tsp))
++		sc_in(ctf_integer(const sigset_t *, sigmask, sigmask))
++		sc_in(ctf_integer(size_t, sigsetsize, sigsetsize))
++		sc_inout(ctf_integer(unsigned int, nfds, nfds))
++		sc_inout(ctf_integer(unsigned int, fds_length, tp_locvar->fds_length))
++		sc_inout(ctf_integer(uint8_t, overflow, tp_locvar->overflow))
++		LTTNG_SYSCALL_POLL_fds_field
++	),
++	TP_code_post(
++		LTTNG_SYSCALL_POLL_code_post
++	)
++)
++#endif /* defined(CONFIG_X86_32) || defined(CONFIG_ARM) */
++
+ #include <linux/eventpoll.h>
+ 
+ SC_LTTNG_TRACEPOINT_ENUM(lttng_epoll_op,

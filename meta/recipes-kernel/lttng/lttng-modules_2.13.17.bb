@@ -14,6 +14,8 @@ SRC_URI = "https://lttng.org/files/${BPN}/${BPN}-${PV}.tar.bz2 \
 
 # Use :append here so that the patch is applied also when using devupstream
 SRC_URI:append = " file://0001-src-Kbuild-change-missing-CONFIG_TRACEPOINTS-to-warn.patch \
+    file://92dd6990b635d31390e073507ec51c19128a562f.patch \
+    file://86040c9e2ff8a79633db34220e32bdda536b00e6.patch \
                 "
 
 SRC_URI[sha256sum] = "b0b23504150ae5c1fc6ee14e28d029518f61fe2ec5f17bb61c7941aa52bb6e65"
