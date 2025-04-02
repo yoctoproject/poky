@@ -90,17 +90,11 @@ PACKAGECONFIG[wireguard] = "--enable-wireguard,--disable-wireguard,libmnl"
 INITSCRIPT_NAME = "connman"
 INITSCRIPT_PARAMS = "start 05 5 2 3 . stop 22 0 1 6 ."
 
-python __anonymous () {
-    systemd_packages = "${PN} ${PN}-wait-online"
-    pkgconfig = d.getVar('PACKAGECONFIG')
-    if ('openvpn' or 'vpnc' or 'l2tp' or 'pptp') in pkgconfig.split():
-        systemd_packages += " ${PN}-vpn"
-    d.setVar('SYSTEMD_PACKAGES', systemd_packages)
-}
-
-SYSTEMD_SERVICE:${PN} = "connman.service"
-SYSTEMD_SERVICE:${PN}-vpn = "connman-vpn.service"
-SYSTEMD_SERVICE:${PN}-wait-online = "connman-wait-online.service"
+SYSTEMD_SERVICE:${PN} = "\
+    connman.service \
+    connman-wait-online.service \
+    ${@bb.utils.contains_any('PACKAGECONFIG', ['openconnect', 'openvpn', 'vpnc', 'l2tp', 'pptp', 'wireguard'], 'connman-vpn.service', '', d)} \
+"
 
 ALTERNATIVE_PRIORITY = "100"
 ALTERNATIVE:${PN} = "${@bb.utils.contains('DISTRO_FEATURES','systemd','resolv-conf','',d)}"
@@ -114,18 +108,15 @@ do_install:append() {
 		sed -i s%@DATADIR@%${datadir}% ${D}${sysconfdir}/init.d/connman
 	fi
 
-	install -d ${D}${bindir}
-	install -m 0755 ${B}/tools/*-test ${D}${bindir}
-	if [ -e ${B}/tools/wispr ]; then
-		install -m 0755 ${B}/tools/wispr ${D}${bindir}
-	fi
+	for noinst_program in ${NOINST_TESTS} ${NOINST_TOOLS}; do
+		if [ -r "${B}/$noinst_program" ]; then
+			install -d ${D}${bindir}
+			install -m 0755 "${B}/$noinst_program" ${D}${bindir}
+		fi
+	done
 
 	# We don't need to package an empty directory
-	rmdir --ignore-fail-on-non-empty ${D}${libdir}/connman/scripts
-
-	# Automake 1.12 won't install empty directories, but we need the
-	# plugins directory to be present for ownership
-	mkdir -p ${D}${libdir}/connman/plugins
+	rmdir --ignore-fail-on-non-empty ${D}${libdir}/connman/scripts ${D}${libdir}/connman
 
 	# For read-only filesystem, do not create links during bootup
 	if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
@@ -134,113 +125,31 @@ do_install:append() {
 	fi
 }
 
-# These used to be plugins, but now they are core
-RPROVIDES:${PN} = "\
-	connman-plugin-loopback \
-	connman-plugin-ethernet \
-	${@bb.utils.contains('PACKAGECONFIG', 'bluetooth','connman-plugin-bluetooth', '', d)} \
-	${@bb.utils.contains('PACKAGECONFIG', 'wifi','connman-plugin-wifi', '', d)} \
-	${@bb.utils.contains('PACKAGECONFIG', '3g','connman-plugin-ofono', '', d)} \
-	"
+NOINST_TESTS = "tools/supplicant-test tools/dhcp-test tools/dhcp-server-test \
+		tools/addr-test tools/web-test tools/resolv-test tools/dbus-test \
+		tools/polkit-test tools/wpad-test tools/private-network-test \
+		tools/session-test tools/dnsproxy-test tools/iptables-test tools/ip6tables-test \
+		tools/iptables-unit tools/dnsproxy-standalone \
+		unit/test-ippool unit/test-iptables \
+"
+NOINST_TOOLS = "tools/stats-tool tools/wispr"
 
-PACKAGES_DYNAMIC += "^${PN}-plugin-.*"
+PACKAGE_BEFORE_PN = "${PN}-client ${PN}-tests ${PN}-tools"
 
-def add_rdepends(bb, d, file, pkg, depmap, multilib_prefix, add_insane_skip):
-    plugintype = pkg.split( '-' )[-1]
-    if plugintype in depmap:
-        rdepends = map(lambda x: multilib_prefix + x, \
-                       depmap[plugintype].split())
-        d.setVar("RDEPENDS:%s" % pkg, " ".join(rdepends))
-    if add_insane_skip:
-        d.appendVar("INSANE_SKIP:%s" % pkg, "dev-so")
-
-python populate_packages:prepend() {
-    depmap = dict(pppd="ppp")
-    multilib_prefix = (d.getVar("MLPREFIX") or "")
-
-    hook = lambda file,pkg,x,y,z: \
-        add_rdepends(bb, d, file, pkg, depmap, multilib_prefix, False)
-    plugin_dir = d.expand('${libdir}/connman/plugins/')
-    plugin_name = d.expand('${PN}-plugin-%s')
-    do_split_packages(d, plugin_dir, r'^(.*).so$', plugin_name, \
-        '${PN} plugin for %s', extra_depends='', hook=hook, prepend=True )
-
-    hook = lambda file,pkg,x,y,z: \
-        add_rdepends(bb, d, file, pkg, depmap, multilib_prefix, True)
-    plugin_dir = d.expand('${libdir}/connman/plugins-vpn/')
-    plugin_name = d.expand('${PN}-plugin-vpn-%s')
-    do_split_packages(d, plugin_dir, r'^(.*).so$', plugin_name, \
-        '${PN} VPN plugin for %s', extra_depends='', hook=hook, prepend=True )
-}
-
-PACKAGES =+ "${PN}-tools ${PN}-tests ${PN}-client"
-
-FILES:${PN}-tools = "${bindir}/wispr"
-RDEPENDS:${PN}-tools = "${PN}"
-
-FILES:${PN}-tests = "${bindir}/*-test"
+FILES:${PN} += " \
+    ${datadir}/dbus-1/system-services \
+    ${datadir}/dbus-1/system.d \
+    ${datadir}/polkit-1 \
+    ${nonarch_libdir}/tmpfiles.d/*.conf \
+"
 
 FILES:${PN}-client = "${bindir}/connmanctl"
 RDEPENDS:${PN}-client = "${PN}"
 
-FILES:${PN} = "${bindir}/* ${sbindir}/* ${libexecdir}/* ${libdir}/lib*.so.* \
-            ${libdir}/connman/plugins \
-            ${sysconfdir} ${sharedstatedir} ${localstatedir} ${datadir} \
-            ${base_bindir}/* ${base_sbindir}/* ${base_libdir}/*.so* ${datadir}/${PN} \
-            ${datadir}/dbus-1/system-services/* \
-            ${sysconfdir}/tmpfiles.d/connman_resolvconf.conf"
+FILES:${PN}-tests = "${@ ' '.join([os.path.join('${bindir}', os.path.basename(noinst_program)) for noinst_program in NOINST_TESTS.split()]) }"
+RDEPENDS:${PN}-tests = "${PN}"
+ALLOW_EMPTY:${PN}-tests = "1"
 
-FILES:${PN}-dev += "${libdir}/connman/*/*.la"
-
-PACKAGES =+ "${PN}-vpn ${PN}-wait-online"
-
-SUMMARY:${PN}-vpn = "A daemon for managing VPN connections within embedded devices"
-DESCRIPTION:${PN}-vpn = "The ConnMan VPN provides a daemon for \
-managing VPN connections within embedded devices running the Linux \
-operating system.  The connman-vpnd handles all the VPN connections \
-and starts/stops VPN client processes when necessary. The connman-vpnd \
-provides a DBus API for managing VPN connections. All the different \
-VPN technogies are implemented using plug-ins."
-FILES:${PN}-vpn += "${sbindir}/connman-vpnd \
-                    ${sysconfdir}/dbus-1/system.d/connman-vpn-dbus.conf \
-                    ${datadir}/dbus-1/system-services/net.connman.vpn.service \
-                    ${systemd_system_unitdir}/connman-vpn.service"
-
-SUMMARY:${PN}-wait-online = "A program that will return once ConnMan has connected to a network"
-DESCRIPTION:${PN}-wait-online = "A service that can be enabled so that \
-the system waits until a network connection is established."
-FILES:${PN}-wait-online += "${sbindir}/connmand-wait-online \
-                            ${systemd_system_unitdir}/connman-wait-online.service"
-
-SUMMARY:${PN}-plugin-vpn-openvpn = "An OpenVPN plugin for ConnMan VPN"
-DESCRIPTION:${PN}-plugin-vpn-openvpn = "The ConnMan OpenVPN plugin uses openvpn client \
-to create a VPN connection to OpenVPN server."
-FILES:${PN}-plugin-vpn-openvpn += "${libdir}/connman/scripts/openvpn-script \
-                                   ${libdir}/connman/plugins-vpn/openvpn.so"
-RDEPENDS:${PN}-plugin-vpn-openvpn += "${PN}-vpn"
-RRECOMMENDS:${PN} += "${@bb.utils.contains('PACKAGECONFIG','openvpn','${PN}-plugin-vpn-openvpn', '', d)}"
-
-SUMMARY:${PN}-plugin-vpn-vpnc = "A vpnc plugin for ConnMan VPN"
-DESCRIPTION:${PN}-plugin-vpn-vpnc = "The ConnMan vpnc plugin uses vpnc client \
-to create a VPN connection to Cisco3000 VPN Concentrator."
-FILES:${PN}-plugin-vpn-vpnc += "${libdir}/connman/scripts/openconnect-script \
-                                ${libdir}/connman/plugins-vpn/vpnc.so \
-                                ${libdir}/connman/scripts/vpn-script"
-RDEPENDS:${PN}-plugin-vpn-vpnc += "${PN}-vpn"
-RRECOMMENDS:${PN} += "${@bb.utils.contains('PACKAGECONFIG','vpnc','${PN}-plugin-vpn-vpnc', '', d)}"
-
-SUMMARY:${PN}-plugin-vpn-l2tp = "A L2TP plugin for ConnMan VPN"
-DESCRIPTION:${PN}-plugin-vpn-l2tp = "The ConnMan L2TP plugin uses xl2tpd daemon \
-to create a VPN connection to L2TP server."
-FILES:${PN}-plugin-vpn-l2tp += "${libdir}/connman/scripts/libppp-plugin.so* \
-                                ${libdir}/connman/plugins-vpn/l2tp.so"
-RDEPENDS:${PN}-plugin-vpn-l2tp += "${PN}-vpn"
-RRECOMMENDS:${PN} += "${@bb.utils.contains('PACKAGECONFIG','l2tp','${PN}-plugin-vpn-l2tp', '', d)}"
-
-SUMMARY:${PN}-plugin-vpn-pptp = "A PPTP plugin for ConnMan VPN"
-DESCRIPTION:${PN}-plugin-vpn-pptp = "The ConnMan PPTP plugin uses pptp-linux client \
-to create a VPN connection to PPTP server."
-FILES:${PN}-plugin-vpn-pptp += "${libdir}/connman/scripts/libppp-plugin.so* \
-                                ${libdir}/connman/plugins-vpn/pptp.so"
-RDEPENDS:${PN}-plugin-vpn-pptp += "${PN}-vpn"
-RRECOMMENDS:${PN} += "${@bb.utils.contains('PACKAGECONFIG','pptp','${PN}-plugin-vpn-pptp', '', d)}"
+FILES:${PN}-tools = "${@ ' '.join([os.path.join('${bindir}', os.path.basename(noinst_program)) for noinst_program in NOINST_TOOLS.split()]) }"
+RDEPENDS:${PN}-tools = "${PN}"
+ALLOW_EMPTY:${PN}-tools = "1"
