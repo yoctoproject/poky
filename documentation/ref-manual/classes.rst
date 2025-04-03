@@ -2712,13 +2712,12 @@ section in the Yocto Project Development Tasks Manual.
 ``ptest-python-pytest``
 =======================
 
-The :ref:`ref-classes-ptest-python-pytest` class can be used in Python-based
+The :ref:`ref-classes-ptest-python-pytest` class can be inherited in Python-based
 recipes to automatically configure the :ref:`ref-classes-ptest` class for Python
 packages leveraging the `pytest <https://docs.pytest.org>`__ unit test framework.
 
-Within the recipe, the :term:`PTEST_PYTEST_DIR` variable can be overridden to
-specify the path to the directory containing the tests (default value:
-``tests``). Test contained in this directory are installed in :term:`D` by the
+Within the recipe, the :term:`PTEST_PYTEST_DIR` variable specifies the path to
+the directory containing the tests that will be installed in :term:`D` by the
 :ref:`ref-tasks-install_ptest_base` task, as well as a specific ``run-ptest``
 script for this task.
 

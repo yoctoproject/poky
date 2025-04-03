@@ -7159,7 +7159,7 @@ system and gives an overview of their function and contents.
    :term:`PTEST_PYTEST_DIR`
       Within the :ref:`ref-classes-ptest-python-pytest` class, the
       :term:`PTEST_PYTEST_DIR` variable represents the path within the source
-      tree of a Python package holding the unit tests to be tested with the
+      tree of a Python package holding the unit tests to be run with the
       `pytest <https://docs.pytest.org>`__ framework. The default value for this
       variable is ``tests``.
 
