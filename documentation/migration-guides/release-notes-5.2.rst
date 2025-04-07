@@ -447,6 +447,10 @@ New Features / Enhancements in |yocto-ver|
       with a matching hash and path, it will be linked, otherwise a new File
       element will be created.
 
+   -  The output of :ref:`devtool upgrade-status
+      <ref-manual/devtool-reference:Checking on the Upgrade Status of a Recipe>`
+      is now sorted by recipe name.
+
 -  Patchtest-related changes:
 
    -  Refactor pattern definitions in a ``patterns`` module.
