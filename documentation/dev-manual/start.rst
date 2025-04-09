@@ -615,7 +615,7 @@ Accessing Source Archives
 The Yocto Project also provides source archives of its releases, which
 are available on :yocto_dl:`/releases/yocto/`. Then, choose the subdirectory
 containing the release you wish to use, for example
-:yocto_dl:`yocto-&DISTRO; </releases/yocto/yocto-&DISTRO;/>`.
+:yocto_dl:`&DISTRO_REL_LATEST_TAG; </releases/yocto/&DISTRO_REL_LATEST_TAG;/>`.
 
 You will find there source archives of individual components (if you wish
 to use them individually), and of the corresponding Poky release bundling
