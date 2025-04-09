@@ -393,7 +393,7 @@ If you would prefer not to use the ``install-buildtools`` script, you can instea
 download and run a pre-built :term:`buildtools` installer yourself with the following
 steps:
 
-#. Go to :yocto_dl:`/releases/yocto/yocto-&DISTRO;/buildtools/`, locate and
+#. Go to :yocto_dl:`/releases/yocto/&DISTRO_REL_LATEST_TAG;/buildtools/`, locate and
    download the ``.sh`` file corresponding to your host architecture
    and to :term:`buildtools`, :term:`buildtools-extended` or :term:`buildtools-make`.
 
