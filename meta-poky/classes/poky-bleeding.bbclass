@@ -9,8 +9,6 @@ python pokybleeding_version_handler () {
     bpn = bpn.replace("-nativesdk", "").replace("nativesdk-", "")
 
     if bpn in d.getVar("POKY_AUTOREV_RECIPES").split():
-        if "pseudo" in bpn:
-            bb.warn("Here 5 %s %s" % (d.getVar("PN"), bpn))
         d.setVar("SRCREV", "${AUTOREV}")
         srcrev_format = d.getVar("SRCREV_FORMAT")
         if srcrev_format:
