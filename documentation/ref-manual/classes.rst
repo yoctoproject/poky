@@ -3452,7 +3452,7 @@ on target hardware. Using ``systemd`` as init is recommended. Image builds
 should create an ESP partition for UEFI firmware and copy ``systemd-boot`` and
 UKI files there. Sample configuration for Wic images is provided in
 :oe_git:`scripts/lib/wic/canned-wks/efi-uki-bootdisk.wks.in
-<openembedded-core/tree/scripts/lib/wic/canned-wks/efi-uki-bootdisk.wks.in>`.
+</openembedded-core/tree/scripts/lib/wic/canned-wks/efi-uki-bootdisk.wks.in>`.
 UKIs are generated using ``systemd`` reference implementation `ukify
 <https://www.freedesktop.org/software/systemd/man/latest/ukify.html>`__.
 This class uses a number of variables but tries to find sensible defaults for
@@ -3462,7 +3462,7 @@ The variables used by this class are:
 
 -  :term:`EFI_ARCH`: architecture name within EFI standard, set in
    :oe_git:`meta/conf/image-uefi.conf
-   <openembedded-core/tree/meta/conf/image-uefi.conf>`
+   </openembedded-core/tree/meta/conf/image-uefi.conf>`
 -  :term:`IMAGE_EFI_BOOT_FILES`: files to install to EFI boot partition
    created by the ``bootimg-efi`` Wic plugin
 -  :term:`INITRAMFS_IMAGE`: initramfs recipe name
@@ -3481,9 +3481,9 @@ The variables used by this class are:
 
 For examples on how to use this class see oeqa selftest
 :oe_git:`meta/lib/oeqa/selftest/cases/uki.py
-<openembedded-core/tree/meta/lib/oeqa/selftest/cases/uki.py>`.
+</openembedded-core/tree/meta/lib/oeqa/selftest/cases/uki.py>`.
 Also an oeqa runtime test :oe_git:`meta/lib/oeqa/runtime/cases/uki.py
-<openembedded-core/tree/meta/lib/oeqa/runtime/cases/uki.py>` is provided which
+</openembedded-core/tree/meta/lib/oeqa/runtime/cases/uki.py>` is provided which
 verifies that the target system booted the same UKI binary as was set at
 buildtime via :term:`UKI_FILENAME`.
 
