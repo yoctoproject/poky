@@ -104,6 +104,13 @@ systemd changes
    ``journald.conf`` to "persistent". The ``/var/log/journal`` directory is now
    used for logging instead of ``/run/log``.
 
+-  If ``pni-names`` is not in the :term:`DISTRO_FEATURES`, the `Predictable
+   Network Interface names <https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/>`__
+   systemd feature will now be disabled. Previously the feature was still
+   enabled even if ``pni-names`` was not part of :term:`DISTRO_FEATURES`. Make
+   sure to add the feature to :term:`DISTRO_FEATURES` if you want to keep this
+   systemd behavior.
+
 Multiconfig changes
 ~~~~~~~~~~~~~~~~~~~
 

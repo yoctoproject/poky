@@ -523,9 +523,10 @@ New Features / Enhancements in |yocto-ver|
          ``${libdir}`` if the ``set-time-epoch`` :term:`PACKAGECONFIG` config is
          set.
 
-      -  really disable Predictable Network Interface names if the ``pni-names``
-         feature is not part of :term:`DISTRO_FEATURES`. Previously it was only
-         really disable for QEMU machines.
+      -  really disable `Predictable Network Interface names
+         <https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/>`__
+         if the ``pni-names`` feature is not part of :term:`DISTRO_FEATURES`.
+         Previously it was only really disabled for QEMU machines.
 
       -  split ``networkd`` into its own package named ``systemd-networkd``.
 
