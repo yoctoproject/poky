@@ -1160,32 +1160,32 @@ Recipe Upgrades in |yocto-ver|
    * - ``gst-devtools``
      - 1.24.10
      - 1.24.12
-   * - ``gstreamer1``
-     - .0 1.24.10
+   * - ``gstreamer1.0``
+     - 1.24.10
      - 1.24.12
-   * - ``gstreamer1``
-     - .0-libav 1.24.10
+   * - ``gstreamer1.0-libav``
+     - 1.24.10
      - 1.24.12
-   * - ``gstreamer1``
-     - .0-plugins-bad 1.24.10
+   * - ``gstreamer1.0-plugins-bad``
+     - 1.24.10
      - 1.24.12
-   * - ``gstreamer1``
-     - .0-plugins-base 1.24.10
+   * - ``gstreamer1.0-plugins-base``
+     - 1.24.10
      - 1.24.12
-   * - ``gstreamer1``
-     - .0-plugins-good 1.24.10
+   * - ``gstreamer1.0-plugins-good``
+     - 1.24.10
      - 1.24.12
-   * - ``gstreamer1``
-     - .0-plugins-ugly 1.24.10
+   * - ``gstreamer1.0-plugins-ugly``
+     - 1.24.10
      - 1.24.12
-   * - ``gstreamer1``
-     - .0-python 1.24.10
+   * - ``gstreamer1.0-python``
+     - 1.24.10
      - 1.24.12
-   * - ``gstreamer1``
-     - .0-rtsp-server 1.24.10
+   * - ``gstreamer1.0-rtsp-server``
+     - 1.24.10
      - 1.24.12
-   * - ``gstreamer1``
-     - .0-vaapi 1.24.10
+   * - ``gstreamer1.0-vaapi``
+     - 1.24.10
      - 1.24.12
    * - ``gtk4``
      - 4.14.5
