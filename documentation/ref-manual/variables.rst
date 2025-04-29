@@ -7761,17 +7761,12 @@ system and gives an overview of their function and contents.
          prefer to have a read-only root filesystem and prefer to keep
          writeable data in one place.
 
-      You can override the default by setting the variable in any layer or
-      in the ``local.conf`` file. Because the default is set using a "weak"
-      assignment (i.e. "??="), you can use either of the following forms to
-      define your override::
+      When setting ``INIT_MANAGER = systemd``, the default will be set to::
 
-         ROOT_HOME = "/root"
          ROOT_HOME ?= "/root"
 
-      These
-      override examples use ``/root``, which is probably the most commonly
-      used override.
+      You can also override the default by setting the variable in your distro
+      configuration or in the ``local.conf`` file.
 
    :term:`ROOTFS`
       Indicates a filesystem image to include as the root filesystem.
