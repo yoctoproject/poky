@@ -776,6 +776,38 @@ argument to ``git format-patch`` with a version number::
 
    git format-patch -v2 <ref-branch>
 
+
+After generating updated patches (v2, v3, and so on) via ``git
+format-patch``, ideally developers will add a patch version changelog
+to each patch that describes what has changed between each revision of
+the patch. Add patch version changelogs after the ``---`` marker in the
+patch, indicating that this information is part of this patch, but is not
+suitable for inclusion in the commit message (i.e. the git history) itself.
+Providing a patch version changelog makes it easier for maintainers and
+reviewers to succinctly understand what changed in all versions of the
+patch, without having to consult alternate sources of information, such as
+searching through messages on a mailing list. For example::
+
+   <patch title>
+
+   <commit message>
+
+   <Signed-off-by/other trailers>
+   ---
+   changes in v4:
+   - provide a clearer commit message
+   - fix spelling mistakes
+
+   changes in v3:
+   - replace func() to use other_func() instead
+
+   changes in v2:
+   - this patch was added in v2
+   ---
+   <diffstat output>
+
+   <unified diff>
+
 Lastly please ensure that you also test your revised changes. In particular
 please don't just edit the patch file written out by ``git format-patch`` and
 resend it.
