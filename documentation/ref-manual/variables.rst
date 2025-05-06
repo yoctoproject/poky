@@ -6131,7 +6131,7 @@ system and gives an overview of their function and contents.
       By default, no API key is used, which results in larger delays between API
       requests and limits the number of queries to the public rate limits posted
       at the `NVD developer's page <https://nvd.nist.gov/developers/start-here>`__.
-      
+
       NVD API keys can be requested through the
       `Request an API Key <https://nvd.nist.gov/developers/request-an-api-key>`__
       page. You can set this variable to the NVD API key in your ``local.conf`` file.
@@ -10399,7 +10399,7 @@ system and gives an overview of their function and contents.
 
          UBOOT_FIT_TEE_IMAGE ?= "tee-raw.bin"
 
-      If a relative path is provided, the file is expected to be relative to 
+      If a relative path is provided, the file is expected to be relative to
       U-Boot's :term:`B` directory. An absolute path can be provided too,
       e.g.::
 
