@@ -83,7 +83,7 @@ systemd changes
    files by starting them via
    `Also <https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#Also=>`__,
    the other service files were automatically added to the :term:`FILES` variable of
-   the same package. Example: 
+   the same package. Example:
 
    a.service contains::
 

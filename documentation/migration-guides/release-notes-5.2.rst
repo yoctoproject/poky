@@ -25,7 +25,7 @@ New Features / Enhancements in |yocto-ver|
       :ref:`Shared State <overview-manual/concepts:Shared State>` for the
       dependencies. See :doc:`/test-manual/reproducible-builds`.
 
-   -  ``systemd``: Add term:`WATCHDOG_RUNTIME_SEC`: for controlling the
+   -  ``systemd``: Add :term:`WATCHDOG_RUNTIME_SEC`: for controlling the
       ``RuntimeWatchdogSec`` option in ``/etc/systemd/system.conf``.
 
    -  :term:`FIT_UBOOT_ENV` to allow including a u-boot script as a text in a
@@ -671,7 +671,7 @@ New Features / Enhancements in |yocto-ver|
    -  New ``bbverbnote`` log utility which can be used to print on the console
       (equivalent to the ``bb.verbnote`` Python implementation).
 
-   -  :ref:``ref-classes-grub-efi``: Add :term:`GRUB_TITLE` variable to set
+   -  :ref:`ref-classes-grub-efi`: Add :term:`GRUB_TITLE` variable to set
       custom GRUB titles.
 
    -  ``gawk``: Enable high precision arithmetic support by default (``mpfr``

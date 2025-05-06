@@ -860,7 +860,7 @@ Initializing the Build Environment
 Before you can use Yocto you need to setup the build environment.
 From within the ``poky`` directory, source the :ref:`ref-manual/structure:\`\`oe-init-build-env\`\`` environment
 setup script to define Yocto Project's build environment on your build host::
-    
-    $ source oe-init-build-env 
+
+   $ source oe-init-build-env
 
 Note, that this step will have to be repeated every time you open a new shell.
