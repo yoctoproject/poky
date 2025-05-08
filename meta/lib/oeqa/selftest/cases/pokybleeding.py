@@ -15,18 +15,18 @@ class PokyBleeding(OESelftestTestCase):
         with a single scm in SRC_URI and for recipe with two scm's in SRC_URI.
         """
 
-        self.assertNotEqual( get_bb_var('SRCREV', 'mtd-utils-selftest'), "AUTOINC")
+        self.assertNotEqual( get_bb_var('SRCREV', 'pseudo'), "AUTOINC")
 
         self.assertNotEqual( get_bb_var('SRCREV', 'hello-rs'), "AUTOINC")
         self.assertNotEqual( get_bb_var('SRCREV_hello-lib', 'hello-rs'), "AUTOINC")
         
         features = '''
 INHERIT += "poky-bleeding"
-POKY_AUTOREV_RECIPES = "hello-rs mtd-utils-selftest"
+POKY_AUTOREV_RECIPES = "hello-rs pseudo"
 '''
         self.write_config(features)
 
-        self.assertEqual( get_bb_var('SRCREV', 'mtd-utils-selftest'), "AUTOINC")
+        self.assertEqual( get_bb_var('SRCREV', 'pseudo'), "AUTOINC")
 
         self.assertEqual( get_bb_var('SRCREV', 'hello-rs'), "AUTOINC")
         self.assertEqual( get_bb_var('SRCREV_hello-lib', 'hello-rs'), "AUTOINC")
