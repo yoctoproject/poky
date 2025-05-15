@@ -26,7 +26,7 @@ ourversion = None
 if len(sys.argv) == 2:
     ourversion = sys.argv[1]
 
-activereleases = ["walnascar", "styhead", "scarthgap", "kirkstone"]
+activereleases = ["walnascar", "scarthgap", "kirkstone"]
 devbranch = "whinlatter"
 ltsseries = ["scarthgap", "kirkstone"]
 
