@@ -8909,7 +8909,7 @@ system and gives an overview of their function and contents.
       :doc:`/sdk-manual/index` manual.
 
       Note that this variable applies to building an SDK, not an eSDK,
-      in which case the term:`TOOLCHAIN_HOST_TASK_ESDK` setting should be
+      in which case the :term:`TOOLCHAIN_HOST_TASK_ESDK` setting should be
       used instead.
 
    :term:`TOOLCHAIN_HOST_TASK_ESDK`
