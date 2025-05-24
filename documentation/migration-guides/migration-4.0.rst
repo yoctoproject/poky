@@ -143,7 +143,7 @@ Python changes
   The new Python packaging classes that should be used are
   :ref:`python_flit_core <ref-classes-python_flit_core>`,
   :ref:`python_setuptools_build_meta <ref-classes-python_setuptools_build_meta>`
-  and :ref:`python_poetry_core <ref-classes-python_poetry_core>`.  
+  and :ref:`python_poetry_core <ref-classes-python_poetry_core>`.
 
 - The :ref:`setuptools3 <ref-classes-setuptools3>` class ``do_install()`` task now
   installs the ``wheel`` binary archive. In current versions of ``setuptools`` the
