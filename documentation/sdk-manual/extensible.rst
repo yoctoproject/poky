@@ -669,7 +669,7 @@ SDK or eSDK:
    ``devtool build``.
    It also allows to benefit from the very good integration that IDEs like
    VSCode offer for tools like CMake or GDB.
-   
+
    However, supporting many programming languages and multiple
    IDEs is quite an elaborate and constantly evolving thing. Support for IDEs
    is therefore implemented as plugins. Plugins can also be provided by
