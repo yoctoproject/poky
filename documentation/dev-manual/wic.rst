@@ -514,7 +514,7 @@ or ::
 
    For more information on how to use the ``bmaptool``
    to flash a device with an image, see the
-   ":ref:`dev-manual/bmaptool:flashing images using \`\`bmaptool\`\``"
+   ":ref:`dev-manual/bmaptool:flashing images using ``bmaptool```"
    section.
 
 Using a Modified Kickstart File
