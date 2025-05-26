@@ -57,7 +57,7 @@ following requirements:
    :ref:`dev-manual/start:preparing the build host`
    section in the Yocto Project Development Tasks Manual.
 
--
+-  Ensure that the following utilities have these minimum version numbers:
 
    -  Git &MIN_GIT_VERSION; or greater
    -  tar &MIN_TAR_VERSION; or greater
@@ -65,7 +65,7 @@ following requirements:
    -  gcc &MIN_GCC_VERSION; or greater.
    -  GNU make &MIN_MAKE_VERSION; or greater
 
-If your build host does not meet any of these three listed version
+If your build host does not satisfy all of the above version
 requirements, you can take steps to prepare the system so that you
 can still use the Yocto Project. See the
 :ref:`ref-manual/system-requirements:required git, tar, python, make and gcc versions`
