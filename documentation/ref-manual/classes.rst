@@ -3426,6 +3426,8 @@ The variables used by this class are:
 -  :term:`UBOOT_FIT_USER_SETTINGS`: adds a user-specific snippet to the U-Boot
    Image Tree Source (ITS). Users can include their custom U-Boot Image Tree
    Source (ITS) snippet in this variable.
+-  :term:`UBOOT_FIT_CONF_FIRMWARE`: adds one image to the ``firmware`` property
+   of the configuration node.
 -  :term:`UBOOT_FIT_CONF_USER_LOADABLES`: adds one or more user-defined images
    to the ``loadables`` property of the configuration node.
 

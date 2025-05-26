@@ -10439,6 +10439,15 @@ system and gives an overview of their function and contents.
 
          do_compile[depends] += "trusted-firmware-a:do_deploy"
 
+   :term:`UBOOT_FIT_CONF_FIRMWARE`
+      Adds one image to the ``firmware`` property of the configuration node of
+      the U-Boot Image Tree Source (ITS). Sets the ``firmware`` property to
+      select the image to boot first::
+
+         UBOOT_FIT_CONF_FIRMWARE = "fwa"
+
+      If not set, the first entry in "loadables" is used to boot instead.
+
    :term:`UBOOT_FIT_CONF_USER_LOADABLES`
       Adds one or more user-defined images to the ``loadables`` property of the
       configuration node of the U-Boot Image Tree Source (ITS). This variable
