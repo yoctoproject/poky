@@ -9117,7 +9117,7 @@ system and gives an overview of their function and contents.
       The Yocto Project actually shares the cache data objects built by its
       autobuilder::
 
-         SSTATE_MIRRORS ?= "file://.* http://cdn.jsdelivr.net/yocto/sstate/all/PATH;downloadfilename=PATH"
+         SSTATE_MIRRORS ?= "file://.* http://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH"
 
       As such binary artifacts are built for the generic QEMU machines
       supported by the various Poky releases, they are less likely to be
