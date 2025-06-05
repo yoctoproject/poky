@@ -7,3 +7,4 @@ Release 5.2 (walnascar)
 
    migration-5.2
    release-notes-5.2
+   release-notes-5.2.1
