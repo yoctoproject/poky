@@ -182,7 +182,7 @@ class DashFriendlySearchEnglish(SearchEnglish):
     # Accept words that can include hyphens
     _word_re = re.compile(r'[\w\-]+')
 
-    js_splitter_code = """
+    js_splitter_code = r"""
 function splitQuery(query) {
     return query
         .split(/[^\p{Letter}\p{Number}_\p{Emoji_Presentation}-]+/gu)
