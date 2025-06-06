@@ -1855,7 +1855,8 @@ a couple different ways:
       Not using this naming convention can lead to subtle problems
       caused by existing code that depends on that naming convention.
 
--  Create or modify a target recipe that contains the following::
+-  Or, create a :ref:`ref-classes-native` variant of any target recipe (e.g.
+   ``myrecipe.bb``) by adding the following to the recipe::
 
       BBCLASSEXTEND = "native"
 
@@ -1886,7 +1887,8 @@ couple different ways:
    inherit statement in the recipe after all other inherit statements so
    that the :ref:`ref-classes-nativesdk` class is inherited last.
 
--  Create a :ref:`ref-classes-nativesdk` variant of any recipe by adding the following::
+-  Or, create a :ref:`ref-classes-nativesdk` variant of any target recipe (e.g.
+   ``myrecipe.bb``) by adding the following to the recipe::
 
        BBCLASSEXTEND = "nativesdk"
 
