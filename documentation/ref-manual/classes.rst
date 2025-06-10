@@ -1591,6 +1591,10 @@ The tests you can list with the :term:`WARN_QA` and
    For example, assignments such as ``FILES:${PN} = "xyz"`` effectively
    turn into ``FILES = "xyz"``.
 
+-  ``recipe-naming:`` Checks that the recipe name and recipe class match, so
+   that ``*-native`` recipes inherit :ref:`ref-classes-native` and
+   ``nativesdk-*`` recipes inherit :ref:`ref-classes-nativesdk`.
+
 -  ``rpaths:`` Checks for rpaths in the binaries that contain build
    system paths such as :term:`TMPDIR`. If this test fails, bad ``-rpath``
    options are being passed to the linker commands and your binaries
