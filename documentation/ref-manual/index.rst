@@ -11,6 +11,7 @@ Yocto Project Reference Manual
    :numbered:
 
    system-requirements
+   yocto-project-supported-features
    terms
    release-process
    structure
