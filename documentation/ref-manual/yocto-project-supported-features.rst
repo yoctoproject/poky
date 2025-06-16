@@ -78,7 +78,7 @@ Below is a list of primary tested features, their maintainer(s) and builder(s):
      - meta-agl-core
    * - `meta-arm <https://git.yoctoproject.org/meta-arm>`__
      - meta-arm layer testing
-     - TBD
+     - meta-arm mailing list <meta-arm@lists.yoctoproject.org>
      - meta-arm
    * - `meta-aws <https://github.com/aws4embeddedlinux/meta-aws>`__
      - meta-aws layer testing
