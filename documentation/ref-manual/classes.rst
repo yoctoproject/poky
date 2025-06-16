@@ -1732,77 +1732,158 @@ Its behavior is mainly controlled by the following variables:
 -  :term:`KERNEL_DTC_FLAGS`: flags for ``dtc``, the Device Tree Compiler
 -  :term:`KERNEL_PACKAGE_NAME`: base name of the kernel packages
 
-.. _ref-classes-kernel-fitimage:
+.. _ref-classes-kernel-fit-image:
 
-``kernel-fitimage``
-===================
+``kernel-fit-image``
+====================
 
-The :ref:`ref-classes-kernel-fitimage` class provides support to pack a kernel image,
-device trees, a U-boot script, an :term:`Initramfs` bundle and a RAM disk
-into a single FIT image. In theory, a FIT image can support any number
-of kernels, U-boot scripts, :term:`Initramfs` bundles, RAM disks and device-trees.
-However, :ref:`ref-classes-kernel-fitimage` currently only supports
+The :ref:`ref-classes-kernel-fit-image` class provides support to pack a kernel image,
+device trees, a U-boot script, and an :term:`Initramfs` into a single FIT image.
+In theory, a FIT image can support any number of kernels, U-boot scripts,
+:term:`Initramfs`, and device trees.
+However, :ref:`ref-classes-kernel-fit-image` currently only supports
 limited usecases: just one kernel image, an optional U-boot script,
-an optional :term:`Initramfs` bundle, an optional RAM disk, and any number of
-device trees.
+an optional :term:`Initramfs`, and any number of device trees.
 
-To create a FIT image, it is required that :term:`KERNEL_CLASSES`
-is set to include ":ref:`ref-classes-kernel-fitimage`" and one of :term:`KERNEL_IMAGETYPE`,
-:term:`KERNEL_ALT_IMAGETYPE` or :term:`KERNEL_IMAGETYPES` to include "fitImage".
+The FIT image is created by a recipe which inherits the
+:ref:`ref-classes-kernel-fit-image` class.
+One such example is the ``linux-yocto-fitimage`` recipe which creates a FIT
+image for the Linux Yocto kernel.
+Additionally, it is required that :term:`KERNEL_CLASSES` is set to include
+:ref:`ref-classes-kernel-fit-extra-artifacts`.
+The :ref:`ref-classes-kernel-fit-extra-artifacts` class exposes the required kernel
+artifacts to the :term:`DEPLOY_DIR_IMAGE` which are used by the
+:ref:`ref-classes-kernel-fit-image` class to create the FIT image.
 
-The options for the device tree compiler passed to ``mkimage -D``
-when creating the FIT image are specified using the
-:term:`UBOOT_MKIMAGE_DTCOPTS` variable.
+The simplest example for building a FIT image is to add::
 
-Only a single kernel can be added to the FIT image created by
-:ref:`ref-classes-kernel-fitimage` and the kernel image in FIT is mandatory. The
-address where the kernel image is to be loaded by U-Boot is
-specified by :term:`UBOOT_LOADADDRESS` and the entrypoint by
-:term:`UBOOT_ENTRYPOINT`. Setting :term:`FIT_ADDRESS_CELLS` to "2"
-is necessary if such addresses are 64 bit ones.
+   KERNEL_CLASSES += "kernel-fit-extra-artifacts"
 
-Multiple device trees can be added to the FIT image created by
-:ref:`ref-classes-kernel-fitimage` and the device tree is optional.
-The address where the device tree is to be loaded by U-Boot is
-specified by :term:`UBOOT_DTBO_LOADADDRESS` for device tree overlays
-and by :term:`UBOOT_DTB_LOADADDRESS` for device tree binaries.
+to the machine :term:`configuration file` and to execute::
 
-Only a single RAM disk can be added to the FIT image created by
-:ref:`ref-classes-kernel-fitimage` and the RAM disk in FIT is optional.
-The address where the RAM disk image is to be loaded by U-Boot
-is specified by :term:`UBOOT_RD_LOADADDRESS` and the entrypoint by
-:term:`UBOOT_RD_ENTRYPOINT`. The ramdisk is added to the FIT image when
-:term:`INITRAMFS_IMAGE` is specified and requires that :term:`INITRAMFS_IMAGE_BUNDLE`
-is not set to 1.
+   bitbake linux-yocto-fitimage
 
-Only a single :term:`Initramfs` bundle can be added to the FIT image created by
-:ref:`ref-classes-kernel-fitimage` and the :term:`Initramfs` bundle in FIT is optional.
-In case of :term:`Initramfs`, the kernel is configured to be bundled with the root filesystem
-in the same binary (example: zImage-initramfs-:term:`MACHINE`.bin).
-When the kernel is copied to RAM and executed, it unpacks the :term:`Initramfs` root filesystem.
-The :term:`Initramfs` bundle can be enabled when :term:`INITRAMFS_IMAGE`
-is specified and requires that :term:`INITRAMFS_IMAGE_BUNDLE` is set to 1.
-The address where the :term:`Initramfs` bundle is to be loaded by U-boot is specified
-by :term:`UBOOT_LOADADDRESS` and the entrypoint by :term:`UBOOT_ENTRYPOINT`.
+This results in a ``fitImage`` file deployed to the :term:`DEPLOY_DIR_IMAGE`
+directory and a ``linux-yocto-fitimage`` package which can be installed.
 
-Only a single U-boot boot script can be added to the FIT image created by
-:ref:`ref-classes-kernel-fitimage` and the boot script is optional.
-The boot script is specified in the ITS file as a text file containing
-U-boot commands. When using a boot script the user should configure the
-U-boot :ref:`ref-tasks-install` task to copy the script to sysroot.
-So the script can be included in the FIT image by the :ref:`ref-classes-kernel-fitimage`
-class. At run-time, U-boot CONFIG_BOOTCOMMAND define can be configured to
-load the boot script from the FIT image and execute it.
+The same approach works for all variants of the ``linux-yocto`` kernel.
+For example, if the ``linux-yocto-rt`` kernel should be used, add the following
+lines to the machine configuration file::
 
-The FIT image generated by the :ref:`ref-classes-kernel-fitimage` class is signed when the
-variables :term:`UBOOT_SIGN_ENABLE`, :term:`UBOOT_MKIMAGE_DTCOPTS`,
-:term:`UBOOT_SIGN_KEYDIR` and :term:`UBOOT_SIGN_KEYNAME` are set
-appropriately. The default values used for :term:`FIT_HASH_ALG` and
-:term:`FIT_SIGN_ALG` in :ref:`ref-classes-kernel-fitimage` are "sha256" and
-"rsa2048" respectively. The keys for signing the FIT image can be generated using
-the :ref:`ref-classes-kernel-fitimage` class when both :term:`FIT_GENERATE_KEYS` and
-:term:`UBOOT_SIGN_ENABLE` are set to "1".
+   KERNEL_CLASSES += "kernel-fit-extra-artifacts"
+   PREFERRED_PROVIDER_virtual/kernel = "linux-yocto-rt"
 
+The FIT image, this time including the RT kernel, is built again by calling::
+
+   bitbake linux-yocto-fitimage
+
+For other kernels provided by other layers, the same approach would work.
+However, it is usually more intuitive to add a custom FIT image recipe next to
+the custom kernel recipe.
+For example, if a layer provides a ``linux-vanilla`` recipe, a
+``linux-vanilla-fitimage`` recipe may be added as well.
+The ``linux-vanilla-fitimage`` recipe can be created as a customized copy of
+the ``linux-yocto-fitimage`` recipe.
+
+Usually the kernel is built as a dependency of an image.
+If the FIT image should be used as a replacement for the kernel image which
+is installed in the root filesystem, then the following variables can be set
+e.g. in the machine configuration file::
+
+   # Create and deploy the vmlinux artifact which gets included into the FIT image
+   KERNEL_CLASSES += "kernel-fit-extra-artifacts"
+
+   # Do not install the kernel image package
+   RRECOMMENDS:${KERNEL_PACKAGE_NAME}-base = ""
+   # Install the FIT image package
+   MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "linux-yocto-fitimage"
+
+   # Configure the image.bbclass to depend on the FIT image instead of only
+   # the kernel to ensure the FIT image is built and deployed with the image
+   KERNEL_DEPLOY_DEPEND = "linux-yocto-fitimage:do_deploy"
+
+The :ref:`ref-classes-kernel-fit-image` class processes several variables that
+allow configuration:
+
+-  The options for the device tree compiler passed to ``mkimage -D``
+   when creating the FIT image are specified using the
+   :term:`UBOOT_MKIMAGE_DTCOPTS` variable.
+
+-  Only a single kernel can be added to the FIT image created by
+   :ref:`ref-classes-kernel-fit-image` and it is a mandatory component of the
+   FIT image.
+   The address where the kernel image is to be loaded by U-Boot is
+   specified by :term:`UBOOT_LOADADDRESS` and the entrypoint by
+   :term:`UBOOT_ENTRYPOINT`. Setting :term:`FIT_ADDRESS_CELLS` to "2"
+   is necessary if such addresses are 64 bit ones.
+
+-  Multiple device trees can be added to the FIT image created by
+   :ref:`ref-classes-kernel-fit-image` and the device tree is optional.
+   The address where the device tree is to be loaded by U-Boot is
+   specified by :term:`UBOOT_DTBO_LOADADDRESS` for device tree overlays
+   and by :term:`UBOOT_DTB_LOADADDRESS` for device tree binaries.
+
+-  Only a single :term:`Initramfs` can be added to the FIT image created by
+   :ref:`ref-classes-kernel-fit-image`. The :term:`Initramfs` in FIT is optional.
+   The address where the RAM disk image is to be loaded by U-Boot
+   is specified by :term:`UBOOT_RD_LOADADDRESS` and the entrypoint by
+   :term:`UBOOT_RD_ENTRYPOINT`. The :term:`Initramfs` is added to the FIT image
+   when :term:`INITRAMFS_IMAGE` is specified.
+
+-  It's recommended to add the :term:`Initramfs` and the kernel image as
+   independent image nodes to the FIT image.
+   Bundling a RAM disk image with the kernel image and including the bundle
+   (:term:`INITRAMFS_IMAGE_BUNDLE` set to "1") in the FIT image is possible.
+   However, this approach has the disadvantage that any change to the RAM
+   disk image necessitates rebuilding the kernel image.
+   This process requires the full kernel build directory, which is kind of
+   incompatible with the :term:`SSTATE_DIR` and, consequently, with SDKs.
+
+-  Only a single U-Boot boot script can be added to the FIT image created by
+   :ref:`ref-classes-kernel-fit-image`. The boot script is optional.
+   The boot script is specified in the ITS file as a text file containing
+   U-Boot commands. When using a boot script the recipe which inherits the
+   :ref:`ref-classes-kernel-fit-image` class should add the script to
+   :term:`SRC_URI` and set the :term:`FIT_UBOOT_ENV` variable to the name of the
+   file like the following::
+
+      FIT_UBOOT_ENV = "boot.txt"
+      SRC_URI += "file://${FIT_UBOOT_ENV}"
+
+   At run-time, U-boot's boot command can be configured to load the boot script
+   from the FIT image and source it.
+
+-  The FIT image generated by the :ref:`ref-classes-kernel-fit-image` class is signed when the
+   variables :term:`UBOOT_SIGN_ENABLE`, :term:`UBOOT_MKIMAGE_DTCOPTS`,
+   :term:`UBOOT_SIGN_KEYDIR` and :term:`UBOOT_SIGN_KEYNAME` are set
+   appropriately. The default values used for :term:`FIT_HASH_ALG` and
+   :term:`FIT_SIGN_ALG` in :ref:`ref-classes-kernel-fit-image` are "sha256" and
+   "rsa2048" respectively. The keys for signing the FIT image can be generated using
+   the :ref:`ref-classes-kernel-fit-image` class when both :term:`FIT_GENERATE_KEYS` and
+   :term:`UBOOT_SIGN_ENABLE` are set to "1".
+
+.. _ref-classes-kernel-fit-extra-artifacts:
+
+``kernel-fit-extra-artifacts``
+==============================
+
+The :ref:`ref-classes-kernel-fit-extra-artifacts` class exposes the required
+kernel artifacts to the :term:`DEPLOY_DIR_IMAGE` directory.
+These artifacts are used by the :ref:`ref-classes-kernel-fit-image` class to
+create a FIT image that can include the kernel, device trees, an optional
+U-Boot script, and an optional Initramfs.
+
+This class is typically included by adding it to the :term:`KERNEL_CLASSES`
+variable in your kernel recipe or machine configuration when building FIT images.
+It ensures that all necessary files are available for packaging into the FIT image,
+such as the kernel binary, device tree blobs (DTBs), and other related files.
+
+For example, to enable this class, set::
+
+   KERNEL_CLASSES += "kernel-fit-extra-artifacts"
+
+This is required when using the :ref:`ref-classes-kernel-fit-image` class to
+generate FIT images for your kernel.
 
 .. _ref-classes-kernel-grub:
 
@@ -3438,7 +3519,7 @@ See U-Boot's documentation for details about `verified boot
 and the `signature process
 <https://source.denx.de/u-boot/u-boot/-/blob/master/doc/uImage.FIT/signature.txt>`__.
 
-See also the description of :ref:`ref-classes-kernel-fitimage` class, which this class
+See also the description of :ref:`ref-classes-kernel-fit-image` class, which this class
 imitates.
 
 .. _ref-classes-uki:
