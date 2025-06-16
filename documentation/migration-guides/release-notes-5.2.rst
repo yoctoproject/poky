@@ -29,7 +29,7 @@ New Features / Enhancements in |yocto-ver|
       ``RuntimeWatchdogSec`` option in ``/etc/systemd/system.conf``.
 
    -  :term:`FIT_UBOOT_ENV` to allow including a u-boot script as a text in a
-      fit image. See the :ref:`ref-classes-kernel-fitimage` for more information.
+      fit image. See the ``kernel-fitimage`` for more information.
 
    -  :ref:`ref-classes-meson`: :term:`MESON_INSTALL_TAGS` to allow passing
       install tags (``--tags``) to the ``meson install`` command during the
@@ -684,7 +684,7 @@ New Features / Enhancements in |yocto-ver|
       command-line tool was added to the different Yocto Project and OpenEmbedded
       repositories.
 
-   -  :ref:`ref-classes-kernel-fitimage`: handle :doc:`multiconfig
+   -  ``kernel-fitimage``: handle :doc:`multiconfig
       </dev-manual/multiconfig>` dependency when
       :term:`INITRAMFS_MULTICONFIG` is set.
 

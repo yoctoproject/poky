@@ -377,7 +377,7 @@ New Features / Enhancements in 5.1
       :term:`SIGGEN_EXCLUDERECIPES_ABISAFE` and does not trigger a rebuild on a
       change for dependent tasks.
 
-   -  In :ref:`ref-classes-kernel-fitimage`, the existence of
+   -  In ``kernel-fitimage``, the existence of
       :term:`EXTERNAL_KERNEL_DEVICETREE` is checked more thoroughly to avoid
       false positives.
 
