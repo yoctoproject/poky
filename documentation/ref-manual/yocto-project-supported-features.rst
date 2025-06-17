@@ -88,6 +88,10 @@ Below is a list of primary tested features, their maintainer(s) and builder(s):
      - meta-intel layer testing
      - TBD
      - meta-intel
+   * - `meta-exein <https://github.com/exein-io/meta-exein>`__
+     - meta-exein layer testing
+     - TBD
+     - meta-exein
    * - `meta-virtualization <https://git.yoctoproject.org/meta-virtualization/>`__
      - meta-virtualization layer testing
      - TBD
@@ -244,10 +248,6 @@ it is on a best effort only basis.
      - Description
      - Maintainer(s)
      - Builder(s)
-   * - `meta-exein <https://github.com/exein-io/meta-exein>`__
-     - meta-exein layer testing
-     - TBD
-     - meta-exein
    * - :wikipedia:`MIPS <MIPS_architecture>`
      - MIPS architecture testing
      - No maintainers
