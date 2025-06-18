@@ -126,7 +126,16 @@ that most themes only style these two admonitions.
 
 ## ReStructured Text Syntax standards
 
-This section has not been filled yet
+### doc directive
+
+The [doc directive](https://www.sphinx-doc.org/en/master/usage/referencing.html#role-doc)
+allows to refer to another document within yocto-docs, like:
+
+    For more information, read :doc:`/bsp-guide/index`.
+
+Note that only "absolute" paths (starting with a '/') are allowed. The root
+directory of that path is documentation/, that is, :doc:`/bsp-guide/index`
+points at documentation/bsp-guide/index.rst.
 
 ## Adding screenshots
 
