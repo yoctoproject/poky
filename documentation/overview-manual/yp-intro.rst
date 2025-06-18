@@ -51,7 +51,7 @@ Here are features and advantages of the Yocto Project:
    RISC-V and other architectures. Most ODMs, OSVs, and chip vendors create and
    supply BSPs that support their hardware. If you have custom silicon, you can
    create a BSP that supports that architecture. See
-   :doc:`ref-manual/yocto-project-supported-features` for details on the level
+   :doc:`/ref-manual/yocto-project-supported-features` for details on the level
    of support for some of these architectures.
 
    Aside from broad architecture support, the Yocto Project fully
