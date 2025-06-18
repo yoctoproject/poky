@@ -1182,7 +1182,7 @@ Use these steps to create a BSP layer:
 
 -  *Create a Kernel Recipe:* Create a kernel recipe in
    ``recipes-kernel/linux`` by either using a kernel append file or a
-   new custom kernel recipe file (e.g. ``linux-yocto_4.12.bb``). The BSP
+   new custom kernel recipe file (e.g. ``linux-yocto_6.12.bb``). The BSP
    layers mentioned in the previous step also contain different kernel
    examples. See the ":ref:`kernel-dev/common:modifying an existing recipe`"
    section in the Yocto Project Linux Kernel Development Manual for
