@@ -1247,7 +1247,7 @@ located in :yocto_git:`poky/meta-yocto-bsp/conf/machine/beaglebone-yocto.conf
 
    PREFERRED_PROVIDER_virtual/xserver ?= "xserver-xorg"
 
-   MACHINE_EXTRA_RRECOMMENDS = "kernel-modules kernel-devicetree"
+   MACHINE_EXTRA_RRECOMMENDS = "kernel-modules"
 
    EXTRA_IMAGEDEPENDS += "virtual/bootloader"
 
@@ -1263,23 +1263,21 @@ located in :yocto_git:`poky/meta-yocto-bsp/conf/machine/beaglebone-yocto.conf
    SERIAL_CONSOLES ?= "115200;ttyS0 115200;ttyO0 115200;ttyAMA0"
 
    PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
-   PREFERRED_VERSION_linux-yocto ?= "6.1%"
+   PREFERRED_VERSION_linux-yocto ?= "6.12%"
 
    KERNEL_IMAGETYPE = "zImage"
-   KERNEL_DEVICETREE = "am335x-bone.dtb am335x-boneblack.dtb am335x-bonegreen.dtb"
-   KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"
+   DTB_FILES = "am335x-bone.dtb am335x-boneblack.dtb am335x-bonegreen.dtb"
+   KERNEL_DEVICETREE = '${@' '.join('ti/omap/%s' % d for d in '${DTB_FILES}'.split())}'
 
    PREFERRED_PROVIDER_virtual/bootloader ?= "u-boot"
 
    SPL_BINARY = "MLO"
    UBOOT_SUFFIX = "img"
    UBOOT_MACHINE = "am335x_evm_defconfig"
-   UBOOT_ENTRYPOINT = "0x80008000"
-   UBOOT_LOADADDRESS = "0x80008000"
 
    MACHINE_FEATURES = "usbgadget usbhost vfat alsa"
 
-   IMAGE_BOOT_FILES ?= "u-boot.${UBOOT_SUFFIX} ${SPL_BINARY} ${KERNEL_IMAGETYPE} ${KERNEL_DEVICETREE}"
+   IMAGE_BOOT_FILES ?= "u-boot.${UBOOT_SUFFIX} ${SPL_BINARY} ${KERNEL_IMAGETYPE} ${DTB_FILES}"
 
    # support runqemu
    EXTRA_IMAGEDEPENDS += "qemu-native qemu-helper-native"
@@ -1333,12 +1331,12 @@ Project Reference Manual.
    needed in the root filesystem. In this case, the U-Boot recipe must
    be built for the image.
 
-   At the end of the file, we also use this setings to implement
+   At the end of the file, we also use this setting to implement
    ``runqemu`` support on the host machine.
 
 -  :term:`DEFAULTTUNE`: Machines
    use tunings to optimize machine, CPU, and application performance.
-   These features, which are collectively known as "tuning features",
+   These features --- collectively known as "tuning features" ---
    are set in the :term:`OpenEmbedded-Core (OE-Core)` layer. In this
    example, the default tuning file is :oe_git:`tune-cortexa8
    </openembedded-core/tree/meta/conf/machine/include/arm/armv7a/tune-cortexa8.inc>`.
@@ -1368,8 +1366,7 @@ Project Reference Manual.
    to create the sysroot when building a Wic image.
 
 -  :term:`SERIAL_CONSOLES`:
-   Defines a serial console (TTY) to enable using getty. In this case,
-   the baud rate is "115200" and the device name is "ttyO0".
+   Defines one or more serial consoles (TTYs) to enable using getty.
 
 -  :term:`PREFERRED_PROVIDER_virtual/kernel <PREFERRED_PROVIDER>`:
    Specifies the recipe that provides "virtual/kernel" when more than
@@ -1379,7 +1376,7 @@ Project Reference Manual.
 
 -  :term:`PREFERRED_VERSION_linux-yocto <PREFERRED_VERSION>`:
    Defines the version of the recipe used to build the kernel, which is
-   "6.1" in this case.
+   "6.12" in this case.
 
 -  :term:`KERNEL_IMAGETYPE`:
    The type of kernel to build for the device. In this case, the
@@ -1420,12 +1417,6 @@ Project Reference Manual.
    -  :term:`UBOOT_MACHINE`:
       Specifies the value passed on the make command line when building
       a U-Boot image.
-
-   -  :term:`UBOOT_ENTRYPOINT`:
-      Specifies the entry point for the U-Boot image.
-
-   -  :term:`UBOOT_LOADADDRESS`:
-      Specifies the load address for the U-Boot image.
 
 -  :term:`MACHINE_FEATURES`:
    Specifies the list of hardware features the BeagleBone device is
