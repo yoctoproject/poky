@@ -76,7 +76,7 @@ Clone the Git repository for the component to modify
 ----------------------------------------------------
 
 After identifying the component to modify as described in the
-":doc:`../contributor-guide/identify-component`" section, clone the
+":doc:`/contributor-guide/identify-component`" section, clone the
 corresponding Git repository. Here is an example for OpenEmbedded-Core::
 
   git clone https://git.openembedded.org/openembedded-core
@@ -872,7 +872,7 @@ in regards to the use of generative AI tools. See:
 https://www.linuxfoundation.org/legal/generative-ai.
 
 All of the existing guidelines in this document are expected to be followed,
-including in the :doc:`recipe-style-guide`, and contributing the changes with
+including in the :doc:`/contributor-guide/recipe-style-guide`, and contributing the changes with
 additional requirements to the items in section
 :ref:`contributor-guide/submit-changes:Implement and commit changes`.
 

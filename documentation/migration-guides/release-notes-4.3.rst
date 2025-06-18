@@ -272,9 +272,9 @@ New Features / Enhancements in 4.3
 
 -  Prominent documentation updates:
 
-   -  New :doc:`../contributor-guide/index` document.
+   -  New :doc:`/contributor-guide/index` document.
 
-   -  New :doc:`../dev-manual/security-subjects` chapter in the Development
+   -  New :doc:`/dev-manual/security-subjects` chapter in the Development
       Tasks Manual.
 
    -  Long overdue documentation for the :ref:`ref-classes-devicetree` class.

@@ -8,8 +8,8 @@ Transitioning to a custom environment for systems development
 
 .. note::
 
-   So you've finished the :doc:`brief-yoctoprojectqs/index` and
-   glanced over the document :doc:`what-i-wish-id-known`, the latter contains
+   So you've finished the :doc:`/brief-yoctoprojectqs/index` and
+   glanced over the document :doc:`/what-i-wish-id-known`, the latter contains
    important information learned from other users. You're well prepared. But
    now, as you are starting your own project, it isn't exactly straightforward what
    to do. And, the documentation is daunting. We've put together a few hints to

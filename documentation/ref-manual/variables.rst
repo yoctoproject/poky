@@ -2576,7 +2576,7 @@ system and gives an overview of their function and contents.
       You can safely share this directory between multiple builds on the
       same development machine. For additional information on how the build
       process gets source files when working behind a firewall or proxy
-      server, see this specific question in the ":doc:`faq`"
+      server, see this specific question in the ":doc:`/ref-manual/faq`"
       chapter. You can also refer to the
       ":yocto_wiki:`Working Behind a Network Proxy </Working_Behind_a_Network_Proxy>`"
       Wiki page.

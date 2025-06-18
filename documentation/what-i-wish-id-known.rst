@@ -49,7 +49,7 @@ contact us with other suggestions.
    their silicon. These layers have names such as "meta-intel" or "meta-ti". Try
    not to build layers from scratch. If you do have custom silicon, use one of
    these layers as a guide or template and familiarize yourself with the
-   :doc:`bsp-guide/index`.
+   :doc:`/bsp-guide/index`.
 
 #. **Do not put everything into one layer:**
    Use different layers to logically separate information in your build. As an
@@ -127,7 +127,7 @@ contact us with other suggestions.
    You can build and run a specific task for a specific package (including
    devshell) or even a single recipe. When developers first start using the
    Yocto Project, the instructions found in the
-   :doc:`brief-yoctoprojectqs/index` show how to create an image
+   :doc:`/brief-yoctoprojectqs/index` show how to create an image
    and then run or flash that image.  However, you can actually build just a
    single recipe. Thus, if some dependency or recipe isn't working, you can just
    say "bitbake foo" where "foo" is the name for a specific recipe.  As you

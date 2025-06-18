@@ -881,7 +881,7 @@ The requirements for a released BSP that conform to the Yocto Project are:
    ``recipes-*`` subdirectories specific to the recipe's function, or
    within a subdirectory containing a set of closely-related recipes.
    The recipes themselves should follow the general guidelines for
-   recipes found in the ":doc:`../contributor-guide/recipe-style-guide`"
+   recipes found in the ":doc:`/contributor-guide/recipe-style-guide`"
    in the Yocto Project and OpenEmbedded Contributor Guide.
 
 -  *License File:* You must include a license file in the
@@ -915,7 +915,7 @@ The requirements for a released BSP that conform to the Yocto Project are:
    -  The name and contact information for the BSP layer maintainer.
       This is the person to whom patches and questions should be sent.
       For information on how to find the right person, see the
-      :doc:`../contributor-guide/submit-changes` section in the Yocto Project and
+      :doc:`/contributor-guide/submit-changes` section in the Yocto Project and
       OpenEmbedded Contributor Guide.
 
    -  Instructions on how to build the BSP using the BSP layer.

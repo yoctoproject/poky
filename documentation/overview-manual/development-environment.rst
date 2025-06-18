@@ -240,7 +240,7 @@ and so forth.
 
    For information on finding out who is responsible for (maintains) a
    particular area of code in the Yocto Project, see the
-   ":doc:`../contributor-guide/identify-component`"
+   ":doc:`/contributor-guide/identify-component`"
    section of the Yocto Project and OpenEmbedded Contributor Guide.
 
 The Yocto Project ``poky`` Git repository also has an upstream
@@ -272,7 +272,7 @@ push them into the "contrib" area and subsequently request that the
 maintainer include them into an upstream branch. This process is called
 "submitting a patch" or "submitting a change." For information on
 submitting patches and changes, see the
-":doc:`../contributor-guide/submit-changes`" section in the Yocto Project
+":doc:`/contributor-guide/submit-changes`" section in the Yocto Project
 and OpenEmbedded Contributor Guide.
 
 In summary, there is a single point of entry for changes into the
@@ -347,7 +347,7 @@ Book <https://book.git-scm.com>`__.
    this type of change, you format the patch and then send the email
    using the Git commands ``git format-patch`` and ``git send-email``.
    For information on how to use these scripts, see the
-   ":doc:`../contributor-guide/submit-changes`" section in the Yocto Project
+   ":doc:`/contributor-guide/submit-changes`" section in the Yocto Project
    and OpenEmbedded Contributor Guide.
 
 Git
