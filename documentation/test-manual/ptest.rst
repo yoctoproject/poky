@@ -46,13 +46,19 @@ Running ptest
 =============
 
 The ``ptest-runner`` package installs a shell script that loops through
-all installed ptest test suites and runs them in sequence. Consequently,
-you might want to add this package to your image.
+all installed ptest test suites and runs them in sequence.
+
+During the execution ``ptest-runner`` keeps count of total and failed
+``ptests``. At end the execution summary is written to the console.
+If any of the ``run-ptest`` fails, ``ptest-runner`` returns '1'.
+
+Consequently, you might want to add ``ptest-runner`` to your image.
+
 
 Getting Your Package Ready
 ==========================
 
-In order to enable a recipe to run installed ptests on target hardware,
+In order to enable a recipe to run installed ``ptests`` on target hardware,
 you need to prepare the recipes that build the packages you want to
 test. Here is what you have to do for each recipe:
 
@@ -77,8 +83,9 @@ test. Here is what you have to do for each recipe:
 
 -  *Create run-ptest:* This script starts your test. Locate the
    script where you will refer to it using
-   :term:`SRC_URI`. Here is an
-   example that starts a test for ``dbus``::
+   :term:`SRC_URI`. Be sure ``run-ptest`` exits with 0 to mark it
+   as successfully executed otherwise will be marked as fail.
+   Here is an example that starts a test for ``dbus``::
 
       #!/bin/sh
       cd test
