@@ -60,6 +60,9 @@ more information in the output :term:`SPDX` data:
 -  Add a description of the source files used to generate host tools and target
    packages (:term:`SPDX_INCLUDE_SOURCES`)
 
+-  Add a description of the **compiled** source files used to generate host tools
+   and target packages (:term:`SPDX_INCLUDE_COMPILED_SOURCES`)
+
 -  Add archives of these source files themselves (:term:`SPDX_ARCHIVE_SOURCES`).
 
 Though the toplevel :term:`SPDX` output is available in
