@@ -109,7 +109,7 @@ particular working environment and set of practices.
 
     -  Keep your cross-development toolchains updated. You can do this
        through provisioning either as new toolchain downloads or as
-       updates through a package update mechanism using ``opkg`` to
+       updates through a package update mechanism to
        provide updates to an existing toolchain. The exact mechanics of
        how and when to do this depend on local policy.
 
@@ -159,7 +159,7 @@ particular working environment and set of practices.
        are made.
 
     -  Allows triggering of automated image booting and testing under
-       the QuickEMUlator (QEMU).
+       the Quick EMUlator (QEMU).
 
     -  Supports incremental build testing and from-scratch builds.
 
@@ -310,7 +310,7 @@ Project Build Host:
 
    -  GNU make &MIN_MAKE_VERSION; or greater
 
-   If your build host does not meet any of these listed version
+   If your build host does not satisfy all of these listed version
    requirements, you can take steps to prepare the system so that you
    can still use the Yocto Project. See the
    ":ref:`ref-manual/system-requirements:required git, tar, python, make and gcc versions`"
@@ -568,7 +568,7 @@ extension accordingly.
 Locating Yocto Project Source Files
 ===================================
 
-This section shows you how to locate, fetch and configure the source
+This section shows you how to locate, fetch, unpack, patch and configure the source
 files you'll need to work with the Yocto Project.
 
 .. note::
@@ -720,11 +720,11 @@ Follow these steps to create a local version of the upstream
       $ git branch
       * master
 
-   Your local repository of poky is identical to the
-   upstream poky repository at the time from which it was cloned. As you
+   Your local repository of poky is initially identical to the
+   upstream poky repository from which it was cloned. As you
    work with the local branch, you can periodically use the
-   ``git pull --rebase`` command to be sure you are up-to-date
-   with the upstream branch.
+   ``git pull`` command to be sure you stay up-to-date
+   with the upstream poky branch.
 
 Checking Out by Branch in Poky
 ------------------------------
