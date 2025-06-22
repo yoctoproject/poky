@@ -52,7 +52,7 @@ such as BSD based NAS::
    sstate-cache-management.py --remove-duplicated --cache-dir=sstate-cache
 
 This command will ask you to confirm the deletions it identifies.
-Run ``sstate-cache-management.sh`` for more details about this script.
+Run ``sstate-cache-management.py`` for more details about this script.
 
 .. note::
 
