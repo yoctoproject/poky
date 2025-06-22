@@ -813,7 +813,7 @@ directory:
 
 #. *Using Local Files Only:* Inside your ``local.conf`` file, add the
    :term:`SOURCE_MIRROR_URL` variable, inherit the
-   :ref:`ref-classes-own-mirrors` class, and use the
+   :ref:`ref-classes-own-mirrors` class, and add the
    :term:`BB_NO_NETWORK` variable to your ``local.conf``::
 
       SOURCE_MIRROR_URL ?= "file:///home/your-download-dir/"
