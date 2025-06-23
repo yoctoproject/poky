@@ -1393,6 +1393,26 @@ doing the following:
    where you have installed them and whether those files are in
    different locations than the defaults.
 
+As a basic example of a :ref:`ref-classes-bin-package`-style recipe, consider
+this snippet from the
+:oe_git:`wireless-regdb </openembedded-core/tree/meta/recipes-kernel/wireless-regdb>`
+recipe file, which fetches a single tarball of binary content and manually
+installs with no need for any configuration or compilation::
+
+   SRC_URI = "https://www.kernel.org/pub/software/network/${BPN}/${BP}.tar.xz"
+   SRC_URI[sha256sum] = "57f8e7721cf5a880c13ae0c202edbb21092a060d45f9e9c59bcd2a8272bfa456"
+
+   inherit bin_package allarch
+
+   do_install() {
+       install -d -m0755 ${D}${nonarch_libdir}/crda
+       install -d -m0755 ${D}${sysconfdir}/wireless-regdb/pubkeys
+       install -m 0644 regulatory.bin ${D}${nonarch_libdir}/crda/regulatory.bin
+       install -m 0644 wens.key.pub.pem ${D}${sysconfdir}/wireless-regdb/pubkeys/wens.key.pub.pem
+       install -m 0644 -D regulatory.db ${D}${nonarch_base_libdir}/firmware/regulatory.db
+       install -m 0644 regulatory.db.p7s ${D}${nonarch_base_libdir}/firmware/regulatory.db.p7s
+   }
+
 Following Recipe Style Guidelines
 =================================
 
