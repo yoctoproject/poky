@@ -20,8 +20,7 @@ S = ${WORKDIR} no longer supported
 If a recipe has :term:`S` set to be :term:`WORKDIR`, this is no longer
 supported, and an error will be issued. The recipe should be changed to::
 
-    S = "${WORKDIR}/sources"
-    UNPACKDIR = "${S}"
+    S = "${UNPACKDIR}"
 
 Any :term:`WORKDIR` references where files from :term:`SRC_URI` are referenced
 should be changed to :term:`S`. These are commonly in :ref:`ref-tasks-compile`,
@@ -62,8 +61,7 @@ require to add an :term:`S` definition to a recipe that only uses
 ``file://`` :term:`SRC_URI` entries. To be consistent, the following pattern is
 recommended::
 
-    S = "${WORKDIR}/sources"
-    UNPACKDIR = "${S}"
+    S = "${UNPACKDIR}"
 
 Building C files from :term:`UNPACKDIR` without setting :term:`S` to point at
 it does not work as the debug prefix mapping doesn't handle that.
