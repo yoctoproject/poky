@@ -44,7 +44,7 @@ therefore increasing the total system boot time. systemd also substantially
 increases system size because of its multiple components and the extra
 dependencies it pulls.
 
-On the contrary, BusyBox init is the simplest and the lightest solution and
+By contrast, BusyBox init is the simplest and the lightest solution and
 also comes with BusyBox mdev as device manager, a lighter replacement to
 :wikipedia:`udev <Udev>`, which SysVinit and systemd both use.
 
