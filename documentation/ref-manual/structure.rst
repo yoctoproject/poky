@@ -611,7 +611,7 @@ example, consider ``linux-yocto-kernel-3.0`` on the machine ``qemux86``
 built within the Yocto Project. For this package, a work directory of
 ``tmp/work/qemux86-poky-linux/linux-yocto/3.0+git1+<.....>``, referred
 to as the :term:`WORKDIR`, is created. Within this directory, the source is
-unpacked to ``linux-qemux86-standard-build`` and then patched by Quilt.
+unpacked to ``sources/linux-qemux86-standard-build`` and then patched by Quilt.
 (See the ":ref:`dev-manual/quilt:using quilt in your workflow`" section in
 the Yocto Project Development Tasks Manual for more information.) Within
 the ``linux-qemux86-standard-build`` directory, standard Quilt
