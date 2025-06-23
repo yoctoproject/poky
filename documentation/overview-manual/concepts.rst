@@ -704,7 +704,7 @@ the Yocto Project Reference Manual.
 
 Each recipe has an area in the :term:`Build Directory` where the unpacked
 source code resides. The :term:`UNPACKDIR` variable points to this area for a
-recipe's unpacked source code, and has the default ``sources-unpack`` name. The
+recipe's unpacked source code, and has the default ``sources`` name. The
 preceding figure and the following list describe the :term:`Build Directory`'s
 hierarchy:
 
