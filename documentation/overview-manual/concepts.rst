@@ -2368,8 +2368,6 @@ The contents of ``libhello_0.1.bb`` are::
    # Change <username> accordingly
    SRC_URI = "git://github.com/<username>/libhello;branch=main;protocol=https"
 
-   S = "${WORKDIR}/git"
-
    do_install(){
       install -d ${D}${includedir}
       install -d ${D}${libdir}
@@ -2393,8 +2391,6 @@ The contents of ``sayhello_0.1.bb`` are::
 
    DEPENDS += "libhello"
    RDEPENDS:${PN} += "libhello"
-
-   S = "${WORKDIR}/git"
 
    do_install(){
       install -d ${D}/usr/bin
