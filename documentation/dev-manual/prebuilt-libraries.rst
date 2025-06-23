@@ -97,7 +97,7 @@ The complete recipe would look like this::
    # we use a local link.
    SRC_URI = "file://libft4222-linux-${PV}.tgz"
 
-   S = "${WORKDIR}"
+   S = "${UNPACKDIR}"
 
    ARCH_DIR:x86-64 = "build-x86_64"
    ARCH_DIR:i586 = "build-i386"
@@ -204,6 +204,6 @@ versioned library example. The "magic" is setting the :term:`SOLIBS` and
 
    do_install () {
            install -d ${D}${libdir}
-           install -m 0755 ${WORKDIR}/libfoo.so ${D}${libdir}
+           install -m 0755 ${UNPACKDIR}/libfoo.so ${D}${libdir}
    }
 

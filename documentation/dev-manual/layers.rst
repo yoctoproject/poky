@@ -507,7 +507,7 @@ the "meta" layer at ``meta/recipes-bsp/formfactor``::
    PR = "r45"
 
    SRC_URI = "file://config file://machconfig"
-   S = "${WORKDIR}"
+   S = "${UNPACKDIR}"
 
    PACKAGE_ARCH = "${MACHINE_ARCH}"
    INHIBIT_DEFAULT_DEPS = "1"
@@ -586,7 +586,7 @@ Directory`.  Here is the main ``xserver-xf86-config`` recipe, which is named
 
    SRC_URI = "file://xorg.conf"
 
-   S = "${WORKDIR}"
+   S = "${UNPACKDIR}"
 
    CONFFILES:${PN} = "${sysconfdir}/X11/xorg.conf"
 
@@ -594,9 +594,9 @@ Directory`.  Here is the main ``xserver-xf86-config`` recipe, which is named
    ALLOW_EMPTY:${PN} = "1"
 
    do_install () {
-        if test -s ${WORKDIR}/xorg.conf; then
+        if test -s ${UNPACKDIR}/xorg.conf; then
                 install -d ${D}/${sysconfdir}/X11
-                install -m 0644 ${WORKDIR}/xorg.conf ${D}/${sysconfdir}/X11/
+                install -m 0644 ${UNPACKDIR}/xorg.conf ${D}/${sysconfdir}/X11/
         fi
    }
 
@@ -614,8 +614,8 @@ file is in the layer at ``recipes-graphics/xorg-xserver``::
        PITFT="${@bb.utils.contains("MACHINE_FEATURES", "pitft", "1", "0", d)}"
        if [ "${PITFT}" = "1" ]; then
            install -d ${D}/${sysconfdir}/X11/xorg.conf.d/
-           install -m 0644 ${WORKDIR}/xorg.conf.d/98-pitft.conf ${D}/${sysconfdir}/X11/xorg.conf.d/
-           install -m 0644 ${WORKDIR}/xorg.conf.d/99-calibration.conf ${D}/${sysconfdir}/X11/xorg.conf.d/
+           install -m 0644 ${UNPACKDIR}/xorg.conf.d/98-pitft.conf ${D}/${sysconfdir}/X11/xorg.conf.d/
+           install -m 0644 ${UNPACKDIR}/xorg.conf.d/99-calibration.conf ${D}/${sysconfdir}/X11/xorg.conf.d/
        fi
    }
 
