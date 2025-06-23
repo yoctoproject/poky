@@ -412,8 +412,7 @@ them. You can learn more by looking at the
 -------------
 
 Unpacks the source code into a working directory pointed to by
-``${``\ :term:`UNPACKDIR`\ ``}``. A legacy way to specify
-this directory is through the :term:`S` and :term:`WORKDIR` variables.
+``${``\ :term:`UNPACKDIR`\ ``}``.
 For more information on how source files are unpacked, see the
 ":ref:`overview-manual/concepts:source fetching`"
 section in the Yocto Project Overview and Concepts Manual.
