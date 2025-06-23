@@ -706,7 +706,7 @@ hierarchy to locations that would mirror their locations on the target
 device. The installation process copies files from the
 ``${``\ :term:`S`\ ``}``,
 ``${``\ :term:`B`\ ``}``, and
-``${``\ :term:`WORKDIR`\ ``}``
+``${``\ :term:`UNPACKDIR`\ ``}``
 directories to the ``${``\ :term:`D`\ ``}``
 directory to create the structure as it should appear on the target
 system.
@@ -1145,7 +1145,7 @@ Building an application from a single file that is stored locally (e.g. under
 ``files``) requires a recipe that has the file listed in the :term:`SRC_URI`
 variable. Additionally, you need to manually write the :ref:`ref-tasks-compile`
 and :ref:`ref-tasks-install` tasks. The :term:`S` variable defines the
-directory containing the source code, which is set to :term:`WORKDIR` in this
+directory containing the source code, which is set to :term:`UNPACKDIR` in this
 case --- the directory BitBake uses for the build::
 
    SUMMARY = "Simple helloworld application"
@@ -1155,7 +1155,7 @@ case --- the directory BitBake uses for the build::
 
    SRC_URI = "file://helloworld.c"
 
-   S = "${WORKDIR}"
+   S = "${UNPACKDIR}"
 
    do_compile() {
        ${CC} ${LDFLAGS} helloworld.c -o helloworld
@@ -1210,8 +1210,6 @@ In the following example, ``lz4`` is a makefile-based package::
               file://CVE-2021-3520.patch \
               "
    UPSTREAM_CHECK_GITTAGREGEX = "v(?P<pver>.*)"
-
-   S = "${WORKDIR}/git"
 
    CVE_STATUS[CVE-2014-4715] = "fixed-version: Fixed in r118, which is larger than the current version"
 
@@ -1270,8 +1268,6 @@ is a simple example of an application without dependencies::
 
    SRC_URI = "git://gitlab.com/ipcalc/ipcalc.git;protocol=https;branch=master"
    SRCREV = "4c4261a47f355946ee74013d4f5d0494487cc2d6"
-
-   S = "${WORKDIR}/git"
 
    inherit meson
 
@@ -1428,7 +1424,7 @@ chapter of the BitBake User Manual.
    The following example shows some of the ways you can use variables in
    recipes::
 
-      S = "${WORKDIR}/postfix-${PV}"
+      S = "${UNPACKDIR}/postfix-${PV}"
       CFLAGS += "-DNO_ASM"
       CFLAGS:append = " --enable-important-feature"
 

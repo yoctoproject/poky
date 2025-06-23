@@ -55,11 +55,11 @@ Consider this next example::
 
    LIC_FILES_CHKSUM = "file://src/ls.c;beginline=5;endline=16;\
                                        md5=bb14ed3c4cda583abc85401304b5cd4e"
-   LIC_FILES_CHKSUM = "file://${WORKDIR}/license.html;md5=5c94767cedb5d6987c902ac850ded2c6"
+   LIC_FILES_CHKSUM = "file://${UNPACKDIR}/license.html;md5=5c94767cedb5d6987c902ac850ded2c6"
 
 The first line locates a file in ``${S}/src/ls.c`` and isolates lines
 five through 16 as license text. The second line refers to a file in
-:term:`WORKDIR`.
+:term:`UNPACKDIR`.
 
 Note that :term:`LIC_FILES_CHKSUM` variable is mandatory for all recipes,
 unless the :term:`LICENSE` variable is set to "CLOSED".

@@ -18,11 +18,10 @@ build packages is available in the :term:`Build Directory` as defined by the
 defined in the ``meta/conf/bitbake.conf`` configuration file in the
 :term:`Source Directory`::
 
-   S = "${WORKDIR}/${BP}"
+   S = "${UNPACKDIR}/${BP}"
 
 You should be aware that many recipes override the
-:term:`S` variable. For example, recipes that fetch their source from Git
-usually set :term:`S` to ``${WORKDIR}/git``.
+:term:`S` variable when the default isn't accurate.
 
 .. note::
 
@@ -31,8 +30,16 @@ usually set :term:`S` to ``${WORKDIR}/git``.
 
            BP = "${BPN}-${PV}"
 
+   This matches the location that the git fetcher unpacks to, and usually
+   matches unpacked content of release tarballs (e.g. they contain a single
+   directory which matches value of ${BP} exactly).
 
-The path to the work directory for the recipe
+The path to the unpack directory for the recipe
+(:term:`UNPACKDIR`) is defined as follows::
+
+   ${WORKDIR}/sources
+
+In turn, the path to the work directory for the recipe
 (:term:`WORKDIR`) is defined as
 follows::
 
