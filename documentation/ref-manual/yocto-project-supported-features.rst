@@ -209,7 +209,8 @@ builder(s):
      - Builder(s)
    * - :wikipedia:`PowerPC (32-bit) <PowerPC>`
      - PowerPC architecture testing (32-bit)
-     - TBD
+     - Peter Marko,
+       Adrian Freihofer
      - qemuppc,
        qemuppc-tc
    * - :oe_git:`meta-openembedded </meta-openembedded>`
