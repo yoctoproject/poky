@@ -14,6 +14,56 @@ Migration notes for |yocto-ver| (|yocto-codename|)
 This section provides migration information for moving to the Yocto
 Project |yocto-ver| Release (codename "|yocto-codename|") from the prior release.
 
+:term:`WORKDIR` changes
+~~~~~~~~~~~~~~~~~~~~~~~
+
+``S = ${WORKDIR}/something`` no longer supported
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If a recipe has :term:`S` set to be ``${``\ :term:`WORKDIR`\ ``}/something``,
+this is no longer supported, and an error will be issued. The recipe should be
+changed to::
+
+   S = "${UNPACKDIR}/something"
+
+``S = ${WORKDIR}/git`` and ``S = ${UNPACKDIR}/git`` should be removed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Git fetcher now unpacks into the :term:`BB_GIT_DEFAULT_DESTSUFFIX` directory
+rather than the ``git/`` directory under :term:`UNPACKDIR`.
+:term:`BB_GIT_DEFAULT_DESTSUFFIX` is set in :term:`OpenEmbedded-Core
+(OE-Core)`'s :oe_git:`bitbake.conf
+</openembedded-core/tree/meta/conf/bitbake.conf>` to :term:`BP`.
+
+This location matches the default value of :term:`S` set by bitbake.conf, so :term:`S`
+setting in recipes can and should be removed.
+
+Note that when :term:`S` is set to a subdirectory of the git checkout, then it
+should be instead adjusted according to the previous point::
+
+   S = "${UNPACKDIR}/${BP}/something"
+
+Note that "git" as the source checkout location can be hardcoded
+in other places in recipes; when it's in :term:`SRC_URI`, replace with
+:term:`BB_GIT_DEFAULT_DESTSUFFIX`, otherwise replace with :term:`BP`.
+
+How to make those adjustments without tedious manual editing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following sed command can be used to remove S = "${WORKDIR}/git
+across a whole layer::
+
+   sed -i "/^S = \"\${WORKDIR}\/git\"/d" `find . -name *.bb -o -name *.inc -o -name *.bbclass`
+
+Then, the following command can tweak the remaining :term:`S` assignments to
+refer to :term:`UNPACKDIR` instead of :term:`WORKDIR`::
+
+   sed -i "s/^S = \"\${WORKDIR}\//S = \"\${UNPACKDIR}\//g" `find . -name *.bb -o -name *.inc -o -name *.bbclass`
+
+The first change can introduce a lot of consecutive empty lines, so those can be removed with::
+
+   sed -i -z -E 's/([ \t\f\v\r]*\n){3,}/\n\n/g' `find . -name *.bb -o -name *.inc`
+
 Supported kernel versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
