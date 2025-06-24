@@ -6,7 +6,7 @@ Efficiently Fetching Source Files During a Build
 The OpenEmbedded build system works with source files located through
 the :term:`SRC_URI` variable. When
 you build something using BitBake, a big part of the operation is
-locating and downloading all the source tarballs. For images,
+locating and downloading all of the source code. For images,
 downloading all the source for various packages can take a significant
 amount of time.
 
@@ -18,7 +18,7 @@ Setting up Effective Mirrors
 ============================
 
 A good deal that goes into a Yocto Project build is simply downloading
-all of the source tarballs. Maybe you have been working with another
+source code. Maybe you have been working with another
 build system for which you have built up a
 sizable directory of source tarballs. Or, perhaps someone else has such
 a directory for which you have read access. If so, you can save time by
