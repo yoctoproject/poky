@@ -170,7 +170,7 @@ as follows::
 The modifications cause the ``.so`` file to be the real library
 and unset :term:`FILES_SOLIBSDEV` so that no libraries get packaged into
 ``${PN}-dev``. The changes are required because unless :term:`PACKAGES` is changed,
-``${PN}-dev`` collects files before `${PN}`. ``${PN}-dev`` must not collect any of
+``${PN}-dev`` collects files before ``${PN}``. ``${PN}-dev`` must not collect any of
 the files you want in ``${PN}``.
 
 Finally, loadable modules, essentially unversioned libraries that are linked
