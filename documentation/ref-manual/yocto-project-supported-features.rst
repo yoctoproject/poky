@@ -226,7 +226,7 @@ builder(s):
      - meta-virt
    * - :wikipedia:`RISC-V (32-bit) <RISC-V>`
      - RISC-V architecture testing (32-bit)
-     - Collective effort
+     - TBD
      - qemuriscv32,
        qemuriscv32,
        qemuriscv32-tc
