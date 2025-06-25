@@ -188,13 +188,14 @@ the recipe.
    Use lower-cased characters and do not include the reserved suffixes
    ``-native``, ``-cross``, ``-initial``, or ``-dev`` casually (i.e. do not use
    them as part of your recipe name unless the string applies). Here are some
-   examples:
+   examples (which includes the use of the string "git" as a special case of a
+   version identifier):
 
    .. code-block:: none
 
-      cups_1.7.0.bb
-      gawk_4.0.2.bb
-      irssi_0.8.16-rc1.bb
+      cups_2.4.12.bb
+      gawk_5.3.2.bb
+      psplash_git.bb
 
 Running a Build on the Recipe
 =============================
