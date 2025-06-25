@@ -276,11 +276,11 @@ upgrading the recipe to a future version is as simple as renaming the
 recipe to match the new version.
 
 Here is a simple example from the
-``meta/recipes-devtools/strace/strace_5.5.bb`` recipe where the source
-comes from a single tarball. Notice the use of the
+:oe_git:`strace recipe </openembedded-core/tree/meta/recipes-devtools/strace>`
+where the source comes from a single tarball. Notice the use of the
 :term:`PV` variable::
 
-   SRC_URI = "https://strace.io/files/${PV}/strace-${PV}.tar.xz \
+   SRC_URI = "${GITHUB_BASE_URI}/download/v${PV}/strace-${PV}.tar.xz \
 
 Files mentioned in :term:`SRC_URI` whose names end in a typical archive
 extension (e.g. ``.tar``, ``.tar.gz``, ``.tar.bz2``, ``.zip``, and so
@@ -292,7 +292,7 @@ another example that specifies these types of files, see the
 Another way of specifying source is from an SCM. For Git repositories,
 you must specify :term:`SRCREV` and you should specify :term:`PV` to include
 a ``+`` sign in its definition. Here is an example from the recipe
-:oe_git:`meta/recipes-sato/l3afpad/l3afpad_git.bb </openembedded-core/tree/meta/recipes-sato/l3afpad/l3afpad_git.bb>`::
+:oe_git:`l3afpad_git.bb </openembedded-core/tree/meta/recipes-sato/l3afpad/l3afpad_git.bb>`::
 
    SRC_URI = "git://github.com/stevenhoneyman/l3afpad.git;branch=master;protocol=https"
 
@@ -347,8 +347,8 @@ paste them into your recipe and then run the build again to continue.
    continuing with the build.
 
 This final example is a bit more complicated and is from the
-``meta/recipes-sato/rxvt-unicode/rxvt-unicode_9.20.bb`` recipe. The
-example's :term:`SRC_URI` statement identifies multiple files as the source
+:oe_git:`rxvt-unicode </openembedded-core/tree/meta/recipes-sato/rxvt-unicode>`
+recipe. The example's :term:`SRC_URI` statement identifies multiple files as the source
 files for the recipe: a tarball, a patch file, a desktop file, and an icon::
 
    SRC_URI = "http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-${PV}.tar.bz2 \
