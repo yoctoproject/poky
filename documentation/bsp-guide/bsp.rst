@@ -172,7 +172,7 @@ section.
 #. *Optionally Clone the meta-intel BSP Layer:* If your hardware is
    based on current Intel CPUs and devices, you can leverage this BSP
    layer. For details on the ``meta-intel`` BSP layer, see the layer's
-   :yocto_git:`README </meta-intel/tree/README>` file.
+   :yocto_git:`README </meta-intel/tree/README.md>` file.
 
    #. *Navigate to Your Source Directory:* Typically, you set up the
       ``meta-intel`` Git repository inside the :term:`Source Directory` (e.g.
