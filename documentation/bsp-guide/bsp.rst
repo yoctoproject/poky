@@ -204,7 +204,7 @@ section.
       .. note::
 
          To see the available branch names in a cloned repository, use the ``git
-         branch -al`` command. See the
+         branch -a`` command. See the
          ":ref:`dev-manual/start:checking out by branch in poky`"
          section in the Yocto Project Development Tasks Manual for more
          information.
