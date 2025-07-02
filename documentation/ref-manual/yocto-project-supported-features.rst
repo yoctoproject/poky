@@ -86,7 +86,7 @@ Below is a list of primary tested features, their maintainer(s) and builder(s):
      - meta-aws
    * - `meta-intel <https://git.yoctoproject.org/meta-intel>`__
      - meta-intel layer testing
-     - TBD
+     - meta-intel mailing list <meta-intel@lists.yoctoproject.org>
      - meta-intel
    * - `meta-exein <https://github.com/exein-io/meta-exein>`__
      - meta-exein layer testing
