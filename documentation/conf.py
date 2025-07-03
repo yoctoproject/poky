@@ -179,13 +179,13 @@ from sphinx.search import SearchEnglish
 from sphinx.search import languages
 class DashFriendlySearchEnglish(SearchEnglish):
 
-    # Accept words that can include hyphens
-    _word_re = re.compile(r'[\w\-]+')
+    # Accept words that can include 'inner' hyphens or dots
+    _word_re = re.compile(r'[\w]+(?:[\.\-][\w]+)*')
 
     js_splitter_code = r"""
 function splitQuery(query) {
     return query
-        .split(/[^\p{Letter}\p{Number}_\p{Emoji_Presentation}-]+/gu)
+        .split(/[^\p{Letter}\p{Number}_\p{Emoji_Presentation}\-\.]+/gu)
         .filter(term => term.length > 0);
 }
 """
