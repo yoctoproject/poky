@@ -277,6 +277,9 @@ in the ``meta-poky`` layer:
 -  *Shared State Directory:* Controlled by the
    :term:`SSTATE_DIR` variable.
 
+-  *Persistent Data Directory:* Controlled by the
+   :term:`PERSISTENT_DIR` variable.
+
 -  *Build Output:* Controlled by the
    :term:`TMPDIR` variable.
 
