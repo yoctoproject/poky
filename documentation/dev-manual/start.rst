@@ -228,6 +228,11 @@ particular working environment and set of practices.
        used by developers in the same organization and share the same
        source directories on their machines.
 
+       If the :term:`SSTATE_DIR` directory is shared for multiple developers,
+       and you are using a :ref:`overview-manual/concepts:Hash Equivalence`
+       server with :term:`BB_HASHSERVE`, the :term:`PERSISTENT_DIR` directory
+       (``${TOPDIR}/cache`` by default) should be shared too.
+
     -  Set up an Autobuilder and have it populate the sstate cache and
        source directories.
 
