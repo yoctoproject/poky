@@ -2396,8 +2396,8 @@ The contents of ``sayhello_0.1.bb`` are::
    RDEPENDS:${PN} += "libhello"
 
    do_install(){
-      install -d ${D}/usr/bin
-      install -m 0700 sayhello ${D}/usr/bin
+      install -d ${D}${bindir}
+      install -m 0700 sayhello ${D}${bindir}
    }
 
 After placing the recipes in a custom layer we can run ``bitbake sayhello``
