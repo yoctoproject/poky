@@ -184,6 +184,12 @@ directory to be shared between them. This means once a Worker has built
 an artifact, all the others can benefit from it. The usage of the directory
 within the build system is designed for sharing over NFS.
 
+Shared Hash Equivalence Server
+------------------------------
+
+The Workers all use the same Hash Equivalence server, through a common
+definition for :term:`BB_HASHSERVE`.
+
 Resulttool
 ----------
 
