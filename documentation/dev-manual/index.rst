@@ -22,6 +22,7 @@ Yocto Project Development Tasks Manual
    building
    multiconfig
    speeding-up-build
+   limiting-resources
    libraries
    prebuilt-libraries
    devtool
