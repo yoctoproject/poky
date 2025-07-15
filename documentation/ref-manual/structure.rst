@@ -365,13 +365,6 @@ directory for multiple builds or move the directory to another location.
 You can control the location of this directory through the
 :term:`SSTATE_DIR` variable.
 
-.. note::
-
-   If you are sharing the :term:`SSTATE_DIR` directory for multiple builds and
-   you are using a :ref:`overview-manual/concepts:Hash Equivalence` server with
-   :term:`BB_HASHSERVE` you should also share the :term:`PERSISTENT_DIR`
-   directory. See :ref:`structure-build-cache` below.
-
 .. _structure-build-tmp:
 
 ``build/tmp/``
@@ -410,10 +403,6 @@ modified. Changes can be detected, for example, through file
 modification time (mtime) changes and hashing of file contents. If no
 changes to the file are detected, then the parsed result stored in the
 cache is reused. If the file has changed, it is reparsed.
-
-This directory and the :term:`SSTATE_DIR` directory can be shared for multiple
-builds when using a :ref:`overview-manual/concepts:Hash Equivalence` server
-with :term:`BB_HASHSERVE`.
 
 .. _structure-build-tmp-deploy:
 
