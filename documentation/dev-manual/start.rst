@@ -228,10 +228,16 @@ particular working environment and set of practices.
        used by developers in the same organization and share the same
        source directories on their machines.
 
-       If the :term:`SSTATE_DIR` directory is shared for multiple developers,
-       and you are using a :ref:`overview-manual/concepts:Hash Equivalence`
-       server with :term:`BB_HASHSERVE`, the :term:`PERSISTENT_DIR` directory
-       (``${TOPDIR}/cache`` by default) should be shared too.
+    -  Set up a local :ref:`overview-manual/concepts:Hash Equivalence` server
+       with :term:`BB_HASHSERVE` and :term:`BB_SIGNATURE_HANDLER`. A basic setup
+       would be::
+
+          BB_HASHSERVE = "auto"
+          BB_SIGNATURE_HANDLER = "OEEquivHash"
+
+       See the :ref:`overview-manual/concepts:Hash Equivalence` section of the
+       Yocto Project Overview and Concepts Manual for more details on the hash
+       equivalence feature.
 
     -  Set up an Autobuilder and have it populate the sstate cache and
        source directories.
