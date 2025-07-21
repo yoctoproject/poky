@@ -543,6 +543,7 @@ your Yocto Project build host:
          DISKPART> select vdisk file="<path_to_VHDX_file>"
          DISKPART> attach vdisk readonly
          DISKPART> compact vdisk
+         DISKPART> detach
          DISKPART> exit
 
 .. note::
