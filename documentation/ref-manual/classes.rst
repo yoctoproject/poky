@@ -3443,6 +3443,86 @@ This class is not intended to be used directly.
 The :ref:`ref-classes-toolchain-scripts` class provides the scripts used for setting up
 the environment for installed SDKs.
 
+.. _ref-classes-toolchain-clang:
+
+``toolchain/clang``
+===================
+
+The :ref:`ref-classes-toolchain-clang` class defines commands for building
+recipes with Clang/LLVM compiler and utilities.
+
+This class is not meant to be inherited directly. Instead, you should either:
+
+-  set the :term:`PREFERRED_TOOLCHAIN_TARGET`, :term:`PREFERRED_TOOLCHAIN_NATIVE`
+   or :term:`PREFERRED_TOOLCHAIN_SDK` variables to "clang" from a
+   :term:`Configuration File`. This will make the :ref:`ref-classes-base` class
+   use the :ref:`ref-classes-toolchain-clang` accordingly. All recipes will
+   be built with the Clang/LLVM toolchain, exception be made for recipes that
+   override the value of :term:`TOOLCHAIN` or :term:`TOOLCHAIN_NATIVE` to
+   another value.
+
+-  set :term:`TOOLCHAIN` or :term:`TOOLCHAIN_NATIVE` to "clang" from a recipe
+   when the recipe needs to override the default toolchain set by
+   :term:`PREFERRED_TOOLCHAIN_TARGET`, :term:`PREFERRED_TOOLCHAIN_NATIVE` or
+   :term:`PREFERRED_TOOLCHAIN_SDK`.
+
+.. _ref-classes-toolchain-clang-native:
+
+``toolchain/clang-native``
+==========================
+
+The :ref:`ref-classes-toolchain-clang-native` class defines commands for
+building :ref:`ref-classes-native` recipes with Clang/LLVM compiler and
+utilities independently of the build context.
+
+The :ref:`ref-classes-toolchain-gcc-native` class defines :term:`BUILD_CC`,
+:term:`BUILD_CXX` and other such variables which are rarely used in recipes.
+Exception be made for target recipes that need to use the compiler from the
+build host at some point during the build.
+
+This class should not be inherited directly. It is inherited by the
+:ref:`ref-classes-base` class if :term:`TOOLCHAIN_NATIVE` is set to "clang".
+
+.. _ref-classes-toolchain-gcc:
+
+``toolchain/gcc``
+=================
+
+The :ref:`ref-classes-toolchain-gcc` class defines commands for building
+recipes with GCC/Binutils compiler and utilities.
+
+This class is not meant to be inherited directly. Instead, you should either:
+
+-  set the :term:`PREFERRED_TOOLCHAIN_TARGET`, :term:`PREFERRED_TOOLCHAIN_NATIVE`
+   or :term:`PREFERRED_TOOLCHAIN_SDK` variables to "gcc" from a
+   :term:`Configuration File`. This will make the :ref:`ref-classes-base` class
+   use the :ref:`ref-classes-toolchain-gcc` accordingly. All recipes will
+   be built with the GCC/Binutils toolchain, exception be made for recipes that
+   override the value of :term:`TOOLCHAIN` or :term:`TOOLCHAIN_NATIVE` to
+   another value.
+
+-  set :term:`TOOLCHAIN` or :term:`TOOLCHAIN_NATIVE` to "gcc" from a recipe
+   when the recipe needs to override the default toolchain set by
+   :term:`PREFERRED_TOOLCHAIN_TARGET`, :term:`PREFERRED_TOOLCHAIN_NATIVE` or
+   :term:`PREFERRED_TOOLCHAIN_SDK`.
+
+.. _ref-classes-toolchain-gcc-native:
+
+``toolchain/gcc-native``
+========================
+
+The :ref:`ref-classes-toolchain-gcc-native` class defines commands for building
+:ref:`ref-classes-native` recipes with GCC/Binutils compiler and utilities
+independently of the build context.
+
+The :ref:`ref-classes-toolchain-gcc-native` class defines :term:`BUILD_CC`,
+:term:`BUILD_CXX` and other such variables which are rarely used in recipes.
+Exception be made for target recipes that need to use the compiler from the build
+host at some point during the build.
+
+This class should not be inherited directly. It is inherited by the
+:ref:`ref-classes-base` class if :term:`TOOLCHAIN_NATIVE` is set to "gcc".
+
 .. _ref-classes-typecheck:
 
 ``typecheck``

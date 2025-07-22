@@ -7325,6 +7325,57 @@ system and gives an overview of their function and contents.
       ":ref:`dev-manual/new-recipe:using virtual providers`" section in the
       Yocto Project Development Tasks Manual.
 
+   :term:`PREFERRED_TOOLCHAIN`
+      The :term:`PREFERRED_TOOLCHAIN` variable selects the toolchain to use for
+      compiling recipes. This variable is not meant to be overridden globally.
+      Instead, the values of :term:`PREFERRED_TOOLCHAIN_TARGET`,
+      :term:`PREFERRED_TOOLCHAIN_NATIVE` and :term:`PREFERRED_TOOLCHAIN_SDK`
+      should be overridden.
+
+   :term:`PREFERRED_TOOLCHAIN_NATIVE`
+      This variable controls the toolchain used for compiling
+      :ref:`ref-classes-native` recipes.
+
+      This variable should be set globally from a :term:`configuration file`.
+
+      See :term:`PREFERRED_TOOLCHAIN_TARGET` for more details on the possible
+      values for this variable.
+
+      A recipe that does not support the toolchain specified by
+      :term:`PREFERRED_TOOLCHAIN_NATIVE` can override it locally with
+      :term:`TOOLCHAIN_NATIVE`.
+
+   :term:`PREFERRED_TOOLCHAIN_SDK`
+      This variable controls the toolchain used for compiling
+      :ref:`ref-classes-nativesdk` recipes.
+
+      This variable should be set globally from a :term:`configuration file`.
+
+      See :term:`PREFERRED_TOOLCHAIN_TARGET` for more details on the possible
+      values for this variable.
+
+   :term:`PREFERRED_TOOLCHAIN_TARGET`
+      This variable controls the toolchain used for compiling recipes in the
+      architecture of the target :term:`MACHINE`.
+
+      There are two possible values for this variable at the moment:
+
+      -  :ref:`gcc <ref-classes-toolchain-gcc>` (default): the GCC/Binutils toolchain.
+      -  :ref:`clang <ref-classes-toolchain-clang>`: the Clang/LLVM toolchain.
+
+      :term:`PREFERRED_TOOLCHAIN_TARGET` will make the :ref:`ref-classes-base`
+      class inherit one of the toolchain classes defined in
+      :oe_git:`meta/classes/toolchain
+      </openembedded-core/tree/meta/classes/toolchain>`. As a consequence, this
+      variable should be set globally from a :term:`configuration file`.
+
+      These classes define commands used for cross-compiling such as :term:`CC`,
+      :term:`CXX`, :term:`LD` and so on.
+
+      A recipe that does not support the toolchain specified by
+      :term:`PREFERRED_TOOLCHAIN_TARGET` can override it locally with
+      :term:`TOOLCHAIN`.
+
    :term:`PREFERRED_VERSION`
       If there are multiple versions of a recipe available, this variable
       determines which version should be given preference. You must always
@@ -10125,6 +10176,21 @@ system and gives an overview of their function and contents.
       implementations, NFS does not meet this minimum requirement.
       Consequently, :term:`TMPDIR` cannot be on NFS.
 
+   :term:`TOOLCHAIN`
+      The :term:`TOOLCHAIN` variable can be used to override the toolchain used
+      by a recipe.
+
+      The default value for this variable is the value of
+      :term:`PREFERRED_TOOLCHAIN`. See the description of
+      :term:`PREFERRED_TOOLCHAIN` to know the list of possible values for
+      :term:`TOOLCHAIN`.
+
+      It is possible to override the value of this variable from a recipe if
+      this recipe is known to support only a specific toolchain. For example,
+      the :oe_git:`Pseudo </openembedded-core/tree/meta/recipes-devtools/pseudo/pseudo_git.bb>`
+      recipe overrides this variable to "gcc", because Pseudo uses GCC compiler
+      built-ins options that the Clang/LLVM compiler does not provide.
+
    :term:`TOOLCHAIN_HOST_TASK`
       This variable lists packages the OpenEmbedded build system uses when
       building an SDK, which contains a cross-development environment. The
@@ -10179,6 +10245,18 @@ system and gives an overview of their function and contents.
       the :term:`SDK_NAME` and
       :term:`SDK_VERSION` variables for additional
       information.
+
+   :term:`TOOLCHAIN_NATIVE`
+      The :term:`TOOLCHAIN_NATIVE` variable can be used to override the
+      toolchain used by a :ref:`ref-classes-native` recipe.
+
+      The default value for this variable is the value of
+      :term:`PREFERRED_TOOLCHAIN` (in :ref:`ref-classes-native` contexts). See
+      the description of :term:`PREFERRED_TOOLCHAIN` to know the list of
+      possible values for :term:`TOOLCHAIN_NATIVE`.
+
+      It is possible to override the value of this variable from a recipe if
+      this recipe is known to support only a specific toolchain.
 
    :term:`TOOLCHAIN_TARGET_TASK`
       This variable lists packages the OpenEmbedded build system uses when
