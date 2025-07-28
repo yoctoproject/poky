@@ -1390,11 +1390,6 @@ The tests you can list with the :term:`WARN_QA` and
    directive, that the recipe also inherits the :ref:`ref-classes-gettext`
    class to ensure that gettext is available during the build.
 
--  ``compile-host-path:`` Checks the
-   :ref:`ref-tasks-compile` log for indications that
-   paths to locations on the build host were used. Using such paths
-   might result in host contamination of the build output.
-
 -  ``debug-deps:`` Checks that all packages except ``-dbg`` packages
    do not depend on ``-dbg`` packages, which would cause a packaging
    bug.
@@ -1461,11 +1456,6 @@ The tests you can list with the :term:`WARN_QA` and
 -  ``incompatible-license:`` Report when packages are excluded from
    being created due to being marked with a license that is in
    :term:`INCOMPATIBLE_LICENSE`.
-
--  ``install-host-path:`` Checks the
-   :ref:`ref-tasks-install` log for indications that
-   paths to locations on the build host were used. Using such paths
-   might result in host contamination of the build output.
 
 -  ``installed-vs-shipped:`` Reports when files have been installed
    within :ref:`ref-tasks-install` but have not been included in any package by
@@ -1598,9 +1588,6 @@ The tests you can list with the :term:`WARN_QA` and
 -  ``shebang-size:`` Check that the shebang line (``#!`` in the first line)
    in a packaged script is not longer than 128 characters, which can cause
    an error at runtime depending on the operating system.
-
--  ``split-strip:`` Reports that splitting or stripping debug symbols
-   from binaries has failed.
 
 -  ``staticdev:`` Checks for static library files (``*.a``) in
    non-``staticdev`` packages.
