@@ -9,7 +9,7 @@ system and gives an overview of their function and contents.
 
 :term:`A <ABIEXTENSION>` :term:`B` :term:`C <CACHE>`
 :term:`D` :term:`E <EFI_PROVIDER>` :term:`F <FAKEROOT>`
-:term:`G <GCCPIE>` :term:`H <HGDIR>` :term:`I <ICECC_CLASS_DISABLE>`
+:term:`G <GCCPIE>` :term:`H <HGDIR>` :term:`I <IMAGE_BASENAME>`
 :term:`K <KARCH>` :term:`L <LABELS>` :term:`M <MACHINE>`
 :term:`N <NATIVELSBSTRING>` :term:`O <OBJCOPY>` :term:`P`
 :term:`Q <QA_EMPTY_DIRS>` :term:`R <RANLIB>` :term:`S` :term:`T`
@@ -2686,7 +2686,7 @@ system and gives an overview of their function and contents.
       :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class sets the
       default value::
 
-         ESDK_CLASS_INHERIT_DISABLE ?= "buildhistory icecc"
+         ESDK_CLASS_INHERIT_DISABLE ?= "buildhistory"
 
       Some classes are not generally applicable within the extensible SDK
       context. You can use this variable to disable those classes.
@@ -3817,91 +3817,6 @@ system and gives an overview of their function and contents.
       does not produce an error if a tool specified in the value of
       :term:`HOSTTOOLS_NONFATAL` is not found on the build host. Thus, you can
       use :term:`HOSTTOOLS_NONFATAL` to filter optional host tools.
-
-   :term:`ICECC_CLASS_DISABLE`
-      Identifies user classes that you do not want the Icecream distributed
-      compile support to consider. This variable is used by the
-      :ref:`ref-classes-icecc` class. You set this variable in
-      your ``local.conf`` file.
-
-      When you list classes using this variable, the recipes inheriting
-      those classes will not benefit from distributed compilation across
-      remote hosts. Instead they will be built locally.
-
-   :term:`ICECC_DISABLED`
-      Disables or enables the ``icecc`` (Icecream) function. For more
-      information on this function and best practices for using this
-      variable, see the ":ref:`ref-classes-icecc`"
-      section.
-
-      Setting this variable to "1" in your ``local.conf`` disables the
-      function::
-
-         ICECC_DISABLED ??= "1"
-
-      To enable the function, set the variable as follows::
-
-         ICECC_DISABLED = ""
-
-   :term:`ICECC_ENV_EXEC`
-      Points to the ``icecc-create-env`` script that you provide. This
-      variable is used by the :ref:`ref-classes-icecc` class. You
-      set this variable in your ``local.conf`` file.
-
-      If you do not point to a script that you provide, the OpenEmbedded
-      build system uses the default script provided by the
-      :oe_git:`icecc-create-env_0.1.bb
-      </openembedded-core/tree/meta/recipes-devtools/icecc-create-env/icecc-create-env_0.1.bb>`
-      recipe, which is a modified version and not the one that comes with
-      ``icecream``.
-
-   :term:`ICECC_PARALLEL_MAKE`
-      Extra options passed to the ``make`` command during the
-      :ref:`ref-tasks-compile` task that specify parallel
-      compilation. This variable usually takes the form of "-j x", where x
-      represents the maximum number of parallel threads ``make`` can run.
-
-      .. note::
-
-         The options passed affect builds on all enabled machines on the
-         network, which are machines running the ``iceccd`` daemon.
-
-      If your enabled machines support multiple cores, coming up with the
-      maximum number of parallel threads that gives you the best
-      performance could take some experimentation since machine speed,
-      network lag, available memory, and existing machine loads can all
-      affect build time. Consequently, unlike the
-      :term:`PARALLEL_MAKE` variable, there is no
-      rule-of-thumb for setting :term:`ICECC_PARALLEL_MAKE` to achieve optimal
-      performance.
-
-      If you do not set :term:`ICECC_PARALLEL_MAKE`, the build system does not
-      use it (i.e. the system does not detect and assign the number of
-      cores as is done with :term:`PARALLEL_MAKE`).
-
-   :term:`ICECC_PATH`
-      The location of the ``icecc`` binary. You can set this variable in
-      your ``local.conf`` file. If your ``local.conf`` file does not define
-      this variable, the :ref:`ref-classes-icecc` class attempts
-      to define it by locating ``icecc`` using ``which``.
-
-   :term:`ICECC_RECIPE_DISABLE`
-      Identifies user recipes that you do not want the Icecream distributed
-      compile support to consider. This variable is used by the
-      :ref:`ref-classes-icecc` class. You set this variable in
-      your ``local.conf`` file.
-
-      When you list recipes using this variable, you are excluding them
-      from distributed compilation across remote hosts. Instead they will
-      be built locally.
-
-   :term:`ICECC_RECIPE_ENABLE`
-      Identifies user recipes that use an empty
-      :term:`PARALLEL_MAKE` variable that you want to
-      force remote distributed compilation on using the Icecream
-      distributed compile support. This variable is used by the
-      :ref:`ref-classes-icecc` class. You set this variable in
-      your ``local.conf`` file.
 
    :term:`IMAGE_BASENAME`
       The base name of image output files. This variable defaults to the

@@ -48,8 +48,8 @@ build system applies them against ``local.conf`` and ``auto.conf``:
    :term:`ESDK_CLASS_INHERIT_DISABLE` are disabled. Using
    :term:`ESDK_CLASS_INHERIT_DISABLE` to disable these classes is the typical
    method to disable classes that are problematic or unnecessary in the SDK
-   context. The default value disables the
-   :ref:`ref-classes-buildhistory` and :ref:`ref-classes-icecc` classes.
+   context. The default value disables the :ref:`ref-classes-buildhistory`
+   class.
 
 Additionally, the contents of ``conf/sdk-extra.conf``, when present, are
 appended to the end of ``conf/local.conf`` within the produced SDK,
