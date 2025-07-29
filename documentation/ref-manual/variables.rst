@@ -10165,6 +10165,12 @@ system and gives an overview of their function and contents.
       :term:`TESTIMAGE_FAILED_QA_ARTIFACTS`  lists space-separated paths on the
       target to retrieve onto the host.
 
+   :term:`TESTSDK_SUITES`
+      When using the :ref:`ref-classes-testsdk` class, the
+      :term:`TESTSDK_SUITES` variable can be used to control the list of test
+      modules to run. The default value for this variable is an empty string
+      and all test modules that can be found are run.
+
    :term:`THISDIR`
       The directory in which the file BitBake is currently parsing is
       located. Do not manually set this variable.

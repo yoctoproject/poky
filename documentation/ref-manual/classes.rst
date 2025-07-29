@@ -3069,6 +3069,9 @@ using the following::
 
    $ bitbake -c testsdk image
 
+The list of test modules that are run can be controlled with the
+:term:`TESTSDK_SUITES` variable.
+
 .. note::
 
    Best practices include using :term:`IMAGE_CLASSES` rather than
