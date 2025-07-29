@@ -397,6 +397,17 @@ Installs the files into the individual recipe specific sysroots (i.e.
 dependencies specified by :term:`DEPENDS`). See the
 ":ref:`ref-classes-staging`" class for more information.
 
+.. _ref-tasks-recipe-qa:
+
+``do_recipe_qa``
+----------------
+
+Performs QA check on recipes that can operate entirely from recipe metadata and
+do not need any of the build artefacts or source code.
+
+The list of QA checks that this tasks defines are documented in
+:doc:`/ref-manual/qa-checks`.
+
 .. _ref-tasks-rm_work:
 
 ``do_rm_work``
