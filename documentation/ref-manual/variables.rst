@@ -406,6 +406,9 @@ system and gives an overview of their function and contents.
    :term:`BB_DEFAULT_UMASK`
       See :term:`bitbake:BB_DEFAULT_UMASK` in the BitBake manual.
 
+   :term:`BB_DEFER_BBCLASSES`
+      See :term:`bitbake:BB_DEFER_BBCLASSES` in the BitBake manual.
+
    :term:`BB_DISKMON_DIRS`
       Monitors disk space and available inodes during the build and allows
       you to control the build based on these parameters.
