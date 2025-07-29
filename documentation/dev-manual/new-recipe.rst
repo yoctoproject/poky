@@ -298,7 +298,7 @@ a ``+`` sign in its definition. Here is an example from the recipe
    SRC_URI = "git://github.com/stevenhoneyman/l3afpad.git;branch=master;protocol=https"
 
    PV = "0.8.18.1.11+git"
-   SRCREV ="3cdccdc9505643e50f8208171d9eee5de11a42ff"
+   SRCREV = "3cdccdc9505643e50f8208171d9eee5de11a42ff"
 
 If your :term:`SRC_URI` statement includes URLs pointing to individual files
 fetched from a remote server other than a version control system,

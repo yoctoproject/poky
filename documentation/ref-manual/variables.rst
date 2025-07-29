@@ -3360,7 +3360,7 @@ system and gives an overview of their function and contents.
       Here is an example setting "0x400000000" as a load address::
 
          FIT_ADDRESS_CELLS = "2"
-         UBOOT_LOADADDRESS= "0x04 0x00000000"
+         UBOOT_LOADADDRESS = "0x04 0x00000000"
 
       See `more details about #address-cells <https://elinux.org/Device_Tree_Usage#How_Addressing_Works>`__.
 
@@ -4101,7 +4101,7 @@ system and gives an overview of their function and contents.
       The :ref:`rootfs-postcommands <ref-classes-rootfs*>` class defines the manifest
       file as follows::
 
-         IMAGE_MANIFEST ="${IMGDEPLOYDIR}/${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.manifest"
+         IMAGE_MANIFEST = "${IMGDEPLOYDIR}/${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.manifest"
 
       The location is
       derived using the :term:`IMGDEPLOYDIR`
@@ -10496,7 +10496,7 @@ system and gives an overview of their function and contents.
       Here is an example setting "0x400000000" as a load address::
 
          UBOOT_FIT_ADDRESS_CELLS = "2"
-         UBOOT_LOADADDRESS= "0x04 0x00000000"
+         UBOOT_LOADADDRESS = "0x04 0x00000000"
 
       See `more details about #address-cells <https://elinux.org/Device_Tree_Usage#How_Addressing_Works>`__.
 

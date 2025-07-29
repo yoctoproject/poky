@@ -424,9 +424,9 @@ command line:
    in the :term:`Build Directory` ``deploy/image`` directory.
    Examples::
 
-      QB_SLIRP_OPT="-netdev user,id=net0,hostfwd=tcp::8080-:80"
+      QB_SLIRP_OPT = "-netdev user,id=net0,hostfwd=tcp::8080-:80"
 
-      QB_SLIRP_OPT="-netdev user,id=net0,hostfwd=tcp::8080-:80,hostfwd=tcp::2222-:22"
+      QB_SLIRP_OPT = "-netdev user,id=net0,hostfwd=tcp::8080-:80,hostfwd=tcp::2222-:22"
 
    The first example forwards TCP port 80 from the emulated system to
    port 8080 (or the next free port) on the host system,

@@ -243,9 +243,9 @@ Bundling an Initramfs Image From a Separate Multiconfig
 
 There may be a case where we want to build an :term:`Initramfs` image which does not
 inherit the same distro policy as our main image, for example, we may want
-our main image to use ``TCLIBC="glibc"``, but to use ``TCLIBC="musl"`` in our :term:`Initramfs`
+our main image to use ``TCLIBC = "glibc"``, but to use ``TCLIBC = "musl"`` in our :term:`Initramfs`
 image to keep a smaller footprint. However, by performing the steps mentioned
-above the :term:`Initramfs` image will inherit ``TCLIBC="glibc"`` without allowing us
+above the :term:`Initramfs` image will inherit ``TCLIBC = "glibc"`` without allowing us
 to override it.
 
 To achieve this, you need to perform some additional steps:
@@ -255,8 +255,8 @@ To achieve this, you need to perform some additional steps:
    For the sake of simplicity let's assume such multiconfig is called: ``initramfscfg.conf`` and
    contains the variables::
 
-      TMPDIR="${TOPDIR}/tmp-initramfscfg"
-      TCLIBC="musl"
+      TMPDIR = "${TOPDIR}/tmp-initramfscfg"
+      TCLIBC = "musl"
 
 #. *Set additional Initramfs variables on your main configuration:*
    Additionally, on your main configuration (``local.conf``) you need to set the
