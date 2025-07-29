@@ -3166,6 +3166,9 @@ The variables used by this class are:
 -  :term:`SPL_SIGN_ENABLE`: enable signing the FIT image.
 -  :term:`SPL_SIGN_KEYDIR`: directory containing the signing keys.
 -  :term:`SPL_SIGN_KEYNAME`: base filename of the signing keys.
+-  :term:`SPL_DTB_BINARY`: Name of the SPL device tree binary. Can be set to an
+   empty string to indicate that no SPL should be created and added to the FIT
+   image.
 -  :term:`UBOOT_FIT_ADDRESS_CELLS`: ``#address-cells`` value for the FIT image.
 -  :term:`UBOOT_FIT_DESC`: description string encoded into the FIT image.
 -  :term:`UBOOT_FIT_GENERATE_KEYS`: generate the keys if they don't exist yet.

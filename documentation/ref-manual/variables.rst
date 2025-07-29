@@ -8875,6 +8875,11 @@ system and gives an overview of their function and contents.
       section in the Yocto Project Board Support Package Developer's Guide
       for additional information.
 
+   :term:`SPL_DTB_BINARY`
+      When inheriting the :ref:`ref-classes-uboot-sign` class, the
+      :term:`SPL_DTB_BINARY` variable contains the name of the SPL binary to be
+      compiled.
+
    :term:`SPL_MKIMAGE_DTCOPTS`
       Options for the device tree compiler passed to ``mkimage -D`` feature
       while creating a FIT image with the :ref:`ref-classes-uboot-sign`
