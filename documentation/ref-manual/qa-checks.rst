@@ -649,6 +649,22 @@ Errors and Warnings
     on the operating system. If you are seeing this message then the specified script
     may need to be patched to have a shorter in order to avoid runtime problems.
 
+.. _qa-check-space-around-equal:
+
+-  ``<filename>:<line number> has a lack of whitespace around the assignment: '<assignment>'``
+
+   This warning indicated that there is missing spaces around an assignment.
+
+   For example, the following assignments would print a warning::
+
+      FOO="bar"
+      FOO= "bar"
+      FOO ="bar"
+
+   These should be replaced by::
+
+      FOO = "bar"
+
 .. _qa-check-src-uri-bad:
 
 - ``<recipename>: SRC_URI uses unstable GitHub archives [src-uri-bad]``
