@@ -7,6 +7,9 @@ Variables Glossary
 This chapter lists common variables used in the OpenEmbedded build
 system and gives an overview of their function and contents.
 
+..
+   check_glossary_begin
+
 :term:`A <ABIEXTENSION>` :term:`B` :term:`C <CACHE>`
 :term:`D` :term:`E <EFI_PROVIDER>` :term:`F <FAKEROOT>`
 :term:`G <GCCPIE>` :term:`H <HGDIR>` :term:`I <IMAGE_BASENAME>`
@@ -15,6 +18,9 @@ system and gives an overview of their function and contents.
 :term:`Q <QA_EMPTY_DIRS>` :term:`R <RANLIB>` :term:`S` :term:`T`
 :term:`U <UBOOT_BINARY>` :term:`V <VIRTUAL-RUNTIME>`
 :term:`W <WARN_QA>` :term:`X <XSERVER>` :term:`Z <ZSTD_THREADS>`
+
+..
+   check_glossary_end
 
 .. glossary::
    :sorted:
