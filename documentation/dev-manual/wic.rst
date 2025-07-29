@@ -309,7 +309,7 @@ Here are the actual partition language commands used in the
 
    # short-description: Create an EFI disk image for genericx86*
    # long-description: Creates a partitioned EFI disk image for genericx86* machines
-   part /boot --source bootimg-efi --sourceparams="loader=grub-efi" --ondisk sda --label msdos --active --align 1024
+   part /boot --source bootimg_efi --sourceparams="loader=grub-efi" --ondisk sda --label msdos --active --align 1024
    part / --source rootfs --ondisk sda --fstype=ext4 --label platform --align 1024 --use-uuid
    part swap --ondisk sda --size 44 --label swap1 --fstype=swap
 
@@ -348,7 +348,7 @@ populate a specific Wic image partition.
 
 Source plugins are subclasses of the ``SourcePlugin`` class, which is
 defined in the ``poky/scripts/lib/wic/pluginbase.py`` file. For example,
-the ``BootimgEFIPlugin`` source plugin found in the ``bootimg-efi.py``
+the ``BootimgEFIPlugin`` source plugin found in the ``bootimg_efi.py``
 file is a subclass of the ``SourcePlugin`` class, which is found in the
 ``pluginbase.py`` file.
 
@@ -365,14 +365,14 @@ implementation, it looks for the plugin with the same name as the
 partition. For example, if the partition is set up using the following
 command in a kickstart file::
 
-   part /boot --source bootimg-pcbios --ondisk sda --label boot --active --align 1024
+   part /boot --source bootimg_pcbios --ondisk sda --label boot --active --align 1024
 
 The methods defined as class
-members of the matching source plugin (i.e. ``bootimg-pcbios``) in the
-``bootimg-pcbios.py`` plugin file are used.
+members of the matching source plugin (i.e. ``bootimg_pcbios``) in the
+``bootimg_pcbios.py`` plugin file are used.
 
 To be more concrete, here is the corresponding plugin definition from
-the ``bootimg-pcbios.py`` file for the previous command along with an
+the ``bootimg_pcbios.py`` file for the previous command along with an
 example method called by the Wic implementation when it needs to prepare
 a partition using an implementation-specific function::
 
@@ -384,7 +384,7 @@ a partition using an implementation-specific function::
        Create MBR boot partition and install syslinux on it.
        """
 
-      name = 'bootimg-pcbios'
+      name = 'bootimg_pcbios'
                 .
                 .
                 .
@@ -550,7 +550,7 @@ changes all instances of "``--ondisk sda``" to "``--ondisk sdb``". The
 example changes the following two lines and leaves the remaining lines
 untouched::
 
-   part /boot --source bootimg-pcbios --ondisk sdb --label boot --active --align 1024
+   part /boot --source bootimg_pcbios --ondisk sdb --label boot --active --align 1024
    part / --source rootfs --ondisk sdb --fstype=ext4 --label platform --align 1024 --use-uuid
 
 Once the lines are changed, the

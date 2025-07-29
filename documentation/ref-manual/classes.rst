@@ -3265,7 +3265,7 @@ The variables used by this class are:
    :oe_git:`meta/conf/image-uefi.conf
    </openembedded-core/tree/meta/conf/image-uefi.conf>`
 -  :term:`IMAGE_EFI_BOOT_FILES`: files to install to EFI boot partition
-   created by the ``bootimg-efi`` Wic plugin
+   created by the ``bootimg_efi`` Wic plugin
 -  :term:`INITRAMFS_IMAGE`: initramfs recipe name
 -  :term:`KERNEL_DEVICETREE`: optional devicetree files to embed into UKI
 -  :term:`UKIFY_CMD`: `ukify

@@ -3839,7 +3839,7 @@ system and gives an overview of their function and contents.
    :term:`IMAGE_BOOT_FILES`
       A space-separated list of files installed into the boot partition
       when preparing an image using the Wic tool with the
-      ``bootimg-partition`` source plugin. By default,
+      ``bootimg_partition`` source plugin. By default,
       the files are
       installed under the same name as the source files. To change the
       installed name, separate it from the original name with a semi-colon
@@ -3917,7 +3917,7 @@ system and gives an overview of their function and contents.
    :term:`IMAGE_EFI_BOOT_FILES`
       A space-separated list of files installed into the boot partition
       when preparing an image using the Wic tool with the
-      ``bootimg-efi`` source plugin. By default,
+      ``bootimg_efi`` source plugin. By default,
       the files are
       installed under the same name as the source files. To change the
       installed name, separate it from the original name with a semi-colon
