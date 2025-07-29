@@ -3163,6 +3163,9 @@ It is intended to be inherited from U-Boot recipes.
 
 The variables used by this class are:
 
+-  :term:`SPL_DTB_BINARY`: Name of the SPL device tree binary. Can be set to an
+   empty string to indicate that no SPL should be created and added to the FIT
+   image.
 -  :term:`SPL_MKIMAGE_DTCOPTS`: DTC options for U-Boot ``mkimage`` when
    building the FIT image.
 -  :term:`SPL_SIGN_ENABLE`: enable signing the FIT image.
