@@ -225,7 +225,7 @@ section in the Yocto Project Overview and Concepts Manual.
 -----------------
 
 Runs QA checks on packaged files. For more information on these checks,
-see the :ref:`ref-classes-insane` class.
+see the :doc:`/ref-manual/qa-checks` document.
 
 .. _ref-tasks-package_write_deb:
 
