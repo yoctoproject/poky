@@ -304,19 +304,6 @@ universal, the list includes them just in case:
       :term:`LTS` release. See the :ref:`ref-long-term-support-releases`
       section for details.
 
-   :term:`OpenEmbedded-Core (OE-Core)`
-      OE-Core is metadata comprised of
-      foundational recipes, classes, and associated files that are meant to
-      be common among many different OpenEmbedded-derived systems,
-      including the Yocto Project. OE-Core is a curated subset of an
-      original repository developed by the OpenEmbedded community that has
-      been pared down into a smaller, core set of continuously validated
-      recipes. The result is a tightly controlled and an quality-assured
-      core set of recipes.
-
-      You can see the Metadata in the ``meta`` directory of the Yocto
-      Project :yocto_git:`Source Repositories </poky>`.
-
    :term:`OpenEmbedded Build System`
       The build system specific to the Yocto
       Project. The OpenEmbedded build system is based on another project
@@ -330,6 +317,19 @@ universal, the list includes them just in case:
       .. note::
 
          For some historical information about Poky, see the :term:`Poky` term.
+
+   :term:`OpenEmbedded-Core (OE-Core)`
+      OE-Core is metadata comprised of
+      foundational recipes, classes, and associated files that are meant to
+      be common among many different OpenEmbedded-derived systems,
+      including the Yocto Project. OE-Core is a curated subset of an
+      original repository developed by the OpenEmbedded community that has
+      been pared down into a smaller, core set of continuously validated
+      recipes. The result is a tightly controlled and an quality-assured
+      core set of recipes.
+
+      You can see the Metadata in the ``meta`` directory of the Yocto
+      Project :yocto_git:`Source Repositories </poky>`.
 
    :term:`Package`
       In the context of the Yocto Project, this term refers to a
