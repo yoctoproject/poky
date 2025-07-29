@@ -10804,6 +10804,12 @@ system and gives an overview of their function and contents.
       passes and uses "all" for the target during the U-Boot building
       process.
 
+   :term:`UBOOT_VERSION`
+      When naming the files that are installed and deployed, the package version
+      (:term:`PV`) and revision (:term:`PR`) are part of the filename. The
+      :term:`UBOOT_VERSION` variable contains this information, but can be
+      overridden if desired.
+
    :term:`UKIFY_CMD`
       When inheriting the :ref:`ref-classes-uki` class,
       `ukify <https://www.freedesktop.org/software/systemd/man/latest/ukify.html>`__ command to build
