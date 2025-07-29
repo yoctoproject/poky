@@ -8875,6 +8875,12 @@ system and gives an overview of their function and contents.
       output (``software_packageVersion``). The default value for this variable
       is :term:`PV`.
 
+   :term:`SPDX_PACKAGE_URL`
+      Provides a place for the SPDX data creator to record the package URL
+      string (``software_packageUrl``, in accordance with the Package URL
+      specification) for a software Package. The default value of this variable
+      is an empty string.
+
    :term:`SPDX_PRETTY`
       This option makes the SPDX output more human-readable, using
       identation and newlines, instead of the default output in a
