@@ -1003,6 +1003,21 @@ The :ref:`ref-classes-go-mod` class allows to use Go modules, and inherits the
 
 See the associated :term:`GO_WORKDIR` variable.
 
+.. _ref-classes-go-mod-update-modules:
+
+``go-mod-update-modules``
+=========================
+
+The :ref:`ref-classes-go-mod-update-modules` class can be used in Go recipes and
+defines a ``do_update_modules`` task that can be run manually to update two
+files ("BPN" below corresponds to :term:`BPN`):
+
+-  ``BPN-go-mods.inc``: list of Go modules the recipe depends on.
+-  ``BPN-licenses.inc``: list of licenses for each Go modules the recipe depends
+   on.
+
+These files can then updated automatically with the ``do_update_modules`` task.
+
 .. _ref-classes-go-vendor:
 
 ``go-vendor``
