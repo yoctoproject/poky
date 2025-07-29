@@ -64,6 +64,60 @@ The first change can introduce a lot of consecutive empty lines, so those can be
 
    sed -i -z -E 's/([ \t\f\v\r]*\n){3,}/\n\n/g' `find . -name *.bb -o -name *.inc`
 
+
+BitBake Git fetcher ``tag`` parameter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``tag=`` parameter of the Git fetcher (``git://``) was updated. The tag
+commit SHA will be compared against the value supplied by the :term:`SRCREV`
+variable or the ``rev=`` parameter in the URI in :term:`SRC_URI`. This is
+strongly recommended to add to the URIs when using the Git fetcher for
+repositories using tag releases.
+
+Space around equal assignment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A new warning is now printed when there are no whitespaces around an ``=``
+assignment in recipes::
+
+   <filename>:<line number> has a lack of whitespace around the assignment: '<assignment>'
+
+For example, the following assignments would print a warning::
+
+   FOO="bar"
+   FOO= "bar"
+   FOO ="bar"
+
+These should be replaced by::
+
+   FOO = "bar"
+
+Wic plugins containing dashes should be renamed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After a Python upgrade, :ref:`Wic <dev-manual/wic:creating partitioned images
+using wic>` plugins containing dashes (``-``) for their filenames are **no
+longer supported**. One must rename the plugin file and convert the dashes to
+underscores (``_``).
+
+It is also recommended to update any WKS file to convert dashes to underscores.
+For example, the ``bootimg-partition.py`` plugin was renamed to
+``bootimg_partition.py``. This means that any WKS file using this plugin must
+change each ``--source bootimg-partition`` to ``--source bootimg_partition``.
+
+However, the current WIC code automatically converts dashes to underscore for
+any ``--source`` call, so existing WKS files will not break if they use upstream
+plugins from :term:`OpenEmbedded-Core (OE-Core)`.
+
+``fitImage`` no longer supporter for :term:`KERNEL_IMAGETYPE`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``fitImage`` type for :term:`KERNEL_IMAGETYPE` is no longer supported. The
+logic for creating a FIT image was moved out of the :ref:`ref-classes-kernel`
+class. Instead, one should create a new recipe to build this FIT image, as
+described in the :ref:`Removed Classes <migration-guides/migration-5.3:Removed
+Classes>` section of the Migration notes for |yocto-ver| (|yocto-codename|).
+
 Supported kernel versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -99,10 +153,37 @@ Removed variables
 
 The following variables have been removed:
 
+-  ``BUILDHISTORY_RESET``: Setting this to non-empty used to remove the old
+   content of the :ref:`ref-classes-buildhistory` as part of the current
+   :term:`BitBake` invocation and replace it with information about what was
+   built during the build. This was partly broken and hard to maintain.
+
 Removed recipes
 ~~~~~~~~~~~~~~~
 
 The following recipes have been removed in this release:
+
+-  ``libsoup``: The last user in :term:`OpenEmbedded-Core (OE-Core)` was
+   ``gst-examples``, which has been upgraded with its ``libsoup`` dependency
+   dropped.
+
+-  ``glibc-y2038-tests``: removed as the recipe only provides tests which are
+   now provided by ``glibc-testsuite``.
+
+-  ``python3-ndg-httpsclient``: The last dependency in core on this recipe was
+   removed in May 2024 with dfa482f1998 ("python3-requests: cleanup RDEPENDS"),
+   and there is no other user of this variable.
+
+Removed :term:`PACKAGECONFIG` entries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  ``dropbear``: ``enable-x11-forwarding`` (renamed to ``x11``)
+
+-  ``libxml2``: ``ipv6``
+
+-  ``squashfs-tools``: ``reproducible``
+
+-  ``mesa``: ``kmsro``, ``osmesa``, ``xa``
 
 Removed classes
 ~~~~~~~~~~~~~~~
@@ -151,6 +232,11 @@ The following classes have been removed in this release:
 
    See the :ref:`ref-classes-kernel-fit-image` section for more information.
 
+-  ``icecc.bbclass``: Reports show that this class has been broken since Yocto
+   Mickledore which suggests there are limited numbers of users. It doesn't have
+   any automated testing and it would be hard to setup and maintain a testing
+   environment for it. The original users/maintainers aren't using it now.
+
 Removed features
 ~~~~~~~~~~~~~~~~
 
@@ -158,3 +244,6 @@ The following features have been removed in this release:
 
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
+
+-  ``xserver-xorg``: remove sub-package ``${PN}-xwayland``, as ``xwayland`` is
+   now its own recipe.
