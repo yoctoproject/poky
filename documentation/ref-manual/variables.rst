@@ -6230,6 +6230,11 @@ system and gives an overview of their function and contents.
       If you use a custom script to set up your build environment, set the
       :term:`OE_INIT_ENV_SCRIPT` variable to its name.
 
+   :term:`OE_SHARED_UMASK`
+      The :term:`OE_SHARED_UMASK` variable contains the :manpage:`umask`
+      definition for shared files (for example files in :term:`SSTATE_DIR` or
+      :term:`DL_DIR`).
+
    :term:`OE_TERMINAL`
       Controls how the OpenEmbedded build system spawns interactive
       terminals on the host development system (e.g. using the BitBake
