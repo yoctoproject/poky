@@ -2054,6 +2054,13 @@ system and gives an overview of their function and contents.
 
          CVE_CHECK_STATUSMAP[cpe-incorrect] = "Ignored"
 
+   :term:`CVE_CHECK_VEX_JUSTIFICATION`
+      Mapping variable for :term:`CVE_STATUS` reasons
+      (for example ``not-applicable-platform``) to :ref:`ref-classes-vex`
+      justifications. Should be set as follows::
+
+         CVE_CHECK_VEX_JUSTIFICATION[not-applicable-config] = "vulnerableCodeNotPresent"
+
    :term:`CVE_VERSION`
       In a recipe, defines the version used to match the recipe version
       against the version in the `NIST CVE database <https://nvd.nist.gov/>`__
