@@ -5468,6 +5468,19 @@ system and gives an overview of their function and contents.
       Linux Kernel configuration auditing feature, see :term:`KCONF_AUDIT_LEVEL`
       and :term:`KCONF_BSP_AUDIT_LEVEL`.
 
+   :term:`KMETA_CONFIG_FEATURES`
+      The :term:`KMETA_CONFIG_FEATURES` variable defines features enabled for the
+      :ref:`ref-classes-kernel-yocto` class. The following list of features are
+      supported:
+
+      -  ``prefer-modules``: prefer a kernel configuration to be set as ``m``
+         instead of the default value ``y`` if the kernel configuration was
+         defined as follows::
+
+            CONFIG_FOO=y # OVERRIDE:$MODULE_OR_Y
+
+      The default value of this variable is an empty string.
+
    :term:`KTYPE`
       Defines the kernel type to be used in assembling the configuration.
       The linux-yocto recipes define "standard", "tiny", and "preempt-rt"
