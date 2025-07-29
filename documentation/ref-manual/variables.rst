@@ -7585,6 +7585,13 @@ system and gives an overview of their function and contents.
       reduce pseudo's overhead. A path is ignored if it matches any prefix in the list
       and can include partial directory (or file) names.
 
+   :term:`PSEUDO_INCLUDE_PATHS`
+      A comma-separated (without spaces) list of path prefixes that should be included
+      by pseudo when monitoring and recording file operations, in order to avoid
+      problems with files being written to outside of the pseudo context and
+      reduce :ref:`pseudo <overview-manual/concepts:Fakeroot and Pseudo>`'s overhead.
+      A path is included if it matches any prefix in the list and can include
+      partial directory (or file) names.
 
    :term:`PTEST_ENABLED`
       Specifies whether or not :ref:`Package
