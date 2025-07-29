@@ -3360,6 +3360,10 @@ system and gives an overview of their function and contents.
 
       This variable is used in the :ref:`ref-classes-kernel-fit-image` class.
 
+   :term:`FIT_CONF_PREFIX`
+      When using the :ref:`ref-classes-kernel-fit-image`, this is the prefix
+      used for creating FIT configuration nodes. Its default value is "conf-".
+
    :term:`FIT_DESC`
       Specifies the description string encoded into a FIT image. The
       default value is set by the :ref:`ref-classes-kernel-fit-image` class as
