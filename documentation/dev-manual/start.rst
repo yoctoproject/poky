@@ -234,6 +234,10 @@ particular working environment and set of practices.
        Yocto Project Overview and Concepts Manual for more details on the hash
        equivalence feature.
 
+       See the :doc:`/dev-manual/hashequivserver` section of the Yocto Project
+       Development Tasks Manual for details on how to setup a
+       :ref:`overview-manual/concepts:Hash Equivalence` server.
+
     -  Set up an Autobuilder and have it populate the sstate cache and
        source directories.
 

@@ -2064,19 +2064,9 @@ on a Hash Equivalence server on a network, by setting::
 
    BB_HASHSERVE = "<HOSTNAME>:<PORT>"
 
-.. note::
-
-   The shared Hash Equivalence server needs to be maintained together with the
-   Shared State cache. Otherwise, the server could report Shared State hashes
-   that only exist on specific clients.
-
-   We therefore recommend that one Hash Equivalence server be set up to
-   correspond with a given Shared State cache, and to start this server
-   in *read-only mode*, so that it doesn't store equivalences for
-   Shared State caches that are local to clients.
-
-   See the :term:`BB_HASHSERVE` reference for details about starting
-   a Hash Equivalence server.
+Setting up a Hash Equivalence server is described in the
+:doc:`/dev-manual/hashequivserver` section of the Yocto Project Development
+Tasks Manual.
 
 See the `video <https://www.youtube.com/watch?v=zXEdqGS62Wc>`__
 of Joshua Watt's `Hash Equivalence and Reproducible Builds

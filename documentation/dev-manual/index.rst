@@ -51,5 +51,6 @@ Yocto Project Development Tasks Manual
    wayland
    qemu
    bblock
+   hashequivserver
 
 .. include:: /boilerplate.rst
