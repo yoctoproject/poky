@@ -58,20 +58,35 @@ Supported Linux Distributions
 Currently, the &DISTRO; release ("&DISTRO_NAME;") of the Yocto Project is
 supported on the following distributions:
 
--  Ubuntu 20.04 (LTS)
-
--  Ubuntu 22.04 (LTS)
-
--  Fedora 38
-
--  Debian GNU/Linux 11.x (Bullseye)
+..
+   Can be generated with yocto-autobuilder-helper's scripts/yocto-supported-distros:
+   yocto-supported-distros --release kirkstone --config yocto-autobuilder2/config.py --output-format docs --poky-distros
 
 -  AlmaLinux 8
+-  AlmaLinux 9
+-  Debian 11
+-  Debian 12
+-  Fedora 39
+-  Fedora 40
+-  Fedora 41
+-  Rocky Linux 8
+-  Rocky Linux 9
+-  Ubuntu 20.04 (LTS)
+-  Ubuntu 22.04 (LTS)
+-  Ubuntu 24.04 (LTS)
+-  Ubuntu 24.10
 
 The following distribution versions are still tested, even though the
 organizations publishing them no longer make updates publicly available:
 
--  Ubuntu 18.04 (LTS)
+..
+   This list contains EOL distros that are still tested on the Autobuilder
+   (meaning there are running workers for them).
+   See https://endoflife.date for information of EOL releases.
+
+-  Fedora 39
+-  Fedora 40
+-  Ubuntu 20.04 (LTS)
 
 Note that the Yocto Project doesn't have access to private updates
 that some of these versions may have. Therefore, our testing has
@@ -80,19 +95,33 @@ limited value if you have access to such updates.
 Finally, here are the distribution versions which were previously
 tested on former revisions of "&DISTRO_NAME;", but no longer are:
 
--  Ubuntu 18.04 (LTS)
+..
+   Can be generated with yocto-autobuilder-helper's scripts/yocto-supported-distros:
+   yocto-supported-distros --release kirkstone --config yocto-autobuilder2/config.py --output-format docs --old-distros
 
--  Ubuntu 20.04 (LTS)
-
--  Ubuntu 22.04 (LTS)
-
+-  CentOS 7
+-  CentOS 8
+-  Debian 10
+-  Debian 8
+-  Debian 9
+-  Fedora 29
+-  Fedora 30
+-  Fedora 31
+-  Fedora 32
+-  Fedora 33
+-  Fedora 34
+-  Fedora 35
+-  Fedora 36
 -  Fedora 37
-
--  Debian GNU/Linux 11.x (Bookworm)
-
+-  Fedora 38
+-  OpenSUSE Leap 15.0
+-  OpenSUSE Leap 15.1
+-  OpenSUSE Leap 15.2
 -  OpenSUSE Leap 15.3
-
--  AlmaLinux 8
+-  Ubuntu 16.04
+-  Ubuntu 18.04
+-  Ubuntu 19.04
+-  Ubuntu 21.10
 
 .. note::
 
