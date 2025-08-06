@@ -58,53 +58,54 @@ Supported Linux Distributions
 Currently, the &DISTRO; release ("&DISTRO_NAME;") of the Yocto Project is
 supported on the following distributions:
 
--  Ubuntu 22.04 (LTS)
-
--  Ubuntu 24.04 (LTS)
-
--  Ubuntu 24.10
-
--  Fedora 39
-
--  Fedora 40
-
--  Fedora 41
-
--  CentOS Stream 9
-
--  Debian GNU/Linux 11 (Bullseye)
-
--  Debian GNU/Linux 12 (Bookworm)
-
--  OpenSUSE Leap 15.5
-
--  OpenSUSE Leap 15.6
+..
+   Can be generated with yocto-autobuilder-helper's scripts/yocto-supported-distros.
+   yocto-supported-distros --release master --config yocto-autobuilder2/config.py --output-format docs
 
 -  AlmaLinux 8
-
 -  AlmaLinux 9
-
--  Rocky 8
-
--  Rocky 9
+-  CentOS Stream 9
+-  Debian GNU/Linux 11 (Bullseye)
+-  Debian GNU/Linux 12 (Bookworm)
+-  Fedora 39
+-  Fedora 40
+-  Fedora 41
+-  OpenSUSE Leap 15.5
+-  OpenSUSE Leap 15.6
+-  Rocky Linux 8
+-  Rocky Linux 9
+-  Ubuntu 22.04 (LTS)
+-  Ubuntu 24.04 (LTS)
+-  Ubuntu 24.10
 
 The following distribution versions are still tested, even though the
 organizations publishing them no longer make updates publicly available:
 
--  Ubuntu 18.04 (LTS)
+..
+   This list contains EOL distros that are still tested on the Autobuilder
+   (meaning there are running workers).
+   See https://endoflife.date for information of EOL releases.
 
--  Ubuntu 20.04 (LTS)
-
--  Ubuntu 23.04
+-  Fedora 39
+-  Fedora 40
+-  OpenSUSE Leap 15.5
+-  Ubuntu 24.10
 
 Note that the Yocto Project doesn't have access to private updates
 that some of these versions may have. Therefore, our testing has
 limited value if you have access to such updates.  Also, :term:`buildtools`
 may have to be used on older releases in order to get current enough
-tools, such as python.
+tools, such as Python.
 
 Finally, here are the distribution versions which were previously
 tested on former revisions of "&DISTRO_NAME;", but no longer are:
+
+..
+   On the master branch it does not really make sense to fill this list. We
+   should maintain the list below on stable branches once we drop support for
+   distributions.
+   The list can be generated with yocto-autobuilder-helper's scripts/yocto-supported-distros:
+   yocto-supported-distros --release <release> --config yocto-autobuilder2/config.py --output-format docs --old-distros
 
 *This list is currently empty*
 
