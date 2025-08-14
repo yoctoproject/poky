@@ -13,6 +13,7 @@ SRC_URI = "git://git.efficios.com/babeltrace.git;branch=stable-2.1;protocol=http
            file://0001-tests-fix-test-applications-in-cpp-common.patch \
            file://0001-tests-set-the-correct-plugin-directory.patch \
            file://0001-Make-bt_field_blob_get_length-return-size_t-instead-.patch \
+           file://0001-wip-tests-yocto.patch \
            "
 SRCREV = "7f2f8cd6dac497cbb466efb31219b531c62013f5"
 UPSTREAM_CHECK_GITTAGREGEX = "v(?P<pver>2(\.\d+)+)$"
@@ -67,8 +68,8 @@ do_install_ptest () {
 	find "${S}/tests/$d" -maxdepth 1 -name *.json \
 	     -exec install -t "${D}${PTEST_PATH}/tests/$d" {} \;
     done
-    install -d "${D}${PTEST_PATH}/tests/data/ctf-traces/"
-    cp -a ${S}/tests/data/ctf-traces/* ${D}${PTEST_PATH}/tests/data/ctf-traces/
+    install -d "${D}${PTEST_PATH}/tests/data/"
+    cp -a ${S}/tests/data/* ${D}${PTEST_PATH}/tests/data/
 
     # Copy the tests directory tree and the executables and
     # Makefiles found within.
