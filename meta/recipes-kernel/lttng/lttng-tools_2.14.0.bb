@@ -87,6 +87,7 @@ do_install_ptest () {
             tests/regression/tools/save-load/configuration/load-42*.lttng tests/regression/tools/health/test_health.sh \
             tests/regression/tools/metadata/utils.sh tests/regression/tools/rotation/rotate_utils.sh \
             tests/regression/tools/notification/util_event_generator.sh \
+            tests/regression/tools/trace-format/ust-local-trace-pretty.expect \
             tests/regression/tools/base-path/*.lttng; do
         install -D "${B}/$f" "${D}${PTEST_PATH}/$f"
     done
