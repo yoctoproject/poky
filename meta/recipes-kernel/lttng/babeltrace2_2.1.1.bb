@@ -22,6 +22,8 @@ inherit autotools pkgconfig ptest python3targetconfig
 
 EXTRA_OECONF = "--disable-debug-info --disable-Werror --enable-python-plugins --enable-python-bindings"
 
+export DISTSETUPOPTS = " --install-lib=${PYTHON_SITEPACKAGES_DIR}"
+
 PACKAGECONFIG ??= "manpages"
 PACKAGECONFIG[manpages] = ", --disable-man-pages, asciidoc-native xmlto-native"
 
