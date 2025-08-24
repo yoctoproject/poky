@@ -1,0 +1,2913 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["master"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# This workflow will install Deno then run `deno lint` and `deno test`.
+# For more information see: https://github.com/denoland/setup-deno
+
+name: Deno
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        # uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@61fe2df320078202e33d7d5ad347e7dcfa0e8f31  # v1.1.2
+        with:
+          deno-version: v1.x
+
+      # Uncomment this step to verify the use of 'deno fmt' on each commit.
+      # - name: Verify formatting
+      #   run: deno fmt --check
+
+      - name: Run linter
+        run: deno lint
+
+      - name: Run tests
+        run: deno test -A
+        <?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="2025072916"
+    android:versionName="2.3.2-2025072916"
+    android:compileSdkVersion="34"
+    android:compileSdkVersionCodename="14"
+    package="com.xiaomi.aicr"
+    platformBuildVersionCode="34"
+    platformBuildVersionName="14">
+
+    <uses-sdk
+        android:minSdkVersion="30"
+        android:targetSdkVersion="34" />
+
+    <permission
+        android:name="miui.mlkit.permission.MLKIT"
+        android:protectionLevel="0x3" />
+
+    <permission
+        android:name="com.xiaomi.aicr.permission.OPEN_CAPABILITY_INTERFACE"
+        android:protectionLevel="0x3" />
+
+    <permission
+        android:name="hyperos.permission.READ_AIACTION"
+        android:protectionLevel="0x3" />
+
+    <permission
+        android:name="hyperos.permission.CALL_INSTRUCTION_ACTION"
+        android:protectionLevel="0x3" />
+
+    <permission
+        android:name="com.microsoft.AIExtensibility.provider.MANAGE_RESOURCES"
+        android:protectionLevel="0x8000002"
+        android:knownCerts="@ref/0x7f030011" />
+
+    <uses-permission
+        android:name="miui.permission.JOYOSE" />
+
+    <uses-permission
+        android:name="hyperos.permission.CALL_INSTRUCTION_ACTION" />
+
+    <uses-permission
+        android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <uses-permission
+        android:name="com.xiaomi.aicr.permission.OPEN_CAPABILITY_INTERFACE" />
+
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+
+    <uses-permission
+        android:name="miui.permission.USE_INTERNAL_GENERAL_API" />
+
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission
+        android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND" />
+
+    <uses-permission
+        android:name="com.xiaomi.permission.CLOUD_MANAGER" />
+
+    <uses-permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission
+        android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission
+        android:name="com.miui.securitycenter.permission.ACCESS_SECURITY_CENTER_PROVIDER" />
+
+    <uses-permission
+        android:name="com.miui.securitycenter.permission.SYSTEM_PERMISSION_DECLARE" />
+
+    <uses-permission
+        android:name="android.permission.INTERNET" />
+
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission
+        android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission
+        android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <uses-permission
+        android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-permission
+        android:name="android.permission.VIBRATE" />
+
+    <uses-permission
+        android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-permission
+        android:name="android.permission.CAPTURE_AUDIO_HOTWORD" />
+
+    <uses-permission
+        android:name="android.permission.BLUETOOTH" />
+
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-permission
+        android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <uses-permission
+        android:name="miui.permission.USE_INTERNAL_GENERAL_API" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN" />
+
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <uses-permission
+        android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS" />
+
+    <uses-permission
+        android:name="android.permission.READ_CALL_LOG" />
+
+    <uses-permission
+        android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission
+        android:name="com.android.permission.GET_INSTALLED_APPS" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
+    <uses-permission
+        android:name="android.permission.MODIFY_DAY_NIGHT_MODE" />
+
+    <uses-permission
+        android:name="android.permission.STATUS_BAR_SERVICE" />
+
+    <uses-permission
+        android:name="android.permission.STATUS_BAR" />
+
+    <uses-permission
+        android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
+    <uses-permission
+        android:name="android.permission.MANAGE_NOTIFICATIONS" />
+
+    <uses-permission
+        android:name="hyperos.permission.READ_AIACTION" />
+
+    <uses-permission
+        android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <uses-permission
+        android:name="com.miui.powercenter.permission.POWER_COMMAND" />
+
+    <uses-permission
+        android:name="com.xiaomi.aicr.permission.MIPUSH_RECEIVE" />
+
+    <permission
+        android:name="com.xiaomi.aicr.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="0x2" />
+
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES" />
+
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VIDEO" />
+
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
+
+    <uses-permission
+        android:name="com.hyperos.permission.READ_RECORD" />
+
+    <uses-permission
+        android:name="com.hyperos.permission.READ_NOTE" />
+
+    <uses-permission
+        android:name="android.permission.READ_CONTACTS" />
+
+    <uses-permission
+        android:name="android.permission.READ_CALENDAR" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_CALENDAR" />
+
+    <uses-permission
+        android:name="android.permission.INJECT_EVENTS" />
+
+    <uses-permission
+        android:name="android.permission.DISABLE_INPUT_DEVICE" />
+
+    <uses-permission
+        android:name="com.miui.notes.permission.ACCESS_NOTE" />
+
+    <uses-permission
+        android:name="android.permission.WAKE_LOCK" />
+
+    <permission
+        android:label="ACCESS_ASSIST_CONTENT_PROVIDER"
+        android:name="com.xiaomi.aireco.permission.ACCESS_ASSIST_CONTENT_PROVIDER"
+        android:protectionLevel="0x3" />
+
+    <uses-permission
+        android:name="android.permission.READ_FRAME_BUFFER" />
+
+    <uses-permission
+        android:name="android.permission.GET_TASKS" />
+
+    <uses-permission
+        android:name="miui.permission.ACCESSIBILITY_SERVICE" />
+
+    <uses-permission
+        android:name="com.xiaomi.permission.SETTINGS_AI" />
+
+    <queries>
+
+        <package
+            android:name="com.miui.player" />
+
+        <package
+            android:name="com.miui.notes" />
+
+        <package
+            android:name="com.miui.gallery" />
+
+        <package
+            android:name="com.milink.service" />
+
+        <package
+            android:name="com.miui.mediaeditor" />
+
+        <package
+            android:name="com.android.contacts" />
+
+        <package
+            android:name="com.android.mms" />
+
+        <package
+            android:name="com.android.camera" />
+
+        <package
+            android:name="com.android.weather" />
+
+        <package
+            android:name="com.miui.creation" />
+
+        <package
+            android:name="com.android.fileexplorer" />
+
+        <package
+            android:name="com.android.soundrecorder" />
+
+        <package
+            android:name="com.xiaomi.aicr.action1" />
+
+        <package
+            android:name="com.xiaomi.aicr.action2" />
+
+        <package
+            android:name="com.xiaomi.aicr.action3" />
+
+        <package
+            android:name="com.xiaomi.aicr.action4" />
+
+        <package
+            android:name="com.android.server.telecom" />
+
+        <package
+            android:name="com.xiaomi.aicr" />
+
+        <package
+            android:name="com.android.browser" />
+
+        <package
+            android:name="com.android.settings" />
+
+        <package
+            android:name="com.mipay.wallet" />
+
+        <package
+            android:name="com.xiaomi.bluetooth" />
+
+        <package
+            android:name="com.miui.securitycenter" />
+
+        <package
+            android:name="com.android.systemui" />
+
+        <package
+            android:name="com.miui.weather2" />
+
+        <package
+            android:name="com.android.deskclock" />
+
+        <package
+            android:name="com.xiaomi.mis" />
+
+        <package
+            android:name="com.miui.fliphome" />
+
+        <package
+            android:name="com.miui.misound" />
+
+        <package
+            android:name="com.xiaomi.misettings" />
+
+        <package
+            android:name="com.xiaomi.account" />
+
+        <package
+            android:name="com.miui.bugreport" />
+
+        <package
+            android:name="com.cloudbae.lovenanning" />
+
+        <package
+            android:name="cn.com.bmac.nfc" />
+
+        <package
+            android:name="com.tianlutech.ebus" />
+
+        <package
+            android:name="cderg.cocc.cocc_cdids" />
+
+        <package
+            android:name="com.chinasofti.shanghaihuateng.metroapp" />
+
+        <package
+            android:name="com.dlmetro.app" />
+
+        <package
+            android:name="com.infothinker.gzmetro" />
+
+        <package
+            android:name="com.chinasofti.shanghaihuateng.jnmetroapp" />
+
+        <package
+            android:name="com.bwton.msx.lyb" />
+
+        <package
+            android:name="com.bwton.msx.ncb" />
+
+        <package
+            android:name="com.app.shanghai.metro" />
+
+        <package
+            android:name="com.wimetro.iafc" />
+
+        <package
+            android:name="com.founder.hsdt" />
+
+        <package
+            android:name="com.sdjictec.qdmetro" />
+
+        <package
+            android:name="com.bwton.szfreego" />
+
+        <package
+            android:name="com.jiuyu.sptcc.cordova" />
+
+        <package
+            android:name="com.iss.shenzhenmetro" />
+
+        <package
+            android:name="com.szt.pay" />
+
+        <package
+            android:name="com.bwton.msx.sjz" />
+
+        <package
+            android:name="org.zzmetro.eticket" />
+
+        <package
+            android:name="com.tencent.mm" />
+
+        <package
+            android:name="com.chinarainbow.tft" />
+
+        <package
+            android:name="com.bwton.tjmetro" />
+
+        <package
+            android:name="com.xzgdjt.smartmetro" />
+
+        <package
+            android:name="com.luqiao.xmmetro" />
+
+        <package
+            android:name="com.miui.tsmclient" />
+
+        <package
+            android:name="com.unionpay" />
+
+        <package
+            android:name="enfc.metro" />
+
+        <package
+            android:name="com.gzyct.yctwallet" />
+
+        <package
+            android:name="com.eg.android.AlipayGphone" />
+
+        <package
+            android:name="com.miui.voiceassist" />
+
+        <package
+            android:name="com.miui.personalassistant" />
+
+        <package
+            android:name="com.xiaomi.smarthome" />
+
+        <package
+            android:name="de.robv.android.xposed.installer" />
+
+        <package
+            android:name="com.saurik.substrate" />
+
+        <package
+            android:name="com.xiaomi.controlscreen.account" />
+
+        <package
+            android:name="com.tencent.mobileqq" />
+
+        <package
+            android:name="com.facebook.katana" />
+
+        <package
+            android:name="com.sina.weibo" />
+
+        <package
+            android:name="com.miui.greenguard" />
+
+        <package
+            android:name="com.mi.health" />
+
+        <intent>
+
+            <action
+                android:name="android.intent.action.MAIN" />
+        </intent>
+
+        <intent>
+
+            <action
+                android:name="android.intent.action.VIEW" />
+        </intent>
+
+        <intent>
+
+            <action
+                android:name="android.intent.action.SEND" />
+        </intent>
+
+        <intent>
+
+            <action
+                android:name="com.android.camera.action.CROP" />
+        </intent>
+
+        <package
+            android:name="cn.wps.moffice_eng" />
+
+        <package
+            android:name="com.kingsoft.moffice_pro" />
+
+        <package
+            android:name="cn.wps.moffice_i18n_TV" />
+    </queries>
+
+    <uses-permission
+        android:name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS" />
+
+    <meta-data
+        android:name="miui.focusNotificationVersion"
+        android:value="1" />
+
+    <uses-permission
+        android:name="android.permission.DISABLE_KEYGUARD" />
+
+    <uses-permission
+        android:name="miui.personalassistant.ACCESS_PROVIDER" />
+
+    <uses-permission
+        android:name="com.miui.voiceassist.QUERY_ENABLE" />
+
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES" />
+
+    <uses-permission
+        android:name="android.permission.START_ANY_ACTIVITY" />
+
+    <uses-permission
+        android:name="com.miui.voiceassist.permission.ACCESS_GLOBAL_CONTENT_PROVIDER" />
+
+    <permission
+        android:name="com.xiaomi.aicr.permission.aireco"
+        android:protectionLevel="0x3" />
+
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS" />
+
+    <uses-permission
+        android:name="miui.permission.READ_STEPS" />
+
+    <permission
+        android:name="com.xiaomi.aicr.permission.NLS_CAPABILITY_PROVIDER"
+        android:protectionLevel="0x412" />
+
+    <permission
+        android:name="xiaomi.permission.device.OVERLOAD_SCENE"
+        android:protectionLevel="0x12" />
+
+    <uses-permission
+        android:name="xiaomi.permission.joyose.OVERLOAD_STATUS" />
+
+    <uses-permission
+        android:name="com.miui.gallery.permission.SEARCH" />
+
+    <uses-permission
+        android:name="miui.permission.ACCESS_RECORDS" />
+
+    <uses-permission
+        android:name="android.permission.READ_SMS" />
+
+    <uses-permission
+        android:name="com.miui.huanji.receivebroadcast" />
+
+    <uses-permission
+        android:name="com.xiaomi.gallery.permission.CLOUD" />
+
+    <uses-permission
+        android:name="com.xiaomi.aicr.permission.NLS_CAPABILITY_PROVIDER" />
+
+    <uses-permission
+        android:name="android.permission.REAL_GET_TASKS" />
+
+    <uses-permission
+        android:name="android.permission.SET_ACTIVITY_WATCHER" />
+
+    <uses-permission
+        android:name="android.permission.USE_CREDENTIALS" />
+
+    <uses-permission
+        android:name="android.permission.MANAGE_ACCOUNTS" />
+
+    <uses-permission
+        android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+
+    <permission
+        android:name="com.xiaomi.aicr.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="0x2" />
+
+    <uses-permission
+        android:name="com.xiaomi.aicr.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+
+    <uses-permission
+        android:name="com.miui.bugreport.permission.DUMP_CACHED_LOG" />
+
+    <uses-permission
+        android:name="miui.permission.ACCESS_MILINK_CAST" />
+
+    <uses-permission
+        android:name="miui.permission.ACCESS_CAST_PROVIDER" />
+
+    <uses-permission
+        android:name="com.miui.voiceassist.permission.ACCESS_SIGNED_CONTENT_PROVIDER" />
+
+    <uses-permission
+        android:name="com.miui.voiceassist.permission.ACCESS_LINK_CONTENT_PROVIDER" />
+
+    <uses-permission
+        android:name="com.xiaomi.ai.android.rpcserver.SPEECH_SERVER" />
+
+    <application
+        android:theme="@ref/0x7f140327"
+        android:label="@ref/0x7f1300c1"
+        android:icon="@ref/0x7f08011e"
+        android:name="com.xiaomi.aicr.AiCrApplication"
+        android:backupAgent="com.xiaomi.aicr.backup.AICRFullBackupAgent"
+        android:allowBackup="true"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:extractNativeLibs="false"
+        android:usesCleartextTraffic="false"
+        android:resizeableActivity="false"
+        android:networkSecurityConfig="@ref/0x7f16000a"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:requestLegacyExternalStorage="true">
+
+        <meta-data
+            android:name="com.hyperos.AI_ACTION_DESCRIPTION"
+            android:resource="@ref/0x7f120002" />
+
+        <meta-data
+            android:name="com.hyperos.AI_ACTION_DESCRIPTION_SDU_DIDI_PSNGER"
+            android:resource="@ref/0x7f120009" />
+
+        <meta-data
+            android:name="com.hyperos.AI_ACTION_DESCRIPTION_NETEASE_CLOUDMUSIC"
+            android:resource="@ref/0x7f120006" />
+
+        <meta-data
+            android:name="com.hyperos.AI_ACTION_DESCRIPTION_HUNANTV_IMGO_ACTIVITY"
+            android:resource="@ref/0x7f120003" />
+
+        <meta-data
+            android:name="com.hyperos.AI_ACTION_DESCRIPTION_ALIPAY"
+            android:resource="@ref/0x7f120001" />
+
+        <property
+            android:name="android.view.PROPERTY_MIUI_SMOOTH_CORNER_ENABLED"
+            android:value="true" />
+
+        <uses-native-library
+            android:name="libOpenCL.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libSNPE.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libcdsprpc.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libtflite_mtk.mtk.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libneuron_runtime.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libxnn.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libNPURuntime_wrapper.so"
+            android:required="false" />
+
+        <uses-library
+            android:name="micloud-sdk" />
+
+        <uses-library
+            android:name="org.apache.http.legacy" />
+
+        <uses-library
+            android:name="libapuwareutils_v2.mtk.so"
+            android:required="false" />
+
+        <uses-library
+            android:name="libneuronusdk_adapter.mtk.so"
+            android:required="false" />
+
+        <meta-data
+            android:name="com.miui.bugreport.LOG_DIR"
+            android:resource="@ref/0x7f160010" />
+
+        <meta-data
+            android:name="required_permissions"
+            android:value="@ref/0x7f1308c1" />
+
+        <meta-data
+            android:name="miui.supportRequiredModifiable"
+            android:value="true" />
+
+        <meta-data
+            android:name="firebase_analytics_collection_deactivated"
+            android:value="true" />
+
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
+
+        <meta-data
+            android:name="google_analytics_default_allow_ad_personalization_signals"
+            android:value="false" />
+
+        <activity
+            android:theme="@ref/0x7f140357"
+            android:name="com.xiaomi.aicr.cognition.MIotProject.PermissionsCheckActivity"
+            android:exported="false"
+            android:process=":cognitionService"
+            android:excludeFromRecents="true"
+            android:screenOrientation="3">
+
+            <intent-filter>
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:theme="@ref/0x7f1403cd"
+            android:name="com.xiaomi.aicr.AiActivity"
+            android:exported="true"
+            android:process=":coreService"
+            android:launchMode="2"
+            android:screenOrientation="3" />
+
+        <activity
+            android:theme="@ref/0x7f140349"
+            android:label="@ref/0x7f13002f"
+            android:name="com.xiaomi.aicr.AboutActivity"
+            android:exported="true"
+            android:launchMode="2" />
+
+        <service
+            android:name="com.xiaomi.aicr.access.AiCrCoreService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":coreService"
+            android:foregroundServiceType="0x1">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.aicr.access.AICR_ENGINE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.xiaomi.aicr.access.AiCrCognitionService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":cognitionService"
+            android:foregroundServiceType="0x1">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.aicr.access.AICR_CONGNITION_ENGINE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.xiaomi.aicr.llm.LLMService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":llmBaseService"
+            android:foregroundServiceType="0x1">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.aicr.llmmodel.AICR_LLM_ENGINE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.xiaomi.aicr.receiver.AICRReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":cognitionService">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <action
+                    android:name="com.xiaomi.aicr.hmind.ACTION_RULES_CHANGED" />
+
+                <action
+                    android:name="com.xiaomi.aicr.hmind.ACTION_DO_WORK_TEST" />
+
+                <action
+                    android:name="com.milink.service.connectivity.HYPER_MIND_MODE_CHANGED_ON" />
+
+                <action
+                    android:name="com.milink.service.connectivity.HYPER_MIND_MODE_CHANGED_OFF" />
+
+                <action
+                    android:name="com.milink.service.connectivity.HYPER_MIND_STATE_CHANGED_ON" />
+
+                <action
+                    android:name="com.milink.service.connectivity.HYPER_MIND_STATE_CHANGED_OFF" />
+
+                <action
+                    android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+
+                <action
+                    android:name="com.mi.car.phoneapp.cta.USER_GRANTED_ACTION" />
+            </intent-filter>
+
+            <intent-filter>
+
+                <action
+                    android:name="android.provider.Telephony.SECRET_CODE" />
+
+                <data
+                    android:scheme="android_secret_code"
+                    android:host="46463" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.xiaomi.aicr.receiver.PolarisReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":cognitionService" />
+
+        <service
+            android:name="androidx.work.multiprocess.RemoteWorkerService"
+            android:exported="false"
+            android:process=":cognitionService"
+            android:foregroundServiceType="0x1" />
+
+        <receiver
+            android:name="com.xiaomi.aicr.cognition.MIotProject.push.PushReceiver"
+            android:exported="true"
+            android:process=":cognitionService">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.xiaomi.aicr.actionprovider.packageChangeReceiver"
+            android:exported="true"
+            android:process=":actionprovider">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.intent.action.PACKAGE_ADDED" />
+
+                <action
+                    android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data
+                    android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
+            android:enabled="false"
+            android:exported="false"
+            android:process=":cognitionService"
+            android:directBootAware="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <action
+                    android:name="android.intent.action.TIME_SET" />
+
+                <action
+                    android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:theme="@ref/0x1030010"
+            android:name="com.xiaomi.passport.ui.sns.WXEntryActivity"
+            android:exported="false" />
+
+        <provider
+            android:name="com.xiaomi.aicr.provider.MlKitProvider"
+            android:permission="miui.mlkit.permission.MLKIT"
+            android:exported="true"
+            android:authorities="com.miui.privacycomputing.provider.mlkitprovider" />
+
+        <provider
+            android:name="com.xiaomi.aicr.iotprovider.MiAiProvider"
+            android:exported="true"
+            android:process=":iotProvider"
+            android:authorities="com.xiaomi.iot.query">
+
+            <meta-data
+                android:name="spec://ddfversion"
+                android:value="1" />
+
+            <meta-data
+                android:name="spec://ability/service"
+                android:value="@ref/0x7f1308e8" />
+
+            <meta-data
+                android:name="spec://dynamic_service"
+                android:value="true" />
+        </provider>
+
+        <provider
+            android:name="com.xiaomi.aicr.actionprovider.ActionProvider"
+            android:exported="true"
+            android:process=":actionprovider"
+            android:authorities="com.xiaomi.aicr.action.provider">
+
+            <meta-data
+                android:name="com.hyperos.AI_ACTION_PROPERTY"
+                android:resource="@ref/0x7f160002" />
+        </provider>
+
+        <provider
+            android:name="com.xiaomi.aicr.actionprovider.carActionsProvider.carActionsProvide"
+            android:exported="true"
+            android:process=":actionprovider"
+            android:authorities="com.xiaomi.aicr.action.caractionsprovide">
+
+            <meta-data
+                android:name="com.hyperos.AI_ACTION_PROPERTY"
+                android:resource="@ref/0x7f160005" />
+        </provider>
+
+        <provider
+            android:name="com.xiaomi.aicr.actionprovider.thirdparty.ActionProvider"
+            android:exported="true"
+            android:process=":thirdpartyactionprovider"
+            android:authorities="com.xiaomi.aicr.thirdpartyaction.provider">
+
+            <meta-data
+                android:name="com.hyperos.AI_ACTION_PROPERTY"
+                android:resource="@ref/0x7f16000f" />
+        </provider>
+
+        <provider
+            android:name="com.xiaomi.aicr.actionprovider.thirdparty.AccessibilityServiceProvider"
+            android:exported="true"
+            android:process=":instruction"
+            android:authorities="com.xiaomi.aicr.thirdpartyactionAccess.provider" />
+
+        <provider
+            android:name="com.xiaomi.aicr.actionprovider.ActionFileProvider"
+            android:exported="false"
+            android:process=":fileProvider"
+            android:authorities="com.xiaomi.aicr.action.fileprovider"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@ref/0x7f160004" />
+        </provider>
+
+        <provider
+            android:name="com.xiaomi.aicr.actionprovider.MicrosoftProvider"
+            android:permission="com.microsoft.AIExtensibility.provider.MANAGE_RESOURCES"
+            android:exported="true"
+            android:process=":actionproviderms"
+            android:authorities="com.xiaomi.aicr.AIExtensibility.provider" />
+
+        <meta-data
+            android:name="cta_provision"
+            android:value="true" />
+
+        <meta-data
+            android:name="cta_name"
+            android:value="app_name_hyper" />
+
+        <meta-data
+            android:name="cta_purpose"
+            android:value="cognition_os2_permission_default_desc_title" />
+
+        <meta-data
+            android:name="cta_use_network"
+            android:value="true" />
+
+        <meta-data
+            android:name="cta_user_agreement"
+            android:value="user_agreement_url" />
+
+        <meta-data
+            android:name="cta_privacy_policy"
+            android:value="privacy_cta_url" />
+
+        <meta-data
+            android:name="cta_user_agreement_offline"
+            android:value="user_agreement" />
+
+        <meta-data
+            android:name="cta_privacy_policy_offline"
+            android:value="privacy_cta" />
+
+        <meta-data
+            android:name="cta_version"
+            android:value="v20240428" />
+
+        <meta-data
+            android:name="cta_grant_permissions"
+            android:value="@ref/0x7f13020e" />
+
+        <meta-data
+            android:name="cta_required_permissions"
+            android:value="@ref/0x7f1308c2" />
+
+        <meta-data
+            android:name="cta_required_permissions_desc"
+            android:value="cognition_os2_permission_default_desc_context" />
+
+        <meta-data
+            android:name="app_build_type"
+            android:value="release" />
+
+        <meta-data
+            android:name="app_flavor"
+            android:value="beta" />
+
+        <meta-data
+            android:name="device_support_list"
+            android:resource="@ref/0x7f03000c" />
+
+        <meta-data
+            android:name="model_support_list"
+            android:resource="@ref/0x7f03000c" />
+
+        <provider
+            android:name="com.xiaomi.aicr.provider.OpenCapabilityProvider"
+            android:permission="com.xiaomi.aicr.permission.OPEN_CAPABILITY_INTERFACE"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":cognitionService"
+            android:authorities="com.xiaomi.aicr.provider.OpenCapabilityProvider" />
+
+        <service
+            android:name="androidx.room.MultiInstanceInvalidationService"
+            android:exported="false"
+            android:process=":cognitionService"
+            android:directBootAware="true"
+            android:foregroundServiceType="0x1" />
+
+        <activity
+            android:theme="@ref/0x7f1406ce"
+            android:name="com.xiaomi.aicr.privacy.PrivacyDialogActivity"
+            android:exported="false"
+            android:process=":cognitionService"
+            android:taskAffinity=":settings"
+            android:excludeFromRecents="true"
+            android:screenOrientation="1" />
+
+        <receiver
+            android:name="com.xiaomi.aicr.cognition.capability.LockScreenCapability$LockAlarmReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":iotProvider" />
+
+        <service
+            android:name="com.xiaomi.aicr.instruction.service.InstructionShortcutService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":instruction" />
+
+        <provider
+            android:name="com.xiaomi.aicr.instruction.action.provider.InstructionActionProvider"
+            android:permission="hyperos.permission.CALL_INSTRUCTION_ACTION"
+            android:exported="true"
+            android:process=":instruction"
+            android:authorities="com.xiaomi.aicr.instruction.action">
+
+            <meta-data
+                android:name="com.hyperos.AI_ACTION_PROPERTY"
+                android:resource="@ref/0x7f160001" />
+
+            <meta-data
+                android:name="com.hyperos.AI_ACTION_DYNAMIC_CHECK"
+                android:value="true" />
+        </provider>
+
+        <service
+            android:name="com.xiaomi.aicr.voicecontrol.service.VoiceControlAccessibilityService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false"
+            android:process=":instruction">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@ref/0x7f160000" />
+        </service>
+
+        <provider
+            android:name="com.xiaomi.aicr.common.download.ModelUpdateProvider"
+            android:exported="false"
+            android:authorities="provider.ModelUpdate" />
+
+        <provider
+            android:name="com.xiaomi.aicr.aireco.intergrator.AirecoMainContentProvider"
+            android:enabled="true"
+            android:exported="false"
+            android:authorities="com.xiaomi.aireco.AiNetContentProvider" />
+
+        <provider
+            android:name="com.xiaomi.aicr.aireco.intergrator.AssistantContentProvider"
+            android:permission="com.xiaomi.aireco.permission.ACCESS_ASSIST_CONTENT_PROVIDER"
+            android:enabled="true"
+            android:exported="true"
+            android:authorities="com.xiaomi.aireco.intention.AssistantContentProvider" />
+
+        <provider
+            android:name="com.xiaomi.aicr.aireco.intergrator.IntentionContentProvider"
+            android:enabled="true"
+            android:exported="true"
+            android:authorities="com.xiaomi.aireco.intention.IntentionContentProvider" />
+
+        <provider
+            android:name="com.xiaomi.aicr.aireco.intergrator.AirecoCoreContentProvider"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":cognitionService"
+            android:authorities="com.xiaomi.aicr.aireco.CoreContentProvider" />
+
+        <activity
+            android:theme="@ref/0x7f1403be"
+            android:label="@ref/0x7f130894"
+            android:name="com.xiaomi.aicr.PrivacyManagerActivity"
+            android:exported="true"
+            android:taskAffinity=":settings"
+            android:screenOrientation="3" />
+
+        <activity
+            android:theme="@ref/0x7f1403be"
+            android:label="@ref/0x7f1308b7"
+            android:name="com.xiaomi.aicr.privacy.ui.UserExperienceActivity"
+            android:exported="true"
+            android:taskAffinity=":settings"
+            android:screenOrientation="1" />
+
+        <activity
+            android:theme="@ref/0x7f1403be"
+            android:label="@ref/0x7f13089a"
+            android:name="com.xiaomi.aicr.privacy.ui.DataAccessManageActivity"
+            android:exported="true"
+            android:taskAffinity=":settings"
+            android:screenOrientation="1" />
+
+        <activity
+            android:theme="@ref/0x7f14014d"
+            android:name="com.xiaomi.aicr.privacy.ui.DataAccessManageDialogActivity"
+            android:exported="true"
+            android:taskAffinity=":settings"
+            android:screenOrientation="1" />
+
+        <service
+            android:name="com.xiaomi.aireco.sdk.messenger.AirecoMessageService"
+            android:process=":cognitionService" />
+
+        <activity
+            android:theme="@ref/0x7f140447"
+            android:name="com.xiaomi.aireco.web.WebContainerActivity"
+            android:exported="true"
+            android:screenOrientation="3"
+            android:configChanges="0xda0" />
+
+        <service
+            android:name="com.xiaomi.aireco.maml.service.MamlService"
+            android:exported="true">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.aicr.aireco.maml.OperationService" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.xiaomi.aireco.focus.notify.action.AirecoOperationService"
+            android:permission="com.xiaomi.aicr.permission.aireco"
+            android:exported="true">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.aicr.aireco.OperationService" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.xiaomi.aireco.focus.notify.AirecoOperationActionResultReceiver"
+            android:exported="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.aicr.aireco.NotifyActionResultReceiver" />
+
+                <action
+                    android:name="com.xiaomi.aicr.aireco.Notification.DELETE" />
+
+                <action
+                    android:name="com.xiaomi.aicr.aireco.Notification.TOAST" />
+
+                <action
+                    android:name="com.xiaomi.aicr.aireco.NORMAL.Notification.DELETE" />
+
+                <action
+                    android:name="com.xiaomi.aicr.aireco.NormalNotification" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="Aireco-Sdk-Version"
+            android:value="3004004" />
+
+        <meta-data
+            android:name="aireco_rn"
+            android:value="true" />
+
+        <activity
+            android:theme="@ref/0x7f1406cf"
+            android:name="com.xiaomi.aireco.intention.access.assistant.IntentionRouterActivity"
+            android:exported="false"
+            android:process=":cognitionService"
+            android:excludeFromRecents="true"
+            android:launchMode="3"
+            android:screenOrientation="1"
+            android:noHistory="true">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.aireco.intention.IntentionRouterActivity" />
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="com.xiaomi.aireco.NotificationActionReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.aicr.aireco.Notification.DELETE" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:theme="@ref/0x7f140001"
+            android:name="com.xiaomi.aireco.comm.metro_code.MetroCodeSoftwareSelectActivity"
+            android:exported="true"
+            android:process=":cognitionService"
+            android:launchMode="2"
+            android:screenOrientation="3">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.intent.action.VIEW" />
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+
+                <category
+                    android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="aireco"
+                    android:host="com.xiaomi.aireco"
+                    android:path="/metro_code_select" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:theme="@ref/0x7f1401ed"
+            android:name="com.xiaomi.aireco.utils.install.JumpInstallAppActivity"
+            android:exported="true"
+            android:screenOrientation="3" />
+
+        <meta-data
+            android:name="com.xiaomi.aicr.supportAISearchProgress"
+            android:value="true" />
+
+        <meta-data
+            android:name="com.xiaomi.aicr.supportGlobalAISearchProgress"
+            android:value="true" />
+
+        <meta-data
+            android:name="com.xiaomi.aicr.supportGlobalAISearchProgressUI"
+            android:value="false" />
+
+        <activity
+            android:theme="@ref/0x7f1403cb"
+            android:label="@ref/0x7f13006b"
+            android:name="com.xiaomi.aicr.aisearch.AiSearchSettingActivity"
+            android:exported="true"
+            android:process=":searchDataService_ui"
+            android:excludeFromRecents="true"
+            android:launchMode="2"
+            android:noHistory="true"
+            android:resizeableActivity="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.android.settings.action.AI_ENHANCED_SETTINGS" />
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.android.settings.ai.enhanced.category"
+                android:value="com.android.settings.category.ai.other" />
+
+            <meta-data
+                android:name="com.android.settings.ai.enhanced.key"
+                android:value="ai_search" />
+
+            <meta-data
+                android:name="com.android.settings.ai.enhanced.title"
+                android:resource="@ref/0x7f13006b" />
+
+            <meta-data
+                android:name="com.android.settings.ai.enhanced.summary"
+                android:resource="@ref/0x7f130066" />
+        </activity>
+
+        <activity
+            android:theme="@ref/0x7f140357"
+            android:name="com.xiaomi.aicr.common.download.dialog.DownloadDialogActivity"
+            android:exported="true"
+            android:process=":download"
+            android:excludeFromRecents="true">
+
+            <intent-filter>
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:theme="@ref/0x7f140357"
+            android:name="com.xiaomi.aicr.common.permission.CommonPermissionActivity"
+            android:exported="true"
+            android:process=":cognitionService"
+            android:excludeFromRecents="true"
+            android:screenOrientation="3">
+
+            <intent-filter>
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:theme="@ref/0x7f1403cb"
+            android:name="com.xiaomi.aicr.common.download.ModelActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":download"
+            android:excludeFromRecents="true"
+            android:launchMode="2"
+            android:noHistory="false" />
+
+        <activity
+            android:theme="@ref/0x7f140357"
+            android:name="com.xiaomi.aicr.common.download.dialog.DiskFullWarningDialogActivity"
+            android:exported="true"
+            android:process=":cognitionService"
+            android:excludeFromRecents="true"
+            android:screenOrientation="3">
+
+            <intent-filter>
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:theme="@ref/0x7f140357"
+            android:name="com.xiaomi.aicr.common.download.dialog.MeteredNetworkDialogActivity"
+            android:exported="true"
+            android:process=":download"
+            android:excludeFromRecents="true">
+
+            <intent-filter>
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:theme="@ref/0x7f140357"
+            android:name="com.xiaomi.aicr.common.download.dialog.ReminderDialogActivity"
+            android:exported="true"
+            android:process=":download"
+            android:excludeFromRecents="true">
+
+            <intent-filter>
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.xiaomi.aicr.common.download.DownloadService"
+            android:exported="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.aicr.common.Download" />
+            </intent-filter>
+        </service>
+
+        <property
+            android:name="android.view.PROPERTY_MIUI_SMOOTH_CORNER_ENABLED"
+            android:value="true" />
+
+        <receiver
+            android:name="com.xiaomi.hmind2.broadcast.AccountChangeReceiver"
+            android:exported="true">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.accounts.LOGIN_ACCOUNTS_CHANGED" />
+
+                <action
+                    android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED" />
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:enabled="@ref/0x7f05000a"
+            android:exported="false"
+            android:directBootAware="false"
+            android:foregroundServiceType="0x1" />
+
+        <receiver
+            android:name="com.ketch.internal.notification.NotificationReceiver"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+            android:value="GlideModule" />
+
+        <service
+            android:name="com.xiaomi.aicr.searchpro.service.AiCrSearchDataBaseService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":searchDataService"
+            android:foregroundServiceType="0x1">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.aicr.searchpro.AICR_SEARCHDATABASE_ENGINE" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="com.xiaomi.aicr.calendarMiner.provider.CalendarCapabilityProvider"
+            android:exported="true"
+            android:process=":searchService"
+            android:authorities="com.xiaomi.aicr.provider.CalendarCapabilityProvider" />
+
+        <provider
+            android:name="com.xiaomi.aicr.aisearch.provider.NLSCapabilityProvider"
+            android:permission="com.xiaomi.aicr.permission.NLS_CAPABILITY_PROVIDER"
+            android:exported="true"
+            android:process=":searchService"
+            android:authorities="com.xiaomi.aicr.provider.NLSCapabilityProvider" />
+
+        <provider
+            android:name="com.xiaomi.aicr.aisearch.provider.SearchDataBaseProvider"
+            android:exported="false"
+            android:process=":searchDataService"
+            android:authorities="provider.SearchDataBaseProvider" />
+
+        <provider
+            android:name="com.xiaomi.aicr.aisearch.provider.ClipAlgoProvider"
+            android:exported="false"
+            android:process=":clipAlgo"
+            android:authorities="provider.ClipAlgoProvider" />
+
+        <provider
+            android:name="com.xiaomi.aicr.aisearch.provider.SemanticSearchProvider"
+            android:permission="com.microsoft.AIExtensibility.provider.MANAGE_RESOURCES"
+            android:exported="true"
+            android:process=":searchService"
+            android:authorities="com.microsoft.AIExtensibility.SemanticSearchProvider" />
+
+        <receiver
+            android:name="com.xiaomi.aicr.aisearch.receiver.AISearchStaticReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":searchDataService">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
+
+                <data
+                    android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:theme="@ref/0x7f140029"
+            android:name="com.xiaomi.aicr.aisearch.progress.AISearchProgressActivity"
+            android:exported="true"
+            android:process=":searchDataService_ui"
+            android:excludeFromRecents="true"
+            android:configChanges="0x4da4"
+            android:noHistory="true"
+            android:resizeableActivity="false">
+
+            <intent-filter>
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+
+                <action
+                    android:name="com.xiaomi.aicr.SEARCH_DB_PROGRESS" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.xiaomi.aicr.aisearch.regularTask.SearchRemoteWorkerService"
+            android:exported="false"
+            android:process=":searchDataService"
+            android:foregroundServiceType="0x1" />
+
+        <uses-native-library
+            android:name="libc++.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libbase.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="ld-android.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libdl_android.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libvndksupport.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libcgrouprc.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libprocessgroup.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libcutils.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libutils.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libhardware.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libOpenCL.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libhidlbase.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="vendor.qti.hardware.dsp@1.0..so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libdmabufheap.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libvmmem.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libbinder.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libqape.qti.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libcdsprpc.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libtflite_mtk.mtk.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libneuron_runtime.so"
+            android:required="false" />
+
+        <uses-native-library
+            android:name="libneuron_runtime.6.so"
+            android:required="false" />
+
+        <service
+            android:name="androidx.work.multiprocess.RemoteWorkManagerService"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:exported="false"
+            android:authorities="com.xiaomi.aicr.androidx-startup">
+
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="com.xiaomi.smarthome.process.ContextInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <service
+            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
+            android:enabled="@ref/0x7f050009"
+            android:exported="false"
+            android:directBootAware="false" />
+
+        <service
+            android:name="androidx.work.impl.background.systemjob.SystemJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="@ref/0x7f05000b"
+            android:exported="true"
+            android:directBootAware="false" />
+
+        <receiver
+            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:directBootAware="false" />
+
+        <receiver
+            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
+            android:enabled="false"
+            android:exported="false"
+            android:directBootAware="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+
+                <action
+                    android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
+            android:enabled="false"
+            android:exported="false"
+            android:directBootAware="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.intent.action.BATTERY_OKAY" />
+
+                <action
+                    android:name="android.intent.action.BATTERY_LOW" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
+            android:enabled="false"
+            android:exported="false"
+            android:directBootAware="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+
+                <action
+                    android:name="android.intent.action.DEVICE_STORAGE_OK" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
+            android:enabled="false"
+            android:exported="false"
+            android:directBootAware="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
+            android:enabled="@ref/0x7f050009"
+            android:exported="false"
+            android:directBootAware="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
+            android:permission="android.permission.DUMP"
+            android:enabled="true"
+            android:exported="true"
+            android:directBootAware="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="pinyin"
+            android:value="1" />
+
+        <meta-data
+            android:name="miui_private_label"
+            android:value="PRIVATE_V150" />
+
+        <meta-data
+            android:name="miuixpreference"
+            android:value="3.1" />
+
+        <meta-data
+            android:name="os_private_label"
+            android:value="PRIVATE_OS020" />
+
+        <meta-data
+            android:name="appcompat"
+            android:value="3.1" />
+
+        <meta-data
+            android:name="bottomsheet"
+            android:value="3" />
+
+        <meta-data
+            android:name="recyclerview_card"
+            android:value="1" />
+
+        <meta-data
+            android:name="cardview"
+            android:value="1" />
+
+        <meta-data
+            android:name="miuixbasewidget"
+            android:value="1" />
+
+        <meta-data
+            android:name="popupwidget"
+            android:value="1" />
+
+        <meta-data
+            android:name="androidbasewidget"
+            android:value="1" />
+
+        <meta-data
+            android:name="miuixstretchablewidget"
+            android:value="1" />
+
+        <meta-data
+            android:name="slidingwidget"
+            android:value="1" />
+
+        <meta-data
+            android:name="smooth"
+            android:value="1" />
+
+        <meta-data
+            android:name="micloudview"
+            android:value="1" />
+
+        <meta-data
+            android:name="log"
+            android:value="1" />
+
+        <meta-data
+            android:name="graphics"
+            android:value="2" />
+
+        <meta-data
+            android:name="springback"
+            android:value="3.1" />
+
+        <meta-data
+            android:name="recyclerview"
+            android:value="2" />
+
+        <meta-data
+            android:name="nest"
+            android:value="2" />
+
+        <meta-data
+            android:name="pickerwidget"
+            android:value="1" />
+
+        <meta-data
+            android:name="haptic"
+            android:value="1" />
+
+        <meta-data
+            android:name="flexible"
+            android:value="1" />
+
+        <meta-data
+            android:name="core"
+            android:value="2" />
+
+        <meta-data
+            android:name="dynamicoverscroller"
+            android:value="2" />
+
+        <meta-data
+            android:name="recyclerview_animator"
+            android:value="2" />
+
+        <meta-data
+            android:name="folme"
+            android:value="2" />
+
+        <service
+            android:name="com.xiaomi.passport.accountmanager.OwnAppXiaomiAccountAuthenticatorService"
+            android:exported="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.accounts.AccountAuthenticator" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.xiaomi.account.service.AppAccountExchangeService"
+            android:permission="com.xiaomi.permission.CLOUD_MANAGER"
+            android:exported="true">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.account.action.BIND_ACCOUNT_EXCHANGE_SERVICE_V2" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:theme="@ref/0x7f1401f7"
+            android:name="com.xiaomi.passport.ui.internal.PickCountryCodeActivity"
+            android:exported="false" />
+
+        <activity
+            android:theme="@ref/0x7f1401f8"
+            android:label=""
+            android:name="com.xiaomi.passport.ui.page.UserAvatarUpdateActivity"
+            android:exported="false"
+            android:screenOrientation="1" />
+
+        <provider
+            android:name="com.xiaomi.passport.ui.settings.provider.PassportFileProvider"
+            android:exported="false"
+            android:authorities="com.xiaomi.aicr.passport.fileprovider"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@ref/0x7f16000b" />
+        </provider>
+
+        <activity
+            android:theme="@ref/0x7f1401f7"
+            android:name="com.xiaomi.passport.ui.internal.ConfirmCredentialActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:configChanges="0x4a0"
+            android:windowSoftInputMode="0x20">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.account.action.XIAOMI_ACCOUNT_QUICK_LOGIN" />
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:theme="@ref/0x7f1401f7"
+            android:name="com.xiaomi.passport.ui.page.AccountLoginActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:screenOrientation="3"
+            android:windowSoftInputMode="0x22" />
+
+        <activity
+            android:theme="@ref/0x7f1401f7"
+            android:label="@ref/0x7f1307a7"
+            android:name="com.xiaomi.passport.ui.page.UserInfoActivity"
+            android:exported="false" />
+
+        <activity
+            android:theme="@ref/0x7f1401f7"
+            android:name="com.xiaomi.passport.ui.internal.PassportJsbWebViewActivity"
+            android:exported="false"
+            android:launchMode="1" />
+
+        <service
+            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
+            android:exported="false"
+            android:directBootAware="true">
+
+            <meta-data
+                android:name="com.google.firebase.components:com.google.mlkit.vision.barcode.internal.BarcodeRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+
+            <meta-data
+                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+
+            <meta-data
+                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+        </service>
+
+        <provider
+            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
+            android:exported="false"
+            android:authorities="com.xiaomi.aicr.mlkitinitprovider"
+            android:initOrder="99" />
+
+        <activity
+            android:theme="@ref/0x1030010"
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@ref/0x7f0b003c" />
+
+        <meta-data
+            android:name="viewpager"
+            android:value="2" />
+
+        <meta-data
+            android:name="spring"
+            android:value="1" />
+
+        <uses-library
+            android:name="androidx.window.extensions"
+            android:required="false" />
+
+        <uses-library
+            android:name="androidx.window.sidecar"
+            android:required="false" />
+
+        <meta-data
+            android:name="com.miui.bugreport.DEFAULT_LOG_DIR"
+            android:resource="@ref/0x7f160009" />
+
+        <provider
+            android:name="com.miui.bugreport.logprovider.DumpLogProvider"
+            android:permission="com.miui.bugreport.permission.DUMP_CACHED_LOG"
+            android:exported="true"
+            android:authorities="com.xiaomi.aicr.provider.bugreport">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.miui.bugreport.intent.ACTION_DUMP_CACHED_LOG" />
+            </intent-filter>
+        </provider>
+
+        <receiver
+            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+            android:permission="android.permission.DUMP"
+            android:enabled="true"
+            android:exported="true"
+            android:directBootAware="false">
+
+            <intent-filter>
+
+                <action
+                    android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+            </intent-filter>
+
+            <intent-filter>
+
+                <action
+                    android:name="androidx.profileinstaller.action.SKIP_FILE" />
+            </intent-filter>
+
+            <intent-filter>
+
+                <action
+                    android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+            </intent-filter>
+
+            <intent-filter>
+
+                <action
+                    android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="animation"
+            android:value="1" />
+
+        <service
+            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+            android:exported="false">
+
+            <meta-data
+                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+                android:value="cct" />
+        </service>
+
+        <receiver
+            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+            android:exported="false" />
+
+        <meta-data
+            android:name="entryClass"
+            android:value="com.xiaomi.aicr.plugin.CognitionAudioPlugin" />
+
+        <meta-data
+            android:name="MIPUSH_SDK_VERSION_CODE"
+            android:value="50012" />
+
+        <meta-data
+            android:name="MIPUSH_SDK_VERSION_NAME"
+            android:value="5_1_2-C" />
+
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true"
+            android:process=":pushservice" />
+
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushservice" />
+
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:permission="com.xiaomi.xmsf.permission.MIPUSH_RECEIVE"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.PingReceiver"
+            android:exported="false"
+            android:process=":pushservice">
+
+            <intent-filter>
+
+                <action
+                    android:name="com.xiaomi.push.PING_TIMER" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:theme="@ref/0x1030010"
+            android:name="com.xiaomi.mipush.sdk.NotificationClickedActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:launchMode="3">
+
+            <meta-data
+                android:name="supportStyle"
+                android:value="scene|voip" />
+        </activity>
+
+        <meta-data
+            android:name="devicebaseinfo"
+            android:value="1" />
+
+        <activity
+            android:theme="@ref/0x1030011"
+            android:name="com.xiaojinzi.component.support.ProxyIntentAct" />
+
+        <activity
+            android:theme="@ref/0x1030010"
+            android:name="cn.wps.sdk.activity.SdkProxyActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="theme"
+            android:value="1" />
+
+        <provider
+            android:name="com.liulishuo.okdownload.OkDownloadProvider"
+            android:exported="false"
+            android:authorities="com.xiaomi.aicr.com.liulishuo.okdownload" />
+    </application>
+</manifest>
+.class public L〇〇/〇oO;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements L〇〇/O8〇oO8〇88;
+
+
+# annotations
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "<R:",
+        "Ljava/lang/Object;",
+        "T:",
+        "Ljava/lang/Object;",
+        ">",
+        "Ljava/lang/Object;",
+        "L\u3007\u3007/O8\u3007oO8\u300788<",
+        "TR;TT;>;"
+    }
+.end annotation
+
+
+# instance fields
+.field public final O8〇oO8〇88:Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/List<",
+            "L\u3007\u3007/\u3007o0\u3007o0<",
+            "TR;TT;>;>;"
+        }
+    .end annotation
+.end field
+
+.field public final 〇O8:Lcn/wps/sdk/request/Request;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Lcn/wps/sdk/request/Request<",
+            "TR;TT;>;"
+        }
+    .end annotation
+.end field
+
+.field public final 〇Ooo:I
+
+.field public final 〇o0〇o0:Z
+
+
+# direct methods
+.method public constructor <init>(Ljava/util/List;ILcn/wps/sdk/request/Request;Z)V
+    .registers 5
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/List<",
+            "L\u3007\u3007/\u3007o0\u3007o0<",
+            "TR;TT;>;>;I",
+            "Lcn/wps/sdk/request/Request<",
+            "TR;TT;>;Z)V"
+        }
+    .end annotation
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    if-eqz p1, :cond_e
+
+    iput-object p1, p0, L〇〇/〇oO;->O8〇oO8〇88:Ljava/util/List;
+
+    iput p2, p0, L〇〇/〇oO;->〇Ooo:I
+
+    iput-object p3, p0, L〇〇/〇oO;->〇O8:Lcn/wps/sdk/request/Request;
+
+    iput-boolean p4, p0, L〇〇/〇oO;->〇o0〇o0:Z
+
+    return-void
+
+    :cond_e
+    new-instance p0, Ljava/lang/AssertionError;
+
+    invoke-direct {p0}, Ljava/lang/AssertionError;-><init>()V
+
+    throw p0
+.end method
+
+
+# virtual methods
+.method public O8〇oO8〇88(Lcn/wps/sdk/request/Request;)LO8〇oO8〇88/O8〇oO8〇88;
+    .registers 6
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Lcn/wps/sdk/request/Request<",
+            "TR;TT;>;)",
+            "LO8\u3007oO8\u300788/O8\u3007oO8\u300788<",
+            "TR;>;"
+        }
+    .end annotation
+
+    iget v0, p0, L〇〇/〇oO;->〇Ooo:I
+
+    iget-object v1, p0, L〇〇/〇oO;->O8〇oO8〇88:Ljava/util/List;
+
+    invoke-interface {v1}, Ljava/util/List;->size()I
+
+    move-result v1
+
+    if-ge v0, v1, :cond_26
+
+    new-instance v0, L〇〇/〇oO;
+
+    iget-object v1, p0, L〇〇/〇oO;->O8〇oO8〇88:Ljava/util/List;
+
+    iget v2, p0, L〇〇/〇oO;->〇Ooo:I
+
+    add-int/lit8 v2, v2, 0x1
+
+    iget-boolean v3, p0, L〇〇/〇oO;->〇o0〇o0:Z
+
+    invoke-direct {v0, v1, v2, p1, v3}, L〇〇/〇oO;-><init>(Ljava/util/List;ILcn/wps/sdk/request/Request;Z)V
+
+    iget-object p1, p0, L〇〇/〇oO;->O8〇oO8〇88:Ljava/util/List;
+
+    iget p0, p0, L〇〇/〇oO;->〇Ooo:I
+
+    invoke-interface {p1, p0}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object p0
+
+    check-cast p0, L〇〇/〇o0〇o0;
+
+    invoke-interface {p0, v0}, L〇〇/〇o0〇o0;->O8〇oO8〇88(L〇〇/O8〇oO8〇88;)LO8〇oO8〇88/O8〇oO8〇88;
+
+    move-result-object p0
+
+    return-object p0
+
+    :cond_26
+    new-instance p0, Ljava/lang/AssertionError;
+
+    const-string p1, "\u6700\u540e\u4e00\u4e2a\u62e6\u622a\u5668\uff0c\u65e0\u6cd5\u5c06\u8bf7\u6c42\u7ee7\u7eed\u5f80\u4e0b\u4f20\u9012"
+
+    invoke-direct {p0, p1}, Ljava/lang/AssertionError;-><init>(Ljava/lang/Object;)V
+
+    throw p0
+.end method
+
+.method public O8〇oO8〇88()Z
+    .registers 1
+
+    iget-boolean p0, p0, L〇〇/〇oO;->〇o0〇o0:Z
+
+    return p0
+.end method
+
+.method public request()Lcn/wps/sdk/request/Request;
+    .registers 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Lcn/wps/sdk/request/Request<",
+            "TR;TT;>;"
+        }
+    .end annotation
+
+    iget-object p0, p0, L〇〇/〇oO;->〇O8:Lcn/wps/sdk/request/Request;
+
+    return-object p0
+.class public interface abstract L〇〇/〇o0〇o0;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+
+# annotations
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "<R:",
+        "Ljava/lang/Object;",
+        "T:",
+        "Ljava/lang/Object;",
+        ">",
+        "Ljava/lang/Object;"
+    }
+.end annotation
+
+
+# virtual methods
+.method public abstract O8〇oO8〇88(L〇〇/O8〇oO8〇88;)LO8〇oO8〇88/O8〇oO8〇88;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "L\u3007\u3007/O8\u3007oO8\u300788<",
+            "TR;TT;>;)",
+            "LO8\u3007oO8\u300788/O8\u3007oO8\u300788<",
+            "TR;>;"
+        }
+    .end annotation
+.class public interface abstract L〇〇/O8〇oO8〇88;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+
+# annotations
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "<R:",
+        "Ljava/lang/Object;",
+        "T:",
+        "Ljava/lang/Object;",
+        ">",
+        "Ljava/lang/Object;"
+    }
+.end annotation
+
+
+# virtual methods
+.method public abstract O8〇oO8〇88(Lcn/wps/sdk/request/Request;)LO8〇oO8〇88/O8〇oO8〇88;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Lcn/wps/sdk/request/Request<",
+            "TR;TT;>;)",
+            "LO8\u3007oO8\u300788/O8\u3007oO8\u300788<",
+            "TR;>;"
+        }
+    .end annotation
+.end method
+
+.method public abstract O8〇oO8〇88()Z
+.end method
+
+.method public abstract request()Lcn/wps/sdk/request/Request;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Lcn/wps/sdk/request/Request<",
+            "TR;TT;>;"
+        }
+    .end annotation
+.end 
+.class public L〇〇/〇oO;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements L〇〇/O8〇oO8〇88;
+
+
+# annotations
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "<R:",
+        "Ljava/lang/Object;",
+        "T:",
+        "Ljava/lang/Object;",
+        ">",
+        "Ljava/lang/Object;",
+        "L\u3007\u3007/O8\u3007oO8\u300788<",
+        "TR;TT;>;"
+    }
+.end annotation
+
+
+# instance fields
+.field public final O8〇oO8〇88:Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/List<",
+            "L\u3007\u3007/\u3007o0\u3007o0<",
+            "TR;TT;>;>;"
+        }
+    .end annotation
+.end field
+
+.field public final 〇O8:Lcn/wps/sdk/request/Request;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Lcn/wps/sdk/request/Request<",
+            "TR;TT;>;"
+        }
+    .end annotation
+.end field
+
+.field public final 〇Ooo:I
+
+.field public final 〇o0〇o0:Z
+
+
+# direct methods
+.method public constructor <init>(Ljava/util/List;ILcn/wps/sdk/request/Request;Z)V
+    .registers 5
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/List<",
+            "L\u3007\u3007/\u3007o0\u3007o0<",
+            "TR;TT;>;>;I",
+            "Lcn/wps/sdk/request/Request<",
+            "TR;TT;>;Z)V"
+        }
+    .end annotation
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    if-eqz p1, :cond_e
+
+    iput-object p1, p0, L〇〇/〇oO;->O8〇oO8〇88:Ljava/util/List;
+
+    iput p2, p0, L〇〇/〇oO;->〇Ooo:I
+
+    iput-object p3, p0, L〇〇/〇oO;->〇O8:Lcn/wps/sdk/request/Request;
+
+    iput-boolean p4, p0, L〇〇/〇oO;->〇o0〇o0:Z
+
+    return-void
+
+    :cond_e
+    new-instance p0, Ljava/lang/AssertionError;
+
+    invoke-direct {p0}, Ljava/lang/AssertionError;-><init>()V
+
+    throw p0
+.end method
+
+
+# virtual methods
+.method public O8〇oO8〇88(Lcn/wps/sdk/request/Request;)LO8〇oO8〇88/O8〇oO8〇88;
+    .registers 6
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Lcn/wps/sdk/request/Request<",
+            "TR;TT;>;)",
+            "LO8\u3007oO8\u300788/O8\u3007oO8\u300788<",
+            "TR;>;"
+        }
+    .end annotation
+
+    iget v0, p0, L〇〇/〇oO;->〇Ooo:I
+
+    iget-object v1, p0, L〇〇/〇oO;->O8〇oO8〇88:Ljava/util/List;
+
+    invoke-interface {v1}, Ljava/util/List;->size()I
+
+    move-result v1
+
+    if-ge v0, v1, :cond_26
+
+    new-instance v0, L〇〇/〇oO;
+
+    iget-object v1, p0, L〇〇/〇oO;->O8〇oO8〇88:Ljava/util/List;
+
+    iget v2, p0, L〇〇/〇oO;->〇Ooo:I
+
+    add-int/lit8 v2, v2, 0x1
+
+    iget-boolean v3, p0, L〇〇/〇oO;->〇o0〇o0:Z
+
+    invoke-direct {v0, v1, v2, p1, v3}, L〇〇/〇oO;-><init>(Ljava/util/List;ILcn/wps/sdk/request/Request;Z)V
+
+    iget-object p1, p0, L〇〇/〇oO;->O8〇oO8〇88:Ljava/util/List;
+
+    iget p0, p0, L〇〇/〇oO;->〇Ooo:I
+
+    invoke-interface {p1, p0}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object p0
+
+    check-cast p0, L〇〇/〇o0〇o0;
+
+    invoke-interface {p0, v0}, L〇〇/〇o0〇o0;->O8〇oO8〇88(L〇〇/O8〇oO8〇88;)LO8〇oO8〇88/O8〇oO8〇88;
+
+    move-result-object p0
+
+    return-object p0
+
+    :cond_26
+    new-instance p0, Ljava/lang/AssertionError;
+
+    const-string p1, "\u6700\u540e\u4e00\u4e2a\u62e6\u622a\u5668\uff0c\u65e0\u6cd5\u5c06\u8bf7\u6c42\u7ee7\u7eed\u5f80\u4e0b\u4f20\u9012"
+
+    invoke-direct {p0, p1}, Ljava/lang/AssertionError;-><init>(Ljava/lang/Object;)V
+
+    throw p0
+.end method
+
+.method public O8〇oO8〇88()Z
+    .registers 1
+
+    iget-boolean p0, p0, L〇〇/〇oO;->〇o0〇o0:Z
+
+    return p0
+.end method
+
+.method public request()Lcn/wps/sdk/request/Request;
+    .registers 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Lcn/wps/sdk/request/Request<",
+            "TR;TT;>;"
+        }
+    .end annotation
+
+    iget-object p0, p0, L〇〇/〇oO;->〇O8:Lcn/wps/sdk/request/Request;
+
+    return-object p0
+.end method
+.class public L〇〇/〇Ooo;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements L〇〇/〇o0〇o0;
+
+
+# annotations
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "<R:",
+        "Ljava/lang/Object;",
+        "T:",
+        "Ljava/lang/Object;",
+        ">",
+        "Ljava/lang/Object;",
+        "L\u3007\u3007/\u3007o0\u3007o0<",
+        "TR;TT;>;"
+    }
+.end annotation
+
+
+# direct methods
+.method public constructor <init>()V
+    .registers 1
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public O8〇oO8〇88(L〇〇/O8〇oO8〇88;)LO8〇oO8〇88/O8〇oO8〇88;
+    .registers 3
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "L\u3007\u3007/O8\u3007oO8\u300788<",
+            "TR;TT;>;)",
+            "LO8\u3007oO8\u300788/O8\u3007oO8\u300788<",
+            "TR;>;"
+        }
+    .end annotation
+
+    :try_start_0
+    invoke-interface {p1}, L〇〇/O8〇oO8〇88;->request()Lcn/wps/sdk/request/Request;
+
+    move-result-object p0
+
+    invoke-interface {p1, p0}, L〇〇/O8〇oO8〇88;->O8〇oO8〇88(Lcn/wps/sdk/request/Request;)LO8〇oO8〇88/O8〇oO8〇88;
+
+    move-result-object p0
+    :try_end_8
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_8} :catch_9
+
+    return-object p0
+
+    :catch_9
+    move-exception p0
+
+    invoke-interface {p1}, L〇〇/O8〇oO8〇88;->O8〇oO8〇88()Z
+
+    move-result p1
+
+    if-nez p1, :cond_29
+
+    new-instance p1, Ljava/lang/StringBuilder;
+
+    const-string v0, "\u5904\u7406\u8bf7\u6c42\u5f02\u5e38->"
+
+    invoke-direct {p1, v0}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    invoke-virtual {p0}, Ljava/lang/Throwable;->getMessage()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-virtual {p1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    const/16 v0, 0x3f1
+
+    invoke-static {v0, p1, p0}, LO8〇oO8〇88/O8〇oO8〇88;->O8〇oO8〇88(ILjava/lang/String;Ljava/lang/Exception;)LO8〇oO8〇88/O8〇oO8〇88;
+
+    move-result-object p0
+
+    return-object p0
+
+    :cond_29
+    new-instance p1, L〇O/O8〇oO8〇88;
+
+    invoke-direct {p1, p0}, L〇O/O8〇oO8〇88;-><init>(Ljava/lang/Exception;)V
+
+    throw p1
+.end metho
+.class public L〇〇/〇O8;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements L〇〇/〇o0〇o0;
+
+
+# annotations
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "<R:",
+        "Ljava/lang/Object;",
+        "T:",
+        "Ljava/lang/Object;",
+        ">",
+        "Ljava/lang/Object;",
+        "L\u3007\u3007/\u3007o0\u3007o0<",
+        "TR;TT;>;"
+    }
+.end annotation
+
+
+# instance fields
+.field public final O8〇oO8〇88:Z
+
+
+# direct methods
+.method public constructor <init>(Z)V
+    .registers 2
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-boolean p1, p0, L〇〇/〇O8;->O8〇oO8〇88:Z
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public O8〇oO8〇88(L〇〇/O8〇oO8〇88;)LO8〇oO8〇88/O8〇oO8〇88;
+    .registers 5
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "L\u3007\u3007/O8\u3007oO8\u300788<",
+            "TR;TT;>;)",
+            "LO8\u3007oO8\u300788/O8\u3007oO8\u300788<",
+            "TR;>;"
+        }
+    .end annotation
+
+    invoke-interface {p1}, L〇〇/O8〇oO8〇88;->request()Lcn/wps/sdk/request/Request;
+
+    move-result-object v0
+
+    invoke-interface {p1, v0}, L〇〇/O8〇oO8〇88;->O8〇oO8〇88(Lcn/wps/sdk/request/Request;)LO8〇oO8〇88/O8〇oO8〇88;
+
+    move-result-object v0
+
+    invoke-interface {p1}, L〇〇/O8〇oO8〇88;->request()Lcn/wps/sdk/request/Request;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Lcn/wps/sdk/request/Request;->〇Ooo()Landroid/content/Context;
+
+    move-result-object p1
+
+    iget v1, v0, LO8〇oO8〇88/O8〇oO8〇88;->O8〇oO8〇88:I
+
+    const/16 v2, 0x3f6
+
+    if-ne v1, v2, :cond_32
+
+    iget-boolean p0, p0, L〇〇/〇O8;->O8〇oO8〇88:Z
+
+    if-eqz p0, :cond_32
+
+    new-instance p0, Ljava/lang/StringBuilder;
+
+    const-string v1, "InstallWpsInterceptor\uff1a "
+
+    invoke-direct {p0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    iget-object v1, v0, LO8〇oO8〇88/O8〇oO8〇88;->〇Ooo:Ljava/lang/String;
+
+    invoke-virtual {p0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {p0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p0
+
+    invoke-static {p0}, Lcn/wps/moffice/sdk/base/log/WpsSdkLog;->log(Ljava/lang/String;)V
+
+    if-eqz p1, :cond_32
+
+    invoke-static {p1}, Loo0〇OO〇O8/〇o0〇o0;->〇o0〇o0(Landroid/content/Context;)V
+
+    :cond_32
+    iget p0, v0, LO8〇oO8〇88/O8〇oO8〇88;->O8〇oO8〇88:I
+
+    if-ne p0, v2, :cond_4b
+
+    if-eqz p1, :cond_4b
+
+    invoke-static {p1}, Loo0〇OO〇O8/〇o0〇o0;->〇O8(Landroid/content/Context;)Z
+
+    move-result p0
+
+    if-eqz p0, :cond_43
+
+    const/16 p0, 0x3f8
+
+    const-string p1, "\u5df2\u5b89\u88c5\u7684wps\u4e0d\u652f\u6301\u8c03\u7528wps\u80fd\u529b,\u8bf7\u5347\u7ea7wps\u5230\u6700\u65b0\u7248\u672c"
+
+    goto :goto_47
+
+    :cond_43
+    const/16 p0, 0x3f7
+
+    const-string p1, "\u65e0\u6cd5\u8c03\u7528wps\u80fd\u529b\uff0c\u8bf7\u5b89\u88c5wps"
+
+    :goto_47
+    invoke-static {p0, p1}, LO8〇oO8〇88/O8〇oO8〇88;->O8〇oO8〇88(ILjava/lang/String;)LO8〇oO8〇88/O8〇oO8〇88;
+
+    move-result-object v0
+
+    :cond_4b
+    return-object v0
+.end method.
+
+
+
+
+
