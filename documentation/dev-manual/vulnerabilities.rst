@@ -318,7 +318,7 @@ products defined in :term:`CVE_PRODUCT`. Then, for each found CVE:
 The CVE database is stored in :term:`DL_DIR` and can be inspected using
 ``sqlite3`` command as follows::
 
-   sqlite3 downloads/CVE_CHECK/nvdcve_1.1.db .dump | grep CVE-2021-37462
+   sqlite3 downloads/CVE_CHECK2/nvd*.db .dump | grep CVE-2021-37462
 
 When analyzing CVEs, it is recommended to:
 
