@@ -311,6 +311,25 @@ New Features / Enhancements in |yocto-ver|
    -  Refactor :ref:`ref-classes-qemu` functions into library functions (in
       :oe_git:`lib/oe/qemu.py </openembedded-core/tree/meta/lib/oe/qemu.py>`).
 
+   -  The ``qemux86-64`` :term:`MACHINE` now defaults to the ``x86-64-v3``
+      micro-architecture level.
+
+      The previous default was Core 2 era processors. This change means that the
+      toolchain is configured to build for that level, and QEMU is configured to
+      emulate it.
+
+      The v3 level adds support for AVX/AVX2/BMI/BMI2/F16C and other newer
+      instructions which are seeing increasing usage in modern software and add
+      performance benefits. Please see :wikipedia:`X86-64 Microarchitecture
+      levels <X86-64#Microarchitecture_levels>` for definition of the levels and
+      lists of Intel/AMD CPUs where support for the instructions was first
+      added.
+
+      Note that if QEMU system emulation is used on an x86 build machine with
+      :wikipedia:`KVM <Kernel-based_Virtual_Machine>` enabled, then the build
+      machine's CPU must also be recent enough to support these instructions
+      natively.
+
 -  Documentation changes:
 
    -  Part of :term:`BitBake` internals are now documented at
