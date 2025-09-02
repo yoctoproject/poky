@@ -174,6 +174,11 @@ The following recipes have been removed in this release:
    removed in May 2024 with dfa482f1998 ("python3-requests: cleanup RDEPENDS"),
    and there is no other user of this variable.
 
+-  ``xf86-input-mouse``: The project has stopped supporting Linux.
+
+-  ``xf86-input-vmmouse``: It has a runtime dependency on ``xf86-input-mouse``,
+   which stopped supporting Linux.
+
 Removed :term:`PACKAGECONFIG` entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
