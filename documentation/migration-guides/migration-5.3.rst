@@ -252,3 +252,5 @@ Miscellaneous changes
 
 -  ``xserver-xorg``: remove sub-package ``${PN}-xwayland``, as ``xwayland`` is
    now its own recipe.
+
+-  The Wic-specific option ``--extra-space`` has been renamed to ``--extra-filesystem-space``.
