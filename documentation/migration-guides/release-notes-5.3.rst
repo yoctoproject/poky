@@ -382,6 +382,9 @@ New Features / Enhancements in |yocto-ver|
          :term:`BitBake` variables. This directory is usually found in
          :term:`STAGING_DIR`.
 
+   - Add the Wic-specific option ``--extra-partiton-space`` to add extra empty
+     space after the space filled by the filesystem in the partition.
+
 -  SDK-related changes:
 
    -  Include additional information about Meson setting in the SDK environment
