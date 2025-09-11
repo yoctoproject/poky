@@ -16,6 +16,7 @@ SRC_URI = "http://download.osgeo.org/libtiff/tiff-${PV}.tar.gz \
 	   file://CVE-2025-8176_3.patch \
 	   file://CVE-2025-8177_1.patch \
 	   file://CVE-2025-8177_2.patch \
+           file://CVE-2025-8534.patch \
 	   "
 
 SRC_URI[sha256sum] = "67160e3457365ab96c5b3286a0903aa6e78bdc44c4bc737d2e486bcecb6ba976"
@@ -38,6 +39,7 @@ PACKAGECONFIG ?= "cxx jpeg zlib lzma \
 PACKAGECONFIG[cxx] = "--enable-cxx,--disable-cxx,,"
 PACKAGECONFIG[jbig] = "--enable-jbig,--disable-jbig,jbig,"
 PACKAGECONFIG[jpeg] = "--enable-jpeg,--disable-jpeg,jpeg,"
+PACKAGECONFIG[lerc] = "--enable-lerc,--disable-lerc,liblerc,"
 PACKAGECONFIG[zlib] = "--enable-zlib,--disable-zlib,zlib,"
 PACKAGECONFIG[lzma] = "--enable-lzma,--disable-lzma,xz,"
 PACKAGECONFIG[webp] = "--enable-webp,--disable-webp,libwebp,"
