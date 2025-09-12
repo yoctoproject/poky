@@ -118,6 +118,22 @@ class. Instead, one should create a new recipe to build this FIT image, as
 described in the :ref:`Removed Classes <migration-guides/migration-5.3:Removed
 Classes>` section of the Migration notes for |yocto-ver| (|yocto-codename|).
 
+systemd Predictable Interface Names no longer MAC policy by default
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :oe_git:`systemd recipe </openembedded-core/tree/meta/recipes-core/systemd>`
+used to forcibly set the "mac" policy by default when the ``pni-names``
+:term:`distro feature <DISTRO_FEATURES>` is enabled.
+
+This is no longer the case as this was not following upstream changes. Now when
+the ``pni-names`` :term:`distro feature <DISTRO_FEATURES>` is enabled, the
+default policy from systemd is selected (from
+https://github.com/systemd/systemd/blob/v257.8/network/99-default.link).
+
+To set back the "mac" policy in systemd (version 257.8 at the time of writing
+this note), you should set the ``NamePolicy`` and ``AlternativeNamesPolicy`` as
+detailed in :manpage:`systemd.link(5)`.
+
 Supported kernel versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
