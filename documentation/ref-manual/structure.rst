@@ -253,6 +253,17 @@ It also contains ``sanity_info``, a text file keeping track of important
 build information such as the values of :term:`TMPDIR`, :term:`SSTATE_DIR`,
 as well as the name and version of the host distribution.
 
+This directory should not be shared between builds.
+
+.. note::
+
+   The default location of the :ref:`overview-manual/concepts:Hash Equivalence`
+   database is this directory (when :term:`BB_HASHSERVE` is set to ``auto``). If
+   you need to share the :ref:`overview-manual/concepts:Hash Equivalence`
+   database, don't share this file and instead refer to the
+   :doc:`/dev-manual/hashequivserver` document of the Yocto Project Development
+   Tasks Manual to setup Hash Equivalence server.
+
 .. _structure-build-conf-local.conf:
 
 ``build/conf/local.conf``
