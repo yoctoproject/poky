@@ -68,6 +68,9 @@ def include(parentfn, fns, lineno, data, error_out, all=False):
     # "include" or "require" accept zero to n space-separated file names to include.
     for fn in fns.split():
         if all:
+            if os.path.isabs(fn):
+                raise ParseError("Incorrect use of include_all with an absolute path %s" % fn, parentfn, lineno)
+
             for path in data.getVar("BBPATH").split(":"):
                 include_single_file(parentfn, os.path.join(path, fn), lineno, data, error_out)
         else:

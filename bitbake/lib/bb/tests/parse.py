@@ -500,6 +500,7 @@ EXTRA_OECONF:append = " foobar"
             test_helper("include_all someother.conf", None)
             test_helper("include_all some3.conf", " foobar")
             test_helper("include_all ${@''}", None)
+            test_helper("include_all " + tempdir + "/conf2/some.conf", bb.parse.ParseError)
 
             self.d.setVar("BBPATH", tempdir + "/conf2" + ":" + tempdir + "/conf1")
 
