@@ -56,7 +56,7 @@ def init(data):
 def supports(fn, d):
     return fn[-5:] == ".conf"
 
-def include(parentfn, fns, lineno, data, error_out):
+def include(parentfn, fns, lineno, data, error_out, all=False):
     """
     error_out: A string indicating the verb (e.g. "include", "inherit") to be
     used in a ParseError that will be raised if the file to be included could
@@ -67,7 +67,11 @@ def include(parentfn, fns, lineno, data, error_out):
 
     # "include" or "require" accept zero to n space-separated file names to include.
     for fn in fns.split():
-        include_single_file(parentfn, fn, lineno, data, error_out)
+        if all:
+            for path in data.getVar("BBPATH").split(":"):
+                include_single_file(parentfn, os.path.join(path, fn), lineno, data, error_out)
+        else:
+            include_single_file(parentfn, fn, lineno, data, error_out)
 
 def include_single_file(parentfn, fn, lineno, data, error_out):
     """
