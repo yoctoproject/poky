@@ -53,10 +53,9 @@ class IncludeAllNode(AstNode):
         Include the file and evaluate the statements
         """
         s = data.expand(self.what_file)
-        logger.debug2("CONF %s:%s: including %s", self.filename, self.lineno, s)
+        logger.debug2("CONF %s:%s: including all %s", self.filename, self.lineno, s)
 
-        for path in data.getVar("BBPATH").split(":"):
-            bb.parse.ConfHandler.include(self.filename, os.path.join(path, s), self.lineno, data, False)
+        bb.parse.ConfHandler.include(self.filename, s, self.lineno, data, False, all=True)
 
 class ExportNode(AstNode):
     def __init__(self, filename, lineno, var):
