@@ -109,7 +109,7 @@ However, the current WIC code automatically converts dashes to underscore for
 any ``--source`` call, so existing WKS files will not break if they use upstream
 plugins from :term:`OpenEmbedded-Core (OE-Core)`.
 
-``fitImage`` no longer supporter for :term:`KERNEL_IMAGETYPE`
+``fitImage`` no longer supported for :term:`KERNEL_IMAGETYPE`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``fitImage`` type for :term:`KERNEL_IMAGETYPE` is no longer supported. The
