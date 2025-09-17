@@ -179,9 +179,9 @@ Removed recipes
 
 The following recipes have been removed in this release:
 
--  ``libsoup``: The last user in :term:`OpenEmbedded-Core (OE-Core)` was
-   ``gst-examples``, which has been upgraded with its ``libsoup`` dependency
-   dropped.
+-  ``libsoup-2.4``: The last user in :term:`OpenEmbedded-Core (OE-Core)` was
+   ``gst-examples``, which has been upgraded with its ``libsoup-2.4`` dependency
+   dropped. The recipe has been moved to ``meta-oe``.
 
 -  ``glibc-y2038-tests``: removed as the recipe only provides tests which are
    now provided by ``glibc-testsuite``.
