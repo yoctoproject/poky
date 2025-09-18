@@ -223,7 +223,7 @@ to add the upgraded version.
       or are submitting an unmodified patch again as part of a
       new iteration of your patch series.
 
-   -  ``CC:`` Name and email of people you want to send a copy
+   -  ``CC``: name and email of people you want to send a copy
       of your changes to. This field will be used by ``git send-email``.
 
    See `more guidance about using such tags
