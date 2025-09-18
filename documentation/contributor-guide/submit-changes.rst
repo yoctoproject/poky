@@ -204,31 +204,35 @@ to add the upgraded version.
 
           detailed description of change
 
-#. *Crediting contributors:* By using the ``git commit --amend`` command,
-   you can add some tags to the commit description to credit other contributors
-   to the change:
+   #. If other people participated in this patch, add some tags to the commit
+      description to credit other contributors to the change:
 
-   -  ``Reported-by``: name and email of a person reporting a bug
-      that your commit is trying to fix. This is a good practice
-      to encourage people to go on reporting bugs and let them
-      know that their reports are taken into account.
+      -  ``Reported-by``: name and email of a person reporting a bug
+         that your commit is trying to fix. This is a good practice
+         to encourage people to go on reporting bugs and let them
+         know that their reports are taken into account.
 
-   -  ``Suggested-by``: name and email of a person to credit for the
-      idea of making the change.
+      -  ``Suggested-by``: name and email of a person to credit for the
+         idea of making the change.
 
-   -  ``Tested-by``, ``Reviewed-by``: name and email for people having
-      tested your changes or reviewed their code. These fields are
-      usually added by the maintainer accepting a patch, or by
-      yourself if you submitted your patches to early reviewers,
-      or are submitting an unmodified patch again as part of a
-      new iteration of your patch series.
+      -  ``Tested-by``, ``Reviewed-by``: name and email for people having
+         tested your changes or reviewed their code. These fields are
+         usually added by the maintainer accepting a patch, or by
+         yourself if you submitted your patches to early reviewers,
+         or are submitting an unmodified patch again as part of a
+         new iteration of your patch series.
 
-   -  ``Cc``: name and email of people you want to send a copy
-      of your changes to. This field will be used by ``git send-email``.
+      -  ``Cc``: name and email of people you want to send a copy
+         of your changes to. This field will be used by ``git send-email``.
 
-   See `more guidance about using such tags
-   <https://www.kernel.org/doc/html/latest/process/submitting-patches.html#using-reported-by-tested-by-reviewed-by-suggested-by-and-fixes>`__
-   in the Linux kernel documentation.
+      See `more guidance about using such tags
+      <https://www.kernel.org/doc/html/latest/process/submitting-patches.html#using-reported-by-tested-by-reviewed-by-suggested-by-and-fixes>`__
+      in the Linux kernel documentation.
+
+      .. note::
+
+         One can amend an existing git commit message to add missing tags for
+         contributors with the ``git commit --amend`` command.
 
 Test your changes
 -----------------
