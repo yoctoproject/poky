@@ -163,7 +163,7 @@ to add the upgraded version.
              this project or the open source license(s) involved.
 
    -  Provide a single-line summary of the change and, if more
-      explanation is needed, provide more detail in the body of the
+      explanation is needed, provide more detail in the description of the
       commit. This summary is typically viewable in the "shortlist" of
       changes. Thus, providing something short and descriptive that
       gives the reader a summary of the change is useful when viewing a
@@ -179,23 +179,23 @@ to add the upgraded version.
 
             git log --oneline <paths>
 
-   -  For the body of the commit message, provide detailed information
+   -  For the commit description, provide detailed information
       that describes what you changed, why you made the change, and the
       approach you used. It might also be helpful if you mention how you
-      tested the change. Provide as much detail as you can in the body
-      of the commit message.
+      tested the change. Provide as much detail as you can in the commit
+      description.
 
       .. note::
 
          If the single line summary is enough to describe a simple
-         change, the body of the commit message can be left empty.
+         change, the commit description can be left empty.
 
    -  If the change addresses a specific bug or issue that is associated
-      with a bug-tracking ID, include a reference to that ID in your
-      detailed description. For example, the Yocto Project uses a
+      with a bug-tracking ID, include a reference to that ID in the body of the
+      commit message. For example, the Yocto Project uses a
       specific convention for bug references --- any commit that addresses
-      a specific bug should use the following form for the detailed
-      description. Be sure to use the actual bug-tracking ID from
+      a specific bug should use the following form for the body of the commit
+      message. Be sure to use the actual bug-tracking ID from
       Bugzilla for bug-id::
 
          single-line summary of change
