@@ -198,6 +198,8 @@ to add the upgraded version.
       description. Be sure to use the actual bug-tracking ID from
       Bugzilla for bug-id::
 
+         single-line summary of change
+
          Fixes [YOCTO #bug-id]
 
          detailed description of change
