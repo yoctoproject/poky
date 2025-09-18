@@ -123,7 +123,7 @@ to add the upgraded version.
 
       $ git commit -s file1 file2 dir1 dir2 ...
 
-   To include **a**\ ll staged files::
+   To include all staged files::
 
       $ git commit -sa
 
