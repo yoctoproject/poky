@@ -909,6 +909,11 @@ to point to that directory::
 
    EXTERNALSRC_BUILD:pn-myrecipe = "path-to-your-source-tree"
 
+.. note::
+
+   The values of :term:`EXTERNALSRC` and :term:`EXTERNALSRC_BUILD`
+   must be absolute paths.
+
 Replicating a Build Offline
 ===========================
 
