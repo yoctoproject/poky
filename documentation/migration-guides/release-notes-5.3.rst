@@ -330,6 +330,11 @@ New Features / Enhancements in |yocto-ver|
       machine's CPU must also be recent enough to support these instructions
       natively.
 
+   -  ``runqemu`` can now run compressed images with snapshot mode. For example,
+      with ``IMAGE_FSTYPES = "... ext4.zst ..."``, you can run::
+
+         runqemu snapshot ext4.zst <image-recipe>
+
 -  Documentation changes:
 
    -  Part of :term:`BitBake` internals are now documented at
@@ -444,6 +449,8 @@ New Features / Enhancements in |yocto-ver|
       -  ``core/case``: add file exists assertion test case.
 
       -  ``context.py``: use :term:`TEST_SUITES` if set.
+
+      - ``runqemu``: add new test for booting compressed images.
 
    -  :ref:`ref-classes-testexport`: capture all tests and data from all layers
       (instead of the :term:`OpenEmbedded-Core (OE-Core)` layer only).
