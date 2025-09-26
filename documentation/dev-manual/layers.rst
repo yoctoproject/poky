@@ -376,6 +376,21 @@ directory::
 Be sure to provide the actual directory for your
 layer as part of the command.
 
+You should pass the dependencies of your layer using the ``--dependency``
+argument::
+
+   $ source oe-init-build-env
+   $ yocto-check-layer --dependency <layer1_directory> <layer2_directory> ... -- your_layer_directory
+
+For :term:`BSP <Board Support Package (BSP)>` layers, the ``--machines``
+argument should be passed as part of the command::
+
+   $ source oe-init-build-env
+   $ yocto-check-layer --machines <machine1> <machine2> ... -- your_layer_directory
+
+These machines are the ones present in your BSP layer, in the ``conf/machine/``
+directory.
+
 Entering the command causes the script to determine the type of layer
 and then to execute a set of specific tests against the layer. The
 following list overviews the test:
