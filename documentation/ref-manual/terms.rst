@@ -131,6 +131,53 @@ universal, the list includes them just in case:
       A variant of :term:`buildtools`, just providing the required
       version of ``make`` to run the OpenEmbedded build system.
 
+   :term:`Built-in Fragment`
+      A built-in fragment is a specific kind of :term:`Configuration Fragment`
+      that affects the value of a single variable globally. :term:`Built-in
+      Fragments <Built-in Fragment>` do not require a separate configuration
+      file, but like a standard :term:`Configuration Fragment`, Built-in
+      Fragments can be enabled or disabled using the :oe_git:`bitbake-config-build
+      </bitbake/tree/bin/bitbake-config-build>` command-line utility.
+
+      When declared, a built-in fragment follows the following naming
+      convention::
+
+         <fragment>:<variable name>
+
+      Where:
+
+      -  ``<fragment>`` is the name of the built-in fragment.
+      -  ``<variable name>`` is the name of the variable to be modified by this
+         fragment.
+
+      For example::
+
+         machine:MACHINE
+
+      Will setup the ``machine`` Built-in Fragment for modifying the value of
+      the :term:`MACHINE` variable.
+
+      Setting the :term:`MACHINE` variable through this fragment must follow
+      this syntax::
+
+         machine/qemux86-64
+
+      This sets the value of :term:`MACHINE` to ``qemux86-64``.
+
+      In :term:`OpenEmbedded-Core (OE-Core)`, the list of available
+      :term:`Built-in Fragments <Built-in Fragment>` can be obtained from the
+      :term:`OE_FRAGMENTS_BUILTIN` variable.
+
+      For more details on fragments, see:
+
+      -  The :doc:`/ref-manual/fragments` section of the Yocto Project Reference
+         Manual for a list of fragments the :term:`OpenEmbedded Build System`
+         supports, and a quick reference guide on how to manage fragments.
+
+      -  The :doc:`/dev-manual/creating-fragments` section of the Yocto Project
+         Development Tasks Manual for details on how to create new fragments
+         in your build.
+
    :term:`Classes`
       Files that provide for logic encapsulation and inheritance so that
       commonly used patterns can be defined once and then easily used in
@@ -154,6 +201,51 @@ universal, the list includes them just in case:
       only used when building for that target (e.g. the
       :file:`machine/beaglebone.conf` configuration file defines variables for
       the Texas Instruments ARM Cortex-A8 development board).
+      :term:`Configuration Fragments <Configuration Fragment>` such as
+      :ref:`ref-fragments-core-yocto-sstate-mirror-cdn` define snippets of
+      configuration that can be enabled from the command-line.
+
+   :term:`Configuration Fragment`
+      A :term:`Configuration Fragment` (also called Standard :term:`Configuration
+      Fragment`) is a :term:`configuration file` that contains configuration
+      statements such as variable assignments, affecting the build at a
+      global-level when the fragment is enabled. By default, configuration
+      fragments are located in the :file:`conf/fragments/` directory of a
+      :term:`Layer`.
+
+      .. note::
+
+         Another form of fragment not to be confounded with Standard
+         :term:`Configuration Fragments <Configuration Fragment>` are
+         :term:`Built-in Fragments <Built-in Fragment>` which are used to assign
+         a single variable value globally.
+
+      A fragment :term:`configuration file` must contain a summary
+      (:term:`BB_CONF_FRAGMENT_SUMMARY`) and a description
+      (:term:`BB_CONF_FRAGMENT_DESCRIPTION`) explaining the purpose of the
+      fragment.
+
+      In :term:`OpenEmbedded-Core (OE-Core)`, the location of fragments and what
+      variables are required in a fragment is specified in :oe_git:`bitbake.conf
+      </openembedded-core/tree/meta/conf/bitbake.conf>` thanks to the
+      :ref:`addfragments <bitbake-user-manual/bitbake-user-manual-metadata:\`\`addfragments\`\`
+      directive>` directive and the :term:`OE_FRAGMENTS`,
+      :term:`OE_FRAGMENTS_METADATA_VARS` and :term:`OE_FRAGMENTS_BUILTIN`
+      variables.
+
+      Fragments can be listed, enabled and disabled with the
+      :oe_git:`bitbake-config-build </bitbake/tree/bin/bitbake-config-build>`
+      command-line utility.
+
+      For more details on fragments, see:
+
+      -  The :doc:`/ref-manual/fragments` section of the Yocto Project Reference
+         Manual for a list of fragments the :term:`OpenEmbedded Build System`
+         supports, and a quick reference guide on how to manage fragments.
+
+      -  The :doc:`/dev-manual/creating-fragments` section of the Yocto Project
+         Development Tasks Manual for details on how to create new fragments
+         in your build.
 
    :term:`Container Layer`
       A flexible definition that typically refers to a single Git checkout

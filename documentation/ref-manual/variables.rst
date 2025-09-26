@@ -397,6 +397,18 @@ system and gives an overview of their function and contents.
    :term:`BB_CHECK_SSL_CERTS`
       See :term:`bitbake:BB_CHECK_SSL_CERTS` in the BitBake manual.
 
+   :term:`BB_CONF_FRAGMENT_DESCRIPTION`
+      The :term:`BB_CONF_FRAGMENT_DESCRIPTION` variable defines the textual
+      description of a :term:`Configuration Fragment`. For details on how to use
+      fragments, see the :doc:`/ref-manual/fragments` section of the Yocto
+      Project Reference Manual.
+
+   :term:`BB_CONF_FRAGMENT_SUMMARY`
+      The :term:`BB_CONF_FRAGMENT_SUMMARY` variable defines the one-line textual
+      summary of a :term:`Configuration Fragment`. For details on how to use
+      fragments, see the :doc:`/ref-manual/fragments` section of the Yocto
+      Project Reference Manual.
+
    :term:`BB_CONSOLELOG`
       See :term:`bitbake:BB_CONSOLELOG` in the BitBake manual.
 
@@ -6229,6 +6241,33 @@ system and gives an overview of their function and contents.
       See the ``meta/classes-recipe/binconfig.bbclass`` in the
       :term:`Source Directory` for details on how this class
       applies these additional sed command arguments.
+
+   :term:`OE_FRAGMENTS`
+      The :term:`OE_FRAGMENTS` variable holds the list of :term:`Configuration
+      Fragments <Configuration Fragment>` currently enabled for the build. For
+      details on how to use fragments, see the :doc:`/ref-manual/fragments`
+      section of the Yocto Project Reference Manual.
+
+   :term:`OE_FRAGMENTS_BUILTIN`
+      The :term:`OE_FRAGMENTS_BUILTIN` variable holds the list of
+      :term:`Built-in Fragments <Built-in Fragment>` available for being set with
+      :oe_git:`bitbake-config-build </bitbake/tree/bin/bitbake-config-build>`.
+      For details on how to use fragments, see the :doc:`/ref-manual/fragments`
+      section of the Yocto Project Reference Manual.
+
+   :term:`OE_FRAGMENTS_METADATA_VARS`
+      The :term:`OE_FRAGMENTS_METADATA_VARS` variable holds the list of
+      variables that are required to set in a standard :term:`Configuration
+      Fragment` file. In :term:`OpenEmbedded-Core (OE-Core)`, these variables
+      are :term:`BB_CONF_FRAGMENT_SUMMARY` and
+      :term:`BB_CONF_FRAGMENT_DESCRIPTION`.
+
+   :term:`OE_FRAGMENTS_PREFIX`
+      The :term:`OE_FRAGMENTS_PREFIX` variable defines the prefix where
+      :term:`BitBake` tries to locate :term:`Configuration Fragments
+      <Configuration Fragment>` in :term:`layers <Layer>`. For details on how to
+      use fragments, see the :doc:`/ref-manual/fragments` section of the Yocto
+      Project Reference Manual.
 
    :term:`OE_INIT_ENV_SCRIPT`
       The name of the build environment setup script for the purposes of
