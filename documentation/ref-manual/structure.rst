@@ -328,6 +328,15 @@ Once the build process gets the sample file, it uses ``sed`` to substitute final
 This file indicates the state of the sanity checks and is created during
 the build.
 
+.. _structure-build-conf-auto.conf:
+
+``build/conf/auto.conf``
+------------------------
+
+This file contains configuration variables that are automatically modified by
+tools such as :oe_git:`bitbake-config-build </bitbake/tree/bin/bitbake-config-build>`.
+This file should not be modified manually.
+
 .. _structure-build-downloads:
 
 ``build/downloads/``
