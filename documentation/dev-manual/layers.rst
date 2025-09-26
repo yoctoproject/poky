@@ -392,11 +392,16 @@ These machines are the ones present in your BSP layer, in the ``conf/machine/``
 directory.
 
 Entering the command causes the script to determine the type of layer
-and then to execute a set of specific tests against the layer. The
-following list overviews the test:
+and then to execute a set of specific tests against the layer.
+
+The following list overviews the test:
 
 -  ``common.test_readme``: Tests if a ``README`` file exists in the
    layer and the file is not empty.
+
+-  ``common.test_security``: Tests that the layer has a ``SECURITY.md``
+   (or similar) file, either in the layer itself or at the top of the containing
+   git repository.
 
 -  ``common.test_parse``: Tests to make sure that BitBake can parse the
    files without error (i.e. ``bitbake -p``).
@@ -405,6 +410,13 @@ following list overviews the test:
    environment is in order without errors (i.e. ``bitbake -e``).
 
 -  ``common.test_world``: Verifies that ``bitbake world`` works.
+
+-  ``common.test_world_inherit_class``: Verifies that ``bitbake world`` works
+   when the :ref:`ref-classes-yocto-check-layer` class is inherited.
+
+-  ``common.test_patches_upstream_status``: Verifies that all the patch files
+   included in the layer contain a
+   :ref:`contributor-guide/recipe-style-guide:Patch Upstream Status`.
 
 -  ``common.test_signatures``: Tests to be sure that BSP and DISTRO
    layers do not come with recipes that change signatures.
@@ -430,6 +442,10 @@ following list overviews the test:
 
 -  ``distro.test_distro_no_set_distros``: Tests to ensure a DISTRO layer
    does not set the distribution when the layer is added.
+
+For a complete list of tests, see the :oe_git:`scripts/lib/checklayer/cases
+</openembedded-core/tree/scripts/lib/checklayer/cases>` directory in
+:term:`OpenEmbedded-Core (OE-Core)`.
 
 Enabling Your Layer
 ===================
