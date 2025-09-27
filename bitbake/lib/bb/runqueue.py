@@ -1610,7 +1610,6 @@ class RunQueue:
 
         if self.state == RunQueueState.SCENE_INIT:
             self.start_worker(self.rqexe)
-            self.rqdata.init_progress_reporter.finish()
 
             # If we don't have any setscene functions, skip execution
             if not self.rqdata.runq_setscene_tids:
@@ -1947,6 +1946,10 @@ class RunQueueExecute:
         #if self.rqdata.runq_setscene_tids:
         self.sqdata = SQData()
         build_scenequeue_data(self.sqdata, self.rqdata, self)
+
+        # Finish the "Initialising tasks" progress bar before
+        # update_scenequeue_data() creates another one.
+        self.rqdata.init_progress_reporter.finish()
 
         update_scenequeue_data(self.sqdata.sq_revdeps, self.sqdata, self.rqdata, self.rq, self.cooker, self.stampcache, self, summary=True)
 
