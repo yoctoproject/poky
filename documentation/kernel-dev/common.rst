@@ -650,13 +650,9 @@ the Broadcom 2708/2709 chipset::
 
    KBUILD_DEFCONFIG:raspberrypi2 ?= "bcm2709_defconfig"
 
-Aside from modifying your kernel recipe and providing your own
-``defconfig`` file, you need to be sure no files or statements set
-:term:`SRC_URI` to use a ``defconfig`` other than your "in-tree" file (e.g.
-a kernel's ``linux-``\ `machine`\ ``.inc`` file). In other words, if the
-build system detects a statement that identifies an "out-of-tree"
-``defconfig`` file, that statement will override your
-:term:`KBUILD_DEFCONFIG` variable.
+If the build system detects a statement that identifies an "out-of-tree"
+``defconfig`` file, your :term:`KBUILD_DEFCONFIG` variable will take precedence
+over it.
 
 See the
 :term:`KBUILD_DEFCONFIG`
