@@ -8173,7 +8173,7 @@ system and gives an overview of their function and contents.
       directory for the build host.
 
    :term:`STAGING_DIR`
-      Helps construct the ``recipe-sysroots`` directory, which is used
+      Helps construct the ``recipe-sysroot*`` directories, which are used
       during packaging.
 
       For information on how staging for recipe-specific sysroots occurs,
