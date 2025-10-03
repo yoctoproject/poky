@@ -34,13 +34,16 @@ $0 OCI_IMAGE [make arguments...]
    OCI_IMAGE is an image:tag of an OCI image hosted on hub.docker.com. It is one
    of:
      - debian:12
-     - fedora:38
+     - debian:13
      - fedora:39
      - fedora:40
-     - leap:15.4
+     - fedora:41
+     - fedora:42
      - leap:15.5
+     - leap:15.6
      - ubuntu:22.04
      - ubuntu:24.04
+     - ubuntu:25.04
 
    [make arguments] is one or more argument to pass to the make command of
    documentation/Makefile, see that file for what's supported. This is typically
@@ -79,21 +82,23 @@ main ()
     #   ;;
     # Missing python3-saneyaml
     # "debian:11"*|\
-    "debian:12"*)
+    "debian:12"*|\
+    "debian:13"*)
       containerfile=Containerfile.debian
       docs=ubuntu_docs.sh
       docs_pdf=ubuntu_docs_pdf.sh
       ;;
-    "fedora:38"*|\
     "fedora:39"*|\
-    "fedora:40"*)
+    "fedora:40"*|\
+    "fedora:41"*|\
+    "fedora:42"*)
       containerfile=Containerfile.fedora
       docs=fedora_docs.sh
       docs_pdf=fedora_docs_pdf.sh
       pip3=pip3_docs.sh
       ;;
-    "leap:15.4"*|\
-    "leap:15.5"*)
+    "leap:15.5"*|\
+    "leap:15.6"*)
     # Seems like issue with permissions package, c.f.
     #
     # Updating /etc/sysconfig/security ...
@@ -121,7 +126,8 @@ main ()
     # Cannot fetch packages anymore
     # "ubuntu:23.04"*|\
     "ubuntu:22.04"*|\
-    "ubuntu:24.04"*)
+    "ubuntu:24.04"*|\
+    "ubuntu:25.04"*)
       containerfile=Containerfile.ubuntu
       docs=ubuntu_docs.sh
       docs_pdf=ubuntu_docs_pdf.sh
