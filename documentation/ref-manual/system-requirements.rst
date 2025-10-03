@@ -67,16 +67,18 @@ supported on the following distributions:
 -  CentOS Stream 9
 -  Debian GNU/Linux 11 (Bullseye)
 -  Debian GNU/Linux 12 (Bookworm)
+-  Debian GNU/Linux 13 (Trixie)
 -  Fedora 39
 -  Fedora 40
 -  Fedora 41
+-  Fedora 42
 -  OpenSUSE Leap 15.5
 -  OpenSUSE Leap 15.6
 -  Rocky Linux 8
 -  Rocky Linux 9
 -  Ubuntu 22.04 (LTS)
 -  Ubuntu 24.04 (LTS)
--  Ubuntu 24.10
+-  Ubuntu 25.04
 
 The following distribution versions are still tested, even though the
 organizations publishing them no longer make updates publicly available:
@@ -89,7 +91,6 @@ organizations publishing them no longer make updates publicly available:
 -  Fedora 39
 -  Fedora 40
 -  OpenSUSE Leap 15.5
--  Ubuntu 24.10
 
 Note that the Yocto Project doesn't have access to private updates
 that some of these versions may have. Therefore, our testing has
