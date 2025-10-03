@@ -172,7 +172,7 @@ series = [k for k in release_series]
 previousseries = series[series.index(ourseries)+1:] or [""]
 lastlts = [k for k in previousseries if k in ltsseries] or "dunfell"
 
-latestreltag = subprocess.run(["git", "describe", "--abbrev=0", "--tags", "--match", "yocto-*"], capture_output=True, text=True).stdout
+latestreltag = subprocess.run(["git", "describe", "--abbrev=0", "--tags", "--match", "yocto-*"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True).stdout
 latestreltag = latestreltag.strip()
 if latestreltag:
     if latestreltag.startswith("yocto-"):
