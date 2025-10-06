@@ -94,7 +94,7 @@ Note that in this case, the fragment will be defined twice in
 :term:`OE_FRAGMENTS`, and the last value is taken into account:
 
 .. code-block::
-   :caption: build/conf/auto.conf
+   :caption: build/conf/toolcfg.conf
 
    OE_FRAGMENTS += " ... machine/qemuarm64 machine/qemux86-64"
 
@@ -103,7 +103,7 @@ In the above example, the value of :term:`MACHINE` is thus equal to
 
 When a fragment is enabled with :ref:`ref-bitbake-config-build-enable-fragment`,
 its name is automatically appended to the :term:`OE_FRAGMENTS` variable in
-:ref:`structure-build-conf-auto.conf`.
+:ref:`structure-build-conf-toolcfg.conf`.
 
 .. note::
 
