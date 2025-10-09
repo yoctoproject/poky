@@ -1,11 +1,14 @@
 ARG ARG_FROM=opensuse/leap:15.4 # default value to avoid warning
 FROM $ARG_FROM
 
+ARG INCLUDE_ESSENTIAL_PACKAGES=0
+ARG ESSENTIAL=opensuse_essential.sh
 ARG DOCS=opensuse_docs.sh
 ARG DOCS_PDF=opensuse_docs_pdf.sh
 ARG PIP3=pip3_docs.sh
 
 # relative to the location of the dockerfile
+COPY --chmod=777 ${ESSENTIAL} /temp/host_packages_essential.sh
 COPY --chmod=777 ${DOCS} /temp/host_packages_docs.sh
 COPY --chmod=777 ${DOCS_PDF} /temp/host_packages_docs_pdf.sh
 COPY --chmod=777 ${PIP3} /temp/pip3_docs.sh
@@ -20,6 +23,7 @@ RUN for script in /temp/*.sh; do \
 
 RUN zypper update -y \
  && zypper install -y sudo \
+ && if [ "$INCLUDE_ESSENTIAL_PACKAGES" = "1" ]; then yes | /temp/host_packages_essential.sh; fi \
  && yes | /temp/host_packages_docs.sh \
  && yes | /temp/host_packages_docs_pdf.sh \
  && yes | /temp/pip3_docs.sh \

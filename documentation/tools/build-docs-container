@@ -24,6 +24,7 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 CONTAINERCMD=${CONTAINERCMD:-docker}
 DOCS_DIR="$SCRIPT_DIR/../.."
 SH_DIR="$SCRIPT_DIR/host_packages_scripts"
+INCLUDE_ESSENTIAL_PACKAGES=${INCLUDE_ESSENTIAL_PACKAGES:-0}
 
 function usage()
 {
@@ -49,6 +50,16 @@ $0 OCI_IMAGE [make arguments...]
    documentation/Makefile, see that file for what's supported. This is typically
    intended to be used to provide specific make targets.
    Default: publish
+
+   Environment variables:
+
+   - CONTAINERCMD can be set to 'docker' or 'podman' to select the
+     container engine (default: 'docker').
+
+   - INCLUDE_ESSENTIAL_PACKAGES can be set to 0 or 1 to also include essential
+     packages listed in documentation/tools/host_packages_scripts/*_essential.sh.
+     This is not required to build the documentation but can be useful to validate
+     the installation of packages listed in these files (default: 0).
 "
 }
 
@@ -85,6 +96,7 @@ main ()
     "debian:12"*|\
     "debian:13"*)
       containerfile=Containerfile.debian
+      essential=ubuntu_essential.sh
       docs=ubuntu_docs.sh
       docs_pdf=ubuntu_docs_pdf.sh
       ;;
@@ -93,6 +105,7 @@ main ()
     "fedora:41"*|\
     "fedora:42"*)
       containerfile=Containerfile.fedora
+      essential=fedora_essential.sh
       docs=fedora_docs.sh
       docs_pdf=fedora_docs_pdf.sh
       pip3=pip3_docs.sh
@@ -119,6 +132,7 @@ main ()
     # "leap:15.6"*)
       image=opensuse/leap:$version
       containerfile=Containerfile.zypper
+      essential=opensuse_essential.sh
       docs=opensuse_docs.sh
       docs_pdf=opensuse_docs_pdf.sh
       pip3=pip3_docs.sh
@@ -129,6 +143,7 @@ main ()
     "ubuntu:24.04"*|\
     "ubuntu:25.04"*)
       containerfile=Containerfile.ubuntu
+      essential=ubuntu_essential.sh
       docs=ubuntu_docs.sh
       docs_pdf=ubuntu_docs_pdf.sh
       ;;
@@ -142,6 +157,8 @@ main ()
   $OCI build \
     --tag "yocto-docs-$sanitized_dockername:latest" \
     --build-arg ARG_FROM="docker.io/$image" \
+    --build-arg INCLUDE_ESSENTIAL_PACKAGES="${INCLUDE_ESSENTIAL_PACKAGES}" \
+    --build-arg ESSENTIAL="$essential" \
     --build-arg DOCS="$docs" \
     --build-arg DOCS_PDF="$docs_pdf" \
     --build-arg PIP3="${pip3:-}" \
