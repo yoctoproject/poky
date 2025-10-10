@@ -90,15 +90,7 @@ value, for example::
 
    bitbake-config-build enable-fragment machine/qemux86-64
 
-Note that in this case, the fragment will be defined twice in
-:term:`OE_FRAGMENTS`, and the last value is taken into account:
-
-.. code-block::
-   :caption: build/conf/toolcfg.conf
-
-   OE_FRAGMENTS += " ... machine/qemuarm64 machine/qemux86-64"
-
-In the above example, the value of :term:`MACHINE` is thus equal to
+In the above example, the new value of :term:`MACHINE` is now equal to
 ``qemux86-64``.
 
 When a fragment is enabled with :ref:`ref-bitbake-config-build-enable-fragment`,
