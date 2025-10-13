@@ -154,11 +154,11 @@ main ()
     --security-opt label=disable
   )
 
-  if [ "$OCI" = "docker" ]; then
+  if [ "$(basename "$OCI")" = "docker" ]; then
     args_run+=(
       --user="$(id -u)":"$(id -g)"
     )
-  elif [ "$OCI" = "podman" ]; then
+  elif [ "$(basename "$OCI")" = "podman" ]; then
     # we need net access to fetch bitbake terms
     args_run+=(
       --cap-add=NET_RAW
