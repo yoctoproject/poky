@@ -12,7 +12,7 @@ known security vulnerabilities, as tracked by the public
 database.
 
 The Yocto Project maintains a `list of known vulnerabilities
-<https://autobuilder.yocto.io/pub/non-release/patchmetrics/>`__
+<https://valkyrie.yocto.io/pub/non-release/patchmetrics/>`__
 for packages in Poky and OE-Core, tracking the evolution of the number of
 unpatched CVEs and the status of patches. Such information is available for
 the current development version and for each supported release.
