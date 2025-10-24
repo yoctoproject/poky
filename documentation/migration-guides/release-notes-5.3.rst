@@ -390,6 +390,9 @@ New Features / Enhancements in |yocto-ver|
    - Add the Wic-specific option ``--extra-partiton-space`` to add extra empty
      space after the space filled by the filesystem in the partition.
 
+   -  Add the Wic plugin ``extra_partition`` to install files from the
+      :term:`DEPLOY_DIR_IMAGE` directory into an extra non-rootfs partition.
+
 -  SDK-related changes:
 
    -  Include additional information about Meson setting in the SDK environment
