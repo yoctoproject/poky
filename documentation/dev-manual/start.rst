@@ -653,8 +653,8 @@ described in the ":ref:`dev-manual/start:accessing source archives`" section.
 #. *Get to the Downloads Area:* Select the "RELEASES" item from the
    pull-down "DEVELOPMENT" tab menu near the top of the page.
 
-#. *Select a Yocto Project Release:* On the top of the "RELEASE" page currently
-   supported releases are displayed, further down past supported Yocto Project
+#. *Select a Yocto Project Release:* On the top of the "RELEASES" page, currently
+   supported releases are displayed; further down, past supported Yocto Project
    releases are visible. The "Download" links in the rows of the table there
    will lead to the download tarballs for the release.
 
