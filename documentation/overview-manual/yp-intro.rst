@@ -172,11 +172,12 @@ Here are challenges you might encounter when developing using the Yocto Project:
    changes on the development system within the BitBake environment and
    then deploying only the updated packages to the target.
 
-   The Yocto Project :term:`OpenEmbedded Build System`
-   produces packages
-   in standard formats (i.e. RPM, DEB, IPK, and TAR). You can deploy
-   these packages into the running system on the target by using
-   utilities on the target such as ``rpm`` or ``ipk``.
+   The Yocto Project :term:`OpenEmbedded Build System` produces packages
+   in standard formats (i.e. RPM, DEB and/or IPK). If you included the
+   runtime package management feature in your image, you can deploy
+   these packages into the running system on the target by using the
+   corresponding utilities on the target such as
+   ``rpm``/``dnf``, ``dpkg``/``apt`` or ``opkg``.
 
 -  *Initial Build Times Can be Significant:* Long initial build times
    are unfortunately unavoidable due to the large number of packages
