@@ -180,6 +180,9 @@ metadata, as extra layers can define their own:
 
 -  *nls:* Include National Language Support (NLS).
 
+-  *opencl:* Include support for the :wikipedia:`OpenCL (Open Computing
+   Language) <OpenCL>` framework.
+
 -  *opengl:* Include the Open Graphics Library, which is a
    cross-language, multi-platform application programming interface used
    for rendering two and three-dimensional graphics.
