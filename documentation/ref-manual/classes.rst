@@ -2704,6 +2704,25 @@ The :ref:`ref-classes-recipe_sanity` class checks for the presence of any host s
 recipe prerequisites that might affect the build (e.g. variables that
 are set or software that is present).
 
+.. _ref-classes-relative_symlinks:
+
+``relative_symlinks``
+=====================
+
+The :ref:`ref-classes-relative_symlinks` class walks the symbolic links in the
+:term:`D` directory and replaces links pointing to absolute paths to relative
+paths. This is occasionally used in some recipes that create wrong symbolic
+links when their :ref:`ref-classes-native` version is built, and/or would cause
+breakage in the :ref:`overview-manual/concepts:shared state cache`.
+
+For example, if the following symbolic link is found in :term:`D`::
+
+   /usr/bin/foo -> /sbin/bar
+
+It is replaced by::
+
+   /usr/bin/foo -> ../../sbin/bar
+
 .. _ref-classes-relocatable:
 
 ``relocatable``
