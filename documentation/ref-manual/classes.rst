@@ -355,8 +355,12 @@ file for details about how to enable this mechanism in your configuration
 file, how to disable it for specific recipes, and how to share ``ccache``
 files between builds.
 
-However, using the class can lead to unexpected side-effects. Thus, using
-this class is not recommended.
+Recipes can also explicitly disable `Ccache` support even when the
+:ref:`ref-classes-ccache` class is enabled, by setting the
+:term:`CCACHE_DISABLE` variable to "1".
+
+Using the :ref:`ref-classes-ccache` class can lead to unexpected side-effects.
+Using this class is not recommended.
 
 .. _ref-classes-chrpath:
 

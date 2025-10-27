@@ -1458,6 +1458,11 @@ system and gives an overview of their function and contents.
    :term:`CC`
       The minimal command and arguments used to run the C compiler.
 
+   :term:`CCACHE_DISABLE`
+      When inheriting the :ref:`ref-classes-ccache` class, the
+      :term:`CCACHE_DISABLE` variable can be set to "1" in a recipe to disable
+      `Ccache` support. This is useful when the recipe is known to not support it.
+
    :term:`CCLD`
       The minimal command and arguments used to run the linker when the C
       compiler is being used as the linker.
