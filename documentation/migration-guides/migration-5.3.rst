@@ -134,10 +134,20 @@ To set back the "mac" policy in systemd (version 257.8 at the time of writing
 this note), you should set the ``NamePolicy`` and ``AlternativeNamesPolicy`` as
 detailed in :manpage:`systemd.link(5)`.
 
+Removal of unlicensed Linux kernel firmware
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the ``linux-firmware`` recipe now excludes firmware that do not
+provide any license information. The recipe holds an internal list of firmware
+to exclude via a variable named ``REMOVE_UNLICENSED``, this variable may be
+overridden if unlicensed firmware is needed. See :oe_git:`the recipe
+</openembedded-core/tree/meta/recipes-kernel/linux-firmware>` for a complete
+overview of the removed firmware.
+
 Supported kernel versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :term:`OLDEST_KERNEL` setting is XXX in this release, meaning that
+The :term:`OLDEST_KERNEL` setting is 5.15 in this release, meaning that
 out the box, older kernels are not supported. See :ref:`4.3 migration notes
 <migration-4.3-supported-kernel-versions>` for details.
 
@@ -147,7 +157,9 @@ Supported distributions
 Compared to the previous releases, running BitBake is supported on new
 GNU/Linux distributions:
 
--  XXX
+-  Debian 13 (Trixie)
+-  Fedora 42
+-  Ubuntu 25.04
 
 On the other hand, some earlier distributions are no longer supported:
 
@@ -174,6 +186,10 @@ The following variables have been removed:
    :term:`BitBake` invocation and replace it with information about what was
    built during the build. This was partly broken and hard to maintain.
 
+-  ``GPE_MIRROR``: this variable used to contain the
+   "http://gpe.linuxtogo.org/download/source" URL, but was not used by any
+   recipe in OE-Core.
+
 Removed recipes
 ~~~~~~~~~~~~~~~
 
@@ -195,6 +211,11 @@ The following recipes have been removed in this release:
 -  ``xf86-input-vmmouse``: It has a runtime dependency on ``xf86-input-mouse``,
    which stopped supporting Linux.
 
+-  ``babeltrace``: Removed in favour of ``babeltrace2``.
+
+-  ``cwautomacros``: A long-obsolete set of custom :ref:`ref-classes-autotools`
+   macros, not used by any other recipe.
+
 Removed :term:`PACKAGECONFIG` entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -205,6 +226,8 @@ Removed :term:`PACKAGECONFIG` entries
 -  ``squashfs-tools``: ``reproducible``
 
 -  ``mesa``: ``kmsro``, ``osmesa``, ``xa``
+
+-  ``systemd``: ``dbus``
 
 Removed classes
 ~~~~~~~~~~~~~~~
@@ -269,4 +292,22 @@ Miscellaneous changes
 -  ``xserver-xorg``: remove sub-package ``${PN}-xwayland``, as ``xwayland`` is
    now its own recipe.
 
--  The Wic-specific option ``--extra-space`` has been renamed to ``--extra-filesystem-space``.
+-  ``gdk-pixbuf``: drop the ``GDK_PIXBUF_LOADERS`` variable, which was part of
+   the recipe's :term:`PACKAGECONFIG`. Instead the :term:`PACKAGECONFIG` can be
+   modified directly to achieve the same result.
+
+-  Remove the ``meta/conf/distro/include/distro_alias.inc`` include file,
+   which associated a recipe name to one or more Distribution package name.
+   This file is not used and maintained anymore.
+
+-  Remove the ``nghttp2-proxy`` package from the ``nghttp2`` recipe as the
+   ``nghttp2-proxy`` package became empty after an upgrade that makes it a
+   library recipe only (due to
+   :term:`EXTRA_OEMAKE` containing ``-DENABLE_APP=OFF`` by default in the
+   recipe).
+
+-  Remove the ``util-linux-fcntl-lock`` package (in the ``util-linux`` recipe) as
+   ``util-linux`` now supports the ``--fcntl`` flag for the ``flock`` command.
+
+   Recipes currently using the ``fcntl-lock`` command should replace these by
+   ``flock --fcntl``.
