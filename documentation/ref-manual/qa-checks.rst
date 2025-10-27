@@ -983,17 +983,6 @@ message, it indicates that the :ref:`ref-tasks-install` step (or perhaps the bui
 of the variables set up for this (``bindir``, ``sbindir``, etc.), and should be
 changed so that it does.
 
-.. _qa-check-var-undefined:
-
-``var-undefined``
------------------
-
--  ``WORKDIR, DEPLOY_DIR, D, PN and PKGD all must be defined, unable to package [var-undefined]`` 
-
-   Reports when variables fundamental to packaging (i.e. :term:`WORKDIR`,
-   :term:`DEPLOY_DIR`, :term:`D`, :term:`PN`, and :term:`PKGD`) are undefined
-   during :ref:`ref-tasks-package`.
-
 .. _qa-check-version-going-backwards:
 
 ``version-going-backwards``
