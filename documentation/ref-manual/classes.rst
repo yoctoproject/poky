@@ -399,6 +399,10 @@ statements are provided in a :term:`configuration file`::
    ASSUME_PROVIDED += "ccache-native"
    HOSTTOOLS += "ccache"
 
+Recipes can also explicitly disable `Ccache` support even when the
+:ref:`ref-classes-ccache` class is enabled, by setting the
+:term:`CCACHE_DISABLE` variable to "1".
+
 Using the :ref:`ref-classes-ccache` class can lead to unexpected side-effects.
 Using this class is not recommended.
 
