@@ -2638,6 +2638,19 @@ The :ref:`ref-classes-rust-common` class is an internal class to the
 :ref:`ref-classes-cargo_common` and :ref:`ref-classes-rust` classes and is not
 intended to be used directly.
 
+.. _ref-classes-rust-target-config:
+
+``rust-target-config``
+======================
+
+The :ref:`ref-classes-rust-target-config` class is an internal class to the
+:ref:`ref-classes-cargo_common` and :ref:`ref-classes-rust` classes and is not
+intended to be used directly.
+
+It is used to generate a JSON specification file from the features listed in
+:term:`TUNE_FEATURES`, which is used for cross-compiling. The logic is done in a
+``do_rust_gen_targets`` task.
+
 .. _ref-classes-sanity:
 
 ``sanity``
