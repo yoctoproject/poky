@@ -2174,6 +2174,19 @@ meson-python build system.
 
 Internally this uses the :ref:`ref-classes-python_pep517` class.
 
+.. _ref-classes-python_pdm:
+
+``python_pdm``
+=================
+
+The :ref:`ref-classes-python_pdm` class adds support for building Python
+packages with the `PDM <https://pdm-project.org/>`__ package and dependency manager.
+
+This class adds  ``python3-pdm-backend-native`` to the recipe's build-time
+dependencies.
+
+Internally this uses the :ref:`ref-classes-python_pep517` class.
+
 .. _ref-classes-python_pep517:
 
 ``python_pep517``
