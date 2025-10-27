@@ -6826,6 +6826,16 @@ system and gives an overview of their function and contents.
    :term:`REPODIR`
       See :term:`bitbake:REPODIR` in the BitBake manual.
 
+   :term:`REQUIRED_COMBINED_FEATURES`
+      When inheriting the :ref:`ref-classes-features_check` class, this variable
+      identifies combined features (the intersection of :term:`MACHINE_FEATURES`
+      and :term:`DISTRO_FEATURES`) that must exist in the current configuration
+      in order for the :term:`OpenEmbedded Build System` to build the recipe. In
+      other words, if the :term:`REQUIRED_COMBINED_FEATURES` variable lists a
+      feature that does not appear in :term:`COMBINED_FEATURES` within the
+      current configuration, then the recipe will be skipped, and if the build
+      system attempts to build the recipe then an error will be triggered.
+
    :term:`REQUIRED_DISTRO_FEATURES`
       When inheriting the
       :ref:`features_check <ref-classes-features_check>`
