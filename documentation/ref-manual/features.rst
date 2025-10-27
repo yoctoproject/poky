@@ -54,6 +54,11 @@ Project metadata:
 
 -  *bluetooth:* Hardware has integrated BT
 
+-  *coresight:* Support for the `Coresight
+   <https://docs.kernel.org/trace/coresight/coresight.html>`__ Linux Kernel
+   feature on Arm processors. This feature depends on the ``opencsd`` recipe
+   which is present in the :yocto_git:`meta-arm </meta-arm>` :term:`layer`.
+
 -  *efi:* Support for booting through EFI
 
 -  *ext2:* Hardware HDD or Microdrive
