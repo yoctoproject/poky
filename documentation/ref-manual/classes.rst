@@ -3241,8 +3241,8 @@ There are two ways to configure the recipe for your machine:
 -  Using :term:`UBOOT_CONFIG` variable. For example::
 
       UBOOT_CONFIG ??= "foo bar"
-      UBOOT_CONFIG[foo] = "config,images,binary"
-      UBOOT_CONFIG[bar] = "config2,images2,binary2"
+      UBOOT_CONFIG[foo] = "config,images,binary,makeopts"
+      UBOOT_CONFIG[bar] = "config2,images2,binary2,makeopts2"
 
    In this example, all possible configurations are selected (``foo`` and
    ``bar``), but it is also possible to build only ``foo`` or ``bar`` by
@@ -3279,6 +3279,10 @@ There are two ways to configure the recipe for your machine:
       the above example).
 
       This option defaults to :term:`UBOOT_BINARY` if unset.
+
+   -  ``makeopts``: the additional options passed to ``make`` when configuring
+      and compiling U-Boot for this configuration entry. The options in this
+      entry are added before the options in :term:`UBOOT_MAKE_OPTS`.
 
 -  Or, using the :term:`UBOOT_MACHINE` variable (and its companion variable
    :term:`UBOOT_BINARY`). For example::

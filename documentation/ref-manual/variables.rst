@@ -10906,6 +10906,12 @@ system and gives an overview of their function and contents.
       Please see the "Selection of Processor Architecture and Board Type"
       section in the U-Boot README for valid values for this variable.
 
+   :term:`UBOOT_MAKE_OPTS`
+      The :term:`UBOOT_MAKE_OPTS` variable can be used to pass extra options to
+      ``make`` when U-Boot is configured and compiled.
+
+      See the :ref:`ref-classes-uboot-config` class for more information.
+
    :term:`UBOOT_MAKE_TARGET`
       Specifies the target called in the ``Makefile``. The default target
       is "all".
