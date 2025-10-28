@@ -372,6 +372,11 @@ symbolic link to a common ``site.conf`` file::
 This way, site-specific settings can be shared for multiple build
 configurations.
 
+.. note::
+
+   For more information on how to use ``bitbake-setup``, see the
+   :doc:`/brief-yoctoprojectqs/index` document.
+
 .. _structure-build-conf-bblock.conf:
 
 ``build/conf/bblock.conf``
