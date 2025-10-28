@@ -24,11 +24,12 @@ users can read in standardized format.
 :term:`SBOM` information is also critical to performing vulnerability exposure
 assessments, as all the components used in the Software Supply Chain are listed.
 
-The OpenEmbedded build system doesn't generate such information by default.
-To make this happen, you must inherit the
-:ref:`ref-classes-create-spdx` class from a configuration file::
+The OpenEmbedded build system generates such information by default (by
+inheriting the :ref:`ref-classes-create-spdx` class in :term:`INHERIT_DISTRO`).
 
-   INHERIT += "create-spdx"
+If needed, it can be disabled from a :term:`configuration file`::
+
+   INHERIT_DISTRO:remove = "create-spdx"
 
 Upon building an image, you will then get the compressed archive
 ``IMAGE-MACHINE.spdx.tar.zst`` contains the index and the files for the single
