@@ -1,0 +1,96 @@
+From 1338f98a279616f4e5e9ea30a25d1dfa0c7df5d6 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petter=20Mab=C3=A4cker?= <petter@technux.se>
+Date: Sun, 4 Jun 2017 12:22:40 +0200
+Subject: [PATCH] Remove dependencies on LSB functions
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+See this as a rebase of the previous 'Remove dependencies on LSB
+functions patch' with only minor modifications from the original version,
+based on the work done by Alex Lennon <ajlennon@dynamicdevices.co.uk> in
+'25fd817 pi-blaster: Added recipe'.
+
+Upstream-Status: Inappropriate [configuration]
+
+Signed-off-by: Petter Mabäcker <petter@technux.se>
+---
+ debian/pi-blaster.init | 38 +++++++-------------------------------
+ 1 file changed, 7 insertions(+), 31 deletions(-)
+
+diff --git a/debian/pi-blaster.init b/debian/pi-blaster.init
+index b142d70..01a686c 100644
+--- a/debian/pi-blaster.init
++++ b/debian/pi-blaster.init
+@@ -28,12 +28,12 @@ SCRIPTNAME=/etc/init.d/$NAME
+ [ -r /etc/default/$NAME ] && . /etc/default/$NAME
+ 
+ # Load the VERBOSE setting and other rcS variables
+-. /lib/init/vars.sh
++#. /lib/init/vars.sh
+ 
+ # Define LSB log_* functions.
+ # Depend on lsb-base (>= 3.2-14) to ensure that this file is present
+ # and status_of_proc is working.
+-. /lib/lsb/init-functions
++#. /lib/lsb/init-functions
+ 
+ #
+ # Function that starts the daemon/service
+@@ -77,48 +77,24 @@ do_stop()
+ 
+ case "$1" in
+   start)
+-	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
++	[ "$VERBOSE" != no ] && echo "Starting $DESC" "$NAME"
+ 	do_start
+-	case "$?" in
+-		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+-		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+-	esac
+ 	;;
+   stop)
+-	[ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
++	[ "$VERBOSE" != no ] && echo "Stopping $DESC" "$NAME"
+ 	do_stop
+-	case "$?" in
+-		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+-		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+-	esac
+-	;;
+-  status)
+-	status_of_proc "$DAEMON" "$NAME" && exit 0 || exit $?
+ 	;;
+   restart|force-reload)
+ 	#
+ 	# If the "reload" option is implemented then remove the
+ 	# 'force-reload' alias
+ 	#
+-	log_daemon_msg "Restarting $DESC" "$NAME"
++	echo "Restarting $DESC" "$NAME"
+ 	do_stop
+-	case "$?" in
+-	  0|1)
+-		do_start
+-		case "$?" in
+-			0) log_end_msg 0 ;;
+-			1) log_end_msg 1 ;; # Old process is still running
+-			*) log_end_msg 1 ;; # Failed to start
+-		esac
+-		;;
+-	  *)
+-		# Failed to stop
+-		log_end_msg 1
+-		;;
+-	esac
++    do_start
+ 	;;
+   *)
+-	echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
++	echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
+ 	exit 3
+ 	;;
+ esac
+-- 
+1.9.1
+
