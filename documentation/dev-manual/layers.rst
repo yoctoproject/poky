@@ -822,6 +822,8 @@ The following list describes the available commands:
 
 -  ``create-layer``: Creates a basic layer.
 
+-  ``show-machines``: Lists the machines available in the currently configured layers.
+
 Creating a General Layer Using the ``bitbake-layers`` Script
 ============================================================
 
