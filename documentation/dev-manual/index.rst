@@ -17,6 +17,7 @@ Yocto Project Development Tasks Manual
    upgrading-recipes
    temporary-source-code
    creating-fragments
+   poky-manual-setup
    quilt.rst
    development-shell
    python-development-shell

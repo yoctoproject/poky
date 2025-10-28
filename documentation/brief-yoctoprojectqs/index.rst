@@ -205,6 +205,12 @@ This directory contains:
 -  A ``config`` directory, representing the current configuration used for this
    :term:`bitbake:setup`.
 
+.. note::
+
+   It is also possible to setup the :term:`Poky` reference distro manually. For
+   that refer to the :doc:`/dev-manual/poky-manual-setup` section of the Yocto
+   Project Development Tasks Manual.
+
 Building Your Image
 ===================
 
@@ -261,7 +267,9 @@ an entire Linux distribution, including the toolchain, from source.
 
        These set up the environment similar to what was previously in the local
        configuration file :ref:`local.conf <structure-build-conf-local.conf>`,
-       which is now largely empty.
+       which is now largely empty. To setup the build how it was done
+       previously, see the :doc:`/dev-manual/poky-manual-setup` section of the
+       Yocto Project Development Tasks Manual.
 
     The current configuration does not allow the ``root`` user to login. As this
     can be useful for development, you can enable the
