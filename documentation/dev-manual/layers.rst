@@ -832,6 +832,8 @@ The following list describes the available commands:
    can replicate the directory structure and revisions of the layers in a current build.
    For more information, see ":ref:`dev-manual/layers:saving and restoring the layers setup`".
 
+-  ``show-machines``: Lists the machines available in the currently configured layers.
+
 Creating a General Layer Using the ``bitbake-layers`` Script
 ============================================================
 
