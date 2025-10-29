@@ -23,8 +23,8 @@ comes to delivering embedded software stacks. The project allows
 software customizations and build interchange for multiple hardware
 platforms as well as software stacks that can be maintained and scaled.
 
-.. image:: figures/key-dev-elements.png
-    :align: center
+.. image:: svg/key-dev-elements.*
+    :width: 100%
 
 For further introductory information on the Yocto Project, you might be
 interested in this
