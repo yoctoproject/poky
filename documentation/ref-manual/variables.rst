@@ -5549,8 +5549,8 @@ system and gives an overview of their function and contents.
 
       .. note::
 
-         An easy way to see what overrides apply is to search for :term:`OVERRIDES`
-         in the output of the ``bitbake -e`` command. See the
+         An easy way to see what overrides apply is to run the command
+         ``bitbake-getvar -r myrecipe OVERRIDES``. See the
          ":ref:`dev-manual/debugging:viewing variable values`" section in the Yocto
          Project Development Tasks Manual for more information.
 
