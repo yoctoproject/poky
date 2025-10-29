@@ -219,9 +219,9 @@ compilation and packaging files, and so forth.
 
 The path to the per-recipe temporary work directory depends on the
 context in which it is being built. The quickest way to find this path
-is to have BitBake return it by running the following::
+is to use the ``bitbake-getvar`` utility::
 
-   $ bitbake -e basename | grep ^WORKDIR=
+   $ bitbake-getvar -r basename WORKDIR
 
 As an example, assume a Source Directory
 top-level folder named ``poky``, a default :term:`Build Directory` at
