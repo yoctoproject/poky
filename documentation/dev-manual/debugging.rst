@@ -111,17 +111,17 @@ occurred in your project. Perhaps an attempt to :ref:`modify a variable
 <bitbake-user-manual/bitbake-user-manual-metadata:modifying existing
 variables>` did not work out as expected.
 
-BitBake's ``-e`` option is used to display variable values after
-parsing. The following command displays the variable values after the
-configuration files (i.e. ``local.conf``, ``bblayers.conf``,
+BitBake's ``bitbake-getvar`` command is used to display variable values after
+parsing. The following command displays the variable value for :term:`OVERRIDES`
+after the configuration files (i.e. ``local.conf``, ``bblayers.conf``,
 ``bitbake.conf`` and so forth) have been parsed::
 
-   $ bitbake -e
+   $ bitbake-getvar OVERRIDES
 
-The following command displays variable values after a specific recipe has
-been parsed. The variables include those from the configuration as well::
+The following command displays the value of :term:`PV` after a specific recipe
+has been parsed::
 
-   $ bitbake -e recipename
+   $ bitbake-getvar -r recipename PV
 
 .. note::
 
@@ -135,19 +135,25 @@ been parsed. The variables include those from the configuration as well::
    the recipe datastore, which means that variables set within one task
    will not be visible to other tasks.
 
-In the output of ``bitbake -e``, each variable is preceded by a
-description of how the variable got its value, including temporary
-values that were later overridden. This description also includes
-variable flags (varflags) set on the variable. The output can be very
+In the output of ``bitbake-getvar``, the line containing the value of the
+variable is preceded by a description of how the variable got its value,
+including temporary values that were later overridden. This description also
+includes variable flags (varflags) set on the variable. The output can be very
 helpful during debugging.
 
 Variables that are exported to the environment are preceded by
-``export`` in the output of ``bitbake -e``. See the following example::
+``export`` in the output of ``bitbake-getvar``. See the following example::
 
    export CC="i586-poky-linux-gcc -m32 -march=i586 --sysroot=/home/ulf/poky/build/tmp/sysroots/qemux86"
 
-In addition to variable values, the output of the ``bitbake -e`` and
-``bitbake -e`` recipe commands includes the following information:
+Shell functions and tasks can also be inspected with the same mechanism::
+
+   $ bitbake-getvar -r recipename do_install
+
+For Python functions and tasks, ``bitbake -e recipename`` can be used instead.
+
+Moreover, the output of the ``bitbake -e`` and ``bitbake -e`` recipe commands
+includes the following information:
 
 -  The output starts with a tree listing all configuration files and
    classes included globally, recursively listing the files they include
