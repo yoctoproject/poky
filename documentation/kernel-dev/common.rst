@@ -1514,15 +1514,13 @@ Expanding Variables
 ===================
 
 Sometimes it is helpful to determine what a variable expands to during a
-build. You can examine the values of variables by examining the
-output of the ``bitbake -e`` command. The output is long and is more
-easily managed in a text file, which allows for easy searches::
+build. You can examine the value of a variable by running the ``bitbake-getvar``
+command::
 
-   $ bitbake -e virtual/kernel > some_text_file
+   $ bitbake-getvar -r virtual/kernel VARIABLE
 
-Within the text file, you can see
-exactly how each variable is expanded and used by the OpenEmbedded build
-system.
+The output of the command explains exactly how the variable is expanded and used
+by the :term:`OpenEmbedded Build System`.
 
 Working with a "Dirty" Kernel Version String
 ============================================
