@@ -439,7 +439,7 @@ Licensing
 =========
 
 Your recipe needs to define variables related to the license
-under whith the software is distributed. See the
+under which the software is distributed. See the
 :ref:`contributor-guide/recipe-style-guide:recipe license fields`
 section in the Contributor Guide for details.
 
