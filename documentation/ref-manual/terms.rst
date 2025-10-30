@@ -461,10 +461,25 @@ universal, the list includes them just in case:
       -  A means by which to test the Yocto Project components (i.e. Poky
          is used to validate the Yocto Project).
 
-      -  A vehicle through which you can download the Yocto Project.
-
       Poky is not a product level distro. Rather, it is a good starting
       point for customization.
+
+      .. note::
+
+         Poky also used to be a repository containing the combination of
+         :term:`BitBake`, :term:`OpenEmbedded-Core (OE-Core)`, the
+         :yocto_git:`meta-yocto </meta-yocto>` repository and the Yocto Project
+         documentation -- which were combined with the :yocto_git:`combo-layer
+         </poky-config>` tool.
+
+         This repository is still hosted at :yocto_git:`/poky` and is still
+         updated for maintained releases that are older than Whinlatter (5.3).
+         Newer releases now use ``bitbake-setup`` to clone and setup the initial
+         :term:`OpenEmbedded Build System` environment. For more information on
+         how to use ``bitbake-setup``, see the :doc:`/brief-yoctoprojectqs/index`
+         document. An alternative can be to setup the above repositories
+         manually, by following the :doc:`/dev-manual/poky-manual-setup`
+         section of the Yocto Project Development Tasks Manual.
 
       .. note::
 
