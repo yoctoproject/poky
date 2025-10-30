@@ -343,6 +343,35 @@ Once the build process gets the sample file, it uses ``sed`` to substitute final
    version of the ``bblayers.conf.sample`` file in the ``meta-poky/conf/templates/default``
    directory.
 
+.. _structure-build-conf-site.conf:
+
+``build/conf/site.conf``
+========================
+
+This configuration file contains the site specific configurations for your build
+environment.
+
+You could for example edit this file to limit the number of threads used by
+:term:`BitBake` (:term:`BB_NUMBER_THREADS`) or set the location from which you
+want to access downloaded files (:term:`DL_DIR`).
+
+This file can be shared for multiple build directories. For example,
+``bitbake-setup`` makes the :ref:`structure-build-conf-site.conf` file a
+symbolic link to a common ``site.conf`` file::
+
+   ├── poky-master-poky-distro_poky-machine_qemux86-64/
+   │   └── build/
+   │       └── conf/
+   │           └── site.conf -> ../../../site.conf
+   ├── poky-master-poky-with-sstate-distro_poky-machine_qemux86-64/
+   │   └── build/
+   │       └── conf/
+   │           └── site.conf -> ../../../site.conf
+   └── site.conf
+
+This way, site-specific settings can be shared for multiple build
+configurations.
+
 .. _structure-build-conf-bblock.conf:
 
 ``build/conf/bblock.conf``
