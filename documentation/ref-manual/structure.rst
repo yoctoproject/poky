@@ -269,22 +269,19 @@ This directory should not be shared between builds.
 ``build/conf/local.conf``
 -------------------------
 
-This configuration file contains all the local user configurations for
-your build environment. The ``local.conf`` file contains documentation
-on the various configuration options. Any variable set here overrides
-any variable set elsewhere within the environment unless that variable
-is hard-coded within a file (e.g. by using '=' instead of '?='). Some
-variables are hard-coded for various reasons but such variables are
-relatively rare.
+This configuration file contains the local user configurations for the build
+environment.
 
-At a minimum, you would normally edit this file to select the target
-:term:`MACHINE`, which package types you wish to use
-(:term:`PACKAGE_CLASSES`), and the location from
-which you want to access downloaded files (:term:`DL_DIR`).
+You could for example experiment with setting (or adding to)
+:term:`DISTRO_FEATURES` or :term:`IMAGE_FEATURES`, or adjust build
+configurations for specific recipes by setting the :term:`PACKAGECONFIG`
+variables for them. If you would like to publish and share changes made to this
+file, it is recommended to put them into a distro :term:`configuration file`, or
+to create layer :term:`configuration fragments <Configuration Fragment>` from
+changes made here.
 
-If ``local.conf`` is not present when you start the build, the
-OpenEmbedded build system creates it from ``local.conf.sample`` when you
-``source`` the top-level build environment setup script
+The :term:`OpenEmbedded Build System` can create it from a ``local.conf.sample``
+file when you ``source`` the top-level build environment setup script
 :ref:`structure-core-script`.
 
 The source ``local.conf.sample`` file used depends on the
@@ -321,12 +318,11 @@ which are directory trees, traversed (or walked) by BitBake. The
 ``bblayers.conf`` file uses the :term:`BBLAYERS`
 variable to list the layers BitBake tries to find.
 
-If ``bblayers.conf`` is not present when you start the build, the
-OpenEmbedded build system creates it from ``bblayers.conf.sample`` when
-you ``source`` the top-level build environment setup script (i.e.
+The OpenEmbedded build system can create it from a ``bblayers.conf.sample`` file
+when you ``source`` the top-level build environment setup script (i.e.
 :ref:`structure-core-script`).
 
-As with the ``local.conf`` file, the source ``bblayers.conf.sample``
+As with the :ref:`structure-build-conf-local.conf` file, the source ``bblayers.conf.sample``
 file used depends on the :term:`TEMPLATECONF` script variable, which
 defaults to ``meta-poky/conf/templates/default`` when you are building from the Yocto
 Project development environment, and to ``meta/conf/templates/default`` when you are
