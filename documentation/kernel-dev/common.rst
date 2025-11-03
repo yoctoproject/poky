@@ -1272,10 +1272,12 @@ appear in the ``.config`` file, which is in the :term:`Build Directory`.
 
 It is simple to create a configuration fragment. One method is to use
 shell commands. For example, issuing the following from the shell
-creates a configuration fragment file named ``my_smp.cfg`` that enables
-multi-processor support within the kernel::
+creates a configuration fragment file named ``my_changes.cfg`` that enables
+multi-processor support within the kernel and disables the FPGA
+Configuration Framework::
 
-   $ echo "CONFIG_SMP=y" >> my_smp.cfg
+   $ echo "CONFIG_SMP=y" >> my_changes.cfg
+   $ echo "# CONFIG_FPGA is not set" >> my_changes.cfg
 
 .. note::
 
