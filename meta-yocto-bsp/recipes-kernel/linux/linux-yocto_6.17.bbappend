@@ -7,5 +7,5 @@ KMACHINE:beaglebone-yocto ?= "beaglebone"
 KMACHINE:genericx86 ?= "common-pc"
 KMACHINE:genericx86-64 ?= "common-pc-64"
 
-KBRANCH:genericarm64 ?= "v6.16/standard/genericarm64"
+KBRANCH:genericarm64 ?= "v6.17/standard/genericarm64"
 SRCREV_machine:genericarm64 ?= "459fdea93914f4db040bd8ebf8bce134a4cd6388"
