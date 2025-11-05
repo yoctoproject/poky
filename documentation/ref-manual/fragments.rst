@@ -193,6 +193,15 @@ then speed up the builds by not having to build things if they are present in
 the cache. It assumes you can download something faster than you can build it
 which will depend on your network configuration.
 
+.. _ref-fragments-root-login-with-empty-password:
+
+``core/yocto/root-login-with-empty-password``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``core/yocto/root-login-with-empty-password`` :term:`configuration fragment`
+can be used to allow to login as the ``root`` user to login without a password
+on the serial console and over SSH.
+
 Yocto Project Autobuilder Fragments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
