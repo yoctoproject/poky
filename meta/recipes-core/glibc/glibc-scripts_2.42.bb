@@ -1,1 +1,0 @@
-require glibc-scripts.inc

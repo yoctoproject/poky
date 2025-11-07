@@ -1,0 +1,111 @@
+The poky repository master branch is no longer being updated.
+
+You can either:
+
+a) switch to individual clones of bitbake, openembedded-core, meta-yocto and yocto-docs
+
+b) use the new bitbake-setup
+
+You can find information about either approach in our documentation:
+https://docs.yoctoproject.org/
+
+Note that "poky" the distro setting is still available in meta-yocto as
+before and we continue to use and maintain that.
+
+Long live Poky!
+
+
+
+
+Some further information on the background of this change follows. The 
+details are taken from:
+https://lists.openembedded.org/g/openembedded-architecture/message/2179
+
+TLDR: People have complained about the combo-layer built poky
+repository for years. It was meant to be a temporary thing, we now have
+an alternative and I'm therefore doing what I promised I'd do. Change
+is tough, things may break but this is the right point to at least try
+it.
+
+I'd like to note that:
+  * setting up builds with a separate oe-core and bitbake clone 
+    works as it always has done
+  * you can change your CI just to use those two repos instead of poky
+  * bitbake-setup isn't mandatory, it will just be what the yocto-
+    docs presents to users
+  * we don't have to stop maintaining the poky repository 
+    however nobody will test the new approach/code unless we do
+  * we are optionally exposing sstate mirrors in the new config
+  * we are also exposing config fragments to users
+  * poky as a DISTRO in meta-yocto remains
+
+A bit more about the history and background for those who are
+interested and then some FAQs:
+
+Back around 2010 when we split up openembedded-classic and started
+developing layers, we made the artificial "poky" repository construct
+as a way to let people easily and quickly get started with the project.
+without cloning and managing multiple repositories. Layers were a new
+idea with lots of rough edges. kas didn't exist, I think repo was only
+just created and it was a different world. For us, ut meant hacking up
+a quick tool, "combo-layer" and it was really a temporary solution to
+fill a gap and it was at least as functional as repo of the era. It was
+assumed we'd work it out properly in the future.
+
+At developer meetings there are inevitable questions about why
+poky/combo-layer exist and few seem to actually like/support it. There
+are continual questions about why a tool doesn't exist or why we don't
+adopt one too.
+
+15 years later, a bit longer than we might have thought, we are finally
+in a position where there may be a viable way forward to change.
+
+It has taken us a bit of time to get to this point. I wrote the
+original description of something like bitbake-setup about 7-8 years
+ago. I shared it privately with a few people, the review feedback
+stopped me pushing it further as I simply did not have the bandwidth.
+We were fortunate to get funding from the Sovereign Tech Fund to start
+the work and whilst I'd probably prefer to avoid the issue, the time
+had come to start. Since then, Alexander Kanavin has put a lot of work
+into getting it to the point where it would be possible to switch. A
+huge thanks to him for getting this to the current point.
+
+Why not use kas/submodules/repo?
+
+This topic has been discussed in depth several times. Very roughly,
+these are either difficult to focus on our use cases or have specific
+designs and intent which we as a project would struggle to influence.
+We are taking significant influence from some of them but also trying
+to build something where we can benefit from tight direct integration
+with bitbake and the metadata. For example fragment support is generic
+and hopefully something other approaches can also benefit from. We want
+to provide something we can switch the projects docs and autobuilder to
+which we can control and develop as we need it to. We are not aiming to
+force anyone to switch, you can use whichever tool you want.
+
+Can we not keep poky [repository master branch] around?
+
+If we do that, nobody will use the new tooling and it will be a
+disaster as issues won't get resolved. We need our CI to use the same
+thing we promote to our new and experienced users. We need this new
+tooling to be usable by our experienced developers too. We have tried
+for months to get people to try it and they simply don't. Making a
+release with it won't change much either. It needs people using it and
+for that, poky has to stop being updated.
+
+What happens to poky [repository]?
+
+The LTS branches continue their lifetime as planned. For master, I'll
+probably put a final commit in changing to just a README which points
+people at the bitbake-setup changes and explains what happened.
+
+What are the timelines? Why now?
+
+If we're going to make a change, we really want this in the next LTS
+release, which is April 2026. We only have one release before that
+which is now, October 2025. We therefore need to switch now, and then
+give us time to update docs, fix issues that arise and so on and have
+it in a release cycle. Whilst it means delaying the Oct 2025 release
+slightly, that is the right thing to do in the context of the bigger
+picture.
+
