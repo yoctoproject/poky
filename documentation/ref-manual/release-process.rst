@@ -62,7 +62,8 @@ codename are likely to be compatible and thus work together.
 
 Releases are given a nominal release version as well but the codename is
 used in repositories for this reason. You can find information on Yocto
-Project releases and codenames at :yocto_wiki:`/Releases`.
+Project releases and codenames in the :yocto_home:`Releases page
+</development/releases/>`.
 
 Our :doc:`/migration-guides/index` detail how to migrate from one release of
 the Yocto Project to the next.
