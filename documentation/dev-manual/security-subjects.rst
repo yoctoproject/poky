@@ -44,10 +44,10 @@ See the
 documentation for details regarding the policies and maintenance of stable
 branches.
 
-The :yocto_wiki:`Releases page </Releases>` contains a list
-of all releases of the Yocto Project. Versions in gray are no longer actively
-maintained with security patches, but well-tested patches may still be accepted
-for them for significant issues.
+The :yocto_home:`Releases </development/releases/>` page contains a list of all
+releases of the Yocto Project, grouped into current and previous releases.
+Previous releases are no longer actively maintained with security patches, but
+well-tested patches may still be accepted for them for significant issues.
 
 Security-related discussions at the Yocto Project
 -------------------------------------------------

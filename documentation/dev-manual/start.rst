@@ -676,7 +676,7 @@ described in the ":ref:`dev-manual/start:accessing index of releases`" section.
    .. note::
 
       For a "map" of Yocto Project releases to version numbers, see the
-      :yocto_wiki:`Releases </Releases>` wiki page.
+      :yocto_home:`Releases </development/releases/>` page.
 
    You can use the "RELEASE ARCHIVE" link to reveal a menu of all Yocto
    Project releases.

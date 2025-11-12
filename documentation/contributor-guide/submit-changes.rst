@@ -656,8 +656,8 @@ backported to a stable branch unless the bug in question does not affect the
 master branch or the fix on the master branch is unsuitable for backporting.
 
 The list of stable branches along with the status and maintainer for each
-branch can be obtained from the
-:yocto_wiki:`Releases wiki page </Releases>`.
+branch can be obtained from the :yocto_home:`Releases </development/releases/>`
+page.
 
 .. note::
 
