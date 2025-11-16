@@ -1,0 +1,81 @@
+# Sample bblayers.conf for Yocto builds
+# This file lists the layers that BitBake will use during the build
+# Copy this to your build/conf/ directory and customize paths as needed
+
+# POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
+# changes incompatibly
+POKY_BBLAYERS_CONF_VERSION = "2"
+
+# Base directory for build operations
+BBPATH = "${TOPDIR}"
+
+# Files that BitBake uses to track dependencies
+BBFILES ?= ""
+
+#
+# Layer Configuration
+#
+# Adjust the paths below based on your setup:
+# - For bitbake-setup: paths will be relative to your setup directory
+# - For manual setup: paths point to your layers/ directory
+
+# Example for manual setup with layers in ../layers/
+BBLAYERS ?= " \
+  ##OEROOT##/layers/meta-yocto/meta-poky \
+  ##OEROOT##/layers/meta-yocto/meta-yocto-bsp \
+  ##OEROOT##/layers/openembedded-core/meta \
+  "
+
+# Alternative example with absolute paths
+# Replace /path/to/yocto with your actual workspace path
+# BBLAYERS ?= " \
+#   /path/to/yocto/layers/meta-yocto/meta-poky \
+#   /path/to/yocto/layers/meta-yocto/meta-yocto-bsp \
+#   /path/to/yocto/layers/openembedded-core/meta \
+#   "
+
+#
+# Additional Layers
+#
+# Add additional layers here as needed. Common layers include:
+#
+# OpenEmbedded layers (meta-openembedded):
+# BBLAYERS += " \
+#   ##OEROOT##/layers/meta-openembedded/meta-oe \
+#   ##OEROOT##/layers/meta-openembedded/meta-python \
+#   ##OEROOT##/layers/meta-openembedded/meta-networking \
+#   ##OEROOT##/layers/meta-openembedded/meta-multimedia \
+#   "
+#
+# Qt layer:
+# BBLAYERS += "##OEROOT##/layers/meta-qt5"
+#
+# Security layer:
+# BBLAYERS += "##OEROOT##/layers/meta-security"
+#
+# Virtualization layer:
+# BBLAYERS += "##OEROOT##/layers/meta-virtualization"
+#
+# Custom/proprietary layers:
+# BBLAYERS += " \
+#   ##OEROOT##/layers/meta-custom \
+#   ##OEROOT##/layers/meta-company \
+#   "
+
+#
+# Layer Priority Notes
+#
+# Layers are processed in the order listed in BBLAYERS
+# If multiple layers provide the same recipe, the one in the layer with
+# higher priority (defined by BBFILE_PRIORITY in layer.conf) wins
+#
+# You can check layer priorities with:
+#   bitbake-layers show-layers
+
+#
+# Dynamic Layers
+#
+# Some layers use dynamic layer support to enable features only when
+# dependencies are present. No special configuration needed.
+
+# End of bblayers.conf sample
