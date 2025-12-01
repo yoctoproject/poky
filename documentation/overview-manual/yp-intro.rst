@@ -44,7 +44,7 @@ Here are features and advantages of the Yocto Project:
    system, software, and service vendors adopt and support the Yocto
    Project in their products and services. For a look at the Yocto
    Project community and the companies involved with the Yocto Project,
-   see the "COMMUNITY" and "ECOSYSTEM" tabs on the
+   see the "COMMUNITY" and "ABOUT" tabs on the
    :yocto_home:`Yocto Project <>` home page.
 
 -  *Architecture Agnostic:* Yocto Project supports Intel, ARM, MIPS,
