@@ -60,10 +60,9 @@ Here are features and advantages of the Yocto Project:
    move between architectures without moving to new development
    environments. Additionally, if you have used the Yocto Project to
    create an image or application and you find yourself not able to
-   support it, commercial Linux vendors such as Wind River, Mentor
-   Graphics, Timesys, and ENEA could take it and provide ongoing
-   support. These vendors have offerings that are built using the Yocto
-   Project.
+   support it, commercial Linux vendors listed on :yocto_home:`/members/` and
+   :yocto_home:`/about/participants/` could take it and provide ongoing
+   support.
 
 -  *Flexibility:* Corporations use the Yocto Project many different
    ways. One example is to create an internal Linux distribution as a
