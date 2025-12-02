@@ -329,10 +329,10 @@ Validating Patches with Patchtest
 
 ``patchtest`` is available in ``openembedded-core`` as a tool for making
 sure that your patches are well-formatted and contain important info for
-maintenance purposes, such as ``Signed-off-by`` and ``Upstream-Status``
-tags. Note that no functional testing of the changes will be performed by ``patchtest``.
-Currently, it only supports testing patches for ``openembedded-core`` branches.
-To setup, perform the following::
+maintenance purposes, such as the ``Signed-off-by`` presence. Note that no
+functional testing of the changes will be performed by ``patchtest``. Currently,
+it only supports testing patches for ``openembedded-core`` branches. To setup,
+perform the following::
 
     pip install -r meta/lib/patchtest/requirements.txt
     source oe-init-build-env
