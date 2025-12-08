@@ -27,7 +27,10 @@ import os.path
 import sys
 import warnings
 from bb.compat import total_ordering
-from collections import Mapping
+try:
+    from collections.abc import Mapping
+except ImportError:
+    from collections import Mapping
 
 try:
     import sqlite3
@@ -48,7 +51,7 @@ if hasattr(sqlite3, 'enable_shared_cache'):
 
 
 @total_ordering
-class SQLTable(collections.MutableMapping):
+class SQLTable(Mapping):
     """Object representing a table/domain in the database"""
     def __init__(self, cachefile, table):
         self.cachefile = cachefile

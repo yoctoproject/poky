@@ -27,7 +27,7 @@ import bb
 import bb.msg
 import multiprocessing
 import fcntl
-import imp
+import importlib.util
 import itertools
 import subprocess
 import glob
@@ -43,7 +43,12 @@ from contextlib import contextmanager
 from ctypes import cdll
 
 logger = logging.getLogger("BitBake.Util")
-python_extensions = [e for e, _, _ in imp.get_suffixes()]
+# Get Python extension suffixes for importlib
+import sys
+if sys.version_info >= (3, 0):
+    python_extensions = ['.py', '.pyc', '.pyo']
+else:
+    python_extensions = [e for e, _, _ in imp.get_suffixes()]
 
 
 def clean_context():
@@ -1482,12 +1487,17 @@ def export_proxies(d):
 def load_plugins(logger, plugins, pluginpath):
     def load_plugin(name):
         logger.debug('Loading plugin %s' % name)
-        fp, pathname, description = imp.find_module(name, [pluginpath])
-        try:
-            return imp.load_module(name, fp, pathname, description)
-        finally:
-            if fp:
-                fp.close()
+        import sys
+        import os.path
+        # Python 3 compatible plugin loading
+        spec = importlib.util.spec_from_file_location(name, os.path.join(pluginpath, name + '.py'))
+        if spec and spec.loader:
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[name] = module
+            spec.loader.exec_module(module)
+            return module
+        else:
+            raise ImportError("Cannot load plugin %s" % name)
 
     logger.debug('Loading plugins from %s...' % pluginpath)
 

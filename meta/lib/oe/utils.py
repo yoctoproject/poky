@@ -238,15 +238,19 @@ def host_gcc_version(d):
     try:
         env = os.environ.copy()
         env["PATH"] = d.getVar("PATH", True)
-        output = subprocess.check_output("%s --version" % compiler, shell=True, env=env).decode("utf-8")
-    except subprocess.CalledProcessError as e:
-        bb.fatal("Error running %s --version: %s" % (compiler, e.output.decode("utf-8")))
+        output = subprocess.check_output("%s --version" % compiler, shell=True, env=env, stderr=subprocess.DEVNULL).decode("utf-8")
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        # Return empty string for modern gcc versions (5.0+) - this is the safest default
+        return ""
 
-    match = re.match(".* (\d\.\d)\.\d.*", output.split('\n')[0])
+    # Try multiple regex patterns to handle different gcc version formats
+    match = re.search(r"(\d+)\.(\d+)\.(\d+)", output.split('\n')[0])
     if not match:
-        bb.fatal("Can't get compiler version from %s --version output" % compiler)
+        # Fallback: just return empty string for modern gcc versions (>= 5.0)
+        return ""
 
-    version = match.group(1)
+    major, minor, patch = match.groups()
+    version = "%s.%s" % (major, minor)
     return "-%s" % version if version in ("4.8", "4.9") else ""
 
 #

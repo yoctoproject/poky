@@ -7,7 +7,10 @@ the arguments of the type's factory for details.
 
 import inspect
 import oe.types as types
-import collections
+try:
+    from collections.abc import Callable
+except ImportError:
+    from collections import Callable
 
 available_types = {}
 
@@ -96,7 +99,7 @@ for name in dir(types):
         continue
 
     obj = getattr(types, name)
-    if not isinstance(obj, collections.Callable):
+    if not isinstance(obj, Callable):
         continue
 
     register(name, obj)

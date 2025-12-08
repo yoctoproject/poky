@@ -68,7 +68,11 @@ from collections import deque
 from datetime import datetime, timedelta
 import time
 import re
-import asyncore
+try:
+    import asyncore
+except ImportError:
+    # Python 3.12+ removed asyncore, use asyncio instead
+    asyncore = None
 import glob
 import locale
 import subprocess
@@ -1491,33 +1495,37 @@ class ThreadedNotifier(threading.Thread, Notifier):
         self.loop()
 
 
-class AsyncNotifier(asyncore.file_dispatcher, Notifier):
-    """
-    This notifier inherits from asyncore.file_dispatcher in order to be able to
-    use pyinotify along with the asyncore framework.
-
-    """
-    def __init__(self, watch_manager, default_proc_fun=None, read_freq=0,
-                 threshold=0, timeout=None, channel_map=None):
+if asyncore is not None:
+    class AsyncNotifier(asyncore.file_dispatcher, Notifier):
         """
-        Initializes the async notifier. The only additional parameter is
-        'channel_map' which is the optional asyncore private map. See
-        Notifier class for the meaning of the others parameters.
+        This notifier inherits from asyncore.file_dispatcher in order to be able to
+        use pyinotify along with the asyncore framework.
 
         """
-        Notifier.__init__(self, watch_manager, default_proc_fun, read_freq,
-                          threshold, timeout)
-        asyncore.file_dispatcher.__init__(self, self._fd, channel_map)
+        def __init__(self, watch_manager, default_proc_fun=None, read_freq=0,
+                     threshold=0, timeout=None, channel_map=None):
+            """
+            Initializes the async notifier. The only additional parameter is
+            'channel_map' which is the optional asyncore private map. See
+            Notifier class for the meaning of the others parameters.
 
-    def handle_read(self):
-        """
-        When asyncore tells us we can read from the fd, we proceed processing
-        events. This method can be overridden for handling a notification
-        differently.
+            """
+            Notifier.__init__(self, watch_manager, default_proc_fun, read_freq,
+                              threshold, timeout)
+            asyncore.file_dispatcher.__init__(self, self._fd, channel_map)
+
+        def handle_read(self):
+            """
+            When asyncore tells us we can read from the fd, we proceed processing
+            events. This method can be overridden for handling a notification
+            differently.
 
         """
         self.read_events()
         self.process_events()
+else:
+    # asyncore not available (Python 3.12+), create a stub
+    AsyncNotifier = None
 
 
 class TornadoAsyncNotifier(Notifier):
