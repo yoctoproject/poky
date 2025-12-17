@@ -1118,6 +1118,53 @@ The :ref:`ref-classes-image_types` class also handles conversion and compression
    :term:`IMAGE_FSTYPES`. This would also be similar for Virtual Box Virtual Disk
    Image ("vdi") and QEMU Copy On Write Version 2 ("qcow2") images.
 
+.. _ref-classes-image-container:
+
+``image-container``
+===================
+
+The :ref:`ref-classes-image-container` class is automatically inherited in
+:doc:`image </ref-manual/images>` recipes that have the ``container`` image type
+in :term:`IMAGE_FSTYPES`. It provides relevant settings to generate an image
+ready for use with an :wikipedia:`OCI <Open_Container_Initiative>`-compliant
+container management tool, such as :wikipedia:`Podman <Podman>` or
+:wikipedia:`Docker <Docker_(software)>`.
+
+.. note::
+
+   This class neither builds nor installs container management tools on the
+   target. Those tools are available in the :yocto_git:`meta-virtualization
+   </meta-virtualization>` layer.
+
+You should set the :term:`PREFERRED_PROVIDER` for the Linux kernel to
+``linux-dummy`` in a :term:`configuration file`::
+
+   PREFERRED_PROVIDER_virtual/kernel = "linux-dummy"
+
+Otherwise an error is triggered. If desired, the
+:term:`IMAGE_CONTAINER_NO_DUMMY` variable can be set to "1" to avoid triggering
+this error.
+
+The ``linux-dummy`` recipe acts as a Linux kernel recipe but builds nothing. It
+is relevant to use as the preferred Linux kernel provider in this case as a
+container image does not need to include a Linux kernel. Selecting it as the
+preferred provider for the kernel will also decrease build time.
+
+Using this class only deploys an additional ``tar.bz2`` archive to
+:term:`DEPLOY_DIR_IMAGE`. This archive can be used in a container file (a file
+typically named ``Dockerfile`` or ``Containerfile``). For example, to be used with
+:wikipedia:`Podman <Podman>` or :wikipedia:`Docker <Docker_(software)>`, the
+`container file <https://docs.docker.com/reference/dockerfile/>`__ could contain
+the following instructions:
+
+.. code-block:: dockerfile
+
+   FROM scratch
+   ADD ./image-container-qemux86-64.rootfs.tar.bz2 /
+   ENTRYPOINT /bin/sh
+
+This is suitable to build a container using our generated root filesystem image.
+
 .. _ref-classes-image-live:
 
 ``image-live``
