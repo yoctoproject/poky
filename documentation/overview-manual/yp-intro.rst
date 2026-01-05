@@ -760,7 +760,8 @@ Here is a brief summary of the "workflow":
    package feed that is used to create the final root file image.
 
 #. The build system generates the file system image and a customized
-   Extensible SDK (eSDK) for application development in parallel.
+   :doc:`SDK </sdk-manual/index>` (Software Development Kit) for application
+   development in parallel.
 
 For a very detailed look at this workflow, see the
 ":ref:`overview-manual/concepts:openembedded build system concepts`" section.
