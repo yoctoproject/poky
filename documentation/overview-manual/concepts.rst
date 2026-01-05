@@ -165,7 +165,7 @@ The following diagram represents the high-level workflow of a build. The
 remainder of this section expands on the fundamental input, output,
 process, and metadata logical blocks that make up the workflow.
 
-.. image:: figures/YP-flow-diagram.png
+.. image:: svg/yp-flow-diagram.*
    :align: center
 
 In general, the build's workflow consists of several functional areas:

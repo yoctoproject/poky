@@ -733,7 +733,7 @@ The :term:`OpenEmbedded Build System` uses a "workflow" to
 accomplish image and SDK generation. The following figure overviews that
 workflow:
 
-.. image:: figures/YP-flow-diagram.png
+.. image:: svg/yp-flow-diagram.*
     :align: center
 
 Here is a brief summary of the "workflow":
