@@ -45,6 +45,45 @@ release process validates the content of the new branch.
    Realize that there can be patches merged onto the stable release
    branches as and when they become available.
 
+.. _ref-yp-development-cycle:
+
+Development Cycle
+=================
+
+As explained in the previous :ref:`ref-manual/release-process:Major and Minor
+Release Cadence` section, a new release comes out every six months.
+
+During this six-months period of time, the Yocto Project releases four
+"Milestone" releases which represent distinct points of time. The milestone
+releases are tested through the :ref:`ref-manual/release-process:Testing and
+Quality Assurance` process and helps spotting issues before the actual release
+is out.
+
+The time span between milestone releases can vary, but they are in general
+evenly spaced out during this six-months period of time.
+
+These milestone releases are tagged with a capital "M" after the future release
+tag name. For example, the milestone tags "&DISTRO_RELEASE_SERIES;M1",
+"&DISTRO_RELEASE_SERIES;M2", and "&DISTRO_RELEASE_SERIES;M3" are released before
+the actual "&DISTRO_RELEASE_SERIES;" release.
+
+.. note::
+
+   The fourth milestone (M4) is not actually released and announced, but
+   represents a point of time for the Quality Assurance team to start the
+   :ref:`ref-manual/release-process:Testing and Quality Assurance` process
+   before tagging and delivering the final release.
+
+After the third milestone release (M3), the Yocto Project enters **Feature
+Freeze**. This means that the maintainers of :term:`OpenEmbedded-Core
+(OE-Core)`, :term:`BitBake` and other core repositories stop accepting
+significant changes on the "master" branch. Changes that may be accepted are
+minor upgrades to core components and security/bug fixes.
+
+During feature freeze, a new branch is created and maintained separately to
+test new features and enhancements received from contributors, but these changes
+will only make it to the master branch after the release is out.
+
 Major Release Codenames
 =======================
 
