@@ -376,5 +376,5 @@ script run by the installer and BitBake.
 
 In the layout above, italicized text is used to indicate replaceable
 portions of the file or directory name. For example, *install_dir* is the
-directory where the SDK is installed, which is ``poky_sdk`` by default,
-and *target* represents the target architecture (e.g. ``i586``).
+directory where the SDK is installed, which is by default ``poky_sdk`` in your
+home directory and *target* represents the target architecture (e.g. ``i586``).
