@@ -121,7 +121,9 @@ is the general form::
 
 For example, the following SDK installer is for a 64-bit
 development host system and a i586-tuned target architecture based off
-the SDK for ``core-image-sato`` and using the current &DISTRO; snapshot::
+the SDK for ``core-image-sato`` and using the current &DISTRO; snapshot:
+
+.. code-block:: text
 
    poky-glibc-x86_64-core-image-sato-i586-toolchain-ext-&DISTRO;.sh
 

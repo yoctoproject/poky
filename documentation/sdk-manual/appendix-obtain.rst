@@ -61,7 +61,9 @@ Follow these steps to locate and hand-install the toolchain:
 
    For example, if your build host is a 64-bit x86 system and you need
    an extended SDK for a 64-bit core2 QEMU target, go into the ``x86_64``
-   folder and download the following installer::
+   folder and download the following installer:
+
+   .. code-block:: text
 
       poky-glibc-x86_64-core-image-sato-core2-64-qemux86-64-toolchain-&DISTRO;.sh
 
@@ -130,7 +132,9 @@ build the SDK installer. Follow these steps:
       :term:`SDKMACHINE` value must be set for the architecture of the
       machine you are using to build the installer. If :term:`SDKMACHINE`
       is not set appropriately, the build fails and provides an error
-      message similar to the following::
+      message similar to the following:
+
+      .. code-block:: text
 
          The extensible SDK can currently only be built for the same
          architecture as the machine being built on - SDK_ARCH
@@ -224,7 +228,9 @@ Follow these steps to extract the root filesystem:
 
    For example, if you plan on using a BeagleBone device as your target
    hardware and your image is a ``core-image-sato-sdk`` image, you can
-   download the following file::
+   download the following file:
+
+   .. code-block:: text
 
       core-image-sato-sdk-beaglebone-yocto.tar.bz2
 

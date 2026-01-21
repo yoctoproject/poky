@@ -52,7 +52,9 @@ libraries appropriate for developing against the corresponding image.
 
 The names of the tarball installer scripts are such that a string
 representing the host system appears first in the filename and then is
-immediately followed by a string representing the target architecture::
+immediately followed by a string representing the target architecture:
+
+.. code-block:: text
 
    poky-glibc-host_system-image_type-arch-toolchain-release_version.sh
 
@@ -75,7 +77,9 @@ immediately followed by a string representing the target architecture::
 
 For example, the following SDK installer is for a 64-bit
 development host system and a i586-tuned target architecture based off
-the SDK for ``core-image-sato`` and using the current DISTRO snapshot::
+the SDK for ``core-image-sato`` and using the current DISTRO snapshot:
+
+.. code-block:: text
 
    poky-glibc-x86_64-core-image-sato-i586-toolchain-DISTRO.sh
 
