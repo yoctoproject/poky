@@ -189,7 +189,9 @@ the installed SDKs to update the installed SDKs by using the
 #. Build the extensible SDK normally (i.e., use the
    ``bitbake -c populate_sdk_ext`` imagename command).
 
-#. Publish the SDK using the following command::
+#. Publish the SDK using the following command:
+
+   .. code-block:: console
 
       $ oe-publish-sdk some_path/sdk-installer.sh path_to_shared_http_directory
 

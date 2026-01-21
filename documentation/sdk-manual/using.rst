@@ -100,7 +100,9 @@ must be writable for whichever users need to use the SDK.
 The following command shows how to run the installer given a toolchain
 tarball for a 64-bit x86 development host system and a 64-bit x86 target
 architecture. The example assumes the SDK installer is located in
-``~/Downloads/`` and has execution rights::
+``~/Downloads/`` and has execution rights:
+
+.. code-block:: console
 
    $ ./Downloads/poky-glibc-x86_64-core-image-sato-i586-toolchain-&DISTRO;.sh
    Poky (Yocto Project Reference Distro) SDK installer version &DISTRO;
@@ -140,7 +142,9 @@ begin with the string "``environment-setup``" and include as part of
 their name the tuned target architecture. As an example, the following
 commands set the working directory to where the SDK was installed and
 then source the environment setup script. In this example, the setup
-script is for an IA-based target machine using i586 tuning::
+script is for an IA-based target machine using i586 tuning:
+
+.. code-block:: console
 
    $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
 

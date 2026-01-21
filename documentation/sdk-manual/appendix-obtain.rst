@@ -69,7 +69,9 @@ Follow these steps to locate and hand-install the toolchain:
 
 #. *Run the Installer:* Be sure you have execution privileges and run
    the installer. Here is an example from the ``Downloads``
-   directory::
+   directory:
+
+   .. code-block:: console
 
       $ ~/Downloads/poky-glibc-x86_64-core-image-sato-core2-64-qemux86-64-toolchain-&DISTRO;.sh
 
@@ -106,7 +108,9 @@ build the SDK installer. Follow these steps:
    the Source Directory (i.e. ``poky``), run the
    :ref:`structure-core-script` environment
    setup script to define the OpenEmbedded build environment on your
-   build host::
+   build host:
+
+   .. code-block:: console
 
       $ source oe-init-build-env
 
@@ -145,11 +149,15 @@ build the SDK installer. Follow these steps:
 
 #. *Build the SDK Installer:* To build the SDK installer for a standard
    SDK and populate the SDK image, use the following command form. Be
-   sure to replace ``image`` with an image (e.g. "core-image-sato")::
+   sure to replace ``image`` with an image (e.g. "core-image-sato"):
+
+   .. code-block:: console
 
       $ bitbake image -c populate_sdk
 
-   You can do the same for the extensible SDK using this command form::
+   You can do the same for the extensible SDK using this command form:
+
+   .. code-block:: console
 
       $ bitbake image -c populate_sdk_ext
 
@@ -174,7 +182,9 @@ build the SDK installer. Follow these steps:
          libc-staticdev"
 
 #. *Run the Installer:* You can now run the SDK installer from
-   ``tmp/deploy/sdk`` in the :term:`Build Directory`. Here is an example::
+   ``tmp/deploy/sdk`` in the :term:`Build Directory`. Here is an example:
+
+   .. code-block:: console
 
       $ cd poky/build/tmp/deploy/sdk
       $ ./poky-glibc-x86_64-core-image-sato-core2-64-toolchain-ext-&DISTRO;.sh
@@ -242,7 +252,9 @@ Follow these steps to extract the root filesystem:
    installed the toolchain (e.g. ``poky_sdk``).
 
    Here is an example based on the toolchain installed in the
-   ":ref:`sdk-manual/appendix-obtain:locating pre-built sdk installers`" section::
+   ":ref:`sdk-manual/appendix-obtain:locating pre-built sdk installers`" section:
+
+   .. code-block:: console
 
       $ source poky_sdk/environment-setup-core2-64-poky-linux
 
@@ -253,7 +265,9 @@ Follow these steps to extract the root filesystem:
    from a previously built root filesystem image that was downloaded
    from the :yocto_dl:`Index of Releases </releases/yocto/&DISTRO_REL_LATEST_TAG;/machines/>`.
    This command extracts the root filesystem into the ``core2-64-sato``
-   directory::
+   directory:
+
+   .. code-block:: console
 
       $ runqemu-extract-sdk ~/Downloads/core-image-sato-sdk-beaglebone-yocto.tar.bz2 ~/beaglebone-sato
 
