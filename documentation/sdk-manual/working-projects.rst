@@ -56,7 +56,9 @@ project:
    Create the remaining
    three files as follows:
 
-   -  ``hello.c``::
+   -  ``hello.c``:
+
+      .. code-block:: c
 
          #include <stdio.h>
 
@@ -66,7 +68,9 @@ project:
                  return 0;
              }
 
-   -  ``configure.ac``::
+   -  ``configure.ac``:
+
+      .. code-block:: none
 
          AC_INIT(hello,0.1)
          AM_INIT_AUTOMAKE([foreign])
@@ -74,7 +78,9 @@ project:
          AC_CONFIG_FILES(Makefile)
          AC_OUTPUT
 
-   -  ``Makefile.am``::
+   -  ``Makefile.am``:
+
+      .. code-block:: none
 
          bin_PROGRAMS = hello
          hello_SOURCES = hello.c
@@ -271,7 +277,9 @@ example:
 
    Create the three files as follows:
 
-   -  ``main.c``::
+   -  ``main.c``:
+
+      .. code-block:: c
 
          #include "module.h"
          void sample_func();
@@ -281,12 +289,16 @@ example:
              return 0;
          }
 
-   -  ``module.h``::
+   -  ``module.h``:
+
+      .. code-block:: c
 
          #include <stdio.h>
          void sample_func();
 
-   -  ``module.c``::
+   -  ``module.c``:
+
+      .. code-block:: c
 
          #include "module.h"
          void sample_func()
@@ -321,7 +333,9 @@ example:
    two lines that can be used to set the :term:`CC` variable. One line is
    identical to the value that is set when you run the SDK environment
    setup script, and the other line sets :term:`CC` to "gcc", the default
-   GNU compiler on the build host::
+   GNU compiler on the build host:
+
+   .. code-block:: Makefile
 
       # CC=i586-poky-linux-gcc -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux
       # CC="gcc"
