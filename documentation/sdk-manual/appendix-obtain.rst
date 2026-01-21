@@ -329,13 +329,29 @@ directories within the ``sysroots`` could be ``i586-poky-linux`` and
 Installed Extensible SDK Directory Structure
 ============================================
 
-The following figure shows the resulting directory structure after you
-install the Extensible SDK by running the ``*.sh`` SDK installation
-script:
+After you install the Extensible SDK by running the ``*.sh`` SDK installation
+script, the following directory structure should be observed:
 
-.. image:: figures/sdk-installed-extensible-sdk-directory.png
-   :scale: 80%
-   :align: center
+.. parsed-literal::
+
+   *install_dir*/
+   ├── bitbake-cookerdaemon.log
+   ├── buildinfo
+   ├── buildtools/
+   ├── cache/
+   ├── conf/
+   ├── .devtoolbase
+   ├── downloads/
+   ├── environment-setup-*target*-poky-linux
+   ├── layers/
+   ├── oe-time-dd-test.dat
+   ├── preparing_system_build.log
+   ├── site-config-*target*-poky-linux
+   ├── sstate-cache/
+   ├── sysroots/
+   ├── tmp/
+   ├── version-*target*-poky-linux
+   └── workspace/
 
 The installed directory structure for the extensible SDK is quite
 different than the installed structure for the standard SDK. The
@@ -348,7 +364,7 @@ the SDK, a configuration file for the target, a version file for the
 target, and log files for the OpenEmbedded build system preparation
 script run by the installer and BitBake.
 
-Within the figure, italicized text is used to indicate replaceable
-portions of the file or directory name. For example, install_dir is the
+In the layout above, italicized text is used to indicate replaceable
+portions of the file or directory name. For example, *install_dir* is the
 directory where the SDK is installed, which is ``poky_sdk`` by default,
-and target represents the target architecture (e.g. ``i586``).
+and *target* represents the target architecture (e.g. ``i586``).
