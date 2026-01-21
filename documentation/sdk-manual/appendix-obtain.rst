@@ -276,24 +276,52 @@ Follow these steps to extract the root filesystem:
 Installed Standard SDK Directory Structure
 ==========================================
 
-The following figure shows the resulting directory structure after you
-install the Standard SDK by running the ``*.sh`` SDK installation
-script:
+After you install the Standard SDK by running the ``*.sh`` SDK installation
+script, the following directory structure should be observed:
 
-.. image:: figures/sdk-installed-standard-sdk-directory.png
-   :scale: 100%
+.. parsed-literal::
+
+   *install_dir*/*version*/
+   ├── buildinfo
+   ├── environment-setup-*target*-poky-linux
+   ├── site-config-*target*-poky-linux
+   ├── sysroots/
+   │   ├── *target*-poky-linux/
+   │   │   ├── bin/
+   │   │   ├── boot/
+   │   │   ├── etc/
+   │   │   ├── home/
+   │   │   ├── lib/
+   │   │   ├── media/
+   │   │   ├── mnt/
+   │   │   ├── proc/
+   │   │   ├── run/
+   │   │   ├── sbin/
+   │   │   ├── sys/
+   │   │   ├── tmp/
+   │   │   ├── usr/
+   │   │   └── var/
+   │   └── *host*-pokysdk-linux/
+   │       ├── bin/
+   │       ├── environment-setup.d/
+   │       ├── etc/
+   │       ├── lib/
+   │       ├── sbin/
+   │       ├── usr/
+   │       └── var/
+   └── version-*target*-poky-linux
 
 The installed SDK consists of an environment setup script for the SDK, a
 configuration file for the target, a version file for the target, and
 the root filesystem (``sysroots``) needed to develop objects for the
 target system.
 
-Within the figure, italicized text is used to indicate replaceable
-portions of the file or directory name. For example, install_dir/version
-is the directory where the SDK is installed. By default, this directory
-is ``/opt/poky/``. And, version represents the specific snapshot of the
-SDK (e.g. &DISTRO;). Furthermore, target represents the target architecture
-(e.g. ``i586``) and host represents the development system's
+In the layout above, italicized text is used to indicate replaceable
+portions of the file or directory name. For example, *install_dir*/*version*
+is the directory where the SDK is installed. By default, *install_dir*
+is ``/opt/poky/``. And, *version* represents the specific snapshot of the
+SDK (e.g. &DISTRO;). Furthermore, *target* represents the target architecture
+(e.g. ``i586``) and *host* represents the development system's
 architecture (e.g. ``x86_64``). Thus, the complete names of the two
 directories within the ``sysroots`` could be ``i586-poky-linux`` and
 ``x86_64-pokysdk-linux`` for the target and host, respectively.
