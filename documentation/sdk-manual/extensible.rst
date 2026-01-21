@@ -100,26 +100,21 @@ The names of the tarball installer scripts are such that a string
 representing the host system appears first in the filename and then is
 immediately followed by a string representing the target architecture.
 An extensible SDK has the string "-ext" as part of the name. Following
-is the general form::
+is the general form:
 
-   poky-glibc-host_system-image_type-arch-toolchain-ext-release_version.sh
+.. parsed-literal::
 
-   Where:
-       host_system is a string representing your development system:
+   poky-glibc-*host_system*-*image_type*-*arch*-toolchain-ext-*release_version*.sh
 
-                  i686 or x86_64.
+Where:
 
-       image_type is the image for which the SDK was built:
+-  *host_system* is a string representing your development system: ``i686`` or ``x86_64``.
 
-                  core-image-sato or core-image-minimal
+-  *image_type* is the image for which the SDK was built: ``core-image-sato`` or ``core-image-minimal``.
 
-       arch is a string representing the tuned target architecture:
+-  *arch* is a string representing the tuned target architecture: ``aarch64``, ``armv5e``, ``core2-64``, ``i586``, ``mips32r2``, ``mips64``, ``ppc7400``, or ``cortexa8hf-neon``.
 
-                  aarch64, armv5e, core2-64, i586, mips32r2, mips64, ppc7400, or cortexa8hf-neon
-
-       release_version is a string representing the release number of the Yocto Project:
-
-                  &DISTRO;, &DISTRO;+snapshot
+-  *release_version* is a string representing the release number of the Yocto Project: ``&DISTRO;``, ``&DISTRO;+snapshot``.
 
 For example, the following SDK installer is for a 64-bit
 development host system and a i586-tuned target architecture based off
