@@ -148,7 +148,7 @@ SDK Development Model
 
 Fundamentally, the SDK fits into the development process as follows:
 
-.. image:: figures/sdk-environment.png
+.. image:: svg/sdk-environment.*
    :width: 100%
 
 The SDK is installed on any machine and can be used to develop applications,
