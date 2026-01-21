@@ -40,15 +40,20 @@ Follow these steps to locate and hand-install the toolchain:
    hardware, and image type.
 
    The installer files (``*.sh``) follow this naming convention:
-   ``poky-glibc-host_system-core-image-type-arch-toolchain[-ext]-release.sh``:
 
-   -  ``host_system``: string representing your development system: ``i686`` or ``x86_64``
+   .. parsed-literal::
 
-   -  ``type``: string representing the image: ``sato`` or ``minimal``
+      poky-glibc-*host_system*-core-image-*type*-*arch*-toolchain[-ext]-*release*.sh
 
-   -  ``arch``: string representing the target architecture such as ``cortexa57-qemuarm64``
+   With:
 
-   -  ``release``: version of the Yocto Project.
+   -  *host_system*: string representing your development system: ``i686`` or ``x86_64``
+
+   -  *type*: string representing the image: ``sato`` or ``minimal``
+
+   -  *arch*: string representing the target architecture such as ``cortexa57-qemuarm64``
+
+   -  *release*: version of the Yocto Project.
 
    .. note::
       The standard SDK installer does not have the ``-ext`` string as
@@ -223,14 +228,19 @@ Follow these steps to extract the root filesystem:
    also contain flattened root filesystem image files (``*.ext4``),
    which you can use with QEMU directly.
 
-   The pre-built root filesystem image files follow the
-   ``core-image-profile-machine.tar.bz2`` naming convention:
+   The pre-built root filesystem image files follow this naming convention:
 
-   -  ``profile``: filesystem image's profile, such as ``minimal``,
+   .. parsed-literal::
+
+      core-image-*profile*-*machine*.tar.bz2
+
+   With:
+
+   -  *profile*: filesystem image's profile, such as ``minimal``,
       ``minimal-dev`` or ``sato``. For information on these types of image
       profiles, see the "Images" chapter in the Yocto Project Reference Manual.
 
-   -  ``machine``:  same string as the name of the parent download directory.
+   -  *machine*:  same string as the name of the parent download directory.
 
    The root filesystems
    provided by the Yocto Project are based off of the
