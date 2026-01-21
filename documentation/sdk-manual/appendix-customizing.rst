@@ -147,7 +147,9 @@ from the :term:`DISTRO` variable.
 The
 :ref:`populate_sdk_base <ref-classes-populate-sdk-*>`
 class defines the default value of the :term:`SDK_TITLE` variable as
-follows::
+follows:
+
+.. code-block:: none
 
    SDK_TITLE ??= "${@d.getVar('DISTRO_NAME') or d.getVar('DISTRO')} SDK"
 
@@ -159,7 +161,9 @@ an example, assume you have your own layer for your distribution named
 does the default "poky" distribution. If so, you could update the
 :term:`SDK_TITLE` variable in the
 ``~/meta-mydistro/conf/distro/mydistro.conf`` file using the following
-form::
+form:
+
+.. code-block:: none
 
    SDK_TITLE = "your_title"
 
@@ -214,7 +218,9 @@ installation directory for the SDK is based on the
 :term:`SDKEXTPATH` variables from
 within the
 :ref:`populate_sdk_base <ref-classes-populate-sdk-*>`
-class as follows::
+class as follows:
+
+.. code-block:: none
 
    SDKEXTPATH ??= "~/${@d.getVar('DISTRO')}_sdk"
 
@@ -231,7 +237,9 @@ assume you have your own layer for your distribution named
 does the default "poky" distribution. If so, you could update the
 :term:`SDKEXTPATH` variable in the
 ``~/meta-mydistro/conf/distro/mydistro.conf`` file using the following
-form::
+form:
+
+.. code-block:: none
 
    SDKEXTPATH = "some_path_for_your_installed_sdk"
 
@@ -265,7 +273,9 @@ source, you need to do a number of things:
 
 #. Set the appropriate configuration so that the produced SDK knows how
    to find the configuration. The variable you need to set is
-   :term:`SSTATE_MIRRORS`::
+   :term:`SSTATE_MIRRORS`:
+
+   .. code-block:: none
 
       SSTATE_MIRRORS = "file://.* https://example.com/some_path/sstate-cache/PATH"
 
@@ -278,7 +288,9 @@ source, you need to do a number of things:
       side, and its contents will not interfere with the build), then
       you can set the variable in your ``local.conf`` or custom distro
       configuration file. You can then pass the variable to the SDK by
-      adding the following::
+      adding the following:
+
+      .. code-block:: none
 
          ESDK_LOCALCONF_ALLOW = "SSTATE_MIRRORS"
 
@@ -301,7 +313,9 @@ everything needed to reconstruct the image for which the SDK was built.
 This bundling can lead to an SDK installer file that is a Gigabyte or
 more in size. If the size of this file causes a problem, you can build
 an SDK that has just enough in it to install and provide access to the
-``devtool command`` by setting the following in your configuration::
+``devtool command`` by setting the following in your configuration:
+
+.. code-block:: none
 
    SDK_EXT_TYPE = "minimal"
 
@@ -323,7 +337,9 @@ information enables the ``devtool search`` command to return useful
 results.
 
 To facilitate this wider range of information, you would need to set the
-following::
+following:
+
+.. code-block:: none
 
    SDK_INCLUDE_PKGDATA = "1"
 
