@@ -275,7 +275,22 @@ with a number. The number used depends on the state of the PR Service:
    .. code-block:: none
 
       hello-world-git_0.0+git0+b6558dd387-r0.0_armv7a-neon.ipk
-      hello-world-git_0.0+git1+dd2f5c3565-r0.0_armv7a-neon.ipk
+      hello-world-git_0.0+git1+dd2f5c3565-r0.1_armv7a-neon.ipk
+
+   Two numbers got incremented here:
+
+   -  ``gitX`` changed from ``git0`` to ``git1``. This is because there was a
+      change in the source code (``SRCREV``).
+
+   -  ``r0.X`` changed from ``r0.0`` to ``r0.1``. This is because the hash of
+      the :ref:`ref-tasks-package` task changed.
+
+      The reason for this change can be many. To understand why the hash of the
+      :ref:`ref-tasks-package` task changed, you can run the following command:
+
+      .. code-block:: console
+
+         $ bitbake-diffsigs -t hello-world package
 
 -  If PR Service is not enabled, the build system replaces the
    ``AUTOINC`` placeholder with zero (i.e. "0"). This results in
