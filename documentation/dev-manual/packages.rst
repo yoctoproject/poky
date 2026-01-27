@@ -279,8 +279,8 @@ with a number. The number used depends on the state of the PR Service:
 
    .. code-block:: none
 
-      hello-world-git_0.0+git0+b6558dd387-r0.0_armv7a-neon.ipk
-      hello-world-git_0.0+git1+dd2f5c3565-r0.1_armv7a-neon.ipk
+      hello-world-git_1.0+git0+b6558dd387-r0.0_armv7a-neon.ipk
+      hello-world-git_1.0+git1+dd2f5c3565-r0.1_armv7a-neon.ipk
 
    Two numbers got incremented here:
 
@@ -305,8 +305,8 @@ with a number. The number used depends on the state of the PR Service:
 
    .. code-block:: none
 
-      hello-world-git_0.0+git0+b6558dd387-r0_armv7a-neon.ipk
-      hello-world-git_0.0+git0+dd2f5c3565-r0_armv7a-neon.ipk
+      hello-world-git_1.0+git0+b6558dd387-r0_armv7a-neon.ipk
+      hello-world-git_1.0+git0+dd2f5c3565-r0_armv7a-neon.ipk
 
 In summary, the OpenEmbedded build system does not track the history of
 binary package versions for this purpose. ``AUTOINC``, in this case, is
