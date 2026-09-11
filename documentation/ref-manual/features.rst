@@ -407,6 +407,10 @@ these valid features is as follows:
    in the Yocto Project Development Tasks Manual. For information on
    tracing and profiling, see the :doc:`/profile-manual/index`.
 
+-  *tools-profile:*: Installs profiling tools such as ``perf``. See the
+   :ref:`profile-manual/intro:Yocto Project Profiling and Tracing Manual` for more
+   information.
+
 -  *tools-sdk:* Installs a full SDK that runs on the device.
 
 -  *tools-testapps:* Installs device testing tools (e.g. touchscreen
