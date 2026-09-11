@@ -882,7 +882,7 @@ system and gives an overview of their function and contents.
       Specifies each additional separate configuration when you are
       building targets with multiple configurations. Use this variable in
       your ``conf/local.conf`` configuration file. Specify a
-      multiconfigname for each configuration file you are using. For
+      multiconfig name for each configuration file you are using. For
       example, the following line specifies three configuration files::
 
          BBMULTICONFIG = "configA configB configC"
