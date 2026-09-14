@@ -289,8 +289,7 @@ Project Build Host:
    officially supported. For a list of the distributions under
    validation and their status, see the ":ref:`Supported Linux
    Distributions <system-requirements-supported-distros>`"
-   section in the Yocto Project Reference Manual and the wiki page at
-   :yocto_wiki:`Distribution Support </Distribution_Support>`.
+   section in the Yocto Project Reference Manual.
 
 #. *Have Enough Free Memory:* Your system should have at least 50 Gbytes
    of free disk space for building images.
