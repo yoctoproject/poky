@@ -191,10 +191,11 @@ arrows and clipart to the new SVG document.
 
 ### Fonts
 
-The recommended font for description text and labels is `Nimbus Roman`, size 10.
+The recommended font for description text and labels is `Nimbus Sans`.
+
 Labels are in bold.
 
-`template.svg` contains ready-to-copy labels.
+`template.svg` contains ready-to-copy text and labels.
 
 ### Text boxes
 
